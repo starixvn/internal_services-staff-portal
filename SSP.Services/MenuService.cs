@@ -6,6 +6,7 @@
     using SSP.Models.Menu;
     using SSP.Repositories;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class MenuService : BaseService, IMenuService
     {
@@ -16,60 +17,60 @@
             this.menuRepository = menuRepository ?? new MenuRepository();
         }
 
-        public IEnumerable<Menu> GetMenus()
+        public async Task<IEnumerable<Menu>> GetMenus()
         {
             var criteria = new GetMenuCriteria();
             IEnumerable<Menu> menus = new List<Menu>();
 
             if (criteria.IsValid())
             {
-                menus = menuRepository.GetMenus(criteria);
+                menus = await menuRepository.GetMenus(criteria);
             }
 
             return menus;
         }
 
-        public Menu GetMenuById(int id)
+        public async Task<Menu> GetMenuById(int id)
         {
             var criteria = new GetMenuByIdCriteria { MenuId = id };
             var menu = new Menu();
             if (criteria.IsValid())
             {
-                menu = GetDataEntity<Menu>(criteria);
+                menu = await GetDataEntity<Menu>(criteria);
             }
 
             return menu;
         }
 
-        public CommandResult Insert(InsertMenuCriteria criteria)
+        public async Task<CommandResult> Insert(InsertMenuCriteria criteria)
         {
             var result = new CommandResult();
             if (criteria != null && criteria.IsValid())
             {
-                result = Repository.ExecuteNonQuery(criteria);
+                result = await Repository.ExecuteNonQuery(criteria);
             }
 
             return result;
         }
 
-        public CommandResult Update(UpdateMenuCriteria criteria)
+        public async Task<CommandResult> Update(UpdateMenuCriteria criteria)
         {
             var result = new CommandResult();
             if (criteria != null && criteria.IsValid())
             {
-                result = Repository.ExecuteNonQuery(criteria);
+                result = await Repository.ExecuteNonQuery(criteria);
             }
 
             return result;
         }
 
-        public CommandResult Delete(int id)
+        public async Task<CommandResult> Delete(int id)
         {
             var criteria = new DeleteMenuCriteria { MenuId = id };
             var result = new CommandResult();
             if (criteria != null && criteria.IsValid())
             {
-                result = Repository.ExecuteNonQuery(criteria);
+                result = await Repository.ExecuteNonQuery(criteria);
             }
 
             return result;

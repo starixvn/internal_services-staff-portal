@@ -7,8 +7,9 @@
     using SSP.Services;
     using SSP.Website.ViewModels.Menu;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-    public class MenuController : Controller
+    public class MenuController : BaseController
     {
         private readonly IMenuService menuService;
         private readonly IFunctionService functionService;
@@ -22,20 +23,20 @@
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<Menu> menus = menuService.GetMenus();
+            IEnumerable<Menu> menus = await menuService.GetMenus();
 
             return View(menus);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             var viewModel = new MenuViewModel
             {
-                Menus = menuService.GetMenus(),
-                Functions = functionService.GetFunctions()
+                Menus = await menuService.GetMenus(),
+                Functions = await functionService.GetFunctions()
             };
 
             return View(viewModel);
@@ -43,7 +44,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(MenuViewModel menu)
+        public async Task<IActionResult> Create(MenuViewModel menu)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +58,7 @@
                     ParentId = (!menu.ParentId.HasValue || menu.ParentId.Value <= 0) ? null : menu.ParentId
                 };
 
-                CommandResult result = menuService.Insert(criteria);
+                CommandResult result = await menuService.Insert(criteria);
 
                 if (result.IsSuccessful)
                 {
@@ -65,16 +66,16 @@
                 }
             }
 
-            menu.Menus = menuService.GetMenus();
-            menu.Functions = functionService.GetFunctions();
+            menu.Menus = await menuService.GetMenus();
+            menu.Functions = await functionService.GetFunctions();
 
             return View(menu);
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            Menu menu = menuService.GetMenuById(id);
+            Menu menu = await menuService.GetMenuById(id);
 
             var viewModel = new MenuViewModel
             {
@@ -85,8 +86,8 @@
                 DisplayOrder = menu.DisplayOrder,
                 ParentId = menu.ParentId,
                 FunctionId = menu.FunctionId,
-                Menus = menuService.GetMenus(),
-                Functions = functionService.GetFunctions()
+                Menus = await menuService.GetMenus(),
+                Functions = await functionService.GetFunctions()
             };
 
             return View(viewModel);
@@ -94,7 +95,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(MenuViewModel menu)
+        public async Task<IActionResult> Edit(MenuViewModel menu)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +110,7 @@
                     ParentId = (!menu.ParentId.HasValue || menu.ParentId.Value <= 0) ? null : menu.ParentId
                 };
 
-                CommandResult result = menuService.Update(criteria);
+                CommandResult result = await menuService.Update(criteria);
 
                 if (result.IsSuccessful)
                 {
@@ -117,16 +118,16 @@
                 }
             }
 
-            menu.Menus = menuService.GetMenus();
-            menu.Functions = functionService.GetFunctions();
+            menu.Menus = await menuService.GetMenus();
+            menu.Functions = await functionService.GetFunctions();
 
             return View(menu);
         }
 
         [HttpPost]
-        public JsonResult Delete(int id)
+        public async Task<JsonResult> Delete(int id)
         {
-            CommandResult result = menuService.Delete(id);
+            CommandResult result = await menuService.Delete(id);
 
             return Json(result);
         }

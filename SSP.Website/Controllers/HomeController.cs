@@ -4,7 +4,7 @@
     using SSP.Website.Models;
     using System.Diagnostics;
 
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public IActionResult Index()
         {

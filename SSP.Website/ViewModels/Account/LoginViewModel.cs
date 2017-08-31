@@ -1,13 +1,16 @@
-﻿namespace SSP.Models.Account
+﻿namespace SSP.Website.ViewModels.Account
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class LoginModel
+    public class LoginViewModel
     {
         [Required]
         public string Username { get; set; }
 
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }

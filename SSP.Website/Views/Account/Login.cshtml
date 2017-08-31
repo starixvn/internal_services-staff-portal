@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+@using SSP.Core.Resources
+
+@model SSP.Website.ViewModels.Account.LoginViewModel
+
+<div class="row">
+    <form method="post" asp-controller="Account" asp-action="Login" asp-route-returnurl="@Model.ReturnUrl">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username, ViewLang.Username)
+            @Html.TextBoxFor(model => model.Username, null, new { @class = "form-control", placeholder = ViewLang.Username })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, ViewLang.Password)
+            @Html.TextBoxFor(model => model.Password, null, new { @class = "form-control", @type = "password", placeholder = ViewLang.Password })
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>

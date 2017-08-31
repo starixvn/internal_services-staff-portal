@@ -4,13 +4,19 @@
     using SSP.Criteria.Function;
     using SSP.Models.Function;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class FunctionService : BaseService, IFunctionService
     {
-        public IEnumerable<Function> GetFunctions()
+        public async Task<IEnumerable<Function>> GetFunctions()
         {
             var criteria = new GetFunctionCriteria();
-            IEnumerable<Function> functions = GetData<Function>(criteria);
+            IEnumerable<Function> functions = new List<Function>();
+
+            if (criteria.IsValid())
+            {
+                functions = await GetData<Function>(criteria);
+            }
 
             return functions;
         }

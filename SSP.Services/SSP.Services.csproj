@@ -52,7 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountService.cs" />
     <Compile Include="FunctionService.cs" />
+    <Compile Include="Interfaces\IAccountService.cs" />
     <Compile Include="Interfaces\IFunctionService.cs" />
     <Compile Include="Interfaces\IMenuService.cs" />
     <Compile Include="MenuService.cs" />

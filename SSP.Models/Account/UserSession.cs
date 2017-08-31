@@ -1,8 +1,10 @@
 ﻿namespace SSP.Models.Account
 {
     using SSP.Models.Function;
+    using System;
     using System.Collections.Generic;
 
+    [Serializable]
     public class UserSession
     {
         public UserSession()

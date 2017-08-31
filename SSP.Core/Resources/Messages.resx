@@ -120,4 +120,10 @@
   <data name="InvalidInputData" xml:space="preserve">
     <value>Invalid input.</value>
   </data>
+  <data name="LogIn_MissingUsnOrPwd" xml:space="preserve">
+    <value>Please input Username/Password.</value>
+  </data>
+  <data name="LogIn_WrongUsnOrPwd" xml:space="preserve">
+    <value>Invalid username/password. Please try again.</value>
+  </data>
 </root>

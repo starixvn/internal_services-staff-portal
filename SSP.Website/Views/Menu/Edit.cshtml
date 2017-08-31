@@ -11,6 +11,8 @@
     <div class="panel-body">
         @using (Html.BeginForm(FormMethod.Post, new { @class = "form-horizontal" }))
         {
+            @Html.HiddenFor(model => model.MenuId)
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, ViewLang.Name, new { @class = "col-sm-2 control-label" })
                 <div class="col-sm-10">

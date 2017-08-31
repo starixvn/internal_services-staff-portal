@@ -2,9 +2,10 @@
 {
     using SSP.Models.Function;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IFunctionService
     {
-        IEnumerable<Function> GetFunctions();
+        Task<IEnumerable<Function>> GetFunctions();
     }
 }

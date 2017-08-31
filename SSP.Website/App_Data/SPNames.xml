@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
+    <Function Name="Account">
+        <Setting Key="Account_GetByUsername" SpName="Account_GetByUsername" DbName="bodb_SSP" Plain="0"></Setting>
+    </Function>
     <Function Name="Function">
         <Setting Key="Function_Get" SpName="Function_Get" DbName="bodb_SSP" Plain="0"></Setting>
     </Function>

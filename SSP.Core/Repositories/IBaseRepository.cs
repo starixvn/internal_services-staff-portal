@@ -2,9 +2,10 @@
 {
     using Fanex.Data.Repository;
     using Models;
+    using System.Threading.Tasks;
 
     public interface IBaseRepository
     {
-        CommandResult ExecuteNonQuery(ICriteria criteria);
+        Task<CommandResult> ExecuteNonQuery(ICriteria criteria);
     }
 }

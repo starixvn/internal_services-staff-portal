@@ -68,5 +68,23 @@ namespace SSP.Core.Resources {
                 return ResourceManager.GetString("InvalidInputData", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please input Username/Password..
+        /// </summary>
+        public static string LogIn_MissingUsnOrPwd {
+            get {
+                return ResourceManager.GetString("LogIn_MissingUsnOrPwd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid username/password. Please try again..
+        /// </summary>
+        public static string LogIn_WrongUsnOrPwd {
+            get {
+                return ResourceManager.GetString("LogIn_WrongUsnOrPwd", resourceCulture);
+            }
+        }
     }
 }

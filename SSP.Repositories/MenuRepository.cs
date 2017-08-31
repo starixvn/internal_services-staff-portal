@@ -5,14 +5,15 @@
     using SSP.Models.Function;
     using SSP.Models.Menu;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class MenuRepository : IMenuRepository
     {
-        public IEnumerable<Menu> GetMenus(ICriteria criteria)
+        public async Task<IEnumerable<Menu>> GetMenus(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                var menus = db.Query<Menu, Function, Menu, Menu>(
+                var menus = db.QueryAsync<Menu, Function, Menu, Menu>(
                     (menu, func, parent) =>
                     {
                         menu.Function = func;
@@ -23,7 +24,7 @@
                     "FunctionId, MenuId",
                     criteria.GetSpParams());
 
-                return menus;
+                return await menus;
             }
         }
     }

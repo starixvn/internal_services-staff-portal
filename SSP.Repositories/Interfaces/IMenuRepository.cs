@@ -3,9 +3,10 @@
     using Fanex.Data.Repository;
     using SSP.Models.Menu;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IMenuRepository
     {
-        IEnumerable<Menu> GetMenus(ICriteria criteria);
+        Task<IEnumerable<Menu>> GetMenus(ICriteria criteria);
     }
 }

@@ -6,10 +6,11 @@
     using System;
     using System.Collections;
     using System.Globalization;
+    using System.Threading.Tasks;
 
     public class BaseRepository : IBaseRepository
     {
-        public CommandResult ExecuteNonQuery(ICriteria criteria)
+        public async Task<CommandResult> ExecuteNonQuery(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -17,7 +18,7 @@
                 hash.Add("errcode", 0);
                 hash.Add("errmsg", string.Empty);
 
-                db.ExecuteNonQuery(hash);
+                await db.ExecuteNonQueryAsync(hash);
                 CommandResult commandResult = GetCommandResult(hash);
 
                 return commandResult;

@@ -3,6 +3,7 @@
     using Fanex.Data.Repository;
     using Repositories;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class BaseService
     {
@@ -16,21 +17,21 @@
 
         public IBaseRepository Repository { get; set; }
 
-        public virtual IEnumerable<T> GetData<T>(ICriteria criteria)
+        public virtual async Task<IEnumerable<T>> GetData<T>(ICriteria criteria)
         {
             if (criteria != null && criteria.IsValid())
             {
-                return dynamicRepository.Fetch<T>(criteria);
+                return await dynamicRepository.FetchAsync<T>(criteria);
             }
 
             return new List<T>();
         }
 
-        public virtual T GetDataEntity<T>(ICriteria criteria)
+        public virtual async Task<T> GetDataEntity<T>(ICriteria criteria)
         {
             if (criteria != null && criteria.IsValid())
             {
-                return dynamicRepository.Get<T>(criteria);
+                return await dynamicRepository.GetAsync<T>(criteria);
             }
 
             return default(T);

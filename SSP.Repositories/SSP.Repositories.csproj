@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IAccountRepository.cs" />
+    <Compile Include="AccountRepository.cs" />
     <Compile Include="MenuRepository.cs" />
     <Compile Include="Interfaces\IMenuRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

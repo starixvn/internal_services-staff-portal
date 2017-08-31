@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\GetUserLoginByUsernameCriteria.cs" />
     <Compile Include="Function\GetFunctionCriteria.cs" />
     <Compile Include="Menu\DeleteMenuCriteria.cs" />
     <Compile Include="Menu\GetMenuByIdCriteria.cs" />

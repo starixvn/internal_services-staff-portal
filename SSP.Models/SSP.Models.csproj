@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\LoginModel.cs" />
     <Compile Include="Account\UserSession.cs" />
     <Compile Include="Function\Function.cs" />
     <Compile Include="Menu\Menu.cs" />

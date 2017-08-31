@@ -4,17 +4,18 @@
     using SSP.Criteria.Menu;
     using SSP.Models.Menu;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IMenuService
     {
-        IEnumerable<Menu> GetMenus();
+        Task<IEnumerable<Menu>> GetMenus();
 
-        Menu GetMenuById(int id);
+        Task<Menu> GetMenuById(int id);
 
-        CommandResult Insert(InsertMenuCriteria criteria);
+        Task<CommandResult> Insert(InsertMenuCriteria criteria);
 
-        CommandResult Update(UpdateMenuCriteria criteria);
+        Task<CommandResult> Update(UpdateMenuCriteria criteria);
 
-        CommandResult Delete(int id);
+        Task<CommandResult> Delete(int id);
     }
 }

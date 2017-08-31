@@ -51,6 +51,7 @@
                 options.Cookie.HttpOnly = true;
             });
 
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IFunctionService, FunctionService>();
         }
