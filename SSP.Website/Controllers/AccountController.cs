@@ -48,7 +48,7 @@
 
             if (!string.IsNullOrWhiteSpace(model.Username) && !string.IsNullOrWhiteSpace(model.Password))
             {
-                UserSession user = await accountService.GetUserLogin(model.Username);
+                UserSession user = await accountService.GetUserLoginAsync(model.Username);
 
                 if (user != null && !string.IsNullOrWhiteSpace(model.Password))
                 {

@@ -6,6 +6,6 @@
 
     public interface IAccountRepository
     {
-        Task<UserSession> GetUserLogin(ICriteria criteria);
+        Task<UserSession> GetUserLoginAsync(ICriteria criteria);
     }
 }

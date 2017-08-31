@@ -25,7 +25,7 @@
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Menu> menus = await menuService.GetMenus();
+            IEnumerable<Menu> menus = await menuService.GetMenuAsync();
 
             return View(menus);
         }
@@ -35,8 +35,8 @@
         {
             var viewModel = new MenuViewModel
             {
-                Menus = await menuService.GetMenus(),
-                Functions = await functionService.GetFunctions()
+                Menus = await menuService.GetMenuAsync(),
+                Functions = await functionService.GetFunctionAsync()
             };
 
             return View(viewModel);
@@ -58,7 +58,7 @@
                     ParentId = (!menu.ParentId.HasValue || menu.ParentId.Value <= 0) ? null : menu.ParentId
                 };
 
-                CommandResult result = await menuService.Insert(criteria);
+                CommandResult result = await menuService.InsertAsync(criteria);
 
                 if (result.IsSuccessful)
                 {
@@ -66,8 +66,8 @@
                 }
             }
 
-            menu.Menus = await menuService.GetMenus();
-            menu.Functions = await functionService.GetFunctions();
+            menu.Menus = await menuService.GetMenuAsync();
+            menu.Functions = await functionService.GetFunctionAsync();
 
             return View(menu);
         }
@@ -75,7 +75,7 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            Menu menu = await menuService.GetMenuById(id);
+            Menu menu = await menuService.GetMenuByIdAsync(id);
 
             var viewModel = new MenuViewModel
             {
@@ -86,8 +86,8 @@
                 DisplayOrder = menu.DisplayOrder,
                 ParentId = menu.ParentId,
                 FunctionId = menu.FunctionId,
-                Menus = await menuService.GetMenus(),
-                Functions = await functionService.GetFunctions()
+                Menus = await menuService.GetMenuAsync(),
+                Functions = await functionService.GetFunctionAsync()
             };
 
             return View(viewModel);
@@ -110,7 +110,7 @@
                     ParentId = (!menu.ParentId.HasValue || menu.ParentId.Value <= 0) ? null : menu.ParentId
                 };
 
-                CommandResult result = await menuService.Update(criteria);
+                CommandResult result = await menuService.UpdateAsync(criteria);
 
                 if (result.IsSuccessful)
                 {
@@ -118,8 +118,8 @@
                 }
             }
 
-            menu.Menus = await menuService.GetMenus();
-            menu.Functions = await functionService.GetFunctions();
+            menu.Menus = await menuService.GetMenuAsync();
+            menu.Functions = await functionService.GetFunctionAsync();
 
             return View(menu);
         }
@@ -127,7 +127,7 @@
         [HttpPost]
         public async Task<JsonResult> Delete(int id)
         {
-            CommandResult result = await menuService.Delete(id);
+            CommandResult result = await menuService.DeleteAsync(id);
 
             return Json(result);
         }

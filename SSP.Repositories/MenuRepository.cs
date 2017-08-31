@@ -9,7 +9,7 @@
 
     public class MenuRepository : IMenuRepository
     {
-        public async Task<IEnumerable<Menu>> GetMenus(ICriteria criteria)
+        public async Task<IEnumerable<Menu>> GetMenuAsync(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {

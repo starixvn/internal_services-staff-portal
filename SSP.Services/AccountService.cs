@@ -14,7 +14,7 @@
             this.accountRepository = accountRepository ?? new AccountRepository();
         }
 
-        public async Task<UserSession> GetUserLogin(string username)
+        public async Task<UserSession> GetUserLoginAsync(string username)
         {
             var criteria = new GetUserLoginByUsernameCriteria
             {
@@ -24,7 +24,7 @@
 
             if (criteria.IsValid())
             {
-                user = await accountRepository.GetUserLogin(criteria);
+                user = await accountRepository.GetUserLoginAsync(criteria);
             }
 
             return user;

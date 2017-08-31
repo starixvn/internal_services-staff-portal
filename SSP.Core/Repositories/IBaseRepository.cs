@@ -6,6 +6,6 @@
 
     public interface IBaseRepository
     {
-        Task<CommandResult> ExecuteNonQuery(ICriteria criteria);
+        Task<CommandResult> ExecuteNonQueryAsync(ICriteria criteria);
     }
 }

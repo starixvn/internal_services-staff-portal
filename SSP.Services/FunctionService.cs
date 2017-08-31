@@ -8,14 +8,14 @@
 
     public class FunctionService : BaseService, IFunctionService
     {
-        public async Task<IEnumerable<Function>> GetFunctions()
+        public async Task<IEnumerable<Function>> GetFunctionAsync()
         {
             var criteria = new GetFunctionCriteria();
             IEnumerable<Function> functions = new List<Function>();
 
             if (criteria.IsValid())
             {
-                functions = await GetData<Function>(criteria);
+                functions = await GetDataAsync<Function>(criteria);
             }
 
             return functions;

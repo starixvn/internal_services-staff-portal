@@ -17,7 +17,7 @@
 
         public IBaseRepository Repository { get; set; }
 
-        public virtual async Task<IEnumerable<T>> GetData<T>(ICriteria criteria)
+        public virtual async Task<IEnumerable<T>> GetDataAsync<T>(ICriteria criteria)
         {
             if (criteria != null && criteria.IsValid())
             {
@@ -27,7 +27,7 @@
             return new List<T>();
         }
 
-        public virtual async Task<T> GetDataEntity<T>(ICriteria criteria)
+        public virtual async Task<T> GetDataEntityAsync<T>(ICriteria criteria)
         {
             if (criteria != null && criteria.IsValid())
             {

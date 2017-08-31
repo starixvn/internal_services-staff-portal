@@ -6,6 +6,6 @@
 
     public interface IFunctionService
     {
-        Task<IEnumerable<Function>> GetFunctions();
+        Task<IEnumerable<Function>> GetFunctionAsync();
     }
 }

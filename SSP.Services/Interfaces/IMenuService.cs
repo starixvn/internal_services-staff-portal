@@ -8,14 +8,14 @@
 
     public interface IMenuService
     {
-        Task<IEnumerable<Menu>> GetMenus();
+        Task<IEnumerable<Menu>> GetMenuAsync();
 
-        Task<Menu> GetMenuById(int id);
+        Task<Menu> GetMenuByIdAsync(int id);
 
-        Task<CommandResult> Insert(InsertMenuCriteria criteria);
+        Task<CommandResult> InsertAsync(InsertMenuCriteria criteria);
 
-        Task<CommandResult> Update(UpdateMenuCriteria criteria);
+        Task<CommandResult> UpdateAsync(UpdateMenuCriteria criteria);
 
-        Task<CommandResult> Delete(int id);
+        Task<CommandResult> DeleteAsync(int id);
     }
 }

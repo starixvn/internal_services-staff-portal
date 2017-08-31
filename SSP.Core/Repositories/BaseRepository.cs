@@ -10,7 +10,7 @@
 
     public class BaseRepository : IBaseRepository
     {
-        public async Task<CommandResult> ExecuteNonQuery(ICriteria criteria)
+        public async Task<CommandResult> ExecuteNonQueryAsync(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {

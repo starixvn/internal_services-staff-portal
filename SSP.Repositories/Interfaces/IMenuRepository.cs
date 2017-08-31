@@ -7,6 +7,6 @@
 
     public interface IMenuRepository
     {
-        Task<IEnumerable<Menu>> GetMenus(ICriteria criteria);
+        Task<IEnumerable<Menu>> GetMenuAsync(ICriteria criteria);
     }
 }

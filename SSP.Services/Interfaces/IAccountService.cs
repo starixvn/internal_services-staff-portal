@@ -5,6 +5,6 @@
 
     public interface IAccountService
     {
-        Task<UserSession> GetUserLogin(string username);
+        Task<UserSession> GetUserLoginAsync(string username);
     }
 }

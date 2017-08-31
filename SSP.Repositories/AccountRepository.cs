@@ -8,7 +8,7 @@
 
     public class AccountRepository : IAccountRepository
     {
-        public async Task<UserSession> GetUserLogin(ICriteria criteria)
+        public async Task<UserSession> GetUserLoginAsync(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
