@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Update Menu";
+}
+
+@using SSP.Core.Resources
+@using SSP.Website.ViewModels.Menu
+
+@model MenuViewModel
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        @using (Html.BeginForm(FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, ViewLang.Name, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(model => model.Name, null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Link, "Url", new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-10">
+                    @Html.TextBoxFor(model => model.Link, null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(model => model.IsActive) Active
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ParentId, ViewLang.Parent, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(model => model.ParentId, new SelectList(Model.Menus, "MenuId", "Name"), ViewLang.None, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FunctionId, ViewLang.Function, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-10">
+                    @Html.DropDownListFor(model => model.FunctionId, new SelectList(Model.Functions, "FunctionId", "Name"), ViewLang.None, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DisplayOrder, ViewLang.DisplayOrder, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-2">
+                    @Html.TextBoxFor(model => model.DisplayOrder, null, new { @class = "form-control", @type = "number", @min = 0 })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">@ViewLang.Save</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>

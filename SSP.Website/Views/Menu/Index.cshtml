@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Menu";
+}
+
+@using SSP.Core.Resources
+@using SSP.Models.Menu
+@model IEnumerable<Menu>
+
+<div class="row">
+    <a class="btn btn-primary" href="@Url.Action("create")"><span class="glyphicon glyphicon-plus"></span> New Menu</a>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>@ViewLang.Name</th>
+                <th>Url</th>
+                <th>@ViewLang.Function</th>
+                <th>Parent Menu</th>
+                <th>@ViewLang.Active</th>
+                <th>@ViewLang.Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                @foreach (Menu menu in Model.Where(i => i.ParentMenu == null))
+                {
+                    <tr>
+                        <td class="rowdivider highlight left" colspan="6">
+                            <a href="@Url.Action("edit", "menu", new { Id = menu.MenuId })">
+                                @menu.Name
+                            </a>
+                        </td>
+                    </tr>
+
+                    foreach (Menu chilmenu in Model.Where(i => i.ParentMenu != null && i.ParentMenu.MenuId == menu.MenuId))
+                    {
+                        <tr>
+                            <td class="sub">
+                                @chilmenu.Name
+                            </td>
+                            <td>
+                                @chilmenu.Link
+                            </td>
+                            <td>
+                                @(chilmenu.Function != null ? chilmenu.Function.Name : string.Empty)
+                            </td>
+                            <td>
+                                @chilmenu.ParentMenu.Name
+                            </td>
+                            <td>
+                                @chilmenu.IsActive
+                            </td>
+                            <td>
+                                <a href="@Url.Action("edit", "menu", new { Id = chilmenu.MenuId })">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">@ViewLang.NoData</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
