@@ -53,7 +53,6 @@
                 if (user != null && !string.IsNullOrWhiteSpace(model.Password))
                 {
                     string hashPassword = GetHash(user.Password);
-                    model.Password = GetHash(Cryptography.CfsEnCode(model.Password));
 
                     if (model.Password == hashPassword)
                     {
