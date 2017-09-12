@@ -44,8 +44,8 @@ namespace TicketDesk.Web.Client.Models
     public class UserSignInViewModel
     {
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
-        [Display(Name = "Email", ResourceType = typeof(Strings))]
-        [EmailAddress(ErrorMessage = null, ErrorMessageResourceName = "InvalidEmail", ErrorMessageResourceType = typeof(Validation))]
+        [Display(Name = "Username")]
+        //[EmailAddress(ErrorMessage = null, ErrorMessageResourceName = "InvalidEmail", ErrorMessageResourceType = typeof(Validation))]
         public string Email { get; set; }
 
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
