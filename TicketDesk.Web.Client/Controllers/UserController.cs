@@ -12,7 +12,6 @@
 // provided to the recipient.
 
 using Fanex.Common;
-using Fanex.NAP.Core.Configuration;
 using Fanex.NAP.Core.Criteria.User;
 using Fanex.NAP.Core.Model;
 using Fanex.NAP.Core.Service.Interface;
@@ -151,22 +150,21 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 var password = Cryptography.CfsEnCode(model.Password);
 
-                var napSetttings = NapSettings.Settings;
                 if (password == user.Password)
                 {
                     var siteLevelList = siteService.GetSiteLevelByUser(user.Id, "UAT");
 
-                    if (siteLevelList.Any(x => x.Site.Id == napSetttings.SiteId))
+                    if (siteLevelList.Any(x => x.Site.Id == SiteId))
                     {
                         var group = user.Group == null ? null : groupService.GetById(user.Group.Id);
 
-                        if ((group == null || group.IsActive) && siteLevelList.Any(x => x.Site.Id == napSetttings.SiteId && x.IsActive))
+                        if ((group == null || group.IsActive) && siteLevelList.Any(x => x.Site.Id == SiteId && x.IsActive))
                         {
                             // check-in user
                             var criteria = new UserCheckInUserCriteria
                             {
                                 UserId = user.Id,
-                                SiteId = napSetttings.SiteId,
+                                SiteId = SiteId,
                                 NetSessionId = Session.SessionID,
                                 Ip = CurrentContext.IP,
                                 LoginDate = DateTime.Now,
@@ -178,11 +176,11 @@ namespace TicketDesk.Web.Client.Controllers
 
                             userService.UserCheckIn(criteria);
 
-                            int level = siteLevelList.FirstOrDefault(x => x.Site.Id == napSetttings.SiteId).Level;
+                            int level = siteLevelList.FirstOrDefault(x => x.Site.Id == SiteId).Level;
 
                             SaveUserSession(user, criteria.OnUserId, level);
 
-                            CreateUserMenu(user.Id, napSetttings.Environment, napSetttings.SiteId);
+                            CreateUserMenu(user.Id, Environment, SiteId);
                             CreateAuthInfo(user);
 
                             //SignInManager.PasswordSignInAsync(model.Email, "123456aa", model.RememberMe, true);

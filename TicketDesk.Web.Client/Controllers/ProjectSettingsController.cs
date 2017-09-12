@@ -1,21 +1,21 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Model;
-using TicketDesk.Web.Client.Models;
-using TicketDesk.Localization.Controllers;
-
-namespace TicketDesk.Web.Client.Controllers
+﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+    using TicketDesk.Domain;
+    using TicketDesk.Domain.Model;
+    using TicketDesk.Localization.Controllers;
+    using TicketDesk.Web.Client.Models;
+
     [RoutePrefix("admin")]
     [Route("{action=index}")]
-    [TdAuthorize(Roles = "TdAdministrators")]
     public class ProjectSettingsController : Controller
     {
-
-          private TdDomainContext Context { get; set; }
+        private TdDomainContext Context { get; set; }
 
         public ProjectSettingsController(TdDomainContext context)
         {
@@ -23,20 +23,23 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("projects")]
+        [NapAuth(FunctionKey = "ProjectSettings", Policy = Constant.Policy.Read)]
         public async Task<ActionResult> Index()
         {
-            var model = Context.Projects.Select(p => new ProjectListViewModelItem { Project = p, NumberOfTickets = p.Tickets.Count()});
+            var model = Context.Projects.Select(p => new ProjectListViewModelItem { Project = p, NumberOfTickets = p.Tickets.Count });
             await model.LoadAsync();
             return View(model);
         }
 
         [Route("project/new")]
+        [NapAuth(FunctionKey = "ProjectSettings", Policy = Constant.Policy.Host)]
         public ActionResult New()
         {
             return View();
         }
 
         [Route("project/new")]
+        [NapAuth(FunctionKey = "ProjectSettings", Policy = Constant.Policy.Host)]
         [HttpPost]
         public async Task<ActionResult> New(Project project)
         {
@@ -53,6 +56,7 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("project/delete/{projectId:int}")]
+        [NapAuth(FunctionKey = "ProjectSettings", Policy = Constant.Policy.Host)]
         [HttpPost]
         public async Task<ActionResult> Delete(int projectId, int reassignTo)
         {
@@ -68,7 +72,7 @@ namespace TicketDesk.Web.Client.Controllers
             var reassignProject = await Context.Projects.FindAsync(reassignTo);
             if (numProjects < 2 || reassignProject == null)
             {
-                return RedirectToAction("Edit", new {projectId});
+                return RedirectToAction("Edit", new { projectId });
             }
 
             //move tickets, then remove project
@@ -86,10 +90,11 @@ namespace TicketDesk.Web.Client.Controllers
             }
 
             ModelState.AddModelError("", Strings.UnableToRemoveProject);
-            return RedirectToAction("Edit", new {projectId});
+            return RedirectToAction("Edit", new { projectId });
         }
 
         [Route("project/{projectId:int}")]
+        [NapAuth(FunctionKey = "ProjectSettings", Policy = Constant.Policy.Host)]
         public async Task<ActionResult> Edit(int projectId)
         {
             var project = await Context.Projects.FindAsync(projectId);
@@ -101,8 +106,8 @@ namespace TicketDesk.Web.Client.Controllers
             return View(project);
         }
 
-      
         [Route("project/{projectId:int}")]
+        [NapAuth(FunctionKey = "ProjectSettings", Policy = Constant.Policy.Host)]
         [HttpPost]
         public async Task<ActionResult> Edit(Project project, int projectId)
         {
@@ -117,7 +122,6 @@ namespace TicketDesk.Web.Client.Controllers
             }
             await AddViewDataForEdit(projectId);
             return View(project);
-        
         }
 
         private async Task AddViewDataForEdit(int projectId)
@@ -127,8 +131,5 @@ namespace TicketDesk.Web.Client.Controllers
                 .Where(p => p.ProjectId != projectId)
                 .ToSelectList(p => p.ProjectId.ToString(), p => p.ProjectName);
         }
-
     }
-
-
 }
