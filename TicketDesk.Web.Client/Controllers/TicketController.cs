@@ -11,22 +11,22 @@
 // attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
-using Fanex.NAP.Core.Business;
-using Fanex.NAP.Core.Web.Attribute;
-using System;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Model;
-using TicketDesk.IO;
-using TicketDesk.Localization.Controllers;
-
 namespace TicketDesk.Web.Client.Controllers
 {
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Validation;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+    using TicketDesk.Domain;
+    using TicketDesk.Domain.Model;
+    using TicketDesk.IO;
+    using TicketDesk.Localization.Controllers;
+
     /// <summary>
     /// Class TicketController.
     /// </summary>

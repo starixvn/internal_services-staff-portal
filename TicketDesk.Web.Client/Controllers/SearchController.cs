@@ -23,7 +23,7 @@ using TicketDesk.Localization.Controllers;
 namespace TicketDesk.Web.Client.Controllers
 {
     [RoutePrefix("search")]
-    [Route("{action=index")]
+    [Route("{action=index}")]
     [TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
     public class SearchController : BaseController
     {

@@ -11,18 +11,18 @@
 // attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Model;
-using TicketDesk.Web.Client.Models;
-
 namespace TicketDesk.Web.Client.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+    using TicketDesk.Domain;
+    using TicketDesk.Domain.Model;
+    using TicketDesk.Web.Client.Models;
+
     [RoutePrefix("tickets")]
     [Route("{action=index}")]
-    [TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
+    //[TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
     public class TicketCenterController : BaseController
     {
         private TdDomainContext Context { get; set; }
