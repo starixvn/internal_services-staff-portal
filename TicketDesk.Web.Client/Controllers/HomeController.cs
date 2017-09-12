@@ -11,13 +11,13 @@
 // attribution must remain intact, and a copy of the license must be 
 // provided to the recipient.
 
-using System;
-using System.Web;
-using System.Web.Mvc;
-using TicketDesk.Localization;
-
 namespace TicketDesk.Web.Client.Controllers
 {
+    using Localization;
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+
     [RoutePrefix("")]
     [Route("{action=index}")]
     public class HomeController : Controller
@@ -27,14 +27,15 @@ namespace TicketDesk.Web.Client.Controllers
         {
             CultureHelper.SetCurrentCulture(name);
 
-            var cookie = new HttpCookie("_culture", name);
-            cookie.Expires = DateTime.Today.AddYears(1);
+            var cookie = new HttpCookie("_culture", name) { Expires = DateTime.Today.AddYears(1) };
             Response.SetCookie(cookie);
 
             if (Request.UrlReferrer != null && !string.IsNullOrEmpty(Request.UrlReferrer.AbsoluteUri))
+            {
                 return Redirect(Request.UrlReferrer.AbsoluteUri);
-            else
-                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [Route("")]
@@ -43,7 +44,7 @@ namespace TicketDesk.Web.Client.Controllers
         {
             return View();
         }
- 
+
         [Route("about")]
         public ActionResult About()
         {
