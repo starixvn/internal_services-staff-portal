@@ -214,3 +214,4 @@ TicketDesk/TicketDesk.Web.Client/App_Data/filestore/
 TicketDesk/.vs/
 **/*.vsext.disable
 /.vs/config/applicationhost.config
+.vs
