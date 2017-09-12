@@ -361,7 +361,6 @@
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="TicketAuthAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\LOCAL\NAPCommonSpNames.xml" />
