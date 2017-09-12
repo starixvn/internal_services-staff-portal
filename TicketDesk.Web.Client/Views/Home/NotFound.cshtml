@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "NotFound";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Not Found</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    @Styles.Render("~/content/error-pages")
+</head>
+<body>
+
+    <div class="layout-full">
+        <div class="img-wrap">
+            <img class="sign" src="~/Content/images/error-assets/404.png" />
+            <img class="cloud-bottom" src="~/Content/images/error-assets/cloud1.png" />
+            <img class="cloud-top" src="~/Content/images/error-assets/cloud2.png" />
+        </div>
+
+        <h2 class="title big-title">OOPS...</h2>
+        <p class="margin-bottom-30 text">The page you were looking for doesn't exist</p>
+        <a class="cta-button" href="~/"><i class="icon fa fa-arrow-left"></i>Take me back to home</a>
+    </div>
+</body>
+</html>

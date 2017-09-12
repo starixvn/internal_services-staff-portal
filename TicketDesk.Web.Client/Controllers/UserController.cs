@@ -3,42 +3,38 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
+using Fanex.Common;
+using Fanex.NAP.Core.Configuration;
+using Fanex.NAP.Core.Criteria.User;
+using Fanex.NAP.Core.Model;
+using Fanex.NAP.Core.Service.Interface;
+using Fanex.NAP.Core.Web;
+using Fanex.NAP.Core.Web.Auth;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
+using System.Web.Security;
 using TicketDesk.Domain;
 using TicketDesk.PushNotifications;
 using TicketDesk.PushNotifications.Model;
 using TicketDesk.Web.Client.Models;
 using TicketDesk.Web.Identity;
 using TicketDesk.Web.Identity.Model;
-using TicketDesk.Localization.Controllers;
-using Fanex.NAP.Core.Service.Interface;
-using Fanex.NAP.Core.Model;
-using Fanex.NAP.Core.Web;
-using Fanex.Common;
-using System.Linq;
-using Fanex.NAP.Core.Web.Context;
-using Fanex.NAP.Core.Web.Auth;
-using System.Web.Security;
-using Fanex.NAP.Core.Configuration;
-using Fanex.NAP.Core.Criteria.User;
-using System.Collections.Generic;
 
 namespace TicketDesk.Web.Client.Controllers
 {
@@ -96,7 +92,7 @@ namespace TicketDesk.Web.Client.Controllers
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     HostingEnvironment.QueueBackgroundWorkItem(ct =>
                     {
-                        using(var notificationContext = new TdPushNotificationContext())
+                        using (var notificationContext = new TdPushNotificationContext())
                         {
                             notificationContext.SubscriberPushNotificationSettingsManager.AddSettingsForSubscriber(
                                 new SubscriberNotificationSetting
@@ -164,8 +160,7 @@ namespace TicketDesk.Web.Client.Controllers
                     {
                         var group = user.Group == null ? null : groupService.GetById(user.Group.Id);
 
-                        if ((group == null || group.IsActive)
-                            && siteLevelList.Where(x => x.Site.Id == napSetttings.SiteId && x.IsActive).Any())
+                        if ((group == null || group.IsActive) && siteLevelList.Any(x => x.Site.Id == napSetttings.SiteId && x.IsActive))
                         {
                             // check-in user
                             var criteria = new UserCheckInUserCriteria
@@ -183,7 +178,7 @@ namespace TicketDesk.Web.Client.Controllers
 
                             userService.UserCheckIn(criteria);
 
-                            int level = siteLevelList.Where(x => x.Site.Id == napSetttings.SiteId).FirstOrDefault().Level;
+                            int level = siteLevelList.FirstOrDefault(x => x.Site.Id == napSetttings.SiteId).Level;
 
                             SaveUserSession(user, criteria.OnUserId, level);
 
@@ -287,6 +282,7 @@ namespace TicketDesk.Web.Client.Controllers
                 ModelState.AddModelError("", error);
             }
         }
+
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))

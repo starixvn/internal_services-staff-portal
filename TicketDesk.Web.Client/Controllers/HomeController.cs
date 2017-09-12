@@ -55,5 +55,17 @@ namespace TicketDesk.Web.Client.Controllers
         {
             return View();
         }
+
+        [Route("not-found", Name = "NotFound")]
+        public ActionResult NotFound()
+        {
+            return View();
+        }
+
+        [Route("internal-error", Name = "InternalError")]
+        public ActionResult InternalError()
+        {
+            return View();
+        }
     }
 }

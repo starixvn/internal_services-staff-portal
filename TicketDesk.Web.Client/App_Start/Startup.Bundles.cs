@@ -22,7 +22,6 @@ namespace TicketDesk.Web.Client
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public void RegisterBundles(BundleCollection bundles)
         {
-
             bundles.Add(new StyleBundle("~/content/styles").Include(
                     "~/Content/bootstrap.css",
                     "~/Content/site.css",
@@ -40,6 +39,10 @@ namespace TicketDesk.Web.Client
 
             bundles.Add(new StyleBundle("~/content/summernote").Include(
                     "~/Scripts/summernote/summernote.css"));
+
+            bundles.Add(new StyleBundle("~/content/error-pages").Include(
+                    "~/Content/font-awesome.css",
+                    "~/Content/error.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/editticket")
                 .Include("~/Scripts/ticketdesk/edit-ticket.js"));
@@ -64,7 +67,6 @@ namespace TicketDesk.Web.Client
 
             bundles.Add(new ScriptBundle("~/bundles/admin-edit-user").Include(
                 "~/Scripts/ticketdesk/admin-edit-user.js"));
-
 
             bundles.Add(new ScriptBundle("~/bundles/editor").Include(
                     "~/Scripts/dropzone/dropzone.js",
@@ -100,7 +102,6 @@ namespace TicketDesk.Web.Client
                     "~/Scripts/jquery.globalize/globalize.js",
                     "~/Scripts/bootstrap.js"));
 
-
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -130,7 +131,6 @@ namespace TicketDesk.Web.Client
 #else
             BundleTable.EnableOptimizations = true;
 #endif
-
         }
     }
 }

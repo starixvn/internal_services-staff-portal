@@ -373,10 +373,23 @@
     <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\select2.png" />
     <Content Include="Content\css\select2x2.png" />
+    <Content Include="Content\error.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\arrow_down.png" />
     <Content Include="Content\Images\arrow_top.png" />
+    <Content Include="Content\Images\error-assets\404.png" />
+    <Content Include="Content\Images\error-assets\500.png" />
+    <Content Include="Content\Images\error-assets\access.png" />
+    <Content Include="Content\Images\error-assets\cloud1.png" />
+    <Content Include="Content\Images\error-assets\cloud2.png" />
+    <Content Include="Content\Images\error-assets\face.png" />
+    <Content Include="Content\Images\error-assets\hand.png" />
+    <Content Include="Content\Images\error-assets\icon-plus-big.png" />
+    <Content Include="Content\Images\error-assets\icon-plus-small.png" />
+    <Content Include="Content\Images\error-assets\img-setting.png" />
+    <Content Include="Content\Images\error-assets\leave.png" />
+    <Content Include="Content\Images\error-assets\UM.png" />
     <Content Include="Content\Images\general-file.png" />
     <Content Include="Content\Images\TicketDesk-2.5-mobile.png" />
     <Content Include="Content\Images\TicketDesk-2.5.png" />
@@ -963,6 +976,8 @@
     <Content Include="Scripts\jquery-2.2.2.min.map" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Scripts\jquery.validate.globalize.min.js.map" />
+    <Content Include="Views\Home\InternalError.cshtml" />
+    <Content Include="Views\Home\NotFound.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

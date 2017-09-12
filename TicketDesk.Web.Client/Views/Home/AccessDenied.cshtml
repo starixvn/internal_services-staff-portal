@@ -1,39 +1,30 @@
-﻿@*
-    TicketDesk - Attribution notice
-    Contributor(s):
+﻿@{
+    ViewBag.Title = "AccessDenied";
+    Layout = null;
+}
 
-         Stephen Redd (https://github.com/stephenredd)
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Access Denied</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    @Styles.Render("~/content/error-pages")
+</head>
+<body>
+    <div class="layout-full">
+        <div class="img-wrap">
+            <img src="~/Content/images/error-assets/access.png" />
+            <img class="hand" src="~/Content/images/error-assets/hand.png" />
+        </div>
 
-    This file is distributed under the terms of the Microsoft Public
-    License (Ms-PL). See http://opensource.org/licenses/MS-PL
-    for the complete terms of use.
-
-    For any distribution that contains code from this file, this notice of
-    attribution must remain intact, and a copy of the license must be
-    provided to the recipient.
-*@
-@using TicketDesk.Localization.Views.Home
-@section scripts{}
-@section title{ TicketDesk }
-@section customHeader{}
-<main>
-    <div class="container">
-        <fieldset>
-            <legend class="col-lg-8 col-lg-offset-2 col-md-9 col-md-offset-1 col-sm-12">@AccessDenied.Legend</legend>
-            <div class="col-lg-7 col-lg-offset-2 col-md-8 col-md-offset-1 col-sm-12">
-
-                <div class="panel panel-danger">
-                    <div class="panel-body">
-                        @Html.Raw(User.Identity.IsAuthenticated && User.IsInRole("TdPendingUsers") ?
-                            AccessDenied.PendingUser :
-                            AccessDenied.PermissionDenied)
-                    </div><div class="panel-footer">
-
-                        @Html.ActionLink(@AccessDenied.HomeLink, "Index",null, new {@class = "btn btn-default" })
-                    </div>
-                </div>
-
-            </div>
-        </fieldset>
+        <h2 class="title">OOOH! 403, ACCESS DENIED</h2>
+        <p class="text">Sorry about that, but you don't have permission to access this page</p>
+        <p class="text">Fortunately, you can go back to</p>
+        <a class="cta-button" href="~/"><i class="icon fa fa-arrow-left"></i>Take me back to home</a>
     </div>
-</main>
+</body>
+</html>
