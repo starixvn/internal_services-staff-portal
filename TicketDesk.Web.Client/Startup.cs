@@ -17,8 +17,9 @@ using System.Web.Routing;
 using Microsoft.Owin;
 using Owin;
 using TicketDesk.Web.Client;
+using Fanex.Data.Configuration;
 
-[assembly: OwinStartup(typeof(Startup))]
+//[assembly: OwinStartup(typeof(Startup))]
 namespace TicketDesk.Web.Client
 {
     public partial class Startup

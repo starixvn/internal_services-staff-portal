@@ -28,26 +28,49 @@ using TicketDesk.Web.Client.Models;
 using TicketDesk.Web.Identity;
 using TicketDesk.Web.Identity.Model;
 using TicketDesk.Localization.Controllers;
+using Fanex.NAP.Core.Service.Interface;
+using Fanex.NAP.Core.Model;
+using Fanex.NAP.Core.Web;
+using Fanex.Common;
+using System.Linq;
+using Fanex.NAP.Core.Web.Context;
+using Fanex.NAP.Core.Web.Auth;
+using System.Web.Security;
+using Fanex.NAP.Core.Configuration;
+using Fanex.NAP.Core.Criteria.User;
+using System.Collections.Generic;
 
 namespace TicketDesk.Web.Client.Controllers
 {
-    [TdAuthorize]
     [RoutePrefix("user")]
     [Route("{action}")]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private TicketDeskUserManager UserManager { get; set; }
         private TicketDeskSignInManager SignInManager { get; set; }
         private TdDomainContext DomainContext { get; set; }
 
+        private readonly IUserService userService;
+        private readonly IGroupService groupService;
+        private readonly ISiteService siteService;
+        private readonly IMenuItemService menuItemService;
+
         public UserController(
             TicketDeskUserManager userManager,
             TicketDeskSignInManager signInManager,
-            TdDomainContext domainContext)
+            TdDomainContext domainContext,
+            IUserService userService,
+            IGroupService groupService,
+            ISiteService siteService,
+            IMenuItemService menuItemService)
         {
             UserManager = userManager;
             SignInManager = signInManager;
             DomainContext = domainContext;
+            this.userService = userService;
+            this.groupService = groupService;
+            this.siteService = siteService;
+            this.menuItemService = menuItemService;
         }
 
         [AllowAnonymous]
@@ -126,17 +149,120 @@ namespace TicketDesk.Web.Client.Controllers
                 return View(model);
             }
 
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
-            switch (result)
+            var user = userService.GetByUsername(model.Email) as User;
+
+            if (user != null)
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                default:
-                    ModelState.AddModelError("", Strings.InvalidLoginAttempt);
-                    return View(model);
+                var password = Cryptography.CfsEnCode(model.Password);
+
+                var napSetttings = NapSettings.Settings;
+                if (password == user.Password)
+                {
+                    var siteLevelList = siteService.GetSiteLevelByUser(user.Id, "UAT");
+
+                    if (siteLevelList.Any(x => x.Site.Id == napSetttings.SiteId))
+                    {
+                        var group = user.Group == null ? null : groupService.GetById(user.Group.Id);
+
+                        if ((group == null || group.IsActive)
+                            && siteLevelList.Where(x => x.Site.Id == napSetttings.SiteId && x.IsActive).Any())
+                        {
+                            // check-in user
+                            var criteria = new UserCheckInUserCriteria
+                            {
+                                UserId = user.Id,
+                                SiteId = napSetttings.SiteId,
+                                NetSessionId = Session.SessionID,
+                                Ip = CurrentContext.IP,
+                                LoginDate = DateTime.Now,
+                                BrowserName = CurrentContext.BrowserName,
+                                CountryCode = CurrentContext.CountryCode,
+                                Domain = CurrentContext.DomainName,
+                                Platform = CurrentContext.Platform
+                            };
+
+                            userService.UserCheckIn(criteria);
+
+                            int level = siteLevelList.Where(x => x.Site.Id == napSetttings.SiteId).FirstOrDefault().Level;
+
+                            SaveUserSession(user, criteria.OnUserId, level);
+
+                            CreateUserMenu(user.Id, napSetttings.Environment, napSetttings.SiteId);
+                            CreateAuthInfo(user);
+
+                            //SignInManager.PasswordSignInAsync(model.Email, "123456aa", model.RememberMe, true);
+
+                            return RedirectToLocal(returnUrl);
+                            // return Redirect(FormsAuthentication.DefaultUrl);
+                        }
+                        else
+                        {
+                            ViewBag.Message = ViewResources.Your_account_was_suspended;
+                            ModelState.AddModelError("", ViewResources.Your_account_was_suspended);
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.Message = ViewResources.You_have_no_authorization;
+                        ModelState.AddModelError("", ViewResources.You_have_no_authorization);
+                    }
+                }
+                else
+                {
+                    // wrong password
+                    ViewBag.Message = ViewResources.Invalid_Username_or_Password;
+                    ModelState.AddModelError("", ViewResources.Invalid_Username_or_Password);
+                }
             }
+            else
+            {
+                // user doesn't exist
+                ViewBag.Message = ViewResources.Invalid_Username_or_Password;
+                ModelState.AddModelError("", ViewResources.Invalid_Username_or_Password);
+            }
+
+            return View(model);
+
+            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
+            //switch (result)
+            //{
+            //    case SignInStatus.Success:
+            //        return RedirectToLocal(returnUrl);
+            //    case SignInStatus.LockedOut:
+            //        return View("Lockout");
+            //    default:
+            //        ModelState.AddModelError("", Strings.InvalidLoginAttempt);
+            //        return View(model);
+            //}
+        }
+
+        private void CreateAuthInfo(User user)
+        {
+            var currentDomain = CurrentContext.CurrentDomain;
+
+            var authInfo = new AuthInfo();
+
+            authInfo.UserId = user.Id;
+            authInfo.OnUserId = 1;
+
+            var authTicket = new FormsAuthenticationTicket(
+                 1,
+                user.Username,
+                DateTime.Now,
+                DateTime.Now.AddMinutes(20000),
+                false,
+                authInfo.ToXml(),
+                currentDomain.Path);
+
+            string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
+            var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket)
+            {
+                HttpOnly = true,
+                Path = currentDomain.Path,
+                Name = FormsAuthentication.FormsCookieName
+            };
+
+            Response.Cookies.Add(authCookie);
         }
 
         [Route("sign-out")]
@@ -168,6 +294,15 @@ namespace TicketDesk.Web.Client.Controllers
                 return Redirect(returnUrl);
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        private void CreateUserMenu(int userId, string environment, int siteId)
+        {
+            CurrentSession.MenuItemList = (IList<MenuItem>)menuItemService.GetByUserAndSiteIncludeGroup(
+                userId,
+                siteId,
+                environment,
+                true);
         }
     }
 }

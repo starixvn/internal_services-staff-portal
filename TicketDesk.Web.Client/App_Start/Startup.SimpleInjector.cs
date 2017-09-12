@@ -28,6 +28,8 @@ using TicketDesk.Domain;
 using TicketDesk.PushNotifications;
 using TicketDesk.Web.Identity;
 using TicketDesk.Web.Identity.Model;
+using Fanex.NAP.Core.Service.Interface;
+using Fanex.NAP.Core.Service.Impl;
 
 namespace TicketDesk.Web.Client
 {
@@ -73,6 +75,27 @@ namespace TicketDesk.Web.Client
                 hybridLifestyle);
 
 
+            //container.Register(() =>
+            //{
+            //    IOwinContext context;
+            //    try
+            //    {
+            //        context = HttpContext.Current.GetOwinContext();
+            //    }
+            //    catch (InvalidOperationException)
+            //    {
+            //        //avoid exception when this is called before the owin environment is fully initialized
+            //        if (container.IsVerifying())
+            //        {
+            //            return new FakeAuthenticationManager();
+            //        }
+            //        throw;
+            //    }
+
+            //    return context.Authentication;
+            //},
+            //Lifestyle.Scoped);
+
             container.Register(() =>
             {
                 IOwinContext context;
@@ -103,6 +126,14 @@ namespace TicketDesk.Web.Client
 
 
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
+
+            container.Register<IUserService>(() => new UserService(), Lifestyle.Transient);
+
+            container.Register<IGroupService>(() => new GroupService(), Lifestyle.Transient);
+
+            container.Register<ISiteService>(() => new SiteService(), Lifestyle.Transient);
+
+            container.Register<IMenuItemService>(() => new MenuItemService(), Lifestyle.Transient);
 
             return container;
         }

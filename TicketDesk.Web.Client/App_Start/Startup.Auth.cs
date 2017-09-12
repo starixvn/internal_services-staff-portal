@@ -11,25 +11,28 @@
 // attribution must remain intact, and a copy of the license must be 
 // provided to the recipient.
 
-using System;
+
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using SimpleInjector;
+using System;
+using TicketDesk.Web.Client.App_Start;
 using TicketDesk.Web.Identity;
 using TicketDesk.Web.Identity.Migrations;
 using TicketDesk.Web.Identity.Model;
 
 namespace TicketDesk.Web.Client
 {
+
     public partial class Startup
     {
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app, Container container)
         {
-            
+
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie
@@ -45,8 +48,9 @@ namespace TicketDesk.Web.Client
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });       
-     
+            });
+
+
             //app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -82,7 +86,6 @@ namespace TicketDesk.Web.Client
             {
                 DemoIdentityDataManager.SetupDemoIdentityData(container.GetInstance<TdIdentityContext>(), null);
             }
-
         }
     }
 }

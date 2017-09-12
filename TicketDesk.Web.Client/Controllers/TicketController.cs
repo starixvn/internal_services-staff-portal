@@ -11,6 +11,8 @@
 // attribution must remain intact, and a copy of the license must be 
 // provided to the recipient.
 
+using Fanex.NAP.Core.Business;
+using Fanex.NAP.Core.Web.Attribute;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -30,7 +32,7 @@ namespace TicketDesk.Web.Client.Controllers
     /// </summary>
     [RoutePrefix("ticket")]
     [Route("{action=index}")]
-    [TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
+    //[TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
     public class TicketController : Controller
     {
         private TdDomainContext Context { get; set; }
@@ -59,6 +61,7 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("new")]
+        [NapAuth(FunctionKey = "EventPicking", Policy = Constant.Policy.Read)]
         public async Task<ActionResult> New()
         {
 
