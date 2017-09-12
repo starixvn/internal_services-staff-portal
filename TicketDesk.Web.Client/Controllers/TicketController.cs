@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using Fanex.NAP.Core.Business;
@@ -33,9 +33,10 @@ namespace TicketDesk.Web.Client.Controllers
     [RoutePrefix("ticket")]
     [Route("{action=index}")]
     //[TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
-    public class TicketController : Controller
+    public class TicketController : BaseController
     {
         private TdDomainContext Context { get; set; }
+
         public TicketController(TdDomainContext context)
         {
             Context = context;
@@ -49,7 +50,6 @@ namespace TicketDesk.Web.Client.Controllers
         [Route("{id:int}")]
         public async Task<ActionResult> Index(int id)
         {
-           
             var model = await Context.Tickets.Include(t => t.TicketSubscribers).FirstOrDefaultAsync(t => t.TicketId == id);
             if (model == null)
             {
@@ -64,7 +64,6 @@ namespace TicketDesk.Web.Client.Controllers
         [NapAuth(FunctionKey = "EventPicking", Policy = Constant.Policy.Read)]
         public async Task<ActionResult> New()
         {
-
             var model = new Ticket
             {
                 Owner = Context.SecurityProvider.CurrentUserId,
@@ -77,8 +76,6 @@ namespace TicketDesk.Web.Client.Controllers
 
             return View(model);
         }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -108,10 +105,8 @@ namespace TicketDesk.Web.Client.Controllers
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch (DbEntityValidationException)
                 {
-
                     //TODO: catch rule exceptions? or can annotations handle this fully now?
                 }
-
             }
             ViewBag.TempId = tempId;
             await SetProjectInfoForModelAsync(ticket);
@@ -175,25 +170,22 @@ namespace TicketDesk.Web.Client.Controllers
         {
             if (ticket.ProjectId == default(int))
             {
-                var projects = await Context.Projects.Select(s=>s.ProjectId).ToListAsync();
+                var projects = await Context.Projects.Select(s => s.ProjectId).ToListAsync();
                 var isMulti = (projects.Count > 1);
                 ViewBag.IsMultiProject = isMulti;
-               
+
                 //set to first project if only one project exists, otherwise use user's selected project
-                ticket.ProjectId = (isMulti) ? await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context) : projects.FirstOrDefault(); 
+                ticket.ProjectId = (isMulti) ? await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context, CurrentSession.UserId.ToString()) : projects.FirstOrDefault();
             }
         }
 
-
         private async Task<bool> CreateTicketAsync(Ticket ticket, Guid tempId)
         {
-
             Context.Tickets.Add(ticket);
             await Context.SaveChangesAsync();
             ticket.CommitPendingAttachments(tempId);
 
             return ticket.TicketId != default(int);
         }
-
     }
 }

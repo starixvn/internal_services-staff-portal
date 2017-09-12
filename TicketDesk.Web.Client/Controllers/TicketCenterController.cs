@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System.Linq;
@@ -23,9 +23,10 @@ namespace TicketDesk.Web.Client.Controllers
     [RoutePrefix("tickets")]
     [Route("{action=index}")]
     [TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
-    public class TicketCenterController : Controller
+    public class TicketCenterController : BaseController
     {
         private TdDomainContext Context { get; set; }
+
         public TicketCenterController(TdDomainContext context)
         {
             Context = context;
@@ -38,17 +39,18 @@ namespace TicketDesk.Web.Client.Controllers
             await Context.UserSettingsManager.ResetAllListSettingsForUserAsync(uId);
             var x = await Context.SaveChangesAsync();
             return RedirectToAction("Index");
-
         }
 
         // GET: TicketCenter
         [Route("{listName?}/{page:int?}")]
         public async Task<ActionResult> Index(int? page, string listName)
         {
-            listName = listName ?? (Context.SecurityProvider.IsTdHelpDeskUser ? "unassigned" : "mytickets");
+            //Role
+            //listName = listName ?? (Context.SecurityProvider.IsTdHelpDeskUser ? "unassigned" : "mytickets");
+            listName = listName ?? "unassigned";
             var pageNumber = page ?? 1;
 
-            var viewModel = await TicketCenterListViewModel.GetViewModelAsync(pageNumber, listName, Context, Context.SecurityProvider.CurrentUserId);//new TicketCenterListViewModel(listName, model, Context, User.Identity.GetUserId());
+            var viewModel = await TicketCenterListViewModel.GetViewModelAsync(pageNumber, listName, Context, CurrentSession.UserId.ToString());
 
             return View(viewModel);
         }
@@ -58,7 +60,6 @@ namespace TicketDesk.Web.Client.Controllers
         {
             return await GetTicketListPartial(page, listName);
         }
-
 
         [Route("filterList/{listName=opentickets}/{page:int?}")]
         public async Task<PartialViewResult> FilterList(
@@ -74,11 +75,10 @@ namespace TicketDesk.Web.Client.Controllers
             var currentListSetting = userSetting.GetUserListSettingByName(listName);
 
             currentListSetting.ModifyFilterSettings(pageSize, ticketStatus, owner, assignedTo);
-            
+
             await Context.SaveChangesAsync();
 
             return await GetTicketListPartial(null, listName);
-
         }
 
         [Route("sortList/{listName=opentickets}/{page:int?}")]
@@ -126,17 +126,12 @@ namespace TicketDesk.Web.Client.Controllers
             return await GetTicketListPartial(page, listName);
         }
 
-
-
         private async Task<PartialViewResult> GetTicketListPartial(int? page, string listName)
         {
             var pageNumber = page ?? 1;
 
             var viewModel = await TicketCenterListViewModel.GetViewModelAsync(pageNumber, listName, Context, Context.SecurityProvider.CurrentUserId);
             return PartialView("_TicketList", viewModel);
-
         }
-
-       
     }
 }

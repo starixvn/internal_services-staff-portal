@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System.Collections.Generic;
@@ -20,6 +20,7 @@ namespace TicketDesk.Domain
     public class UserSettingsManager
     {
         private TdDomainContext Context { get; set; }
+
         public UserSettingsManager(TdDomainContext context)
         {
             Context = context;
@@ -28,7 +29,7 @@ namespace TicketDesk.Domain
         public async Task ResetAllListSettingsForUserAsync(string userId)
         {
             var settings = await GetSettingsForUserAsync(userId);
-            
+
             settings.ListSettings = new UserTicketListSettingsCollection
             {
                     UserTicketListSetting.GetDefaultListSettings(userId, Context.SecurityProvider.IsTdHelpDeskUser|| Context.SecurityProvider.IsTdAdministrator)
@@ -37,12 +38,15 @@ namespace TicketDesk.Domain
 
         public async Task<UserSetting> GetSettingsForUserAsync(string userId)
         {
-            var isHelpDeskUser = Context.SecurityProvider.IsTdHelpDeskUser ||
-                                    Context.SecurityProvider.IsTdAdministrator;
+            //Role
+            //var isHelpDeskUser = Context.SecurityProvider.IsTdHelpDeskUser ||
+            //                        Context.SecurityProvider.IsTdAdministrator;
+
+            var isHelpDeskUser = true;
             var settings = await Context.UserSettings.FindAsync(userId);
 
             //ensure settings exist
-            if (settings == null )
+            if (settings == null)
             {
                 settings = UserSetting.GetDefaultSettingsForUser(userId, isHelpDeskUser);
                 using (var tempCtx = new TdDomainContext())
@@ -93,6 +97,5 @@ namespace TicketDesk.Domain
             var settings = await GetSettingsForUserAsync(userId);
             return settings.GetUserListSettingByName(listName);
         }
-
     }
 }

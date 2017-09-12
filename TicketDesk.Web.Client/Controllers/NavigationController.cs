@@ -8,11 +8,10 @@ using TicketDesk.Localization.Controllers;
 namespace TicketDesk.Web.Client.Controllers
 {
     [RoutePrefix("navigation")]
-    public class NavigationController : Controller
+    public class NavigationController : BaseController
     {
         public TdDomainContext Context { get; set; }
 
-        
         public NavigationController(TdDomainContext context)
         {
             Context = context;
@@ -30,14 +29,14 @@ namespace TicketDesk.Web.Client.Controllers
             }
 
             var modelProjects = projects.ToList();
-            
+
             //get user's selected project
-            var projectId = AsyncHelper.RunSync(() => Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context));
+            var projectId = AsyncHelper.RunSync(() => Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context, CurrentSession.UserId.ToString()));
 
             //add the "all projects item" then get a select list to render
             modelProjects.Insert(0, new Project { ProjectId = 0, ProjectName = Strings.ModelProjects_DefaultOption, ProjectDescription = string.Empty });
             var model = modelProjects.ToSelectList(p => p.ProjectId.ToString(), p => p.ProjectName, projectId, false);
-            
+
             return PartialView("_ProjectMenu", model);
         }
 
@@ -55,7 +54,6 @@ namespace TicketDesk.Web.Client.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return Redirect(Request.UrlReferrer.ToString());
-
         }
 
         //private async Task<int> GetUserSelectedProjectId(IEnumerable<Project> projects)
@@ -64,7 +62,7 @@ namespace TicketDesk.Web.Client.Controllers
         //    var projectId = settings.SelectedProjectId ?? 0;
 
         //    //if user's selected project points to a project that no longer exists, reset
-        //    //  normally this wouldn't happen since the dbcontext will update user settings when projects are deleted 
+        //    //  normally this wouldn't happen since the dbcontext will update user settings when projects are deleted
         //    if (projectId != 0 && projects.All(p => p.ProjectId != projectId))
         //    {
         //        projectId = 0;

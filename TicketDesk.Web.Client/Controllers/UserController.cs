@@ -12,6 +12,7 @@
 // provided to the recipient.
 
 using Fanex.Common;
+using Fanex.NAP.Core.Configuration;
 using Fanex.NAP.Core.Criteria.User;
 using Fanex.NAP.Core.Model;
 using Fanex.NAP.Core.Service.Interface;
@@ -181,6 +182,7 @@ namespace TicketDesk.Web.Client.Controllers
                             SaveUserSession(user, criteria.OnUserId, level);
 
                             CreateUserMenu(user.Id, Environment, SiteId);
+
                             CreateAuthInfo(user);
 
                             //SignInManager.PasswordSignInAsync(model.Email, "123456aa", model.RememberMe, true);
