@@ -105,6 +105,7 @@ namespace TicketDesk.Web.Client
             container.Register<IGroupService>(() => new GroupService(), Lifestyle.Transient);
             container.Register<ISiteService>(() => new SiteService(), Lifestyle.Transient);
             container.Register<IMenuItemService>(() => new MenuItemService(), Lifestyle.Transient);
+            container.Register<IFunctionService>(() => new FunctionService(), Lifestyle.Transient);
 
             return container;
         }

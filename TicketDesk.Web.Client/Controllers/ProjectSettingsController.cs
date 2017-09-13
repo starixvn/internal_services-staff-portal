@@ -28,7 +28,7 @@
         {
             var model = Context.Projects.Select(p => new ProjectListViewModelItem { Project = p, NumberOfTickets = p.Tickets.Count });
             await model.LoadAsync();
-            ViewBag.IsHost = 1;//HasRight("ProjectSettings", Constant.Policy.Host);
+            ViewBag.IsHost = HasRight("ProjectSettings", Constant.Policy.Host);
 
             return View(model);
         }

@@ -3,26 +3,26 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
-
-using System;
-using System.Security;
-using TicketDesk.Domain.Model;
 
 namespace TicketDesk.Domain
 {
+    using Fanex.NAP.Core.Service.Interface;
+    using System;
+    using System.Security;
+    using TicketDesk.Domain.Model;
+
     /// <summary>
-    /// Provides the minimal set of security services to support business logic 
+    /// Provides the minimal set of security services to support business logic
     /// </summary>
     public abstract class TdDomainSecurityProviderBase
     {
-
         protected abstract Func<string, bool> GetIsTdHelpDeskUser { get; }
 
         protected abstract Func<string, bool> GetIsTdInternalUser { get; }
@@ -112,5 +112,7 @@ namespace TicketDesk.Domain
         {
             return GetValidTicketActivities(ticket).HasFlag(activity);
         }
+
+        public abstract IFunctionService FunctionService { get; }
     }
 }

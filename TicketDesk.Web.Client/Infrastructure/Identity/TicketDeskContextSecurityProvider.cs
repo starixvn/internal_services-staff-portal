@@ -3,32 +3,45 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
-
-using System;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
-using Microsoft.AspNet.Identity;
-using TicketDesk.Domain;
-using TicketDesk.Web.Identity;
 
 namespace TicketDesk.Web.Client
 {
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+    using Microsoft.Ajax.Utilities;
+    using Microsoft.AspNet.Identity;
+    using TicketDesk.Domain;
+    using TicketDesk.Web.Identity;
+    using Fanex.NAP.Core.Service.Interface;
+    using Fanex.NAP.Core.Service.Impl;
+
     public sealed class TicketDeskContextSecurityProvider : TdDomainSecurityProviderBase
     {
         private TicketDeskUserManager UserManager { get; set; }
+
+        private IFunctionService _functionService { get; set; }
 
         public TicketDeskContextSecurityProvider()
         {
             UserManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
             CurrentUserId = HttpContext.Current.User.Identity.GetUserId();
+            _functionService = new FunctionService();
+        }
+
+        public override IFunctionService FunctionService
+        {
+            get
+            {
+                return _functionService;
+            }
         }
 
         public override string CurrentUserId { get; set; }
@@ -57,6 +70,5 @@ namespace TicketDesk.Web.Client
         {
             get { return userId => UserManager.InfoCache.GetUserInfo(userId).IfNotNull(i => i.DisplayName); }
         }
-
     }
 }

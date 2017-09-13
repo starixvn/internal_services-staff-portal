@@ -38,6 +38,7 @@ namespace TicketDesk.Web.Client.Controllers
         [Route("reset-user-lists")]
         public async Task<ActionResult> ResetUserLists()
         {
+
             var uId = Context.SecurityProvider.CurrentUserId;
             await Context.UserSettingsManager.ResetAllListSettingsForUserAsync(uId);
             var x = await Context.SaveChangesAsync();
