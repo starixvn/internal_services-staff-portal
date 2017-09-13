@@ -36,9 +36,9 @@
 
         protected string Environment => NapSettings.Settings.Environment;
 
-        public bool HasRight(string functionKey, Constant.Policy policy)
+        protected bool HasRight(string functionKey, Constant.Policy policy)
         {
-            int functionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
+            int functionPolicy = UserService.GetUserSiteFunctionKeyPolicy(
                 CurrentSession.UserId,
                 SiteId,
                 functionKey);
