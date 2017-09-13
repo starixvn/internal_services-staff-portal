@@ -251,6 +251,10 @@ namespace TicketDesk.Web.Client.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// Get Menus from NAP
+        /// </summary>
+        /// <param name="userId"></param>
         private void CreateUserMenu(int userId)
         {
             var menus = menuItemService.GetByUserAndSiteIncludeGroup(
@@ -263,11 +267,13 @@ namespace TicketDesk.Web.Client.Controllers
 
             CurrentSession.MenuItemList = new List<MenuItem>();
 
-            foreach (IMenuItem item in parentMenu)
+            foreach (var item in parentMenu)
             {
-                MenuItem concreteItem = (MenuItem)item;
+                var concreteItem = (MenuItem)item;
                 CurrentSession.MenuItemList.Add(concreteItem);
             }
+
+            CurrentSession.MenuItemList = CurrentSession.MenuItemList.OrderBy(x => x.DisplayOrder).ToList();
         }
 
         private void DoCheckin(User user)

@@ -10,9 +10,7 @@
 
     public class BaseController : Controller
     {
-        private readonly ICurrentSession currentSession;
-        private readonly ICurrentContext currentContext;
-        private readonly IUserService userService;
+        private readonly IUserService _userService;
 
         public BaseController() : this(null, null, null)
         {
@@ -23,54 +21,24 @@
             ICurrentContext currentContext,
             IUserService userService)
         {
-            this.currentSession = currentSession ?? new CurrentSession();
-            this.currentContext = currentContext ?? new CurrentContext();
-            this.userService = userService ?? new UserService();
+            CurrentSession = currentSession ?? new CurrentSession();
+            CurrentContext = currentContext ?? new CurrentContext();
+            _userService = userService ?? new UserService();
         }
 
-        protected ICurrentSession CurrentSession
-        {
-            get
-            {
-                return currentSession;
-            }
-        }
+        protected ICurrentSession CurrentSession { get; }
 
-        protected ICurrentContext CurrentContext
-        {
-            get
-            {
-                return currentContext;
-            }
-        }
+        protected ICurrentContext CurrentContext { get; }
 
-        protected IUserService UserService
-        {
-            get
-            {
-                return userService;
-            }
-        }
+        protected IUserService UserService => _userService;
 
-        protected int SiteId
-        {
-            get
-            {
-                return NapSettings.Settings.SiteId;
-            }
-        }
+        protected int SiteId => NapSettings.Settings.SiteId;
 
-        protected string Environment
-        {
-            get
-            {
-                return NapSettings.Settings.Environment;
-            }
-        }
+        protected string Environment => NapSettings.Settings.Environment;
 
         public bool HasRight(string functionKey, Constant.Policy policy)
         {
-            int functionPolicy = userService.GetUserSiteFunctionKeyPolicy(
+            int functionPolicy = _userService.GetUserSiteFunctionKeyPolicy(
                 CurrentSession.UserId,
                 SiteId,
                 functionKey);
