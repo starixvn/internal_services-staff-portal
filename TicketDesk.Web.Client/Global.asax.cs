@@ -9,12 +9,25 @@ using TicketDesk.Web.Client.App_Start;
 
 namespace TicketDesk.Web.Client
 {
+    using System.Diagnostics;
+    using Microsoft.ApplicationInsights.Extensibility;
+
     public class Global : System.Web.HttpApplication
     {
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            DisableApplicationInsightsOnDebug();
             DbSettingProviderManager.Current.Start();
+        }
+
+        /// <summary>
+        /// Disables the application insights locally.
+        /// </summary>
+        [Conditional("DEBUG")]
+        private static void DisableApplicationInsightsOnDebug()
+        {
+            TelemetryConfiguration.Active.DisableTelemetry = true;
         }
 
         protected void Session_Start(object sender, EventArgs e)

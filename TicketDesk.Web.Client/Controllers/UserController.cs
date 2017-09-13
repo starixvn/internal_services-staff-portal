@@ -257,23 +257,11 @@ namespace TicketDesk.Web.Client.Controllers
         /// <param name="userId"></param>
         private void CreateUserMenu(int userId)
         {
-            var menus = menuItemService.GetByUserAndSiteIncludeGroup(
-                userId,
-                SiteId,
-                Environment,
-                true);
-
-            IList<IMenuItem> parentMenu = menus.Where(x => x.Parent == null).ToList();
-
-            CurrentSession.MenuItemList = new List<MenuItem>();
-
-            foreach (var item in parentMenu)
-            {
-                var concreteItem = (MenuItem)item;
-                CurrentSession.MenuItemList.Add(concreteItem);
-            }
-
-            CurrentSession.MenuItemList = CurrentSession.MenuItemList.OrderBy(x => x.DisplayOrder).ToList();
+            CurrentSession.MenuItemList = (IList<MenuItem>)menuItemService.GetByUserAndSiteIncludeGroup(
+                    userId,
+                    SiteId,
+                    Environment,
+                    true); ;
         }
 
         private void DoCheckin(User user)

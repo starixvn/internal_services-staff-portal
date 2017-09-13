@@ -1,5 +1,5 @@
-﻿@using Fanex.NAP.Core.Domain
-@using TicketDesk.Localization.Views.Shared
+﻿@using TicketDesk.Localization.Views.Shared
+@using TicketDesk.Web.Client.Models.Extensions
 
 @model TicketDesk.Web.Client.Models.NavbarViewModel
 
@@ -18,11 +18,32 @@
     <div>
         <div id="main-menu-collapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                @foreach (IMenuItem menu in Model.MenuItems)
+                @foreach (MenuItem menu in Model.MenuItems)
                 {
-                    <li class="@Html.IsActiveRoute(menu.Url)">
-                        <a href="@menu.Url" area=""><i class="@menu.Description"></i> @menu.Name</a>
-                    </li>
+                    var menuClass = Html.IsActiveRoute(menu.Url);
+                    var isHaveChildren = menu.Children.Any();
+                    if (isHaveChildren)
+                    {
+                        menuClass += " dropdown";
+                        <li class="@menuClass">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@menu.Name <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @foreach (var childMenuItem in menu.Children)
+                                {
+                                    <li class="@Html.IsActiveRoute(childMenuItem.Url)">
+                                        <a href="@childMenuItem.Url">@childMenuItem.Name</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="@menuClass">
+                            <a href="@menu.Url" area=""><i class="@menu.Description"></i> @menu.Name</a>
+                        </li>
+                    }
+
                 }
             </ul>
             <ul class="nav navbar-nav navbar-right" style="margin-right: 5px;">
@@ -71,5 +92,5 @@
                 </span>
             </div>
         </div>
-    }
+                    }
 </nav>

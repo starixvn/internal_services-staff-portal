@@ -18,6 +18,7 @@ namespace TicketDesk.Web.Client.Controllers
     using Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web;
     using System.Web.Mvc;
 
@@ -48,17 +49,44 @@ namespace TicketDesk.Web.Client.Controllers
             return View();
         }
 
+        private static List<Models.Extensions.MenuItem> PopulateMenus(IEnumerable<MenuItem> menus)
+        {
+            var result = new List<Models.Extensions.MenuItem>();
+
+            if (menus == null)
+            {
+                return result;
+            }
+
+            // Get parent menu item
+            foreach (var rawItem in menus)
+            {
+                if (rawItem.Parent == null)
+                {
+                    result.Add(rawItem);
+                }
+            }
+
+            // Get children menu item
+            foreach (var menuItem in result)
+            {
+                menuItem.Children = menus.Where(x => x.Parent != null && x.Parent.Id == menuItem.Id);
+            }
+
+            return result.OrderBy(x => x.DisplayOrder).ToList();
+        }
+
         [Route("menu")]
         [ChildActionOnly]
         public PartialViewResult Menu()
         {
             var model = new NavbarViewModel
             {
-                MenuItems = CurrentSession.MenuItemList ?? new List<MenuItem>(),
+                MenuItems = PopulateMenus(CurrentSession.MenuItemList),
                 Username = CurrentSession.Username,
                 IsAuthenticated = CurrentSession.UserId > 0
             };
-
+            
             return PartialView("~/Views/Shared/_Navbar.cshtml", model);
         }
 
