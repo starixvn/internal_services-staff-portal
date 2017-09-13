@@ -14,17 +14,17 @@
 *@
 
 @using TicketDesk.Localization.Views.Shared
-@using TicketDesk.Web.Identity
+@model TicketDesk.Web.Client.Models.NavbarViewModel
 
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <i class="fa fa-user"></i><span class="">
-            @(User.Identity.IsAuthenticated ? User.Identity.GetUserDisplayName() : _Layout.Account)
+            @(Model.IsAuthenticated ? Model.Username : _Layout.Account)
         </span>
         <span class="caret"></span>
     </a>
     <ul class="dropdown-menu" role="menu">
-        @if (User.Identity.IsAuthenticated)
+        @if (Model.IsAuthenticated)
         {
             <li>
                 @Html.ActionLink(_Layout.MyAccount, "Manage", "Account")

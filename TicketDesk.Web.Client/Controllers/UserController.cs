@@ -202,7 +202,7 @@ namespace TicketDesk.Web.Client.Controllers
         public ActionResult SignOut()
         {
             DoSignOut();
-            return Redirect(FormsAuthentication.LoginUrl);
+            return RedirectToAction("Index", "Home");
         }
 
         private void CreateAuthInfo(User user)

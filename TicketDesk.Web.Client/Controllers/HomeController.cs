@@ -13,11 +13,13 @@
 
 namespace TicketDesk.Web.Client.Controllers
 {
+    using Fanex.NAP.Core.Model;
     using Localization;
+    using Models;
     using System;
+    using System.Collections.Generic;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.NAP.Core.Web.Session;
 
     [RoutePrefix("")]
     [Route("{action=index}")]
@@ -49,9 +51,14 @@ namespace TicketDesk.Web.Client.Controllers
         [ChildActionOnly]
         public PartialViewResult Menu()
         {
-            ViewBag.MenuItemList = CurrentSession.MenuItemList;
+            var model = new NavbarViewModel
+            {
+                MenuItems = CurrentSession.MenuItemList ?? new List<MenuItem>(),
+                Username = CurrentSession.Username,
+                IsAuthenticated = CurrentSession.UserId > 0
+            };
 
-            return PartialView("~/Views/Shared/_Navbar.cshtml");
+            return PartialView("~/Views/Shared/_Navbar.cshtml", model);
         }
 
         [Route("about")]

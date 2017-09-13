@@ -354,6 +354,7 @@
     <Compile Include="Models\Extensions\TicketSubscriberExtensions.cs" />
     <Compile Include="Models\FilterBarViewModel.cs" />
     <Compile Include="Infrastructure\Migration\Legacy\LegacySecurityMigrator.cs" />
+    <Compile Include="Models\NavbarViewModel.cs" />
     <Compile Include="Models\ProjectListViewModel.cs" />
     <Compile Include="Models\SystemInfoViewModel.cs" />
     <Compile Include="Models\TicketCenterListViewModel.cs" />
