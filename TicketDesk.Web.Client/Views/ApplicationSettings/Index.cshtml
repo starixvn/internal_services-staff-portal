@@ -7,6 +7,10 @@
     @Index.Title
 }
 
+@{
+    bool isHost = (bool)ViewBag.IsHost;
+}
+
 @section scripts
 {
     @Styles.Render("~/content/select2")
@@ -48,7 +52,8 @@
                                 <label class="col-md-4 col-sm-4 control-label">@Index.Global_Priority</label>
                                 <div class="col-md-8 col-sm-8">
                                     <label class="checkbox-inline">
-                                        @Html.CheckBoxFor(model => model.Permissions.AllowInternalUsersToEditPriority, new { htmlAttributes = new { @class = "form-control" } })
+                                        @(isHost ? Html.CheckBoxFor(model => model.Permissions.AllowInternalUsersToEditPriority)
+                                            : Html.CheckBoxFor(model => model.Permissions.AllowInternalUsersToEditPriority, new { @disabled = "disabled" }))
                                         @Html.DisplayNameFor(model => model.Permissions.AllowInternalUsersToEditPriority)
                                     </label>
                                 </div>
@@ -57,7 +62,8 @@
                                 <label class="col-md-4 col-sm-4 control-label">@Index.Global_Tags</label>
                                 <div class="col-md-8 col-sm-8">
                                     <label class="checkbox-inline">
-                                        @Html.CheckBoxFor(model => model.Permissions.AllowInternalUsersToEditTags, new {htmlAttributes = new {@class = "form-control"}})
+                                        @(isHost ? Html.CheckBoxFor(model => model.Permissions.AllowInternalUsersToEditTags)
+                                            : Html.CheckBoxFor(model => model.Permissions.AllowInternalUsersToEditTags, new { @disabled = "disabled" }))
                                         @Html.DisplayNameFor(model => model.Permissions.AllowInternalUsersToEditTags)
                                     </label>
                                 </div>
@@ -66,7 +72,8 @@
                                 <label class="col-md-4 col-sm-4 control-label">Owner</label>
                                 <div class="col-md-8 col-sm-8">
                                     <label class="checkbox-inline">
-                                        @Html.CheckBoxFor(model => model.Permissions.AllowInternalUsersToSetOwner, new {htmlAttributes = new {@class = "form-control"}})
+                                        @(isHost ? Html.CheckBoxFor(model => model.Permissions.AllowInternalUsersToSetOwner)
+                                            : Html.CheckBoxFor(model => model.Permissions.AllowInternalUsersToSetOwner, new { @disabled = "disabled" }))
                                         @Html.DisplayNameFor(model => model.Permissions.AllowInternalUsersToSetOwner)
                                     </label>
                                 </div>
@@ -75,7 +82,8 @@
                                 <label class="col-md-4 col-sm-4 control-label">Assigned To</label>
                                 <div class="col-md-8 col-sm-8">
                                     <label class="checkbox-inline">
-                                        @Html.CheckBoxFor(model => model.Permissions.AllowInternalUsersToSetAssigned, new { htmlAttributes = new { @class = "form-control" } })
+                                        @(isHost ? Html.CheckBoxFor(model => model.Permissions.AllowInternalUsersToSetAssigned)
+                                            : Html.CheckBoxFor(model => model.Permissions.AllowInternalUsersToSetAssigned, new { @disabled = "disabled" }))
                                         @Html.DisplayNameFor(model => model.Permissions.AllowInternalUsersToSetAssigned)
                                     </label>
                                 </div>
@@ -90,13 +98,15 @@
                                 <div class="col-md-8 col-sm-8">
                                     <div class="radio">
                                         <label class="checkbox-inline">
-                                            @Html.RadioButton("DefaultTextEditorType", "summernote", (Model.ClientSettings.GetDefaultTextEditorType() == "summernote"), new { id = "IsSummernote" })
+                                            @(isHost ? @Html.RadioButton("DefaultTextEditorType", "summernote", (Model.ClientSettings.GetDefaultTextEditorType() == "summernote"), new { id = "IsSummernote" })
+                                                : @Html.RadioButton("DefaultTextEditorType", "summernote", (Model.ClientSettings.GetDefaultTextEditorType() == "summernote"), new { id = "IsSummernote", @disabled = "disabled" }))
                                             @Index.Settings_Editor_HTML
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label class="checkbox-inline">
-                                            @Html.RadioButton("DefaultTextEditorType", "pagedown", (Model.ClientSettings.GetDefaultTextEditorType() == "pagedown"), new { id = "IsPagedown" })
+                                            @(isHost ? @Html.RadioButton("DefaultTextEditorType", "pagedown", (Model.ClientSettings.GetDefaultTextEditorType() == "pagedown"), new { id = "IsPagedown" })
+                                                : @Html.RadioButton("DefaultTextEditorType", "pagedown", (Model.ClientSettings.GetDefaultTextEditorType() == "pagedown"), new { id = "IsPagedown", @disabled = "disabled" }))
                                             @Index.Settings_Editor_Markdown
                                         </label>
                                     </div>
@@ -113,19 +123,22 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.SelectLists.TicketTypesList, new { @class = "col-md-4 col-sm-4 control-label" })
                                 <div class="col-md-8 col-sm-8">
-                                    <input id="tickettypes" name="tickettypes" class="form-control input-sm" value="@Model.GetTicketTypes()" />
+                                    <input id="tickettypes" name="tickettypes" class="form-control input-sm" value="@Model.GetTicketTypes()"
+                                           @(isHost ? string.Empty : "disabled") />
                                 </div>
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(model => model.SelectLists.CategoryList, new { @class = "col-md-4 col-sm-4 control-label" })
                                 <div class="col-md-8 col-sm-8">
-                                    <input id="categories" name="categories" class="form-control input-sm" value="@Model.GetCategories()" />
+                                    <input id="categories" name="categories" class="form-control input-sm" value="@Model.GetCategories()"
+                                           @(isHost ? string.Empty : "disabled") />
                                 </div>
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(model => model.SelectLists.PriorityList, new { @class = "col-md-4 col-sm-4 control-label" })
                                 <div class="col-md-8 col-sm-8">
-                                    <input id="priorities" name="priorities" class="form-control input-sm" value="@Model.GetPriorities()" />
+                                    <input id="priorities" name="priorities" class="form-control input-sm" value="@Model.GetPriorities()"
+                                           @(isHost ? string.Empty : "disabled") />
                                 </div>
                             </div>
                         </div>
@@ -136,18 +149,21 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.SecuritySettings.DefaultNewUserRoles, new { @class = "col-md-4 col-sm-4 control-label" })
                                 <div class="col-md-8 col-sm-8">
-                                    @Html.ListBox("defaultroles", Model.GetDefaultNewUserRolesList(), new { id = "defaultroles", @class = "form-control input-sm" })
+                                    @(isHost ? @Html.ListBox("defaultroles", Model.GetDefaultNewUserRolesList(), new { id = "defaultroles", @class = "form-control input-sm" })
+                                            : @Html.ListBox("defaultroles", Model.GetDefaultNewUserRolesList(), new { id = "defaultroles", @class = "form-control input-sm", @disabled = "disabled" }))
                                 </div>
                             </div>
-
                         </div>
-                        <div class="panel-footer">
-                            <div class="">
-                                <button type="submit" class="btn btn-success" tabindex="10"><i class="fa fa-save"></i>&nbsp;&nbsp;@Index.SaveOption</button>&nbsp;&nbsp;
-
+                        @if (isHost)
+                        {
+                            <div class="panel-footer">
+                                <div class="">
+                                    <button type="submit" class="btn btn-success" tabindex="10">
+                                        <i class="fa fa-save"></i>&nbsp;&nbsp;@Index.SaveOption
+                                    </button>&nbsp;&nbsp;
+                                </div>
                             </div>
-                        </div>
-
+                        }
                     </div>
                 </div>
             }

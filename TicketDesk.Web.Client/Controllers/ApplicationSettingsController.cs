@@ -3,14 +3,16 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
+using Fanex.NAP.Core.Business;
+using Fanex.NAP.Core.Web.Attribute;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -23,24 +25,28 @@ namespace TicketDesk.Web.Client.Controllers
 {
     [RoutePrefix("admin/application-settings")]
     [Route("{action=index}")]
-    [TdAuthorizeAttribute(Roles = "TdAdministrators")]
-    public class ApplicationSettingsController : Controller
+    public class ApplicationSettingsController : BaseController
     {
         private TdDomainContext Context { get; set; }
         private bool IsAzureSearchDetected { get; set; }
+
         public ApplicationSettingsController(TdDomainContext context)
         {
             Context = context;
             IsAzureSearchDetected = TdSearchContext.Current.IndexManager.GetType() == typeof(AzureIndexProvider);
         }
 
+        [NapAuth(FunctionKey = "ApplicationSettings", Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var dbSetting = Context.TicketDeskSettings;
             ViewBag.IsAzureSearchEnabled = IsAzureSearchDetected;
+            ViewBag.IsHost = HasRight("ApplicationSettings", Constant.Policy.Host);
+
             return View(dbSetting);
         }
 
+        [NapAuth(FunctionKey = "ApplicationSettings", Policy = Constant.Policy.Host)]
         [HttpPost]
         public ActionResult Index(
             ApplicationSetting settings,
@@ -62,6 +68,8 @@ namespace TicketDesk.Web.Client.Controllers
                 Context.SaveChanges();
             }
             ViewBag.IsAzureSearchEnabled = IsAzureSearchDetected;
+            ViewBag.IsHost = HasRight("ApplicationSettings", Constant.Policy.Host);
+
             return View(dbSetting);
         }
     }
