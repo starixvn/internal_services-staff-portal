@@ -10,8 +10,6 @@
 
     public class BaseController : Controller
     {
-        private readonly IUserService _userService;
-
         public BaseController() : this(null, null, null)
         {
         }
@@ -23,14 +21,14 @@
         {
             CurrentSession = currentSession ?? new CurrentSession();
             CurrentContext = currentContext ?? new CurrentContext();
-            _userService = userService ?? new UserService();
+            UserService = userService ?? new UserService();
         }
 
         protected ICurrentSession CurrentSession { get; }
 
         protected ICurrentContext CurrentContext { get; }
 
-        protected IUserService UserService => _userService;
+        protected IUserService UserService { get; }
 
         protected int SiteId => NapSettings.Settings.SiteId;
 
