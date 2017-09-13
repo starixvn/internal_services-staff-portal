@@ -11,12 +11,13 @@
 // attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using TicketDesk.Domain.Model;
-
 namespace TicketDesk.Domain
 {
+    using Fanex.NAP.Core.Business;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using TicketDesk.Domain.Model;
+
     public class UserSettingsManager
     {
         private TdDomainContext Context { get; set; }
@@ -42,7 +43,7 @@ namespace TicketDesk.Domain
             //var isHelpDeskUser = Context.SecurityProvider.IsTdHelpDeskUser ||
             //                        Context.SecurityProvider.IsTdAdministrator;
 
-            var isHelpDeskUser = true;
+            var isHelpDeskUser = Context.SecurityProvider.NapContextHelper.HasRight("TicketManagement", Constant.Policy.Host);
             var settings = await Context.UserSettings.FindAsync(userId);
 
             //ensure settings exist

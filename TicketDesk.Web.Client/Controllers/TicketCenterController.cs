@@ -33,12 +33,12 @@ namespace TicketDesk.Web.Client.Controllers
         public TicketCenterController(TdDomainContext context)
         {
             Context = context;
+            Context.SecurityProvider.NapContextHelper = CurrentHelper;
         }
 
         [Route("reset-user-lists")]
         public async Task<ActionResult> ResetUserLists()
         {
-
             var uId = Context.SecurityProvider.CurrentUserId;
             await Context.UserSettingsManager.ResetAllListSettingsForUserAsync(uId);
             var x = await Context.SaveChangesAsync();
@@ -51,7 +51,7 @@ namespace TicketDesk.Web.Client.Controllers
         {
             //Role
             //listName = listName ?? (Context.SecurityProvider.IsTdHelpDeskUser ? "unassigned" : "mytickets");
-            listName = listName ?? "unassigned";
+            listName = listName ?? (Context.SecurityProvider.NapContextHelper.HasRight("TicketManagement", Constant.Policy.Host) ? "unassigned" : "mytickets");
             var pageNumber = page ?? 1;
 
             var viewModel = await TicketCenterListViewModel.GetViewModelAsync(pageNumber, listName, Context, CurrentSession.UserId.ToString());

@@ -6,6 +6,7 @@
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
+    using Infrastructure.Helpers;
     using System.Web.Mvc;
 
     public class BaseController : Controller
@@ -22,7 +23,11 @@
             CurrentSession = currentSession ?? new CurrentSession();
             CurrentContext = currentContext ?? new CurrentContext();
             UserService = userService ?? new UserService();
+
+            CurrentHelper = new NapContextHelper(CurrentSession, CurrentContext, UserService);
         }
+
+        protected NapContextHelper CurrentHelper { get; }
 
         protected ICurrentSession CurrentSession { get; }
 

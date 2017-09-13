@@ -14,6 +14,7 @@
 namespace TicketDesk.Domain
 {
     using Fanex.NAP.Core.Service.Interface;
+    using Fanex.NAP.Core.Web.Session;
     using System;
     using System.Security;
     using TicketDesk.Domain.Model;
@@ -114,5 +115,7 @@ namespace TicketDesk.Domain
         }
 
         public abstract IFunctionService FunctionService { get; }
+
+        public abstract IContextHelper NapContextHelper { get; set; }
     }
 }
