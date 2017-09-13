@@ -33,6 +33,7 @@ namespace TicketDesk.Web.Client.Controllers
     [RoutePrefix("ticket")]
     [Route("{action=index}")]
     //[TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
+    [NapAuth(FunctionKey = "TicketManagement", Policy = Constant.Policy.Read)]
     public class TicketController : BaseController
     {
         private TdDomainContext Context { get; set; }
@@ -61,7 +62,6 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("new")]
-        [NapAuth(FunctionKey = "EventPicking", Policy = Constant.Policy.Read)]
         public async Task<ActionResult> New()
         {
             var model = new Ticket

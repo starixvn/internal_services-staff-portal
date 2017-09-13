@@ -94,10 +94,11 @@ namespace TicketDesk.Domain
 
         public TicketActivity GetValidTicketActivities(Ticket ticket)
         {
-            if (!(IsTdAdministrator || IsTdHelpDeskUser || IsTdInternalUser))
-            {
-                throw new SecurityException("User is not authorized to read ticket data.");
-            }
+            //Role
+            //if (!(IsTdAdministrator || IsTdHelpDeskUser || IsTdInternalUser))
+            //{
+            //    throw new SecurityException("User is not authorized to read ticket data.");
+            //}
             var validTicketActivities = ticket.GetAvailableActivites(CurrentUserId);
             var allowedActivities = IsTdAdministrator
                 ? GetAdministratorUserPermissions()

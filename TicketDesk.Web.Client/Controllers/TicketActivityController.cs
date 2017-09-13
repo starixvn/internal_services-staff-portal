@@ -11,26 +11,31 @@
 // attribution must remain intact, and a copy of the license must be 
 // provided to the recipient.
 
-using System;
-using System.Configuration;
-using System.Data.Entity;
-using System.Globalization;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Model;
-using TicketDesk.IO;
-using TicketDesk.Localization.Controllers;
 
 namespace TicketDesk.Web.Client.Controllers
 {
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using System;
+    using System.Configuration;
+    using System.Data.Entity;
+    using System.Globalization;
+    using System.Linq;
+    using System.Security;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+    using TicketDesk.Domain;
+    using TicketDesk.Domain.Model;
+    using TicketDesk.IO;
+    using TicketDesk.Localization.Controllers;
+
+
     [RoutePrefix("ticket-activity")]
     [Route("{action}")]
-    [TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
     [ValidateInput(false)]
+    //[TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
+    [NapAuth(FunctionKey = "TicketManagement", Policy = Constant.Policy.Read)]
     public class TicketActivityController : Controller
     {
         private TdDomainContext Context { get; set; }
@@ -123,7 +128,7 @@ namespace TicketDesk.Web.Client.Controllers
             string tagList)
         {
             details = details.StripHtmlWhenEmpty();
-            var projectName = await Context.Projects.Where(p => p.ProjectId == projectId).Select(s=>s.ProjectName).FirstOrDefaultAsync();
+            var projectName = await Context.Projects.Where(p => p.ProjectId == projectId).Select(s => s.ProjectName).FirstOrDefaultAsync();
             var activityFn = Context.TicketActions.EditTicketInfo(comment, projectId, projectName, title, details, priority, ticketType, category, owner, tagList, Context.TicketDeskSettings);
             return await PerformTicketAction(ticketId, activityFn, TicketActivity.EditTicketInfo);
         }
