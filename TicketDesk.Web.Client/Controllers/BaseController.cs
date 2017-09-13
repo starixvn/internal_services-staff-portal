@@ -34,14 +34,14 @@
 
         protected string Environment => NapSettings.Settings.Environment;
 
-        protected bool HasRight(string functionKey, Constant.Policy policy)
-        {
-            int functionPolicy = UserService.GetUserSiteFunctionKeyPolicy(
-                CurrentSession.UserId,
-                SiteId,
-                functionKey);
+        //protected bool HasRight(string functionKey, Constant.Policy policy)
+        //{
+        //    int functionPolicy = UserService.GetUserSiteFunctionKeyPolicy(
+        //        CurrentSession.UserId,
+        //        SiteId,
+        //        functionKey);
 
-            return functionPolicy >= (int)policy;
-        }
+        //    return functionPolicy >= (int)policy;
+        //}
     }
 }

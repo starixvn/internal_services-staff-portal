@@ -48,6 +48,7 @@ namespace TicketDesk.Web.Client.Controllers
             return View();
         }
 
+        [Route("menu")]
         [ChildActionOnly]
         public PartialViewResult Menu()
         {
