@@ -13,7 +13,10 @@
 
 namespace TicketDesk.Domain
 {
+    using Fanex.NAP.Core.Service.Interface;
+    using Fanex.NAP.Core.Web.Session;
     using System;
+    using System.Security;
     using TicketDesk.Domain.Model;
 
     /// <summary>
@@ -110,6 +113,8 @@ namespace TicketDesk.Domain
         {
             return GetValidTicketActivities(ticket).HasFlag(activity);
         }
+
+        public abstract IFunctionService FunctionService { get; }
 
         public abstract IContextHelper NapContextHelper { get; set; }
     }

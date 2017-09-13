@@ -20,15 +20,30 @@ namespace TicketDesk.Web.Client
     using Microsoft.AspNet.Identity;
     using TicketDesk.Domain;
     using TicketDesk.Web.Identity;
+    using Fanex.NAP.Core.Service.Interface;
+    using Fanex.NAP.Core.Service.Impl;
+    using Fanex.NAP.Core.Web.Session;
+    using Infrastructure.Helpers;
 
     public sealed class TicketDeskContextSecurityProvider : TdDomainSecurityProviderBase
     {
         private TicketDeskUserManager UserManager { get; set; }
 
+        private IFunctionService _functionService { get; set; }
+
         public TicketDeskContextSecurityProvider()
         {
             UserManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
             CurrentUserId = HttpContext.Current.User.Identity.GetUserId();
+            _functionService = new FunctionService();
+        }
+
+        public override IFunctionService FunctionService
+        {
+            get
+            {
+                return _functionService;
+            }
         }
 
         public override IContextHelper NapContextHelper { get; set; }
