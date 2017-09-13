@@ -324,7 +324,7 @@
     <Compile Include="Infrastructure\Extensions\SummerNoteStringExtensions.cs" />
     <Compile Include="Infrastructure\Filters\LocalizationFilter.cs" />
     <Compile Include="Infrastructure\Filters\TdAuthorizeAttribute.cs" />
-    <Compile Include="Infrastructure\Helpers\NapContextHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\ContextHelper.cs" />
     <Compile Include="Infrastructure\Helpers\DescriptionForHelper.cs" />
     <Compile Include="Infrastructure\Helpers\DisplayForHelper.cs" />
     <Compile Include="Infrastructure\Helpers\JsonCamelCaseResult.cs" />

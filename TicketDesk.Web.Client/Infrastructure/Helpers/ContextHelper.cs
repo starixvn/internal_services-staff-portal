@@ -7,9 +7,9 @@
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
 
-    public class NapContextHelper : IContextHelper
+    public class ContextHelper : IContextHelper
     {
-        public NapContextHelper(
+        public ContextHelper(
             ICurrentSession currentSession,
             ICurrentContext currentContext,
             IUserService userService)
