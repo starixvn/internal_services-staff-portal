@@ -2,7 +2,6 @@
 {
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Configuration;
-    using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Context;
@@ -15,11 +14,18 @@
         private readonly ICurrentContext currentContext;
         private readonly IUserService userService;
 
-        public BaseController()
+        public BaseController() : this(null, null, null)
         {
-            this.currentSession = new CurrentSession();
-            this.currentContext = new CurrentContext();
-            this.userService = new UserService();
+        }
+
+        public BaseController(
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IUserService userService)
+        {
+            this.currentSession = currentSession ?? new CurrentSession();
+            this.currentContext = currentContext ?? new CurrentContext();
+            this.userService = userService ?? new UserService();
         }
 
         protected ICurrentSession CurrentSession
@@ -35,6 +41,14 @@
             get
             {
                 return currentContext;
+            }
+        }
+
+        protected IUserService UserService
+        {
+            get
+            {
+                return userService;
             }
         }
 
@@ -62,15 +76,6 @@
                 functionKey);
 
             return functionPolicy >= (int)policy;
-        }
-
-        protected void SaveUserSession(User user, int onlineUserId, int level)
-        {
-            currentSession.UserId = user.Id;
-            currentSession.Username = user.Username;
-            currentSession.OnUserId = onlineUserId;
-            currentSession.SessionId = Session.SessionID;
-            currentSession.Level = level;
         }
     }
 }

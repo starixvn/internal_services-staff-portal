@@ -13,7 +13,7 @@
 
     [RoutePrefix("admin")]
     [Route("{action=index}")]
-    public class ProjectSettingsController : Controller
+    public class ProjectSettingsController : BaseController
     {
         private TdDomainContext Context { get; set; }
 
@@ -28,6 +28,8 @@
         {
             var model = Context.Projects.Select(p => new ProjectListViewModelItem { Project = p, NumberOfTickets = p.Tickets.Count });
             await model.LoadAsync();
+            ViewBag.IsHost = HasRight("ProjectSettings", Constant.Policy.Host);
+
             return View(model);
         }
 

@@ -1,6 +1,10 @@
 ﻿@using TicketDesk.Localization.Views.ProjectSettings
 @model IEnumerable<TicketDesk.Web.Client.Models.ProjectListViewModelItem>
 
+@{
+    bool isHost = (bool)ViewBag.IsHost;
+}
+
 @section title
 {
     @Index.Title
@@ -39,9 +43,7 @@
                     </div>
                 </div>
                 <div class="panel panel-info">
-
                     <div class="panel-body" style="padding: 0;">
-
                         <div class="table-responsive">
                             <table class="table table-striped table-condensed table-hover ">
                                 <tr>
@@ -54,15 +56,21 @@
                                     <th>
                                         @Index.Tickets
                                     </th>
-
                                 </tr>
                                 @foreach (var item in Model)
                                 {
-                                    <tr class="clickable">
+                                    <tr class="@(isHost ? "clickable" : string.Empty)">
                                         <td>
-                                            <a href="@Url.Action("Edit", "ProjectSettings", new {projectId = item.Project.ProjectId})">
+                                            @if (isHost)
+                                            {
+                                                <a href="@Url.Action("Edit", "ProjectSettings", new { projectId = item.Project.ProjectId })">
+                                                    @item.Project.ProjectName
+                                                </a>
+                                            }
+                                            else
+                                            {
                                                 @item.Project.ProjectName
-                                            </a>
+                                            }
                                         </td>
                                         <td>@item.Project.ProjectDescription</td>
                                         <td>@item.NumberOfTickets</td>
@@ -72,20 +80,17 @@
                         </div>
                     </div>
 
-                    <div class="panel-footer">
-                        <div class="">
-
-                            <a href="@Url.Action("New", "ProjectSettings")" class="btn btn-primary">
-                                <i class="fa fa-plus"></i>&nbsp;&nbsp;@Index.SaveOption
-                            </a>
-
-
+                    @if (isHost)
+                    {
+                        <div class="panel-footer">
+                            <div class="">
+                                <a href="@Url.Action("New", "ProjectSettings")" class="btn btn-primary">
+                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;@Index.SaveOption
+                                </a>
+                            </div>
                         </div>
-                    </div>
-
+                    }
                 </div>
-
-
             </div>
         </fieldset>
     </div>

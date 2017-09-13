@@ -3,18 +3,16 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
-using System;
-using System.Reflection;
-using System.Web;
-using System.Web.Mvc;
+using Fanex.NAP.Core.Service.Impl;
+using Fanex.NAP.Core.Service.Interface;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -24,12 +22,13 @@ using SimpleInjector;
 using SimpleInjector.Advanced;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
+using System;
+using System.Reflection;
+using System.Web;
+using System.Web.Mvc;
 using TicketDesk.Domain;
-using TicketDesk.PushNotifications;
 using TicketDesk.Web.Identity;
 using TicketDesk.Web.Identity.Model;
-using Fanex.NAP.Core.Service.Interface;
-using Fanex.NAP.Core.Service.Impl;
 
 namespace TicketDesk.Web.Client
 {
@@ -51,13 +50,11 @@ namespace TicketDesk.Web.Client
 
             container.RegisterSingleton(app);
 
-            
             //allows objects to be reused when inside web request, or created fresh when used on background threads or outside a request context
             var hybridLifestyle = Lifestyle.CreateHybrid(
                 () => HttpContext.Current != null, new WebRequestLifestyle(), Lifestyle.Transient);
 
             container.Register<TicketDeskContextSecurityProvider>(Lifestyle.Scoped);
-
 
             container.Register(() => HttpContext.Current != null ?
                     new TdDomainContext(container.GetInstance<TicketDeskContextSecurityProvider>()) :
@@ -67,13 +64,12 @@ namespace TicketDesk.Web.Client
             container.Register(() => new TdIdentityContext(), hybridLifestyle);
 
             container.Register<IUserStore<TicketDeskUser>>(() =>
-                new UserStore<TicketDeskUser>(container.GetInstance<TdIdentityContext>()), 
+                new UserStore<TicketDeskUser>(container.GetInstance<TdIdentityContext>()),
                 hybridLifestyle);
 
             container.Register<IRoleStore<TicketDeskRole, string>>(() =>
-                new RoleStore<TicketDeskRole>(container.GetInstance<TdIdentityContext>()), 
+                new RoleStore<TicketDeskRole>(container.GetInstance<TdIdentityContext>()),
                 hybridLifestyle);
-
 
             //container.Register(() =>
             //{
@@ -124,15 +120,11 @@ namespace TicketDesk.Web.Client
             container.RegisterInitializer<TicketDeskUserManager>(manager =>
                 manager.ConfigureDataProtection(app));
 
-
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
 
             container.Register<IUserService>(() => new UserService(), Lifestyle.Transient);
-
             container.Register<IGroupService>(() => new GroupService(), Lifestyle.Transient);
-
             container.Register<ISiteService>(() => new SiteService(), Lifestyle.Transient);
-
             container.Register<IMenuItemService>(() => new MenuItemService(), Lifestyle.Transient);
 
             return container;

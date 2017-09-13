@@ -29,13 +29,12 @@
             </script>
         }
     }
-
 </head>
 <body>
 
-    @Html.Action("_Header","Menu")
+    @Html.Action("_Header", "Menu")
 
-<div class="body-content">
+    <div class="body-content">
         @RenderBody()
         <footer>
             <p class="text-muted">
@@ -64,13 +63,10 @@
     </script>
     @RenderSection("scripts", required: false)
 
-
     <script type="text/javascript">
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
-
     </script>
-
 </body>
 </html>

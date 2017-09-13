@@ -18,7 +18,6 @@ using Fanex.NAP.Core.Service.Interface;
 using Fanex.NAP.Core.Web;
 using Fanex.NAP.Core.Web.Auth;
 using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -152,42 +151,24 @@ namespace TicketDesk.Web.Client.Controllers
 
                 if (password == user.Password)
                 {
-                    var siteLevelList = siteService.GetSiteLevelByUser(user.Id, "UAT");
+                    var siteLevelList = siteService.GetSiteLevelByUser(user.Id, Environment);
+                    var group = user.Group == null ? null : groupService.GetById(user.Group.Id);
 
                     if (siteLevelList.Any(x => x.Site.Id == SiteId))
                     {
-                        var group = user.Group == null ? null : groupService.GetById(user.Group.Id);
-
                         if ((group == null || group.IsActive) && siteLevelList.Any(x => x.Site.Id == SiteId && x.IsActive))
                         {
                             // check-in user
-                            var criteria = new UserCheckInUserCriteria
+                            DoCheckin(user);
+
+                            if (SiteId != 0)
                             {
-                                UserId = user.Id,
-                                SiteId = SiteId,
-                                NetSessionId = Session.SessionID,
-                                Ip = CurrentContext.IP,
-                                LoginDate = DateTime.Now,
-                                BrowserName = CurrentContext.BrowserName,
-                                CountryCode = CurrentContext.CountryCode,
-                                Domain = CurrentContext.DomainName,
-                                Platform = CurrentContext.Platform
-                            };
-
-                            userService.UserCheckIn(criteria);
-
-                            int level = siteLevelList.FirstOrDefault(x => x.Site.Id == SiteId).Level;
-
-                            SaveUserSession(user, criteria.OnUserId, level);
-
-                            CreateUserMenu(user.Id, Environment, SiteId);
+                                CreateUserMenu(user.Id);
+                            }
 
                             CreateAuthInfo(user);
 
-                            //SignInManager.PasswordSignInAsync(model.Email, "123456aa", model.RememberMe, true);
-
                             return RedirectToLocal(returnUrl);
-                            // return Redirect(FormsAuthentication.DefaultUrl);
                         }
                         else
                         {
@@ -216,18 +197,13 @@ namespace TicketDesk.Web.Client.Controllers
             }
 
             return View(model);
+        }
 
-            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
-            //switch (result)
-            //{
-            //    case SignInStatus.Success:
-            //        return RedirectToLocal(returnUrl);
-            //    case SignInStatus.LockedOut:
-            //        return View("Lockout");
-            //    default:
-            //        ModelState.AddModelError("", Strings.InvalidLoginAttempt);
-            //        return View(model);
-            //}
+        [Route("sign-out")]
+        public ActionResult SignOut()
+        {
+            DoSignOut();
+            return Redirect(FormsAuthentication.LoginUrl);
         }
 
         private void CreateAuthInfo(User user)
@@ -237,13 +213,13 @@ namespace TicketDesk.Web.Client.Controllers
             var authInfo = new AuthInfo();
 
             authInfo.UserId = user.Id;
-            authInfo.OnUserId = 1;
+            authInfo.OnUserId = CurrentSession.OnUserId;
 
             var authTicket = new FormsAuthenticationTicket(
                  1,
                 user.Username,
                 DateTime.Now,
-                DateTime.Now.AddMinutes(20000),
+                DateTime.Now.AddMinutes(FormsAuthentication.Timeout.TotalMinutes),
                 false,
                 authInfo.ToXml(),
                 currentDomain.Path);
@@ -257,21 +233,6 @@ namespace TicketDesk.Web.Client.Controllers
             };
 
             Response.Cookies.Add(authCookie);
-        }
-
-        [Route("sign-out")]
-        public ActionResult SignOut()
-        {
-            AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
-        }
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
         }
 
         private void AddErrors(IdentityResult result)
@@ -291,13 +252,50 @@ namespace TicketDesk.Web.Client.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private void CreateUserMenu(int userId, string environment, int siteId)
+        private void CreateUserMenu(int userId)
         {
             CurrentSession.MenuItemList = (IList<MenuItem>)menuItemService.GetByUserAndSiteIncludeGroup(
                 userId,
-                siteId,
-                environment,
+                SiteId,
+                Environment,
                 true);
+        }
+
+        private void DoCheckin(User user)
+        {
+            var criteria = new UserCheckInUserCriteria
+            {
+                UserId = user.Id,
+                SiteId = SiteId,
+                NetSessionId = Session.SessionID,
+                Ip = CurrentContext.IP,
+                LoginDate = DateTime.Now,
+                BrowserName = CurrentContext.BrowserName,
+                CountryCode = CurrentContext.CountryCode,
+                Domain = CurrentContext.DomainName,
+                Platform = CurrentContext.Platform
+            };
+
+            UserService.UserCheckIn(criteria);
+
+            // saves user session
+            CurrentSession.Level = UserService.GetUserSiteLevel(user.Id, SiteId);
+            CurrentSession.UserId = user.Id;
+            CurrentSession.Username = user.Username;
+            CurrentSession.OnUserId = criteria.OnUserId;
+            CurrentSession.SessionId = Session.SessionID;
+        }
+
+        private void DoSignOut()
+        {
+            var criteria = new LogOutUserCriteria
+            {
+                OnUserId = CurrentSession.OnUserId
+            };
+            UserService.UserLogOut(criteria);
+            FormsAuthentication.SignOut();
+            Response.Cookies.Clear();
+            CurrentSession.ClearAll();
         }
     }
 }

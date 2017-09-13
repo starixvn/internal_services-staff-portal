@@ -42,7 +42,7 @@ namespace TicketDesk.Web.Client
 
             bundles.Add(new StyleBundle("~/content/error-pages").Include(
                     "~/Content/font-awesome.css",
-                    "~/Content/error.css"));
+                    "~/Content/ticketdesk/error.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/editticket")
                 .Include("~/Scripts/ticketdesk/edit-ticket.js"));
