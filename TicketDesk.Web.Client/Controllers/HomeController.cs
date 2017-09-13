@@ -17,6 +17,7 @@ namespace TicketDesk.Web.Client.Controllers
     using System;
     using System.Web;
     using System.Web.Mvc;
+    using Fanex.NAP.Core.Web.Session;
 
     [RoutePrefix("")]
     [Route("{action=index}")]
@@ -43,6 +44,14 @@ namespace TicketDesk.Web.Client.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult Menu()
+        {
+            ViewBag.MenuItemList = CurrentSession.MenuItemList;
+
+            return PartialView("~/Views/Shared/_Navbar.cshtml");
         }
 
         [Route("about")]

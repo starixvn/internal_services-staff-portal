@@ -1,45 +1,32 @@
-﻿@using TicketDesk.Localization.Views.Shared
+﻿@using Fanex.NAP.Core.Domain
+@using Fanex.NAP.Core.Model
+@using TicketDesk.Localization.Views.Shared
+
+@{
+    var menus = ViewBag.MenuItemList != null ? (List<MenuItem>)ViewBag.MenuItemList : new List<MenuItem>();
+}
 
 <nav id="mainNav" class="navbar navbar-default " role="navigation">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-collapse">
-
             <span class="sr-only">@_Layout.Toggle</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
 
-        <div class="pull-right" style="margin: 0 5px;">
-
-            <a href="@Url.Action("Index", "TicketCenter", new {area = ""})"
-               data-toggle="tooltip"
-               data-placement="bottom"
-               title="@_Layout.TicketCenter"
-               class="@Html.IsActiveRoute("Index", "TicketCenter") btn btn-default navbar-btn hidden-sm hidden-md hidden-lg"><i class="fa fa-ticket"></i></a>
-            <a href="@Url.Action("New", "Ticket", new {area = ""})"
-               data-toggle="tooltip"
-               data-placement="bottom"
-               title="@_Layout.NewTicket"
-               class="@Html.IsActiveRoute("New", "Ticket") btn btn-default navbar-btn hidden-sm hidden-md hidden-lg "><i class="fa fa-plus"></i></a>
-        </div>
         @Html.ActionLink(" ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-
 
     </div>
     <div>
         <div id="main-menu-collapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="@Html.IsActiveRoute("Index", "Home")">
-                    <a href="@Url.Action("Index", "Home", new {area = ""})"><i class="fa fa-home"></i> @_Layout.Home</a>
-                </li>
-                <li class="@Html.IsActiveRoute("Index", "TicketCenter")">
-                    <a href="@Url.Action("Index", "TicketCenter", new {area = ""})"><i class="fa fa-ticket"></i> @_Layout.TicketCenter</a>
-                </li>
-                <li class="@Html.IsActiveRoute("New", "Ticket")">
-                    <a href="@Url.Action("New", "Ticket", new {area = ""})"><i class="fa fa-plus"></i> @_Layout.NewTicket</a>
-                </li>
-                <li role="separator" class="nav-divider"></li>
+                @foreach (IMenuItem menu in menus)
+                {
+                    <li class="@Html.IsActiveRoute(menu.Url)">
+                        <a href="@menu.Url" area=""><i class="@menu.Description"></i> @menu.Name</a>
+                    </li>
+                }
             </ul>
             <ul class="nav navbar-nav navbar-right" style="margin-right: 5px;">
                 <li class="dropdown hidden-sm hidden-md hidden-lg" style="padding: 10px 15px;">
@@ -76,7 +63,9 @@
     {
         <div class="container-fluid navbar-default" style="border-top: 1px solid #e7e7e7; padding: 7px;">
             <div class="form form-inline pull-left-xs pull-right-sm">
-                @{ Html.RenderAction("ProjectMenu", "Navigation"); }
+                @{
+                    Html.RenderAction("ProjectMenu", "Navigation");
+                }
                 <div class="form-group hidden-xs">
                     @Html.Partial("_QuickSearch")
                 </div>
@@ -85,5 +74,5 @@
                 </span>
             </div>
         </div>
-    }
+                    }
 </nav>

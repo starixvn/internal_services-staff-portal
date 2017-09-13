@@ -36,6 +36,8 @@ using TicketDesk.Web.Identity.Model;
 
 namespace TicketDesk.Web.Client.Controllers
 {
+    using Fanex.NAP.Core.Domain;
+
     [RoutePrefix("user")]
     [Route("{action}")]
     public class UserController : BaseController
@@ -254,11 +256,21 @@ namespace TicketDesk.Web.Client.Controllers
 
         private void CreateUserMenu(int userId)
         {
-            CurrentSession.MenuItemList = (IList<MenuItem>)menuItemService.GetByUserAndSiteIncludeGroup(
+            var menus = menuItemService.GetByUserAndSiteIncludeGroup(
                 userId,
                 SiteId,
                 Environment,
                 true);
+
+            IList<IMenuItem> parentMenu = menus.Where(x => x.Parent == null).ToList();
+
+            CurrentSession.MenuItemList = new List<MenuItem>();
+
+            foreach (IMenuItem item in parentMenu)
+            {
+                MenuItem concreteItem = (MenuItem)item;
+                CurrentSession.MenuItemList.Add(concreteItem);
+            }
         }
 
         private void DoCheckin(User user)

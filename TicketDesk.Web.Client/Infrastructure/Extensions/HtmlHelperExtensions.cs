@@ -15,6 +15,8 @@ using System.Web.Mvc;
 
 namespace TicketDesk.Web.Client
 {
+    using System.Web;
+
     public static class HtmlHelperExtensions
     {
         public static string IsActiveRoute(this HtmlHelper html,string actionName, string controllerName)
@@ -23,6 +25,24 @@ namespace TicketDesk.Web.Client
             var controller = html.ViewContext.RouteData.Values["controller"] as string;
 
             return (controllerName == controller && actionName == action) ? "active" : "";
+        }
+
+        public static string IsActiveRoute(this HtmlHelper html, string route)
+        {
+            var currentRoute = HttpContext.Current.Request.Url.AbsolutePath;
+
+            if (currentRoute == "/" && route == "/")
+            {
+                // Home
+                return "active";
+            }
+
+            if (currentRoute.Contains(route) && route != "/")
+            {
+                return "active";
+            }
+
+            return string.Empty;
         }
     }
 }
