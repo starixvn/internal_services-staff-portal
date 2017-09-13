@@ -33,7 +33,7 @@ namespace TicketDesk.Web.Client.Controllers
         public TicketCenterController(TdDomainContext context)
         {
             Context = context;
-            Context.SecurityProvider.NapContextHelper = CurrentHelper;
+            Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
 
         [Route("reset-user-lists")]

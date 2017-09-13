@@ -24,10 +24,10 @@
             CurrentContext = currentContext ?? new CurrentContext();
             UserService = userService ?? new UserService();
 
-            CurrentHelper = new NapContextHelper(CurrentSession, CurrentContext, UserService);
+            NapContextHelper = new ContextHelper(CurrentSession, CurrentContext, UserService);
         }
 
-        protected NapContextHelper CurrentHelper { get; }
+        protected ContextHelper NapContextHelper { get; }
 
         protected ICurrentSession CurrentSession { get; }
 
