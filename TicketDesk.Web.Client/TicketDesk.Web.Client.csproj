@@ -298,7 +298,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EmailTestController.cs" />
-    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Controllers\ProjectSettingsController.cs" />
     <Compile Include="Controllers\PushNotificationSettingsController.cs" />
@@ -374,7 +373,6 @@
     <Content Include="Content\css\select2.css" />
     <Content Include="Content\css\select2.png" />
     <Content Include="Content\css\select2x2.png" />
-    <Content Include="Content\ticketdesk\error.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\arrow_down.png" />
@@ -980,13 +978,13 @@
     <Content Include="Views\Home\InternalError.cshtml" />
     <Content Include="Views\Home\NotFound.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
-    <Content Include="Views\Menu\_Header.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\ticketdesk\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\ProjectSelector\" />
   </ItemGroup>
