@@ -71,27 +71,6 @@ namespace TicketDesk.Web.Client
                 new RoleStore<TicketDeskRole>(container.GetInstance<TdIdentityContext>()),
                 hybridLifestyle);
 
-            //container.Register(() =>
-            //{
-            //    IOwinContext context;
-            //    try
-            //    {
-            //        context = HttpContext.Current.GetOwinContext();
-            //    }
-            //    catch (InvalidOperationException)
-            //    {
-            //        //avoid exception when this is called before the owin environment is fully initialized
-            //        if (container.IsVerifying())
-            //        {
-            //            return new FakeAuthenticationManager();
-            //        }
-            //        throw;
-            //    }
-
-            //    return context.Authentication;
-            //},
-            //Lifestyle.Scoped);
-
             container.Register(() =>
             {
                 IOwinContext context;

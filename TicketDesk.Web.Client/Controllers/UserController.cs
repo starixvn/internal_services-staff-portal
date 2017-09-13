@@ -46,7 +46,6 @@ namespace TicketDesk.Web.Client.Controllers
         private TicketDeskSignInManager SignInManager { get; set; }
         private TdDomainContext DomainContext { get; set; }
 
-        private readonly IUserService userService;
         private readonly IGroupService groupService;
         private readonly ISiteService siteService;
         private readonly IMenuItemService menuItemService;
@@ -55,7 +54,6 @@ namespace TicketDesk.Web.Client.Controllers
             TicketDeskUserManager userManager,
             TicketDeskSignInManager signInManager,
             TdDomainContext domainContext,
-            IUserService userService,
             IGroupService groupService,
             ISiteService siteService,
             IMenuItemService menuItemService)
@@ -63,7 +61,6 @@ namespace TicketDesk.Web.Client.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
             DomainContext = domainContext;
-            this.userService = userService;
             this.groupService = groupService;
             this.siteService = siteService;
             this.menuItemService = menuItemService;
@@ -145,7 +142,7 @@ namespace TicketDesk.Web.Client.Controllers
                 return View(model);
             }
 
-            var user = userService.GetByUsername(model.Email) as User;
+            var user = UserService.GetByUsername(model.Email) as User;
 
             if (user != null)
             {
