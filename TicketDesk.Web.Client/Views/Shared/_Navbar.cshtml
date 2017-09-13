@@ -25,8 +25,10 @@
                     if (isHaveChildren)
                     {
                         menuClass += " dropdown";
-                        <li class="@menuClass">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@menu.Name <span class="caret"></span></a>
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="@menu.Description"></i> @menu.Name <span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu">
                                 @foreach (var childMenuItem in menu.Children)
                                 {

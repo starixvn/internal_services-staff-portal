@@ -261,7 +261,7 @@ namespace TicketDesk.Web.Client.Controllers
                     userId,
                     SiteId,
                     Environment,
-                    true); ;
+                    true);
         }
 
         private void DoCheckin(User user)
