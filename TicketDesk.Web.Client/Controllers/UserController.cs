@@ -300,8 +300,21 @@ namespace TicketDesk.Web.Client.Controllers
             };
             UserService.UserLogOut(criteria);
             FormsAuthentication.SignOut();
+
+            DeleteCookiesAndClearSession();
+        }
+
+        private void DeleteCookiesAndClearSession()
+        {
             Response.Cookies.Clear();
+
+            HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            authCookie.Expires = DateTime.Now.AddDays(-1);
+            Response.Cookies.Add(authCookie);
+
             CurrentSession.ClearAll();
+            Session.Clear();
+            Session.Abandon();
         }
     }
 }
