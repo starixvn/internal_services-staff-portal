@@ -74,6 +74,10 @@ body {
         color: #000;
     }
 
+.search-box {
+    width: auto;
+}
+
 .form-group-xs .control-label {
     height: 22px;
     padding: 1px 3px;
@@ -408,7 +412,9 @@ p {
     .pull-right-sm {
         float: right;
     }
-    
+    .search-box {
+        width: 150px;
+    }
 }
 
 @media (min-width: 992px) {
@@ -416,7 +422,9 @@ p {
         display: table-cell;
         float: none !important;
     }
-    
+    .search-box {
+        width: 150px;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -426,6 +434,9 @@ p {
     }
     .pull-right-md {
         float: right;
+    }
+    .search-box {
+        width: 200px;
     }
 }
 

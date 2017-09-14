@@ -49,7 +49,7 @@
                 }
             </ul>
             <ul class="nav navbar-nav navbar-right" style="margin-right: 5px;">
-                <li class="dropdown hidden-sm hidden-md hidden-lg" style="padding: 10px 15px;">
+                <li class="dropdown search-box" style="padding: 10px 15px;">
                     @Html.Partial("_QuickSearch")
                 </li>
                 @Html.Partial("_UserMenu", Model)
@@ -79,7 +79,7 @@
             </ul>
         </div>
     </div>
-    @if (Model.IsAuthenticated)
+    @*@if (Model.IsAuthenticated)
     {
         <div class="container-fluid navbar-default" style="border-top: 1px solid #e7e7e7; padding: 7px;">
             <div class="form form-inline pull-left-xs pull-right-sm">
@@ -94,5 +94,5 @@
                 </span>
             </div>
         </div>
-                    }
+                    }*@
 </nav>
