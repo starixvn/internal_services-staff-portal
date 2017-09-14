@@ -79,7 +79,7 @@
             </ul>
         </div>
     </div>
-    @*@if (Model.IsAuthenticated)
+    @if (Model.IsAuthenticated)
     {
         <div class="container-fluid navbar-default" style="border-top: 1px solid #e7e7e7; padding: 7px;">
             <div class="form form-inline pull-left-xs pull-right-sm">
@@ -89,7 +89,10 @@
                 <div class="form-group hidden-xs">
                     @Html.Partial("_QuickSearch")
                 </div>
+                <span class="hidden-xs">
+                    @Html.Partial("_AdminMenu")
+                </span>
             </div>
         </div>
-    }*@
+                    }
 </nav>
