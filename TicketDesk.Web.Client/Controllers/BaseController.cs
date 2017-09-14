@@ -1,7 +1,5 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Context;
@@ -34,19 +32,5 @@
         protected ICurrentContext CurrentContext { get; }
 
         protected IUserService UserService { get; }
-
-        protected int SiteId => NapSettings.Settings.SiteId;
-
-        protected string Environment => NapSettings.Settings.Environment;
-
-        protected bool HasRight(string functionKey, Constant.Policy policy)
-        {
-            int functionPolicy = UserService.GetUserSiteFunctionKeyPolicy(
-                CurrentSession.UserId,
-                SiteId,
-                functionKey);
-
-            return functionPolicy >= (int)policy;
-        }
     }
 }

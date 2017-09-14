@@ -1,41 +1,35 @@
-﻿using Fanex.NAP.Core.Criteria.User;
-using Fanex.NAP.Core.Service.Impl;
-using Fanex.NAP.Core.Web.Auth;
-using Fanex.NAP.Core.Web.Session;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-
-namespace TicketDesk.Web.Client.App_Start
+﻿namespace TicketDesk.Web.Client.App_Start
 {
+    using Fanex.NAP.Core.Criteria.User;
+    using Fanex.NAP.Core.Service.Impl;
+    using Fanex.NAP.Core.Web.Auth;
+    using Fanex.NAP.Core.Web.Session;
+    using System.Web;
+    using System.Web.Security;
+
     public static class AuthConfig
     {
         public static void RegisterAuth(HttpContext context)
         {
             var user = HttpContext.Current.User;
 
-            if (user != null)
+            if (user != null && user.Identity is FormsIdentity && user.Identity.IsAuthenticated)
             {
-                if (user.Identity is FormsIdentity && user.Identity.IsAuthenticated)
+                HttpCookie httpCookie = context.Request.Cookies[FormsAuthentication.FormsCookieName];
+
+                if (httpCookie != null)
                 {
-                    HttpCookie httpCookie = context.Request.Cookies[FormsAuthentication.FormsCookieName];
+                    FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(httpCookie.Value);
 
-                    if (httpCookie != null)
+                    if (ticket == null || ticket.Expired || string.IsNullOrEmpty(ticket.UserData))
                     {
-                        FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(httpCookie.Value);
-
-                        if (ticket == null || ticket.Expired || string.IsNullOrEmpty(ticket.UserData))
-                        {
-                            return;
-                        }
-
-                        var identity = new FormsIdentity(ticket);
-                        AuthInfo udata = AuthInfo.CreateUserData(ticket.UserData);
-
-                        context.User = new NapPrincipal(identity, udata);
+                        return;
                     }
+
+                    var identity = new FormsIdentity(ticket);
+                    AuthInfo udata = AuthInfo.CreateUserData(ticket.UserData);
+
+                    context.User = new NapPrincipal(identity, udata);
                 }
             }
         }

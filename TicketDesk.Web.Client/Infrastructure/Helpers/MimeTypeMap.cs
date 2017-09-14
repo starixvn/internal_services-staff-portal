@@ -1,17 +1,17 @@
 ﻿// TicketDesk - Attribution notice
 // Original Code By:
 //       Samuel Neff - https://github.com/samuelneff/MimeTypeMap
-//    
+//
 // Contributor(s):
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -19,13 +19,13 @@ using System.Collections.Generic;
 
 namespace TicketDesk.Web.Client
 {
-
     public static class MimeTypeMap
     {
         private static readonly IDictionary<string, string> Mappings = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
 
         #region Big freaking list of mime types
-        // combination of values from Windows 7 Registry and 
+
+        // combination of values from Windows 7 Registry and
         // from C:\Windows\System32\inetsrv\config\applicationHost.config
         // some added, including .7z and .dat
         {".323", "text/h323"},
@@ -588,8 +588,7 @@ namespace TicketDesk.Web.Client
         {".xwd", "image/x-xwindowdump"},
         {".z", "application/x-compress"},
         {".zip", "application/x-zip-compressed"},
-        #endregion
-
+        #endregion Big freaking list of mime types
         };
 
         public static string GetMimeType(string extension)

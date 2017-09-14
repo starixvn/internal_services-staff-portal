@@ -7,15 +7,15 @@
 
     public interface IContextHelper
     {
-        ICurrentSession CurrentSession();
+        int SiteId { get; }
 
-        ICurrentContext CurrentContext();
+        string Environment { get; }
 
-        IUserService UserService();
+        ICurrentSession CurrentSession { get; }
 
-        int GetSiteId();
+        ICurrentContext CurrentContext { get; }
 
-        string GetEnvironment();
+        IUserService UserService { get; }
 
         bool HasRight(string functionKey, Constant.Policy policy);
     }

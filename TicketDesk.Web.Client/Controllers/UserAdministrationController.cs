@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using PagedList;
-using TicketDesk.Web.Client.Models;
-using TicketDesk.Web.Identity;
-using TicketDesk.Web.Identity.Model;
-using TicketDesk.Localization.Controllers;
-
-namespace TicketDesk.Web.Client.Controllers
+﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Microsoft.AspNet.Identity;
+    using PagedList;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+    using TicketDesk.Localization.Controllers;
+    using TicketDesk.Web.Client.Models;
+    using TicketDesk.Web.Identity;
+    using TicketDesk.Web.Identity.Model;
+
     [RoutePrefix("admin")]
     [Route("{action=index}")]
     [TdAuthorize(Roles = "TdAdministrators")]
@@ -41,8 +41,7 @@ namespace TicketDesk.Web.Client.Controllers
         {
             ViewBag.AllRolesList = await RoleManager.Roles.ToListAsync();
             var users = await GetUsersForListAsync(page ?? 1);
-            return PartialView("_UserList",users);
-
+            return PartialView("_UserList", users);
         }
 
         [Route("user/{id?}")]
@@ -56,8 +55,8 @@ namespace TicketDesk.Web.Client.Controllers
             }
             var model = new UserAccountInfoViewModel(user, user.Roles.Select(r => r.RoleId));
             var tdPendingRole = RoleManager.Roles.FirstOrDefault(r => r.Name == "TdPendingUsers");
-            
-            ViewBag.TdPendingUsersRoleId = tdPendingRole == null ? "" : tdPendingRole.Id; 
+
+            ViewBag.TdPendingUsersRoleId = tdPendingRole == null ? string.Empty : tdPendingRole.Id;
             return View(model);
         }
 
@@ -66,7 +65,7 @@ namespace TicketDesk.Web.Client.Controllers
         public async Task<ActionResult> Edit(UserAccountInfoViewModel model)
         {
             var tdPendingRole = RoleManager.Roles.FirstOrDefault(r => r.Name == "TdPendingUsers");
-            ViewBag.TdPendingUsersRoleId = tdPendingRole == null ? "" : tdPendingRole.Id;
+            ViewBag.TdPendingUsersRoleId = tdPendingRole == null ? string.Empty : tdPendingRole.Id;
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -80,14 +79,12 @@ namespace TicketDesk.Web.Client.Controllers
             }
             else
             {
-
                 //deal with locks first
                 if (await SetLockout(model, user))
                 {
                     //do user info updates
                     if (await UpdateUserInfo(user, model))
                     {
-
                         //if any roles other than pending are selected, make sure we remove the pending role from the model first
                         if (tdPendingRole != null)
                         {
@@ -108,7 +105,6 @@ namespace TicketDesk.Web.Client.Controllers
                             roleIdsToRemove = roleIdsToRemove.Except(RoleManager.Roles.Where(r => r.Name == "tdAdministrators").Select(r => r.Id)).ToList();
                         }
 
-
                         var roleIdsToAdd = model.Roles.Except(user.Roles.Select(ur => ur.RoleId)).ToList();
                         //do role removes
                         if (await RemoveRoles(roleIdsToRemove, user))
@@ -122,11 +118,10 @@ namespace TicketDesk.Web.Client.Controllers
                         }
                     }
                 }
-               
             }
-            //Since the above operations could be partially committed before a failure, 
-            //  we will re-get the user so we are sure the screen will accurately show 
-            //  the current data. Model errors will have been added by the respective 
+            //Since the above operations could be partially committed before a failure,
+            //  we will re-get the user so we are sure the screen will accurately show
+            //  the current data. Model errors will have been added by the respective
             //  update operations that failed
             user = await UserManager.FindByIdAsync(model.User.Id);
             model = new UserAccountInfoViewModel(user, user.Roles.Select(r => r.RoleId));
@@ -159,6 +154,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 AddErrors(result);
             }
+
             return result.Succeeded;
         }
 
@@ -172,14 +168,15 @@ namespace TicketDesk.Web.Client.Controllers
                 {
                     AddErrors(result);
                 }
+
                 return result.Succeeded;
             }
+
             return true;
         }
 
         private async Task<bool> RemoveRoles(IEnumerable<string> roleIdsToRemove, TicketDeskUser user)
         {
-           
             var roleNamesToRemove = RoleManager.Roles.Where(r => roleIdsToRemove.Any(ri => ri == r.Id)).Select(r => r.Name);
             if (roleNamesToRemove.Any())
             {
@@ -188,8 +185,10 @@ namespace TicketDesk.Web.Client.Controllers
                 {
                     AddErrors(result);
                 }
+
                 return result.Succeeded;
             }
+
             return true;
         }
 
@@ -215,8 +214,10 @@ namespace TicketDesk.Web.Client.Controllers
                 {
                     AddErrors(result);
                 }
+
                 return result.Succeeded;
             }
+
             return true;
         }
 
@@ -224,10 +225,8 @@ namespace TicketDesk.Web.Client.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error);
+                ModelState.AddModelError(string.Empty, error);
             }
         }
     }
-
-    
 }

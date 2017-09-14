@@ -9,6 +9,10 @@
 
     public class ContextHelper : IContextHelper
     {
+        private readonly ICurrentSession _currentSession;
+        private readonly ICurrentContext _currentContext;
+        private readonly IUserService _userService;
+
         public ContextHelper(
             ICurrentSession currentSession,
             ICurrentContext currentContext,
@@ -19,36 +23,21 @@
             _userService = userService;
         }
 
-        private readonly ICurrentSession _currentSession;
+        public int SiteId => NapSettings.Settings.SiteId;
 
-        private readonly ICurrentContext _currentContext;
+        public string Environment => NapSettings.Settings.Environment;
 
-        private readonly IUserService _userService;
+        public ICurrentSession CurrentSession => _currentSession;
 
-        public ICurrentSession CurrentSession()
-        {
-            return _currentSession;
-        }
+        public ICurrentContext CurrentContext => _currentContext;
 
-        public ICurrentContext CurrentContext()
-        {
-            return _currentContext;
-        }
-
-        public IUserService UserService()
-        {
-            return _userService;
-        }
-
-        public int GetSiteId() => NapSettings.Settings.SiteId;
-
-        public string GetEnvironment() => NapSettings.Settings.Environment;
+        public IUserService UserService => _userService;
 
         public bool HasRight(string functionKey, Constant.Policy policy)
         {
-            int functionPolicy = UserService().GetUserSiteFunctionKeyPolicy(
-                CurrentSession().UserId,
-                GetSiteId(),
+            int functionPolicy = UserService.GetUserSiteFunctionKeyPolicy(
+                CurrentSession.UserId,
+                SiteId,
                 functionKey);
 
             return functionPolicy >= (int)policy;

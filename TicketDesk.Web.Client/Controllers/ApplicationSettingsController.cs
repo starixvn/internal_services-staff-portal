@@ -41,7 +41,7 @@ namespace TicketDesk.Web.Client.Controllers
         {
             var dbSetting = Context.TicketDeskSettings;
             ViewBag.IsAzureSearchEnabled = IsAzureSearchDetected;
-            ViewBag.IsHost = HasRight("ApplicationSettings", Constant.Policy.Host);
+            ViewBag.IsHost = NapContextHelper.HasRight("ApplicationSettings", Constant.Policy.Host);
 
             return View(dbSetting);
         }
@@ -68,7 +68,7 @@ namespace TicketDesk.Web.Client.Controllers
                 Context.SaveChanges();
             }
             ViewBag.IsAzureSearchEnabled = IsAzureSearchDetected;
-            ViewBag.IsHost = HasRight("ApplicationSettings", Constant.Policy.Host);
+            ViewBag.IsHost = NapContextHelper.HasRight("ApplicationSettings", Constant.Policy.Host);
 
             return View(dbSetting);
         }

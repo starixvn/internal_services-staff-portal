@@ -42,10 +42,6 @@ namespace TicketDesk.Web.Client.Controllers
     [Route("{action}")]
     public class UserController : BaseController
     {
-        private TicketDeskUserManager UserManager { get; set; }
-        private TicketDeskSignInManager SignInManager { get; set; }
-        private TdDomainContext DomainContext { get; set; }
-
         private readonly IGroupService groupService;
         private readonly ISiteService siteService;
         private readonly IMenuItemService menuItemService;
@@ -65,6 +61,12 @@ namespace TicketDesk.Web.Client.Controllers
             this.siteService = siteService;
             this.menuItemService = menuItemService;
         }
+
+        private TicketDeskUserManager UserManager { get; set; }
+
+        private TicketDeskSignInManager SignInManager { get; set; }
+
+        private TdDomainContext DomainContext { get; set; }
 
         [AllowAnonymous]
         [Route("register")]
@@ -150,17 +152,17 @@ namespace TicketDesk.Web.Client.Controllers
 
                 if (password == user.Password)
                 {
-                    var siteLevelList = siteService.GetSiteLevelByUser(user.Id, Environment);
+                    var siteLevelList = siteService.GetSiteLevelByUser(user.Id, NapContextHelper.Environment);
                     var group = user.Group == null ? null : groupService.GetById(user.Group.Id);
 
-                    if (siteLevelList.Any(x => x.Site.Id == SiteId))
+                    if (siteLevelList.Any(x => x.Site.Id == NapContextHelper.SiteId))
                     {
-                        if ((group == null || group.IsActive) && siteLevelList.Any(x => x.Site.Id == SiteId && x.IsActive))
+                        if ((group == null || group.IsActive) && siteLevelList.Any(x => x.Site.Id == NapContextHelper.SiteId && x.IsActive))
                         {
                             // check-in user
                             DoCheckin(user);
 
-                            if (SiteId != 0)
+                            if (NapContextHelper.SiteId != 0)
                             {
                                 CreateUserMenu(user.Id);
                             }
@@ -172,27 +174,27 @@ namespace TicketDesk.Web.Client.Controllers
                         else
                         {
                             ViewBag.Message = ViewResources.Your_account_was_suspended;
-                            ModelState.AddModelError("", ViewResources.Your_account_was_suspended);
+                            ModelState.AddModelError(string.Empty, ViewResources.Your_account_was_suspended);
                         }
                     }
                     else
                     {
                         ViewBag.Message = ViewResources.You_have_no_authorization;
-                        ModelState.AddModelError("", ViewResources.You_have_no_authorization);
+                        ModelState.AddModelError(string.Empty, ViewResources.You_have_no_authorization);
                     }
                 }
                 else
                 {
                     // wrong password
                     ViewBag.Message = ViewResources.Invalid_Username_or_Password;
-                    ModelState.AddModelError("", ViewResources.Invalid_Username_or_Password);
+                    ModelState.AddModelError(string.Empty, ViewResources.Invalid_Username_or_Password);
                 }
             }
             else
             {
                 // user doesn't exist
                 ViewBag.Message = ViewResources.Invalid_Username_or_Password;
-                ModelState.AddModelError("", ViewResources.Invalid_Username_or_Password);
+                ModelState.AddModelError(string.Empty, ViewResources.Invalid_Username_or_Password);
             }
 
             return View(model);
@@ -238,7 +240,7 @@ namespace TicketDesk.Web.Client.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error);
+                ModelState.AddModelError(string.Empty, error);
             }
         }
 
@@ -248,6 +250,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 return Redirect(returnUrl);
             }
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -259,8 +262,8 @@ namespace TicketDesk.Web.Client.Controllers
         {
             CurrentSession.MenuItemList = (IList<MenuItem>)menuItemService.GetByUserAndSiteIncludeGroup(
                     userId,
-                    SiteId,
-                    Environment,
+                    NapContextHelper.SiteId,
+                    NapContextHelper.Environment,
                     true);
         }
 
@@ -269,7 +272,7 @@ namespace TicketDesk.Web.Client.Controllers
             var criteria = new UserCheckInUserCriteria
             {
                 UserId = user.Id,
-                SiteId = SiteId,
+                SiteId = NapContextHelper.SiteId,
                 NetSessionId = Session.SessionID,
                 Ip = CurrentContext.IP,
                 LoginDate = DateTime.Now,
@@ -282,7 +285,7 @@ namespace TicketDesk.Web.Client.Controllers
             UserService.UserCheckIn(criteria);
 
             // saves user session
-            CurrentSession.Level = UserService.GetUserSiteLevel(user.Id, SiteId);
+            CurrentSession.Level = UserService.GetUserSiteLevel(user.Id, NapContextHelper.SiteId);
             CurrentSession.UserId = user.Id;
             CurrentSession.Username = user.Username;
             CurrentSession.OnUserId = criteria.OnUserId;

@@ -1,15 +1,15 @@
 ﻿// TicketDesk - Attribution notice
-//    
+//
 // Contributor(s):
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -23,7 +23,6 @@ using TicketDesk.Localization.Infrastructure;
 
 namespace TicketDesk.Web.Client
 {
-
     public static class DescriptionForHelper
     {
         public static MvcHtmlString DescriptionFor(
@@ -36,19 +35,16 @@ namespace TicketDesk.Web.Client
             return GetDescriptionFromAttribute(cssClassName, tagName, attr);
         }
 
-
         public static MvcHtmlString DescriptionFor(
             this HtmlHelper helper,
             Type modelType,
             string cssClassName = "",
-            string tagName = "div"
-            )
+            string tagName = "div")
         {
             var attr = (DescriptionAttribute)modelType.GetCustomAttributes(typeof(LocalizedDescriptionAttribute), false).FirstOrDefault();
             if (attr == null)
                 attr = (DescriptionAttribute)modelType.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault();
             return GetDescriptionFromAttribute(cssClassName, tagName, attr);
-
         }
 
         public static MvcHtmlString DescriptionFor<TModel, TValue>(
@@ -63,10 +59,14 @@ namespace TicketDesk.Web.Client
             {
                 throw new InvalidOperationException(Strings.MemberExpression);
             }
+
             var prop = memberExpression.Member;
             var attr = (DescriptionAttribute)prop.GetCustomAttributes(typeof(LocalizedDescriptionAttribute), false).FirstOrDefault();
             if (attr == null)
+            {
                 attr = (DescriptionAttribute)prop.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault();
+            }
+
             return GetDescriptionFromAttribute(cssClassName, tagName, attr);
         }
 
@@ -82,6 +82,7 @@ namespace TicketDesk.Web.Client
                     {
                         tag.AddCssClass(cssClassName);
                     }
+
                     return new MvcHtmlString(tag.ToString());
                 }
             }

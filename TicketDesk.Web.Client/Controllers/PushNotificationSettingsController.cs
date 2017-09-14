@@ -3,21 +3,21 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Newtonsoft.Json.Linq;
 using TicketDesk.Domain;
 using TicketDesk.Domain.Model;
 using TicketDesk.PushNotifications;
@@ -52,7 +52,6 @@ namespace TicketDesk.Web.Client.Controllers
             return View(dbSetting);
         }
 
-
         [HttpPost]
         public ActionResult Index(ApplicationPushNotificationSetting settings, string siteRootUrl)
         {
@@ -75,12 +74,10 @@ namespace TicketDesk.Web.Client.Controllers
         [Route("list-providers")]
         public ActionResult ListDeliveryProviderSettings()
         {
-
             var interfaceType = typeof(IPushNotificationDeliveryProvider);
             var classes = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
                 .Where(t => !t.IsAbstract && interfaceType.IsAssignableFrom(t)).ToList();
-
 
             var model =
                 new Dictionary<Type, ApplicationPushNotificationSetting.PushNotificationDeliveryProviderSetting>();
@@ -93,7 +90,6 @@ namespace TicketDesk.Web.Client.Controllers
                 model.Add(c,
                     settings ?? new ApplicationPushNotificationSetting.PushNotificationDeliveryProviderSetting());
             }
-
 
             return PartialView(model);
         }
@@ -125,7 +121,7 @@ namespace TicketDesk.Web.Client.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                // reflection to get the TryUpdateMethod 
+                // reflection to get the TryUpdateMethod
                 var method =
                     GetType()
                         .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
@@ -162,7 +158,6 @@ namespace TicketDesk.Web.Client.Controllers
             return PushNotificationDeliveryManager.DeliveryProviders.FirstOrDefault(p => p.GetType().AssemblyQualifiedName == providerTypeName) ??
                    PushNotificationDeliveryManager.CreateDefaultDeliveryProviderInstance(Type.GetType(providerTypeName));
         }
-
 
         private string GetRootUrlSetting()
         {

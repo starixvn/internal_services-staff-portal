@@ -27,7 +27,7 @@
         public async Task<ActionResult> Index()
         {
             var model = Context.Projects.Select(p => new ProjectListViewModelItem { Project = p, NumberOfTickets = p.Tickets.Count });
-            ViewBag.IsHost = HasRight("ProjectSettings", Constant.Policy.Host);
+            ViewBag.IsHost = NapContextHelper.HasRight("ProjectSettings", Constant.Policy.Host);
             await model.LoadAsync();
 
             return View(model);
