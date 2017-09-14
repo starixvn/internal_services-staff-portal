@@ -24,8 +24,8 @@
                     var isHaveChildren = menu.Children.Any();
                     if (isHaveChildren)
                     {
-                        menuClass += " dropdown";
-                        <li>
+                        menuClass = "dropdown";
+                        <li class="@menuClass">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <i class="@menu.Description"></i> @menu.Name <span class="caret"></span>
                             </a>
