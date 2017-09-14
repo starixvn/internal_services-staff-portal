@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System.Collections.Generic;
@@ -16,50 +16,49 @@ using System.Linq;
 using Microsoft.AspNet.Identity;
 using TicketDesk.Web.Identity.Model;
 using TicketDesk.Localization.Identity;
+using Fanex.NAP.Core.Configuration;
 
 namespace TicketDesk.Web.Identity
 {
     public class TicketDeskRoleManager : RoleManager<TicketDeskRole>
     {
-
         public TicketDeskRoleManager(IRoleStore<TicketDeskRole, string> roleStore)
             : base(roleStore)
         {
         }
 
-
         public IOrderedEnumerable<TicketDeskUser> GetTdInternalUsers(TicketDeskUserManager userManager)
         {
-            return GetUsersInRole(new[] {"TdInternalUsers", "TdHelpDeskUsers", "TdAdministrators" }, userManager);
+            return GetUsersInRole(new[] { "TdInternalUsers", "TdHelpDeskUsers", "TdAdministrators" }, userManager);
         }
+
         public IOrderedEnumerable<TicketDeskUser> GetTdTdAdministrators(TicketDeskUserManager userManager)
         {
-            return GetUsersInRole(new[] {"TdAdministrators"}, userManager);
+            return GetUsersInRole(new[] { "TdAdministrators" }, userManager);
         }
 
         public IOrderedEnumerable<TicketDeskUser> GetTdHelpDeskUsers(TicketDeskUserManager userManager)
         {
-            return GetUsersInRole(new[] {"TdHelpDeskUsers", "TdAdministrators" }, userManager);
+            return GetUsersInRole(new[] { "TdHelpDeskUsers", "TdAdministrators" }, userManager);
         }
+
         public IOrderedEnumerable<TicketDeskUser> GetTdPendingUsers(TicketDeskUserManager userManager)
         {
-            return GetUsersInRole(new[] {"TdPendingUsers"}, userManager);
+            return GetUsersInRole(new[] { "TdPendingUsers" }, userManager);
         }
 
         public IOrderedEnumerable<TicketDeskUser> GetUsersInRole(string[] roleNames, TicketDeskUserManager userManager)
         {
+            //NOTE : WILL IMPLEMENT follow function policy
             var foundUsers = new List<TicketDeskUser>();
 
-            foreach (var roleName in roleNames)
+            foundUsers.AddRange(userManager.UserService.GetBySite(userManager.SiteId).Select(u => new TicketDeskUser
             {
-                foundUsers.AddRange(
-                    this
-                        .FindByName(roleName)
-                        .Users
-                        .GetUsersInRole(userManager)
-                        .Where(u => foundUsers.All(f => f.Id != u.Id))
-                    );
-            }
+                Id = u.Id.ToString(),
+                Email = u.Email,
+                DisplayName = u.FirstName + " " + u.LastName
+            }));
+
             return foundUsers.OrderBy(u => u.DisplayName);
         }
 
@@ -76,9 +75,7 @@ namespace TicketDesk.Web.Identity
                     this.Create(defaultRole);
                 }
             }
-
         }
-
 
         public static IEnumerable<TicketDeskRole> DefaultRoles
         {
@@ -97,7 +94,6 @@ namespace TicketDesk.Web.Identity
                         Name = "TdHelpDeskUsers",
                         DisplayName = DefaultRolesDisplayName["TdHelpDeskUsers"],
                         Description = DefaultRolesDescription["TdHelpDeskUsers"],
-
                      },
                      new TicketDeskRole
                     {

@@ -11,14 +11,14 @@
 // attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Caching;
-using Microsoft.AspNet.Identity;
-
 namespace TicketDesk.Web.Identity.Model
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.Caching;
+    using Microsoft.AspNet.Identity;
+
     public class UserDisplayInfoCache : List<UserDisplayInfo>
     {
         private TicketDeskUserManager Manager { get; set; }
@@ -47,11 +47,12 @@ namespace TicketDesk.Web.Identity.Model
             if (cacheCollection == null)
             {
                 var policy = new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(15d) };
-                cacheCollection = manager.UserService.GetAll().Select(u => new UserDisplayInfo
+
+                cacheCollection = manager.UserService.GetBySite(manager.SiteId).Select(u => new UserDisplayInfo
                 {
                     Id = u.Id.ToString(),
                     Email = u.Email,
-                    DisplayName = u.Name
+                    DisplayName = u.FirstName + " " + u.LastName
                 }).ToList();
 
                 cache.Add(key, cacheCollection, policy);

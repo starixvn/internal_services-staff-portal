@@ -18,6 +18,7 @@ namespace TicketDesk.Web.Identity
     using TicketDesk.Web.Identity.Model;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Service.Impl;
+    using Fanex.NAP.Core.Configuration;
 
     public class TicketDeskUserManager : UserManager<TicketDeskUser>
     {
@@ -26,11 +27,18 @@ namespace TicketDesk.Web.Identity
         {
             ConfigureUserManager();
             UserService = new UserService();
+            FunctionService = new FunctionService();
+            SiteId = NapSettings.Settings.SiteId;
         }
 
         public IUserService UserService { get; private set; }
 
-        public UserDisplayInfoCache InfoCache { get { return new UserDisplayInfoCache(this); } }
+        public IFunctionService FunctionService { get; private set; }
+
+        public int SiteId { get; private set; }
+
+        public UserDisplayInfoCache InfoCache
+        { get { return new UserDisplayInfoCache(this); } }
 
         public bool IsTdHelpDeskUser(string userId)
         {
