@@ -25,12 +25,12 @@ namespace TicketDesk.Web.Client.Controllers
     [Route("{action=index}")]
     public class SearchManagerController : Controller
     {
-        private TdDomainContext Context { get; set; }
-
         public SearchManagerController(TdDomainContext context)
         {
             Context = context;
         }
+
+        private TdDomainContext Context { get; set; }
 
         [Route("")]
         [NapAuth(FunctionKey = FunctionKeys.SearchManagement, Policy = Constant.Policy.Read)]

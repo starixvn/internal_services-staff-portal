@@ -27,14 +27,15 @@ namespace TicketDesk.Web.Client.Controllers
     [Route("{action=index}")]
     public class ApplicationSettingsController : BaseController
     {
-        private TdDomainContext Context { get; set; }
-        private bool IsAzureSearchDetected { get; set; }
-
         public ApplicationSettingsController(TdDomainContext context)
         {
             Context = context;
             IsAzureSearchDetected = TdSearchContext.Current.IndexManager.GetType() == typeof(AzureIndexProvider);
         }
+
+        private TdDomainContext Context { get; set; }
+
+        private bool IsAzureSearchDetected { get; set; }
 
         [NapAuth(FunctionKey = FunctionKeys.ApplicationSettings, Policy = Constant.Policy.Read)]
         public ActionResult Index()
@@ -54,8 +55,7 @@ namespace TicketDesk.Web.Client.Controllers
             [ModelBinder(typeof(CommaSeparatedModelBinder))] string[] tickettypes,
             [ModelBinder(typeof(CommaSeparatedModelBinder))] string[] priorities,
             List<string> defaultroles,
-            string defaultTextEditorType
-            )
+            string defaultTextEditorType)
         {
             var dbSetting = Context.TicketDeskSettings;
             if (ModelState.IsValid && TryUpdateModel(dbSetting))
@@ -67,6 +67,7 @@ namespace TicketDesk.Web.Client.Controllers
                 dbSetting.ClientSettings.Settings["DefaultTextEditorType"] = defaultTextEditorType;
                 Context.SaveChanges();
             }
+
             ViewBag.IsAzureSearchEnabled = IsAzureSearchDetected;
             ViewBag.IsHost = NapContextHelper.HasRight(FunctionKeys.ApplicationSettings, Constant.Policy.Host);
 

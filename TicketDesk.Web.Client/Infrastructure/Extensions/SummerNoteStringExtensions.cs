@@ -15,6 +15,7 @@ namespace TicketDesk.Web.Client
                     content = null;
                 }
             }
+
             return content;
         }
     }

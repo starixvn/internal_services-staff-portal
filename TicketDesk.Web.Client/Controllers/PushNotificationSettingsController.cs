@@ -32,9 +32,6 @@ namespace TicketDesk.Web.Client.Controllers
     [Route("{action=index}")]
     public class PushNotificationSettingsController : BaseController
     {
-        private TdPushNotificationContext NoteContext { get; set; }
-        private TdDomainContext DomainContext { get; set; }
-
         public PushNotificationSettingsController(TdPushNotificationContext noteContext, TdDomainContext domainContext)
         {
             ViewBag.Saved = false;
@@ -42,6 +39,10 @@ namespace TicketDesk.Web.Client.Controllers
             NoteContext = noteContext;
             DomainContext = domainContext;
         }
+
+        private TdPushNotificationContext NoteContext { get; set; }
+
+        private TdDomainContext DomainContext { get; set; }
 
         [NapAuth(FunctionKey = FunctionKeys.PushNotificationSettings, Policy = Constant.Policy.Read)]
         public ActionResult Index()
@@ -119,7 +120,9 @@ namespace TicketDesk.Web.Client.Controllers
         [HttpPost]
         [Route("configure-provider")]
         [NapAuth(FunctionKey = FunctionKeys.PushNotificationSettings, Policy = Constant.Policy.Host)]
-        public async Task<ActionResult> ConfigureDeliveryProvider(string providerAssemblyQualifiedName, bool isEnabled,
+        public async Task<ActionResult> ConfigureDeliveryProvider(
+            string providerAssemblyQualifiedName,
+            bool isEnabled,
             FormCollection form)
         {
             var provider = GetProvider(providerAssemblyQualifiedName);
@@ -131,6 +134,7 @@ namespace TicketDesk.Web.Client.Controllers
                 {
                     return RedirectToAction("Index");
                 }
+
                 // reflection to get the TryUpdateMethod
                 var method =
                     GetType()
@@ -138,7 +142,7 @@ namespace TicketDesk.Web.Client.Controllers
                         .First(m => m.Name == "TryUpdateModel" && m.IsGenericMethod && m.GetParameters().Count() == 1)
                         .MakeGenericMethod(provider.Configuration.GetType());
 
-                if ((bool)method.Invoke(this, new[] { provider.Configuration }))//TryUpdateModel call
+                if ((bool)method.Invoke(this, new[] { provider.Configuration })) //TryUpdateModel call
                 {
                     settings.ProviderConfigurationData = JObject.FromObject(provider.Configuration);
                     settings.IsEnabled = isEnabled;

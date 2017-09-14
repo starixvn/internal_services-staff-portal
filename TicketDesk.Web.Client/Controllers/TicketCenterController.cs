@@ -27,20 +27,20 @@ namespace TicketDesk.Web.Client.Controllers
     [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
     public class TicketCenterController : BaseController
     {
-        private TdDomainContext Context { get; set; }
-
         public TicketCenterController(TdDomainContext context)
         {
             Context = context;
             Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
 
+        private TdDomainContext Context { get; set; }
+
         [Route("reset-user-lists")]
         public async Task<ActionResult> ResetUserLists()
         {
             var uId = Context.SecurityProvider.CurrentUserId;
             await Context.UserSettingsManager.ResetAllListSettingsForUserAsync(uId);
-            var x = await Context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -99,21 +99,21 @@ namespace TicketDesk.Web.Client.Controllers
 
             if (isMultiSort)
             {
-                if (sortCol != null)// column already in sort, remove from sort
+                if (sortCol != null) // column already in sort, remove from sort
                 {
-                    if (currentListSetting.SortColumns.Count > 1)//only remove if there are more than one sort
+                    if (currentListSetting.SortColumns.Count > 1) //only remove if there are more than one sort
                     {
                         currentListSetting.SortColumns.Remove(sortCol);
                     }
                 }
-                else// column not in sort, add to sort
+                else // column not in sort, add to sort
                 {
                     currentListSetting.SortColumns.Add(new UserTicketListSortColumn(columnName, ColumnSortDirection.Ascending));
                 }
             }
             else
             {
-                if (sortCol != null)// column already in sort, just flip direction
+                if (sortCol != null) // column already in sort, just flip direction
                 {
                     sortCol.SortDirection = (sortCol.SortDirection == ColumnSortDirection.Ascending) ? ColumnSortDirection.Descending : ColumnSortDirection.Ascending;
                 }

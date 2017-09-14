@@ -31,12 +31,18 @@ public class PagedListAsync<T> : BasePagedList<T>
         return list;
     }
 
-    async Task InitAsync(IQueryable<T> superset, int pageNumber, int pageSize)
+    private async Task InitAsync(IQueryable<T> superset, int pageNumber, int pageSize)
     {
         if (pageNumber < 1)
+        {
             throw new ArgumentOutOfRangeException("pageNumber", pageNumber, Strings.PageNumberBelow);
+        }
+
         if (pageSize < 1)
+        {
             throw new ArgumentOutOfRangeException("pageSize", pageSize, Strings.PageSizeLess);
+        }
+
         TotalItemCount = superset == null ? 0 : await superset.CountAsync();
         PageSize = pageSize;
         PageNumber = pageNumber;
@@ -49,8 +55,12 @@ public class PagedListAsync<T> : BasePagedList<T>
         var num = FirstItemOnPage + PageSize - 1;
         LastItemOnPage = num > TotalItemCount ? TotalItemCount : num;
         if (superset == null || TotalItemCount <= 0)
+        {
             return;
-        Subset.AddRange(pageNumber == 1 ? await superset.Skip(0).Take(pageSize).ToListAsync() : await superset.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync());
+        }
+
+        Subset.AddRange(pageNumber == 1 ? await superset.Skip(0).Take(pageSize).ToListAsync()
+            : await superset.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync());
     }
 }
 

@@ -10,13 +10,13 @@
     [RoutePrefix("navigation")]
     public class NavigationController : BaseController
     {
-        public TdDomainContext Context { get; set; }
-
         public NavigationController(TdDomainContext context)
         {
             Context = context;
             Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
+
+        public TdDomainContext Context { get; set; }
 
         [ChildActionOnly]
         [Route("project-menu")]
@@ -50,10 +50,12 @@
                 await Context.UserSettingsManager.UpdateUserSelectedProjectAsync(projectId, CurrentSession.UserId.ToString());
                 await Context.SaveChangesAsync();
             }
+
             if (Request.UrlReferrer == null)
             {
                 return RedirectToAction("Index", "Home");
             }
+
             return Redirect(Request.UrlReferrer.ToString());
         }
 

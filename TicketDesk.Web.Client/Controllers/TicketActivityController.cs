@@ -35,13 +35,13 @@ namespace TicketDesk.Web.Client.Controllers
     [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
     public class TicketActivityController : BaseController
     {
-        private TdDomainContext Context { get; set; }
-
         public TicketActivityController(TdDomainContext context)
         {
             Context = context;
             Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
+
+        private TdDomainContext Context { get; set; }
 
         [Route("load-activity")]
         public async Task<ActionResult> LoadActivity(TicketActivity activity, int ticketId, Guid? tempId)
@@ -56,6 +56,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 await SetProjectInfoForModelAsync(ticket);
             }
+
             return PartialView("_ActivityForm", ticket);
         }
 
@@ -179,8 +180,10 @@ namespace TicketDesk.Web.Client.Controllers
                        TicketDeskFileStore.DeleteAttachment(file, ticketId.ToString(CultureInfo.InvariantCulture), false);
                        sb.AppendLine(string.Format("<dd>    {0}</dd>", file));
                    }
+
                    sb.AppendLine("</dl>");
                }
+
                var filesAdded = ticket.CommitPendingAttachments(tempId).ToArray();
                if (filesAdded.Any())
                {
@@ -193,8 +196,10 @@ namespace TicketDesk.Web.Client.Controllers
                    {
                        sb.AppendLine(string.Format("<dd>    {0}</dd>", file));
                    }
+
                    sb.AppendLine("</dl>");
                }
+
                comment = sb.ToString();
 
                //perform the simple business domain functions
@@ -285,12 +290,14 @@ namespace TicketDesk.Web.Client.Controllers
                 {
                     ModelState.AddModelError("Security", ex);
                 }
+
                 var result = await Context.SaveChangesAsync(); //save changes catches lastupdatedby and date automatically
                 if (result > 0)
                 {
-                    return new EmptyResult();//standard success case
+                    return new EmptyResult(); //standard success case
                 }
             }
+
             //fail case, return the view and let the client/view sort out the errors
             ViewBag.CommentRequired = activity.IsCommentRequired();
             ViewBag.Activity = activity;

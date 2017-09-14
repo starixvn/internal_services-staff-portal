@@ -15,12 +15,12 @@
     [Route("{action=index}")]
     public class ProjectSettingsController : BaseController
     {
-        private TdDomainContext Context { get; set; }
-
         public ProjectSettingsController(TdDomainContext context)
         {
             Context = context;
         }
+
+        private TdDomainContext Context { get; set; }
 
         [Route("projects")]
         [NapAuth(FunctionKey = FunctionKeys.ProjectSettings, Policy = Constant.Policy.Read)]
@@ -53,6 +53,7 @@
                     return RedirectToAction("Index");
                 }
             }
+
             ModelState.AddModelError(string.Empty, Strings.UnableToCreateProject);
             return View();
         }
@@ -83,6 +84,7 @@
             {
                 ticket.ProjectId = reassignTo;
             }
+
             Context.Projects.Remove(project);
 
             var result = await Context.SaveChangesAsync();
@@ -104,6 +106,7 @@
             {
                 return RedirectToAction("Index");
             }
+
             await AddViewDataForEdit(projectId);
             return View(project);
         }
@@ -122,6 +125,7 @@
                     return RedirectToAction("Index");
                 }
             }
+
             await AddViewDataForEdit(projectId);
             return View(project);
         }

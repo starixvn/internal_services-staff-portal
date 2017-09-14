@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -31,29 +31,32 @@ namespace TicketDesk.Web.Client.Controllers
         [Route("upload")]
         public async Task<ActionResult> Upload(Guid tempId)
         {
-            var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false").Equals("true", StringComparison.InvariantCultureIgnoreCase);
+            var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false")
+                .Equals("true", StringComparison.InvariantCultureIgnoreCase);
             if (demoMode)
             {
                 return new EmptyResult();
             }
+
             //TODO: doesn't necessarily play well with large files, cap file upload size to something reasonable (define in settings) or use upload chunking
             foreach (string fileName in Request.Files)
             {
                 var file = Request.Files[fileName];
                 Debug.Assert(file != null, "file != null");
-                
+
                 await TicketDeskFileStore.SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true);
             }
-            return new JsonCamelCaseResult { Data = new { Message = string.Empty } };//dropzone expects a message property back
+
+            return new JsonCamelCaseResult { Data = new { Message = string.Empty } }; //dropzone expects a message property back
         }
 
         [HttpPost]
         [Route("delete")]
         public JsonResult Delete(Guid id, string fileName)
         {
-            //ticketdesk never lets the UI directly delete a file attachment unless it is a pending. 
+            //ticketdesk never lets the UI directly delete a file attachment unless it is a pending.
             TicketDeskFileStore.DeleteAttachment(fileName, id.ToString(), true);
-            return new JsonCamelCaseResult { Data = new { Message = string.Empty } };//dropzone expects a message property back
+            return new JsonCamelCaseResult { Data = new { Message = string.Empty } }; //dropzone expects a message property back
         }
 
         [HttpGet]
@@ -87,7 +90,6 @@ namespace TicketDesk.Web.Client.Controllers
                 Url = Url.RouteUrl("GetAttachedFile", new { Id = id.Value, FileName = f.Name })
             } : null));
 
-
             return new JsonCamelCaseResult
             {
                 Data = files,
@@ -104,7 +106,8 @@ namespace TicketDesk.Web.Client.Controllers
         private ActionResult FetchFile(string fileName, string container, bool isPending)
         {
             var fstream = TicketDeskFileStore.GetFile(fileName, container, isPending);
-            return new FileStreamResult(fstream, "application/octet-stream");//always send it back as octet-stream so client browser actually downloads it, instead of displaying it on-screen
+            //always send it back as octet-stream so client browser actually downloads it, instead of displaying it on-screen
+            return new FileStreamResult(fstream, "application/octet-stream");
         }
     }
 }

@@ -35,13 +35,13 @@ namespace TicketDesk.Web.Client.Controllers
     [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
     public class TicketController : BaseController
     {
-        private TdDomainContext Context { get; set; }
-
         public TicketController(TdDomainContext context)
         {
             Context = context;
             Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
+
+        private TdDomainContext Context { get; set; }
 
         public RedirectToRouteResult Index()
         {
@@ -56,6 +56,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 return RedirectToAction("Index", "TicketCenter");
             }
+
             ViewBag.IsEditorDefaultHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
 
             return View(model);
@@ -108,6 +109,7 @@ namespace TicketDesk.Web.Client.Controllers
                     //TODO: catch rule exceptions? or can annotations handle this fully now?
                 }
             }
+
             ViewBag.TempId = tempId;
             await SetProjectInfoForModelAsync(ticket);
             return View(ticket);
@@ -145,9 +147,9 @@ namespace TicketDesk.Web.Client.Controllers
         public async Task<JsonResult> ChangeTicketSubscription(int ticketId)
         {
             var userId = Context.SecurityProvider.CurrentUserId;
-            var ticket = await Context.Tickets.Include(t => t.TicketSubscribers).Include(t => t.TicketEvents.Select(e => e.TicketEventNotifications)).FirstOrDefaultAsync(t => t.TicketId == ticketId);
-            var subscriber =
-                ticket.TicketSubscribers.FirstOrDefault(s => s.SubscriberId == Context.SecurityProvider.CurrentUserId);
+            var ticket = await Context.Tickets.Include(t => t.TicketSubscribers)
+                .Include(t => t.TicketEvents.Select(e => e.TicketEventNotifications)).FirstOrDefaultAsync(t => t.TicketId == ticketId);
+            var subscriber = ticket.TicketSubscribers.FirstOrDefault(s => s.SubscriberId == Context.SecurityProvider.CurrentUserId);
             var isSubscribed = false;
             if (subscriber == null)
             {
@@ -162,6 +164,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 ticket.TicketSubscribers.Remove(subscriber);
             }
+
             await Context.SaveChangesAsync();
             return new JsonCamelCaseResult { Data = new { IsSubscribed = isSubscribed } };
         }

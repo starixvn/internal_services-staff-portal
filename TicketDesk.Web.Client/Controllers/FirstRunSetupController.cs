@@ -36,11 +36,6 @@ namespace TicketDesk.Web.Client.Controllers
     [WhenSetupEnabled]
     public class FirstRunSetupController : Controller
     {
-        private TicketDeskUserManager UserManager { get; set; }
-        private TicketDeskSignInManager SignInManager { get; set; }
-
-        private SystemInfoViewModel Model { get; set; }
-
         public FirstRunSetupController(
             TicketDeskUserManager userManager,
             TicketDeskSignInManager signInManager)
@@ -49,6 +44,12 @@ namespace TicketDesk.Web.Client.Controllers
             SignInManager = signInManager;
             Model = new SystemInfoViewModel();
         }
+
+        private TicketDeskUserManager UserManager { get; set; }
+
+        private TicketDeskSignInManager SignInManager { get; set; }
+
+        private SystemInfoViewModel Model { get; set; }
 
         // GET: FirstRunSetup
         [Route("", Name = "first-run-setup")]
@@ -68,6 +69,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 LegacySecurityMigrator.RemoveLegacyMembershipObjects(identityCtx);
             }
+
             return RedirectToAction("Index");
         }
 
@@ -135,12 +137,14 @@ namespace TicketDesk.Web.Client.Controllers
                     {
                         GlobalFilters.Filters.Remove(filter.Instance);
                     }
+
                     Database.SetInitializer(new TdIdentityDbInitializer());
                     Database.SetInitializer(new TdPushNotificationDbInitializer());
                     Startup.ConfigurePushNotifications();
                     UpdateSearchIndex();
                 }
             }
+
             return View();
         }
 
@@ -197,6 +201,7 @@ namespace TicketDesk.Web.Client.Controllers
                     await UserManager.AddToRoleAsync(existingUser.Id, "TdAdministrators");
                 }
             }
+
             Database.SetInitializer(new TdPushNotificationDbInitializer());
 
             Startup.ConfigurePushNotifications();
@@ -222,6 +227,7 @@ namespace TicketDesk.Web.Client.Controllers
                     notificationContext.SaveChanges();
                 }
             }
+
             UpdateSearchIndex();
             return RedirectToAction("Index");
         }
@@ -233,6 +239,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 return new EmptyResult();
             }
+
             return PartialView("_AzureInfo", Model);
         }
 
@@ -255,6 +262,7 @@ namespace TicketDesk.Web.Client.Controllers
                 ViewBag.ErrorAzureDbDoesNotExist = !Model.DatabaseStatus.DatabaseExists;
                 ViewBag.WarnNotAnAzureDb = !Model.AzureInfo.IsSqlAzure;
             }
+
             return View("_NewDatabase", Model);
         }
 
@@ -265,6 +273,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 return new EmptyResult();
             }
+
             return View("_LegacyDatabase", Model);
         }
 
@@ -275,6 +284,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 return new EmptyResult();
             }
+
             return View("_LegacySecurity", Model);
         }
 
@@ -287,6 +297,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 return new EmptyResult();
             }
+
             return View("_SetupCompleteInfo", Model);
         }
     }

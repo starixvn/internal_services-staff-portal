@@ -28,13 +28,13 @@ namespace TicketDesk.Web.Client.Controllers
     [Route("{action=index}")]
     public class SearchController : BaseController
     {
-        private TdDomainContext Context { get; set; }
-
         public SearchController(TdDomainContext context)
         {
             Context = context;
             Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
+
+        private TdDomainContext Context { get; set; }
 
         [Route("")]
         [Route("{term}")]
@@ -55,6 +55,7 @@ namespace TicketDesk.Web.Client.Controllers
 
                 return View(model);
             }
+
             return View(new Ticket[0]);
         }
     }

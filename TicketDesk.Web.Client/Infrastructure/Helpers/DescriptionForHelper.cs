@@ -43,7 +43,10 @@ namespace TicketDesk.Web.Client
         {
             var attr = (DescriptionAttribute)modelType.GetCustomAttributes(typeof(LocalizedDescriptionAttribute), false).FirstOrDefault();
             if (attr == null)
+            {
                 attr = (DescriptionAttribute)modelType.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault();
+            }
+
             return GetDescriptionFromAttribute(cssClassName, tagName, attr);
         }
 

@@ -19,14 +19,15 @@
     [TdAuthorize(Roles = "TdAdministrators")]
     public class UserAdministrationController : Controller
     {
-        private TicketDeskUserManager UserManager { get; set; }
-        private TicketDeskRoleManager RoleManager { get; set; }
-
         public UserAdministrationController(TicketDeskUserManager userManager, TicketDeskRoleManager roleManager)
         {
             UserManager = userManager;
             RoleManager = roleManager;
         }
+
+        private TicketDeskUserManager UserManager { get; set; }
+
+        private TicketDeskRoleManager RoleManager { get; set; }
 
         [Route("users/{page:int?}")]
         public async Task<ActionResult> Index(int? page)
@@ -53,6 +54,7 @@
             {
                 return RedirectToAction("Index");
             }
+
             var model = new UserAccountInfoViewModel(user, user.Roles.Select(r => r.RoleId));
             var tdPendingRole = RoleManager.Roles.FirstOrDefault(r => r.Name == "TdPendingUsers");
 
@@ -70,6 +72,7 @@
             {
                 return View(model);
             }
+
             var user = await UserManager.FindByIdAsync(model.User.Id);
             var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false").Equals("true", StringComparison.InvariantCultureIgnoreCase);
 

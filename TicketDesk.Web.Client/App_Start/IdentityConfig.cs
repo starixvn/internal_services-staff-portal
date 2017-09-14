@@ -3,22 +3,20 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
-using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace TicketDesk.Web.Client
 {
-    //TODO: This file is from the sample template, leaving here for now until I figure out what to do with two factor and where to put it
-
-
+    // TODO: This file is from the sample template, leaving here for now until I figure out what to do with two factor and where to put it
 
     //TODO: What to do with this?
     public class EmailService : IIdentityMessageService
@@ -39,8 +37,4 @@ namespace TicketDesk.Web.Client
             return Task.FromResult(0);
         }
     }
-
-
-
-
 }

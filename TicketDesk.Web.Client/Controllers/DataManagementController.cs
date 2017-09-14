@@ -29,12 +29,6 @@ namespace TicketDesk.Web.Client.Controllers
     [Route("{action=index}")]
     public class DataManagementController : Controller
     {
-        private TdIdentityContext IdentityContext { get; set; }
-
-        private TdPushNotificationContext PushNotificationContext { get; set; }
-
-        private TicketDeskSignInManager SignInManager { get; set; }
-
         public DataManagementController(
             TdIdentityContext identityContext,
             TdPushNotificationContext pushNotificationContext,
@@ -44,6 +38,12 @@ namespace TicketDesk.Web.Client.Controllers
             PushNotificationContext = pushNotificationContext;
             SignInManager = signInManager;
         }
+
+        private TdIdentityContext IdentityContext { get; set; }
+
+        private TdPushNotificationContext PushNotificationContext { get; set; }
+
+        private TicketDeskSignInManager SignInManager { get; set; }
 
         [Route("demo")]
         [NapAuth(FunctionKey = FunctionKeys.DataManagement, Policy = Constant.Policy.Read)]
@@ -60,6 +60,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 DemoDataManager.RemoveAllData(ctx);
             }
+
             DemoIdentityDataManager.RemoveIdentity(IdentityContext, User.Identity.GetUserId());
             DemoPushNotificationDataManager.RemoveAllPushNotificationData(PushNotificationContext);
             ViewBag.DemoDataRemoved = true;
@@ -76,6 +77,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 DemoDataManager.SetupDemoData(ctx);
             }
+
             DemoIdentityDataManager.SetupDemoIdentityData(IdentityContext, User.Identity.GetUserId());
             DemoPushNotificationDataManager.SetupDemoPushNotificationData(PushNotificationContext);
             ViewBag.DemoDataCreated = true;
