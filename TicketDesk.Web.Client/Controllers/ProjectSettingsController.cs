@@ -23,26 +23,26 @@
         }
 
         [Route("projects")]
-        [NapAuth(FunctionKey = "ProjectSettings", Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.ProjectSettings, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> Index()
         {
             var model = Context.Projects.Select(p => new ProjectListViewModelItem { Project = p, NumberOfTickets = p.Tickets.Count });
-            ViewBag.IsHost = NapContextHelper.HasRight("ProjectSettings", Constant.Policy.Host);
+            ViewBag.IsHost = NapContextHelper.HasRight(FunctionKeys.ProjectSettings, Constant.Policy.Host);
             await model.LoadAsync();
 
             return View(model);
         }
 
         [Route("project/new")]
-        [NapAuth(FunctionKey = "ProjectSettings", Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.ProjectSettings, Policy = Constant.Policy.Host)]
         public ActionResult New()
         {
             return View();
         }
 
         [Route("project/new")]
-        [NapAuth(FunctionKey = "ProjectSettings", Policy = Constant.Policy.Host)]
         [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.ProjectSettings, Policy = Constant.Policy.Host)]
         public async Task<ActionResult> New(Project project)
         {
             if (ModelState.IsValid)
@@ -53,13 +53,13 @@
                     return RedirectToAction("Index");
                 }
             }
-            ModelState.AddModelError("", Strings.UnableToCreateProject);
+            ModelState.AddModelError(string.Empty, Strings.UnableToCreateProject);
             return View();
         }
 
         [Route("project/delete/{projectId:int}")]
-        [NapAuth(FunctionKey = "ProjectSettings", Policy = Constant.Policy.Host)]
         [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.ProjectSettings, Policy = Constant.Policy.Host)]
         public async Task<ActionResult> Delete(int projectId, int reassignTo)
         {
             //does project to delete exist?
@@ -91,12 +91,12 @@
                 RedirectToAction("Index");
             }
 
-            ModelState.AddModelError("", Strings.UnableToRemoveProject);
+            ModelState.AddModelError(string.Empty, Strings.UnableToRemoveProject);
             return RedirectToAction("Edit", new { projectId });
         }
 
         [Route("project/{projectId:int}")]
-        [NapAuth(FunctionKey = "ProjectSettings", Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.ProjectSettings, Policy = Constant.Policy.Host)]
         public async Task<ActionResult> Edit(int projectId)
         {
             var project = await Context.Projects.FindAsync(projectId);
@@ -109,8 +109,8 @@
         }
 
         [Route("project/{projectId:int}")]
-        [NapAuth(FunctionKey = "ProjectSettings", Policy = Constant.Policy.Host)]
         [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.ProjectSettings, Policy = Constant.Policy.Host)]
         public async Task<ActionResult> Edit(Project project, int projectId)
         {
             var existing = await Context.Projects.FindAsync(projectId);

@@ -39,7 +39,7 @@ namespace TicketDesk.Web.Client.Controllers
         [Route("")]
         [Route("{term}")]
         [HttpGet]
-        [NapAuth(FunctionKey = "QuickSearch", Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.QuickSearch, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> Index(string term)
         {
             var projectId = await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context);

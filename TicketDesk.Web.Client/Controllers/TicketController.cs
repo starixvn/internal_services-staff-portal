@@ -32,8 +32,7 @@ namespace TicketDesk.Web.Client.Controllers
     /// </summary>
     [RoutePrefix("ticket")]
     [Route("{action=index}")]
-    //[TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
-    [NapAuth(FunctionKey = "TicketManagement", Policy = Constant.Policy.Read)]
+    [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
     public class TicketController : BaseController
     {
         private TdDomainContext Context { get; set; }

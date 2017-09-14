@@ -43,12 +43,12 @@ namespace TicketDesk.Web.Client.Controllers
             DomainContext = domainContext;
         }
 
-        [NapAuth(FunctionKey = "PushNotificationSettings", Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.PushNotificationSettings, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             ViewBag.CurrentRootUrl = GetCurrentRootUrl();
             ViewBag.SiteRootUrl = GetRootUrlSetting();
-            ViewBag.IsHost = NapContextHelper.HasRight("PushNotificationSettings", Constant.Policy.Host);
+            ViewBag.IsHost = NapContextHelper.HasRight(FunctionKeys.PushNotificationSettings, Constant.Policy.Host);
 
             var dbSetting = NoteContext.TicketDeskPushNotificationSettings;
 
@@ -56,7 +56,7 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = "PushNotificationSettings", Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.PushNotificationSettings, Policy = Constant.Policy.Host)]
         public ActionResult Index(ApplicationPushNotificationSetting settings, string siteRootUrl)
         {
             var dbSetting = NoteContext.TicketDeskPushNotificationSettings;
@@ -70,7 +70,7 @@ namespace TicketDesk.Web.Client.Controllers
 
             ViewBag.CurrentRootUrl = GetCurrentRootUrl();
             ViewBag.SiteRootUrl = GetRootUrlSetting();
-            ViewBag.IsHost = NapContextHelper.HasRight("PushNotificationSettings", Constant.Policy.Host);
+            ViewBag.IsHost = NapContextHelper.HasRight(FunctionKeys.PushNotificationSettings, Constant.Policy.Host);
 
             Task.Delay(500).ContinueWith(t => System.Web.HttpRuntime.UnloadAppDomain()).ConfigureAwait(false);
 
@@ -78,7 +78,7 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("list-providers")]
-        [NapAuth(FunctionKey = "PushNotificationSettings", Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.PushNotificationSettings, Policy = Constant.Policy.Read)]
         public ActionResult ListDeliveryProviderSettings()
         {
             var interfaceType = typeof(IPushNotificationDeliveryProvider);
@@ -96,13 +96,13 @@ namespace TicketDesk.Web.Client.Controllers
                 model.Add(c, settings ?? new ApplicationPushNotificationSetting.PushNotificationDeliveryProviderSetting());
             }
 
-            ViewBag.IsHost = NapContextHelper.HasRight("PushNotificationSettings", Constant.Policy.Host);
+            ViewBag.IsHost = NapContextHelper.HasRight(FunctionKeys.PushNotificationSettings, Constant.Policy.Host);
 
             return PartialView(model);
         }
 
         [Route("configure-provider")]
-        [NapAuth(FunctionKey = "PushNotificationSettings", Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.PushNotificationSettings, Policy = Constant.Policy.Read)]
         public ActionResult ConfigureDeliveryProvider(string providerAssemblyQualifiedName)
         {
             var provider = GetProvider(providerAssemblyQualifiedName);
@@ -112,13 +112,13 @@ namespace TicketDesk.Web.Client.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IsHost = NapContextHelper.HasRight("PushNotificationSettings", Constant.Policy.Host);
+            ViewBag.IsHost = NapContextHelper.HasRight(FunctionKeys.PushNotificationSettings, Constant.Policy.Host);
             return View(settings);
         }
 
         [HttpPost]
         [Route("configure-provider")]
-        [NapAuth(FunctionKey = "PushNotificationSettings", Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.PushNotificationSettings, Policy = Constant.Policy.Host)]
         public async Task<ActionResult> ConfigureDeliveryProvider(string providerAssemblyQualifiedName, bool isEnabled,
             FormCollection form)
         {
@@ -147,7 +147,7 @@ namespace TicketDesk.Web.Client.Controllers
                 }
             }
 
-            ViewBag.IsHost = NapContextHelper.HasRight("PushNotificationSettings", Constant.Policy.Host);
+            ViewBag.IsHost = NapContextHelper.HasRight(FunctionKeys.PushNotificationSettings, Constant.Policy.Host);
 
             return View(settings);
         }

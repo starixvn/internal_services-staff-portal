@@ -36,7 +36,7 @@ namespace TicketDesk.Web.Client.Controllers
             IsAzureSearchDetected = TdSearchContext.Current.IndexManager.GetType() == typeof(AzureIndexProvider);
         }
 
-        [NapAuth(FunctionKey = "ApplicationSettings", Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.ApplicationSettings, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var dbSetting = Context.TicketDeskSettings;
@@ -46,8 +46,8 @@ namespace TicketDesk.Web.Client.Controllers
             return View(dbSetting);
         }
 
-        [NapAuth(FunctionKey = "ApplicationSettings", Policy = Constant.Policy.Host)]
         [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.ApplicationSettings, Policy = Constant.Policy.Host)]
         public ActionResult Index(
             ApplicationSetting settings,
             [ModelBinder(typeof(CommaSeparatedModelBinder))] string[] categories,
@@ -68,7 +68,7 @@ namespace TicketDesk.Web.Client.Controllers
                 Context.SaveChanges();
             }
             ViewBag.IsAzureSearchEnabled = IsAzureSearchDetected;
-            ViewBag.IsHost = NapContextHelper.HasRight("ApplicationSettings", Constant.Policy.Host);
+            ViewBag.IsHost = NapContextHelper.HasRight(FunctionKeys.ApplicationSettings, Constant.Policy.Host);
 
             return View(dbSetting);
         }

@@ -46,14 +46,14 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("demo")]
-        [NapAuth(FunctionKey = "DataManagement", Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.DataManagement, Policy = Constant.Policy.Read)]
         public ActionResult Demo()
         {
             return View();
         }
 
         [Route("remove-demo-data")]
-        [NapAuth(FunctionKey = "DataManagement", Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.DataManagement, Policy = Constant.Policy.Read)]
         public ActionResult RemoveDemoData()
         {
             using (var ctx = new TdDomainContext(null))
@@ -69,7 +69,7 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("create-demo-data")]
-        [NapAuth(FunctionKey = "DataManagement", Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.DataManagement, Policy = Constant.Policy.Read)]
         public ActionResult CreateDemoData()
         {
             using (var ctx = new TdDomainContext(null))

@@ -33,14 +33,14 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("")]
-        [NapAuth(FunctionKey = "SearchManagement", Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.SearchManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             return View();
         }
 
         [Route("remove-index")]
-        [NapAuth(FunctionKey = "SearchManagement", Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.SearchManagement, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> RemoveIndex()
         {
             await TdSearchContext.Current.IndexManager.RemoveIndexAsync();
@@ -49,7 +49,7 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("populate-index")]
-        [NapAuth(FunctionKey = "SearchManagement", Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.SearchManagement, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> PopulateIndex()
         {
             await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync();
