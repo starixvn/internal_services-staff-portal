@@ -9,28 +9,30 @@
 
     public class BaseController : Controller
     {
-        public BaseController() : this(null, null, null)
+        public BaseController()
         {
+            NapContextHelper = new ContextHelper();
         }
 
-        public BaseController(
-            ICurrentSession currentSession,
-            ICurrentContext currentContext,
-            IUserService userService)
-        {
-            CurrentSession = currentSession ?? new CurrentSession();
-            CurrentContext = currentContext ?? new CurrentContext();
-            UserService = userService ?? new UserService();
+        protected ContextHelper NapContextHelper { get; private set; }
 
-            NapContextHelper = new ContextHelper(CurrentSession, CurrentContext, UserService);
+        protected ICurrentSession CurrentSession
+        {
+            get { return NapContextHelper.CurrentSession; }
+
+            set { NapContextHelper.CurrentSession = value; }
         }
 
-        protected ContextHelper NapContextHelper { get; }
+        protected ICurrentContext CurrentContext
+        {
+            get { return NapContextHelper.CurrentContext; }
 
-        protected ICurrentSession CurrentSession { get; }
+            set { NapContextHelper.CurrentContext = value; }
+        }
 
-        protected ICurrentContext CurrentContext { get; }
-
-        protected IUserService UserService { get; }
+        protected IUserService UserService
+        {
+            get { return NapContextHelper.UserService; }
+        }
     }
 }
