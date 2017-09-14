@@ -13,7 +13,9 @@
 
 namespace TicketDesk.Domain
 {
+    using Fanex.NAP.Core.Business;
     using System;
+    using System.Security;
     using TicketDesk.Domain.Model;
 
     /// <summary>
@@ -93,14 +95,14 @@ namespace TicketDesk.Domain
         public TicketActivity GetValidTicketActivities(Ticket ticket)
         {
             //Role
-            //if (!(IsTdAdministrator || IsTdHelpDeskUser || IsTdInternalUser))
-            //{
-            //    throw new SecurityException("User is not authorized to read ticket data.");
-            //}
+            if (!(IsReadTicketManagement || IsHostTicketManagement))
+            {
+                throw new SecurityException("User is not authorized to read ticket data.");
+            }
             var validTicketActivities = ticket.GetAvailableActivites(CurrentUserId);
-            var allowedActivities = IsTdAdministrator
+            var allowedActivities = IsHostTicketManagement
                 ? GetAdministratorUserPermissions()
-                : IsTdHelpDeskUser
+                : IsHostTicketManagement
                     ? GetHelpDeskUserPermissions()
                     : GetInternalUserPermissions();
             return (validTicketActivities & allowedActivities);
@@ -112,5 +114,15 @@ namespace TicketDesk.Domain
         }
 
         public abstract IContextHelper NapContextHelper { get; set; }
+
+        public bool IsReadTicketManagement
+        {
+            get { return NapContextHelper.HasRight("TicketManagement", Constant.Policy.Read); }
+        }
+
+        public bool IsHostTicketManagement
+        {
+            get { return NapContextHelper.HasRight("TicketManagement", Constant.Policy.Host); }
+        }
     }
 }

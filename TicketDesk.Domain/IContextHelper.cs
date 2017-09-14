@@ -17,6 +17,8 @@
 
         IUserService UserService { get; }
 
+        IFunctionService FunctionService { get; }
+
         bool HasRight(string functionKey, Constant.Policy policy);
     }
 }

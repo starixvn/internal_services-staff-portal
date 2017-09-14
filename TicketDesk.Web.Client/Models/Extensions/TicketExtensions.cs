@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -25,7 +25,6 @@ using TicketDesk.Web.Client.Models;
 using TicketDesk.Web.Identity;
 using TicketDesk.Web.Identity.Model;
 using TicketDesk.Localization.Models;
-
 
 namespace TicketDesk.Domain.Model
 {
@@ -80,7 +79,6 @@ namespace TicketDesk.Domain.Model
 
         public static HtmlString HtmlDetails(this Ticket ticket)
         {
-           
             var content = (ticket.IsHtml) ? ticket.Details : ticket.Details.HtmlFromMarkdown();
             var san = new HtmlSanitizer();
             return new HtmlString(san.Sanitize(content));
@@ -128,7 +126,6 @@ namespace TicketDesk.Domain.Model
             return all.ToUserSelectList(false, ticket.Owner);
         }
 
-
         public static SelectList GetAssignedToList(this Ticket ticket, bool excludeCurrentUser = false, bool excludeCurrentAssignedTo = false, bool includeEmptyText = true)
         {
             var roleManager = DependencyResolver.Current.GetService<TicketDeskRoleManager>();
@@ -149,39 +146,40 @@ namespace TicketDesk.Domain.Model
         public static bool AllowEditTags(this Ticket ticket)
         {
             //TODO: is this the best place to put this check?
-            
-            return true;
-
-            //var context = DependencyResolver.Current.GetService<TdDomainContext>();
+            //ROLE
             //return context.SecurityProvider.IsTdHelpDeskUser || context.TicketDeskSettings.Permissions.AllowInternalUsersToEditTags;
+
+            var context = DependencyResolver.Current.GetService<TdDomainContext>();
+            return context.SecurityProvider.IsHostTicketManagement || context.TicketDeskSettings.Permissions.AllowInternalUsersToEditTags;
         }
 
         public static bool AllowSetOwner(this Ticket ticket)
         {
             //TODO: is this the best place to put this check? Is this one even worth the extension?
-
-            return true;
-            //var context = DependencyResolver.Current.GetService<TdDomainContext>();
+            //ROLE
             //return (context.SecurityProvider.IsTdInternalUser && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetOwner) || (context.SecurityProvider.IsTdHelpDeskUser || context.SecurityProvider.IsTdAdministrator);
+
+            var context = DependencyResolver.Current.GetService<TdDomainContext>();
+            return (context.SecurityProvider.IsReadTicketManagement && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetOwner) || (context.SecurityProvider.IsHostTicketManagement);
         }
 
         public static bool AllowSetAssigned(this Ticket ticket)
         {
             //TODO: is this the best place to put this check? Is this one even worth the extension?
-
-            return true;
-
-            //var context = DependencyResolver.Current.GetService<TdDomainContext>();
+            //ROLE
             //return (context.SecurityProvider.IsTdInternalUser && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetAssigned) || (context.SecurityProvider.IsTdHelpDeskUser || context.SecurityProvider.IsTdAdministrator);
 
+            var context = DependencyResolver.Current.GetService<TdDomainContext>();
+            return (context.SecurityProvider.IsReadTicketManagement && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetAssigned) || (context.SecurityProvider.IsHostTicketManagement);
         }
 
         public static bool AllowEditPriorityList(this Ticket ticket)
         {
             //TODO: is this the best place to put this check?
-            return true;
-            //var context = DependencyResolver.Current.GetService<TdDomainContext>();
+            //ROLE
             //return (context.SecurityProvider.IsTdAdministrator || context.SecurityProvider.IsTdHelpDeskUser) || (context.SecurityProvider.IsTdInternalUser &&  context.TicketDeskSettings.Permissions.AllowInternalUsersToEditPriority);
+            var context = DependencyResolver.Current.GetService<TdDomainContext>();
+            return (context.SecurityProvider.IsHostTicketManagement) || (context.SecurityProvider.IsReadTicketManagement && context.TicketDeskSettings.Permissions.AllowInternalUsersToEditPriority);
         }
 
         /// <summary>
@@ -205,5 +203,4 @@ namespace TicketDesk.Domain.Model
             return attachments.Select(a => a.Name);
         }
     }
-
 }

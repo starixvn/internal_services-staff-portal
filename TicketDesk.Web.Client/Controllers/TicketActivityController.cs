@@ -3,14 +3,13 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
-
 
 namespace TicketDesk.Web.Client.Controllers
 {
@@ -30,18 +29,19 @@ namespace TicketDesk.Web.Client.Controllers
     using TicketDesk.IO;
     using TicketDesk.Localization.Controllers;
 
-
     [RoutePrefix("ticket-activity")]
     [Route("{action}")]
     [ValidateInput(false)]
     //[TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
     [NapAuth(FunctionKey = "TicketManagement", Policy = Constant.Policy.Read)]
-    public class TicketActivityController : Controller
+    public class TicketActivityController : BaseController
     {
         private TdDomainContext Context { get; set; }
+
         public TicketActivityController(TdDomainContext context)
         {
             Context = context;
+            Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
 
         [Route("load-activity")]
@@ -161,7 +161,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 return new EmptyResult();
             }
-            //most of this action is performed directly against the storage provider, outside the business domain's control. 
+            //most of this action is performed directly against the storage provider, outside the business domain's control.
             //  All the business domain has to do is record the activity log and comments
             Action<Ticket> activityFn = ticket =>
            {
@@ -173,7 +173,6 @@ namespace TicketDesk.Web.Client.Controllers
                    sb.AppendLine("<dl><dt>");
                    sb.AppendLine(Strings.RemovedFiles);
                    sb.AppendLine("</dt>");
-
 
                    var files = deleteFiles.Split(',');
                    foreach (var file in files)
@@ -272,7 +271,6 @@ namespace TicketDesk.Web.Client.Controllers
             var activityFn = Context.TicketActions.TakeOver(comment, priority);
             return await PerformTicketAction(ticketId, activityFn, TicketActivity.TakeOver);
         }
-
 
         private async Task<ActionResult> PerformTicketAction(int ticketId, Action<Ticket> activityFn, TicketActivity activity)
         {

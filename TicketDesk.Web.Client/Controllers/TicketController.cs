@@ -41,6 +41,7 @@ namespace TicketDesk.Web.Client.Controllers
         public TicketController(TdDomainContext context)
         {
             Context = context;
+            Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
 
         public RedirectToRouteResult Index()
@@ -66,7 +67,7 @@ namespace TicketDesk.Web.Client.Controllers
         {
             var model = new Ticket
             {
-                Owner = Context.SecurityProvider.CurrentUserId,
+                Owner = CurrentSession.UserId.ToString(),
                 IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote"
             };
 
@@ -175,7 +176,7 @@ namespace TicketDesk.Web.Client.Controllers
                 ViewBag.IsMultiProject = isMulti;
 
                 //set to first project if only one project exists, otherwise use user's selected project
-                ticket.ProjectId = (isMulti) ? await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context, CurrentSession.UserId.ToString()) : projects.FirstOrDefault();
+                ticket.ProjectId = (isMulti) ? await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context) : projects.FirstOrDefault();
             }
         }
 

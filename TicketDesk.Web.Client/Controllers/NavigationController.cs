@@ -15,6 +15,7 @@
         public NavigationController(TdDomainContext context)
         {
             Context = context;
+            Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
 
         [ChildActionOnly]
@@ -31,7 +32,7 @@
             var modelProjects = projects.ToList();
 
             //get user's selected project
-            var projectId = AsyncHelper.RunSync(() => Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context, CurrentSession.UserId.ToString()));
+            var projectId = AsyncHelper.RunSync(() => Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context));
 
             //add the "all projects item" then get a select list to render
             modelProjects.Insert(0, new Project { ProjectId = 0, ProjectName = Strings.ModelProjects_DefaultOption, ProjectDescription = string.Empty });
@@ -46,7 +47,7 @@
             //only switch projects if project exists, or selection is the "all projects" option
             if (projectId == 0 || Context.Projects.Any(p => p.ProjectId == projectId))
             {
-                await Context.UserSettingsManager.UpdateUserSelectedProjectAsync(projectId, Context.SecurityProvider.CurrentUserId);
+                await Context.UserSettingsManager.UpdateUserSelectedProjectAsync(projectId, CurrentSession.UserId.ToString());
                 await Context.SaveChangesAsync();
             }
             if (Request.UrlReferrer == null)

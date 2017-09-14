@@ -64,7 +64,7 @@ namespace TicketDesk.Web.Client.Models
             var filterColumns = CurrentListSetting.FilterColumns.ToList();
 
             //if filtering by project, add filter for selected project
-            var projectId = await context.UserSettingsManager.GetUserSelectedProjectIdAsync(context, napUserId);
+            var projectId = await context.UserSettingsManager.GetUserSelectedProjectIdAsync(context);
             if (projectId != default(int))
             {
                 filterColumns.Add(new UserTicketListFilterColumn("ProjectId", true, projectId));

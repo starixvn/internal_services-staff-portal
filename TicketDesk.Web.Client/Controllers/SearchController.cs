@@ -32,6 +32,7 @@ namespace TicketDesk.Web.Client.Controllers
         public SearchController(TdDomainContext context)
         {
             Context = context;
+            Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
 
         [Route("")]
@@ -39,7 +40,7 @@ namespace TicketDesk.Web.Client.Controllers
         [HttpGet]
         public async Task<ActionResult> Index(string term)
         {
-            var projectId = await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context, CurrentSession.OnUserId.ToString());
+            var projectId = await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context);
             if (!string.IsNullOrEmpty(term))
             {
                 var model = await TdSearchContext.Current.SearchAsync(Context.Tickets.Include(t => t.Project), term, projectId);
