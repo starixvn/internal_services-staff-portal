@@ -33,7 +33,7 @@ namespace TicketDesk.Domain
 
         public abstract Func<string, string> GetUserDisplayName { get; }
 
-        public abstract string CurrentUserId { get; set; }
+        public abstract string CurrentUserId { get; }
 
         public string CurrentUserDisplayName
         {

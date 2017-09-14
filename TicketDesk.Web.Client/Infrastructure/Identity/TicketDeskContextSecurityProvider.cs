@@ -28,12 +28,15 @@ namespace TicketDesk.Web.Client
         public TicketDeskContextSecurityProvider()
         {
             UserManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
-            CurrentUserId = HttpContext.Current.User.Identity.GetUserId();
+            //CurrentUserId = HttpContext.Current.User.Identity.GetUserId();
         }
 
         public override IContextHelper NapContextHelper { get; set; }
 
-        public override string CurrentUserId { get; set; }
+        public override string CurrentUserId
+        {
+            get { return NapContextHelper.CurrentSession.UserId.ToString(); }
+        }
 
         protected override Func<string, bool> GetIsTdHelpDeskUser
         {
@@ -57,7 +60,10 @@ namespace TicketDesk.Web.Client
 
         public override Func<string, string> GetUserDisplayName
         {
-            get { return userId => UserManager.InfoCache.GetUserInfo(userId).IfNotNull(i => i.DisplayName); }
+            get
+            {
+                return userId => UserManager.InfoCache.GetUserInfo(userId).IfNotNull(i => i.DisplayName);
+            }
         }
     }
 }
