@@ -3,29 +3,30 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
-
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Migrations;
-using TicketDesk.PushNotifications;
-using TicketDesk.PushNotifications.Migrations;
-using TicketDesk.Web.Identity;
-using TicketDesk.Web.Identity.Migrations;
 
 namespace TicketDesk.Web.Client.Controllers
 {
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using Microsoft.AspNet.Identity;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+    using TicketDesk.Domain;
+    using TicketDesk.Domain.Migrations;
+    using TicketDesk.PushNotifications;
+    using TicketDesk.PushNotifications.Migrations;
+    using TicketDesk.Web.Identity;
+    using TicketDesk.Web.Identity.Migrations;
+
     [RoutePrefix("admin/data-management")]
     [Route("{action=index}")]
-    [TdAuthorize(Roles = "TdAdministrators")]
     public class DataManagementController : Controller
     {
         private TdIdentityContext IdentityContext { get; set; }
@@ -34,7 +35,10 @@ namespace TicketDesk.Web.Client.Controllers
 
         private TicketDeskSignInManager SignInManager { get; set; }
 
-        public DataManagementController(TdIdentityContext identityContext, TdPushNotificationContext pushNotificationContext, TicketDeskSignInManager signInManager)
+        public DataManagementController(
+            TdIdentityContext identityContext,
+            TdPushNotificationContext pushNotificationContext,
+            TicketDeskSignInManager signInManager)
         {
             IdentityContext = identityContext;
             PushNotificationContext = pushNotificationContext;
@@ -42,12 +46,14 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("demo")]
+        [NapAuth(FunctionKey = "DataManagement", Policy = Constant.Policy.Read)]
         public ActionResult Demo()
         {
             return View();
         }
 
         [Route("remove-demo-data")]
+        [NapAuth(FunctionKey = "DataManagement", Policy = Constant.Policy.Read)]
         public ActionResult RemoveDemoData()
         {
             using (var ctx = new TdDomainContext(null))
@@ -63,6 +69,7 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("create-demo-data")]
+        [NapAuth(FunctionKey = "DataManagement", Policy = Constant.Policy.Read)]
         public ActionResult CreateDemoData()
         {
             using (var ctx = new TdDomainContext(null))

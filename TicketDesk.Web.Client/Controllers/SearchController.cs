@@ -11,20 +11,21 @@
 // attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
-using System.Linq;
-using System.Data.Entity;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Model;
-using TicketDesk.Search.Common;
-using TicketDesk.Localization.Controllers;
-
 namespace TicketDesk.Web.Client.Controllers
 {
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+    using TicketDesk.Domain;
+    using TicketDesk.Domain.Model;
+    using TicketDesk.Localization.Controllers;
+    using TicketDesk.Search.Common;
+
     [RoutePrefix("search")]
     [Route("{action=index}")]
-    [TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
     public class SearchController : BaseController
     {
         private TdDomainContext Context { get; set; }
@@ -38,6 +39,7 @@ namespace TicketDesk.Web.Client.Controllers
         [Route("")]
         [Route("{term}")]
         [HttpGet]
+        [NapAuth(FunctionKey = "QuickSearch", Policy = Constant.Policy.Read)]
         public async Task<ActionResult> Index(string term)
         {
             var projectId = await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context);
