@@ -11,25 +11,26 @@
 // attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Model;
-using TicketDesk.PushNotifications;
-using TicketDesk.PushNotifications.Delivery;
-using TicketDesk.PushNotifications.Model;
-
 namespace TicketDesk.Web.Client.Controllers
 {
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using Newtonsoft.Json.Linq;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+    using TicketDesk.Domain;
+    using TicketDesk.Domain.Model;
+    using TicketDesk.PushNotifications;
+    using TicketDesk.PushNotifications.Delivery;
+    using TicketDesk.PushNotifications.Model;
+
     [RoutePrefix("admin/push-notification-settings")]
     [Route("{action=index}")]
-    [TdAuthorize(Roles = "TdAdministrators")]
-    public class PushNotificationSettingsController : Controller
+    public class PushNotificationSettingsController : BaseController
     {
         private TdPushNotificationContext NoteContext { get; set; }
         private TdDomainContext DomainContext { get; set; }
@@ -42,10 +43,12 @@ namespace TicketDesk.Web.Client.Controllers
             DomainContext = domainContext;
         }
 
+        [NapAuth(FunctionKey = "PushNotificationSettings", Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             ViewBag.CurrentRootUrl = GetCurrentRootUrl();
             ViewBag.SiteRootUrl = GetRootUrlSetting();
+            ViewBag.IsHost = NapContextHelper.HasRight("PushNotificationSettings", Constant.Policy.Host);
 
             var dbSetting = NoteContext.TicketDeskPushNotificationSettings;
 
@@ -53,6 +56,7 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = "PushNotificationSettings", Policy = Constant.Policy.Host)]
         public ActionResult Index(ApplicationPushNotificationSetting settings, string siteRootUrl)
         {
             var dbSetting = NoteContext.TicketDeskPushNotificationSettings;
@@ -63,8 +67,10 @@ namespace TicketDesk.Web.Client.Controllers
                 DomainContext.SaveChanges();
                 ViewBag.Saved = true;
             }
+
             ViewBag.CurrentRootUrl = GetCurrentRootUrl();
             ViewBag.SiteRootUrl = GetRootUrlSetting();
+            ViewBag.IsHost = NapContextHelper.HasRight("PushNotificationSettings", Constant.Policy.Host);
 
             Task.Delay(500).ContinueWith(t => System.Web.HttpRuntime.UnloadAppDomain()).ConfigureAwait(false);
 
@@ -72,6 +78,7 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("list-providers")]
+        [NapAuth(FunctionKey = "PushNotificationSettings", Policy = Constant.Policy.Read)]
         public ActionResult ListDeliveryProviderSettings()
         {
             var interfaceType = typeof(IPushNotificationDeliveryProvider);
@@ -79,22 +86,23 @@ namespace TicketDesk.Web.Client.Controllers
                 .SelectMany(s => s.GetTypes())
                 .Where(t => !t.IsAbstract && interfaceType.IsAssignableFrom(t)).ToList();
 
-            var model =
-                new Dictionary<Type, ApplicationPushNotificationSetting.PushNotificationDeliveryProviderSetting>();
+            var model = new Dictionary<Type, ApplicationPushNotificationSetting.PushNotificationDeliveryProviderSetting>();
 
             foreach (var c in classes)
             {
                 var settings = NoteContext.TicketDeskPushNotificationSettings
                     .DeliveryProviderSettings
                     .FirstOrDefault(p => p.ProviderAssemblyQualifiedName == c.AssemblyQualifiedName);
-                model.Add(c,
-                    settings ?? new ApplicationPushNotificationSetting.PushNotificationDeliveryProviderSetting());
+                model.Add(c, settings ?? new ApplicationPushNotificationSetting.PushNotificationDeliveryProviderSetting());
             }
+
+            ViewBag.IsHost = NapContextHelper.HasRight("PushNotificationSettings", Constant.Policy.Host);
 
             return PartialView(model);
         }
 
         [Route("configure-provider")]
+        [NapAuth(FunctionKey = "PushNotificationSettings", Policy = Constant.Policy.Read)]
         public ActionResult ConfigureDeliveryProvider(string providerAssemblyQualifiedName)
         {
             var provider = GetProvider(providerAssemblyQualifiedName);
@@ -103,12 +111,14 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 return RedirectToAction("Index");
             }
-            //ViewBag.Provider = provider;
+
+            ViewBag.IsHost = NapContextHelper.HasRight("PushNotificationSettings", Constant.Policy.Host);
             return View(settings);
         }
 
         [HttpPost]
         [Route("configure-provider")]
+        [NapAuth(FunctionKey = "PushNotificationSettings", Policy = Constant.Policy.Host)]
         public async Task<ActionResult> ConfigureDeliveryProvider(string providerAssemblyQualifiedName, bool isEnabled,
             FormCollection form)
         {
@@ -136,6 +146,9 @@ namespace TicketDesk.Web.Client.Controllers
                     return RedirectToAction("Index");
                 }
             }
+
+            ViewBag.IsHost = NapContextHelper.HasRight("PushNotificationSettings", Constant.Policy.Host);
+
             return View(settings);
         }
 
@@ -150,6 +163,7 @@ namespace TicketDesk.Web.Client.Controllers
                 //created new settings, add to context (will not be saved here, but may be committed by caller
                 NoteContext.TicketDeskPushNotificationSettings.DeliveryProviderSettings.Add(settings);
             }
+
             return settings;
         }
 
@@ -166,6 +180,7 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 root = GetCurrentRootUrl();
             }
+
             return root;
         }
 

@@ -13,9 +13,12 @@
     provided to the recipient.
 *@
 @using TicketDesk.Localization.Views.PushNotificationSettings
-
 @using System.Configuration
 @model TicketDesk.PushNotifications.Model.ApplicationPushNotificationSetting
+
+@{
+    bool isHost = (bool)ViewBag.IsHost;
+}
 
 @section title
 {
@@ -26,7 +29,7 @@
 {
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#useCurrentUrlButton').on('click', function () {
+            $('#useCurrentUrlButton:not(:disabled)').on('click', function () {
                 $('#siteRootUrl').val('@ViewBag.CurrentRootUrl');
             });
 
@@ -55,7 +58,6 @@
                             @Html.Raw(Index.DemoMode_Alert)
                         </div>
                     }
-                     
                     else
                     {
                         if (ViewBag.Saved)
@@ -65,6 +67,7 @@
                                 <div class="text-muted">The server has been restarted, there may be a brief delay while the system re-initializes. </div>
                             </div>
                         }
+
                         using (Html.BeginForm("Index", "PushNotificationSettings", FormMethod.Post, new { @class = "form-horizontal" }))
                         {
 
@@ -78,7 +81,6 @@
                                     @Html.Action("ListDeliveryProviderSettings")
                                 </div>
 
-
                                 <div class="panel-heading">
                                     <h2 class="panel-title">@Index.General_Header</h2>
                                 </div>
@@ -90,7 +92,9 @@
                                         @Html.LabelFor(model => model.IsEnabled, new { @class = "col-md-4 col-sm-4 control-label" })
                                         <div class="col-md-8 col-sm-8">
                                             <label class="checkbox-inline">
-                                                @Html.EditorFor(model => model.IsEnabled)
+                                                @(isHost ? Html.EditorFor(model => model.IsEnabled)
+                                                    : Html.EditorFor(model => model.IsEnabled, new { htmlAttributes = new { @disabled = "disabled" } }))
+
                                                 @Html.PromptFor(model => model.IsEnabled)
                                             </label>
                                             @Html.ValidationMessageFor(model => model.IsEnabled, "", new { @class = "text-danger" })
@@ -106,11 +110,11 @@
                                         @Html.LabelFor(model => model.IsBackgroundQueueEnabled, new { @class = "col-md-4 col-sm-4 control-label" })
                                         <div class="col-md-8 col-sm-8">
                                             <label class="checkbox-inline">
-                                                @Html.EditorFor(model => model.IsBackgroundQueueEnabled)
+                                                @(isHost ? Html.EditorFor(model => model.IsBackgroundQueueEnabled)
+                                                    : Html.EditorFor(model => model.IsBackgroundQueueEnabled, new { htmlAttributes = new { @disabled = "disabled" } }))
                                                 @Html.PromptFor(model => model.IsBackgroundQueueEnabled)
                                             </label>
                                             @Html.DescriptionFor(model => model.IsBackgroundQueueEnabled, "help-block", "span")
-
                                         </div>
                                     </div>
 
@@ -124,13 +128,14 @@
                                                        type="url"
                                                        data-val="true"
                                                        data-val-url="@Index.SiteRootUrl_Validation"
-                                                       value="@ViewBag.SiteRootUrl" />
+                                                       value="@ViewBag.SiteRootUrl" @(isHost ? string.Empty : "disabled") />
                                                 <span class="input-group-btn">
                                                     <button id="useCurrentUrlButton"
                                                             type="button"
                                                             data-toggle="tooltip"
                                                             data-placement="bottom"
-                                                            title="@Index.UseCurrentURL" class="btn btn-default btn-sm">
+                                                            title="@Index.UseCurrentURL" class="btn btn-default btn-sm"
+                                                            @(isHost ? string.Empty : "disabled")>
                                                         <i class="fa fa-link"></i>
                                                     </button>
                                                 </span>
@@ -145,7 +150,8 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.DeliveryIntervalMinutes, new { @class = "col-md-4 col-sm-4  control-label" })
                                         <div class="col-md-8 col-sm-8">
-                                            @Html.EditorFor(model => model.DeliveryIntervalMinutes, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                            @(isHost ? Html.EditorFor(model => model.DeliveryIntervalMinutes, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                                    : Html.EditorFor(model => model.DeliveryIntervalMinutes, new { htmlAttributes = new { @class = "form-control input-sm", @disabled = "disabled" } }))
                                             @Html.ValidationMessageFor(model => model.DeliveryIntervalMinutes, "", new { @class = "text-danger" })
                                             @Html.DescriptionFor(model => model.DeliveryIntervalMinutes, "help-block", "span")
                                         </div>
@@ -153,7 +159,8 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.RetryAttempts, new { @class = "col-md-4 col-sm-4  control-label" })
                                         <div class="col-md-8 col-sm-8">
-                                            @Html.EditorFor(model => model.RetryAttempts, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                            @(isHost ? Html.EditorFor(model => model.RetryAttempts, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                                : Html.EditorFor(model => model.RetryAttempts, new { htmlAttributes = new { @class = "form-control input-sm", @disabled = "disabled" } }))
                                             @Html.ValidationMessageFor(model => model.RetryAttempts, "", new { @class = "text-danger" })
                                             @Html.DescriptionFor(model => model.RetryAttempts, "help-block", "span")
                                         </div>
@@ -161,15 +168,13 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.RetryIntervalMinutes, new { @class = "col-md-4 col-sm-4 control-label" })
                                         <div class="col-md-8 col-sm-8">
-                                            @Html.EditorFor(model => model.RetryIntervalMinutes, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                            @(isHost ? Html.EditorFor(model => model.RetryIntervalMinutes, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                                : Html.EditorFor(model => model.RetryIntervalMinutes, new { htmlAttributes = new { @class = "form-control input-sm", @disabled = "disabled" } }))
                                             @Html.ValidationMessageFor(model => model.RetryIntervalMinutes, "", new { @class = "text-danger" })
                                             @Html.DescriptionFor(model => model.RetryIntervalMinutes, "help-block", "span")
                                         </div>
                                     </div>
                                 </div>
-
-
-
 
                                 <div class="panel-heading">
                                     <h2 class="panel-title">@Index.BroadcastNotification_Header</h2>
@@ -179,18 +184,18 @@
                                         @Html.LabelFor(model => model.BroadcastSettings.IsBroadcastEnabled, new { @class = "col-md-4 col-sm-4 control-label" })
                                         <div class="col-md-8 col-sm-8">
                                             <label class="checkbox-inline">
-                                                @Html.EditorFor(model => model.BroadcastSettings.IsBroadcastEnabled)
+                                                @(isHost ? Html.EditorFor(model => model.BroadcastSettings.IsBroadcastEnabled)
+                                                    : Html.EditorFor(model => model.BroadcastSettings.IsBroadcastEnabled, new { htmlAttributes = new { @disabled = "disabled" } }))
                                                 @Html.PromptFor(model => model.BroadcastSettings.IsBroadcastEnabled)
                                             </label>
                                             @Html.DescriptionFor(model => model.BroadcastSettings.IsBroadcastEnabled, "help-block", "span")
-
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.BroadcastSettings.BroadcastMode, new { @class = "col-md-4 col-sm-4 control-label" })
                                         <div class="col-md-8 col-sm-8">
-
-                                            @Html.EnumDropDownListFor(model => model.BroadcastSettings.BroadcastMode, new { @class = "form-control" })
+                                            @(isHost ? Html.EnumDropDownListFor(model => model.BroadcastSettings.BroadcastMode, new { @class = "form-control" })
+                                                : Html.EnumDropDownListFor(model => model.BroadcastSettings.BroadcastMode, new { @class = "form-control", @disabled = "disabled" }))
 
                                             @Html.DescriptionFor(model => model.BroadcastSettings.BroadcastMode, "help-block", "span")
                                         </div>
@@ -198,7 +203,8 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.BroadcastSettings.SendToCustomEmailDisplayName, new { @class = "col-md-4 col-sm-4 control-label" })
                                         <div class="col-md-8 col-sm-8">
-                                            @Html.EditorFor(model => model.BroadcastSettings.SendToCustomEmailDisplayName, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                            @(isHost ? Html.EditorFor(model => model.BroadcastSettings.SendToCustomEmailDisplayName, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                                : Html.EditorFor(model => model.BroadcastSettings.SendToCustomEmailDisplayName, new { htmlAttributes = new { @class = "form-control input-sm", @disabled = "disabled" } }))
 
                                             @Html.DescriptionFor(model => model.BroadcastSettings.SendToCustomEmailDisplayName, "help-block", "span")
                                         </div>
@@ -206,18 +212,14 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.BroadcastSettings.SendToCustomEmailAddress, new { @class = "col-md-4 col-sm-4 control-label" })
                                         <div class="col-md-8 col-sm-8">
-                                            @Html.EditorFor(model => model.BroadcastSettings.SendToCustomEmailAddress, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                            @(isHost ? Html.EditorFor(model => model.BroadcastSettings.SendToCustomEmailAddress, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                                : Html.EditorFor(model => model.BroadcastSettings.SendToCustomEmailAddress, new { htmlAttributes = new { @class = "form-control input-sm", @disabled = "disabled" } }))
                                             @Html.ValidationMessageFor(model => model.BroadcastSettings.SendToCustomEmailDisplayName, "", new { @class = "text-danger" })
 
                                             @Html.DescriptionFor(model => model.BroadcastSettings.SendToCustomEmailAddress, "help-block", "span")
                                         </div>
                                     </div>
-
                                 </div>
-
-
-
-
 
                                 <div class="panel-heading">
                                     <h2 class="panel-title">@Index.AntiNoise_Header</h2>
@@ -227,7 +229,8 @@
                                         @Html.LabelFor(model => model.AntiNoiseSettings.ExcludeSubscriberEvents, new { @class = "col-md-4 col-sm-4 control-label" })
                                         <div class="col-md-8 col-sm-8">
                                             <label class="checkbox-inline">
-                                                @Html.EditorFor(model => model.AntiNoiseSettings.ExcludeSubscriberEvents)
+                                                @(isHost ? Html.EditorFor(model => model.AntiNoiseSettings.ExcludeSubscriberEvents)
+                                                    : Html.EditorFor(model => model.AntiNoiseSettings.ExcludeSubscriberEvents, new { htmlAttributes = new { @disabled = "disabled" } }))
                                                 @Html.PromptFor(model => model.AntiNoiseSettings.ExcludeSubscriberEvents)
                                             </label>
                                             @Html.ValidationMessageFor(model => model.AntiNoiseSettings.ExcludeSubscriberEvents, "", new { @class = "text-danger" })
@@ -238,7 +241,8 @@
                                         @Html.LabelFor(model => model.AntiNoiseSettings.IsConsolidationEnabled, new { @class = "col-md-4 col-sm-4 control-label" })
                                         <div class="col-md-8 col-sm-8">
                                             <label class="checkbox-inline">
-                                                @Html.EditorFor(model => model.AntiNoiseSettings.IsConsolidationEnabled)
+                                                @(isHost ? Html.EditorFor(model => model.AntiNoiseSettings.IsConsolidationEnabled)
+                                                    : Html.EditorFor(model => model.AntiNoiseSettings.IsConsolidationEnabled, new { htmlAttributes = new { @disabled = "disabled" } }))
                                                 @Html.PromptFor(model => model.AntiNoiseSettings.IsConsolidationEnabled)
                                             </label>
                                             @Html.ValidationMessageFor(model => model.AntiNoiseSettings.IsConsolidationEnabled, "", new { @class = "text-danger" })
@@ -248,7 +252,8 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.AntiNoiseSettings.InitialConsolidationDelayMinutes, new { @class = "col-md-4 col-sm-4 control-label" })
                                         <div class="col-md-8 col-sm-8">
-                                            @Html.EditorFor(model => model.AntiNoiseSettings.InitialConsolidationDelayMinutes, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                            @(isHost ? Html.EditorFor(model => model.AntiNoiseSettings.InitialConsolidationDelayMinutes, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                                : Html.EditorFor(model => model.AntiNoiseSettings.InitialConsolidationDelayMinutes, new { htmlAttributes = new { @class = "form-control input-sm", @disabled = "disabled" } }))
                                             @Html.ValidationMessageFor(model => model.AntiNoiseSettings.InitialConsolidationDelayMinutes, "", new { @class = "text-danger" })
                                             @Html.DescriptionFor(model => model.AntiNoiseSettings.InitialConsolidationDelayMinutes, "help-block", "span")
                                         </div>
@@ -256,18 +261,24 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.AntiNoiseSettings.MaxConsolidationDelayMinutes, new { @class = "col-md-4 col-sm-4 control-label" })
                                         <div class="col-md-8 col-sm-8">
-                                            @Html.EditorFor(model => model.AntiNoiseSettings.MaxConsolidationDelayMinutes, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                            @(isHost ? Html.EditorFor(model => model.AntiNoiseSettings.MaxConsolidationDelayMinutes, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                                                : Html.EditorFor(model => model.AntiNoiseSettings.MaxConsolidationDelayMinutes, new { htmlAttributes = new { @class = "form-control input-sm", @disabled = "disabled" } }))
                                             @Html.ValidationMessageFor(model => model.AntiNoiseSettings.MaxConsolidationDelayMinutes, "", new { @class = "text-danger" })
                                             @Html.DescriptionFor(model => model.AntiNoiseSettings.MaxConsolidationDelayMinutes, "help-block", "span")
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="panel-footer">
-                                    <div class="">
-                                        <button type="submit" class="btn btn-success" tabindex="10"><i class="fa fa-save"></i>&nbsp;&nbsp;@Index.SaveOption</button>&nbsp;&nbsp;
+                                @if (isHost)
+                                {
+                                    <div class="panel-footer">
+                                        <div class="">
+                                            <button type="submit" class="btn btn-success" tabindex="10">
+                                                <i class="fa fa-save"></i>&nbsp;&nbsp;@Index.SaveOption
+                                            </button>&nbsp;&nbsp;
+                                        </div>
                                     </div>
-                                </div>
+                                }
                             </div>
                         }
                     }

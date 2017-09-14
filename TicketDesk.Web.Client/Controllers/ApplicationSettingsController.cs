@@ -11,18 +11,18 @@
 // attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
-using Fanex.NAP.Core.Business;
-using Fanex.NAP.Core.Web.Attribute;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Model;
-using TicketDesk.Search.Azure;
-using TicketDesk.Search.Common;
-
 namespace TicketDesk.Web.Client.Controllers
 {
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+    using TicketDesk.Domain;
+    using TicketDesk.Domain.Model;
+    using TicketDesk.Search.Azure;
+    using TicketDesk.Search.Common;
+
     [RoutePrefix("admin/application-settings")]
     [Route("{action=index}")]
     public class ApplicationSettingsController : BaseController

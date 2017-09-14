@@ -13,10 +13,13 @@
     provided to the recipient.
 *@
 @using TicketDesk.Localization.Views.PushNotificationSettings
-
 @using System.Reflection
 @using TicketDesk.PushNotifications
 @model Dictionary<Type, TicketDesk.PushNotifications.Model.ApplicationPushNotificationSetting.PushNotificationDeliveryProviderSetting>
+
+@{
+    bool isHost = (bool)ViewBag.IsHost;
+}
 
 @foreach (var type in Model.Keys)
 {
@@ -37,7 +40,8 @@
     </div>
     if (settings.IsEnabled)
     {
-        var provider = PushNotificationDeliveryManager.DeliveryProviders.FirstOrDefault(p => p.GetType().AssemblyQualifiedName == settings.ProviderAssemblyQualifiedName);
+        var provider = PushNotificationDeliveryManager.DeliveryProviders
+            .FirstOrDefault(p => p.GetType().AssemblyQualifiedName == settings.ProviderAssemblyQualifiedName);
         if (provider != null)
         {
             PropertyInfo[] properties = provider.GetType().GetProperties(BindingFlags.Public);
