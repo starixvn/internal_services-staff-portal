@@ -48,7 +48,7 @@ namespace TicketDesk.Web.Identity.Model
             {
                 var policy = new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(15d) };
 
-                cacheCollection = manager.NapContextHelper.UserService.GetBySite(manager.NapCurrentUserId).Select(u => new UserDisplayInfo
+                cacheCollection = manager.NapContextHelper.UserService.GetBySite(manager.NapContextHelper.SiteId).Select(u => new UserDisplayInfo
                 {
                     Id = u.Id.ToString(),
                     Email = u.Email,

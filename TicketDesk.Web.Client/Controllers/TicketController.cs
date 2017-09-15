@@ -33,7 +33,6 @@ namespace TicketDesk.Web.Client.Controllers
     /// </summary>
     [RoutePrefix("ticket")]
     [Route("{action=index}")]
-    [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
     public class TicketController : BaseController
     {
         public TicketController(TdDomainContext context)
@@ -43,12 +42,14 @@ namespace TicketDesk.Web.Client.Controllers
 
         private TdDomainContext Context { get; set; }
 
+        [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
         public RedirectToRouteResult Index()
         {
             return RedirectToAction("Index", "TicketCenter");
         }
 
         [Route("{id:int}")]
+        [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> Index(int id)
         {
             var model = await Context.Tickets.Include(t => t.TicketSubscribers).FirstOrDefaultAsync(t => t.TicketId == id);
@@ -118,6 +119,7 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("ticket-files")]
+        [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
         public ActionResult TicketFiles(int ticketId)
         {
             //WARNING! This is also used as a child action and cannot be made async in MVC 5
@@ -127,6 +129,7 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("ticket-events")]
+        [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
         public ActionResult TicketEvents(int ticketId)
         {
             //WARNING! This is also used as a child action and cannot be made async in MVC 5
@@ -135,6 +138,7 @@ namespace TicketDesk.Web.Client.Controllers
         }
 
         [Route("ticket-details")]
+        [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
         public ActionResult TicketDetails(int ticketId)
         {
             //WARNING! This is also used as a child action and cannot be made async in MVC 5
@@ -146,6 +150,7 @@ namespace TicketDesk.Web.Client.Controllers
 
         [Route("change-ticket-subscription")]
         [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
         public async Task<JsonResult> ChangeTicketSubscription(int ticketId)
         {
             var userId = Context.SecurityProvider.CurrentUserId;
@@ -171,6 +176,7 @@ namespace TicketDesk.Web.Client.Controllers
             return new JsonCamelCaseResult { Data = new { IsSubscribed = isSubscribed } };
         }
 
+        // [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         private async Task SetProjectInfoForModelAsync(Ticket ticket)
         {
             if (ticket.ProjectId == default(int))

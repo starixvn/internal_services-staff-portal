@@ -19,8 +19,8 @@
 <div class="form-group form-group-sm">
     <label class="col-sm-2 control-label">@Strings.ReOpen_Label</label>
     <div class="col-sm-8">
-        <label class="checkbox-inline" for="reactivate">
-            <input class="" name="reactivate" type="checkbox" id="assignToMe" tabindex="1" value="true" />
+        <label class="checkbox-inline" for="assignToMe">
+            <input class="" name="assignToMe" type="checkbox" id="assignToMe" tabindex="1" value="false" onclick="$(this).val(this.checked ? true : false)" />
             @Strings.ReOpen_AssignToMe
         </label>
         <div class="small" style="text-indent: 2em;">
@@ -30,4 +30,3 @@
         </div>
     </div>
 </div>
-
