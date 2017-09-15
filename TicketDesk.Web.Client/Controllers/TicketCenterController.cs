@@ -13,6 +13,7 @@
 
 namespace TicketDesk.Web.Client.Controllers
 {
+    using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using System.Linq;
@@ -24,7 +25,7 @@ namespace TicketDesk.Web.Client.Controllers
 
     [RoutePrefix("tickets")]
     [Route("{action=index}")]
-    [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
+    [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
     public class TicketCenterController : BaseController
     {
         public TicketCenterController(TdDomainContext context)

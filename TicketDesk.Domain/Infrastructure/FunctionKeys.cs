@@ -1,8 +1,8 @@
-﻿namespace TicketDesk.Web.Client
+﻿namespace TicketDesk.Domain.Infrastructure
 {
     public static class FunctionKeys
     {
-        public const string TicketManagement = "TicketManagement";
+        public const string TicketCenter = "TicketCenter";
 
         public const string ApplicationSettings = "ApplicationSettings";
 
