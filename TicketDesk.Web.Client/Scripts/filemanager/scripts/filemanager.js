@@ -1325,7 +1325,7 @@
         setUploader(path);
 
         // Display an activity indicator.
-        var loading = '<img id="activity" src="themes/' + config.options.theme + '/images/wait30trans.gif" width="30" height="30" />';
+        var loading = '<img id="activity" src="../scripts/filemanager/themes/' + config.options.theme + '/images/wait30trans.gif" width="30" height="30" />';
 
         // test if scrollbar plugin is enabled
         if ($('#fileinfo .mCSB_container').length > 0) {
