@@ -13,6 +13,7 @@
 
 namespace TicketDesk.Web.Client.Controllers
 {
+    using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Microsoft.AspNet.Identity;

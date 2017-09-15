@@ -119,6 +119,7 @@
     <Compile Include="IContextHelper.cs" />
     <Compile Include="Infrastructure\AsyncHelper.cs" />
     <Compile Include="Infrastructure\CommentRequiredAttribute.cs" />
+    <Compile Include="Infrastructure\FunctionKeys.cs" />
     <Compile Include="Migrations\201412302236209_Td2.5.003.cs" />
     <Compile Include="Migrations\201412302236209_Td2.5.003.Designer.cs">
       <DependentUpon>201412302236209_Td2.5.003.cs</DependentUpon>
