@@ -17,5 +17,7 @@
         public const string SearchManagement = "SearchManagement";
 
         public const string QuickSearch = "QuickSearch";
+
+        public const string FileManagement = "FileManagement";
     }
 }

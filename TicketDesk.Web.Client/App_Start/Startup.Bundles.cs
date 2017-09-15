@@ -44,6 +44,22 @@ namespace TicketDesk.Web.Client
                     "~/Content/font-awesome.css",
                     "~/Content/ticketdesk/error.css"));
 
+            bundles.Add(new StyleBundle("~/content/file-manager").Include(
+                    "~/Scripts/filemanager/styles/reset.css",
+                    "~/Scripts/filemanager/scripts/jquery.filetree/jqueryFileTree.css",
+                    "~/Scripts/filemanager/scripts/jquery.contextmenu/jquery.contextMenu-1.01.css",
+                    "~/Scripts/filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/file-manager")
+                .Include("~/Scripts/filemanager/scripts/jquery-browser.js",
+                    "~/Scripts/filemanager/scripts/jquery.form-3.24.js",
+                    "~/Scripts/filemanager/scripts/jquery.splitter/jquery.splitter-1.5.1.js",
+                    "~/Scripts/filemanager/scripts/jquery.filetree/jqueryFileTree.js",
+                    "~/Scripts/filemanager/scripts/jquery.contextmenu/jquery.contextMenu-1.01.js",
+                    "~/Scripts/filemanager/scripts/jquery.impromptu-3.2.min.js",
+                    "~/Scripts/filemanager/scripts/jquery.tablesorter-2.7.2.min.js",
+                    "~/Scripts/filemanager/scripts/filemanager.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/editticket")
                 .Include("~/Scripts/ticketdesk/edit-ticket.js"));
 

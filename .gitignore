@@ -214,3 +214,4 @@ ModelManifest.xml
 /.vs/
 **/*.vsext.disable
 
+/TicketDesk.Web.Client/uploads

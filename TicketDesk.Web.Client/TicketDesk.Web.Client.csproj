@@ -298,6 +298,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EmailTestController.cs" />
+    <Compile Include="Controllers\FileManagerController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Controllers\ProjectSettingsController.cs" />
     <Compile Include="Controllers\PushNotificationSettingsController.cs" />
@@ -322,6 +323,7 @@
     <Compile Include="Infrastructure\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\PagedListExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\SummerNoteStringExtensions.cs" />
+    <Compile Include="Infrastructure\FilemanagerConfig.cs" />
     <Compile Include="Infrastructure\Filters\LocalizationFilter.cs" />
     <Compile Include="Infrastructure\Filters\TdAuthorizeAttribute.cs" />
     <Compile Include="Infrastructure\Helpers\DescriptionForHelper.cs" />
@@ -414,11 +416,6 @@
     <Content Include="Scripts\cldr\event.js" />
     <Content Include="Scripts\cldr\supplemental.js" />
     <Content Include="Scripts\cldr\unresolved.js" />
-    <Content Include="Scripts\dropzone\basic.css" />
-    <Content Include="Scripts\dropzone\basic.min.css" />
-    <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
-    <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
-    <Content Include="Scripts\dropzone\dropzone.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Fonts\glyphicons-halflings-regular.ttf" />
@@ -434,11 +431,14 @@
     <Content Include="Fonts\fontawesome-webfont.eot" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\filesystem-precompiled-release.pubxml" />
-    <Content Include="Scripts\dropzone\dropzone.js" />
-    <Content Include="Scripts\dropzone\dropzone.min.css" />
-    <Content Include="Scripts\dropzone\dropzone.min.js" />
     <None Include="Properties\PublishProfiles\TicketDesk.pubxml" />
+    <Content Include="Scripts\filemanager\.gitignore" />
+    <Content Include="Scripts\filemanager\bower.json" />
+    <Content Include="Scripts\filemanager\changelog" />
+    <Content Include="Scripts\filemanager\composer.json" />
+    <Content Include="Scripts\filemanager\ReadMe.md" />
     <None Include="Scripts\jquery-2.2.2.intellisense.js" />
+    <Content Include="Scripts\filemanager\index.html" />
     <Content Include="Scripts\jquery-2.2.2.js" />
     <Content Include="Scripts\jquery-2.2.2.min.js" />
     <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.af-ZA.js" />
@@ -980,12 +980,22 @@
     <Content Include="Views\Home\InternalError.cshtml" />
     <Content Include="Views\Home\NotFound.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
+    <Content Include="Views\FileManager\Index.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Scripts\dropzone\" />
+    <Folder Include="Scripts\filemanager\connectors\" />
+    <Folder Include="Scripts\filemanager\images\" />
+    <Folder Include="Scripts\filemanager\scripts\" />
+    <Folder Include="Scripts\filemanager\styles\" />
+    <Folder Include="Scripts\filemanager\themes\" />
+    <Folder Include="Scripts\filemanager\userfiles\" />
+    <Folder Include="Scripts\filemanager\utils\" />
+    <Folder Include="uploads\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\ProjectSelector\" />
   </ItemGroup>
