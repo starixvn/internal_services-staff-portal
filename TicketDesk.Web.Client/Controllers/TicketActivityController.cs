@@ -38,7 +38,6 @@ namespace TicketDesk.Web.Client.Controllers
         public TicketActivityController(TdDomainContext context)
         {
             Context = context;
-            Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
 
         private TdDomainContext Context { get; set; }

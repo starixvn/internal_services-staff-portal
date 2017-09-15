@@ -30,7 +30,6 @@ namespace TicketDesk.Web.Client.Controllers
         public TicketCenterController(TdDomainContext context)
         {
             Context = context;
-            Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
 
         private TdDomainContext Context { get; set; }
@@ -53,7 +52,7 @@ namespace TicketDesk.Web.Client.Controllers
             listName = listName ?? (Context.SecurityProvider.NapContextHelper.HasRight("TicketManagement", Constant.Policy.Host) ? "unassigned" : "mytickets");
             var pageNumber = page ?? 1;
 
-            var viewModel = await TicketCenterListViewModel.GetViewModelAsync(pageNumber, listName, Context, CurrentSession.UserId.ToString());
+            var viewModel = await TicketCenterListViewModel.GetViewModelAsync(pageNumber, listName, Context, Context.SecurityProvider.CurrentUserId);
 
             return View(viewModel);
         }

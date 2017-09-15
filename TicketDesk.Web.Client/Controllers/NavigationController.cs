@@ -13,7 +13,6 @@
         public NavigationController(TdDomainContext context)
         {
             Context = context;
-            Context.SecurityProvider.NapContextHelper = NapContextHelper;
         }
 
         public TdDomainContext Context { get; set; }

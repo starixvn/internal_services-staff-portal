@@ -208,9 +208,9 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
-TicketDesk/TicketDesk.Web.Client/App_Data/attachments/
-TicketDesk/TicketDesk.Web.Client/App_Data/ticketdesk-searchindex/
-TicketDesk/TicketDesk.Web.Client/App_Data/filestore/
-TicketDesk/.vs/
+/TicketDesk.Web.Client/App_Data/attachments/
+/TicketDesk.Web.Client/App_Data/ticketdesk-searchindex/
+/TicketDesk.Web.Client/App_Data/filestore/
+/.vs/
 **/*.vsext.disable
-/.vs
+
