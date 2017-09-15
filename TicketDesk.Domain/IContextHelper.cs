@@ -11,13 +11,11 @@
 
         string Environment { get; }
 
-        ICurrentSession CurrentSession { get; }
+        ICurrentSession CurrentSession { get; set; }
 
-        ICurrentContext CurrentContext { get; }
+        ICurrentContext CurrentContext { get; set; }
 
         IUserService UserService { get; }
-
-        IFunctionService FunctionService { get; }
 
         bool HasRight(string functionKey, Constant.Policy policy);
     }

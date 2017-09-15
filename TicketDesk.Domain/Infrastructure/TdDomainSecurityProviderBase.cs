@@ -115,14 +115,32 @@ namespace TicketDesk.Domain
 
         public abstract IContextHelper NapContextHelper { get; set; }
 
+        public abstract int NapCurrentUserId { get; }
+
         public bool IsReadTicketManagement
         {
-            get { return NapContextHelper.HasRight("TicketManagement", Constant.Policy.Read); }
+            get
+            {
+                int functionPolicy = NapContextHelper.UserService.GetUserSiteFunctionKeyPolicy(
+                    NapCurrentUserId,
+                    NapContextHelper.SiteId,
+                    "TicketManagement");
+
+                return functionPolicy >= (int)Constant.Policy.Read;
+            }
         }
 
         public bool IsHostTicketManagement
         {
-            get { return NapContextHelper.HasRight("TicketManagement", Constant.Policy.Host); }
+            get
+            {
+                int functionPolicy = NapContextHelper.UserService.GetUserSiteFunctionKeyPolicy(
+                    NapCurrentUserId,
+                    NapContextHelper.SiteId,
+                    "TicketManagement");
+
+                return functionPolicy >= (int)Constant.Policy.Host;
+            }
         }
     }
 }

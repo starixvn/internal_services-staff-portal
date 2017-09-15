@@ -15,7 +15,6 @@
             CurrentSession = new CurrentSession();
             CurrentContext = new CurrentContext();
             UserService = new UserService();
-            FunctionService = new FunctionService();
         }
 
         public ICurrentSession CurrentSession { get; set; }
@@ -23,8 +22,6 @@
         public ICurrentContext CurrentContext { get; set; }
 
         public IUserService UserService { get; }
-
-        public IFunctionService FunctionService { get; }
 
         public int SiteId => NapSettings.Settings.SiteId;
 

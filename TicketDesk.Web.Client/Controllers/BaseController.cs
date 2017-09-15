@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Domain;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Context;
@@ -11,10 +12,11 @@
     {
         public BaseController()
         {
-            NapContextHelper = new ContextHelper();
+            var context = DependencyResolver.Current.GetService<TdDomainContext>();
+            NapContextHelper = context.SecurityProvider.NapContextHelper;
         }
 
-        protected ContextHelper NapContextHelper { get; private set; }
+        protected IContextHelper NapContextHelper { get; private set; }
 
         protected ICurrentSession CurrentSession
         {

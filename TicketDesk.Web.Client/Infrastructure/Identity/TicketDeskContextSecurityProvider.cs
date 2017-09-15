@@ -20,6 +20,7 @@ namespace TicketDesk.Web.Client
     using Microsoft.AspNet.Identity;
     using TicketDesk.Domain;
     using TicketDesk.Web.Identity;
+    using Infrastructure.Helpers;
 
     public sealed class TicketDeskContextSecurityProvider : TdDomainSecurityProviderBase
     {
@@ -28,15 +29,17 @@ namespace TicketDesk.Web.Client
         public TicketDeskContextSecurityProvider()
         {
             UserManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
+            NapContextHelper = new ContextHelper();
+            NapCurrentUserId = NapContextHelper.CurrentSession.UserId;
+            CurrentUserId = NapCurrentUserId.ToString();
             //CurrentUserId = HttpContext.Current.User.Identity.GetUserId();
         }
 
         public override IContextHelper NapContextHelper { get; set; }
 
-        public override string CurrentUserId
-        {
-            get { return NapContextHelper.CurrentSession.UserId.ToString(); }
-        }
+        public override int NapCurrentUserId { get; }
+
+        public override string CurrentUserId { get; }
 
         protected override Func<string, bool> GetIsTdHelpDeskUser
         {
