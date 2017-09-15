@@ -52,7 +52,7 @@ namespace TicketDesk.Web.Identity
             //NOTE : WILL IMPLEMENT follow function policy
             var foundUsers = new List<TicketDeskUser>();
 
-            foundUsers.AddRange(userManager.UserService.GetBySite(userManager.SiteId).Select(u => new TicketDeskUser
+            foundUsers.AddRange(userManager.NapContextHelper.UserService.GetBySite(userManager.NapContextHelper.SiteId).Select(u => new TicketDeskUser
             {
                 Id = u.Id.ToString(),
                 Email = u.Email,

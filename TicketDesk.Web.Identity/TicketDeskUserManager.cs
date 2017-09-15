@@ -16,9 +16,9 @@ namespace TicketDesk.Web.Identity
     using System;
     using Microsoft.AspNet.Identity;
     using TicketDesk.Web.Identity.Model;
-    using Fanex.NAP.Core.Service.Interface;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Configuration;
+    using Domain.Infrastructure;
+    using Domain;
+    using Fanex.NAP.Core.Business;
 
     public class TicketDeskUserManager : UserManager<TicketDeskUser>
     {
@@ -26,38 +26,40 @@ namespace TicketDesk.Web.Identity
             : base(store)
         {
             ConfigureUserManager();
-            UserService = new UserService();
-            FunctionService = new FunctionService();
-            SiteId = NapSettings.Settings.SiteId;
+
+            //NAP configure
+            NapContextHelper = new ContextHelper();
+            NapCurrentUserId = NapContextHelper.CurrentSession.UserId;
+            CurrentUserId = NapCurrentUserId.ToString();
         }
 
-        public IUserService UserService { get; private set; }
+        public IContextHelper NapContextHelper { get; }
 
-        public IFunctionService FunctionService { get; private set; }
+        public int NapCurrentUserId { get; }
 
-        public int SiteId { get; private set; }
+        public string CurrentUserId { get; }
 
         public UserDisplayInfoCache InfoCache
         { get { return new UserDisplayInfoCache(this); } }
 
         public bool IsTdHelpDeskUser(string userId)
         {
-            return this.IsInRole(userId, "TdHelpDeskUsers") || IsTdAdministrator(userId);
+            return IsHasTicketManagementPolicy(userId, (int)Constant.Policy.Host);
         }
 
         public bool IsTdInternalUser(string userId)
         {
-            return this.IsInRole(userId, "TdInternalUsers") || IsTdHelpDeskUser(userId);
+            return IsHasTicketManagementPolicy(userId, (int)Constant.Policy.Read);
         }
 
         public bool IsTdAdministrator(string userId)
         {
-            return this.IsInRole(userId, "TdAdministrators");
+            return IsTdHelpDeskUser(userId);
         }
 
         public bool IsTdPendingUser(string userId)
         {
-            return this.IsInRole(userId, "TdPendingUsers");
+            return false;
         }
 
         private void ConfigureUserManager()
@@ -82,6 +84,16 @@ namespace TicketDesk.Web.Identity
             UserLockoutEnabledByDefault = true;
             DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             MaxFailedAccessAttemptsBeforeLockout = 5;
+        }
+
+        private bool IsHasTicketManagementPolicy(string userId, int policy)
+        {
+            int functionPolicy = NapContextHelper.UserService.GetUserSiteFunctionKeyPolicy(
+                int.Parse(userId),
+                NapContextHelper.SiteId,
+                FunctionKeys.TicketManagement);
+
+            return functionPolicy >= policy;
         }
     }
 }

@@ -14,13 +14,11 @@
 namespace TicketDesk.Web.Client
 {
     using System;
-    using System.Web;
     using System.Web.Mvc;
     using Microsoft.Ajax.Utilities;
-    using Microsoft.AspNet.Identity;
     using TicketDesk.Domain;
     using TicketDesk.Web.Identity;
-    using Infrastructure.Helpers;
+    using Domain.Infrastructure;
 
     public sealed class TicketDeskContextSecurityProvider : TdDomainSecurityProviderBase
     {
@@ -29,9 +27,10 @@ namespace TicketDesk.Web.Client
         public TicketDeskContextSecurityProvider()
         {
             UserManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
-            NapContextHelper = new ContextHelper();
-            NapCurrentUserId = NapContextHelper.CurrentSession.UserId;
-            CurrentUserId = NapCurrentUserId.ToString();
+
+            NapContextHelper = UserManager.NapContextHelper;
+            NapCurrentUserId = UserManager.NapCurrentUserId;
+            CurrentUserId = UserManager.CurrentUserId;
             //CurrentUserId = HttpContext.Current.User.Identity.GetUserId();
         }
 

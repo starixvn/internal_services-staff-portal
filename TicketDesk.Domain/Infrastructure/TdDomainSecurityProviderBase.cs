@@ -95,14 +95,14 @@ namespace TicketDesk.Domain
         public TicketActivity GetValidTicketActivities(Ticket ticket)
         {
             //Role
-            if (!(IsReadTicketManagement || IsHostTicketManagement))
+            if (!(IsTdInternalUser || IsTdAdministrator))
             {
                 throw new SecurityException("User is not authorized to read ticket data.");
             }
             var validTicketActivities = ticket.GetAvailableActivites(CurrentUserId);
-            var allowedActivities = IsHostTicketManagement
+            var allowedActivities = IsTdAdministrator
                 ? GetAdministratorUserPermissions()
-                : IsHostTicketManagement
+                : IsTdAdministrator
                     ? GetHelpDeskUserPermissions()
                     : GetInternalUserPermissions();
             return (validTicketActivities & allowedActivities);
@@ -116,31 +116,5 @@ namespace TicketDesk.Domain
         public abstract IContextHelper NapContextHelper { get; set; }
 
         public abstract int NapCurrentUserId { get; }
-
-        public bool IsReadTicketManagement
-        {
-            get
-            {
-                int functionPolicy = NapContextHelper.UserService.GetUserSiteFunctionKeyPolicy(
-                    NapCurrentUserId,
-                    NapContextHelper.SiteId,
-                    "TicketManagement");
-
-                return functionPolicy >= (int)Constant.Policy.Read;
-            }
-        }
-
-        public bool IsHostTicketManagement
-        {
-            get
-            {
-                int functionPolicy = NapContextHelper.UserService.GetUserSiteFunctionKeyPolicy(
-                    NapCurrentUserId,
-                    NapContextHelper.SiteId,
-                    "TicketManagement");
-
-                return functionPolicy >= (int)Constant.Policy.Host;
-            }
-        }
     }
 }

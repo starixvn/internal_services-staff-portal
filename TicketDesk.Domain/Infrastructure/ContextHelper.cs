@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Web.Client.Infrastructure.Helpers
+﻿namespace TicketDesk.Domain.Infrastructure
 {
     using Domain;
     using Fanex.NAP.Core.Business;

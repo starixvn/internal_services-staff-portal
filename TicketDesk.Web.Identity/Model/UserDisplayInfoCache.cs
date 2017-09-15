@@ -44,11 +44,11 @@ namespace TicketDesk.Web.Identity.Model
             var cache = MemoryCache.Default;
             var cacheCollection = cache[key] as IEnumerable<UserDisplayInfo>;
 
-            if (cacheCollection == null)
+            if (cacheCollection == null || !cacheCollection.Any())
             {
                 var policy = new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(15d) };
 
-                cacheCollection = manager.UserService.GetBySite(manager.SiteId).Select(u => new UserDisplayInfo
+                cacheCollection = manager.NapContextHelper.UserService.GetBySite(manager.NapCurrentUserId).Select(u => new UserDisplayInfo
                 {
                     Id = u.Id.ToString(),
                     Email = u.Email,
