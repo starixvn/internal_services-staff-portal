@@ -46,7 +46,7 @@
             //only switch projects if project exists, or selection is the "all projects" option
             if (projectId == 0 || Context.Projects.Any(p => p.ProjectId == projectId))
             {
-                await Context.UserSettingsManager.UpdateUserSelectedProjectAsync(projectId, CurrentSession.UserId.ToString());
+                await Context.UserSettingsManager.UpdateUserSelectedProjectAsync(projectId, Context.SecurityProvider.CurrentUserId);
                 await Context.SaveChangesAsync();
             }
 

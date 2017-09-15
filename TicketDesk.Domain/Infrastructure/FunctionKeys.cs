@@ -2,7 +2,9 @@
 {
     public static class FunctionKeys
     {
-        public const string TicketCenter = "TicketCenter";
+        public const string NewTicket = "NewTicket";
+
+        public const string TicketManagement = "TicketManagement";
 
         public const string ApplicationSettings = "ApplicationSettings";
 

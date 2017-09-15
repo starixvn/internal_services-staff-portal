@@ -14,6 +14,7 @@
 namespace TicketDesk.Domain
 {
     using Fanex.NAP.Core.Business;
+    using Infrastructure;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using TicketDesk.Domain.Model;
@@ -43,7 +44,7 @@ namespace TicketDesk.Domain
             //var isHelpDeskUser = Context.SecurityProvider.IsTdHelpDeskUser ||
             //                        Context.SecurityProvider.IsTdAdministrator;
 
-            var isHelpDeskUser = Context.SecurityProvider.NapContextHelper.HasRight("TicketManagement", Constant.Policy.Host);
+            var isHelpDeskUser = Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.TicketManagement, Constant.Policy.Host);
             var settings = await Context.UserSettings.FindAsync(userId);
 
             //ensure settings exist

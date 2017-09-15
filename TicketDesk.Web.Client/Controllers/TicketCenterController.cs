@@ -25,7 +25,7 @@ namespace TicketDesk.Web.Client.Controllers
 
     [RoutePrefix("tickets")]
     [Route("{action=index}")]
-    [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+    [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
     public class TicketCenterController : BaseController
     {
         public TicketCenterController(TdDomainContext context)
@@ -50,7 +50,7 @@ namespace TicketDesk.Web.Client.Controllers
         {
             //Role
             //listName = listName ?? (Context.SecurityProvider.IsTdHelpDeskUser ? "unassigned" : "mytickets");
-            listName = listName ?? (Context.SecurityProvider.NapContextHelper.HasRight("TicketManagement", Constant.Policy.Host) ? "unassigned" : "mytickets");
+            listName = listName ?? (Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.TicketManagement, Constant.Policy.Host) ? "unassigned" : "mytickets");
             var pageNumber = page ?? 1;
 
             var viewModel = await TicketCenterListViewModel.GetViewModelAsync(pageNumber, listName, Context, Context.SecurityProvider.CurrentUserId);

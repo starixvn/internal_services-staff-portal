@@ -33,7 +33,7 @@ namespace TicketDesk.Web.Client.Controllers
     /// </summary>
     [RoutePrefix("ticket")]
     [Route("{action=index}")]
-    [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+    [NapAuth(FunctionKey = FunctionKeys.TicketManagement, Policy = Constant.Policy.Read)]
     public class TicketController : BaseController
     {
         public TicketController(TdDomainContext context)
@@ -62,12 +62,13 @@ namespace TicketDesk.Web.Client.Controllers
             return View(model);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [Route("new")]
         public async Task<ActionResult> New()
         {
             var model = new Ticket
             {
-                Owner = CurrentSession.UserId.ToString(),
+                Owner = Context.SecurityProvider.CurrentUserId,
                 IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote"
             };
 
@@ -78,6 +79,7 @@ namespace TicketDesk.Web.Client.Controllers
             return View(model);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
