@@ -1,625 +1,3401 @@
 /**
- *	Filemanager JS core
+ *    Rich Filemanager JS core
  *
- *	filemanager.js
+ *    filemanager.js
  *
- *	@license	MIT License
- *	@author		Jason Huck - Core Five Labs
- *	@author		Simon Georget <simon (at) linea21 (dot) com>
- *	@copyright	Authors
+ *    @license    MIT License
+ *    @author        Jason Huck - Core Five Labs
+ *    @author        Simon Georget <simon (at) linea21 (dot) com>
+ *    @author        Pavel Solomienko <https://github.com/servocoder/>
+ *    @copyright    Authors
  */
 
 (function ($) {
-    // function to retrieve GET params
-    $.urlParam = function (name) {
-        var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
-        if (results)
-            return results[1];
-        else
-            return 0;
-    };
-
-    /*-----------------------------------------------------$('#level-up').click----
-      Setup, Layout, and Status Functions
-    ---------------------------------------------------------*/
-
-    // We retrieve config settings from filemanager.config.js
-    var loadConfigFile = function (type) {
-        var json = null;
-        type = (typeof type === "undefined") ? "user" : type;
-
-        if (type == 'user') {
-            if ($.urlParam('config') != 0) {
-                var url = './scripts/' + $.urlParam('config');
-                userconfig = $.urlParam('config');
-            } else {
-                var url = './scripts/filemanager.config.json';
-                userconfig = 'filemanager.config.json';
+    $.richFilemanagerPlugin = function (element, pluginOptions) {
+        /**
+         * Plugin's default options
+         */
+        var defaults = {
+            baseUrl: '.',   // relative path to the FM plugin folder
+            config: {},     // configuration options
+            callbacks: {
+                beforeCreateImageUrl: function (resourceObject, url) {
+                    return url;
+                },
+                beforeCreatePreviewUrl: function (resourceObject, url) {
+                    return url;
+                },
+                beforeSelectItem: function (resourceObject, url) {
+                    return url;
+                },
+                afterSelectItem: function (resourceObject, url, contextWindow) { }
             }
-        } else {
-            var url = './scripts/filemanager.config.default.json';
-        }
+        };
 
-        $.ajax({
-            'async': false,
-            'url': url,
-            'dataType': "json",
-            cache: false,
-            'success': function (data) {
-                json = data;
+        /**
+         * The reference the current instance of the object
+         */
+        var fm = this;
+
+        /**
+         * Private properties accessible only from inside the plugin
+         */
+        var $container = $(element),    // reference to the jQuery version of DOM element the plugin is attached to
+            $wrapper = $container.children('.fm-wrapper'),
+            $header = $wrapper.find('.fm-header'),
+            $uploader = $header.find('.fm-uploader'),
+            $splitter = $wrapper.children('.fm-splitter'),
+            $footer = $wrapper.children('.fm-footer'),
+            $fileinfo = $splitter.children('.fm-fileinfo'),
+            $filetree = $splitter.children('.fm-filetree'),
+            $viewItemsWrapper = $fileinfo.find('.view-items-wrapper'),
+            $previewWrapper = $fileinfo.find('.fm-preview-wrapper'),
+            $viewItems = $viewItemsWrapper.find('.view-items'),
+            $uploadButton = $uploader.children('.fm-upload'),
+
+            config = null,              // configuration options
+            fileRoot = '/',             // relative files root, may be changed with some query params
+            apiConnector = null,        // API connector URL to perform requests to server
+            capabilities = [],          // allowed actions to perform in FM
+            configSortField = null,     // items sort field name
+            configSortOrder = null,     // items sort order 'asc'/'desc'
+            fmModel = null,             // filemanager knockoutJS model
+            langModel = null,           // language model
+
+            /** variables to keep request options data **/
+            fullexpandedFolder = null,    // path to be automatically expanded by filetree plugin
+
+            /** service variables **/
+            _url_ = purl(),
+            timeStart = new Date().getTime();
+
+        /**
+         * This holds the merged default and user-provided options.
+         * Plugin's properties will be available through this object like:
+         * - fm.propertyName from inside the plugin
+         * - element.data('richFilemanager').propertyName from outside the plugin, where "element" is the element the plugin is attached to;
+         * @type {{}}
+         */
+
+        // The plugin's final settings, contains the merged default and user-provided options (if any)
+        fm.settings = $.extend(true, defaults, pluginOptions);
+
+        /*--------------------------------------------------------------------------------------------------------------
+         Public methods
+         Can be called like:
+         - fm.methodName(arg1, arg2, ... argn) from inside the plugin
+         - element.data('richFilemanager').publicMethod(arg1, arg2, ... argn) from outside the plugin,
+           where "element" is the element the plugin is attached to
+        --------------------------------------------------------------------------------------------------------------*/
+
+        fm.write = function (message, obj) {
+            var log = alertify;
+            var options = $.extend({}, {
+                reset: true,
+                delay: 5000,
+                logMaxItems: 5,
+                logPosition: 'bottom right',
+                logContainerClass: 'fm-log',
+                parent: $('.fm-popup').is(':visible') ? document.body : $fileinfo[0],
+                onClick: undefined,
+                unique: false,
+                type: 'log'
+            }, obj);
+
+            // display only one log for the specified 'logClass'
+            if (options.logClass && options.unique && $('.fm-log').children('.' + options.logClass).length > 0) {
+                return log;
             }
-        });
-        return json;
-    };
 
-    // loading default configuration file
-    var configd = loadConfigFile('default');
-    // loading user configuration file
-    var config = loadConfigFile();
-    // we remove version from user config file
-    if (config !== null) delete config.version;
+            if (options.reset) log.reset();
+            if (options.parent) log.parent(options.parent);
+            log.logDelay(options.delay);
+            log.logMaxItems(options.logMaxItems);
+            log.logPosition(options.logPosition);
+            log.logContainerClass(options.logContainerClass);
+            log[options.type](message, options.onClick);
+            return log;
+        };
 
-    // we merge default config and user config file
-    var config = $.extend({}, configd, config);
+        fm.error = function (message, options) {
+            return fm.write(message, $.extend({}, {
+                type: 'error',
+                delay: 10000
+            }, options));
+        };
 
-    if (config.options.logger) var start = new Date().getTime();
+        fm.warning = function (message, options) {
+            return fm.write(message, $.extend({}, {
+                type: 'warning',
+                delay: 10000
+            }, options));
+        };
 
-    // <head> included files collector
-    HEAD_included_files = new Array();
+        fm.success = function (message, options) {
+            return fm.write(message, $.extend({}, {
+                type: 'success',
+                delay: 6000
+            }, options));
+        };
 
-    /**
-     * function to load a given css file into header
-     * if not already included
-     */
-    loadCSS = function (href) {
-        // we check if already included
-        if ($.inArray(href, HEAD_included_files) == -1) {
-            var cssLink = $("<link rel='stylesheet' type='text/css' href='" + href + "'>");
-            $("head").append(cssLink);
-            HEAD_included_files.push(href);
-        }
-    };
+        fm.alert = function (message) {
+            alertify
+                .reset()
+                .dialogContainerClass('fm-popup')
+                .alert(message);
+        };
 
-    /**
-    * function to load a given js file into header
-    * if not already included
-    */
-    loadJS = function (src) {
-        // we check if already included
-        if ($.inArray(src, HEAD_included_files) == -1) {
-            var jsLink = $("<script type='text/javascript' src='" + src + "'>");
-            $("head").append(jsLink);
-            HEAD_included_files.push(src);
-        }
-    };
+        fm.confirm = function (obj) {
+            alertify
+                .reset()
+                .dialogWidth(obj.width)
+                .dialogPersistent(obj.persistent)
+                .dialogContainerClass('fm-popup')
+                .confirm(obj.message, obj.okBtn, obj.cancelBtn);
+        };
 
-    /**
-     * determine path when using baseUrl and
-     * setFileRoot connector function to give back
-     * a valid path on selectItem calls
-     *
-     */
-    smartPath = function (url, path) {
-        var a = url.split('/');
-        var separator = '/' + a[a.length - 2] + '/';
-        var pos = path.indexOf(separator);
-        // separator is not found
-        // this can happen when not set dynamically with setFileRoot function - see  : https://github.com/simogeo/Filemanager/issues/354
-        if (pos == -1) {
-            rvalue = url + path;
-        } else {
-            rvalue = url + path.substring(pos + separator.length);
-        }
-        if (config.options.logger) console.log("url : " + url + " - path : " + path + " - separator : " + separator + " -  pos : " + pos + " - returned value : " + rvalue);
+        fm.prompt = function (obj) {
+            alertify
+                .reset()
+                .dialogWidth(obj.width)
+                .dialogPersistent(obj.persistent)
+                .dialogContainerClass('fm-popup')
+                .theme(obj.template)
+                .prompt(obj.message, obj.value || '', obj.okBtn, obj.cancelBtn);
+        };
 
-        return rvalue;
-    };
+        fm.dialog = function (obj) {
+            alertify
+                .reset()
+                .dialogWidth(obj.width)
+                .dialogPersistent(obj.persistent)
+                .dialogContainerClass('fm-popup')
+                .dialog(obj.message, obj.buttons);
+        };
 
-    // Sets paths to connectors based on language selection.
-    var fileConnector = config.options.fileConnector || '../scripts/filemanager/connectors/' + config.options.lang + '/filemanager.' + config.options.lang;
+        // Forces columns to fill the layout vertically.
+        // Called on initial page load and on resize.
+        fm.setDimensions = function () {
+            var padding = $wrapper.outerHeight(true) - $wrapper.height(),
+                newH = $(window).height() - $header.height() - $footer.height() - padding,
+                newW = $splitter.width() - $splitter.children(".splitter-bar-vertical").outerWidth() - $filetree.outerWidth();
 
-    // Read capabilities from config files if exists
-    // else apply default settings
-    var capabilities = config.options.capabilities || new Array('select', 'download', 'rename', 'move', 'delete', 'replace');
+            $splitter.height(newH);
+            $fileinfo.width(newW);
+        };
 
-    // Get localized messages from file
-    // through culture var or from URL
-    if ($.urlParam('langCode') != 0) {
-        if (file_exists('../scripts/filemanager/scripts/languages/' + $.urlParam('langCode') + '.js')) {
-            config.options.culture = $.urlParam('langCode');
-        } else {
-            var urlLang = $.urlParam('langCode').substring(0, 2);
-            if (file_exists('../scripts/filemanager/scripts/languages/' + urlLang + '.js')) config.options.culture = urlLang;
-        }
-    }
-
-    var lg = [];
-    $.ajax({
-        url: '../scripts/filemanager/scripts/languages/' + config.options.culture + '.js',
-        async: false,
-        dataType: 'json',
-        success: function (json) {
-            lg = json;
-        }
-    });
-
-    // Options for alert, prompt, and confirm dialogues.
-    $.prompt.setDefaults({
-        overlayspeed: 'fast',
-        show: 'fadeIn',
-        opacity: 0.4,
-        persistent: false
-    });
-
-    // Forces columns to fill the layout vertically.
-    // Called on initial page load and on resize.
-    var setDimensions = function () {
-        var bheight = 53,
-            $uploader = $('#uploader');
-
-        if ($.urlParam('CKEditorCleanUpFuncNum')) bheight += 60;
-
-        var newH = $(window).height() - $uploader.height() - $uploader.offset().top - bheight;
-        $('#splitter, #filetree, #fileinfo, .vsplitbar').height(newH);
-        var newW = $('#splitter').width() - $('div.vsplitbar').width() - $('#filetree').width();
-        $('#fileinfo').width(newW);
-    };
-
-    // Display Min Path
-    var displayPath = function (path, reduce) {
-        reduce = (typeof reduce === "undefined") ? true : false;
-
-        if (config.options.showFullPath == false) {
-            // if a "displayPathDecorator" function is defined, use it to decorate path
-            if ('function' === typeof displayPathDecorator) {
-                return displayPathDecorator(path.replace(fileRoot, "/"));
-            } else {
-                path = path.replace(fileRoot, "/");
-                if (path.length > 50 && reduce === true) {
-                    var n = path.split("/");
-                    path = '/' + n[1] + '/' + n[2] + '/(...)/' + n[n.length - 2] + '/';
-                }
-                return path;
+        fm.log = function () {
+            if (config.options.logger && arguments) {
+                [].unshift.call(arguments, new Date().getTime());
+                console.log.apply(this, arguments);
             }
-        } else {
-            return path;
-        }
-    };
+        };
 
-    // Set the view buttons state
-    var setViewButtonsFor = function (viewMode) {
-        if (viewMode == 'grid') {
-            $('#grid').addClass('ON');
-            $('#list').removeClass('ON');
-        }
-        else {
-            $('#list').addClass('ON');
-            $('#grid').removeClass('ON');
-        }
-    };
+        /*--------------------------------------------------------------------------------------------------------------
+         Private methods
+         These methods can be called only from inside the plugin like: methodName(arg1, arg2, ... argn)
+        --------------------------------------------------------------------------------------------------------------*/
 
-    // Test if a given url exists
-    function file_exists(url) {
-        // http://kevin.vanzonneveld.net
-        // +   original by: Enrique Gonzalez
-        // +      input by: Jani Hartikainen
-        // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-        // %        note 1: This function uses XmlHttpRequest and cannot retrieve resource from different domain.
-        // %        note 1: Synchronous so may lock up browser, mainly here for study purposes.
-        // *     example 1: file_exists('http://kevin.vanzonneveld.net/pj_test_supportfile_1.htm');
-        // *     returns 1: '123'
-        var req = this.window.ActiveXObject ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
-        if (!req) {
-            throw new Error('XMLHttpRequest not supported');
-        }
+        /**
+         * The "constructor" method that gets called when the object is created
+         */
+        var construct = function () {
+            var deferred = $.Deferred();
 
-        // HEAD Results are usually shorter (faster) than GET
-        req.open('HEAD', url, false);
-        req.send(null);
-        if (req.status == 200) {
-            return true;
-        }
-
-        return false;
-    }
-
-    // preg_replace
-    // Code from : http://xuxu.fr/2006/05/20/preg-replace-javascript/
-    var preg_replace = function (array_pattern, array_pattern_replace, str) {
-        var new_str = String(str);
-        for (i = 0; i < array_pattern.length; i++) {
-            var reg_exp = RegExp(array_pattern[i], "g");
-            var val_to_replace = array_pattern_replace[i];
-            new_str = new_str.replace(reg_exp, val_to_replace);
-        }
-        return new_str;
-    };
-
-    // cleanString (), on the same model as server side (connector)
-    // cleanString
-    var cleanString = function (str) {
-        var cleaned = "";
-        var p_search = new Array("Š", "š", "Đ", "đ", "Ž", "ž", "Č", "č", "Ć", "ć", "À",
-                            "Á", "Â", "Ã", "Ä", "Å", "Æ", "Ç", "È", "É", "Ê", "Ë", "Ì", "Í", "Î", "Ï",
-                            "Ñ", "Ò", "Ó", "Ô", "Õ", "Ö", "Ő", "Ø", "Ù", "Ú", "Û", "Ü", "Ý", "Þ", "ß",
-                            "à", "á", "â", "ã", "ä", "å", "æ", "ç", "è", "é", "ê", "ë", "ì", "í",
-                            "î", "ï", "ð", "ñ", "ò", "ó", "ô", "õ", "ö", "ő", "ø", "ù", "ú", "û", "ü",
-                            "ý", "ý", "þ", "ÿ", "Ŕ", "ŕ", " ", "'", "/"
-                            );
-        var p_replace = new Array("S", "s", "Dj", "dj", "Z", "z", "C", "c", "C", "c", "A",
-                            "A", "A", "A", "A", "A", "A", "C", "E", "E", "E", "E", "I", "I", "I", "I",
-                            "N", "O", "O", "O", "O", "O", "O", "O", "U", "U", "U", "U", "Y", "B", "Ss",
-                            "a", "a", "a", "a", "a", "a", "a", "c", "e", "e", "e", "e", "i", "i",
-                            "i", "i", "o", "n", "o", "o", "o", "o", "o", "o", "o", "u", "u", "u", "u",
-                            "y", "y", "b", "y", "R", "r", "_", "_", ""
-                        );
-
-        cleaned = preg_replace(p_search, p_replace, str);
-
-        // allow only latin alphabet
-        if (config.options.chars_only_latin) {
-            cleaned = cleaned.replace(/[^_a-zA-Z0-9]/g, "");
-        }
-
-        cleaned = cleaned.replace(/[_]+/g, "_");
-        // prevent bug https://github.com/simogeo/Filemanager/issues/474
-        if (cleaned == "") cleaned = "unsupportedCharsReplacement";
-
-        return cleaned;
-    };
-
-    // nameFormat (), separate filename from extension before calling cleanString()
-    // nameFormat
-    var nameFormat = function (input) {
-        filename = '';
-        if (input.lastIndexOf('.') != -1) {
-            filename = cleanString(input.substr(0, input.lastIndexOf('.')));
-            filename += '.' + input.split('.').pop();
-        } else {
-            filename = cleanString(input);
-        }
-        return filename;
-    };
-
-    //Converts bytes to kb, mb, or gb as needed for display.
-    var formatBytes = function (bytes) {
-        var n = parseFloat(bytes);
-        var d = parseFloat(1024);
-        var c = 0;
-        var u = [lg.bytes, lg.kb, lg.mb, lg.gb];
-
-        while (true) {
-            if (n < d) {
-                n = Math.round(n * 100) / 100;
-                return n + u[c];
-            } else {
-                n /= d;
-                c += 1;
-            }
-        }
-    };
-
-    // Handle Error. Freeze interactive buttons and display
-    // error message. Also called when auth() function return false (Code == "-1")
-    var handleError = function (errMsg) {
-        $('#fileinfo').html('<h1>' + errMsg + '</h1>');
-        $('#newfile').attr("disabled", "disabled");
-        $('#upload').attr("disabled", "disabled");
-        $('#newfolder').attr("disabled", "disabled");
-    };
-
-    // Test if Data structure has the 'cap' capability
-    // 'cap' is one of 'select', 'rename', 'delete', 'download', move
-    function has_capability(data, cap) {
-        if (data['File Type'] == 'dir' && cap == 'replace') return false;
-        if (data['File Type'] == 'dir' && cap == 'download') {
-            if (config.security.allowFolderDownload == true) return true;
-            else return false;
-        }
-        if (typeof (data['Capabilities']) == "undefined") return true;
-        else return $.inArray(cap, data['Capabilities']) > -1;
-    }
-
-    // Test if file is authorized
-    var isAuthorizedFile = function (filename) {
-        var ext = getExtension(filename);
-
-        // no extension is allowed
-        if (ext == '' && config.security.allowNoExtension == true) return true;
-
-        if (config.security.uploadPolicy == 'DISALLOW_ALL') {
-            if ($.inArray(ext, config.security.uploadRestrictions) != -1) return true;
-        }
-        if (config.security.uploadPolicy == 'ALLOW_ALL') {
-            if ($.inArray(ext, config.security.uploadRestrictions) == -1) return true;
-        }
-
-        return false;
-    };
-
-    // from http://phpjs.org/functions/basename:360
-    var basename = function (path, suffix) {
-        var b = path.replace(/^.*[\/\\]/g, '');
-
-        if (typeof (suffix) == 'string' && b.substr(b.length - suffix.length) == suffix) {
-            b = b.substr(0, b.length - suffix.length);
-        }
-
-        return b;
-    };
-
-    // return filename extension
-    var getExtension = function (filename) {
-        if (filename.split('.').length == 1) {
-            return "";
-        }
-        return filename.split('.').pop().toLowerCase();
-    };
-
-    // return filename without extension {
-    var getFilename = function (filename) {
-        if (filename.lastIndexOf('.') != -1) {
-            return filename.substring(0, filename.lastIndexOf('.'));
-        } else {
-            return filename;
-        }
-    };
-
-    //Test if is editable file
-    var isEditableFile = function (filename) {
-        if ($.inArray(getExtension(filename), config.edit.editExt) != -1) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    // Test if is image file
-    var isImageFile = function (filename) {
-        if ($.inArray(getExtension(filename), config.images.imagesExt) != -1) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    // Test if file is supported web video file
-    var isVideoFile = function (filename) {
-        if ($.inArray(getExtension(filename), config.videos.videosExt) != -1) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    // Test if file is supported web audio file
-    var isAudioFile = function (filename) {
-        if ($.inArray(getExtension(filename), config.audios.audiosExt) != -1) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    // Test if file is pdf file
-    var isPdfFile = function (filename) {
-        if ($.inArray(getExtension(filename), config.pdfs.pdfsExt) != -1) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    // Return HTML video player
-    var getVideoPlayer = function (data) {
-        var code = '<video width=' + config.videos.videosPlayerWidth + ' height=' + config.videos.videosPlayerHeight + ' src="' + data['Path'] + '" controls="controls">';
-        code += '<img src="' + data['Preview'] + '" />';
-        code += '</video>';
-
-        $("#fileinfo img").remove();
-        $('#fileinfo #preview #main-title').before(code);
-    };
-
-    //Return HTML audio player
-    var getAudioPlayer = function (data) {
-        var code = '<audio src="' + data['Path'] + '" controls="controls">';
-        code += '<img src="' + data['Preview'] + '" />';
-        code += '</audio>';
-
-        $("#fileinfo img").remove();
-        $('#fileinfo #preview #main-title').before(code);
-    };
-
-    //Return PDF Reader
-    var getPdfReader = function (data) {
-        var code = '<iframe id="fm-pdf-viewer" src ="../scripts/filemanager/scripts/ViewerJS/index.html#' + data['Path'] + '" width="' + config.pdfs.pdfsReaderWidth + '" height="' + config.pdfs.pdfsReaderHeight + '" allowfullscreen webkitallowfullscreen></iframe>';
-
-        $("#fileinfo img").remove();
-        $('#fileinfo #preview #main-title').before(code);
-    };
-
-    // Display icons on list view
-    // retrieving them from filetree
-    // Called using SetInterval
-    var display_icons = function (timer) {
-        $('#fileinfo').find('td:first-child').each(function () {
-            var path = $(this).attr('data-path');
-            var treenode = $('#filetree').find('a[data-path="' + path + '"]').parent();
-
-            if (typeof treenode.css('background-image') !== "undefined") {
-                $(this).css('background-image', treenode.css('background-image'));
-                window.clearInterval(timer);
-            }
-        });
-    };
-
-    // Sets the folder status, upload, and new folder functions
-    // to the path specified. Called on initial page load and
-    // whenever a new directory is selected.
-    var setUploader = function (path) {
-        $('#currentpath').val(path);
-        $('#uploader h1').text(lg.current_folder + displayPath(path)).attr('title', displayPath(path, false)).attr('data-path', path);
-
-        $('#newfolder').unbind().click(function () {
-            var foldername = lg.default_foldername;
-            var msg = lg.prompt_foldername + ' : <input id="fname" name="fname" type="text" value="' + foldername + '" />';
-
-            var getFolderName = function (v, m) {
-                if (v != 1) return false;
-                var fname = m.children('#fname').val();
-
-                if (fname != '') {
-                    foldername = cleanString(fname);
-                    var d = new Date(); // to prevent IE cache issues
-                    $.getJSON(fileConnector + '?mode=addfolder&path=' + $('#currentpath').val() + '&config=' + userconfig + '&name=' + encodeURIComponent(foldername) + '&time=' + d.getMilliseconds(), function (result) {
-                        if (result['Code'] == 0) {
-                            addFolder(result['Parent'], result['Name']);
-                            getFolderInfo(result['Parent']);
-
-                            // seems to be necessary when dealing w/ files located on s3 (need to look into a cleaner solution going forward)
-                            $('#filetree').find('a[data-path="' + result['Parent'] + '/"]').click().click();
-                        } else {
-                            $.prompt(result['Error']);
-                        }
+            deferred
+                .then(function () {
+                    return configure();
+                })
+                .then(function () {
+                    return localize();
+                })
+                .then(function (conf_d, conf_u) {
+                    return performInitialRequest();
+                })
+                .then(function () {
+                    return includeTemplates();
+                })
+                .then(function () {
+                    includeAssets(function () {
+                        initialize();
                     });
+                });
+
+            deferred.resolve();
+        };
+
+        var configure = function () {
+            return $.when(loadConfigFile('default'), loadConfigFile('user')).done(function (confd, confu) {
+                var config_default = confd[0];
+                var config_user = confu[0];
+
+                // remove version from user config file
+                if (config_user !== undefined && config_user !== null) {
+                    delete config_user.version;
+                }
+                // merge default config and user config file
+                config = $.extend({}, config_default, config_user);
+
+                // setup apiConnector
+                if (config.api.connectorUrl) {
+                    apiConnector = config.api.connectorUrl;
                 } else {
-                    $.prompt(lg.no_foldername);
+                    var connectorUrl = location.origin + location.pathname;
+                    var langConnector = '../filemanager/connectors/' + config.api.lang + '/filemanager.' + config.api.lang;
+
+                    // for url like http://site.com/index.html
+                    if (getExtension(connectorUrl).length > 0) {
+                        connectorUrl = connectorUrl.substring(0, connectorUrl.lastIndexOf('/') + 1);
+                    }
+                    apiConnector = connectorUrl + langConnector;
+                }
+            });
+        };
+
+        // performs initial request to server to retrieve initial params
+        var performInitialRequest = function () {
+            return buildAjaxRequest('GET', {
+                mode: 'initiate'
+            }).done(function (response) {
+                if (response.data) {
+                    var serverConfig = response.data.attributes.config;
+                    // configuration options retrieved from the server
+                    $.each(serverConfig, function (section, options) {
+                        $.each(options, function (param, value) {
+                            if (config[section] === undefined) {
+                                config[section] = [];
+                            }
+                            config[section][param] = value;
+                        });
+                    });
+
+                    // If the server is in read only mode, set the GUI to browseOnly:
+                    if (config.security.readOnly) {
+                        config.options.browseOnly = true;
+                    }
+                }
+                handleAjaxResponseErrors(response);
+            }).fail(function () {
+                fm.error('Unable to perform initial request to server.');
+            }).then(function (response) {
+                if (response.errors) {
+                    return $.Deferred().reject();
+                }
+            });
+        };
+
+        // localize messages based on configuration or URL value
+        var localize = function () {
+            langModel = new LangModel();
+
+            return $.ajax()
+                .then(function () {
+                    var urlLangCode = _url_.param('langCode');
+                    if (urlLangCode) {
+                        // try to load lang file based on langCode in query params
+                        return file_exists(langModel.buildLangFileUrl(urlLangCode))
+                            .done(function () {
+                                langModel.setLang(urlLangCode);
+                            })
+                            .fail(function () {
+                                setTimeout(function () {
+                                    fm.error('Given language file (' + langModel.buildLangFileUrl(urlLangCode) + ') does not exist!');
+                                }, 500);
+                            });
+                    } else {
+                        langModel.setLang(config.language.default);
+                    }
+                })
+                .then(function () {
+                    return $.ajax({
+                        type: 'GET',
+                        url: langModel.buildLangFileUrl(langModel.getLang()),
+                        dataType: 'json'
+                    }).done(function (jsonTrans) {
+                        langModel.setTranslations(jsonTrans);
+                    });
+                });
+        };
+
+        var includeTemplates = function () {
+            return $.when(loadTemplate('upload-container'), loadTemplate('upload-item')).done(function (uc, ui) {
+                var tmpl_upload_container = uc[0];
+                var tmpl_upload_item = ui[0];
+
+                $wrapper
+                    .append(tmpl_upload_container)
+                    .append(tmpl_upload_item);
+            });
+        };
+
+        var includeAssets = function (callback) {
+            var primary = [],
+                secondary = [];
+
+            // theme defined in configuration file
+            primary.push('../filemanager/themes/' + config.options.theme + '/styles/theme.css');
+
+            if (config.viewer.image.lazyLoad) {
+                primary.push('../filemanager/scripts/lazyload/dist/lazyload.min.js');
+            }
+            if (config.customScrollbar.enabled) {
+                primary.push('../filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css');
+                primary.push('../filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js');
+            }
+
+            // add callback on loaded assets and inject primary ones
+            primary.push(callback);
+            loadAssets(primary);
+
+            // Loading CodeMirror if enabled for online edition
+            if (config.editor.enabled) {
+                var editorTheme = config.editor.theme;
+                if (editorTheme && editorTheme !== 'default') {
+                    secondary.push('../filemanager/scripts/CodeMirror/theme/' + editorTheme + '.css');
+                }
+                secondary.push('../filemanager/scripts/CodeMirror/lib/codemirror.css');
+                secondary.push('../filemanager/scripts/CodeMirror/lib/codemirror.js');
+                secondary.push('../filemanager/scripts/CodeMirror/addon/selection/active-line.js');
+                secondary.push('../filemanager/scripts/CodeMirror/addon/display/fullscreen.css');
+                secondary.push('../filemanager/scripts/CodeMirror/addon/display/fullscreen.js');
+            }
+
+            // Load Markdown-it, if enabled. For .md to HTML rendering:
+            if (config.viewer.markdownRenderer.enabled) {
+                secondary.push('../filemanager/styles/fm-markdown.css');
+                secondary.push('../filemanager/scripts/markdown-it/markdown-it.min.js');
+                secondary.push('../filemanager/scripts/markdown-it/default.min.css');
+                secondary.push('../filemanager/scripts/markdown-it/highlight.min.js');
+                secondary.push('../filemanager/scripts/markdown-it/markdown-it-footnote.min.js');
+                secondary.push('../filemanager/scripts/markdown-it/markdown-it-replace-link.min.js');
+            }
+
+            if (!config.options.browseOnly) {
+                // Loading jquery file upload library
+                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/vendor/jquery.ui.widget.js');
+                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/canvas-to-blob.min.js');
+                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/load-image.all.min.js');
+                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/jquery.iframe-transport.js');
+                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/jquery.fileupload.js');
+                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/jquery.fileupload-process.js');
+                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/jquery.fileupload-image.js');
+                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/jquery.fileupload-validate.js');
+
+                if (config.upload.multiple) {
+                    secondary.push('../filemanager/scripts/jQuery-File-Upload/css/dropzone.css');
+                }
+            }
+
+            if (secondary.length) {
+                loadAssets(secondary);
+            }
+        };
+
+        var initialize = function () {
+            // reads capabilities from config files if exists else apply default settings
+            capabilities = config.options.capabilities || ['upload', 'select', 'download', 'rename', 'copy', 'move', 'delete', 'extract'];
+
+            // defines sort params
+            var chunks = [];
+            if (config.options.fileSorting) {
+                chunks = config.options.fileSorting.toLowerCase().split('_');
+            }
+
+            configSortField = chunks[0] || 'name';
+            configSortOrder = chunks[1] || 'asc';
+
+            // changes files root to restrict the view to a given folder
+            var exclusiveFolder = _url_.param('exclusiveFolder');
+            if (exclusiveFolder) {
+                fileRoot = '/' + exclusiveFolder + '/';
+                fileRoot = normalizePath(fileRoot);
+            }
+
+            // get folder that should be expanded after filemanager is loaded
+            var expandedFolder = _url_.param('expandedFolder');
+            if (expandedFolder) {
+                fullexpandedFolder = fileRoot + expandedFolder + '/';
+                fullexpandedFolder = normalizePath(fullexpandedFolder);
+            }
+
+            // Activates knockout.js
+            fmModel = new FmModel();
+            ko.applyBindings(fmModel);
+
+            fmModel.itemsModel.initiateLazyLoad();
+            fmModel.filterModel.setName(_url_.param('filter'));
+
+            ko.bindingHandlers.toggleNodeVisibility = {
+                init: function (element, valueAccessor) {
+                    var node = valueAccessor();
+                    $(element).toggle(node.isExpanded());
+                },
+                update: function (element, valueAccessor) {
+                    var node = valueAccessor();
+                    if (node.isSliding() === false) {
+                        return false;
+                    }
+                    if (node.isExpanded() === false) {
+                        $(element).slideDown(config.filetree.expandSpeed, function () {
+                            node.isSliding(false);
+                            node.isExpanded(true);
+                        });
+                    }
+                    if (node.isExpanded() === true) {
+                        $(element).slideUp(config.filetree.expandSpeed, function () {
+                            node.isSliding(false);
+                            node.isExpanded(false);
+                        });
+                    }
                 }
             };
-            var btns = {};
-            btns[lg.create_folder] = true;
-            btns[lg.cancel] = false;
-            $.prompt(msg, {
-                callback: getFolderName,
-                buttons: btns
-            });
-        });
-    };
 
-    // Binds specific actions to the toolbar in detail views.
-    // Called when detail views are loaded.
-    var bindToolbar = function (data) {
-        // this little bit is purely cosmetic
-        $("#fileinfo button").each(function (index) {
-            // check if span doesn't exist yet, when bindToolbar called from renameItem for example
-            if ($(this).find('span').length == 0)
-                $(this).wrapInner('<span></span>');
-        });
+            ko.bindingHandlers.draggableView = {
+                init: function (element, valueAccessor, allBindingsAccessor) {
+                    fmModel.ddModel.makeDraggable(valueAccessor(), element);
+                }
+            };
 
-        if (!has_capability(data, 'select')) {
-            $('#fileinfo').find('button#select').hide();
-        } else {
-            $('#fileinfo').find('button#select').click(function () { selectItem(data); }).show();
-            if (window.opener || window.tinyMCEPopup) {
-                $('#preview img').attr('title', lg.select);
-                $('#preview img').click(function () { selectItem(data); }).css("cursor", "pointer");
-            }
-        }
+            ko.bindingHandlers.droppableView = {
+                init: function (element, valueAccessor, allBindingsAccessor) {
+                    fmModel.ddModel.makeDroppable(valueAccessor(), element);
+                }
+            };
 
-        if (!has_capability(data, 'rename')) {
-            $('#fileinfo').find('button#rename').hide();
-        } else {
-            $('#fileinfo').find('button#rename').click(function () {
-                var newName = renameItem(data);
-                if (newName.length) $('#fileinfo > h1').text(newName);
-            }).show();
-        }
+            ko.bindingHandlers.draggableTree = {
+                init: function (element, valueAccessor, allBindingsAccessor) {
+                    fmModel.ddModel.makeDraggable(valueAccessor(), element);
+                }
+            };
 
-        if (!has_capability(data, 'move')) {
-            $('#fileinfo').find('button#move').hide();
-        } else {
-            $('#fileinfo').find('button#move').click(function () {
-                var newName = moveItem(data);
-                if (newName.length) $('#fileinfo > h1').text(newName);
-            }).show();
-        }
+            ko.bindingHandlers.droppableTree = {
+                init: function (element, valueAccessor, allBindingsAccessor) {
+                    fmModel.ddModel.makeDroppable(valueAccessor(), element);
+                }
+            };
 
-        // @todo
-        if (!has_capability(data, 'replace')) {
-            $('#fileinfo').find('button#replace').hide();
-        } else {
-            $('#fileinfo').find('button#replace').click(function () {
-                replaceItem(data);
-            }).show();
-        }
+            $wrapper.mousewheel(function (e) {
+                if (!fmModel.ddModel.dragHelper) {
+                    return true;
+                }
 
-        if (!has_capability(data, 'delete')) {
-            $('#fileinfo').find('button#delete').hide();
-        } else {
-            $('#fileinfo').find('button#delete').click(function () {
-                if (deleteItem(data)) $('#fileinfo').html('<h1>' + lg.select_from_left + '</h1>');
-            }).show();
-        }
+                var $panes,
+                    $obstacle = null;
 
-        if (!has_capability(data, 'download')) {
-            $('#fileinfo').find('button#download').hide();
-        } else {
-            $('#fileinfo').find('button#download').click(function () {
-                window.location = fileConnector + '?mode=download&path=' + encodeURIComponent(data['Path']) + '&config=' + userconfig;
-            }).show();
-        }
-    };
+                if (config.customScrollbar.enabled) {
+                    $panes = $([$viewItemsWrapper[0], $filetree[0]]);
+                } else {
+                    $panes = $splitter.children('.splitter-pane');
+                }
 
-    //Create FileTree and bind elements
-    //called during initialization and also when adding a file
-    //directly in root folder (via addNode)
-    var createFileTree = function () {
-        if ($('#filetree .mCSB_container').length > 0) {
-            var el = '#filetree .mCSB_container';
-        } else {
-            var el = '#filetree';
-        }
-        // Creates file tree.
-        $(el).fileTree({
-            root: fileRoot,
-            datafunc: populateFileTree,
-            multiFolder: false,
-            folderCallback: function (path) { getFolderInfo(path); },
-            expandedFolder: fullexpandedFolder,
-            after: function (data) {
-                $('#filetree').find('li a').each(function () {
-                    $(this).contextMenu(
-                        { menu: getContextMenuOptions($(this)) },
-                        function (action, el, pos) {
-                            var path = $(el).attr('data-path');
-                            setMenus(action, path);
-                        }
-                    );
+                $panes.each(function (i) {
+                    var $pane = $(this),
+                        top = $pane.offset().top,
+                        left = $pane.offset().left;
+
+                    if ((e.offsetY >= top && e.offsetY <= top + $pane.height()) &&
+                        (e.offsetX >= left && e.offsetX <= left + $pane.width())) {
+                        $obstacle = $pane;
+                        return false;
+                    }
                 });
-                //Search function
-                if (config.options.searchBox == true) {
-                    $('#q').liveUpdate('#filetree ul').blur();
-                    $('#search span.q-inactive').html(lg.search);
-                    $('#search a.q-reset').attr('title', lg.search_reset);
+
+                // no one appropriate obstacle is overlapped
+                if ($obstacle === null) {
+                    return false;
+                }
+
+                if (config.customScrollbar.enabled) {
+                    var $scrollBar = $obstacle.find('.mCSB_scrollTools_vertical'),
+                        directionSign = (e.deltaY === 1) ? '+' : '-';
+
+                    if ($scrollBar.is(':visible')) {
+                        $obstacle.mCustomScrollbar("scrollTo", [directionSign + "=250", 0], {
+                            scrollInertia: 500,
+                            scrollEasing: "easeOut",
+                            callbacks: true
+                        });
+                    }
+                } else {
+                    if ($obstacle[0].scrollHeight > $obstacle[0].clientHeight) {
+                        var scrollPosition = $obstacle.scrollTop();
+                        var scrollOffset = scrollPosition - (200 * e.deltaY);
+
+                        fmModel.ddModel.isScrolling = true;
+                        scrollOffset = (scrollOffset < 0) ? 0 : scrollOffset;
+                        $obstacle.stop().animate({ scrollTop: scrollOffset }, 100, 'linear', function () {
+                            fmModel.ddModel.isScrolling = false;
+                            fmModel.ddModel.isScrolled = true;
+                        });
+                    }
+                }
+            });
+
+            $viewItems.selectable({
+                filter: "li:not(.directory-parent), tbody > tr:not(.directory-parent)",
+                cancel: ".directory-parent, thead",
+                disabled: !config.manager.selection.enabled,
+                appendTo: $viewItems,
+                start: function (event, ui) {
+                    clearSelection();
+                    fmModel.itemsModel.isSelecting(true);
+                },
+                stop: function (event, ui) {
+                    fmModel.itemsModel.isSelecting(false);
+                },
+                selected: function (event, ui) {
+                    var koItem = ko.dataFor(ui.selected);
+                    koItem.selected(true);
+                },
+                unselected: function (event, ui) {
+                    var koItem = ko.dataFor(ui.unselected);
+                    koItem.selected(false);
+                }
+            });
+
+            $fileinfo.contextMenu({
+                selector: '.view-items',
+                zIndex: 10,
+                // wrap options with "build" allows to get item element
+                build: function ($triggerElement, e) {
+                    var contextMenuItems = {
+                        createFolder: {
+                            name: lg('create_folder'),
+                            className: 'create-folder'
+                        },
+                        paste: {
+                            name: lg('clipboard_paste'),
+                            className: 'paste',
+                            disabled: function (key, options) {
+                                return fmModel.clipboardModel.isEmpty();
+                            }
+                        }
+                    };
+
+                    if (!fmModel.clipboardModel.enabled() || config.options.browseOnly === true) {
+                        delete contextMenuItems.paste;
+                    }
+
+                    return {
+                        appendTo: '.fm-container',
+                        items: contextMenuItems,
+                        reposition: false,
+                        callback: function (itemKey, options) {
+                            switch (itemKey) {
+                                case 'createFolder':
+                                    fmModel.headerModel.createFolder();
+                                    break;
+
+                                case 'paste':
+                                    fmModel.clipboardModel.paste();
+                                    break;
+                            }
+                        }
+                    }
+                }
+            });
+
+            if (config.extras.extra_js) {
+                for (var i = 0; i < config.extras.extra_js.length; i++) {
+                    $.ajax({
+                        type: 'GET',
+                        url: config.extras.extra_js[i],
+                        dataType: "script",
+                        async: config.extras.extra_js_async
+                    });
                 }
             }
-        }, function (file) {
-            getFileInfo(file);
-        });
-    };
 
-    /*---------------------------------------------------------
-      Item Actions
-    ---------------------------------------------------------*/
+            // adding a close button triggering callback function if CKEditorCleanUpFuncNum passed
+            if (_url_.param('CKEditorCleanUpFuncNum')) {
+                fmModel.headerModel.closeButton(true);
+                fmModel.headerModel.closeButtonOnClick = function () {
+                    parent.CKEDITOR.tools.callFunction(_url_.param('CKEditorCleanUpFuncNum'));
+                };
+            }
 
-    // Calls the SetUrl function for FCKEditor compatibility,
-    // passes file path, dimensions, and alt text back to the
-    // opening window. Triggered by clicking the "Select"
-    // button in detail views or choosing the "Select"
-    // contextual menu option in list views.
-    // NOTE: closes the window when finished.
-    var selectItem = function (data) {
-        if (config.options.baseUrl !== false) {
-            var url = smartPath(baseUrl, data['Path'].replace(fileRoot, ""));
-        } else {
-            var url = baseUrl + data['Path'];
+            // input file replacement
+            $("#newfile").change(function () {
+                $("#filepath").val($(this).val().replace(/.+[\\\/]/, ""));
+            });
+
+            prepareFileTree();
+            prepareFileView();
+            setupUploader();
+
+            // Loading CustomScrollbar if enabled
+            if (config.customScrollbar.enabled) {
+                $filetree.mCustomScrollbar({
+                    theme: config.customScrollbar.theme,
+                    scrollButtons: {
+                        enable: config.customScrollbar.button
+                    },
+                    advanced: {
+                        autoExpandHorizontalScroll: true,
+                        updateOnContentResize: true
+                    },
+                    callbacks: {
+                        onScrollStart: function () {
+                            fmModel.ddModel.isScrolling = true;
+                        },
+                        onScroll: function () {
+                            fmModel.ddModel.isScrolling = false;
+                        }
+                    },
+                    axis: "yx"
+                });
+
+                $previewWrapper.mCustomScrollbar({
+                    theme: config.customScrollbar.theme,
+                    scrollButtons: {
+                        enable: config.customScrollbar.button
+                    },
+                    advanced: {
+                        autoExpandHorizontalScroll: true,
+                        updateOnContentResize: true,
+                        updateOnSelectorChange: '.fm-preview-viewer'
+                    }
+                });
+
+                $viewItemsWrapper.mCustomScrollbar({
+                    theme: config.customScrollbar.theme,
+                    scrollButtons: {
+                        enable: config.customScrollbar.button
+                    },
+                    advanced: {
+                        autoExpandHorizontalScroll: true,
+                        updateOnContentResize: true,
+                        updateOnSelectorChange: '.grid, .list'
+                    },
+                    callbacks: {
+                        onScrollStart: function () {
+                            if (!fmModel.itemsModel.continiousSelection()) {
+                                this.yStartPosition = this.mcs.top;
+                                this.yStartTime = (new Date()).getTime();
+                            }
+                            fmModel.ddModel.isScrolling = true;
+                        },
+                        onScroll: function () {
+                            fmModel.ddModel.isScrolling = false;
+                            fmModel.ddModel.isScrolled = true;
+                        },
+                        whileScrolling: function () {
+                            if (config.manager.selection.enabled) {
+                                // would prefer to get scroll position from [onScrollStart],
+                                // but the [onScroll] should fire first, which happens with a big lag
+                                var timeDiff = (new Date()).getTime() - this.yStartTime;
+
+                                // check if selection lasso has not been dropped while scrolling
+                                if (!fmModel.itemsModel.continiousSelection() && timeDiff > 400) {
+                                    this.yStartPosition = this.mcs.top;
+                                }
+
+                                // set flag if selection lasso is active
+                                if (fmModel.itemsModel.isSelecting()) {
+                                    fmModel.itemsModel.continiousSelection(true);
+                                }
+
+                                var yIncrement = Math.abs(this.mcs.top) - Math.abs(this.yStartPosition);
+                                $viewItems.selectable("repositionCssHelper", yIncrement, 0);
+                            }
+
+                            if (fmModel.itemsModel.lazyLoad) {
+                                fmModel.itemsModel.lazyLoad.handleScroll(); // use throttle
+                            }
+                        }
+                    },
+                    axis: "y",
+                    alwaysShowScrollbar: 0
+                });
+            }
+
+            // add useragent string to html element for IE 10/11 detection
+            var doc = document.documentElement;
+            doc.setAttribute('data-useragent', navigator.userAgent);
+
+            if (config.options.logger) {
+                var timeEnd = new Date().getTime();
+                var time = timeEnd - timeStart;
+                console.log('Total execution time : ' + time + ' ms');
+            }
+
+            var $loading = $container.find('.fm-loading-wrap');
+            // remove loading screen div
+            $loading.fadeOut(800, function () {
+                fm.setDimensions();
+            });
+            fm.setDimensions();
+        };
+
+        /**
+         * Language model
+         * @constructor
+         */
+        var LangModel = function () {
+            var currentLang = null,
+                translationsHash = {},
+                translationsPath = fm.settings.baseUrl + '/languages/';
+
+            this.buildLangFileUrl = function (code) {
+                return translationsPath + code + '.json';
+            };
+
+            this.setLang = function (code) {
+                currentLang = code;
+            };
+
+            this.getLang = function () {
+                return currentLang;
+            };
+
+            this.setTranslations = function (json) {
+                translationsHash = json;
+            };
+
+            this.getTranslations = function () {
+                return translationsHash;
+            };
+
+            this.translate = function (key) {
+                return translationsHash[key];
+            };
+        };
+
+        /**
+         * Knockout general model
+         * @constructor
+         */
+        var FmModel = function () {
+            var model = this;
+            this.config = ko.observable(config);
+            this.loadingView = ko.observable(true);
+            this.previewFile = ko.observable(false);
+            this.viewMode = ko.observable(config.manager.defaultViewMode);
+            this.currentPath = ko.observable(fileRoot);
+            this.browseOnly = ko.observable(config.options.browseOnly);
+            this.previewModel = ko.observable(null);
+            this.currentLang = langModel.getLang();
+            this.lg = langModel.getTranslations();
+
+            this.previewFile.subscribe(function (enabled) {
+                if (!enabled) {
+                    // close editor upon disabling preview
+                    model.previewModel.closeEditor();
+
+                    // update content of descriptive panel
+                    if (model.itemsModel.descriptivePanel.rdo().id === model.previewModel.rdo().id) {
+                        model.itemsModel.descriptivePanel.render(model.previewModel.viewer.content());
+                    }
+                }
+            });
+
+            this.addItem = function (resourceObject, targetPath) {
+                // handle tree nodes
+                var targetNode = fmModel.treeModel.findByParam('id', targetPath);
+                if (targetNode) {
+                    var newNode = fmModel.treeModel.createNode(resourceObject);
+                    fmModel.treeModel.addNodes(targetNode, newNode);
+                }
+
+                // handle view objects
+                if (fmModel.currentPath() === targetPath) {
+                    model.itemsModel.addNew(resourceObject);
+                }
+            };
+
+            this.removeItem = function (resourceObject) {
+                // handle tree nodes
+                var treeNode = fmModel.treeModel.findByParam('id', resourceObject.id);
+                if (treeNode) {
+                    treeNode.remove();
+                }
+
+                // handle view objects
+                var viewItem = model.itemsModel.findByParam('id', resourceObject.id);
+                if (viewItem) {
+                    viewItem.remove();
+                }
+            };
+
+            // fetch selected view items OR tree nodes
+            this.fetchSelectedItems = function (instanceName) {
+                var selectedNodes, selectedItems;
+
+                if (instanceName === ItemObject.name) {
+                    return model.itemsModel.getSelected();
+                }
+                if (instanceName === TreeNodeModel.name) {
+                    return model.treeModel.getSelected();
+                }
+                if (!instanceName) {
+                    selectedNodes = model.treeModel.getSelected();
+                    selectedItems = model.itemsModel.getSelected();
+
+                    return (selectedItems.length > 0) ? selectedItems : selectedNodes;
+                }
+                throw new Error('Unknown item type.');
+            };
+
+            // fetch resource objects out of the selected items
+            this.fetchSelectedObjects = function (item) {
+                var objects = [];
+                $.each(model.fetchSelectedItems(item.constructor.name), function (i, itemObject) {
+                    objects.push(itemObject.rdo);
+                });
+                return objects;
+            };
+
+            // check whether view item can be opened based on the event and configuration options
+            function isItemOpenable(event) {
+                // selecting with Ctrl key
+                if (config.manager.selection.enabled && config.manager.selection.useCtrlKey && event.ctrlKey === true) {
+                    return false;
+                }
+
+                // single clicked while expected dblclick
+                if (config.manager.dblClickOpen && event.type === 'click') {
+                    return false;
+                }
+
+                return true;
+            }
+
+            var PreviewModel = function () {
+                var preview_model = this,
+                    clipboard = null;
+
+                this.rdo = ko.observable({});
+                // computed resource data object
+                this.cdo = ko.observable({});
+
+                this.viewer = {
+                    type: ko.observable('default'),
+                    isEditable: ko.observable(false),
+                    url: ko.observable(null),
+                    pureUrl: ko.observable(null),
+                    options: ko.observable({}),
+                    content: ko.observable(null),
+                    codeMirror: ko.observable(null)
+                };
+
+                this.renderer = new RenderModel();
+                this.editor = new EditorModel();
+
+                this.rdo.subscribe(function (resourceObject) {
+                    preview_model.cdo({
+                        isFolder: (resourceObject.type === 'folder'),
+                        sizeFormatted: formatBytes(resourceObject.attributes.size),
+                        extension: (resourceObject.type === 'file') ? getExtension(resourceObject.id) : null,
+                        dimensions: resourceObject.attributes.width ? resourceObject.attributes.width + 'x' + resourceObject.attributes.height : null
+                    });
+                });
+
+                this.editor.content.subscribe(function (content) {
+                    if (preview_model.editor.isInteractive()) {
+                        // instantly render changes of editor content
+                        preview_model.renderer.render(content);
+                    }
+                });
+
+                this.applyObject = function (resourceObject) {
+                    if (clipboard) {
+                        clipboard.destroy();
+                    }
+
+                    model.previewFile(false);
+
+                    var filename = resourceObject.attributes.name,
+                        editorObject = {
+                            interactive: false
+                        },
+                        viewerObject = {
+                            type: 'default',
+                            url: null,
+                            options: {}
+                        };
+
+                    preview_model.rdo(resourceObject);
+
+                    if (isImageFile(filename)) {
+                        viewerObject.type = 'image';
+                        viewerObject.url = createImageUrl(resourceObject, false, true);
+                    }
+                    if (isAudioFile(filename) && config.viewer.audio.enabled === true) {
+                        viewerObject.type = 'audio';
+                        viewerObject.url = createPreviewUrl(resourceObject, true);
+                    }
+                    if (isVideoFile(filename) && config.viewer.video.enabled === true) {
+                        viewerObject.type = 'video';
+                        viewerObject.url = createPreviewUrl(resourceObject, true);
+                        viewerObject.options = {
+                            width: config.viewer.video.playerWidth,
+                            height: config.viewer.video.playerHeight
+                        };
+                    }
+                    if (isOpenDocFile(filename) && config.viewer.opendoc.enabled === true) {
+                        viewerObject.type = 'opendoc';
+                        viewerObject.url = fm.settings.baseUrl + '/scripts/ViewerJS/index.html#' + createPreviewUrl(resourceObject, true);
+                        viewerObject.options = {
+                            width: config.viewer.opendoc.readerWidth,
+                            height: config.viewer.opendoc.readerHeight
+                        };
+                    }
+                    if (isGoogleDocsFile(filename) && config.viewer.google.enabled === true) {
+                        viewerObject.type = 'google';
+                        viewerObject.url = 'https://docs.google.com/viewer?url=' + encodeURIComponent(createPreviewUrl(resourceObject, false)) + '&embedded=true';
+                        viewerObject.options = {
+                            width: config.viewer.google.readerWidth,
+                            height: config.viewer.google.readerHeight
+                        };
+                    }
+                    if (isIFrameFile(filename) && config.viewer.iframe.enabled === true) {
+                        viewerObject.type = 'iframe';
+                        viewerObject.url = createPreviewUrl(resourceObject, true);
+                        viewerObject.options = {
+                            width: config.viewer.iframe.readerWidth,
+                            height: config.viewer.iframe.readerHeight
+                        };
+                    }
+                    if ((isCodeMirrorFile(filename) && config.viewer.codeMirrorRenderer.enabled === true) ||
+                        (isMarkdownFile(filename) && config.viewer.markdownRenderer.enabled === true)
+                    ) {
+                        viewerObject.type = 'renderer';
+                        viewerObject.options = {
+                            is_writable: resourceObject.attributes.writable
+                        };
+                        preview_model.renderer.setRenderer(resourceObject);
+                        editorObject.interactive = preview_model.renderer.renderer().interactive;
+                    }
+
+                    preview_model.viewer.type(viewerObject.type);
+                    preview_model.viewer.url(viewerObject.url);
+                    preview_model.viewer.options(viewerObject.options);
+                    preview_model.viewer.pureUrl(createCopyUrl(resourceObject));
+                    preview_model.viewer.isEditable(isEditableFile(filename) && config.editor.enabled === true);
+                    preview_model.editor.isInteractive(editorObject.interactive);
+
+                    if (viewerObject.type === 'renderer' || preview_model.viewer.isEditable()) {
+                        previewItem(resourceObject).then(function (response) {
+                            if (response.data) {
+                                var content = response.data.attributes.content;
+                                preview_model.viewer.content(content);
+                                model.previewFile(true);
+                            }
+                        });
+                    } else {
+                        model.previewFile(true);
+                    }
+                };
+
+                this.afterRender = function () {
+                    preview_model.renderer.render(preview_model.viewer.content());
+
+                    var copyBtnEl = $previewWrapper.find('.btn-copy-url')[0];
+                    clipboard = new Clipboard(copyBtnEl);
+
+                    clipboard.on('success', function (e) {
+                        fm.success(lg('copied'));
+                    });
+                };
+
+                this.initiateEditor = function (elements) {
+                    var textarea = $previewWrapper.find('.fm-cm-editor-content')[0];
+                    preview_model.editor.createInstance(preview_model.cdo().extension, textarea, {
+                        readOnly: false,
+                        styleActiveLine: true
+                    });
+                };
+
+                // fires specific action by clicking toolbar buttons in detail view
+                this.bindToolbar = function (action) {
+                    if (has_capability(preview_model.rdo(), action)) {
+                        performAction(action, {}, preview_model.rdo());
+                    }
+                };
+
+                this.previewIconClass = ko.pureComputed(function () {
+                    var cssClass = [],
+                        extraClass = ['ico'];
+                    if (preview_model.viewer.type() === 'default' || !preview_model.viewer.url()) {
+                        cssClass.push('grid-icon');
+                        if (this.cdo().isFolder === true) {
+                            cssClass.push('ico_folder');
+                            extraClass.push('folder');
+                            if (!this.rdo().attributes.readable) {
+                                extraClass.push('lock');
+                            }
+                        } else {
+                            cssClass.push('ico_file');
+                            if (this.rdo().attributes.readable) {
+                                extraClass.push('ext', this.cdo().extension);
+                            } else {
+                                extraClass.push('file', 'lock');
+                            }
+                        }
+                        cssClass.push(extraClass.join('_'));
+                    }
+                    return cssClass.join(' ');
+                }, this);
+
+                this.editFile = function () {
+                    var content = preview_model.viewer.content();
+                    preview_model.renderer.render(content);
+                    preview_model.editor.render(content);
+                };
+
+                this.saveFile = function () {
+                    saveItem(preview_model.rdo());
+                };
+
+                this.closeEditor = function () {
+                    preview_model.editor.enabled(false);
+                    // re-render viewer content
+                    preview_model.renderer.render(preview_model.viewer.content());
+                };
+
+                this.buttonVisibility = function (action) {
+                    switch (action) {
+                        case 'select':
+                            return (has_capability(preview_model.rdo(), action) && hasContext());
+                        case 'move':
+                        case 'rename':
+                        case 'delete':
+                        case 'download':
+                            return (has_capability(preview_model.rdo(), action));
+                    }
+                };
+            };
+
+            var TreeModel = function () {
+                var tree_model = this;
+                this.selectedNode = ko.observable(null);
+
+                this.treeData = {
+                    id: fileRoot,
+                    level: ko.observable(-1),
+                    children: ko.observableArray([])
+                };
+
+                this.treeData.children.subscribe(function (value) {
+                    tree_model.arrangeNode(tree_model.treeData);
+                });
+
+                var expandFolderDefault = function (parentNode) {
+                    if (fullexpandedFolder !== null) {
+                        if (!parentNode) {
+                            parentNode = tree_model.treeData
+                        }
+
+                        // looking for node that starts with specified path
+                        var node = tree_model.findByFilter(function (node) {
+                            return (fullexpandedFolder.indexOf(node.id) === 0);
+                        }, parentNode);
+
+                        if (node) {
+                            config.filetree.expandSpeed = 10;
+                            tree_model.loadNodes(node, false);
+                        } else {
+                            fullexpandedFolder = null;
+                            config.filetree.expandSpeed = 200;
+                        }
+                    }
+                };
+
+                this.mapNodes = function (filter, contextNode) {
+                    if (!contextNode) {
+                        contextNode = tree_model.treeData;
+                    }
+                    // don't apply callback function to the treeData root node
+                    if (contextNode.id !== tree_model.treeData.id) {
+                        filter.call(this, contextNode);
+                    }
+                    var nodes = contextNode.children();
+                    if (!nodes || nodes.length === 0) {
+                        return null;
+                    }
+                    for (var i = 0, l = nodes.length; i < l; i++) {
+                        filter.call(this, nodes[i]);
+                        tree_model.findByFilter(filter, nodes[i]);
+                    }
+                };
+
+                this.findByParam = function (key, value, contextNode) {
+                    if (!contextNode) {
+                        contextNode = tree_model.treeData;
+                        if (contextNode[key] === value) {
+                            return contextNode;
+                        }
+                    }
+                    var nodes = contextNode.children();
+                    if (!nodes || nodes.length === 0) {
+                        return null;
+                    }
+                    for (var i = 0, l = nodes.length; i < l; i++) {
+                        if (nodes[i][key] === value) {
+                            return nodes[i];
+                        }
+                        var result = tree_model.findByParam(key, value, nodes[i]);
+                        if (result) return result;
+                    }
+                    return null;
+                };
+
+                this.findByFilter = function (filter, contextNode) {
+                    if (!contextNode) {
+                        contextNode = tree_model.treeData;
+                        if (filter(contextNode)) {
+                            return contextNode;
+                        }
+                    }
+                    var nodes = contextNode.children();
+                    if (!nodes || nodes.length === 0) {
+                        return null;
+                    }
+                    for (var i = 0, l = nodes.length; i < l; i++) {
+                        if (filter(nodes[i])) {
+                            return nodes[i];
+                        }
+                        var result = tree_model.findByFilter(filter, nodes[i]);
+                        if (result) return result;
+                    }
+                    return null;
+                };
+
+                this.getSelected = function () {
+                    var selectedItems = [];
+                    if (tree_model.selectedNode()) {
+                        selectedItems.push(tree_model.selectedNode());
+                    }
+                    return selectedItems;
+                };
+
+                this.loadNodes = function (targetNode, refresh) {
+                    var path = targetNode ? targetNode.id : tree_model.treeData.id;
+                    if (targetNode) {
+                        targetNode.isLoaded(false);
+                    }
+
+                    var queryParams = {
+                        mode: 'getfolder',
+                        path: path
+                    };
+
+                    buildAjaxRequest('GET', queryParams).done(function (response) {
+                        if (response.data) {
+                            var nodes = [];
+                            $.each(response.data, function (i, resourceObject) {
+                                var nodeObject = tree_model.createNode(resourceObject);
+                                nodes.push(nodeObject);
+                            });
+                            if (refresh) {
+                                targetNode.children([]);
+                            }
+                            tree_model.addNodes(targetNode, nodes);
+                            // not root
+                            if (targetNode) {
+                                targetNode.isLoaded(true);
+                                tree_model.expandNode(targetNode);
+                            }
+                            expandFolderDefault(targetNode);
+                        }
+                        handleAjaxResponseErrors(response);
+                    }).fail(handleAjaxError);
+                };
+
+                this.createNode = function (resourceObject) {
+                    var node = new TreeNodeModel(resourceObject);
+                    fmModel.filterModel.filterItem(node);
+                    return node;
+                };
+
+                this.addNodes = function (targetNode, newNodes) {
+                    if (!$.isArray(newNodes)) {
+                        newNodes = [newNodes];
+                    }
+                    if (!targetNode) {
+                        targetNode = tree_model.treeData;
+                    }
+                    // list only folders in tree
+                    if (config.filetree.foldersOnly) {
+                        newNodes = $.grep(newNodes, function (node) {
+                            return (node.cdo.isFolder);
+                        });
+                    }
+                    $.each(newNodes, function (i, node) {
+                        node.parentNode(targetNode);
+                    });
+                    var allNodes = targetNode.children().concat(newNodes);
+                    targetNode.children(sortItems(allNodes));
+                };
+
+                this.expandNode = function (node) {
+                    if (node.isExpanded() === false && node.isLoaded() === true) {
+                        node.isSliding(true);
+                        return true;
+                    }
+                    return false;
+                };
+
+                this.collapseNode = function (node) {
+                    if (node.isExpanded() === true) {
+                        node.isSliding(true);
+                        return true;
+                    }
+                    return false;
+                };
+
+                this.toggleNode = function (node) {
+                    if (!tree_model.collapseNode(node)) {
+                        tree_model.expandNode(node);
+                    }
+                };
+
+                this.arrangeNode = function (node) {
+                    var childrenLength = node.children().length;
+                    $.each(node.children(), function (index, cNode) {
+                        cNode.level(node.level() + 1);
+                        cNode.isFirstNode(index === 0);
+                        cNode.isLastNode(index === (childrenLength - 1));
+                    });
+                };
+
+                this.nodeRendered = function (elements, node) {
+                    // attach context menu
+                    $(elements[1]).contextMenu({
+                        selector: '.file, .directory',
+                        zIndex: 100,
+                        // wrap options with "build" allows to get item element
+                        build: function ($triggerElement, e) {
+                            node.selected(true);
+
+                            return {
+                                appendTo: '.fm-container',
+                                items: getContextMenuItems(node.rdo),
+                                callback: function (itemKey, options) {
+                                    performAction(itemKey, options, node.rdo, model.fetchSelectedObjects(node));
+                                }
+                            }
+                        }
+                    });
+                };
+
+                this.actualizeNodeObject = function (node, oldFolder, newFolder) {
+                    var search = new RegExp('^' + oldFolder);
+                    var oldPath = node.rdo.id;
+                    var newPath = oldPath.replace(search, newFolder);
+                    node.id = newPath;
+                    node.rdo.id = newPath;
+                    node.rdo.attributes.path = node.rdo.attributes.path.replace(new RegExp(oldPath + '$'), newPath);
+
+                    if (node.children().length) {
+                        $.each(node.children(), function (index, cNode) {
+                            tree_model.actualizeNodeObject(cNode, oldFolder, newFolder);
+                        });
+                    }
+                };
+            };
+
+            var TreeNodeModel = function (resourceObject) {
+                var tree_node = this;
+                this.id = resourceObject.id;
+                this.rdo = resourceObject;
+                this.cdo = { // computed data object
+                    isFolder: (resourceObject.type === 'folder'),
+                    extension: (resourceObject.type === 'file') ? getExtension(resourceObject.id) : null,
+                    dimensions: resourceObject.attributes.width ? resourceObject.attributes.width + 'x' + resourceObject.attributes.height : null,
+                    cssItemClass: (resourceObject.type === 'folder') ? 'directory' : 'file',
+                    hiddenByType: false,
+                    hiddenBySearch: false
+                };
+
+                this.visible = ko.observable(true);
+                this.nodeTitle = ko.observable(resourceObject.attributes.name);
+                this.children = ko.observableArray([]);
+                this.parentNode = ko.observable(null);
+                this.isSliding = ko.observable(false);
+                this.isLoading = ko.observable(false);
+                this.isLoaded = ko.observable(false);
+                this.isExpanded = ko.observable(false);
+                this.selected = ko.observable(false);
+                this.dragHovered = ko.observable(false);
+                // arrangable properties
+                this.level = ko.observable(0);
+                this.isFirstNode = ko.observable(false);
+                this.isLastNode = ko.observable(false);
+
+                this.nodeTitle.subscribe(function (value) {
+                    tree_node.rdo.attributes.name = value;
+                });
+
+                this.children.subscribe(function (value) {
+                    model.treeModel.arrangeNode(tree_node);
+                });
+
+                this.isLoaded.subscribe(function (value) {
+                    tree_node.isLoading(!value);
+                });
+
+                this.selected.subscribe(function (value) {
+                    if (value) {
+                        if (model.treeModel.selectedNode() !== null) {
+                            model.treeModel.selectedNode().selected(false);
+                        }
+                        model.treeModel.selectedNode(tree_node);
+                        model.itemsModel.unselectItems();
+                    } else {
+                        model.treeModel.selectedNode(null);
+                    }
+                });
+
+                this.switchNode = function (node) {
+                    if (!node.cdo.isFolder) {
+                        return false;
+                    }
+                    if (!node.rdo.attributes.readable) {
+                        fm.error(lg('NOT_ALLOWED_SYSTEM'));
+                        return false;
+                    }
+                    if (!node.isLoaded()) {
+                        tree_node.openNode(node);
+                    } else {
+                        model.treeModel.toggleNode(node);
+                    }
+                };
+
+                this.mouseDown = function (node, e) {
+                    node.selected(true);
+                };
+
+                this.nodeClick = function (node, e) {
+                    if (!config.manager.dblClickOpen) {
+                        tree_node.openNode(node);
+                    }
+                };
+
+                this.nodeDblClick = function (node, e) {
+                    if (config.manager.dblClickOpen) {
+                        tree_node.openNode(node);
+                    }
+                };
+
+                this.openNode = function (node, e) {
+                    if (node.rdo.type === 'file') {
+                        getDetailView(node.rdo);
+                    }
+                    if (node.rdo.type === 'folder') {
+                        if (!node.isLoaded() || (node.isExpanded() && config.filetree.reloadOnClick)) {
+                            model.treeModel.loadNodes(node, true);
+                            getDetailView(node.rdo);
+                        } else {
+                            model.treeModel.toggleNode(node);
+
+                            fmModel.currentPath(node.id);
+                            fmModel.breadcrumbsModel.splitCurrent();
+                            var dataObjects = [];
+                            $.each(node.children(), function (i, cnode) {
+                                dataObjects.push(cnode.rdo);
+                            });
+                            model.itemsModel.setList(dataObjects);
+                        }
+                    }
+                };
+
+                this.remove = function () {
+                    tree_node.parentNode().children.remove(tree_node);
+                };
+
+                this.isRoot = function () {
+                    return tree_node.level() === model.treeModel.treeData.id;
+                };
+
+                this.title = ko.pureComputed(function () {
+                    return (config.options.showTitleAttr) ? this.rdo.id : null;
+                }, this);
+
+                this.itemClass = ko.pureComputed(function () {
+                    var cssClass = [];
+                    if (this.selected() && config.manager.selection.enabled) {
+                        cssClass.push('ui-selected');
+                    }
+                    if (this.dragHovered()) {
+                        cssClass.push(model.ddModel.hoveredCssClass);
+                    }
+                    return cssClass.join(' ');
+                }, this);
+
+                this.iconClass = ko.pureComputed(function () {
+                    var cssClass,
+                        extraClass = ['ico'];
+                    if (this.cdo.isFolder === true) {
+                        cssClass = 'ico_folder';
+                        if (this.isLoading() === true) {
+                            extraClass.push('loading');
+                        } else {
+                            extraClass.push('folder');
+                            if (!this.rdo.attributes.readable) {
+                                extraClass.push('lock');
+                            } else if (this.isExpanded() || !this.isExpanded() && this.isSliding()) {
+                                extraClass.push('open');
+                            }
+                        }
+                    } else {
+                        cssClass = 'ico_file';
+                        if (this.rdo.attributes.readable) {
+                            extraClass.push('ext', this.cdo.extension);
+                        } else {
+                            extraClass.push('file', 'lock');
+                        }
+                    }
+                    return cssClass + ' ' + extraClass.join('_');
+                }, this);
+
+                this.switcherClass = ko.pureComputed(function () {
+                    var cssClass = [];
+                    if (config.filetree.showLine) {
+                        if (this.level() === 0 && this.isFirstNode() && this.isLastNode()) {
+                            cssClass.push('root');
+                        } else if (this.level() === 0 && this.isFirstNode()) {
+                            cssClass.push('roots');
+                        } else if (this.isLastNode()) {
+                            cssClass.push('bottom');
+                        } else {
+                            cssClass.push('center');
+                        }
+                    } else {
+                        cssClass.push('noline');
+                    }
+                    if (this.cdo.isFolder) {
+                        var isOpen = (this.isExpanded() || !this.isExpanded() && this.isSliding());
+                        cssClass.push(isOpen ? 'open' : 'close');
+                    } else {
+                        cssClass.push('docu');
+                    }
+                    return cssClass.join('_');
+                }, this);
+
+                this.clusterClass = ko.pureComputed(function () {
+                    return (config.filetree.showLine && !this.isLastNode()) ? 'line' : '';
+                }, this);
+            };
+
+            var ItemsModel = function () {
+                var items_model = this;
+                this.objects = ko.observableArray([]);
+                this.objectsSize = ko.observable(0);
+                this.objectsNumber = ko.observable(0);
+                this.selectedNumber = ko.observable(0);
+                this.listSortField = ko.observable(configSortField);
+                this.listSortOrder = ko.observable(configSortOrder);
+                this.isSelecting = ko.observable(false);
+                this.continiousSelection = ko.observable(false);
+                this.descriptivePanel = new RenderModel();
+                this.lazyLoad = null;
+
+                this.isSelecting.subscribe(function (state) {
+                    if (!state) {
+                        // means selection lasso has been dropped
+                        items_model.continiousSelection(false);
+                    }
+                });
+
+                this.createObject = function (resourceObject) {
+                    var item = new ItemObject(resourceObject);
+                    fmModel.filterModel.filterItem(item);
+                    return item;
+                };
+
+                this.addNew = function (dataObjects) {
+                    // use underlying array for better performance
+                    // http://www.knockmeout.net/2012/04/knockoutjs-performance-gotcha.html
+                    var items = model.itemsModel.objects();
+
+                    if (!$.isArray(dataObjects)) {
+                        dataObjects = [dataObjects];
+                    }
+
+                    $.each(dataObjects, function (i, resourceObject) {
+                        items.push(items_model.createObject(resourceObject));
+                    });
+
+                    items = sortItems(items);
+                    model.itemsModel.objects.valueHasMutated();
+                };
+
+                this.loadList = function (path) {
+                    model.loadingView(true);
+
+                    var queryParams = {
+                        mode: 'getfolder',
+                        path: path
+                    };
+                    if (_url_.param('type')) {
+                        queryParams.type = _url_.param('type');
+                    }
+
+                    buildAjaxRequest('GET', queryParams).done(function (response) {
+                        if (response.data) {
+                            model.currentPath(path);
+                            model.breadcrumbsModel.splitCurrent();
+                            model.itemsModel.setList(response.data);
+
+                            if (model.itemsModel.lazyLoad) {
+                                model.itemsModel.lazyLoad.update();
+                            }
+                        }
+                        handleAjaxResponseErrors(response);
+                    }).fail(handleAjaxError);
+                };
+
+                this.setList = function (dataObjects) {
+                    var objects = [];
+                    // add parent folder object
+                    if (!isFile(model.currentPath()) && model.currentPath() !== fileRoot) {
+                        var parentPath = getParentDirname(model.currentPath());
+                        var parentItem = {
+                            id: parentPath,
+                            rdo: {
+                                id: parentPath,
+                                type: 'parent',
+                                attributes: {
+                                    readable: true,
+                                    writable: true
+                                }
+                            },
+                            dragHovered: ko.observable(false)
+                        };
+
+                        parentItem.open = function (item, e) {
+                            if (isItemOpenable(e)) {
+                                items_model.loadList(parentItem.id);
+                            }
+                        };
+
+                        parentItem.itemClass = ko.pureComputed(function () {
+                            var cssClass = [];
+                            if (parentItem.dragHovered()) {
+                                cssClass.push(model.ddModel.hoveredCssClass);
+                            }
+                            return cssClass.join(' ');
+                        });
+
+                        objects.push(parentItem);
+                    }
+
+                    // clear previously rendered content
+                    items_model.descriptivePanel.content(null);
+
+                    $.each(dataObjects, function (i, resourceObject) {
+                        if (config.manager.renderer.position && typeof config.manager.renderer.indexFile === 'string' &&
+                            resourceObject.attributes.name.toLowerCase() === config.manager.renderer.indexFile.toLowerCase()
+                        ) {
+                            items_model.descriptivePanel.setRenderer(resourceObject);
+                            // load and render index file content
+                            previewItem(items_model.descriptivePanel.rdo()).then(function (response) {
+                                if (response.data) {
+                                    items_model.descriptivePanel.render(response.data.attributes.content);
+                                }
+                            });
+                        }
+                        objects.push(items_model.createObject(resourceObject));
+                    });
+
+                    model.itemsModel.objects(sortItems(objects));
+                    model.loadingView(false);
+                };
+
+                this.findByParam = function (key, value) {
+                    return ko.utils.arrayFirst(model.itemsModel.objects(), function (object) {
+                        return object[key] === value;
+                    });
+                };
+
+                this.findByFilter = function (filter, allMatches) {
+                    var firstMatch = !(allMatches || false);
+
+                    var resultItems = [],
+                        items = items_model.objects();
+
+                    if (!items || items.length === 0) {
+                        return null;
+                    }
+                    for (var i = 0, l = items.length; i < l; i++) {
+                        if (filter(items[i])) {
+                            if (firstMatch) {
+                                return items[i];
+                            }
+                            resultItems.push(items[i]);
+                        }
+                    }
+                    return firstMatch ? null : resultItems;
+                };
+
+                this.sortObjects = function () {
+                    var sortedList = sortItems(items_model.objects());
+                    items_model.objects(sortedList);
+                };
+
+                this.getSelected = function () {
+                    var selectedItems = items_model.findByFilter(function (item) {
+                        return item.rdo.type !== "parent" && item.selected();
+                    }, true);
+                    items_model.selectedNumber(selectedItems.length);
+                    return selectedItems;
+                };
+
+                this.unselectItems = function (ctrlKey) {
+                    var appendSelection = (config.manager.selection.enabled && config.manager.selection.useCtrlKey && ctrlKey === true);
+                    if (!appendSelection) {
+                        // drop selection from selected items
+                        $.each(items_model.getSelected(), function (i, itemObject) {
+                            itemObject.selected(false);
+                        });
+                    }
+                };
+
+                this.initiateLazyLoad = function () {
+                    // not configured or already initiated
+                    if (config.viewer.image.lazyLoad !== true || items_model.lazyLoad) {
+                        return;
+                    }
+
+                    items_model.lazyLoad = new LazyLoad({
+                        container: $fileinfo[0], // work only for default scrollbar
+                        callback_load: function (element) {
+                            fm.log("LOADED", element.getAttribute('data-original'));
+                        },
+                        callback_set: function (element) {
+                            fm.log("SET", element.getAttribute('data-original'));
+                        },
+                        callback_processed: function (elementsLeft) {
+                            fm.log("PROCESSED", elementsLeft + " images left");
+                        }
+                    });
+                };
+
+                this.objects.subscribe(function (items) {
+                    var totalNumber = 0,
+                        totalSize = 0;
+
+                    $.each(items, function (i, item) {
+                        if (item.rdo.type !== 'parent') {
+                            totalNumber++;
+                        }
+                        if (item.rdo.type === 'file') {
+                            totalSize += Number(item.rdo.attributes.size);
+                        }
+                    });
+                    // updates folder summary info
+                    items_model.objectsNumber(totalNumber);
+                    items_model.objectsSize(formatBytes(totalSize));
+
+                    // update
+                    if (items_model.lazyLoad) {
+                        setTimeout(function () {
+                            items_model.lazyLoad.update();
+                        }, 50);
+                    }
+
+                    // context menu
+                    $viewItems.contextMenu({
+                        selector: '.file, .directory',
+                        zIndex: 100,
+                        // wrap options with "build" allows to get item element
+                        build: function ($triggerElement, e) {
+                            var koItem = ko.dataFor($triggerElement[0]);
+                            if (!koItem.selected()) {
+                                model.itemsModel.unselectItems(false);
+                                koItem.selected(true);
+                            }
+
+                            return {
+                                appendTo: '.fm-container',
+                                items: getContextMenuItems(koItem.rdo),
+                                callback: function (itemKey, options) {
+                                    performAction(itemKey, options, koItem.rdo, model.fetchSelectedObjects(koItem));
+                                }
+                            }
+                        }
+                    });
+                });
+            };
+
+            var ItemObject = function (resourceObject) {
+                var item_object = this,
+                    previewWidth = config.viewer.image.thumbMaxWidth;
+
+                if (resourceObject.attributes.width && resourceObject.attributes.width < previewWidth) {
+                    previewWidth = resourceObject.attributes.width;
+                }
+
+                this.id = resourceObject.id; // for search purpose
+                this.rdo = resourceObject; // original resource data object
+                this.cdo = { // computed data object
+                    isFolder: (resourceObject.type === 'folder'),
+                    sizeFormatted: formatBytes(resourceObject.attributes.size),
+                    extension: (resourceObject.type === 'file') ? getExtension(resourceObject.id) : null,
+                    dimensions: resourceObject.attributes.width ? resourceObject.attributes.width + 'x' + resourceObject.attributes.height : null,
+                    cssItemClass: (resourceObject.type === 'folder') ? 'directory' : 'file',
+                    imageUrl: createImageUrl(resourceObject, true, true),
+                    previewWidth: previewWidth,
+                    hiddenByType: false,
+                    hiddenBySearch: false
+                };
+                this.visible = ko.observable(true);
+                this.selected = ko.observable(false);
+                this.dragHovered = ko.observable(false);
+                this.lazyPreview = (config.viewer.image.lazyLoad && this.cdo.imageUrl);
+
+                this.selected.subscribe(function (value) {
+                    if (value && model.treeModel.selectedNode() !== null) {
+                        model.treeModel.selectedNode().selected(false);
+                    }
+                });
+
+                this.title = ko.pureComputed(function () {
+                    return (config.options.showTitleAttr) ? this.rdo.id : null;
+                }, this);
+
+                this.itemClass = ko.pureComputed(function () {
+                    var cssClass = [];
+                    if (this.selected() && config.manager.selection.enabled) {
+                        cssClass.push('ui-selected');
+                    }
+                    if (this.dragHovered()) {
+                        cssClass.push(model.ddModel.hoveredCssClass);
+                    }
+                    return this.cdo.cssItemClass + ' ' + cssClass.join(' ');
+                }, this);
+
+                this.listIconClass = ko.pureComputed(function () {
+                    var cssClass,
+                        extraClass = ['ico'];
+                    if (this.cdo.isFolder === true) {
+                        cssClass = 'ico_folder';
+                        extraClass.push('folder');
+                        if (!this.rdo.attributes.readable) {
+                            extraClass.push('lock');
+                        }
+                    } else {
+                        cssClass = 'ico_file';
+                        if (this.rdo.attributes.readable) {
+                            extraClass.push('ext', this.cdo.extension);
+                        } else {
+                            extraClass.push('file', 'lock');
+                        }
+                    }
+                    return cssClass + ' ' + extraClass.join('_');
+                }, this);
+
+                this.gridIconClass = ko.pureComputed(function () {
+                    var cssClass = [],
+                        extraClass = ['ico'];
+                    if (!this.cdo.imageUrl) {
+                        cssClass.push('grid-icon');
+                        if (this.cdo.isFolder === true) {
+                            cssClass.push('ico_folder');
+                            extraClass.push('folder');
+                            if (!this.rdo.attributes.readable) {
+                                extraClass.push('lock');
+                            }
+                        } else {
+                            cssClass.push('ico_file');
+                            if (this.rdo.attributes.readable) {
+                                extraClass.push('ext', this.cdo.extension);
+                            } else {
+                                extraClass.push('file', 'lock');
+                            }
+                        }
+                        cssClass.push(extraClass.join('_'));
+                    }
+                    return cssClass.join(' ');
+                }, this);
+
+                this.mouseDown = function (item, e) {
+                    // case: previously selected items are dragged instead of a newly one
+                    // unselect if currently clicked item is not the one of selected items
+                    if (!item.selected()) {
+                        model.itemsModel.unselectItems(e.ctrlKey);
+                    }
+
+                    model.selectionModel.unselect = item.selected();
+                    item.selected(true);
+                };
+
+                this.open = function (item, e) {
+                    if (model.selectionModel.unselect) {
+                        // case: click + ctrlKey on selected item
+                        if (e.ctrlKey) {
+                            item.selected(false);
+                        }
+                        // drop selection
+                        if (!e.ctrlKey && config.manager.dblClickOpen) {
+                            model.itemsModel.unselectItems(e.ctrlKey);
+                            item.selected(true);
+                        }
+                    }
+
+                    if (isItemOpenable(e)) {
+                        if (config.options.quickSelect && item.rdo.type === 'file' && has_capability(item.rdo, 'select')) {
+                            selectItem(item.rdo);
+                        } else {
+                            getDetailView(item.rdo);
+                        }
+                    }
+                };
+
+                this.remove = function () {
+                    model.itemsModel.objects.remove(this);
+                };
+            };
+
+            var TableViewModel = function () {
+                var SortableHeader = function (name) {
+                    var thead = this;
+                    this.column = ko.observable(name);
+                    this.order = ko.observable(model.itemsModel.listSortOrder());
+
+                    this.sortClass = ko.pureComputed(function () {
+                        var cssClass;
+                        if (model.itemsModel.listSortField() === thead.column()) {
+                            cssClass = 'sorted sorted-' + this.order();
+                        }
+                        return cssClass;
+                    }, this);
+
+                    this.sort = function () {
+                        var isAscending = thead.order() === 'asc';
+                        var isSameColumn = model.itemsModel.listSortField() === thead.column();
+                        thead.order(isSameColumn ? (isAscending ? 'desc' : 'asc') : model.itemsModel.listSortOrder());
+                        model.itemsModel.listSortField(thead.column());
+                        model.itemsModel.listSortOrder(thead.order());
+                        model.itemsModel.sortObjects();
+                    };
+                };
+
+                this.thName = new SortableHeader('name');
+                this.thType = new SortableHeader('type');
+                this.thSize = new SortableHeader('size');
+                this.thDimensions = new SortableHeader('dimensions');
+                this.thModified = new SortableHeader('modified');
+            };
+
+            var HeaderModel = function () {
+                var header_model = this;
+
+                this.closeButton = ko.observable(false);
+                this.langSwitcher = $.isArray(config.language.available) && config.language.available.length > 0;
+
+                this.closeButtonOnClick = function () {
+                    fm.log("CLOSE button is clicked");
+                };
+
+                this.navHome = function () {
+                    model.previewFile(false);
+                    model.itemsModel.loadList(fileRoot);
+                };
+
+                this.navLevelUp = function () {
+                    var parentFolder = model.previewFile()
+                        ? getDirname(model.previewModel.rdo().id)
+                        : getParentDirname(model.currentPath());
+
+                    if (model.previewFile()) {
+                        model.previewFile(false);
+                    }
+
+                    if (parentFolder !== model.currentPath()) {
+                        model.itemsModel.loadList(parentFolder);
+                    }
+                };
+
+                this.navRefresh = function () {
+                    if (model.previewFile()) {
+                        model.previewFile(false);
+                        model.previewFile(true);
+                    } else {
+                        model.itemsModel.loadList(model.currentPath());
+                    }
+                };
+
+                this.displayGrid = function () {
+                    model.viewMode('grid');
+                    model.previewFile(false);
+                };
+
+                this.displayList = function () {
+                    model.viewMode('list');
+                    model.previewFile(false);
+                };
+
+                this.switchLang = function (e) {
+                    var langNew = e.target.value,
+                        langCurrent = langModel.getLang();
+
+                    if (langNew && langNew.toLowerCase() !== langCurrent.toLowerCase()) {
+                        var newUrl, url = window.location.toString(),
+                            regExp = new RegExp('(langCode=)' + langCurrent);
+
+                        if (regExp.test(url)) {
+                            newUrl = url.replace(regExp, '$1' + langNew);
+                        } else {
+                            newUrl = url + ($.isEmptyObject(_url_.param()) ? '?' : '#') + 'langCode=' + langNew;
+                        }
+                        window.location.href = newUrl;
+                    }
+                };
+
+                this.createFolder = function () {
+                    var makeFolder = function (e, ui) {
+                        var folderName = ui.getInputValue();
+                        if (!folderName) {
+                            fm.error(lg('no_foldername'));
+                            return;
+                        }
+
+                        buildAjaxRequest('GET', {
+                            mode: 'addfolder',
+                            path: fmModel.currentPath(),
+                            name: folderName
+                        }).done(function (response) {
+                            if (response.data) {
+                                fmModel.addItem(response.data, fmModel.currentPath());
+
+                                ui.closeDialog();
+                                if (config.options.showConfirmation) {
+                                    fm.success(lg('successful_added_folder'));
+                                }
+                            }
+                            handleAjaxResponseErrors(response);
+                        }).fail(handleAjaxError);
+                    };
+
+                    fm.prompt({
+                        message: lg('prompt_foldername'),
+                        value: lg('default_foldername'),
+                        okBtn: {
+                            label: lg('create_folder'),
+                            autoClose: false,
+                            click: makeFolder
+                        },
+                        cancelBtn: {
+                            label: lg('cancel')
+                        }
+                    });
+                };
+            };
+
+            var SummaryModel = function () {
+                this.files = ko.observable(null);
+                this.folders = ko.observable(null);
+                this.size = ko.observable(null);
+                this.enabled = ko.observable(false);
+
+                this.doSummarize = function () {
+                    summarizeItems();
+                };
+            };
+
+            var FilterModel = function () {
+                var filter_model = this;
+                this.name = ko.observable(null);
+
+                this.setName = function (filterName) {
+                    if (filterName &&
+                        config.filter &&
+                        $.isArray(config.filter[filterName])
+                    ) {
+                        filter_model.name(filterName);
+                    }
+                };
+
+                // return extensions which are match a filter name
+                this.getExtensions = function () {
+                    if (filter_model.name()) {
+                        return config.filter[filter_model.name()];
+                    }
+                    return null;
+                };
+
+                // check whether file item should be filtered out of the output based on it's extension
+                this.filterItem = function (itemObject) {
+                    if (itemObject.rdo.type === 'parent') {
+                        return;
+                    }
+
+                    var extensions = filter_model.getExtensions(),
+                        visibility = !itemObject.cdo.hiddenBySearch;
+
+                    if (itemObject.rdo.type === "file" && $.isArray(extensions)) {
+                        var ext = getExtension(itemObject.id),
+                            matchByType = extensions.indexOf(ext) !== -1;
+
+                        visibility = visibility && matchByType;
+                        itemObject.cdo.hiddenByType = !matchByType;
+                    }
+                    itemObject.visible(visibility);
+                };
+
+                this.filter = function (filterName) {
+                    model.searchModel.reset();
+                    filter_model.setName(filterName);
+
+                    $.each(model.itemsModel.objects(), function (i, itemObject) {
+                        filter_model.filterItem(itemObject);
+                    });
+
+                    model.treeModel.mapNodes(function (node) {
+                        filter_model.filterItem(node);
+                    });
+
+                    if (model.itemsModel.lazyLoad) {
+                        model.itemsModel.lazyLoad.update();
+                    }
+                };
+
+                this.reset = function () {
+                    filter_model.name(null);
+                    filter_model.filter(null);
+                };
+            };
+
+            var SearchModel = function () {
+                var search_model = this;
+                this.value = ko.observable('');
+
+                this.findAll = function (data, event) {
+                    var delay = 200,
+                        insensitive = true;
+
+                    search_model.value(event.target.value);
+
+                    delayCallback(function () {
+                        var searchString = insensitive ? search_model.value().toLowerCase() : search_model.value();
+
+                        $.each(model.itemsModel.objects(), function (i, itemObject) {
+                            if (itemObject.rdo.type === 'parent' || itemObject.cdo.hiddenByType) {
+                                return;
+                            }
+                            var itemName = itemObject.rdo.attributes.name;
+                            if (insensitive) {
+                                itemName = itemName.toLowerCase();
+                            }
+
+                            var visibility = (itemName.indexOf(searchString) === 0);
+                            itemObject.cdo.hiddenBySearch = !visibility;
+                            itemObject.visible(visibility);
+                        });
+                    }, delay);
+                };
+
+                this.reset = function (data, event) {
+                    search_model.value('');
+                    $.each(model.itemsModel.objects(), function (i, itemObject) {
+                        if (itemObject.rdo.type === 'parent') {
+                            return;
+                        }
+                        itemObject.cdo.hiddenBySearch = false;
+                        itemObject.visible(!itemObject.cdo.hiddenByType);
+                    });
+                };
+            };
+
+            var ClipboardModel = function () {
+                var cbMode = null,
+                    cbObjects = [],
+                    clipboard_model = this,
+                    active = capabilities.indexOf('copy') > -1 || capabilities.indexOf('move') > -1;
+
+                this.itemsNum = ko.observable(0);
+                this.enabled = ko.observable(model.config().clipboard.enabled && active);
+
+                this.copy = function () {
+                    if (!clipboard_model.hasCapability('copy')) {
+                        return;
+                    }
+                    cbMode = 'copy';
+                    cbObjects = model.fetchSelectedItems();
+                    clipboard_model.itemsNum(cbObjects.length);
+                };
+
+                this.cut = function () {
+                    if (!clipboard_model.hasCapability('cut')) {
+                        return;
+                    }
+                    cbMode = 'cut';
+                    cbObjects = model.fetchSelectedItems();
+                    clipboard_model.itemsNum(cbObjects.length);
+                };
+
+                this.paste = function () {
+                    if (!clipboard_model.hasCapability('paste') || clipboard_model.isEmpty()) {
+                        return;
+                    }
+                    if (cbMode === null || cbObjects.length === 0) {
+                        fm.warning(lg('clipboard_empty'));
+                        return;
+                    }
+
+                    var targetPath = model.currentPath();
+
+                    processMultipleActions(cbObjects, function (i, itemObject) {
+                        if (cbMode === 'cut') {
+                            return moveItem(itemObject, targetPath);
+                        }
+                        if (cbMode === 'copy') {
+                            return copyItem(itemObject, targetPath);
+                        }
+                    }, clearClipboard);
+                };
+
+                this.clear = function () {
+                    if (!clipboard_model.hasCapability('clear') || clipboard_model.isEmpty()) {
+                        return;
+                    }
+                    clearClipboard();
+                    fm.success(lg('clipboard_cleared'));
+                };
+
+                this.isEmpty = function () {
+                    return cbObjects.length === 0;
+                };
+
+                this.hasCapability = function (capability) {
+                    if (!clipboard_model.enabled) {
+                        return false;
+                    }
+
+                    switch (capability) {
+                        case 'copy':
+                            return capabilities.indexOf('copy') > -1;
+                        case 'cut':
+                            return capabilities.indexOf('move') > -1;
+                        default:
+                            return true;
+                    }
+                };
+
+                function clearClipboard() {
+                    cbObjects = [];
+                    cbMode = null;
+                    clipboard_model.itemsNum(0);
+                }
+            };
+
+            var BreadcrumbsModel = function () {
+                var bc_model = this;
+
+                this.items = ko.observableArray([]);
+
+                this.add = function (path, label) {
+                    bc_model.items.push(new BcItem(path, label));
+                };
+
+                this.splitCurrent = function () {
+                    var path = fileRoot,
+                        cPath = model.currentPath(),
+                        chunks = cPath.replace(new RegExp('^' + fileRoot), '').split('/');
+
+                    // reset breadcrumbs
+                    bc_model.items([]);
+                    // push root node
+                    bc_model.add(fileRoot, '');
+
+                    while (chunks.length > 0) {
+                        var chunk = chunks.shift();
+                        if (chunk) {
+                            path += chunk + '/';
+                            bc_model.add(path, chunk);
+                        }
+                    }
+                };
+
+                var BcItem = function (path, label) {
+                    var bc_item = this;
+                    this.path = path;
+                    this.label = label;
+                    this.isRoot = (path === fileRoot);
+                    this.active = (path === model.currentPath());
+
+                    this.itemClass = function () {
+                        var cssClass = ['nav-item'];
+                        if (bc_item.isRoot) {
+                            cssClass.push('root');
+                        }
+                        if (bc_item.active) {
+                            cssClass.push('active');
+                        }
+                        return cssClass.join(' ');
+                    };
+
+                    this.goto = function (item, e) {
+                        if (!item.active) {
+                            model.itemsModel.loadList(item.path);
+                        }
+                    };
+                };
+            };
+
+            var RenderModel = function () {
+                var $containerElement,
+                    render_model = this;
+
+                this.rdo = ko.observable({});
+                this.content = ko.observable(null);
+                this.renderer = ko.observable(null);
+
+                this.render = function (data) {
+                    if (render_model.renderer()) {
+                        render_model.renderer().processContent(data);
+                    }
+                };
+
+                this.setRenderer = function (resourceObject) {
+                    render_model.rdo(resourceObject);
+
+                    if (isMarkdownFile(resourceObject.attributes.name)) {
+                        // markdown renderer
+                        render_model.renderer(new MarkdownRenderer());
+                    } else {
+                        // CodeMirror renderer
+                        render_model.renderer(new CodeMirrorRenderer());
+                    }
+                };
+
+                this.setContainer = function (templateElements) {
+                    $.each(templateElements, function () {
+                        if ($(this).hasClass('fm-renderer-container')) {
+                            $containerElement = $(this);
+                            return false;
+                        }
+                    });
+
+                    render_model.renderer().processDomElements($containerElement);
+                };
+
+                var CodeMirrorRenderer = function () {
+                    this.name = 'codeMirror';
+                    this.interactive = false;
+
+                    var instance = new EditorModel();
+
+                    this.processContent = function (data) {
+                        instance.render(data);
+                        render_model.content(data);
+                    };
+
+                    this.processDomElements = function ($container) {
+                        if (!instance.instance) {
+                            var textarea = $container.find('.fm-cm-renderer-content')[0],
+                                extension = getExtension(render_model.rdo().id);
+
+                            instance.createInstance(extension, textarea, {
+                                readOnly: 'nocursor',
+                                styleActiveLine: false,
+                                lineNumbers: false
+                            });
+                        }
+                    };
+                };
+
+                var MarkdownRenderer = function () {
+                    this.name = 'markdown';
+                    this.interactive = true;
+
+                    var instance = window.markdownit({
+                        // Basic options:
+                        html: true,
+                        linkify: true,
+                        typographer: true,
+
+                        // Custom highlight function to apply CSS class `highlight`:
+                        highlight: function (str, lang) {
+                            if (lang && hljs.getLanguage(lang)) {
+                                try {
+                                    return '<pre class="highlight"><code>' +
+                                        hljs.highlight(lang, str, true).value +
+                                        '</code></pre>';
+                                } catch (__) { }
+                            }
+                            return '<pre class="highlight"><code>' + instance.utils.escapeHtml(str) + '</code></pre>';
+                        },
+
+                        // custom link function to enable <img ...> and file d/ls:
+                        replaceLink: function (link, env) {
+                            // do not change if link as http:// or ftp:// or mailto: etc.
+                            if (link.search("://") != -1 || startsWith(link, 'mailto:')) {
+                                return link;
+                            }
+
+                            // define path depending on absolute / relative link type
+                            var basePath = (startsWith(link, '/')) ? fileRoot : getDirname(render_model.rdo().id);
+                            var path = basePath + ltrim(link, '/');
+
+                            if (isMarkdownFile(path)) {
+                                // to open file in preview mode upon click
+                                return path;
+                            } else {
+                                var queryParams = extendRequestParams("GET", {
+                                    mode: 'readfile',
+                                    path: path
+                                });
+                                return buildConnectorUrl(queryParams);
+                            }
+                        }
+                    }).use(window.markdownitReplaceLink);
+
+                    this.processContent = function (data) {
+                        var result = instance.render(data);
+                        render_model.content(result);
+                        setLinksBehavior();
+                    };
+
+                    this.processDomElements = function ($container) { };
+
+                    function setLinksBehavior() {
+                        // add onClick events to local .md file links (to perform AJAX previews)
+                        $containerElement.find("a").each(function () {
+                            var href = $(this).attr("href"),
+                                editor = fmModel.previewModel.editor;
+
+                            if (editor.enabled() && editor.isInteractive()) {
+                                // prevent user from losing unsaved changes in preview mode
+                                // in case of clicking on a link that jumps off the page
+                                $(this).off("click");
+                                $(this).on("click", function () {
+                                    return false; // prevent onClick event
+                                });
+                            } else {
+                                if (href.search("://") != -1 || startsWith(href, 'mailto:')) {
+                                    return; // do nothing
+                                }
+
+                                if (isMarkdownFile(href)) {
+                                    // open file in preview mode for clicked link
+                                    $(this).on("click", function (e) {
+                                        getItemInfo(href).then(function (response) {
+                                            if (response.data) {
+                                                getDetailView(response.data);
+                                            }
+                                        });
+
+                                        return false; // prevent onClick event
+                                    });
+                                }
+                            }
+                        });
+                    }
+                };
+            };
+
+            var EditorModel = function () {
+                var editor_model = this,
+                    delayedContent = null;
+
+                this.instance = null;
+                this.enabled = ko.observable(false);
+                this.content = ko.observable(null);
+                this.mode = ko.observable(null);
+                this.isInteractive = ko.observable(false);
+
+                this.mode.subscribe(function (mode) {
+                    if (mode) {
+                        editor_model.instance.setOption('mode', mode);
+                        if (delayedContent) {
+                            drawContent(delayedContent);
+                            delayedContent = null;
+                        }
+                    }
+                });
+
+                this.render = function (content) {
+                    if (editor_model.mode()) {
+                        drawContent(content);
+                    } else {
+                        delayedContent = content;
+                    }
+                };
+
+                this.createInstance = function (extension, element, options) {
+                    var cm,
+                        defaults = {
+                            readOnly: 'nocursor',
+                            styleActiveLine: false,
+                            viewportMargin: Infinity,
+                            lineNumbers: config.editor.lineNumbers,
+                            lineWrapping: config.editor.lineWrapping,
+                            theme: config.editor.theme,
+                            matchBrackets: config.editor.matchBrackets,
+                            extraKeys: {
+                                "F11": function (cm) {
+                                    cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+                                },
+                                "Esc": function (cm) {
+                                    if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+                                }
+                            }
+                        };
+
+                    cm = CodeMirror.fromTextArea(element, $.extend({}, defaults, options));
+
+                    cm.on("changes", function (cm, change) {
+                        editor_model.content(cm.getValue());
+                    });
+
+                    editor_model.instance = cm;
+
+                    includeAssets(extension);
+                };
+
+                function drawContent(content) {
+                    editor_model.enabled(true);
+                    editor_model.instance.setValue(content);
+                    // to make sure DOM is ready to render content
+                    setTimeout(function () {
+                        editor_model.instance.refresh();
+                    }, 0);
+                }
+
+                function includeAssets(extension) {
+                    var assets = [],
+                        currentMode = 'default';
+
+                    // highlight code according to extension file
+                    if (config.editor.codeHighlight) {
+                        if (extension === 'js') {
+                            assets.push('../filemanager/scripts/CodeMirror/mode/javascript/javascript.js');
+                            currentMode = 'javascript';
+                        }
+                        if (extension === 'css') {
+                            assets.push('../filemanager/scripts/CodeMirror/mode/css/css.js');
+                            currentMode = 'css';
+                        }
+                        if (extension === 'html') {
+                            assets.push('../filemanager/scripts/CodeMirror/mode/xml/xml.js');
+                            currentMode = 'text/html';
+                        }
+                        if (extension === 'xml') {
+                            assets.push('../filemanager/scripts/CodeMirror/mode/xml/xml.js');
+                            currentMode = 'application/xml';
+                        }
+                        if (extension === 'php') {
+                            assets.push('../filemanager/scripts/CodeMirror/mode/htmlmixed/htmlmixed.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/xml/xml.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/javascript/javascript.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/css/css.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/clike/clike.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/php/php.js');
+                            currentMode = 'application/x-httpd-php';
+                        }
+                        if (extension === 'java') {
+                            assets.push('../filemanager/scripts/CodeMirror/mode/clike/clike.js');
+                            currentMode = 'text/x-java';
+                        }
+                        if (extension === 'sql') {
+                            assets.push('../filemanager/scripts/CodeMirror/mode/sql/sql.js');
+                            currentMode = 'text/x-mysql';
+                        }
+                        if (extension === 'md') {
+                            assets.push('../filemanager/scripts/CodeMirror/addon/mode/overlay.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/xml/xml.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/markdown/markdown.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/gfm/gfm.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/javascript/javascript.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/css/css.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/htmlmixed/htmlmixed.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/clike/clike.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/shell/shell.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/meta.js');
+                            currentMode = 'gfm';
+                        }
+                        if (extension === 'sh') {
+                            assets.push('../filemanager/scripts/CodeMirror/addon/mode/overlay.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/markdown/markdown.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/gfm/gfm.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/javascript/javascript.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/css/css.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/htmlmixed/htmlmixed.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/clike/clike.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/meta.js');
+                            assets.push('../filemanager/scripts/CodeMirror/mode/shell/shell.js');
+                            currentMode = 'shell';
+                        }
+                    }
+
+                    if (assets.length) {
+                        assets.push(function () {
+                            // after all required assets are loaded
+                            editor_model.mode(currentMode);
+                        });
+                        loadAssets(assets);
+                    } else {
+                        editor_model.mode(currentMode);
+                    }
+                }
+            };
+
+            var DragAndDropModel = function () {
+                var drag_model = this,
+                    restrictedCssClass = 'drop-restricted',
+                    $dragHelperTemplate = $('#drag-helper-template');
+
+                this.items = [];
+                this.hoveredItem = null;
+                this.dragHelper = null;
+                this.isScrolling = false;
+                this.isScrolled = false;
+                this.hoveredCssClass = 'drop-hover';
+
+                this.makeDraggable = function (item, element) {
+                    if (item.rdo.type === "file" || item.rdo.type === "folder") {
+                        $(element).draggable({
+                            distance: 3,
+                            cursor: "pointer",
+                            cursorAt: {
+                                left: Math.floor($dragHelperTemplate.width() / 2),
+                                bottom: 15
+                            },
+                            scroll: false,
+                            appendTo: $wrapper,
+                            containment: $container,
+                            refreshPositions: false,
+                            helper: function () {
+                                var $cloned,
+                                    iconClass;
+
+                                if (model.fetchSelectedItems(item.constructor.name).length > 1) {
+                                    iconClass = 'ico_multiple';
+                                } else {
+                                    iconClass = (item.rdo.type === "folder")
+                                        ? 'ico_folder'
+                                        : 'ico_file ico_ext_' + getExtension(item.rdo.id);
+                                }
+
+                                $cloned = $dragHelperTemplate.children('.drag-helper').clone();
+                                $cloned.find('.clip').addClass(iconClass);
+
+                                drag_model.dragHelper = $cloned;
+                                return $cloned;
+                            },
+                            start: function (event, ui) {
+                                drag_model.items = model.fetchSelectedItems(item.constructor.name);
+                            },
+                            drag: function (event, ui) {
+                                $(this).draggable('option', 'refreshPositions', drag_model.isScrolling || drag_model.isScrolled);
+                                drag_model.isScrolled = false;
+                            },
+                            stop: function (event, ui) {
+                                drag_model.items = [];
+                                drag_model.dragHelper = null;
+                            }
+                        });
+                    }
+                };
+
+                this.makeDroppable = function (targetItem, element) {
+                    if (targetItem.rdo.type === "folder" || targetItem.rdo.type === "parent") {
+                        $(element).droppable({
+                            tolerance: "pointer",
+                            enableExtendedEvents: targetItem instanceof ItemObject,
+                            accept: function ($draggable) {
+                                var dragItem = ko.dataFor($draggable[0]),
+                                    type = dragItem ? dragItem.rdo.type : null;
+
+                                return (type === "file" || type === "folder");
+                            },
+                            over: function (event, ui) {
+                                // prevent "over" event fire before "out" event
+                                // http://stackoverflow.com/a/28457286/7095038
+                                setTimeout(function () {
+                                    markHovered(null);
+                                    markRestricted(ui.helper, false);
+
+                                    if (!isDropAllowed(targetItem)) {
+                                        markRestricted(ui.helper, true);
+                                    }
+                                    markHovered(targetItem);
+                                }, 0);
+                            },
+                            out: function (event, ui) {
+                                markHovered(null);
+                                markRestricted(ui.helper, false);
+                            },
+                            drop: function (event, ui) {
+                                markHovered(null);
+
+                                if (!isDropAllowed(targetItem)) {
+                                    return false;
+                                }
+
+                                processMultipleActions(drag_model.items, function (i, itemObject) {
+                                    return moveItem(itemObject.rdo, targetItem.id);
+                                });
+                            }
+                        });
+                    }
+                };
+
+                // check whether draggable items can be accepted by target item
+                function isDropAllowed(targetItem) {
+                    var matches = $.grep(drag_model.items, function (itemObject, i) {
+                        if (targetItem.rdo.type === "folder" || targetItem.rdo.type === "parent") {
+                            // drop folder inside descending folders (filetree)
+                            if (startsWith(targetItem.rdo.id, itemObject.rdo.id)) {
+                                return true;
+                            }
+                            // drop items inside the same folder (filetree)
+                            if (targetItem.rdo.id === getClosestNode(itemObject.rdo.id)) {
+                                return true;
+                            }
+                        }
+                        // drop item to itself
+                        return (itemObject.id === targetItem.id);
+                    });
+                    // prevent on moving (to) protect folder or to the one of selected items
+                    return (targetItem.rdo.attributes.writable && matches.length === 0);
+                }
+
+                // mark item as hovered if it accepts draggable item
+                function markHovered(item) {
+                    if (drag_model.hoveredItem !== null) {
+                        drag_model.hoveredItem.dragHovered(false);
+                    }
+                    drag_model.hoveredItem = item;
+                    if (item) {
+                        item.dragHovered(true);
+                    }
+                }
+
+                // mark helper as restricted if target item doesn't accept draggable item
+                function markRestricted($helper, flag) {
+                    if (flag) {
+                        $helper.addClass(restrictedCssClass);
+                    } else {
+                        $helper.removeClass(restrictedCssClass);
+                    }
+                }
+            };
+
+            var SelectionModel = function () {
+                this.unselect = false;
+            };
+
+            this.treeModel = new TreeModel();
+            this.itemsModel = new ItemsModel();
+            this.tableViewModel = new TableViewModel();
+            this.previewModel = new PreviewModel();
+            this.headerModel = new HeaderModel();
+            this.summaryModel = new SummaryModel();
+            this.filterModel = new FilterModel();
+            this.searchModel = new SearchModel();
+            this.clipboardModel = new ClipboardModel();
+            this.breadcrumbsModel = new BreadcrumbsModel();
+            this.ddModel = new DragAndDropModel();
+            this.selectionModel = new SelectionModel();
+        };
+
+        /*---------------------------------------------------------
+         Helper functions
+         ---------------------------------------------------------*/
+
+        // Wrapper for translate method
+        var lg = function (key) {
+            return langModel.translate(key);
+        };
+
+        var sortItems = function (items) {
+            var parentItem;
+            var sortOrder = (fmModel.viewMode() === 'list') ? fmModel.itemsModel.listSortOrder() : configSortOrder;
+            var sortParams = {
+                natural: true,
+                order: sortOrder === 'asc' ? 1 : -1,
+                cases: false
+            };
+
+            // shift parent item to unshift it back after sorting
+            if (items.length > 0 && items[0].rdo.type === 'parent') {
+                parentItem = items.shift();
+            }
+
+            items.sort(function (a, b) {
+                var sortReturnNumber,
+                    aa = getSortSubject(a),
+                    bb = getSortSubject(b);
+
+                if (aa === bb) {
+                    sortReturnNumber = 0;
+                } else {
+                    if (aa === undefined || bb === undefined) {
+                        sortReturnNumber = 0;
+                    } else {
+                        if (!sortParams.natural || (!isNaN(aa) && !isNaN(bb))) {
+                            sortReturnNumber = aa < bb ? -1 : (aa > bb ? 1 : 0);
+                        } else {
+                            sortReturnNumber = naturalCompare(aa, bb);
+                        }
+                    }
+                }
+                // lastly assign asc/desc
+                sortReturnNumber *= sortParams.order;
+                return sortReturnNumber;
+            });
+
+            /**
+             * Get the string/number to be sorted by checking the array value with the criterium.
+             * @item KO or treeNode object
+             */
+            function getSortSubject(item) {
+                var sortBy,
+                    sortField = configSortField;
+
+                if (fmModel.viewMode() === 'list') {
+                    sortField = fmModel.itemsModel.listSortField();
+                }
+
+                switch (sortField) {
+                    case 'type':
+                        sortBy = item.cdo.extension || '';
+                        break;
+                    case 'size':
+                        sortBy = item.rdo.attributes.size;
+                        break;
+                    case 'modified':
+                        sortBy = item.rdo.attributes.timestamp;
+                        break;
+                    case 'dimensions':
+                        sortBy = item.cdo.dimensions || '';
+                        break;
+                    default:
+                        sortBy = item.rdo.attributes.name;
+                }
+
+                // strings should be ordered in lowercase (unless specified)
+                if (typeof sortBy === "string") {
+                    if (!sortParams.cases) {
+                        sortBy = sortBy.toLowerCase();
+                    }
+                    // spaces/newlines
+                    sortBy = sortBy.replace(/\s+/g, ' ');
+                }
+                return sortBy;
+            }
+
+            /**
+             * Compare strings using natural sort order
+             * http://web.archive.org/web/20130826203933/http://my.opera.com/GreyWyvern/blog/show.dml/1671288
+             */
+            function naturalCompare(a, b) {
+                var aa = chunkify(a.toString()),
+                    bb = chunkify(b.toString());
+                for (var x = 0; aa[x] && bb[x]; x++) {
+                    if (aa[x] !== bb[x]) {
+                        var c = Number(aa[x]),
+                            d = Number(bb[x]);
+                        if (c == aa[x] && d == bb[x]) {
+                            return c - d;
+                        } else {
+                            return aa[x] > bb[x] ? 1 : -1;
+                        }
+                    }
+                }
+                return aa.length - bb.length;
+            }
+
+            /**
+             * Split a string into an array by type: numeral or string
+             */
+            function chunkify(t) {
+                var tz = [], x = 0, y = -1, n = 0, i, j;
+                while (i = (j = t.charAt(x++)).charCodeAt(0)) {
+                    var m = (i == 46 || (i >= 48 && i <= 57));
+                    if (m !== n) {
+                        tz[++y] = '';
+                        n = m;
+                    }
+                    tz[y] += j;
+                }
+                return tz;
+            }
+
+            // handle folders position
+            var folderItems = [];
+            var i = items.length;
+            while (i--) {
+                if (items[i].rdo.type === 'folder') {
+                    folderItems.push(items[i]);
+                    items.splice(i, 1);
+                }
+            }
+            if (config.options.folderPosition !== 'top') {
+                folderItems.reverse();
+            }
+            for (var k = 0, fl = folderItems.length; k < fl; k++) {
+                if (config.options.folderPosition === 'top') {
+                    items.unshift(folderItems[k]);
+                } else {
+                    items.push(folderItems[k]);
+                }
+            }
+
+            if (parentItem) {
+                items.unshift(parentItem);
+            }
+
+            return items;
+        };
+
+        // Test if a given url exists
+        var file_exists = function (url) {
+            return $.ajax({
+                type: 'HEAD',
+                url: url
+            });
+        };
+
+        // Retrieves config settings from config files
+        var loadConfigFile = function (type) {
+            var url = null;
+            type = (typeof type === "undefined") ? "user" : type;
+
+            if (type === 'user') {
+                if (_url_.param('config')) {
+                    url = fm.settings.baseUrl + '/config/' + _url_.param('config');
+                } else {
+                    url = fm.settings.baseUrl + '/config/filemanager.config.json';
+                }
+            } else {
+                url = fm.settings.baseUrl + '/config/filemanager.config.default.json';
+            }
+
+            return $.ajax({
+                type: 'GET',
+                url: url,
+                dataType: "json",
+                cache: false,
+                error: function (response) {
+                    fm.error('Given config file (' + url + ') does not exist!');
+                }
+            });
+        };
+
+        // Loads a given js/css files dynamically into header
+        var loadAssets = function (assets) {
+            for (var i = 0, l = assets.length; i < l; i++) {
+                if (typeof assets[i] === 'string') {
+                    assets[i] = fm.settings.baseUrl + assets[i];
+                }
+            }
+
+            toast.apply(this, assets);
+        };
+
+        // Loads a given js template file into header if not already included
+        var loadTemplate = function (id, data) {
+            return $.ajax({
+                type: 'GET',
+                url: fm.settings.baseUrl + '/scripts/templates/' + id + '.html',
+                error: handleAjaxError
+            });
+        };
+
+        // Converts bytes to KB, MB, or GB as needed for display
+        var formatBytes = function (bytes, round) {
+            if (!bytes) return '';
+            round = round || false;
+            var n = parseFloat(bytes);
+            var d = parseFloat(round ? 1000 : 1024);
+            var c = 0;
+            var u = [lg('unit_bytes'), lg('unit_kb'), lg('unit_mb'), lg('unit_gb')];
+
+            while (true) {
+                if (n < d) {
+                    n = Math.round(n * 100) / 100;
+                    return n + ' ' + u[c];
+                } else {
+                    n /= d;
+                    c += 1;
+                }
+            }
+        };
+
+        // Format server-side response single error object
+        var formatServerError = function (errorObject) {
+            var message;
+            // look for message in case an error CODE is provided
+            if (langModel.getLang() && lg(errorObject.message)) {
+                message = lg(errorObject.message);
+                $.each(errorObject.arguments, function (i, argument) {
+                    message = message.replace('%s', argument);
+                });
+            } else {
+                message = errorObject.message;
+            }
+            return message;
+        };
+
+        // Handle ajax request error.
+        var handleAjaxError = function (response) {
+            fm.log(response.responseText || response);
+            fm.error(lg('ERROR_SERVER'));
+            fm.error(response.responseText);
+        };
+
+        // Handle ajax json response error.
+        var handleAjaxResponseErrors = function (response) {
+            if (response.errors) {
+                fm.log(response.errors);
+                $.each(response.errors, function (i, errorObject) {
+                    fm.error(formatServerError(errorObject));
+
+                    if (errorObject.arguments.redirect) {
+                        window.location.href = errorObject.arguments.redirect;
+                    }
+                });
+            }
+        };
+
+        // Test if item has the 'cap' capability
+        // 'cap' is one of 'select', 'rename', 'delete', 'download', 'copy', 'move'
+        function has_capability(resourceObject, cap) {
+            if (capabilities.indexOf(cap) === -1) return false;
+            if (cap === 'select' && resourceObject.type === 'folder') return false;
+            if (cap === 'extract') {
+                var extension = getExtension(resourceObject.attributes.name);
+                return (resourceObject.type === 'file' && extension === 'zip');
+            }
+            if (cap === 'download' && resourceObject.type === 'folder') {
+                return (config.options.allowFolderDownload === true);
+            }
+            if (typeof (resourceObject.attributes.capabilities) !== "undefined") {
+                return $.inArray(cap, resourceObject.attributes.capabilities) > -1
+            }
+            return true;
         }
 
-        if (window.opener || window.tinyMCEPopup || $.urlParam('field_name') || $.urlParam('CKEditorCleanUpFuncNum') || $.urlParam('CKEditor')) {
+        // http://stackoverflow.com/questions/3390930/any-way-to-make-jquery-inarray-case-insensitive
+        (function ($) {
+            $.extend({
+                // Case insensative $.inArray (http://api.jquery.com/jquery.inarray/)
+                // $.inArrayInsensitive(value, array [, fromIndex])
+                //  value (type: String)
+                //    The value to search for
+                //  array (type: Array)
+                //    An array through which to search.
+                //  fromIndex (type: Number)
+                //    The index of the array at which to begin the search.
+                //    The default is 0, which will search the whole array.
+                inArrayInsensitive: function (elem, arr, i) {
+                    // not looking for a string anyways, use default method
+                    if (typeof elem !== 'string') {
+                        return $.inArray.apply(this, arguments);
+                    }
+                    // confirm array is populated
+                    if (arr) {
+                        var len = arr.length;
+                        i = i ? (i < 0 ? Math.max(0, len + i) : i) : 0;
+                        elem = elem.toLowerCase();
+                        for (; i < len; i++) {
+                            if (i in arr && arr[i].toLowerCase() == elem) {
+                                return i;
+                            }
+                        }
+                    }
+                    // stick with inArray/indexOf and return -1 on no match
+                    return -1;
+                }
+            });
+        })(jQuery);
+
+        // Test if file is authorized, based on extension only
+        var isAuthorizedFile = function (filename) {
+            var ext = getExtension(filename);
+
+            if (config.security.extensions.ignoreCase) {
+                if (config.security.extensions.policy == 'ALLOW_LIST') {
+                    if ($.inArrayInsensitive(ext, config.security.extensions.restrictions) !== -1) return true;
+                }
+                if (config.security.extensions.policy == 'DISALLOW_LIST') {
+                    if ($.inArrayInsensitive(ext, config.security.extensions.restrictions) === -1) return true;
+                }
+            } else {
+                if (config.security.extensions.policy == 'ALLOW_LIST') {
+                    if ($.inArray(ext, config.security.extensions.restrictions) !== -1) return true;
+                }
+                if (config.security.extensions.policy == 'DISALLOW_LIST') {
+                    if ($.inArray(ext, config.security.extensions.restrictions) === -1) return true;
+                }
+            }
+
+            return false;
+        };
+
+        // Test if path is dir
+        var isFile = function (path) {
+            return path.charAt(path.length - 1) !== '/';
+        };
+
+        // Replace all leading or trailing chars with an empty string
+        var trim = function (string, char) {
+            var regExp = new RegExp('^' + char + '+|' + char + '+$', 'g');
+            return string.replace(regExp, '');
+        };
+
+        // Replace all leading chars with an empty string
+        var ltrim = function (string, char) {
+            var regExp = new RegExp('^' + char + '+', 'g');
+            return string.replace(regExp, '');
+        };
+
+        // Replace all trailing chars with an empty string
+        var rtrim = function (string, char) {
+            var regExp = new RegExp(char + '+$', 'g');
+            return string.replace(regExp, '');
+        };
+
+        var startsWith = function (string, searchString, position) {
+            position = position || 0;
+            return string.substr(position, searchString.length) === searchString;
+        };
+
+        var encodePath = function (path) {
+            var parts = [];
+            $.each(path.split('/'), function (i, part) {
+                parts.push(encodeURIComponent(part));
+            });
+            return parts.join('/');
+        };
+
+        // invert backslashes and remove duplicated ones
+        var normalizePath = function (path) {
+            return path.replace(/\\/g, '/').replace(/\/+/g, '/');
+        };
+
+        // return filename extension
+        var getExtension = function (filename) {
+            if (filename.split('.').length === 1) {
+                return "";
+            }
+            return filename.split('.').pop().toLowerCase();
+        };
+
+        // return filename without extension
+        var getFilename = function (filename) {
+            if (filename.lastIndexOf('.') !== -1) {
+                return filename.substring(0, filename.lastIndexOf('.'));
+            } else {
+                return filename;
+            }
+        };
+
+        // return path without filename
+        // "/dir/to/"           --> "/dir/to/"
+        // "/dir/to/file.txt" --> "/dir/to/"
+        var getDirname = function (path) {
+            if (path.lastIndexOf('/') !== path.length - 1) {
+                return path.substr(0, path.lastIndexOf('/') + 1);
+            } else {
+                return path;
+            }
+        };
+
+        // return parent folder for path, if folder is passed it should ends with '/'
+        // "/dir/to/"          -->  "/dir/"
+        // "/dir/to/file.txt"  -->  "/dir/"
+        var getParentDirname = function (path) {
+            return path.split('/').reverse().slice(2).reverse().join('/') + '/';
+        };
+
+        // return closest node for path
+        // "/dir/to/"          -->  "/dir/"
+        // "/dir/to/file.txt"  -->  "/dir/to/"
+        var getClosestNode = function (path) {
+            return path.substring(0, path.slice(0, -1).lastIndexOf('/')) + '/';
+        };
+
+        // Test if is editable file
+        var isEditableFile = function (filename) {
+            return ($.inArray(getExtension(filename), config.editor.extensions) !== -1);
+        };
+
+        // Test if is image file
+        var isImageFile = function (filename) {
+            return ($.inArray(getExtension(filename), config.viewer.image.extensions) !== -1);
+        };
+
+        // Test if file is supported web video file
+        var isVideoFile = function (filename) {
+            return ($.inArray(getExtension(filename), config.viewer.video.extensions) !== -1);
+        };
+
+        // Test if file is supported web audio file
+        var isAudioFile = function (filename) {
+            return ($.inArray(getExtension(filename), config.viewer.audio.extensions) !== -1);
+        };
+
+        // Test if file is openable in iframe
+        var isIFrameFile = function (filename) {
+            return ($.inArray(getExtension(filename), config.viewer.iframe.extensions) !== -1);
+        };
+
+        // Test if file is opendoc file
+        // Supported file types: http://viewerjs.org/examples/
+        var isOpenDocFile = function (filename) {
+            return ($.inArray(getExtension(filename), config.viewer.opendoc.extensions) !== -1);
+        };
+
+        // Test if file is supported by Google Docs viewer
+        // Supported file types: http://stackoverflow.com/q/24325363/1789808
+        var isGoogleDocsFile = function (filename) {
+            return ($.inArray(getExtension(filename), config.viewer.google.extensions) !== -1);
+        };
+
+        // Test if file is supported by CodeMirror renderer
+        var isCodeMirrorFile = function (filename) {
+            return ($.inArray(getExtension(filename), config.viewer.codeMirrorRenderer.extensions) !== -1);
+        };
+
+        // Test if file is supported by Markdown-it renderer, which renders .md files to HTML
+        var isMarkdownFile = function (filename) {
+            return ($.inArray(getExtension(filename), config.viewer.markdownRenderer.extensions) !== -1);
+        };
+
+        var extendRequestParams = function (method, parameters) {
+            var methodParams,
+                configParams = config.api.requestParams;
+
+            method = method.toUpperCase();
+
+            if ($.isPlainObject(configParams)) {
+                methodParams = configParams[method];
+
+                if ($.isPlainObject(methodParams) && !$.isEmptyObject(methodParams)) {
+                    var extendParams = $.extend({}, configParams['MIXED'] || {}, methodParams);
+
+                    // append params to serialized form
+                    if (method === 'POST' && $.isArray(parameters)) {
+                        $.each(extendParams, function (key, value) {
+                            parameters.push({
+                                name: key,
+                                value: value
+                            });
+                        });
+                    } else {
+                        parameters = $.extend({}, parameters, extendParams);
+                    }
+                }
+            }
+            return parameters;
+        };
+
+        var buildAjaxRequest = function (method, parameters) {
+            return $.ajax({
+                type: method,
+                cache: false,
+                url: buildConnectorUrl(),
+                dataType: 'json',
+                data: extendRequestParams(method, parameters)
+            });
+        };
+
+        var getFilteredFileExtensions = function () {
+            if (_url_.param('filter')) {
+                if (config.filter[_url_.param('filter')] !== undefined) {
+                    var shownExtensions = config.filter[_url_.param('filter')];
+                }
+            }
+            return shownExtensions;
+        };
+
+        var buildConnectorUrl = function (params) {
+            var defaults = {
+                time: new Date().getTime()
+            };
+            var queryParams = $.extend({}, params || {}, defaults);
+            return apiConnector + '?' + $.param(queryParams);
+        };
+
+        // Build url to preview files
+        var createPreviewUrl = function (resourceObject, encode) {
+            var previewUrl,
+                objectPath = resourceObject.attributes.path;
+
+            if (config.viewer.absolutePath && objectPath) {
+                if (encode) {
+                    objectPath = encodePath(objectPath);
+                }
+                previewUrl = buildAbsolutePath(objectPath, false);
+            } else {
+                var queryParams = extendRequestParams("GET", {
+                    mode: 'readfile',
+                    path: resourceObject.id
+                });
+                previewUrl = buildConnectorUrl(queryParams);
+            }
+
+            previewUrl = fm.settings.callbacks.beforeCreatePreviewUrl(resourceObject, previewUrl);
+            return previewUrl;
+        };
+
+        // Build url to display image or its thumbnail
+        var createImageUrl = function (resourceObject, thumbnail, disableCache) {
+            var imageUrl;
+            if (isImageFile(resourceObject.id) &&
+                resourceObject.attributes.readable && (
+                (thumbnail && config.viewer.image.showThumbs) ||
+                (!thumbnail && config.viewer.image.enabled === true)
+            )) {
+                if (config.viewer.absolutePath && !thumbnail && resourceObject.attributes.path) {
+                    imageUrl = buildAbsolutePath(encodePath(resourceObject.attributes.path), disableCache);
+                } else {
+                    var queryParams = { path: resourceObject.id };
+                    if (getExtension(resourceObject.id) === 'svg') {
+                        queryParams.mode = 'readfile';
+                    } else {
+                        queryParams.mode = 'getimage';
+                        if (thumbnail) {
+                            queryParams.thumbnail = 'true';
+                        }
+                    }
+                    queryParams = extendRequestParams("GET", queryParams);
+                    imageUrl = buildConnectorUrl(queryParams);
+                }
+                imageUrl = fm.settings.callbacks.beforeCreateImageUrl(resourceObject, imageUrl);
+            }
+            return imageUrl;
+        };
+
+        var buildAbsolutePath = function (path, disableCache) {
+            var url = (typeof config.viewer.previewUrl === "string") ? config.viewer.previewUrl : location.origin;
+            url = trim(url, '/') + path;
+            // add timestamp-based query parameter to disable browser caching
+            if (disableCache) {
+                url += '?time=' + (new Date().getTime());
+            }
+            return url;
+        };
+
+        var createCopyUrl = function (resourceObject) {
+            function encodeCopyUrl(path) {
+                return (config.clipboard.encodeCopyUrl) ? encodePath(path) : path;
+            }
+
+            if (config.viewer.absolutePath && resourceObject.attributes.path) {
+                var path = encodeCopyUrl(resourceObject.attributes.path);
+                return buildAbsolutePath(path, false);
+            } else {
+                var path = encodeCopyUrl(resourceObject.id),
+                    mode = (resourceObject.type === 'folder') ? 'getfolder' : 'readfile';
+                return apiConnector + '?path=' + path + '&mode=' + mode;
+            }
+        };
+
+        // Returns container for filetree or fileinfo section based on scrollbar plugin state
+        var getSectionContainer = function ($section) {
+            // if scrollbar plugin is enabled
+            if (config.customScrollbar.enabled) {
+                return $section.find('.mCSB_container');
+            } else {
+                return $section;
+            }
+        };
+
+        // Delays execution of function that is passed as argument
+        var delayCallback = (function () {
+            var timer = 0;
+            return function (callback, ms) {
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        // Handle multiple actions in loop with deferred object
+        var processMultipleActions = function (items, callbackFunction, finishCallback) {
+            var successCounter = 0,
+                totalCounter = items.length,
+                deferred = $.Deferred().resolve();
+
+            $.each(items, function (i, item) {
+                deferred = deferred.then(function () {
+                    return callbackFunction(i, item);
+                }).then(function (result) {
+                    if (result && result.data) {
+                        successCounter++;
+                    }
+                });
+            });
+
+            if (totalCounter > 1) {
+                deferred.then(function () {
+                    fm.write(lg('successful_processed').replace('%s', successCounter).replace('%s', totalCounter));
+                });
+            }
+
+            deferred.then(function () {
+                if (typeof finishCallback === 'function') {
+                    finishCallback();
+                }
+            });
+        };
+
+        // Clears browser window selection
+        var clearSelection = function () {
+            if (document.selection && document.selection.empty) {
+                document.selection.empty();
+            } else if (window.getSelection) {
+                var sel = window.getSelection();
+                sel.removeAllRanges();
+            }
+        };
+
+        // Build FileTree and bind events
+        function prepareFileTree() {
+            if (!config.filetree.enabled) {
+                return;
+            }
+
+            $filetree.show();
+
+            // Provides support for adjustible columns.
+            $splitter.splitter({
+                sizeLeft: config.filetree.width,
+                minLeft: config.filetree.minWidth,
+                minRight: 200
+            });
+
+            fmModel.treeModel.loadNodes(null, false);
+        }
+
+        // Build FileTree and bind events
+        function prepareFileView() {
+            fmModel.itemsModel.loadList(fileRoot);
+        }
+
+        // Check if plugin instance created inside some context
+        function hasContext() {
+            return window.opener // window.open()
+                || (window.parent && window.self !== window.parent) // <iframe>
+                || window.tinyMCEPopup // tinyMCE >= 3.0
+                || _url_.param('field_name') // tinymce 4 or colorbox
+                || _url_.param('CKEditor') // CKEditor 3.0 + integration method
+                || _url_.param('ImperaviElementId'); // Imperavi Redactor I >= 10.x.x
+        }
+
+        /*---------------------------------------------------------
+         Item Actions
+         ---------------------------------------------------------*/
+
+        // Triggered by clicking the "Select" button in detail views
+        // or choosing the "Select" contextual menu option in list views.
+        // NOTE: closes the window when finished.
+        var selectItem = function (resourceObject) {
+            var contextWindow = null,
+                previewUrl = createPreviewUrl(resourceObject, true);
+
+            previewUrl = fm.settings.callbacks.beforeSelectItem(resourceObject, previewUrl);
+
+            // tinyMCE > 3.0 integration method
             if (window.tinyMCEPopup) {
-                // use TinyMCE > 3.0 integration method
                 var win = tinyMCEPopup.getWindowArg("window");
-                win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = url;
+                win.document.getElementById(tinyMCEPopup.getWindowArg("input")).value = previewUrl;
                 if (typeof (win.ImageDialog) != "undefined") {
                     // Update image dimensions
                     if (win.ImageDialog.getImageData)
@@ -627,14 +3403,15 @@
 
                     // Preview if necessary
                     if (win.ImageDialog.showPreviewImage)
-                        win.ImageDialog.showPreviewImage(url);
+                        win.ImageDialog.showPreviewImage(previewUrl);
                 }
                 tinyMCEPopup.close();
                 return;
             }
+
             // tinymce 4 and colorbox
-            if ($.urlParam('field_name')) {
-                parent.document.getElementById($.urlParam('field_name')).value = url;
+            if (_url_.param('field_name')) {
+                parent.document.getElementById(_url_.param('field_name')).value = previewUrl;
 
                 if (typeof parent.tinyMCE !== "undefined") {
                     parent.tinyMCE.activeEditor.windowManager.close();
@@ -644,1324 +3421,1042 @@
                 }
             }
 
-            else if ($.urlParam('CKEditor')) {
-                // use CKEditor 3.0 + integration method
+            if (_url_.param('ImperaviElementId')) {
+                // use Imperavi Redactor I, tested on v.10.x.x
                 if (window.opener) {
                     // Popup
-                    window.opener.CKEDITOR.tools.callFunction($.urlParam('CKEditorFuncNum'), url);
                 } else {
                     // Modal (in iframe)
-                    parent.CKEDITOR.tools.callFunction($.urlParam('CKEditorFuncNum'), url);
-                    parent.CKEDITOR.tools.callFunction($.urlParam('CKEditorCleanUpFuncNum'));
+                    var elementId = _url_.param('ImperaviElementId'),
+                        instance = parent.$('#' + elementId).redactor('core.getObject');
+
+                    if (instance) {
+                        instance.modal.close();
+                        instance.buffer.set(); // for undo action
+
+                        if (isImageFile(resourceObject.attributes.name)) {
+                            instance.insert.html('<img src="' + previewUrl + '">');
+                        } else {
+                            instance.insert.html('<a href="' + previewUrl + '">' + resourceObject.attributes.name + '</a>');
+                        }
+                    }
                 }
-            } else {
-                // use FCKEditor 2.0 integration method
-                if (data['Properties']['Width'] != '') {
-                    var p = url;
-                    var w = data['Properties']['Width'];
-                    var h = data['Properties']['Height'];
+            }
+
+            // CKEditor 3.0 + integration method
+            if (_url_.param('CKEditor')) {
+                if (window.opener) {
+                    // Popup
+                    window.opener.CKEDITOR.tools.callFunction(_url_.param('CKEditorFuncNum'), previewUrl);
+                } else {
+                    // Modal (in iframe)
+                    parent.CKEDITOR.tools.callFunction(_url_.param('CKEditorFuncNum'), previewUrl);
+                    parent.CKEDITOR.tools.callFunction(_url_.param('CKEditorCleanUpFuncNum'));
+                }
+            }
+
+            // FCKEditor 2.0 integration method
+            // todo: https://docs.cksource.com/FCKeditor_2.x/Developers_Guide/JavaScript_API
+            if (window.opener && typeof window.opener.SetUrl === 'function') {
+                if (resourceObject.attributes.width) {
+                    var p = previewUrl;
+                    var w = resourceObject.attributes.width;
+                    var h = resourceObject.attributes.height;
                     window.opener.SetUrl(p, w, h);
                 } else {
-                    window.opener.SetUrl(url);
+                    window.opener.SetUrl(previewUrl);
                 }
             }
 
+            // define context window if any
             if (window.opener) {
-                window.close();
+                contextWindow = window.opener;
             }
-        } else {
-            $.prompt(lg.fck_select_integration);
-        }
-    };
+            if (window.parent && window.self !== window.parent) {
+                contextWindow = window.parent;
+            }
 
-    // Renames the current item and returns the new name.
-    // Called by clicking the "Rename" button in detail views
-    // or choosing the "Rename" contextual menu option in
-    // list views.
-    var renameItem = function (data) {
-        var finalName = '';
-        var fileName = config.security.allowChangeExtensions ? data['Filename'] : getFilename(data['Filename']);
-        var msg = lg.new_filename + ' : <input id="rname" name="rname" type="text" value="' + fileName + '" />';
+            // sending post message to the context window
+            if (contextWindow) {
+                contextWindow.postMessage(
+                    {
+                        source: 'richfilemanager',
+                        preview_url: previewUrl
+                    }, '*'
+                );
+            }
 
-        var getNewName = function (v, m) {
-            if (v != 1) return false;
-            rname = m.children('#rname').val();
+            fm.settings.callbacks.afterSelectItem(resourceObject, previewUrl, contextWindow);
+        };
 
-            if (rname != '') {
-                var givenName = rname;
+        // Renames the current item and returns the new name.
+        // Called by clicking the "Rename" button in detail views
+        // or choosing the "Rename" contextual menu option in list views.
+        var renameItem = function (resourceObject) {
+            var doRename = function (e, ui) {
+                var oldPath = resourceObject.id;
+                var givenName = ui.getInputValue();
+                if (!givenName) {
+                    // TODO: file/folder message depending on file type
+                    fm.error(lg('new_filename'));
+                    return;
+                }
 
-                if (!config.security.allowChangeExtensions) {
-                    givenName = nameFormat(rname);
-                    var suffix = getExtension(data['Filename']);
+                if (!config.options.allowChangeExtensions) {
+                    var suffix = getExtension(resourceObject.attributes.name);
                     if (suffix.length > 0) {
                         givenName = givenName + '.' + suffix;
                     }
                 }
 
                 // File only - Check if file extension is allowed
-                if (data['Path'].charAt(data['Path'].length - 1) != '/' && !isAuthorizedFile(givenName)) {
-                    var str = '<p>' + lg.INVALID_FILE_TYPE + '</p>';
-                    if (config.security.uploadPolicy == 'DISALLOW_ALL') {
-                        str += '<p>' + lg.ALLOWED_FILE_TYPE + config.security.uploadRestrictions.join(', ') + '.</p>';
+                if (isFile(oldPath) && !isAuthorizedFile(givenName)) {
+                    var str = '<p>' + lg('INVALID_FILE_TYPE') + '</p>';
+                    if (config.security.extensions.policy == 'ALLOW_LIST') {
+                        str += '<p>' + lg('ALLOWED_FILE_TYPE').replace('%s', config.security.extensions.restrictions.join(', ')) + '.</p>';
                     }
-                    if (config.security.uploadPolicy == 'ALLOW_ALL') {
-                        str += '<p>' + lg.DISALLOWED_FILE_TYPE + config.security.uploadRestrictions.join(', ') + '.</p>';
+                    if (config.security.extensions.policy == 'DISALLOW_LIST') {
+                        str += '<p>' + lg('DISALLOWED_FILE_TYPE').replace('%s', config.security.extensions.restrictions.join(', ')) + '.</p>';
                     }
                     $("#filepath").val('');
-                    $.prompt(str);
-                    return false;
+                    fm.error(str);
+                    return;
                 }
 
-                var oldPath = data['Path'];
-                var connectString = fileConnector + '?mode=rename&old=' + encodeURIComponent(data['Path']) + '&new=' + encodeURIComponent(givenName) + '&config=' + userconfig;
+                buildAjaxRequest('GET', {
+                    mode: 'rename',
+                    old: oldPath,
+                    new: givenName
+                }).done(function (response) {
+                    if (response.data) {
+                        var newItem = response.data;
 
-                $.ajax({
-                    type: 'GET',
-                    url: connectString,
-                    dataType: 'json',
-                    async: false,
-                    success: function (result) {
-                        if (result['Code'] == 0) {
-                            var newPath = result['New Path'];
-                            var newName = result['New Name'];
-                            var oldPath = result['Old Path'];
-
-                            updateNode(oldPath, newPath, newName);
-
-                            var title = $("#preview h1").attr("title");
-
-                            if (typeof title != "undefined" && title == oldPath) {
-                                $('#preview h1').text(newName);
+                        // handle tree nodes
+                        var sourceNode = fmModel.treeModel.findByParam('id', oldPath);
+                        if (sourceNode) {
+                            if (sourceNode.rdo.type === 'folder') {
+                                sourceNode.nodeTitle(newItem.attributes.name);
+                                // update object data for the current and all child nodes
+                                fmModel.treeModel.actualizeNodeObject(sourceNode, oldPath, newItem.id);
                             }
+                            if (sourceNode.rdo.type === 'file') {
+                                var parentNode = sourceNode.parentNode();
+                                var newNode = fmModel.treeModel.createNode(newItem);
+                                sourceNode.remove();
 
-                            if ($('#fileinfo').data('view') == 'grid') {
-                                $('#fileinfo img[data-path="' + oldPath + '"]').parent().next('p').text(newName);
-                                $('#fileinfo img[data-path="' + oldPath + '"]').attr('data-path', newPath);
-                            } else {
-                                $('#fileinfo td[data-path="' + oldPath + '"]').text(newName);
-                                $('#fileinfo td[data-path="' + oldPath + '"]').attr('data-path', newPath);
-                            }
-                            $("#preview h1").html(newName);
-
-                            // actualized data for binding
-                            data['Path'] = newPath;
-                            data['Filename'] = newName;
-
-                            // Bind toolbar functions.
-                            $('#fileinfo').find('button#rename, button#delete, button#download').unbind();
-                            bindToolbar(data);
-
-                            if (config.options.showConfirmation) $.prompt(lg.successful_rename);
-                        } else {
-                            $.prompt(result['Error']);
-                        }
-
-                        finalName = result['New Name'];
-                    }
-                });
-            }
-        };
-        var btns = {};
-        btns[lg.rename] = true;
-        btns[lg.cancel] = false;
-        $.prompt(msg, {
-            callback: getNewName,
-            buttons: btns
-        });
-
-        return finalName;
-    };
-
-    // Replace the current file and keep the same name.
-    // Called by clicking the "Replace" button in detail views
-    // or choosing the "Replace" contextual menu option in
-    // list views.
-    var replaceItem = function (data) {
-        // @todo remove all this
-        // remove dynamic form if already exists
-        //$('#file-replacement').remove();
-
-        // we create a dynamic form with input File
-        //	$form = $('<form id="file-replacement" method="post">');
-        //	$form.append('<input id="fileR" name="fileR" type="file" />');
-        //	$form.append('<input id="mode" name="mode" type="hidden" value="replace" /> ');
-        //	$form.append('<input id="newfilepath" name="newfilepath" type="hidden" value="' + data["Path"] + '" />');
-        //	$('body').prepend($form);
-
-        // we auto-submit form when user filled it up
-        $('#fileR').bind('change', function () {
-            $(this).closest("form#toolbar").submit();
-        });
-
-        // we set the connector to send data to
-        $('#toolbar').attr('action', fileConnector);
-        $('#toolbar').attr('method', 'post');
-
-        // submission script
-        $('#toolbar').ajaxForm({
-            target: '#uploadresponse',
-            beforeSubmit: function (arr, form, options) {
-                var newFile = $('#fileR', form).val();
-
-                // Test if a value is given
-                if (newFile == '') {
-                    return false;
-                }
-
-                // Check if file extension is matching with the original
-                if (getExtension(newFile) != data["File Type"]) {
-                    $.prompt(lg.ERROR_REPLACING_FILE + " ." + getExtension(data["Filename"]));
-                    return false;
-                }
-                $('#replace').attr('disabled', true);
-                $('#upload span').addClass('loading').text(lg.loading_data);
-
-                // if config.upload.fileSizeLimit == auto we delegate size test to connector
-                if (typeof FileReader !== "undefined" && typeof config.upload.fileSizeLimit != "auto") {
-                    // Check file size using html5 FileReader API
-                    var size = $('#fileR', form).get(0).files[0].size;
-                    if (size > config.upload.fileSizeLimit * 1024 * 1024) {
-                        $.prompt("<p>" + lg.file_too_big + "</p><p>" + lg.file_size_limit + config.upload.fileSizeLimit + " " + lg.mb + ".</p>");
-                        $('#upload').removeAttr('disabled').find("span").removeClass('loading').text(lg.upload);
-                        return false;
-                    }
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                $('#upload').removeAttr('disabled').find("span").removeClass('loading').text(lg.upload);
-                $.prompt(lg.ERROR_UPLOADING_FILE);
-            },
-            success: function (result) {
-                var data = jQuery.parseJSON($('#uploadresponse').find('textarea').text());
-
-                if (data['Code'] == 0) {
-                    var fullpath = data["Path"] + '/' + data["Name"];
-
-                    // Reloading file info
-                    getFileInfo(fullpath);
-                    // Visual effects for user to see action is successful
-                    $('#preview').find('img').hide().fadeIn('slow'); // on right panel
-                    $('ul.jqueryFileTree').find('li a[data-path="' + fullpath + '"]').parent().hide().fadeIn('slow'); // on fileTree
-
-                    if (config.options.showConfirmation) $.prompt(lg.successful_replace);
-                } else {
-                    $.prompt(data['Error']);
-                }
-                $('#replace').removeAttr('disabled');
-                $('#upload span').removeClass('loading').text(lg.upload);
-            }
-        });
-
-        // we pass data path value - original file
-        $('#newfilepath').val(data["Path"]);
-
-        // we open the input file dialog window
-        $('#fileR').click();
-    };
-
-    // Move the current item to specified dir and returns the new name.
-    // Called by clicking the "Move" button in detail views
-    // or choosing the "Move" contextual menu option in
-    // list views.
-    var moveItem = function (data) {
-        var finalName = '';
-        var msg = lg.move + ' : <input id="rname" name="rname" type="text" value="" />';
-        msg += '<div class="prompt-info">' + lg.help_move + '</div>';
-
-        var doMove = function (v, m) {
-            if (v != 1) return false;
-            rname = m.children('#rname').val();
-
-            if (rname != '') {
-                var givenName = rname;
-                var oldPath = data['Path'];
-                var connectString = fileConnector + '?mode=move&old=' + encodeURIComponent(data['Path']) + '&new=' + encodeURIComponent(givenName) + '&root=' + encodeURIComponent(fileRoot) + '&config=' + userconfig;
-
-                $.ajax({
-                    type: 'GET',
-                    url: connectString,
-                    dataType: 'json',
-                    async: false,
-                    success: function (result) {
-                        if (result['Code'] == 0) {
-                            var newPath = result['New Path'];
-                            var newName = result['New Name'];
-
-                            // we set fullexpandedFolder value to automatically open file in
-                            // filetree when calling createFileTree() function
-                            fullexpandedFolder = newPath;
-
-                            createFileTree();
-                            getFolderInfo(newPath); // update list in main window
-
-                            if (config.options.showConfirmation) $.prompt(lg.successful_moved);
-                        } else {
-                            $.prompt(result['Error']);
-                        }
-
-                        finalName = newPath + newName;
-                    }
-                });
-            }
-        };
-        var btns = {};
-        btns[lg.move] = true;
-        btns[lg.cancel] = false;
-        $.prompt(msg, {
-            callback: doMove,
-            buttons: btns
-        });
-
-        return finalName;
-    };
-
-    // Prompts for confirmation, then deletes the current item.
-    // Called by clicking the "Delete" button in detail views
-    // or choosing the "Delete contextual menu item in list views.
-    var deleteItem = function (data) {
-        var isDeleted = false;
-        var msg = lg.confirmation_delete;
-
-        var doDelete = function (v, m) {
-            if (v != 1) return false;
-            var d = new Date(); // to prevent IE cache issues
-            var connectString = fileConnector + '?mode=delete&path=' + encodeURIComponent(data['Path']) + '&time=' + d.getMilliseconds() + '&config=' + userconfig,
-            parent = data['Path'].split('/').reverse().slice(1).reverse().join('/') + '/';
-
-            $.ajax({
-                type: 'GET',
-                url: connectString,
-                dataType: 'json',
-                async: false,
-                success: function (result) {
-                    if (result['Code'] == 0) {
-                        removeNode(result['Path']);
-                        var rootpath = result['Path'].substring(0, result['Path'].length - 1); // removing the last slash
-                        rootpath = rootpath.substr(0, rootpath.lastIndexOf('/') + 1);
-                        $('#uploader h1').text(lg.current_folder + displayPath(rootpath)).attr("title", displayPath(rootpath, false)).attr('data-path', rootpath);
-                        isDeleted = true;
-
-                        if (config.options.showConfirmation) $.prompt(lg.successful_delete);
-
-                        // seems to be necessary when dealing w/ files located on s3 (need to look into a cleaner solution going forward)
-                        $('#filetree').find('a[data-path="' + parent + '/"]').click().click();
-                    } else {
-                        isDeleted = false;
-                        $.prompt(result['Error']);
-                    }
-                }
-            });
-        };
-        var btns = {};
-        btns[lg.yes] = true;
-        btns[lg.no] = false;
-        $.prompt(msg, {
-            callback: doDelete,
-            buttons: btns
-        });
-
-        return isDeleted;
-    };
-
-    // Display an 'edit' link for editable files
-    // Then let user change the content of the file
-    // Save action is handled by the method using ajax
-    var editItem = function (data) {
-        isEdited = false;
-
-        $('#fileinfo').find('div#tools').append(' <a id="edit-file" href="#" title="' + lg.edit + '"><span>' + lg.edit + '</span></a>');
-
-        $('#edit-file').click(function () {
-            $(this).hide(); // hiding Edit link
-
-            var d = new Date(); // to prevent IE cache issues
-            var connectString = fileConnector + '?mode=editfile&path=' + encodeURIComponent(data['Path']) + '&config=' + userconfig + '&time=' + d.getMilliseconds();
-
-            $.ajax({
-                type: 'GET',
-                url: connectString,
-                dataType: 'json',
-                async: false,
-                success: function (result) {
-                    if (result['Code'] == 0) {
-                        var content = '<form id="edit-form">';
-                        content += '<textarea id="edit-content" name="content">' + result['Content'] + '</textarea>';
-                        content += '<input type="hidden" name="mode" value="savefile" />';
-                        content += '<input type="hidden" name="path" value="' + data['Path'] + '" />';
-                        content += '<button id="edit-cancel" class="edition" type="button">' + lg.quit_editor + '</button>';
-                        content += '<button id="edit-save" class="edition" type="button">' + lg.save + '</button>';
-                        content += '</form>';
-
-                        $('#preview').find('img').hide();
-                        $('#preview').prepend(content).hide().fadeIn();
-
-                        // Cancel Button Behavior
-                        $('#edit-cancel').click(function () {
-                            $('#preview').find('form#edit-form').hide();
-                            $('#preview').find('img').fadeIn();
-                            $('#edit-file').show();
-                        });
-
-                        // Save Button Behavior
-                        $('#edit-save').click(function () {
-                            // we get new textarea content
-                            var newcontent = codeMirrorEditor.getValue();
-                            $("textarea#edit-content").val(newcontent);
-
-                            var postData = $('#edit-form').serializeArray();
-
-                            $.ajax({
-                                type: 'POST',
-                                url: fileConnector + '?config=' + userconfig,
-                                dataType: 'json',
-                                data: postData,
-                                async: false,
-                                success: function (result) {
-                                    if (result['Code'] == 0) {
-                                        isEdited = true;
-                                        // if (config.options.showConfirmation) $.prompt(lg.successful_edit);
-                                        $.prompt(lg.successful_edit);
-                                    } else {
-                                        isEdited = false;
-                                        $.prompt(result['Error']);
-                                    }
+                                if (parentNode) {
+                                    fmModel.treeModel.addNodes(parentNode, newNode);
                                 }
-                            });
-                        });
+                            }
+                        }
 
-                        // we instantiate codeMirror according to config options
-                        codeMirrorEditor = instantiateCodeMirror(getExtension(data['Path']), config);
-                    } else {
-                        isEdited = false;
-                        $.prompt(result['Error']);
-                        $(this).show(); // hiding Edit link
+                        // handle view objects
+                        var sourceItem = fmModel.itemsModel.findByParam('id', oldPath);
+                        if (sourceItem) {
+                            if (sourceItem.rdo.type === 'parent') {
+                                sourceItem.id = newItem.id;
+                            } else {
+                                sourceItem.remove();
+                                fmModel.itemsModel.addNew(newItem);
+                            }
+                        }
+                        // ON rename currently open folder
+                        if (fmModel.currentPath() === oldPath) {
+                            fmModel.itemsModel.loadList(newItem.id);
+                        }
+                        // ON rename currently previewed file
+                        if (fmModel.previewFile() && fmModel.previewModel.rdo().id === oldPath) {
+                            fmModel.previewModel.applyObject(newItem);
+                        }
+
+                        ui.closeDialog();
+                        if (config.options.showConfirmation) {
+                            fm.success(lg('successful_rename'));
+                        }
                     }
+                    handleAjaxResponseErrors(response);
+                }).fail(handleAjaxError);
+            };
+
+            fm.prompt({
+                message: lg('new_filename'),
+                value: config.options.allowChangeExtensions ? resourceObject.attributes.name : getFilename(resourceObject.attributes.name),
+                okBtn: {
+                    label: lg('action_rename'),
+                    autoClose: false,
+                    click: doRename
+                },
+                cancelBtn: {
+                    label: lg('cancel')
                 }
             });
-        });
+        };
 
-        return isEdited;
-    };
+        // Move the current item to specified dir and returns the new name.
+        // Called by clicking the "Move" button in de tail views
+        // or choosing the "Move" contextual menu option in list views.
+        var moveItemPrompt = function (objects, successCallback) {
+            var doMove = function (e, ui) {
+                var targetPath = ui.getInputValue();
+                if (!targetPath) {
+                    fm.error(lg('prompt_foldername'));
+                    return;
+                }
+                targetPath = rtrim(targetPath, '/') + '/';
+                successCallback(targetPath);
+            };
 
-    /*---------------------------------------------------------
-      Functions to Update the File Tree
-    ---------------------------------------------------------*/
+            var objectsTotal = objects.length,
+                message = (objectsTotal > 1) ? lg('prompt_move_multiple').replace('%s', objectsTotal) : lg('prompt_move');
 
-    // Adds a new node as the first item beneath the specified
-    // parent node. Called after a successful file upload.
-    var addNode = function (path, name) {
-        var ext = getExtension(name);
-        var thisNode = $('#filetree').find('a[data-path="' + path + '"]');
-        var parentNode = thisNode.parent();
-        var newNode = '<li class="file ext_' + ext + '"><a data-path="' + path + name + '" href="#" class="">' + name + '</a></li>';
-
-        // if is root folder
-        // TODO optimize
-        if (!parentNode.find('ul').size()) {
-            parentNode = $('#filetree').find('ul.jqueryFileTree');
-
-            parentNode.prepend(newNode);
-            createFileTree();
-        } else {
-            parentNode.find('ul').prepend(newNode);
-            thisNode.click().click();
-        }
-
-        getFolderInfo(path); // update list in main window
-
-        if (config.options.showConfirmation) $.prompt(lg.successful_added_file);
-    };
-
-    // Updates the specified node with a new name. Called after
-    // a successful rename operation.
-    var updateNode = function (oldPath, newPath, newName) {
-        var thisNode = $('#filetree').find('a[data-path="' + oldPath + '"]');
-        var parentNode = thisNode.parent().parent().prev('a');
-        thisNode.attr('data-path', newPath).text(newName);
-
-        // we work directly on root folder
-        // TODO optimize by binding only the renamed element
-        if (parentNode.length == 0) {
-            createFileTree();
-        } else {
-            parentNode.click().click();
-        }
-    };
-
-    // Removes the specified node. Called after a successful
-    // delete operation.
-    var removeNode = function (path) {
-        $('#filetree')
-            .find('a[data-path="' + path + '"]')
-            .parent()
-            .fadeOut('slow', function () {
-                $(this).remove();
+            fm.prompt({
+                message: message,
+                value: fmModel.currentPath(),
+                okBtn: {
+                    label: lg('action_move'),
+                    autoClose: false,
+                    click: doMove
+                },
+                cancelBtn: {
+                    label: lg('cancel')
+                },
+                template: {
+                    dialogInput:
+                    '<input data-alertify-input type="text" value="" />' +
+                    '<div class="prompt-info">' + lg('help_move') + '</div>'
+                }
             });
-        // if the actual view is the deleted folder, we display parent folder
-        if ($('#uploader h1').attr('data-path') == path) {
-            var a = path.split('/');
-            var parent = a.slice(0, length - 2).join('/') + '/';
-            getFolderInfo(parent);
-        }
-        // grid case
-        if ($('#fileinfo').data('view') == 'grid') {
-            $('#contents img[data-path="' + path + '"]').parent().parent()
-                .fadeOut('slow', function () {
-                    $(this).remove();
-                });
-        }
-            // list case
-        else {
-            $('table#contents')
-                .find('td[data-path="' + path + '"]')
-                .parent()
-                .fadeOut('slow', function () {
-                    $(this).remove();
-                });
-        }
-        // remove fileinfo when item to remove is currently selected
-        if ($('#preview').length) {
-            getFolderInfo(path.substr(0, path.lastIndexOf('/') + 1));
-        }
-    };
+        };
 
-    // Adds a new folder as the first item beneath the
-    // specified parent node. Called after a new folder is
-    // successfully created.
-    var addFolder = function (parent, name) {
-        var newNode = '<li class="directory collapsed"><a data-path="' + parent + name + '/" href="#">' + name + '</a><ul class="jqueryFileTree" style="display: block;"></ul></li>';
-        var parentNode = $('#filetree').find('a[data-path="' + parent + '"]');
-        if (parent != fileRoot) {
-            parentNode.next('ul').prepend(newNode).prev('a').click().click();
-        } else {
-            $('#filetree ul.jqueryFileTree').prepend(newNode);
-            $('#filetree').find('li a[data-path="' + parent + name + '/"]').attr('class', 'cap_rename cap_delete').click(function () {
-                getFolderInfo(parent + name + '/');
-            }).each(function () {
-                $(this).contextMenu(
-					{ menu: getContextMenuOptions($(this)) },
-					function (action, el, pos) {
-					    var path = $(el).attr('data-path');
-					    setMenus(action, path);
-					});
+        // Copy the current item to specified dir and returns the new name.
+        // Called upon paste copied items via clipboard.
+        var copyItem = function (resourceObject, targetPath) {
+            return buildAjaxRequest('GET', {
+                mode: 'copy',
+                source: resourceObject.id,
+                target: targetPath
+            }).done(function (response) {
+                if (response.data) {
+                    var newItem = response.data;
+
+                    fmModel.addItem(newItem, targetPath);
+
+                    alertify.clearDialogs();
+                    if (config.options.showConfirmation) {
+                        fm.success(lg('successful_copied'));
+                    }
+                }
+                handleAjaxResponseErrors(response);
+            }).fail(handleAjaxError);
+        };
+
+        // Move the current item to specified dir and returns the new name.
+        // Called by clicking the "Move" button in detail views
+        // or choosing the "Move" contextual menu option in list views.
+        var moveItem = function (resourceObject, targetPath) {
+            return buildAjaxRequest('GET', {
+                mode: 'move',
+                old: resourceObject.id,
+                new: targetPath
+            }).done(function (response) {
+                if (response.data) {
+                    var newItem = response.data;
+
+                    fmModel.removeItem(resourceObject);
+                    fmModel.addItem(newItem, targetPath);
+
+                    // ON move currently open folder to another folder
+                    if (fmModel.currentPath() === resourceObject.id) {
+                        fmModel.itemsModel.loadList(newItem.id);
+                    }
+                    // ON move currently previewed file
+                    if (fmModel.previewFile() && fmModel.previewModel.rdo().id === resourceObject.id) {
+                        fmModel.previewFile(false);
+                    }
+
+                    alertify.clearDialogs();
+                    if (config.options.showConfirmation) {
+                        fm.success(lg('successful_moved'));
+                    }
+                }
+                handleAjaxResponseErrors(response);
+            }).fail(handleAjaxError);
+        };
+
+        // Prompts for confirmation, then deletes the current item.
+        var deleteItemPrompt = function (objects, successCallback) {
+            var objectsTotal = objects.length,
+                message = (objectsTotal > 1) ? lg('confirm_delete_multiple').replace('%s', objectsTotal) : lg('confirm_delete');
+
+            fm.confirm({
+                message: message,
+                okBtn: {
+                    label: lg('yes'),
+                    click: function (e, ui) {
+                        successCallback();
+                    }
+                },
+                cancelBtn: {
+                    label: lg('no')
+                }
+            });
+        };
+
+        // Delete item by path
+        var deleteItem = function (path) {
+            return buildAjaxRequest('GET', {
+                mode: 'delete',
+                path: path
+            }).done(function (response) {
+                if (response.data) {
+                    var targetItem = response.data;
+
+                    fmModel.removeItem(targetItem);
+
+                    // ON delete currently previewed file
+                    if (fmModel.previewFile() && fmModel.previewModel.rdo().id === targetItem.id) {
+                        fmModel.previewFile(false);
+                    }
+
+                    if (config.options.showConfirmation) {
+                        fm.success(lg('successful_delete'));
+                    }
+                }
+                handleAjaxResponseErrors(response);
+            }).fail(handleAjaxError);
+        };
+
+        // Starts file download process.
+        // Called by clicking the "Download" button in detail views
+        // or choosing the "Download" contextual menu item in list views.
+        var downloadItem = function (resourceObject) {
+            var queryParams = {
+                mode: 'download',
+                path: resourceObject.id
+            };
+
+            return buildAjaxRequest('GET', queryParams).done(function (response) {
+                if (response.data) {
+                    //window.location = buildConnectorUrl(queryParams);
+                    $.fileDownload(buildConnectorUrl(queryParams));
+                }
+                handleAjaxResponseErrors(response);
+            }).fail(handleAjaxError);
+        };
+
+        // Creates CodeMirror instance to let user change the content of the file
+        var previewItem = function (resourceObject) {
+            return buildAjaxRequest('GET', {
+                mode: 'editfile',
+                path: resourceObject.id
+            }).done(function (response) {
+                handleAjaxResponseErrors(response);
+            }).fail(handleAjaxError);
+        };
+
+        // Save CodeMirror editor content to file
+        var saveItem = function (resourceObject) {
+            var formParams = $('#fm-js-editor-form').serializeArray();
+
+            buildAjaxRequest('POST', formParams).done(function (response) {
+                if (response.data) {
+                    var dataObject = response.data,
+                        preview_model = fmModel.previewModel,
+                        content = preview_model.editor.content();
+
+                    // update preview object data
+                    preview_model.rdo(dataObject);
+
+                    // assign new content to the viewer and close editor
+                    preview_model.viewer.content(content);
+                    preview_model.closeEditor();
+
+                    // replace original item with a new one to adjust observable items
+                    var newItem = fmModel.itemsModel.createObject(dataObject);
+                    var originalItem = fmModel.itemsModel.findByParam('id', dataObject.id);
+                    fmModel.itemsModel.objects.replace(originalItem, newItem);
+
+                    fm.success(lg('successful_edit'));
+                }
+                handleAjaxResponseErrors(response);
+            }).fail(handleAjaxError);
+        };
+
+        var getItemInfo = function (targetPath) {
+            return buildAjaxRequest('GET', {
+                mode: 'getfile',
+                path: targetPath
+            }).done(function (response) {
+                handleAjaxResponseErrors(response);
+            }).fail(handleAjaxError);
+        };
+
+        // Display storage summary info
+        var summarizeItems = function () {
+            return buildAjaxRequest('GET', {
+                mode: 'summarize'
+            }).done(function (response) {
+                if (response.data) {
+                    var data = response.data.attributes,
+                        size = formatBytes(data.size, true);
+
+                    if (data.sizeLimit > 0) {
+                        var sizeTotal = formatBytes(data.sizeLimit, true);
+                        var ratio = data.size * 100 / data.sizeLimit;
+                        var percentage = Math.round(ratio * 100) / 100;
+                        size += ' (' + percentage + '%) ' + lg('of') + ' ' + sizeTotal;
+                    }
+
+                    fmModel.summaryModel.files(data.files);
+                    fmModel.summaryModel.folders(data.folders);
+                    fmModel.summaryModel.size(size);
+
+                    fmModel.summaryModel.enabled(true);
+                    var $summary = $('#summary-popup').clone().show();
+                    fmModel.summaryModel.enabled(false);
+
+                    fm.alert($summary[0].outerHTML);
+                }
+                handleAjaxResponseErrors(response);
+            }).fail(handleAjaxError);
+        };
+
+        // Prompts for confirmation, then extracts the current archive.
+        var extractItemPrompt = function (resourceObject) {
+            var doExtract = function (e, ui) {
+                var targetPath = ui.getInputValue();
+                if (!targetPath) {
+                    fm.error(lg('prompt_foldername'));
+                    return;
+                }
+                targetPath = rtrim(targetPath, '/') + '/';
+
+                extractItem(resourceObject, targetPath)
+            };
+
+            fm.prompt({
+                message: lg('prompt_extract'),
+                value: fmModel.currentPath(),
+                okBtn: {
+                    label: lg('action_extract'),
+                    autoClose: false,
+                    click: doExtract
+                },
+                cancelBtn: {
+                    label: lg('cancel')
+                }
+            });
+        };
+
+        // Extract files and folders from archive.
+        // Called by choosing the "Extract" contextual menu option in list views.
+        var extractItem = function (resourceObject, targetPath) {
+            buildAjaxRequest('POST', {
+                mode: 'extract',
+                source: resourceObject.id,
+                target: targetPath
+            }).done(function (response) {
+                if (response.data) {
+                    // TODO: implement "addItems", add in batches
+                    $.each(response.data, function (i, resourceObject) {
+                        fmModel.addItem(resourceObject, targetPath);
+                    });
+
+                    alertify.clearDialogs();
+                    if (config.options.showConfirmation) {
+                        fm.success(lg('successful_extracted'));
+                    }
+                }
+                handleAjaxResponseErrors(response);
+            }).fail(handleAjaxError);
+        };
+
+        /*---------------------------------------------------------
+         Functions to Retrieve File and Folder Details
+         ---------------------------------------------------------*/
+
+        // Retrieves file or folder info based on the path provided.
+        function getDetailView(resourceObject) {
+            if (!resourceObject.attributes.readable) {
+                fm.error(lg('NOT_ALLOWED_SYSTEM'));
+                return false;
             }
-                );
-        }
-
-        if (config.options.showConfirmation) $.prompt(lg.successful_added_folder);
-    };
-
-    /*---------------------------------------------------------
-      Functions to Retrieve File and Folder Details
-    ---------------------------------------------------------*/
-
-    // Decides whether to retrieve file or folder info based on
-    // the path provided.
-    var getDetailView = function (path) {
-        if (path.lastIndexOf('/') == path.length - 1) {
-            getFolderInfo(path);
-            $('#filetree').find('a[data-path="' + path + '"]').click();
-        } else {
-            getFileInfo(path);
-        }
-    };
-
-    function getContextMenuOptions(elem) {
-        var optionsID = elem.attr('class').replace(/ /g, '_');
-        if (optionsID == "") return 'itemOptions';
-        if (!($('#' + optionsID).length)) {
-            // Create a clone to itemOptions with menus specific to this element
-            var newOptions = $('#itemOptions').clone().attr('id', optionsID);
-            if (!elem.hasClass('cap_select')) $('.select', newOptions).remove();
-            if (!elem.hasClass('cap_download')) $('.download', newOptions).remove();
-            if (!elem.hasClass('cap_rename')) $('.rename', newOptions).remove();
-            if (!elem.hasClass('cap_move')) $('.move', newOptions).remove();
-            $('.replace', newOptions).remove(); // we remove replace since it is not implemented on Opera + Chrome and works only if #preview panel is on on FF
-            if (!elem.hasClass('cap_delete')) $('.delete', newOptions).remove();
-            $('#itemOptions').after(newOptions);
-        }
-        return optionsID;
-    }
-
-    // Binds contextual menus to items in list and grid views.
-    var setMenus = function (action, path) {
-        var d = new Date(); // to prevent IE cache issues
-        $.getJSON(fileConnector + '?mode=getinfo&path=' + encodeURIComponent(path) + '&config=' + userconfig + '&time=' + d.getMilliseconds(), function (data) {
-            if ($('#fileinfo').data('view') == 'grid') {
-                var item = $('#fileinfo').find('img[data-path="' + data['Path'] + '"]').parent();
-            } else {
-                var item = $('#fileinfo').find('td[data-path="' + data['Path'] + '"]').parent();
+            if (resourceObject.type === 'file') {
+                fmModel.previewModel.applyObject(resourceObject);
             }
+            if (resourceObject.type === 'folder' || resourceObject.type === 'parent') {
+                fmModel.previewFile(false);
+                fmModel.itemsModel.loadList(resourceObject.id);
+            }
+        }
+
+        // Options for context menu plugin
+        function getContextMenuItems(resourceObject) {
+            var clipboardDisabled = !fmModel.clipboardModel.enabled(),
+                contextMenuItems = {
+                    select: { name: lg('action_select'), className: 'select' },
+                    download: { name: lg('action_download'), className: 'download' },
+                    rename: { name: lg('action_rename'), className: 'rename' },
+                    move: { name: lg('action_move'), className: 'move' },
+                    separator1: "-----",
+                    copy: { name: lg('clipboard_copy'), className: 'copy' },
+                    cut: { name: lg('clipboard_cut'), className: 'cut' },
+                    delete: { name: lg('action_delete'), className: 'delete' },
+                    extract: { name: lg('action_extract'), className: 'extract' },
+                    copyUrl: { name: lg('copy_to_clipboard'), className: 'copy-url' }
+                };
+
+            if (!has_capability(resourceObject, 'download')) delete contextMenuItems.download;
+            if (!has_capability(resourceObject, 'select') || !hasContext()) delete contextMenuItems.select;
+            if (!has_capability(resourceObject, 'rename') || config.options.browseOnly === true) delete contextMenuItems.rename;
+            if (!has_capability(resourceObject, 'delete') || config.options.browseOnly === true) delete contextMenuItems.delete;
+            if (!has_capability(resourceObject, 'extract') || config.options.browseOnly === true) delete contextMenuItems.extract;
+            if (!has_capability(resourceObject, 'copy') || config.options.browseOnly === true || clipboardDisabled) delete contextMenuItems.copy;
+            if (!has_capability(resourceObject, 'move') || config.options.browseOnly === true || clipboardDisabled) {
+                delete contextMenuItems.cut;
+                delete contextMenuItems.move;
+            }
+
+            return contextMenuItems
+        }
+
+        // Binds contextual menu to items in list and grid views.
+        var performAction = function (action, options, targetObject, selectedObjects) {
+            // suppose that target object is part of selected objects while multiple selection
+            var objects = selectedObjects ? selectedObjects : [targetObject];
 
             switch (action) {
                 case 'select':
-                    selectItem(data);
+                    selectItem(targetObject);
                     break;
 
-                case 'download': // todo implement javascript method to test if exstension is correct
-                    window.location = fileConnector + '?mode=download&path=' + data['Path'] + '&config=' + userconfig + '&time=' + d.getMilliseconds();
+                case 'download':
+                    $.each(objects, function (i, itemObject) {
+                        downloadItem(itemObject);
+                    });
                     break;
 
                 case 'rename':
-                    var newName = renameItem(data);
-                    break;
-
-                case 'replace':
-                    replaceItem(data);
+                    renameItem(targetObject);
                     break;
 
                 case 'move':
-                    var newName = moveItem(data);
+                    moveItemPrompt(objects, function (targetPath) {
+                        processMultipleActions(objects, function (i, itemObject) {
+                            return moveItem(itemObject, targetPath);
+                        });
+                    });
                     break;
 
                 case 'delete':
-                    deleteItem(data);
+                    deleteItemPrompt(objects, function () {
+                        processMultipleActions(objects, function (i, itemObject) {
+                            return deleteItem(itemObject.id);
+                        });
+                    });
+                    break;
+
+                case 'extract':
+                    extractItemPrompt(targetObject);
+                    break;
+
+                case 'copy':
+                    fmModel.clipboardModel.copy(objects);
+                    break;
+
+                case 'cut':
+                    fmModel.clipboardModel.cut(objects);
+                    break;
+
+                case 'copyUrl':
+                    var clipboard = new Clipboard(options.$selected[0], {
+                        text: function (trigger) {
+                            return createCopyUrl(targetObject);
+                        }
+                    });
+
+                    clipboard.on('success', function (e) {
+                        fm.success(lg('copied'));
+                        clipboard.destroy();
+                    });
                     break;
             }
-        });
-    };
+        };
 
-    // Retrieves information about the specified file as a JSON
-    // object and uses that data to populate a template for
-    // detail views. Binds the toolbar for that detail view to
-    // enable specific actions. Called whenever an item is
-    // clicked in the file tree or list views.
-    var getFileInfo = function (file) {
-        //Hide context menu
-        $('.contextMenu').hide();
-
-        // Update location for status, upload, & new folder functions.
-        var currentpath = file.substr(0, file.lastIndexOf('/') + 1);
-        setUploader(currentpath);
-
-        // Include the template.
-        var template = '<div id="preview"><img /><div id="main-title"><h1></h1><div id="tools"></div></div><dl></dl></div>';
-        template += '<form id="toolbar">';
-        template += '<button id="parentfolder">' + lg.parentfolder + '</button>';
-        if ($.inArray('select', capabilities) != -1 && ($.urlParam('CKEditor') || window.opener || window.tinyMCEPopup || $.urlParam('field_name'))) template += '<button id="select" name="select" type="button" value="Select">' + lg.select + '</button>';
-        if ($.inArray('download', capabilities) != -1) template += '<button id="download" name="download" type="button" value="Download">' + lg.download + '</button>';
-        if ($.inArray('rename', capabilities) != -1 && config.options.browseOnly != true) template += '<button id="rename" name="rename" type="button" value="Rename">' + lg.rename + '</button>';
-        if ($.inArray('move', capabilities) != -1 && config.options.browseOnly != true) template += '<button id="move" name="move" type="button" value="Move">' + lg.move + '</button>';
-        if ($.inArray('delete', capabilities) != -1 && config.options.browseOnly != true) template += '<button id="delete" name="delete" type="button" value="Delete">' + lg.del + '</button>';
-        if ($.inArray('replace', capabilities) != -1 && config.options.browseOnly != true) {
-            template += '<button id="replace" name="replace" type="button" value="Replace">' + lg.replace + '</button>';
-            template += '<div class="hidden-file-input"><input id="fileR" name="fileR" type="file" /></div>';
-            template += '<input id="mode" name="mode" type="hidden" value="replace" /> ';
-            template += '<input id="newfilepath" name="newfilepath" type="hidden" />';
-        }
-        template += '</form>';
-
-        // test if scrollbar plugin is enabled
-        if ($('#fileinfo .mCSB_container').length > 0) {
-            $('#fileinfo .mCSB_container').html(template);
-        } else {
-            $('#fileinfo').html(template);
-        }
-
-        $('#parentfolder').click(function () { getFolderInfo(currentpath); });
-
-        // Retrieve the data & populate the template.
-        var d = new Date(); // to prevent IE cache issues
-        $.getJSON(fileConnector + '?mode=getinfo&path=' + encodeURIComponent(file) + '&config=' + userconfig + '&time=' + d.getMilliseconds(), function (data) {
-            if (data['Code'] == 0) {
-                $('#fileinfo').find('h1').text(data['Filename']).attr('title', file);
-
-                $('#fileinfo').find('img').attr('src', data['Preview']);
-                if (isVideoFile(data['Filename']) && config.videos.showVideoPlayer == true) {
-                    getVideoPlayer(data);
-                }
-                if (isAudioFile(data['Filename']) && config.audios.showAudioPlayer == true) {
-                    getAudioPlayer(data);
-                }
-                //Pdf
-                if (isPdfFile(data['Filename']) && config.pdfs.showPdfReader == true) {
-                    getPdfReader(data);
-                }
-                if (isEditableFile(data['Filename']) && config.edit.enabled == true && data['Protected'] == 0) {
-                    editItem(data);
-                }
-
-                // copy URL instructions - zeroclipboard
-                var d = new Date(); // to prevent IE cache issues
-
-                if (config.options.baseUrl !== false) {
-                    var url = smartPath(baseUrl, data['Path'].replace(fileRoot, ""));
-                } else {
-                    var url = baseUrl + data['Path'];
-                }
-                if (data['Protected'] == 0) {
-                    $('#fileinfo').find('div#tools').append(' <a id="copy-button" data-clipboard-text="' + url + '" title="' + lg.copy_to_clipboard + '" href="#"><span>' + lg.copy_to_clipboard + '</span></a>');
-                    // loading zeroClipboard code
-
-                    loadJS('../scripts/filemanager/scripts/zeroclipboard/copy.js?d' + d.getMilliseconds());
-                    $('#copy-button').click(function () {
-                        $('#fileinfo').find('div#tools').append('<span id="copied">' + lg.copied + '</span>');
-                        $('#copied').delay(500).fadeOut(1000, function () { $(this).remove(); });
-                    });
-                }
-
-                var properties = '';
-
-                if (data['Properties']['Width'] && data['Properties']['Width'] != '') properties += '<dt>' + lg.dimensions + '</dt><dd>' + data['Properties']['Width'] + 'x' + data['Properties']['Height'] + '</dd>';
-                if (data['Properties']['Date Created'] && data['Properties']['Date Created'] != '') properties += '<dt>' + lg.created + '</dt><dd>' + data['Properties']['Date Created'] + '</dd>';
-                if (data['Properties']['Date Modified'] && data['Properties']['Date Modified'] != '') properties += '<dt>' + lg.modified + '</dt><dd>' + data['Properties']['Date Modified'] + '</dd>';
-                if (data['Properties']['Size'] || parseInt(data['Properties']['Size']) == 0) properties += '<dt>' + lg.size + '</dt><dd>' + formatBytes(data['Properties']['Size']) + '</dd>';
-                $('#fileinfo').find('dl').html(properties);
-
-                // Bind toolbar functions.
-                bindToolbar(data);
-            } else {
-                $.prompt(data['Error']);
+        // Handling file uploads
+        var setupUploader = function () {
+            if (config.options.browseOnly) {
+                return false;
             }
-        });
-    };
 
-    // Retrieves data for all items within the given folder and
-    // creates a list view. Binds contextual menu options.
-    // TODO: consider stylesheet switching to switch between grid
-    // and list views with sorting options.
-    var getFolderInfo = function (path) {
-        // Update location for status, upload, & new folder functions.
-        setUploader(path);
+            // Multiple Uploads
+            if (config.upload.multiple) {
+                // remove simple file upload element
+                $('#file-input-container').remove();
 
-        // Display an activity indicator.
-        var loading = '<img id="activity" src="../scripts/filemanager/themes/' + config.options.theme + '/images/wait30trans.gif" width="30" height="30" />';
-
-        // test if scrollbar plugin is enabled
-        if ($('#fileinfo .mCSB_container').length > 0) {
-            $('#fileinfo .mCSB_container').html(loading);
-        } else {
-            $('#fileinfo').html(loading);
-        }
-
-        $('#loading-wrap').fadeOut(800); // we remove loading screen div
-
-        // Retrieve the data and generate the markup.
-        var d = new Date(); // to prevent IE cache issues
-        var url = fileConnector + '?path=' + encodeURIComponent(path) + '&config=' + userconfig + '&mode=getfolder&showThumbs=' + config.options.showThumbs + '&time=' + d.getMilliseconds();
-        if ($.urlParam('type')) url += '&type=' + $.urlParam('type');
-        $.getJSON(url, function (data) {
-            var result = '';
-
-            // Is there any error or user is unauthorized?
-            if (data.Code == '-1') {
-                handleError(data.Error);
-                return;
-            };
-
-            setDimensions(); //fix dimensions before all images load
-
-            if (data) {
-                var counter = 0;
-                var totalSize = 0;
-                if ($('#fileinfo').data('view') == 'grid') {
-                    result += '<ul id="contents" class="grid">';
-
-                    for (key in data) {
-                        counter++;
-                        var props = data[key]['Properties'];
-                        var cap_classes = "";
-                        for (cap in capabilities) {
-                            if (has_capability(data[key], capabilities[cap])) {
-                                cap_classes += " cap_" + capabilities[cap];
-                            }
-                        }
-
-                        var scaledWidth = 64;
-                        var actualWidth = props['Width'];
-                        if (actualWidth > 1 && actualWidth < scaledWidth) scaledWidth = actualWidth;
-
-                        config.options.showTitleAttr ? title = ' title="' + data[key]['Path'] + '"' : title = '';
-
-                        result += '<li class="' + cap_classes + '"' + title + '"><div class="clip"><img src="' + data[key]['Preview'] + '" width="' + scaledWidth + '" alt="' + data[key]['Path'] + '" data-path="' + data[key]['Path'] + '" /></div><p>' + data[key]['Filename'] + '</p>';
-                        if (props['Width'] && props['Width'] != '') result += '<span class="meta dimensions">' + props['Width'] + 'x' + props['Height'] + '</span>';
-                        if (props['Size'] && props['Size'] != '') result += '<span class="meta size">' + props['Size'] + '</span>';
-                        if (props['Size'] && props['Size'] != '') totalSize += props['Size'];
-                        if (props['Date Created'] && props['Date Created'] != '') result += '<span class="meta created">' + props['Date Created'] + '</span>';
-                        if (props['Date Modified'] && props['Date Modified'] != '') result += '<span class="meta modified">' + props['Date Modified'] + '</span>';
-                        result += '</li>';
+                $uploadButton.unbind().click(function () {
+                    if (capabilities.indexOf('upload') === -1) {
+                        fm.error(lg('NOT_ALLOWED'));
+                        return false;
                     }
 
-                    result += '</ul>';
-                } else {
-                    result += '<table id="contents" class="list">';
-                    result += '<thead><tr><th class="headerSortDown"><span>' + lg.name + '</span></th><th><span>' + lg.dimensions + '</span></th><th><span>' + lg.size + '</span></th><th><span>' + lg.modified + '</span></th></tr></thead>';
-                    result += '<tbody>';
-
-                    for (key in data) {
-                        counter++;
-                        var path = data[key]['Path'];
-                        var props = data[key]['Properties'];
-                        var cap_classes = "";
-                        config.options.showTitleAttr ? title = ' title="' + data[key]['Path'] + '"' : title = '';
-
-                        for (cap in capabilities) {
-                            if (has_capability(data[key], capabilities[cap])) {
-                                cap_classes += " cap_" + capabilities[cap];
-                            }
-                        }
-                        result += '<tr class="' + cap_classes + '">';
-                        result += '<td data-path="' + data[key]['Path'] + '"' + title + '">' + data[key]['Filename'] + '</td>';
-
-                        if (props['Width'] && props['Width'] != '') {
-                            result += ('<td>' + props['Width'] + 'x' + props['Height'] + '</td>');
-                        } else {
-                            result += '<td></td>';
-                        }
-
-                        if (props['Size'] && props['Size'] != '') {
-                            result += '<td><abbr title="' + props['Size'] + '">' + formatBytes(props['Size']) + '</abbr></td>';
-                            totalSize += props['Size'];
-                        } else {
-                            result += '<td></td>';
-                        }
-
-                        if (props['Date Modified'] && props['Date Modified'] != '') {
-                            result += '<td>' + props['Date Modified'] + '</td>';
-                        } else {
-                            result += '<td></td>';
-                        }
-
-                        result += '</tr>';
-                    }
-
-                    result += '</tbody>';
-                    result += '</table>';
-                }
-            } else {
-                result += '<h1>' + lg.could_not_retrieve_folder + '</h1>';
-            }
-
-            // Add the new markup to the DOM.
-            // test if scrollbar plugin is enabled
-            if ($('#fileinfo .mCSB_container').length > 0) {
-                $('#fileinfo .mCSB_container').html(result);
-            } else {
-                $('#fileinfo').html(result);
-            }
-
-            // update #folder-info
-            $('#items-counter').text(counter);
-            $('#items-size').text(Math.round(totalSize / 1024 / 1024 * 100) / 100);
-
-            // Bind click events to create detail views and add
-            // contextual menu options.
-            if ($('#fileinfo').data('view') == 'grid') {
-                $('#fileinfo').find('#contents li').click(function () {
-                    var path = $(this).find('img').attr('data-path');
-                    if (config.options.quickSelect && data[path]['File Type'] != 'dir' && $(this).hasClass('cap_select')) {
-                        selectItem(data[path]);
-                    } else {
-                        getDetailView(path);
-                    }
-                }).each(function () {
-                    $(this).contextMenu(
-                        { menu: getContextMenuOptions($(this)) },
-                        function (action, el, pos) {
-                            var path = $(el).find('img').attr('data-path');
-                            setMenus(action, path);
-                        }
-                    );
-                });
-            } else {
-                $('#fileinfo tbody tr').click(function () {
-                    var path = $('td:first-child', this).attr('data-path');
-                    if (config.options.quickSelect && data[path]['File Type'] != 'dir' && $(this).hasClass('cap_select')) {
-                        selectItem(data[path]);
-                    } else {
-                        getDetailView(path);
-                    }
-                }).each(function () {
-                    $(this).contextMenu(
-                        { menu: getContextMenuOptions($(this)) },
-                        function (action, el, pos) {
-                            var path = $('td:first-child', el).attr('data-path');
-                            setMenus(action, path);
-                        }
-                    );
-                });
-
-                $('#fileinfo').find('table').tablesorter({
-                    textExtraction: function (node) {
-                        if ($(node).find('abbr').size()) {
-                            return $(node).find('abbr').attr('title');
-                        } else {
-                            return node.innerHTML;
-                        }
-                    }
-                });
-                // Calling display_icons() function
-                // to get icons from filteree
-                // Necessary to fix bug #170
-                // https://github.com/simogeo/Filemanager/issues/170
-                var timer = setInterval(function () { display_icons(timer) }, 300);
-            }
-        });
-    };
-
-    // Retrieve data (file/folder listing) for jqueryFileTree and pass the data back
-    // to the callback function in jqueryFileTree
-    var populateFileTree = function (path, callback) {
-        var d = new Date(); // to prevent IE cache issues
-        var url = fileConnector + '?path=' + encodeURIComponent(path) + '&config=' + userconfig + '&mode=getfolder&showThumbs=' + config.options.showThumbs + '&time=' + d.getMilliseconds();
-        if ($.urlParam('type')) url += '&type=' + $.urlParam('type');
-        $.getJSON(url, function (data) {
-            var result = '';
-            // Is there any error or user is unauthorized?
-            if (data.Code == '-1') {
-                handleError(data.Error);
-                return;
-            };
-
-            if (data) {
-                result += "<ul class=\"jqueryFileTree\" style=\"display: none;\">";
-                for (key in data) {
-                    var cap_classes = "";
-
-                    for (cap in capabilities) {
-                        if (has_capability(data[key], capabilities[cap])) {
-                            cap_classes += " cap_" + capabilities[cap];
-                        }
-                    }
-                    if (data[key]['File Type'] == 'dir') {
-                        var extraclass = data[key]['Protected'] == 0 ? '' : ' directory-locked';
-                        result += "<li class=\"directory collapsed" + extraclass + "\"><a href=\"#\" class=\"" + cap_classes + "\" data-path=\"" + data[key]['Path'] + "\">" + data[key]['Filename'] + "</a></li>";
-                    } else {
-                        if (config.options.listFiles) {
-                            var extraclass = data[key]['Protected'] == 0 ? '' : ' file-locked';
-                            result += "<li class=\"file ext_" + data[key]['File Type'].toLowerCase() + extraclass + "\"><a href=\"#\" class=\"" + cap_classes + "\" data-path=\"" + data[key]['Path'] + "\">" + data[key]['Filename'] + "</a></li>";
-                        }
-                    }
-                }
-                result += "</ul>";
-            } else {
-                result += '<h1>' + lg.could_not_retrieve_folder + '</h1>';
-            }
-            callback(result);
-        });
-    };
-
-    /*---------------------------------------------------------
-      Initialization
-    ---------------------------------------------------------*/
-
-    $(function () {
-        if (config.extras.extra_js) {
-            for (var i = 0; i < config.extras.extra_js.length; i++) {
-                $.ajax({
-                    url: config.extras.extra_js[i],
-                    dataType: "script",
-                    async: config.extras.extra_js_async
-                });
-            }
-        }
-
-        $('#link-to-project').attr('href', config.url).attr('target', '_blank').attr('title', lg.support_fm + ' [' + lg.version + ' : ' + config.version + ']');
-        $('div.version').html(config.version);
-
-        // Loading theme
-        loadCSS('../scripts/filemanager/themes/' + config.options.theme + '/styles/filemanager.css');
-        $.ajax({
-            url: '../scripts/filemanager/themes/' + config.options.theme + '/styles/ie.css',
-            async: false,
-            success: function (data) {
-                $('head').append(data);
-            }
-        });
-
-        // loading zeroClipboard
-        loadJS('../scripts/filemanager/scripts/zeroclipboard/dist/ZeroClipboard.js');
-
-        // Loading CodeMirror if enabled for online edition
-        if (config.edit.enabled) {
-            loadCSS('../scripts/filemanager/scripts/CodeMirror/lib/codemirror.css');
-            loadCSS('../scripts/filemanager/scripts/CodeMirror/theme/' + config.edit.theme + '.css');
-            loadJS('../scripts/filemanager/scripts/CodeMirror/lib/codemirror.js');
-            loadJS('../scripts/filemanager/scripts/CodeMirror/addon/selection/active-line.js');
-            loadCSS('../scripts/filemanager/scripts/CodeMirror/addon/display/fullscreen.css');
-            loadJS('../scripts/filemanager/scripts/CodeMirror/addon/display/fullscreen.js');
-            loadJS('../scripts/filemanager/scripts/CodeMirror/dynamic-mode.js');
-        }
-
-        if (!config.options.fileRoot) {
-            fileRoot = '/' + document.location.pathname.substring(1, document.location.pathname.lastIndexOf('/') + 1) + 'userfiles/';
-        } else {
-            if (!config.options.serverRoot) {
-                fileRoot = config.options.fileRoot;
-            } else {
-                fileRoot = '/' + config.options.fileRoot;
-            }
-            // we remove double slashes - can happen when using PHP SetFileRoot() function with fileRoot = '/' value
-            fileRoot = fileRoot.replace(/\/\//g, '\/');
-        }
-
-        if (config.options.baseUrl === false) {
-            baseUrl = window.location.protocol + "//" + window.location.host;
-        } else {
-            baseUrl = config.options.baseUrl;
-        }
-
-        if ($.urlParam('exclusiveFolder') != 0) {
-            fileRoot += $.urlParam('exclusiveFolder');
-            if (fileRoot.charAt(fileRoot.length - 1) != '/') fileRoot += '/'; // add last '/' if needed
-            fileRoot = fileRoot.replace(/\/\//g, '\/');
-        }
-
-        if ($.urlParam('expandedFolder') != 0) {
-            expandedFolder = $.urlParam('expandedFolder');
-            fullexpandedFolder = fileRoot + expandedFolder;
-        } else {
-            expandedFolder = '';
-            fullexpandedFolder = null;
-        }
-
-        $('#folder-info').html('<span id="items-counter"></span> ' + lg.items + ' - ' + lg.size + ' : <span id="items-size"></span> ' + lg.mb);
-
-        // we finalize the FileManager UI initialization
-        // with localized text if necessary
-        if (config.options.autoload == true) {
-            $('#upload').append(lg.upload);
-            $('#newfolder').append(lg.new_folder);
-            $('#grid').attr('title', lg.grid_view);
-            $('#list').attr('title', lg.list_view);
-            $('#fileinfo h1').append(lg.select_from_left);
-            $('#itemOptions a[href$="#select"]').append(lg.select);
-            $('#itemOptions a[href$="#download"]').append(lg.download);
-            $('#itemOptions a[href$="#rename"]').append(lg.rename);
-            $('#itemOptions a[href$="#move"]').append(lg.move);
-            $('#itemOptions a[href$="#replace"]').append(lg.replace);
-            $('#itemOptions a[href$="#delete"]').append(lg.del);
-        }
-
-        /** Adding a close button triggering callback function if CKEditorCleanUpFuncNum passed */
-        if ($.urlParam('CKEditorCleanUpFuncNum')) {
-            $("body").append('<button id="close-btn" type="button">' + lg.close + '</button>');
-
-            $('#close-btn').click(function () {
-                parent.CKEDITOR.tools.callFunction($.urlParam('CKEditorCleanUpFuncNum'));
-            });
-        }
-
-        /** Input file Replacement */
-        $('#browse').append('+');
-        $('#browse').attr('title', lg.browse);
-        $("#newfile").change(function () {
-            $("#filepath").val($(this).val().replace(/.+[\\\/]/, ""));
-        });
-
-        /** load searchbox */
-        if (config.options.searchBox === true) {
-            loadJS("../scripts/filemanager/scripts/filemanager.liveSearch.min.js");
-        } else {
-            $('#search').remove();
-        }
-
-        // cosmetic tweak for buttons
-        $('button').wrapInner('<span></span>');
-
-        // Set initial view state.
-        $('#fileinfo').data('view', config.options.defaultViewMode);
-        setViewButtonsFor(config.options.defaultViewMode);
-
-        $('#home').click(function () {
-            var currentViewMode = $('#fileinfo').data('view');
-            $('#fileinfo').data('view', currentViewMode);
-            $('#filetree ul.jqueryFileTree > li.expanded > a').trigger('click');
-            getFolderInfo(fileRoot);
-        });
-
-        $('#level-up').click(function () {
-            var cpath = $('#uploader h1').attr('data-path'); // get path
-            // console.log(' cpath : ' + cpath + ' - fileRoot : ' + fileRoot ); // @todo remove
-            if (cpath != fileRoot) {
-                // we get the parent folder - cpath.slice(0, - 1) removes last slash
-                var parent = cpath.substring(0, cpath.slice(0, -1).lastIndexOf("/")) + '/';
-                // console.log(' parent : ' + parent); // @todo remove
-                var currentViewMode = $('#fileinfo').data('view');
-                $('#fileinfo').data('view', currentViewMode);
-                $('#filetree').find('a[data-path="' + cpath + '"]').click(); // we close the previous folder
-                getFolderInfo(parent);
-            }
-        });
-
-        // Set buttons to switch between grid and list views.
-        $('#grid').click(function () {
-            setViewButtonsFor('grid');
-            $('#fileinfo').data('view', 'grid');
-            getFolderInfo($('#currentpath').val());
-        });
-
-        $('#list').click(function () {
-            setViewButtonsFor('list');
-            $('#fileinfo').data('view', 'list');
-            getFolderInfo($('#currentpath').val());
-        });
-
-        // Provide initial values for upload form, status, etc.
-        setUploader(fileRoot);
-
-        // Handling File upload
-
-        // Multiple Uploads
-        if (config.upload.multiple) {
-            // we load dropzone library
-            loadCSS('../scripts/filemanager/scripts/dropzone/downloads/css/dropzone.css');
-            loadJS('../scripts/filemanager/scripts/dropzone/downloads/dropzone.js');
-            Dropzone.autoDiscover = false;
-
-            // we remove simple file upload element
-            $('#file-input-container').remove();
-
-            // we add multiple-files upload button using upload button
-            // $('#upload').prop('type', 'button');
-            // replaced by code below because og Chrome 18 bug https://github.com/simogeo/Filemanager/issues/304
-            // and it may also be safer for IE (see http://stackoverflow.com/questions/1544317/change-type-of-input-field-with-jquery
-            $('#upload').remove();
-            $("#newfolder").before('<button value="Upload" type="button" name="upload" id="upload" class="em"><span>' + lg.upload + '</span></button> ');
-
-            $('#upload').unbind().click(function () {
-                // we create prompt
-                var msg = '<div id="dropzone-container"><h2>' + lg.current_folder + $('#uploader h1').attr('title') + '</h2><div id="multiple-uploads" class="dropzone"></div>';
-                msg += '<div id="total-progress"><div data-dz-uploadprogress="" style="width:0%;" class="progress-bar"></div></div>';
-                msg += '<div class="prompt-info">' + lg.dz_dictMaxFilesExceeded.replace('%s', config.upload.number) + lg.file_size_limit + config.upload.fileSizeLimit + ' ' + lg.mb + '.</div>';
-                msg += '<button id="process-upload">' + lg.upload + '</button></div>';
-
-                error_flag = false;
-                var path = $('#currentpath').val();
-
-                var fileSize = (config.upload.fileSizeLimit != 'auto') ? config.upload.fileSizeLimit : 256; // default dropzone value
-
-                if (config.security.uploadPolicy == 'DISALLOW_ALL') {
-                    var allowedFiles = '.' + config.security.uploadRestrictions.join(',.');
-                } else {
-                    // we allow any extension since we have no easy way to handle the the built-in `acceptedFiles` params
-                    // Would be handled later by the connector
-                    var allowedFiles = null;
-                }
-
-                if ($.urlParam('type').toString().toLowerCase() == 'images' || config.upload.imagesOnly) {
-                    var allowedFiles = '.' + config.images.imagesExt.join(',.');
-                }
-
-                var btns = {};
-                btns[lg.close] = false;
-                $.prompt(msg, {
-                    buttons: btns
-                });
-
-                $("div#multiple-uploads").dropzone({
-                    paramName: "newfile",
-                    url: fileConnector + '?config=' + userconfig,
-                    maxFilesize: fileSize,
-                    maxFiles: config.upload.number,
-                    addRemoveLinks: true,
-                    parallelUploads: config.upload.number,
-                    dictCancelUpload: lg.cancel,
-                    dictRemoveFile: lg.del,
-                    dictMaxFilesExceeded: lg.dz_dictMaxFilesExceeded.replace("%s", config.upload.number),
-                    dictDefaultMessage: lg.dz_dictDefaultMessage,
-                    dictInvalidFileType: lg.dz_dictInvalidFileType,
-                    dictFileTooBig: lg.file_too_big + ' ' + lg.file_size_limit + config.upload.fileSizeLimit + ' ' + lg.mb,
-                    acceptedFiles: allowedFiles,
-                    autoProcessQueue: false,
-                    init: function () {
-                        // for accessing dropzone : https://github.com/enyo/dropzone/issues/180
-                        var dropzone = this;
-                        $("#process-upload").click(function () {
-                            // to proceed full queue parallelUploads ust be equal or > to maxFileSize
-                            // https://github.com/enyo/dropzone/issues/462
-                            dropzone.processQueue();
+                    var allowedFileTypes = null,
+                        currentPath = fmModel.currentPath(),
+                        templateContainer = tmpl('tmpl-fileupload-container', {
+                            folder: lg('current_folder') + currentPath,
+                            info: lg('upload_files_number_limit').replace('%s', config.upload.maxNumberOfFiles) + ' ' + lg('upload_file_size_limit').replace('%s', formatBytes(config.upload.fileSizeLimit, true)),
+                            lang: langModel.getTranslations()
                         });
-                    },
-                    totaluploadprogress: function (progress) {
-                        $("#total-progress .progress-bar").css('width', progress + "%");
-                    },
-                    sending: function (file, xhr, formData) {
-                        formData.append("mode", "add");
-                        formData.append("currentpath", path);
-                    },
-                    success: function (file, response) {
-                        $('#uploadresponse').empty().html(response);
-                        var data = jQuery.parseJSON($('#uploadresponse').find('textarea').text());
 
-                        if (data['Code'] == 0) {
-                            this.removeFile(file);
+                    if (config.security.extensions.policy == 'ALLOW_LIST') {
+                        allowedFileTypes = new RegExp('(\\.|\\/)(' + config.security.extensions.restrictions.join('|') + ')$', 'i');
+                    }
+
+                    fm.dialog({
+                        message: templateContainer,
+                        width: 'auto',
+                        buttons: [{
+                            type: "ok",
+                            label: lg('action_upload'),
+                            autoClose: false,
+                            click: function (e, ui) {
+                                if ($dropzone.children('.upload-item').length > 0) {
+                                    $dropzone.find('.button-start').trigger('click');
+                                } else {
+                                    fm.error(lg('upload_choose_file'));
+                                }
+                            }
+                        }, {
+                            label: lg('action_select'),
+                            closeOnClick: false,
+                            click: function (e, ui) {
+                                $('#fileupload', $uploadContainer).trigger('click');
+                            }
+                        }, {
+                            type: "cancel",
+                            label: lg('close')
+                        }]
+                    });
+
+                    var $uploadContainer = $('.fm-fileupload-container'),
+                        $dropzone = $('.dropzone', $uploadContainer),
+                        $dropzoneWrapper = $('.dropzone-wrapper', $uploadContainer),
+                        $totalProgressBar = $('#total-progress', $uploadContainer).children();
+
+                    if (config.customScrollbar.enabled) {
+                        $dropzoneWrapper.mCustomScrollbar({
+                            theme: config.customScrollbar.theme,
+                            scrollButtons: {
+                                enable: config.customScrollbar.button
+                            },
+                            advanced: {
+                                autoExpandHorizontalScroll: true,
+                                updateOnContentResize: true
+                            },
+                            callbacks: {
+                                onOverflowY: function () {
+                                    $dropzoneWrapper.find('.mCSB_container').css({
+                                        'margin-right': $dropzoneWrapper.find('.mCSB_scrollTools').width()
+                                    });
+                                },
+                                onOverflowYNone: function () {
+                                    $dropzoneWrapper.find('.mCSB_container').css({
+                                        'margin-right': 'auto'
+                                    });
+                                }
+                            },
+                            axis: "y"
+                        });
+                    }
+
+                    $dropzoneWrapper.on("click", function (e) {
+                        if (e.target === this || $(e.target).parent()[0] === this || e.target === $dropzone[0] || $(e.target).parent().hasClass('default-message')) {
+                            $('#fileupload', $uploadContainer).trigger('click');
+                        }
+                    });
+
+                    /**
+                     * Start uploading process.
+                     */
+                    $dropzone.on('click', '.button-start', function (e) {
+                        var $target = $(this);
+                        var $buttons = $target.parent().parent();
+                        var data = $buttons.data();
+
+                        data.submit();
+                        $target.remove();
+                    });
+
+                    /**
+                     * Abort uploading process.
+                     */
+                    $dropzone.on('click', '.button-abort', function (e) {
+                        var $target = $(this),
+                            $buttons = $target.parent().parent(),
+                            data = $buttons.data(),
+                            $node = data.files[0].context;
+
+                        data.abort();
+                        $node.find('.error-message').text(lg('upload_aborted'));
+                        $node.addClass('aborted');
+                    });
+
+                    /**
+                     * Resume uploading if at least one chunk was uploaded.
+                     * Otherwise start upload from the very beginning of file.
+                     */
+                    $dropzone.on('click', '.button-resume', function (e) {
+                        var $target = $(this),
+                            $buttons = $target.parent().parent(),
+                            data = $buttons.data(),
+                            file = data.files[0];
+
+                        function resumeUpload(data) {
+                            $.blueimp.fileupload.prototype.options.add.call($('#fileupload')[0], e, data);
+                            data.submit();
+                        }
+
+                        if (file.chunkUploaded) {
+                            var targetPath = currentPath + file.serverName;
+                            getItemInfo(targetPath).then(function (response) {
+                                if (response.data) {
+                                    data.uploadedBytes = Number(response.data.attributes.size);
+                                    if (!data.uploadedBytes) {
+                                        file.chunkUploaded = undefined;
+                                    }
+                                    resumeUpload(data);
+                                }
+                            });
                         } else {
-                            // this.removeAllFiles();
-                            getFolderInfo(path);
-                            $('#filetree').find('a[data-path="' + path + '"]').click();
-                            $.prompt(data['Error']);
-                            error_flag = true;
+                            resumeUpload(data);
                         }
-                    },
-                    complete: function (file) {
-                        if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-                            $("#total-progress .progress-bar").css('width', '0%');
-                            if (this.getRejectedFiles().length === 0 && error_flag === false) {
-                                setTimeout(function () { $.prompt.close(); }, 800);
-                            }
-                            getFolderInfo(path);
-                            if (path == fileRoot) createFileTree();
-                            $('#filetree').find('a[data-path="' + path + '"]').click().click();
-                            if (config.options.showConfirmation) {
-                                $.prompt(lg.successful_added_file);
-                            }
+                    });
+
+                    /**
+                     * Remove file from upload query.
+                     * Also remove uploaded file chunks if were uploaded.
+                     */
+                    $dropzone.on('click', '.button-remove', function (e) {
+                        var $target = $(this),
+                            $buttons = $target.parent().parent(),
+                            data = $buttons.data(),
+                            file = data.files[0];
+
+                        if (file.chunkUploaded) {
+                            deleteItem(currentPath + file.serverName);
                         }
+
+                        $target.closest('.upload-item').remove();
+                        updateDropzoneView();
+                    });
+
+                    $dropzone.on('click', '.button-info', function (e) {
+                        var $target = $(this);
+                        var $node = $target.closest('.upload-item');
+
+                        if ($node.hasClass('error')) {
+                            var $message = $node.find('.error-message');
+                            fm.error($message.text());
+                        }
+                    });
+
+                    var updateDropzoneView = function () {
+                        if ($dropzone.children('.upload-item').length > 0) {
+                            $dropzone.addClass('started');
+                        } else {
+                            $dropzone.removeClass('started');
+                        }
+                    };
+
+                    var shownExtensions = fmModel.filterModel.getExtensions();
+                    if (shownExtensions) {
+                        $('#fileupload').attr('accept', shownExtensions.map(function (el) {
+                            return '.' + el;
+                        }).join());
                     }
+
+                    $('#fileupload', $uploadContainer)
+                        .fileupload({
+                            autoUpload: false,
+                            sequentialUploads: true,
+                            dataType: 'json',
+                            dropZone: $dropzone,
+                            maxChunkSize: config.upload.chunkSize,
+                            url: buildConnectorUrl(),
+                            paramName: 'files',
+                            singleFileUploads: true,
+                            formData: extendRequestParams('POST', {
+                                mode: 'upload',
+                                path: currentPath
+                            }),
+                            // validation
+                            // maxNumberOfFiles works only for single "add" call when "singleFileUploads" is set to "false"
+                            maxNumberOfFiles: config.upload.maxNumberOfFiles,
+                            acceptFileTypes: allowedFileTypes,
+                            maxFileSize: config.upload.fileSizeLimit,
+                            messages: {
+                                maxNumberOfFiles: lg('upload_files_number_limit').replace('%s', config.upload.maxNumberOfFiles),
+                                acceptFileTypes: lg('upload_file_type_invalid'),
+                                maxFileSize: lg('upload_file_too_big') + ' ' + lg('upload_file_size_limit').replace('%s', formatBytes(config.upload.fileSizeLimit, true))
+                            },
+                            // image preview options
+                            previewMaxHeight: 120,
+                            previewMaxWidth: 120,
+                            previewCrop: true
+                        })
+
+                        .on('fileuploadadd', function (e, data) {
+                            var $items = $dropzone.children('.upload-item');
+                            $.each(data.files, function (index, file) {
+                                // skip selected files if total files number exceed "maxNumberOfFiles"
+                                if ($items.length >= config.upload.maxNumberOfFiles) {
+                                    fm.error(lg('upload_files_number_limit').replace('%s', config.upload.maxNumberOfFiles), {
+                                        logClass: 'fileuploadadd',
+                                        unique: true
+                                    });
+                                    return false;
+                                }
+                                // to display in item template
+                                file.formattedSize = formatBytes(file.size);
+                                var $template = $(tmpl('tmpl-upload-item', {
+                                    file: file,
+                                    lang: langModel.getTranslations(),
+                                    imagesPath: fm.settings.baseUrl + '/scripts/jQuery-File-Upload/img'
+                                }));
+                                file.context = $template;
+                                $template.find('.buttons').data(data);
+                                $template.appendTo($dropzone);
+                            });
+                            updateDropzoneView();
+                        })
+
+                        .on('fileuploadsend', function (e, data) {
+                            $.each(data.files, function (index, file) {
+                                var $node = file.context;
+                                $node.removeClass('added aborted error').addClass('process');
+
+                                // workaround to handle a case while chunk uploading when you may press abort button after
+                                // uploading is done, but right before "fileuploaddone" event is fired, and try to resume upload
+                                if (file.chunkUploaded && (data.total === data.uploadedBytes)) {
+                                    $node.remove();
+                                }
+                            });
+                        })
+
+                        .on('fileuploadfail', function (e, data) {
+                            $.each(data.files, function (index, file) {
+                                file.error = lg('upload_failed');
+                                var $node = file.context;
+                                $node.removeClass('added process').addClass('error');
+                            });
+                        })
+
+                        .on('fileuploaddone', function (e, data) {
+                            var response = data.result;
+                            $.each(data.files, function (index, file) {
+                                var $node = file.context;
+                                // handle server-side errors
+                                if (response && response.errors) {
+                                    $node.removeClass('added process').addClass('error');
+                                    $node.find('.error-message').text(formatServerError(response.errors[0]));
+                                    $node.find('.button-start').remove();
+                                } else {
+                                    // remove file preview item on success upload
+                                    $node.remove();
+                                }
+                            });
+                        })
+
+                        .on('fileuploadalways', function (e, data) {
+                            var response = data.result;
+                            $.each(data.files, function (index, file) {
+                                if (response && response.data && response.data[index]) {
+                                    var resourceObject = response.data[index];
+                                    fmModel.removeItem(resourceObject);
+                                    fmModel.addItem(resourceObject, fmModel.currentPath());
+                                }
+                            });
+
+                            var $items = $dropzone.children('.upload-item');
+                            // all files in queue are processed
+                            if ($items.filter('.added').length === 0 && $items.filter('.process').length === 0) {
+                                // all files were successfully uploaded
+                                if ($items.length === 0) {
+                                    alertify.clearDialogs();
+
+                                    if (config.options.showConfirmation) {
+                                        fm.success(lg('upload_successful_files'));
+                                    }
+                                }
+                                // errors occurred
+                                if ($items.filter('.error').length) {
+                                    fm.error(lg('upload_partially') + "<br>" + lg('upload_failed_details'));
+                                }
+                            }
+                            updateDropzoneView();
+                        })
+
+                        .on('fileuploadchunkdone', function (e, data) {
+                            var response = data.result;
+                            $.each(data.files, function (index, file) {
+                                if (response.data && response.data[index]) {
+                                    var resourceObject = response.data[index];
+                                    fmModel.removeItem(resourceObject);
+                                    fmModel.addItem(resourceObject, fmModel.currentPath());
+
+                                    // get filename from server, it may differ from original
+                                    file.serverName = resourceObject.attributes.name;
+                                    // mark that file has uploaded chunk(s)
+                                    file.chunkUploaded = 1;
+                                }
+                            });
+                        })
+
+                        .on('fileuploadprocessalways', function (e, data) {
+                            $.each(data.files, function (index, file) {
+                                var $node = file.context;
+                                // file wasn't added to queue (due to config.upload.maxNumberOfFiles limit e.g.)
+                                if (typeof $node === 'undefined') {
+                                    return;
+                                }
+                                // show preview for image file
+                                if (file.preview) {
+                                    $node.find('.image').append(file.preview);
+                                    $node.find('.preview').removeClass('file-preview').addClass('image-preview');
+                                }
+                                // handle client-side error
+                                if (file.error) {
+                                    $node.removeClass('added process').addClass('error');
+                                    $node.find('.error-message').text(file.error);
+                                    $node.find('.button-start').remove();
+                                }
+                            });
+                        })
+
+                        .on('fileuploadprogress', function (e, data) {
+                            $.each(data.files, function (index, file) {
+                                // fill progress bar for single item
+                                var $node = file.context,
+                                    progress = parseInt(data.loaded / data.total * 100, 10);
+                                $node.find('.progress-bar').css('width', progress + '%');
+                            });
+                        })
+
+                        .on('fileuploadprogressall', function (e, data) {
+                            // fill total progress bar
+                            var progress = parseInt(data.loaded / data.total * 100, 10);
+                            $totalProgressBar.css('width', progress + '%');
+                        });
                 });
-            });
 
-            // Simple Upload
-        } else {
-            $('#uploader').attr('action', fileConnector + '?config=' + userconfig);
-
-            $('#uploader').ajaxForm({
-                target: '#uploadresponse',
-                beforeSubmit: function (arr, form, options) {
-                    // Test if a value is given
-                    if ($('#newfile', form).val() == '') {
+                // Simple Upload
+            } else {
+                $uploadButton.click(function () {
+                    if (capabilities.indexOf('upload') === -1) {
+                        fm.error(lg('NOT_ALLOWED'));
                         return false;
                     }
-                    // Check if file extension is allowed
-                    if (!isAuthorizedFile($('#newfile', form).val())) {
-                        var str = '<p>' + lg.INVALID_FILE_TYPE + '</p>';
-                        if (config.security.uploadPolicy == 'DISALLOW_ALL') {
-                            str += '<p>' + lg.ALLOWED_FILE_TYPE + config.security.uploadRestrictions.join(', ') + '.</p>';
-                        }
-                        if (config.security.uploadPolicy == 'ALLOW_ALL') {
-                            str += '<p>' + lg.DISALLOWED_FILE_TYPE + config.security.uploadRestrictions.join(', ') + '.</p>';
-                        }
-                        $("#filepath").val('');
-                        $.prompt(str);
-                        return false;
-                    }
-                    $('#upload').attr('disabled', true);
-                    $('#upload span').addClass('loading').text(lg.loading_data);
-                    if ($.urlParam('type').toString().toLowerCase() == 'images') {
-                        // Test if uploaded file extension is in valid image extensions
-                        var newfileSplitted = $('#newfile', form).val().toLowerCase().split('.');
-                        var found = false;
-                        for (key in config.images.imagesExt) {
-                            if (config.images.imagesExt[key] == newfileSplitted[newfileSplitted.length - 1]) {
-                                found = true;
-                            }
-                        }
-                        if (found === false) {
-                            $.prompt(lg.UPLOAD_IMAGES_ONLY);
-                            $('#upload').removeAttr('disabled').find("span").removeClass('loading').text(lg.upload);
-                            return false;
-                        }
-                    }
-                    // if config.upload.fileSizeLimit == auto we delegate size test to connector
-                    if (typeof FileReader !== "undefined" && typeof config.upload.fileSizeLimit != "auto") {
-                        // Check file size using html5 FileReader API
-                        var size = $('#newfile', form).get(0).files[0].size;
-                        if (size > config.upload.fileSizeLimit * 1024 * 1024) {
-                            $.prompt("<p>" + lg.file_too_big + "</p><p>" + lg.file_size_limit + config.upload.fileSizeLimit + " " + lg.mb + ".</p>");
-                            $('#upload').removeAttr('disabled').find("span").removeClass('loading').text(lg.upload);
-                            return false;
-                        }
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    $('#upload').removeAttr('disabled').find("span").removeClass('loading').text(lg.upload);
-                    $.prompt(lg.ERROR_UPLOADING_FILE);
-                },
-                success: function (result) {
-                    var data = jQuery.parseJSON($('#uploadresponse').find('textarea').text());
-                    if (data['Code'] == 0) {
-                        addNode(data['Path'], data['Name']);
-                        $("#filepath, #newfile").val('');
-                        // IE can not empty input='file'. A fix consist to replace the element (see github issue #215)
-                        if ($.browser.msie) $("#newfile").replaceWith($("#newfile").clone(true));
 
-                        // seems to be necessary when dealing w/ files located on s3 (need to look into a cleaner solution going forward)
-                        $('#filetree').find('a[data-path="' + data['Path'] + '/"]').click().click();
+                    var data = $(this).data();
+                    if ($.isEmptyObject(data)) {
+                        fm.error(lg('upload_choose_file'));
                     } else {
-                        $.prompt(data['Error']);
+                        data.submit();
                     }
-                    $('#upload').removeAttr('disabled');
-                    $('#upload span').removeClass('loading').text(lg.upload);
-                    $("#filepath").val('');
-                }
-            });
-        }
-
-        // Loading CustomScrollbar if enabled
-        // Important, the script should be called after calling createFileTree() to prevent bug
-        if (config.customScrollbar.enabled) {
-            loadCSS('../scripts/filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css');
-            loadJS('../scripts/filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js');
-
-            var csTheme = config.customScrollbar.theme != undefined ? config.customScrollbar.theme : 'inset-2-dark';
-            var csButton = config.customScrollbar.button != undefined ? config.customScrollbar.button : true;
-
-            $(window).load(function () {
-                $("#filetree").append('<div style="height:3000px"></div>'); // because if #filetree has height equal to 0, mCustomScrollbar is not applied
-                $("#filetree").mCustomScrollbar({
-                    theme: csTheme,
-                    scrollButtons: { enable: csButton },
-                    advanced: { autoExpandHorizontalScroll: true, updateOnContentResize: true },
-                    callbacks: {
-                        onInit: function () { createFileTree(); }
-                    },
-                    axis: "yx"
                 });
-                $("#fileinfo").mCustomScrollbar({
-                    theme: csTheme,
-                    scrollButtons: { enable: csButton },
-                    advanced: { autoExpandHorizontalScroll: true, updateOnContentResize: true },
-                    axis: "y",
-                    alwaysShowScrollbar: 1
-                });
-            });
-        } else {
-            createFileTree();
-        }
 
-        // Disable select function if no window.opener
-        if (!(window.opener || window.tinyMCEPopup || $.urlParam('field_name'))) $('#itemOptions a[href$="#select"]').remove();
-        // Keep only browseOnly features if needed
-        if (config.options.browseOnly == true) {
-            $('#file-input-container').remove();
-            $('#upload').remove();
-            $('#newfolder').remove();
-            $('#toolbar').remove('#rename');
-            $('.contextMenu .rename').remove();
-            $('.contextMenu .move').remove();
-            $('.contextMenu .replace').remove();
-            $('.contextMenu .delete').remove();
-        }
+                $uploader
+                    .fileupload({
+                        autoUpload: false,
+                        dataType: 'json',
+                        url: buildConnectorUrl(),
+                        paramName: 'files',
+                        maxChunkSize: config.upload.chunkSize
+                    })
 
-        // Adjust layout.
-        setDimensions();
-        $(window).resize(setDimensions);
+                    .on('fileuploadadd', function (e, data) {
+                        $uploadButton.data(data);
+                    })
 
-        // Provides support for adjustible columns.
-        $('#splitter').splitter({
-            sizeLeft: config.options.splitterMinWidth,
-            minLeft: config.options.splitterMinWidth,
-            minRight: 200
-        });
+                    .on('fileuploadsubmit', function (e, data) {
+                        data.formData = extendRequestParams('POST', {
+                            mode: 'upload',
+                            path: fmModel.currentPath()
+                        });
+                        $uploadButton.addClass('loading').prop('disabled', true);
+                        $uploadButton.children('span').text(lg('loading_data'));
+                    })
 
-        getDetailView(fileRoot + expandedFolder);
-    });
+                    .on('fileuploadalways', function (e, data) {
+                        $("#filepath").val('');
+                        $uploadButton.removeData().removeClass('loading').prop('disabled', false);
+                        $uploadButton.children('span').text(lg('action_upload'));
+                        var response = data.result;
 
-    // add useragent string to html element for IE 10/11 detection
-    var doc = document.documentElement;
-    doc.setAttribute('data-useragent', navigator.userAgent);
+                        // handle server-side errors
+                        if (response && response.errors) {
+                            fm.error(lg('upload_failed') + "<br>" + formatServerError(response.errors[0]));
+                        }
+                        if (response && response.data) {
+                            var resourceObject = response.data[0];
+                            fmModel.removeItem(resourceObject);
+                            fmModel.addItem(resourceObject, fmModel.currentPath());
 
-    if (config.options.logger) {
-        var end = new Date().getTime();
-        var time = end - start;
-        console.log('Total execution time : ' + time + ' ms');
-    }
+                            if (config.options.showConfirmation) {
+                                fm.success(lg('upload_successful_file'));
+                            }
+                        }
+                    })
 
-    $(window).load(function () {
-        setDimensions();
-    });
+                    .on('fileuploadchunkdone', function (e, data) {
+                        var response = data.result;
+                        if (response.data && response.data[0]) {
+                            var resourceObject = response.data[0];
+                            fmModel.removeItem(resourceObject);
+                            fmModel.addItem(resourceObject, fmModel.currentPath());
+                        }
+                    })
+
+                    .on('fileuploadfail', function (e, data) {
+                        // server error 500, etc.
+                        fm.error(lg('upload_failed'));
+                    });
+            }
+        };
+
+        // call the "constructor" method
+        construct();
+
+        $(window).resize(fm.setDimensions);
+    };
 })(jQuery);
 
-$(window).load(function () {
-    $('#fileinfo').css({ 'left': $('#splitter .vsplitbar').width() + $('#filetree').width() });
-});
+// add the plugin to the jQuery.fn object
+$.fn.richFilemanager = function (options) {
+    // iterate through the DOM elements we are attaching the plugin to
+    return this.each(function () {
+        // if plugin has not already been attached to the element
+        if (undefined == $(this).data('richFilemanager')) {
+            /**
+             * Creates a new instance of the plugin
+             * Pass the DOM element and the user-provided options as arguments
+             */
+            var plugin = new $.richFilemanagerPlugin(this, options);
+
+            /**
+             * Store a reference to the plugin object
+             * The plugin are available like:
+             * - element.data('richFilemanager').publicMethod(arg1, arg2, ... argn);  for methods
+             * - element.data('richFilemanager').settings.propertyName;  for properties
+             */
+            $(this).data('richFilemanager', plugin);
+        }
+    });
+};
+
+// add location.origin for IE
+if (!window.location.origin) {
+    window.location.origin = window.location.protocol + "//"
+        + window.location.hostname
+        + (window.location.port ? ':' + window.location.port : '');
+}

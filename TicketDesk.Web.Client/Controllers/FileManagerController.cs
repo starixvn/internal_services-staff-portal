@@ -3,22 +3,31 @@
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Text;
-    using System.Text.RegularExpressions;
     using System.Web;
     using System.Web.Mvc;
-    using System.Web.Script.Serialization;
 
     [RoutePrefix("file-manager")]
     [Route("{action=index}")]
     [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
     public class FileManagerController : BaseController
     {
-        private readonly FilemanagerConfig config = new FilemanagerConfig();
+        private readonly string _webRootPath;
+        private readonly string _webPath;
+        private readonly List<string> _allowedExtensions;
 
-        private readonly JavaScriptSerializer json = new JavaScriptSerializer();
+        public FileManagerController()
+        {
+            // FileManager Content Folder Path
+            _webPath = "uploads";
+            _webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _webPath);
+            _allowedExtensions = new List<string> { "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md" };
+        }
 
         public ActionResult Index()
         {
@@ -26,460 +35,820 @@
         }
 
         [Route("filemanager")]
-        public ActionResult FileManager(string mode, string path = null)
+        public ActionResult FileManager(
+            string mode,
+            string path,
+            string name,
+            List<HttpPostedFileBase> files,
+            string old,
+            string @new,
+            string source,
+            string target,
+            string content,
+            bool thumbnail = false)
         {
-            Response.ClearHeaders();
-            Response.ClearContent();
-            Response.Clear();
+            if (!string.IsNullOrWhiteSpace(path) && path.StartsWith("/"))
+                path = path.Substring(1);
+            if (!string.IsNullOrWhiteSpace(@new) && @new.StartsWith("/"))
+                @new = @new == "/" ? string.Empty : @new.Substring(1);
+            if (!string.IsNullOrWhiteSpace(source) && source.StartsWith("/"))
+                source = source.Substring(1);
+            if (!string.IsNullOrWhiteSpace(target) && target.StartsWith("/"))
+                target = target.Substring(1);
 
-            try
+            switch (mode)
             {
-                switch (mode)
-                {
-                    case "getinfo":
-                        return Content(GetInfo(path), "application/json", Encoding.UTF8);
+                case "initiate":
+                    return Json(Initiate(), JsonRequestBehavior.AllowGet);
 
-                    case "getfolder":
-                        return Content(GetFolderInfo(path), "application/json", Encoding.UTF8);
+                case "getfolder":
+                    return Json(GetFolder(path), JsonRequestBehavior.AllowGet);
 
-                    case "move":
-                        var oldPath = Request.QueryString["old"];
-                        var newPath = string.Format("{0}{1}/{2}", Request.QueryString["root"], Request.QueryString["new"], Path.GetFileName(oldPath));
-                        return Content(Move(oldPath, newPath), "application/json", Encoding.UTF8);
+                case "addfolder":
+                    return Json(AddFolder(path, name), JsonRequestBehavior.AllowGet);
 
-                    case "rename":
-                        return Content(Rename(Request.QueryString["old"], Request.QueryString["new"]), "application/json", Encoding.UTF8);
+                case "upload":
+                    return Json(Upload(path, files), JsonRequestBehavior.AllowGet);
 
-                    case "replace":
-                        return Content(Replace(Request.Form["newfilepath"]), "text/html", Encoding.UTF8);
+                case "rename":
+                    return Json(Rename(old, @new), JsonRequestBehavior.AllowGet);
 
-                    case "delete":
-                        return Content(Delete(path), "application/json", Encoding.UTF8);
+                case "move":
+                    return Json(Move(old, @new), JsonRequestBehavior.AllowGet);
 
-                    case "addfolder":
-                        return Content(AddFolder(path, Request.QueryString["name"]), "application/json", Encoding.UTF8);
+                case "copy":
+                    return Json(Copy(source, target), JsonRequestBehavior.AllowGet);
 
-                    case "download":
-                        if (System.IO.File.Exists(Server.MapPath(path)) && IsInRootPath(path))
-                        {
-                            FileInfo fi = new FileInfo(Server.MapPath(path));
-                            Response.AddHeader("Content-Disposition", "attachment; filename=" + Server.UrlPathEncode(path));
-                            Response.AddHeader("Content-Length", fi.Length.ToString());
-                            return File(fi.FullName, "application/octet-stream");
-                        }
-                        else
-                        {
-                            return new HttpNotFoundResult("File not found");
-                        }
+                case "editfile":
+                    return Json(EditFile(path), JsonRequestBehavior.AllowGet);
 
-                    case "add":
-                        return Content(AddFile(Request.Form["currentpath"]), "text/html", Encoding.UTF8);
+                case "savefile":
+                    return Json(SaveFile(path, content), JsonRequestBehavior.AllowGet);
 
-                    case "preview":
-                        var fi2 = new FileInfo(Server.MapPath(Request.QueryString["path"]));
-                        return new FilePathResult(fi2.FullName, "image/" + fi2.Extension.TrimStart('.'));
+                case "delete":
+                    return Json(Delete(path), JsonRequestBehavior.AllowGet);
 
-                    default:
-                        return Content(Error(string.Format("{0} not implemented", mode)));
-                }
-            }
-            catch (HttpException he)
-            {
-                return Content(Error(he.Message), "application/json", Encoding.UTF8);
-            }
-        }
-
-        private bool IsImage(FileInfo fileInfo)
-        {
-            return config.ImgExtensions.Contains(Path.GetExtension(fileInfo.FullName).ToLower());
-        }
-
-        private bool IsInRootPath(string path)
-        {
-            return path != null && Path.GetFullPath(path).StartsWith(Path.GetFullPath(config.RootPath));
-        }
-
-        private string AddFile(string path)
-        {
-            string response;
-
-            if (Request.Files.Count == 0 || Request.Files[0].ContentLength == 0)
-            {
-                response = Error("No file provided.");
-            }
-            else
-            {
-                if (!IsInRootPath(path))
-                {
-                    response = Error("Attempt to add file outside root path");
-                }
-                else
-                {
-                    HttpPostedFileBase file = Request.Files[0];
-                    if (!config.AllowedExtensions.Contains(Path.GetExtension(file.FileName).ToLower()))
+                case "download":
+                    if (Request.Headers["accept"].ToString().Contains("json"))
                     {
-                        response = Error("Uploaded file type is not allowed.");
+                        return Json(Download(path), JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
-                        //Only allow certain characters in file names
-                        var baseFileName = Regex.Replace(Path.GetFileNameWithoutExtension(file.FileName), @"[^\w_-]", "");
-                        var filePath = Path.Combine(path, baseFileName + Path.GetExtension(file.FileName));
+                        var file = DownloadFile(path);
+                        return File(file.FileBytes, "application/x-msdownload", file.FileName);
+                    }
+                case "getimage":
+                    return GetImage(path, thumbnail);
 
-                        //Make file name unique
-                        var i = 0;
-                        while (System.IO.File.Exists(Server.MapPath(filePath)))
+                case "readfile":
+                    break;
+
+                case "summarize":
+                    return Json(Summarize(), JsonRequestBehavior.AllowGet);
+            }
+
+            throw new Exception("Unknown Request!");
+        }
+
+        private dynamic Initiate()
+        {
+            var result = new
+            {
+                Data = new
+                {
+                    Type = "initiate",
+                    Attributes = new
+                    {
+                        Config = new
                         {
-                            i = i + 1;
-                            baseFileName = Regex.Replace(baseFileName, @"_[\d]+$", "");
-                            filePath = Path.Combine(path, baseFileName + "_" + i + Path.GetExtension(file.FileName));
+                            Security = new
+                            {
+                                ReadOnly = false,
+                                Extensions = new
+                                {
+                                    IgnoreCase = true,
+                                    Policy = "ALLOW_LIST",
+                                    Restrictions = _allowedExtensions
+                                }
+                            }
                         }
-                        file.SaveAs(Server.MapPath(filePath));
+                    }
+                }
+            };
 
-                        response = json.Serialize(new
+            return result;
+        }
+
+        private dynamic GetFolder(string path)
+        {
+            if (path == null) path = string.Empty;
+
+            var rootpath = Path.Combine(_webRootPath, path);
+
+            var rootDirectory = new DirectoryInfo(rootpath);
+
+            var data = new List<dynamic>();
+
+            foreach (var directory in rootDirectory.GetDirectories())
+            {
+                var item = new
+                {
+                    Id = MakeWebPath(Path.Combine(path, directory.Name), false, true),
+                    Type = "folder",
+                    Attributes = new
+                    {
+                        Name = directory.Name,
+                        Path = MakeWebPath(Path.Combine(_webPath, path, directory.Name), true, true),
+                        Readable = 1,
+                        Writable = 1,
+                        Created = directory.CreationTime.ToString(CultureInfo.InvariantCulture),
+                        Modified = directory.LastWriteTime.ToString(CultureInfo.InvariantCulture),
+                        Timestamp = (int)(DateTime.Now - directory.LastWriteTime).Ticks
+                    }
+                };
+
+                data.Add(item);
+            }
+
+            foreach (var file in rootDirectory.GetFiles())
+            {
+                var item = new
+                {
+                    Id = MakeWebPath(Path.Combine(path, file.Name)),
+                    Type = "file",
+                    Attributes = new
+                    {
+                        Name = file.Name,
+                        Path = MakeWebPath(Path.Combine(_webPath, path, file.Name), true),
+                        Readable = 1,
+                        Writable = 1,
+                        Created = file.CreationTime.ToString(CultureInfo.InvariantCulture),
+                        Modified = file.LastWriteTime.ToString(CultureInfo.InvariantCulture),
+                        Extension = file.Extension.Replace(".", ""),
+                        Size = file.Length,
+                        Timestamp = (int)(DateTime.Now - file.LastWriteTime).Ticks
+                    }
+                };
+
+                data.Add(item);
+            }
+
+            var result = new
+            {
+                Data = data
+            };
+
+            return result;
+        }
+
+        private dynamic AddFolder(string path, string name)
+        {
+            var newDirectoryPath = Path.Combine(_webRootPath, path, name);
+
+            var directoryExist = Directory.Exists(newDirectoryPath);
+
+            if (directoryExist)
+            {
+                var errorResult = new { Errors = new List<dynamic>() };
+
+                errorResult.Errors.Add(new
+                {
+                    Code = "500",
+                    Message = "DIRECTORY_ALREADY_EXISTS",
+                    Arguments = new List<string>
+                    {
+                        name
+                    }
+                });
+
+                return errorResult;
+            }
+
+            Directory.CreateDirectory(newDirectoryPath);
+            var directory = new DirectoryInfo(newDirectoryPath);
+
+            var result = new
+            {
+                Data =
+                    new
+                    {
+                        Id = MakeWebPath(Path.Combine(path, directory.Name), false, true),
+                        Type = "folder",
+                        Attributes = new
                         {
-                            Path = path,
-                            Name = Path.GetFileName(file.FileName),
-                            Error = "No error",
-                            Code = 0
-                        });
+                            Name = directory.Name,
+                            Path = MakeWebPath(Path.Combine(_webPath, path, directory.Name), true, true),
+                            Readable = 1,
+                            Writable = 1,
+                            Created = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture)
+                        }
                     }
-                }
-            }
-            return "<textarea>" + response + "</textarea>";
-        }
-
-        private string AddFolder(string path, string newFolder)
-        {
-            if (!IsInRootPath(path))
-            {
-                return Error("Attempt to add folder outside root path");
-            }
-
-            Directory.CreateDirectory(Path.Combine(Server.MapPath(path), newFolder));
-            return json.Serialize(new
-            {
-                Parent = path,
-                Name = newFolder,
-                Error = "",
-                Code = 0
-            });
-        }
-
-        private string Delete(string path)
-        {
-            if (!IsInRootPath(path))
-            {
-                return Error("Attempt to delete file outside root path");
-            }
-            if (!System.IO.File.Exists(Server.MapPath(path)) && !Directory.Exists(Server.MapPath(path)))
-            {
-                return Error("File not found");
-            }
-
-            FileAttributes attr = System.IO.File.GetAttributes(Server.MapPath(path));
-
-            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
-            {
-                Directory.Delete(Server.MapPath(path), true);
-            }
-            else
-            {
-                System.IO.File.Delete(Server.MapPath(path));
-            }
-
-            return json.Serialize(new
-            {
-                Path = path,
-                Error = "",
-                Code = 0
-            });
-        }
-
-        private string Error(string msg)
-        {
-            return json.Serialize(new
-            {
-                Error = msg,
-                Code = -1
-            });
-        }
-
-        private Dictionary<string, object> GetDirectoryInfo(DirectoryInfo dirInfo, string fullPath)
-        {
-            return new Dictionary<string, object>
-            {
-                { "Path", fullPath },
-                { "Filename", dirInfo.Name },
-                { "File Type", "dir" },
-                { "Protected", dirInfo.Attributes.HasFlag(FileAttributes.ReadOnly) ? 1 : 0 },
-                { "Preview", config.IconDirectory + "_Open.png" },
-                {
-                    "Properties", new Dictionary<string, object>
-                    {
-                        { "Date Created", dirInfo.CreationTime.ToString() },
-                        { "Date Modified", dirInfo.LastWriteTime.ToString() },
-                        { "Height", 0 },
-                        { "Width", 0 },
-                        { "Size", 0 }
-                    }
-                },
-                { "Error", "" },
-                { "Code", 0 }
             };
+
+            return result;
         }
 
-        private Dictionary<string, object> GetFileInfo(FileInfo fileInfo, string fullPath)
+        private dynamic Upload(string path, IEnumerable<HttpPostedFileBase> files)
         {
-            string icon;
-            int height = 0;
-            int width = 0;
-            if (IsImage(fileInfo))
+            var result = new { Data = new List<dynamic>() };
+
+            foreach (var file in files)
             {
-                icon = fullPath + "?" + fileInfo.LastWriteTime.Ticks.ToString();
+                if (file.ContentLength <= 0) continue;
+
+                var fileExist = System.IO.File.Exists(Path.Combine(_webRootPath, path, file.FileName));
+
+                if (fileExist)
+                {
+                    var errorResult = new { Errors = new List<dynamic>() };
+
+                    errorResult.Errors.Add(new
+                    {
+                        Code = "500",
+                        Message = "FILE_ALREADY_EXISTS",
+                        Arguments = new List<string>
+                        {
+                            file.FileName
+                        }
+                    });
+
+                    return errorResult;
+                }
+
+                var filePath = Path.Combine(_webRootPath, path, file.FileName);
+                file.SaveAs(filePath);
+
+                result.Data.Add(new
+                {
+                    Id = MakeWebPath(Path.Combine(path, file.FileName)),
+                    Type = "file",
+                    Attributes = new
+                    {
+                        Name = file.FileName,
+                        Extension = Path.GetExtension(file.FileName).Replace(".", ""),
+                        Path = MakeWebPath(Path.Combine(_webPath, path, file.FileName), true),
+                        Readable = 1,
+                        Writable = 1,
+                        Created = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                        Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                        Size = file.ContentLength
+                    }
+                });
+            }
+
+            return result;
+        }
+
+        private dynamic Rename(string old, string @new)
+        {
+            var oldPath = Path.Combine(_webRootPath, old);
+
+            var fileAttributes = System.IO.File.GetAttributes(oldPath);
+
+            if (fileAttributes == FileAttributes.Directory)
+            {
+                var oldDirectoryName = Path.GetDirectoryName(old).Split('\\').Last();
+                var newDirectoryPath = old.Replace(oldDirectoryName, @new);
+                var newPath = Path.Combine(_webRootPath, newDirectoryPath);
+
+                var directoryExist = Directory.Exists(newPath);
+
+                if (directoryExist)
+                {
+                    var errorResult = new { Errors = new List<dynamic>() };
+
+                    errorResult.Errors.Add(new
+                    {
+                        Code = "500",
+                        Message = "DIRECTORY_ALREADY_EXISTS",
+                        Arguments = new List<string>
+                        {
+                            @new
+                        }
+                    });
+
+                    return errorResult;
+                }
+
+                Directory.Move(oldPath, newPath);
+
+                var result = new
+                {
+                    Data = new
+                    {
+                        Id = newDirectoryPath,
+                        Type = "folder",
+                        Attributes = new
+                        {
+                            Name = @new,
+                            Readable = 1,
+                            Writable = 1,
+                            // created date, size vb.
+                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                        }
+                    }
+                };
+
+                return result;
             }
             else
             {
-                icon = string.Format("{0}{1}.png", config.IconDirectory, fileInfo.Extension.Replace(".", ""));
-                if (!System.IO.File.Exists(Server.MapPath(icon)))
-                {
-                    icon = string.Format("{0}default.png", config.IconDirectory);
-                }
-            }
-            if (IsImage(fileInfo))
-            {
-                try
-                {
-                    using (System.Drawing.Image img = System.Drawing.Image.FromFile(fileInfo.FullName))
-                    {
-                        height = img.Height;
-                        width = img.Width;
-                    }
-                }
-                catch
-                {
-                }
-            }
+                var oldFileName = Path.GetFileName(old);
+                var newFilePath = old.Replace(oldFileName, @new);
+                var newPath = Path.Combine(_webRootPath, newFilePath);
 
-            return new Dictionary<string, object>
-            {
-                { "Path", fullPath },
-                { "Filename", fileInfo.Name },
-                { "File Type", fileInfo.Extension.Replace(".", "") },
-                { "Protected", fileInfo.IsReadOnly ? 1 : 0 },
-                { "Preview", icon },
+                var fileExist = System.IO.File.Exists(newPath);
+
+                if (fileExist)
                 {
-                    "Properties", new Dictionary<string, object>
+                    var errorResult = new { Errors = new List<dynamic>() };
+
+                    errorResult.Errors.Add(new
                     {
-                        { "Date Created", fileInfo.CreationTime.ToString() },
-                        { "Date Modified", fileInfo.LastWriteTime.ToString() },
-                        { "Height", height },
-                        { "Width", width },
-                        { "Size", fileInfo.Length }
+                        Code = "500",
+                        Message = "FILE_ALREADY_EXISTS",
+                        Arguments = new List<string>
+                        {
+                            @new
+                        }
+                    });
+
+                    return errorResult;
+                }
+
+                System.IO.File.Move(oldPath, newPath);
+
+                var result = new
+                {
+                    Data = new
+                    {
+                        Id = newFilePath,
+                        Type = "file",
+                        Attributes = new
+                        {
+                            Name = @new,
+                            Extension = Path.GetExtension(newPath).Replace(".", ""),
+                            Readable = 1,
+                            Writable = 1,
+                            // created date, size vb.
+                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                        }
                     }
-                },
-                { "Error", "" },
-                { "Code", 0 }
+                };
+
+                return result;
+            }
+        }
+
+        private dynamic Move(string old, string @new)
+        {
+            var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, old));
+
+            if (fileAttributes == FileAttributes.Directory)
+            {
+                var directoryName = Path.GetDirectoryName(old).Split('\\').Last();
+                var newDirectoryPath = Path.Combine(@new, directoryName);
+                var oldPath = Path.Combine(_webRootPath, old);
+                var newPath = Path.Combine(_webRootPath, @new, directoryName);
+
+                var directoryExist = Directory.Exists(newPath);
+
+                if (directoryExist)
+                {
+                    var errorResult = new { Errors = new List<dynamic>() };
+
+                    errorResult.Errors.Add(new
+                    {
+                        Code = "500",
+                        Message = "DIRECTORY_ALREADY_EXISTS",
+                        Arguments = new List<string>
+                        {
+                            directoryName
+                        }
+                    });
+
+                    return errorResult;
+                }
+
+                Directory.Move(oldPath, newPath);
+
+                var result = new
+                {
+                    Data = new
+                    {
+                        Id = newDirectoryPath,
+                        Type = "folder",
+                        Attributes = new
+                        {
+                            Name = directoryName,
+                            Readable = 1,
+                            Writable = 1,
+                            // created date, size vb.
+                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                        }
+                    }
+                };
+
+                return result;
+            }
+            else
+            {
+                var fileName = Path.GetFileName(old);
+                var newFilePath = Path.Combine(@new, fileName);
+                var oldPath = Path.Combine(_webRootPath, old);
+
+                var newPath = @new == "/"
+                    ? Path.Combine(_webRootPath, fileName.Replace("/", ""))
+                    : Path.Combine(_webRootPath, @new, fileName);
+
+                var fileExist = System.IO.File.Exists(newPath);
+
+                if (fileExist)
+                {
+                    var errorResult = new { Errors = new List<dynamic>() };
+
+                    errorResult.Errors.Add(new
+                    {
+                        Code = "500",
+                        Message = "FILE_ALREADY_EXISTS",
+                        Arguments = new List<string>
+                        {
+                            fileName
+                        }
+                    });
+
+                    return errorResult;
+                }
+
+                System.IO.File.Move(oldPath, newPath);
+
+                var result = new
+                {
+                    Data = new
+                    {
+                        Id = newFilePath,
+                        Type = "file",
+                        Attributes = new
+                        {
+                            Name = fileName,
+                            Extension = Path.GetExtension(@new).Replace(".", ""),
+                            Readable = 1,
+                            Writable = 1,
+                            // created date, size vb.
+                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                        }
+                    }
+                };
+
+                return result;
+            }
+        }
+
+        private dynamic Copy(string source, string target)
+        {
+            var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, source));
+
+            if (fileAttributes == FileAttributes.Directory)
+            {
+                var directoryName = Path.GetDirectoryName(source).Split('\\').Last();
+                var newDirectoryPath = Path.Combine(target, directoryName);
+                var oldPath = Path.Combine(_webRootPath, source);
+                var newPath = Path.Combine(_webRootPath, target, directoryName);
+
+                var directoryExist = Directory.Exists(newPath);
+
+                if (directoryExist)
+                {
+                    var errorResult = new { Errors = new List<dynamic>() };
+
+                    errorResult.Errors.Add(new
+                    {
+                        Code = "500",
+                        Message = "DIRECTORY_ALREADY_EXISTS",
+                        Arguments = new List<string>
+                        {
+                            directoryName
+                        }
+                    });
+
+                    return errorResult;
+                }
+
+                DirectoryCopy(oldPath, newPath);
+
+                var result = new
+                {
+                    Data = new
+                    {
+                        Id = newDirectoryPath,
+                        Type = "folder",
+                        Attributes = new
+                        {
+                            Name = directoryName,
+                            Readable = 1,
+                            Writable = 1,
+                            // created date, size vb.
+                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                        }
+                    }
+                };
+
+                return result;
+            }
+            else
+            {
+                var fileName = Path.GetFileName(source);
+                var newFilePath = Path.Combine(@target, fileName);
+                var oldPath = Path.Combine(_webRootPath, source);
+                var newPath = Path.Combine(_webRootPath, target, fileName);
+
+                var fileExist = System.IO.File.Exists(newPath);
+
+                if (fileExist)
+                {
+                    var errorResult = new { Errors = new List<dynamic>() };
+
+                    errorResult.Errors.Add(new
+                    {
+                        Code = "500",
+                        Message = "FILE_ALREADY_EXISTS",
+                        Arguments = new List<string>
+                        {
+                            fileName
+                        }
+                    });
+
+                    return errorResult;
+                }
+
+                System.IO.File.Copy(oldPath, newPath);
+
+                var result = new
+                {
+                    Data = new
+                    {
+                        Id = newFilePath,
+                        Type = "file",
+                        Attributes = new
+                        {
+                            Name = fileName,
+                            Extension = Path.GetExtension(fileName).Replace(".", ""),
+                            Readable = 1,
+                            Writable = 1,
+                            // created date, size vb.
+                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                        }
+                    }
+                };
+
+                return result;
+            }
+        }
+
+        private dynamic EditFile(string path)
+        {
+            var fileName = Path.GetFileName(path);
+            var fileExtension = Path.GetExtension(path).Replace(".", "");
+            var filePath = Path.Combine(_webRootPath, path);
+
+            var content = System.IO.File.ReadAllText(filePath, Encoding.UTF8);
+
+            var result = new
+            {
+                Data = new
+                {
+                    Id = path,
+                    Type = "file",
+                    Attributes = new
+                    {
+                        Name = fileName,
+                        Extension = fileExtension,
+                        Writable = 1,
+                        Readable = 1,
+                        // created vb.
+                        Content = content,
+                        Path = $"/{Path.Combine(path)}"
+                    }
+                }
             };
+
+            return result;
         }
 
-        private string GetFolderInfo(string path)
+        private dynamic SaveFile(string path, string content)
         {
-            if (!IsInRootPath(path))
-            {
-                return Error("Attempt to view files outside root path");
-            }
-            if (!Directory.Exists(Server.MapPath(path)))
-            {
-                return Error("Directory not found");
-            }
+            var filePath = Path.Combine(_webRootPath, path);
 
-            DirectoryInfo RootDirInfo = new DirectoryInfo(Server.MapPath(path));
-            var list = new Dictionary<string, object>();
+            System.IO.File.WriteAllText(filePath, content);
 
-            foreach (DirectoryInfo dirInfo in RootDirInfo.GetDirectories())
-            {
-                var fullPath = Path.Combine(path, dirInfo.Name);
-                list.Add(fullPath, GetDirectoryInfo(dirInfo, fullPath + "/"));
-            }
+            var fileName = Path.GetFileName(path);
+            var fileExtension = Path.GetExtension(fileName);
 
-            foreach (FileInfo fileInfo in RootDirInfo.GetFiles())
+            var result = new
             {
-                var fullPath = Path.Combine(path, fileInfo.Name);
-                list.Add(fullPath, GetFileInfo(fileInfo, fullPath));
-            }
-
-            return json.Serialize(list);
-        }
-
-        private string GetInfo(string path)
-        {
-            if (!IsInRootPath(path))
-            {
-                return Error("Attempt to view file outside root path");
-            }
-            if (!System.IO.File.Exists(Server.MapPath(path)) && !Directory.Exists(Server.MapPath(path)))
-            {
-                return Error("File not found");
-            }
-
-            FileAttributes attr = System.IO.File.GetAttributes(Server.MapPath(path));
-
-            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
-            {
-                return json.Serialize(GetDirectoryInfo(new DirectoryInfo(Server.MapPath(path)), path));
-            }
-            else
-            {
-                return json.Serialize(GetFileInfo(new FileInfo(Server.MapPath(path)), path));
-            }
-        }
-
-        private string Move(string oldPath, string newPath)
-        {
-            if (!IsInRootPath(oldPath))
-            {
-                return Error("Attempt to modify file outside root path");
-            }
-            else if (!IsInRootPath(newPath))
-            {
-                return Error("Attempt to move a file outside root path");
-            }
-            else if (!System.IO.File.Exists(Server.MapPath(oldPath)) && !Directory.Exists(Server.MapPath(oldPath)))
-            {
-                return Error("File not found");
-            }
-
-            FileAttributes attr = System.IO.File.GetAttributes(Server.MapPath(oldPath));
-
-            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
-            {
-                DirectoryInfo oldDir = new DirectoryInfo(Server.MapPath(oldPath));
-                newPath = Path.Combine(newPath, oldDir.Name);
-                Directory.Move(Server.MapPath(oldPath), Server.MapPath(newPath));
-                DirectoryInfo newDir = new DirectoryInfo(Server.MapPath(newPath));
-
-                return json.Serialize(new Dictionary<string, object>
+                Data = new
                 {
-                    { "Old Path", oldPath },
-                    { "Old Name", oldDir.Name },
-                    { "New Path", newDir.FullName.Replace(HttpRuntime.AppDomainAppPath, "/").Replace(Path.DirectorySeparatorChar, '/') },
-                    { "New Name", newDir.Name },
-                    { "Error", "" },
-                    { "Code", 0 }
-                });
-            }
-            else
-            {
-                FileInfo oldFile = new FileInfo(Server.MapPath(oldPath));
-                FileInfo newFile = new FileInfo(Server.MapPath(newPath));
-                if (newFile.Extension != oldFile.Extension)
-                {
-                    //Don't allow extension to be changed
-                    newFile = new FileInfo(Path.ChangeExtension(newFile.FullName, oldFile.Extension));
-                }
-                System.IO.File.Move(oldFile.FullName, newFile.FullName);
-
-                return json.Serialize(new Dictionary<string, object>
-                {
-                    { "Old Path", oldPath.Replace(oldFile.Name, "") },
-                    { "Old Name", oldFile.Name },
-                    { "New Path", newFile.FullName.Replace(HttpRuntime.AppDomainAppPath, "/").Replace(Path.DirectorySeparatorChar, '/').Replace(newFile.Name, "") },
-                    { "New Name", newFile.Name },
-                    { "Error", "" },
-                    { "Code", 0 }
-                });
-            }
-        }
-
-        private string Rename(string path, string newName)
-        {
-            if (!IsInRootPath(path))
-            {
-                return Error("Attempt to modify file outside root path");
-            }
-            if (!System.IO.File.Exists(Server.MapPath(path)) && !Directory.Exists(Server.MapPath(path)))
-            {
-                return Error("File not found");
-            }
-
-            FileAttributes attr = System.IO.File.GetAttributes(Server.MapPath(path));
-
-            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
-            {
-                DirectoryInfo oldDir = new DirectoryInfo(Server.MapPath(path));
-                Directory.Move(Server.MapPath(path), Path.Combine(oldDir.Parent.FullName, newName));
-                DirectoryInfo newDir = new DirectoryInfo(Path.Combine(oldDir.Parent.FullName, newName));
-
-                return json.Serialize(new Dictionary<string, object>
-                {
-                    { "Old Path", path },
-                    { "Old Name", oldDir.Name },
-                    { "New Path", newDir.FullName.Replace(HttpRuntime.AppDomainAppPath, "/").Replace(Path.DirectorySeparatorChar, '/') },
-                    { "New Name", newDir.Name },
-                    { "Error", "" },
-                    { "Code", 0 }
-                });
-            }
-            else
-            {
-                FileInfo oldFile = new FileInfo(Server.MapPath(path));
-                //Don't allow extension to be changed
-                newName = Path.GetFileNameWithoutExtension(newName) + oldFile.Extension;
-                FileInfo newFile = new FileInfo(Path.Combine(oldFile.Directory.FullName, newName));
-                System.IO.File.Move(oldFile.FullName, newFile.FullName);
-
-                return json.Serialize(new Dictionary<string, object>
-                {
-                    { "Old Path", path },
-                    { "Old Name", oldFile.Name },
-                    { "New Path", newFile.FullName.Replace(HttpRuntime.AppDomainAppPath, "/").Replace(Path.DirectorySeparatorChar, '/') },
-                    { "New Name", newFile.Name },
-                    { "Error", "" },
-                    { "Code", 0 }
-                });
-            }
-        }
-
-        private string Replace(string path)
-        {
-            if (Request.Files.Count == 0 || Request.Files[0].ContentLength == 0)
-            {
-                return Error("No file provided.");
-            }
-            else if (!IsInRootPath(path))
-            {
-                return Error("Attempt to replace file outside root path");
-            }
-            else
-            {
-                var fi = new FileInfo(Server.MapPath(path));
-                HttpPostedFileBase file = Request.Files[0];
-                if (!config.AllowedExtensions.Contains(Path.GetExtension(file.FileName).ToLower()))
-                {
-                    return Error("Uploaded file type is not allowed.");
-                }
-                else if (!Path.GetExtension(file.FileName).Equals(fi.Extension))
-                {
-                    return Error("Replacement file must have the same extension as the file being replaced.");
-                }
-                else if (!fi.Exists)
-                {
-                    return Error("File to replace not found.");
-                }
-                else
-                {
-                    file.SaveAs(fi.FullName);
-
-                    return "<textarea>" + json.Serialize(new
+                    Id = path,
+                    Type = "file",
+                    Attributes = new
                     {
-                        Path = path.Replace("/" + fi.Name, ""),
-                        Name = fi.Name,
-                        Error = "No error",
-                        Code = 0
-                    }) + "</textarea>";
+                        Name = fileName,
+                        Extension = fileExtension,
+                        Readable = 1,
+                        Writable = 1
+                        // created vb.
+                    }
                 }
+            };
+
+            return result;
+        }
+
+        private dynamic Delete(string path)
+        {
+            var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, path));
+
+            if (fileAttributes == FileAttributes.Directory)
+            {
+                var directoryName = Path.GetDirectoryName(path).Split('\\').Last();
+
+                Directory.Delete(Path.Combine(_webRootPath, path), true);
+
+                var result = new
+                {
+                    Data = new
+                    {
+                        Id = path,
+                        Type = "folder",
+                        Attributes = new
+                        {
+                            Name = directoryName,
+                            Readable = 1,
+                            Writable = 1,
+                            // created date, size vb.
+                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                            Path = path
+                        }
+                    }
+                };
+
+                return result;
             }
+            else
+            {
+                var fileName = Path.GetFileName(Path.Combine(_webRootPath, path));
+                var fileExtension = Path.GetExtension(fileName).Replace(".", "");
+
+                System.IO.File.Delete(Path.Combine(_webRootPath, path));
+
+                var result = new
+                {
+                    Data = new
+                    {
+                        Id = path,
+                        Type = "file",
+                        Attributes = new
+                        {
+                            Name = fileName,
+                            Extension = fileExtension,
+                            Readable = 1,
+                            Writable = 1,
+                            // created date, size vb.
+                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                            // Path = $"/{fileName}"
+                        }
+                    }
+                };
+
+                return result;
+            }
+        }
+
+        private dynamic Download(string path)
+        {
+            var fileName = Path.GetFileName(Path.Combine(_webRootPath, path));
+            var fileExtension = Path.GetExtension(fileName).Replace(".", "");
+
+            // undone dosya var mý kontrolü...
+
+            var result = new
+            {
+                Data = new
+                {
+                    Id = path,
+                    Type = "file",
+                    Attributes = new
+                    {
+                        Name = fileName,
+                        Extension = fileExtension,
+                        Readable = 1,
+                        Writable = 1,
+                        // created date, size vb.
+                        Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                        //Path = $"{path}"
+                    }
+                }
+            };
+
+            return result;
+        }
+
+        private dynamic DownloadFile(string path)
+        {
+            var filepath = Path.Combine(_webRootPath, path);
+            var fileName = Path.GetFileName(filepath);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filepath);
+
+            var file = new
+            {
+                FileName = fileName,
+                FileBytes = fileBytes
+            };
+
+            return file;
+        }
+
+        private ActionResult GetImage(string path, bool thumbnail)
+        {
+            var filepath = Path.Combine(_webRootPath, path);
+            var fileName = Path.GetFileName(filepath);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filepath);
+
+            return File(fileBytes, "application/x-msdownload", fileName);
+        }
+
+        private dynamic Summarize()
+        {
+            var directories = Directory.GetDirectories(_webRootPath, "*", SearchOption.AllDirectories).Length;
+
+            var directoryInfo = new DirectoryInfo(_webRootPath);
+            var files = directoryInfo.GetFiles("*", SearchOption.AllDirectories);
+            var allSize = files.Select(f => f.Length).Sum();
+
+            var result = new
+            {
+                Data = new
+                {
+                    Id = "/",
+                    Type = "summary",
+                    Attributes = new
+                    {
+                        Size = allSize,
+                        Files = files.Length,
+                        Folders = directories,
+                        SizeLimit = 0
+                    }
+                }
+            };
+
+            return result;
+        }
+
+        private static void DirectoryCopy(string sourceDirName, string destDirName)
+        {
+            // Get the subdirectories for the specified directory.
+            var dir = new DirectoryInfo(sourceDirName);
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException(
+                    "Source directory does not exist or could not be found: "
+                    + sourceDirName);
+            }
+
+            var dirs = dir.GetDirectories();
+            // If the destination directory doesn't exist, create it.
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+            }
+
+            // Get the files in the directory and copy them to the new location.
+            var files = dir.GetFiles();
+            foreach (var file in files)
+            {
+                var temppath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(temppath, false);
+            }
+
+            // If copying subdirectories, copy them and their contents to new location.
+            foreach (var subdir in dirs)
+            {
+                var temppath = Path.Combine(destDirName, subdir.Name);
+                DirectoryCopy(subdir.FullName, temppath);
+            }
+        }
+
+        private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
+        {
+            path = path.Replace("\\", "/");
+
+            if (addSeperatorToBegin) path = "/" + path;
+            if (addSeperatorToLast) path = path + "/";
+
+            return path;
         }
     }
 }

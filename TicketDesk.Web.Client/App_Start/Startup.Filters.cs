@@ -21,6 +21,7 @@ namespace TicketDesk.Web.Client
         public void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new LocalizationFilter());
+            filters.Add(new CustomJsonResultAttribute());
             filters.Add(new HandleErrorAttribute());
         }
     }
