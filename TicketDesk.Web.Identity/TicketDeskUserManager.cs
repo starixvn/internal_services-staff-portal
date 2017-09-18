@@ -44,22 +44,22 @@ namespace TicketDesk.Web.Identity
 
         public bool IsTdHelpDeskUser(string userId)
         {
-            return IsHasTicketManagementPolicy(userId, (int)Constant.Policy.Host);
+            return this.IsInRole(userId, "TdHelpDeskUsers") || IsTdAdministrator(userId);
         }
 
         public bool IsTdInternalUser(string userId)
         {
-            return IsHasTicketManagementPolicy(userId, (int)Constant.Policy.Read);
+            return this.IsInRole(userId, "TdInternalUsers") || IsTdHelpDeskUser(userId);
         }
 
         public bool IsTdAdministrator(string userId)
         {
-            return IsTdHelpDeskUser(userId);
+            return this.IsInRole(userId, "TdAdministrators");
         }
 
         public bool IsTdPendingUser(string userId)
         {
-            return false;
+            return this.IsInRole(userId, "TdPendingUsers");
         }
 
         private void ConfigureUserManager()
@@ -84,16 +84,6 @@ namespace TicketDesk.Web.Identity
             UserLockoutEnabledByDefault = true;
             DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             MaxFailedAccessAttemptsBeforeLockout = 5;
-        }
-
-        private bool IsHasTicketManagementPolicy(string userId, int policy)
-        {
-            int functionPolicy = NapContextHelper.UserService.GetUserSiteFunctionKeyPolicy(
-                int.Parse(userId),
-                NapContextHelper.SiteId,
-                FunctionKeys.TicketManagement);
-
-            return functionPolicy >= policy;
         }
     }
 }

@@ -23,14 +23,6 @@ namespace TicketDesk.Domain
     /// </summary>
     public abstract class TdDomainSecurityProviderBase
     {
-        protected abstract Func<string, bool> GetIsTdHelpDeskUser { get; }
-
-        protected abstract Func<string, bool> GetIsTdInternalUser { get; }
-
-        protected abstract Func<string, bool> GetIsTdAdministrator { get; }
-
-        protected abstract Func<string, bool> GetIsTdPendingUser { get; }
-
         public abstract Func<string, string> GetUserDisplayName { get; }
 
         public abstract string CurrentUserId { get; }
@@ -40,42 +32,40 @@ namespace TicketDesk.Domain
             get { return GetUserDisplayName(CurrentUserId); }
         }
 
-        public bool IsTdHelpDeskUser
+        public abstract bool IsTdHelpDeskUser
         {
-            get { return GetIsTdHelpDeskUser(CurrentUserId); }
+            get;
         }
 
-        public bool IsTdInternalUser
+        public abstract bool IsTdInternalUser
         {
-            get { return GetIsTdInternalUser(CurrentUserId); }
+            get;
         }
 
-        public bool IsTdAdministrator
+        public abstract bool IsTdAdministrator
         {
-            get { return GetIsTdAdministrator(CurrentUserId); }
+            get;
         }
 
-        public bool IsTdPendingUser
+        public abstract bool IsTdPendingUser
         {
-            get { return GetIsTdPendingUser(CurrentUserId); }
+            get;
         }
 
-        internal TicketActivity GetInternalUserPermissions()
+
+        internal TicketActivity GetReadTicketActivityPermission()
         {
-            return
-                TicketActivity.ModifyAttachments |
-                TicketActivity.EditTicketInfo |
+            return TicketActivity.ModifyAttachments |
                 TicketActivity.SupplyMoreInfo |
                 TicketActivity.ReOpen |
-                TicketActivity.Create |
                 TicketActivity.AddComment |
                 TicketActivity.Close |
                 TicketActivity.ForceClose;
         }
 
-        internal TicketActivity GetHelpDeskUserPermissions()
+        internal TicketActivity GetHostTicketActivityPermission()
         {
-            return GetInternalUserPermissions() |
+            return GetReadTicketActivityPermission() |
                 TicketActivity.RequestMoreInfo |
                 TicketActivity.CancelMoreInfo |
                 TicketActivity.CreateOnBehalfOf |
@@ -86,25 +76,39 @@ namespace TicketDesk.Domain
                 TicketActivity.GiveUp |
                 TicketActivity.Resolve;
         }
-
-        internal TicketActivity GetAdministratorUserPermissions()
+        internal TicketActivity GetNewTicketPermission()
         {
-            return GetInternalUserPermissions() | GetHelpDeskUserPermissions();
+            return TicketActivity.EditTicketInfo | TicketActivity.Create;
         }
+
+
 
         public TicketActivity GetValidTicketActivities(Ticket ticket)
         {
             //Role
-            if (!(IsTdInternalUser || IsTdAdministrator))
+            if (!(IsReadTicketCenter || IsHostTicketCenter || IsReadNewTicket))
             {
                 throw new SecurityException("User is not authorized to read ticket data.");
             }
             var validTicketActivities = ticket.GetAvailableActivites(CurrentUserId);
-            var allowedActivities = IsTdAdministrator
-                ? GetAdministratorUserPermissions()
-                : IsTdAdministrator
-                    ? GetHelpDeskUserPermissions()
-                    : GetInternalUserPermissions();
+
+            var allowedActivities = TicketActivity.None;
+
+            if (IsReadNewTicket)
+            {
+                allowedActivities |= GetNewTicketPermission();
+            }
+
+            if (IsReadTicketCenter)
+            {
+                allowedActivities |= GetReadTicketActivityPermission();
+            }
+
+            if (IsHostTicketCenter)
+            {
+                allowedActivities |= GetHostTicketActivityPermission();
+            }
+
             return (validTicketActivities & allowedActivities);
         }
 
@@ -116,5 +120,12 @@ namespace TicketDesk.Domain
         public abstract IContextHelper NapContextHelper { get; set; }
 
         public abstract int NapCurrentUserId { get; }
+
+        public abstract bool IsReadTicketCenter { get; }
+
+        public abstract bool IsHostTicketCenter { get; }
+
+        public abstract bool IsReadNewTicket { get; }
+
     }
 }

@@ -19,6 +19,7 @@ namespace TicketDesk.Web.Client
     using TicketDesk.Domain;
     using TicketDesk.Web.Identity;
     using Domain.Infrastructure;
+    using Fanex.NAP.Core.Business;
 
     public sealed class TicketDeskContextSecurityProvider : TdDomainSecurityProviderBase
     {
@@ -31,7 +32,6 @@ namespace TicketDesk.Web.Client
             NapContextHelper = UserManager.NapContextHelper;
             NapCurrentUserId = UserManager.NapCurrentUserId;
             CurrentUserId = UserManager.CurrentUserId;
-            //CurrentUserId = HttpContext.Current.User.Identity.GetUserId();
         }
 
         public override IContextHelper NapContextHelper { get; set; }
@@ -40,32 +40,66 @@ namespace TicketDesk.Web.Client
 
         public override string CurrentUserId { get; }
 
-        protected override Func<string, bool> GetIsTdHelpDeskUser
-        {
-            get { return UserManager.IsTdHelpDeskUser; }
-        }
-
-        protected override Func<string, bool> GetIsTdInternalUser
-        {
-            get { return UserManager.IsTdInternalUser; }
-        }
-
-        protected override Func<string, bool> GetIsTdAdministrator
-        {
-            get { return UserManager.IsTdAdministrator; }
-        }
-
-        protected override Func<string, bool> GetIsTdPendingUser
-        {
-            get { return UserManager.IsTdPendingUser; }
-        }
-
         public override Func<string, string> GetUserDisplayName
         {
             get
             {
                 return userId => UserManager.InfoCache.GetUserInfo(userId).IfNotNull(i => i.DisplayName);
             }
+        }
+
+        public override bool IsTdHelpDeskUser
+        {
+            get { return UserManager.IsTdHelpDeskUser(CurrentUserId); }
+        }
+
+        public override bool IsTdInternalUser
+        {
+            get { return UserManager.IsTdInternalUser(CurrentUserId); }
+        }
+
+        public override bool IsTdAdministrator
+        {
+            get { return UserManager.IsTdAdministrator(CurrentUserId); }
+        }
+
+        public override bool IsTdPendingUser
+        {
+            get { return UserManager.IsTdPendingUser(CurrentUserId); }
+        }
+
+        public override bool IsReadTicketCenter
+        {
+            get
+            {
+                return IsHasTicketPolicy(FunctionKeys.TicketCenter, (int)Constant.Policy.Read);
+            }
+        }
+
+        public override bool IsHostTicketCenter
+        {
+            get
+            {
+                return IsHasTicketPolicy(FunctionKeys.TicketCenter, (int)Constant.Policy.Host);
+            }
+        }
+
+        public override bool IsReadNewTicket
+        {
+            get
+            {
+                return IsHasTicketPolicy(FunctionKeys.NewTicket, (int)Constant.Policy.Read);
+            }
+        }
+
+        private bool IsHasTicketPolicy(string functionKey, int policy)
+        {
+            int functionPolicy = NapContextHelper.UserService.GetUserSiteFunctionKeyPolicy(
+                NapCurrentUserId,
+                NapContextHelper.SiteId,
+                functionKey);
+
+            return functionPolicy >= policy;
         }
     }
 }

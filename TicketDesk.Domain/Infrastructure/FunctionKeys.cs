@@ -2,9 +2,11 @@
 {
     public static class FunctionKeys
     {
+        public const string ListAssignedTicket = "ListAssignedTicket";
+
         public const string NewTicket = "NewTicket";
 
-        public const string TicketManagement = "TicketManagement";
+        public const string TicketCenter = "TicketCenter";
 
         public const string ApplicationSettings = "ApplicationSettings";
 

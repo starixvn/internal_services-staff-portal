@@ -34,7 +34,7 @@ namespace TicketDesk.Domain
 
             settings.ListSettings = new UserTicketListSettingsCollection
             {
-                    UserTicketListSetting.GetDefaultListSettings(userId, Context.SecurityProvider.IsTdHelpDeskUser|| Context.SecurityProvider.IsTdAdministrator)
+                    UserTicketListSetting.GetDefaultListSettings(userId,Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket, Constant.Policy.Read))
             };
         }
 
@@ -44,13 +44,13 @@ namespace TicketDesk.Domain
             //var isHelpDeskUser = Context.SecurityProvider.IsTdHelpDeskUser ||
             //                        Context.SecurityProvider.IsTdAdministrator;
 
-            var isHelpDeskUser = Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.TicketManagement, Constant.Policy.Host);
+            var isShowListAssignedTicket = Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket, Constant.Policy.Read);
             var settings = await Context.UserSettings.FindAsync(userId);
 
             //ensure settings exist
             if (settings == null)
             {
-                settings = UserSetting.GetDefaultSettingsForUser(userId, isHelpDeskUser);
+                settings = UserSetting.GetDefaultSettingsForUser(userId, isShowListAssignedTicket);
                 using (var tempCtx = new TdDomainContext())
                 {
                     await tempCtx.UserSettingsManager.AddOrUpdateSettingsForUser(settings);
@@ -58,11 +58,11 @@ namespace TicketDesk.Domain
                 }
             }
             //ensure that the user has all required lists for their role, if not blow away list settings and recreate
-            if (!settings.ListSettings.HasRequiredDefaultListSettings(isHelpDeskUser))
+            if (!settings.ListSettings.HasRequiredDefaultListSettings(isShowListAssignedTicket))
             {
                 settings.ListSettings = new UserTicketListSettingsCollection
                 {
-                    UserTicketListSetting.GetDefaultListSettings(userId, isHelpDeskUser)
+                    UserTicketListSetting.GetDefaultListSettings(userId, isShowListAssignedTicket)
                 };
                 using (var tempCtx = new TdDomainContext())
                 {

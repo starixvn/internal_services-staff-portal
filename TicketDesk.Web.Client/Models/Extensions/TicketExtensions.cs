@@ -146,9 +146,10 @@ namespace TicketDesk.Domain.Model
         public static bool AllowEditTags(this Ticket ticket)
         {
             //TODO: is this the best place to put this check?
-
+            //ROLE
+            //return context.SecurityProvider.IsTdHelpDeskUser || context.TicketDeskSettings.Permissions.AllowInternalUsersToEditTags;
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
-            return context.SecurityProvider.IsTdHelpDeskUser || context.TicketDeskSettings.Permissions.AllowInternalUsersToEditTags;
+            return context.SecurityProvider.IsHostTicketCenter || context.TicketDeskSettings.Permissions.AllowInternalUsersToEditTags;
         }
 
         public static bool AllowSetOwner(this Ticket ticket)
@@ -158,7 +159,7 @@ namespace TicketDesk.Domain.Model
             //return (context.SecurityProvider.IsTdInternalUser && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetOwner) || (context.SecurityProvider.IsTdHelpDeskUser || context.SecurityProvider.IsTdAdministrator);
 
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
-            return (context.SecurityProvider.IsTdInternalUser && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetOwner) || (context.SecurityProvider.IsTdAdministrator);
+            return (context.SecurityProvider.IsReadTicketCenter && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetOwner) || (context.SecurityProvider.IsHostTicketCenter);
         }
 
         public static bool AllowSetAssigned(this Ticket ticket)
@@ -168,7 +169,7 @@ namespace TicketDesk.Domain.Model
             //return (context.SecurityProvider.IsTdInternalUser && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetAssigned) || (context.SecurityProvider.IsTdHelpDeskUser || context.SecurityProvider.IsTdAdministrator);
 
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
-            return (context.SecurityProvider.IsTdInternalUser && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetAssigned) || (context.SecurityProvider.IsTdAdministrator);
+            return (context.SecurityProvider.IsReadTicketCenter && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetAssigned) || (context.SecurityProvider.IsHostTicketCenter);
         }
 
         public static bool AllowEditPriorityList(this Ticket ticket)
@@ -177,7 +178,7 @@ namespace TicketDesk.Domain.Model
             //ROLE
             //return (context.SecurityProvider.IsTdAdministrator || context.SecurityProvider.IsTdHelpDeskUser) || (context.SecurityProvider.IsTdInternalUser &&  context.TicketDeskSettings.Permissions.AllowInternalUsersToEditPriority);
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
-            return (context.SecurityProvider.IsTdAdministrator) || (context.SecurityProvider.IsTdHelpDeskUser && context.TicketDeskSettings.Permissions.AllowInternalUsersToEditPriority);
+            return (context.SecurityProvider.IsHostTicketCenter) || (context.SecurityProvider.IsReadTicketCenter && context.TicketDeskSettings.Permissions.AllowInternalUsersToEditPriority);
         }
 
         /// <summary>
