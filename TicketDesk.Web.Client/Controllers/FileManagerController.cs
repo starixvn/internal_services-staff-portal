@@ -10,6 +10,7 @@
     using System.Linq;
     using System.Text;
     using System.Web;
+    using System.Web.Configuration;
     using System.Web.Mvc;
 
     [RoutePrefix("file-manager")]
@@ -24,7 +25,7 @@
         public FileManagerController()
         {
             // FileManager Content Folder Path
-            _webPath = "uploads";
+            _webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
             _webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _webPath);
             _allowedExtensions = new List<string> { "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md" };
         }
