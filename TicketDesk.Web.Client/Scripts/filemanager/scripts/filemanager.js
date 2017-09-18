@@ -177,7 +177,7 @@
         // Called on initial page load and on resize.
         fm.setDimensions = function () {
             var padding = $wrapper.outerHeight(true) - $wrapper.height(),
-                newH = $(window).height() - $header.height() - $footer.height() - padding,
+                newH = $(window).height() - $header.height() - $footer.height() - padding - 150,
                 newW = $splitter.width() - $splitter.children(".splitter-bar-vertical").outerWidth() - $filetree.outerWidth();
 
             $splitter.height(newH);

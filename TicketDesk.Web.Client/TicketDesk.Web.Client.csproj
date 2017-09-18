@@ -455,6 +455,7 @@
     <Content Include="Scripts\filemanager\bower.json" />
     <Content Include="Scripts\filemanager\changelog" />
     <Content Include="Scripts\filemanager\composer.json" />
+    <Content Include="Scripts\filemanager\config\filemanager.init.js" />
     <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\AbstractFileManager.java" />
     <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\error\FileManagerException.java" />
     <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\error\FMConfigException.java" />
@@ -684,7 +685,6 @@
     <Content Include="Scripts\filemanager\.git\refs\heads\master" />
     <Content Include="Scripts\filemanager\.git\refs\remotes\origin\HEAD" />
     <Content Include="Scripts\filemanager\config\filemanager.config.default.json" />
-    <Content Include="Scripts\filemanager\config\filemanager.init.js" />
     <Content Include="Scripts\filemanager\connectors\ashx\filemanager.ashx" />
     <Content Include="Scripts\filemanager\connectors\java\build.gradle" />
     <Content Include="Scripts\filemanager\connectors\java\readme.md" />
