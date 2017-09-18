@@ -36,6 +36,7 @@ namespace TicketDesk.Web.Client.Controllers
 
         private TdDomainContext Context { get; set; }
 
+        [ValidateInput(false)]
         [Route("")]
         [Route("{term}")]
         [HttpGet]
