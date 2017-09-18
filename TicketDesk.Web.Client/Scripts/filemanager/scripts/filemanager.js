@@ -116,7 +116,7 @@
     };
 
     // Sets paths to connectors based on language selection.
-    var fileConnector = config.options.fileConnector || 'connectors/' + config.options.lang + '/filemanager.' + config.options.lang;
+    var fileConnector = config.options.fileConnector || '../scripts/filemanager/connectors/' + config.options.lang + '/filemanager.' + config.options.lang;
 
     // Read capabilities from config files if exists
     // else apply default settings
@@ -432,7 +432,7 @@
 
     //Return PDF Reader
     var getPdfReader = function (data) {
-        var code = '<iframe id="fm-pdf-viewer" src = "scripts/ViewerJS/index.html#' + data['Path'] + '" width="' + config.pdfs.pdfsReaderWidth + '" height="' + config.pdfs.pdfsReaderHeight + '" allowfullscreen webkitallowfullscreen></iframe>';
+        var code = '<iframe id="fm-pdf-viewer" src ="../scripts/filemanager/scripts/ViewerJS/index.html#' + data['Path'] + '" width="' + config.pdfs.pdfsReaderWidth + '" height="' + config.pdfs.pdfsReaderHeight + '" allowfullscreen webkitallowfullscreen></iframe>';
 
         $("#fileinfo img").remove();
         $('#fileinfo #preview #main-title').before(code);

@@ -14,7 +14,7 @@
         "generateThumbnails": true,
         "cacheThumbnails": true,
         "searchBox": true,
-        "listFiles": true,
+        "listFiles": false,
         "fileSorting": "default",
         "quickSelect": false,
         "chars_only_latin": true,
@@ -68,7 +68,7 @@
     "upload": {
         "multiple": true,
         "number": 5,
-        "overwrite": false,
+        "overwrite": true,
         "imagesOnly": false,
         "fileSizeLimit": 16
     },
@@ -129,7 +129,7 @@
         "pdfsReaderHeight": "480"
     },
     "edit": {
-        "enabled": true,
+        "enabled": false,
         "lineNumbers": true,
         "lineWrapping": true,
         "codeHighlight": false,
