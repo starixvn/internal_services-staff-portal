@@ -47,9 +47,9 @@ namespace TicketDesk.Web.Client
             bundles.Add(new StyleBundle("~/content/file-manager").Include(
                     "~/Scripts/filemanager/styles/reset.css",
                     "~/Scripts/filemanager/scripts/jquery.contextmenu/dist/jquery.contextMenu.min.css",
-                    "~/Scripts/filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css",
                     "~/Scripts/filemanager/scripts/alertify.js/dist/css/alertify.css")
-                    .Include("~/Scripts/filemanager/styles/filemanager.css", new CssRewriteUrlTransform()));
+                    .Include("~/Scripts/filemanager/styles/filemanager.css", new CssRewriteUrlTransform())
+                    .Include("~/Scripts/filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new ScriptBundle("~/bundles/file-manager")
                 .Include("~/Scripts/filemanager/scripts/jquery-ui/jquery-ui.min.js",
@@ -64,7 +64,7 @@ namespace TicketDesk.Web.Client
                     "~/Scripts/filemanager/scripts/javascript-templates/js/tmpl.min.js",
                     "~/Scripts/filemanager/scripts/toast/lib/toast.min.js",
                     "~/Scripts/filemanager/scripts/purl/purl.min.js",
-                    "~/Scripts/filemanager/scripts/filemanager.js",
+                    "~/Scripts/filemanager/scripts/filemanager.min.js",
                     "~/Scripts/filemanager/config/filemanager.init.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/editticket")

@@ -16,6 +16,7 @@ namespace TicketDesk.Web.Client.Controllers
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using TicketDesk.Domain;
@@ -45,6 +46,12 @@ namespace TicketDesk.Web.Client.Controllers
         public async Task<ActionResult> RemoveIndex()
         {
             await TdSearchContext.Current.IndexManager.RemoveIndexAsync();
+
+            // initialize search
+            await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync();
+            IEnumerable<SearchIndexItem> searchItems = new List<SearchIndexItem>();
+            await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems);
+
             ViewBag.IndexRemoved = true;
             return View("Index");
         }

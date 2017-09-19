@@ -2,25 +2,29 @@
     ViewBag.Title = "Index";
 }
 
-@Styles.Render("~/content/file-manager")
+@section css
+{
+    @Styles.Render("~/content/file-manager")
+    <style type="text/css">
+        .fm-container .fm-loading-wrap {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            display: block;
+            background: white url(../../Scripts/filemanager/images/spinner.gif) no-repeat center center;
+            z-index: 999;
+        }
+    </style>
+}
 
 @section scripts
 {
     @Scripts.Render("~/bundles/file-manager")
 }
-<style type="text/css">
-    .fm-container .fm-loading-wrap {
-        position: fixed;
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-        top: 0;
-        left: 0;
-        display: block;
-        background: white url(../../Scripts/filemanager/images/spinner.gif) no-repeat center center;
-        z-index: 999;
-    }
-</style>
+
  <main>
     <div class="fm-container">
         <div class="fm-loading-wrap"><!-- loading wrapper / removed when loaded --></div>

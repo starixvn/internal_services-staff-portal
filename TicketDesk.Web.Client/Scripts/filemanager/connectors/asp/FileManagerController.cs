@@ -6,8 +6,8 @@ namespace RfmNetCore.Controllers
     using System.IO;
     using System.Linq;
     using System.Text;
-    using System.Threading.Tasks;
     using System.Web;
+    using System.Web.Configuration;
     using System.Web.Mvc;
 
     public class FileManagerController : Controller
@@ -19,12 +19,22 @@ namespace RfmNetCore.Controllers
         public FileManagerController()
         {
             // FileManager Content Folder Path
-            _webPath = "uploads";
-            _webRootPath = Server.MapPath(_webPath);
+            _webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
+            _webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _webPath);
             _allowedExtensions = new List<string> { "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md" };
         }
 
-        public ActionResult Index(string mode, string path, string name, List<HttpPostedFileBase> files, string old, string @new, string source, string target, string content, bool thumbnail)
+        public ActionResult Index(
+            string mode,
+            string path,
+            string name,
+            List<HttpPostedFileBase> files,
+            string old,
+            string @new,
+            string source,
+            string target,
+            string content,
+            bool thumbnail = false)
         {
             if (!string.IsNullOrWhiteSpace(path) && path.StartsWith("/"))
                 path = path.Substring(1);
@@ -38,39 +48,39 @@ namespace RfmNetCore.Controllers
             switch (mode)
             {
                 case "initiate":
-                    return Json(Initiate());
+                    return Json(Initiate(), JsonRequestBehavior.AllowGet);
 
                 case "getfolder":
-                    return Json(GetFolder(path));
+                    return Json(GetFolder(path), JsonRequestBehavior.AllowGet);
 
                 case "addfolder":
-                    return Json(AddFolder(path, name));
+                    return Json(AddFolder(path, name), JsonRequestBehavior.AllowGet);
 
                 case "upload":
-                    return Json(Upload(path, files).Result);
+                    return Json(Upload(path, files), JsonRequestBehavior.AllowGet);
 
                 case "rename":
-                    return Json(Rename(old, @new));
+                    return Json(Rename(old, @new), JsonRequestBehavior.AllowGet);
 
                 case "move":
-                    return Json(Move(old, @new));
+                    return Json(Move(old, @new), JsonRequestBehavior.AllowGet);
 
                 case "copy":
-                    return Json(Copy(source, target));
+                    return Json(Copy(source, target), JsonRequestBehavior.AllowGet);
 
                 case "editfile":
-                    return Json(EditFile(path));
+                    return Json(EditFile(path), JsonRequestBehavior.AllowGet);
 
                 case "savefile":
-                    return Json(SaveFile(path, content));
+                    return Json(SaveFile(path, content), JsonRequestBehavior.AllowGet);
 
                 case "delete":
-                    return Json(Delete(path));
+                    return Json(Delete(path), JsonRequestBehavior.AllowGet);
 
                 case "download":
                     if (Request.Headers["accept"].ToString().Contains("json"))
                     {
-                        return Json(Download(path));
+                        return Json(Download(path), JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
@@ -84,7 +94,7 @@ namespace RfmNetCore.Controllers
                     break;
 
                 case "summarize":
-                    return Json(Summarize());
+                    return Json(Summarize(), JsonRequestBehavior.AllowGet);
             }
 
             throw new Exception("Unknown Request!");
@@ -229,7 +239,7 @@ namespace RfmNetCore.Controllers
             return result;
         }
 
-        private async Task<dynamic> Upload(string path, IEnumerable<HttpPostedFileBase> files)
+        private dynamic Upload(string path, IEnumerable<HttpPostedFileBase> files)
         {
             var result = new { Data = new List<dynamic>() };
 
@@ -256,10 +266,8 @@ namespace RfmNetCore.Controllers
                     return errorResult;
                 }
 
-                //using (var fileStream = new FileStream(Path.Combine(_webRootPath, path, file.FileName), FileMode.Create))
-                //{
-                //    await file.SaveAs(fileStream);
-                //}
+                var filePath = Path.Combine(_webRootPath, path, file.FileName);
+                file.SaveAs(filePath);
 
                 result.Data.Add(new
                 {

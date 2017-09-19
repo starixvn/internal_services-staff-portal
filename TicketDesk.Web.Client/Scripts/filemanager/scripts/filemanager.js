@@ -3,10 +3,10 @@
  *
  *    filemanager.js
  *
- *    @license    MIT License
- *    @author        Jason Huck - Core Five Labs
- *    @author        Simon Georget <simon (at) linea21 (dot) com>
- *    @author        Pavel Solomienko <https://github.com/servocoder/>
+ *    @license      MIT License
+ *    @author       Jason Huck - Core Five Labs
+ *    @author       Simon Georget <simon (at) linea21 (dot) com>
+ *    @author       Pavel Solomienko <https://github.com/servocoder/>
  *    @copyright    Authors
  */
 
@@ -177,7 +177,7 @@
         // Called on initial page load and on resize.
         fm.setDimensions = function () {
             var padding = $wrapper.outerHeight(true) - $wrapper.height(),
-                newH = $(window).height() - $header.height() - $footer.height() - padding - 150,
+                newH = $(window).height() - $header.height() - $footer.height() - padding,
                 newW = $splitter.width() - $splitter.children(".splitter-bar-vertical").outerWidth() - $filetree.outerWidth();
 
             $splitter.height(newH);
@@ -241,7 +241,7 @@
                     apiConnector = config.api.connectorUrl;
                 } else {
                     var connectorUrl = location.origin + location.pathname;
-                    var langConnector = '../filemanager/connectors/' + config.api.lang + '/filemanager.' + config.api.lang;
+                    var langConnector = 'connectors/' + config.api.lang + '/filemanager.' + config.api.lang;
 
                     // for url like http://site.com/index.html
                     if (getExtension(connectorUrl).length > 0) {
@@ -333,14 +333,14 @@
                 secondary = [];
 
             // theme defined in configuration file
-            primary.push('../filemanager/themes/' + config.options.theme + '/styles/theme.css');
+            primary.push('/themes/' + config.options.theme + '/styles/theme.css');
 
             if (config.viewer.image.lazyLoad) {
-                primary.push('../filemanager/scripts/lazyload/dist/lazyload.min.js');
+                primary.push('/scripts/lazyload/dist/lazyload.min.js');
             }
             if (config.customScrollbar.enabled) {
-                primary.push('../filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css');
-                primary.push('../filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js');
+                primary.push('/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css');
+                primary.push('/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js');
             }
 
             // add callback on loaded assets and inject primary ones
@@ -351,38 +351,38 @@
             if (config.editor.enabled) {
                 var editorTheme = config.editor.theme;
                 if (editorTheme && editorTheme !== 'default') {
-                    secondary.push('../filemanager/scripts/CodeMirror/theme/' + editorTheme + '.css');
+                    secondary.push('/scripts/CodeMirror/theme/' + editorTheme + '.css');
                 }
-                secondary.push('../filemanager/scripts/CodeMirror/lib/codemirror.css');
-                secondary.push('../filemanager/scripts/CodeMirror/lib/codemirror.js');
-                secondary.push('../filemanager/scripts/CodeMirror/addon/selection/active-line.js');
-                secondary.push('../filemanager/scripts/CodeMirror/addon/display/fullscreen.css');
-                secondary.push('../filemanager/scripts/CodeMirror/addon/display/fullscreen.js');
+                secondary.push('/scripts/CodeMirror/lib/codemirror.css');
+                secondary.push('/scripts/CodeMirror/lib/codemirror.js');
+                secondary.push('/scripts/CodeMirror/addon/selection/active-line.js');
+                secondary.push('/scripts/CodeMirror/addon/display/fullscreen.css');
+                secondary.push('/scripts/CodeMirror/addon/display/fullscreen.js');
             }
 
             // Load Markdown-it, if enabled. For .md to HTML rendering:
             if (config.viewer.markdownRenderer.enabled) {
-                secondary.push('../filemanager/styles/fm-markdown.css');
-                secondary.push('../filemanager/scripts/markdown-it/markdown-it.min.js');
-                secondary.push('../filemanager/scripts/markdown-it/default.min.css');
-                secondary.push('../filemanager/scripts/markdown-it/highlight.min.js');
-                secondary.push('../filemanager/scripts/markdown-it/markdown-it-footnote.min.js');
-                secondary.push('../filemanager/scripts/markdown-it/markdown-it-replace-link.min.js');
+                secondary.push('/styles/fm-markdown.css');
+                secondary.push('/scripts/markdown-it/markdown-it.min.js');
+                secondary.push('/scripts/markdown-it/default.min.css');
+                secondary.push('/scripts/markdown-it/highlight.min.js');
+                secondary.push('/scripts/markdown-it/markdown-it-footnote.min.js');
+                secondary.push('/scripts/markdown-it/markdown-it-replace-link.min.js');
             }
 
             if (!config.options.browseOnly) {
                 // Loading jquery file upload library
-                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/vendor/jquery.ui.widget.js');
-                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/canvas-to-blob.min.js');
-                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/load-image.all.min.js');
-                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/jquery.iframe-transport.js');
-                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/jquery.fileupload.js');
-                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/jquery.fileupload-process.js');
-                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/jquery.fileupload-image.js');
-                secondary.push('../filemanager/scripts/jQuery-File-Upload/js/jquery.fileupload-validate.js');
+                secondary.push('/scripts/jQuery-File-Upload/js/vendor/jquery.ui.widget.js');
+                secondary.push('/scripts/jQuery-File-Upload/js/canvas-to-blob.min.js');
+                secondary.push('/scripts/jQuery-File-Upload/js/load-image.all.min.js');
+                secondary.push('/scripts/jQuery-File-Upload/js/jquery.iframe-transport.js');
+                secondary.push('/scripts/jQuery-File-Upload/js/jquery.fileupload.js');
+                secondary.push('/scripts/jQuery-File-Upload/js/jquery.fileupload-process.js');
+                secondary.push('/scripts/jQuery-File-Upload/js/jquery.fileupload-image.js');
+                secondary.push('/scripts/jQuery-File-Upload/js/jquery.fileupload-validate.js');
 
                 if (config.upload.multiple) {
-                    secondary.push('../filemanager/scripts/jQuery-File-Upload/css/dropzone.css');
+                    secondary.push('/scripts/jQuery-File-Upload/css/dropzone.css');
                 }
             }
 
@@ -2462,61 +2462,61 @@
                     // highlight code according to extension file
                     if (config.editor.codeHighlight) {
                         if (extension === 'js') {
-                            assets.push('../filemanager/scripts/CodeMirror/mode/javascript/javascript.js');
+                            assets.push('/scripts/CodeMirror/mode/javascript/javascript.js');
                             currentMode = 'javascript';
                         }
                         if (extension === 'css') {
-                            assets.push('../filemanager/scripts/CodeMirror/mode/css/css.js');
+                            assets.push('/scripts/CodeMirror/mode/css/css.js');
                             currentMode = 'css';
                         }
                         if (extension === 'html') {
-                            assets.push('../filemanager/scripts/CodeMirror/mode/xml/xml.js');
+                            assets.push('/scripts/CodeMirror/mode/xml/xml.js');
                             currentMode = 'text/html';
                         }
                         if (extension === 'xml') {
-                            assets.push('../filemanager/scripts/CodeMirror/mode/xml/xml.js');
+                            assets.push('/scripts/CodeMirror/mode/xml/xml.js');
                             currentMode = 'application/xml';
                         }
                         if (extension === 'php') {
-                            assets.push('../filemanager/scripts/CodeMirror/mode/htmlmixed/htmlmixed.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/xml/xml.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/javascript/javascript.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/css/css.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/clike/clike.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/php/php.js');
+                            assets.push('/scripts/CodeMirror/mode/htmlmixed/htmlmixed.js');
+                            assets.push('/scripts/CodeMirror/mode/xml/xml.js');
+                            assets.push('/scripts/CodeMirror/mode/javascript/javascript.js');
+                            assets.push('/scripts/CodeMirror/mode/css/css.js');
+                            assets.push('/scripts/CodeMirror/mode/clike/clike.js');
+                            assets.push('/scripts/CodeMirror/mode/php/php.js');
                             currentMode = 'application/x-httpd-php';
                         }
                         if (extension === 'java') {
-                            assets.push('../filemanager/scripts/CodeMirror/mode/clike/clike.js');
+                            assets.push('/scripts/CodeMirror/mode/clike/clike.js');
                             currentMode = 'text/x-java';
                         }
                         if (extension === 'sql') {
-                            assets.push('../filemanager/scripts/CodeMirror/mode/sql/sql.js');
+                            assets.push('/scripts/CodeMirror/mode/sql/sql.js');
                             currentMode = 'text/x-mysql';
                         }
                         if (extension === 'md') {
-                            assets.push('../filemanager/scripts/CodeMirror/addon/mode/overlay.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/xml/xml.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/markdown/markdown.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/gfm/gfm.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/javascript/javascript.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/css/css.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/htmlmixed/htmlmixed.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/clike/clike.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/shell/shell.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/meta.js');
+                            assets.push('/scripts/CodeMirror/addon/mode/overlay.js');
+                            assets.push('/scripts/CodeMirror/mode/xml/xml.js');
+                            assets.push('/scripts/CodeMirror/mode/markdown/markdown.js');
+                            assets.push('/scripts/CodeMirror/mode/gfm/gfm.js');
+                            assets.push('/scripts/CodeMirror/mode/javascript/javascript.js');
+                            assets.push('/scripts/CodeMirror/mode/css/css.js');
+                            assets.push('/scripts/CodeMirror/mode/htmlmixed/htmlmixed.js');
+                            assets.push('/scripts/CodeMirror/mode/clike/clike.js');
+                            assets.push('/scripts/CodeMirror/mode/shell/shell.js');
+                            assets.push('/scripts/CodeMirror/mode/meta.js');
                             currentMode = 'gfm';
                         }
                         if (extension === 'sh') {
-                            assets.push('../filemanager/scripts/CodeMirror/addon/mode/overlay.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/markdown/markdown.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/gfm/gfm.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/javascript/javascript.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/css/css.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/htmlmixed/htmlmixed.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/clike/clike.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/meta.js');
-                            assets.push('../filemanager/scripts/CodeMirror/mode/shell/shell.js');
+                            assets.push('/scripts/CodeMirror/addon/mode/overlay.js');
+                            assets.push('/scripts/CodeMirror/mode/markdown/markdown.js');
+                            assets.push('/scripts/CodeMirror/mode/gfm/gfm.js');
+                            assets.push('/scripts/CodeMirror/mode/javascript/javascript.js');
+                            assets.push('/scripts/CodeMirror/mode/css/css.js');
+                            assets.push('/scripts/CodeMirror/mode/htmlmixed/htmlmixed.js');
+                            assets.push('/scripts/CodeMirror/mode/clike/clike.js');
+                            assets.push('/scripts/CodeMirror/mode/meta.js');
+                            assets.push('/scripts/CodeMirror/mode/shell/shell.js');
                             currentMode = 'shell';
                         }
                     }

@@ -15,7 +15,6 @@
 
     [RoutePrefix("file-manager")]
     [Route("{action=index}")]
-    [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
     public class FileManagerController : BaseController
     {
         private readonly string _webRootPath;
@@ -30,11 +29,13 @@
             _allowedExtensions = new List<string> { "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md" };
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             return View();
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
         [Route("filemanager")]
         public ActionResult FileManager(
             string mode,

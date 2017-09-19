@@ -52,6 +52,7 @@ namespace TicketDesk.Search.Lucene
                 {
                     InitWriter();
                 }
+
                 return _tdIndexWriter;
             }
         }
@@ -77,6 +78,7 @@ namespace TicketDesk.Search.Lucene
                     //  really another writer open elsewhere
                     IndexWriter.Unlock(TdIndexDirectory);
                 }
+
                 _tdIndexWriter = new IndexWriter(
                     TdIndexDirectory,
                     TdIndexAnalyzer,
