@@ -38,7 +38,7 @@ namespace TicketDesk.Web.Client.Controllers
                 return new EmptyResult();
             }
 
-            //TODO: doesn't necessarily play well with large files, cap file upload size to something reasonable (define in settings) or use upload chunking
+            // TODO: doesn't necessarily play well with large files, cap file upload size to something reasonable (define in settings) or use upload chunking
             foreach (string fileName in Request.Files)
             {
                 var file = Request.Files[fileName];
@@ -47,16 +47,19 @@ namespace TicketDesk.Web.Client.Controllers
                 await TicketDeskFileStore.SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true);
             }
 
-            return new JsonCamelCaseResult { Data = new { Message = string.Empty } }; //dropzone expects a message property back
+            // dropzone expects a message property back
+            return new JsonCamelCaseResult { Data = new { Message = string.Empty } };
         }
 
         [HttpPost]
         [Route("delete")]
         public JsonResult Delete(Guid id, string fileName)
         {
-            //ticketdesk never lets the UI directly delete a file attachment unless it is a pending.
+            // ticketdesk never lets the UI directly delete a file attachment unless it is a pending.
             TicketDeskFileStore.DeleteAttachment(fileName, id.ToString(), true);
-            return new JsonCamelCaseResult { Data = new { Message = string.Empty } }; //dropzone expects a message property back
+
+            // dropzone expects a message property back
+            return new JsonCamelCaseResult { Data = new { Message = string.Empty } };
         }
 
         [HttpGet]
@@ -106,7 +109,8 @@ namespace TicketDesk.Web.Client.Controllers
         private ActionResult FetchFile(string fileName, string container, bool isPending)
         {
             var fstream = TicketDeskFileStore.GetFile(fileName, container, isPending);
-            //always send it back as octet-stream so client browser actually downloads it, instead of displaying it on-screen
+
+            // always send it back as octet-stream so client browser actually downloads it, instead of displaying it on-screen
             return new FileStreamResult(fstream, "application/octet-stream");
         }
     }

@@ -50,13 +50,24 @@
             bool thumbnail = false)
         {
             if (!string.IsNullOrWhiteSpace(path) && path.StartsWith("/"))
+            {
                 path = path.Substring(1);
+            }
+
             if (!string.IsNullOrWhiteSpace(@new) && @new.StartsWith("/"))
+            {
                 @new = @new == "/" ? string.Empty : @new.Substring(1);
+            }
+
             if (!string.IsNullOrWhiteSpace(source) && source.StartsWith("/"))
+            {
                 source = source.Substring(1);
+            }
+
             if (!string.IsNullOrWhiteSpace(target) && target.StartsWith("/"))
+            {
                 target = target.Substring(1);
+            }
 
             switch (mode)
             {
@@ -100,6 +111,7 @@
                         var file = DownloadFile(path);
                         return File(file.FileBytes, "application/x-msdownload", file.FileName);
                     }
+
                 case "getimage":
                     return GetImage(path, thumbnail);
 
@@ -110,7 +122,7 @@
                     return Json(Summarize(), JsonRequestBehavior.AllowGet);
             }
 
-            throw new Exception("Unknown Request!");
+            return RedirectToAction("index");
         }
 
         private dynamic Initiate()
@@ -144,12 +156,13 @@
 
         private dynamic GetFolder(string path)
         {
-            if (path == null) path = string.Empty;
+            if (path == null)
+            {
+                path = string.Empty;
+            }
 
             var rootpath = Path.Combine(_webRootPath, path);
-
             var rootDirectory = new DirectoryInfo(rootpath);
-
             var data = new List<dynamic>();
 
             foreach (var directory in rootDirectory.GetDirectories())
@@ -187,7 +200,7 @@
                         Writable = 1,
                         Created = file.CreationTime.ToString(CultureInfo.InvariantCulture),
                         Modified = file.LastWriteTime.ToString(CultureInfo.InvariantCulture),
-                        Extension = file.Extension.Replace(".", ""),
+                        Extension = file.Extension.Replace(".", string.Empty),
                         Size = file.Length,
                         Timestamp = (int)(DateTime.Now - file.LastWriteTime).Ticks
                     }
@@ -254,11 +267,17 @@
 
         private dynamic Upload(string path, IEnumerable<HttpPostedFileBase> files)
         {
-            var result = new { Data = new List<dynamic>() };
+            var result = new
+            {
+                Data = new List<dynamic>()
+            };
 
             foreach (var file in files)
             {
-                if (file.ContentLength <= 0) continue;
+                if (file.ContentLength <= 0)
+                {
+                    continue;
+                }
 
                 var fileExist = System.IO.File.Exists(Path.Combine(_webRootPath, path, file.FileName));
 
@@ -289,7 +308,7 @@
                     Attributes = new
                     {
                         Name = file.FileName,
-                        Extension = Path.GetExtension(file.FileName).Replace(".", ""),
+                        Extension = Path.GetExtension(file.FileName).Replace(".", string.Empty),
                         Path = MakeWebPath(Path.Combine(_webPath, path, file.FileName), true),
                         Readable = 1,
                         Writable = 1,
@@ -306,7 +325,6 @@
         private dynamic Rename(string old, string @new)
         {
             var oldPath = Path.Combine(_webRootPath, old);
-
             var fileAttributes = System.IO.File.GetAttributes(oldPath);
 
             if (fileAttributes == FileAttributes.Directory)
@@ -314,7 +332,6 @@
                 var oldDirectoryName = Path.GetDirectoryName(old).Split('\\').Last();
                 var newDirectoryPath = old.Replace(oldDirectoryName, @new);
                 var newPath = Path.Combine(_webRootPath, newDirectoryPath);
-
                 var directoryExist = Directory.Exists(newPath);
 
                 if (directoryExist)
@@ -347,6 +364,7 @@
                             Name = @new,
                             Readable = 1,
                             Writable = 1,
+
                             // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         }
@@ -360,7 +378,6 @@
                 var oldFileName = Path.GetFileName(old);
                 var newFilePath = old.Replace(oldFileName, @new);
                 var newPath = Path.Combine(_webRootPath, newFilePath);
-
                 var fileExist = System.IO.File.Exists(newPath);
 
                 if (fileExist)
@@ -391,9 +408,10 @@
                         Attributes = new
                         {
                             Name = @new,
-                            Extension = Path.GetExtension(newPath).Replace(".", ""),
+                            Extension = Path.GetExtension(newPath).Replace(".", string.Empty),
                             Readable = 1,
                             Writable = 1,
+
                             // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         }
@@ -414,7 +432,6 @@
                 var newDirectoryPath = Path.Combine(@new, directoryName);
                 var oldPath = Path.Combine(_webRootPath, old);
                 var newPath = Path.Combine(_webRootPath, @new, directoryName);
-
                 var directoryExist = Directory.Exists(newPath);
 
                 if (directoryExist)
@@ -447,6 +464,7 @@
                             Name = directoryName,
                             Readable = 1,
                             Writable = 1,
+
                             // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         }
@@ -460,11 +478,7 @@
                 var fileName = Path.GetFileName(old);
                 var newFilePath = Path.Combine(@new, fileName);
                 var oldPath = Path.Combine(_webRootPath, old);
-
-                var newPath = @new == "/"
-                    ? Path.Combine(_webRootPath, fileName.Replace("/", ""))
-                    : Path.Combine(_webRootPath, @new, fileName);
-
+                var newPath = @new == "/" ? Path.Combine(_webRootPath, fileName.Replace("/", string.Empty)) : Path.Combine(_webRootPath, @new, fileName);
                 var fileExist = System.IO.File.Exists(newPath);
 
                 if (fileExist)
@@ -495,9 +509,10 @@
                         Attributes = new
                         {
                             Name = fileName,
-                            Extension = Path.GetExtension(@new).Replace(".", ""),
+                            Extension = Path.GetExtension(@new).Replace(".", string.Empty),
                             Readable = 1,
                             Writable = 1,
+
                             // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         }
@@ -518,7 +533,6 @@
                 var newDirectoryPath = Path.Combine(target, directoryName);
                 var oldPath = Path.Combine(_webRootPath, source);
                 var newPath = Path.Combine(_webRootPath, target, directoryName);
-
                 var directoryExist = Directory.Exists(newPath);
 
                 if (directoryExist)
@@ -551,6 +565,7 @@
                             Name = directoryName,
                             Readable = 1,
                             Writable = 1,
+
                             // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         }
@@ -565,7 +580,6 @@
                 var newFilePath = Path.Combine(@target, fileName);
                 var oldPath = Path.Combine(_webRootPath, source);
                 var newPath = Path.Combine(_webRootPath, target, fileName);
-
                 var fileExist = System.IO.File.Exists(newPath);
 
                 if (fileExist)
@@ -596,9 +610,10 @@
                         Attributes = new
                         {
                             Name = fileName,
-                            Extension = Path.GetExtension(fileName).Replace(".", ""),
+                            Extension = Path.GetExtension(fileName).Replace(".", string.Empty),
                             Readable = 1,
                             Writable = 1,
+
                             // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         }
@@ -612,9 +627,8 @@
         private dynamic EditFile(string path)
         {
             var fileName = Path.GetFileName(path);
-            var fileExtension = Path.GetExtension(path).Replace(".", "");
+            var fileExtension = Path.GetExtension(path).Replace(".", string.Empty);
             var filePath = Path.Combine(_webRootPath, path);
-
             var content = System.IO.File.ReadAllText(filePath, Encoding.UTF8);
 
             var result = new
@@ -629,6 +643,7 @@
                         Extension = fileExtension,
                         Writable = 1,
                         Readable = 1,
+
                         // created vb.
                         Content = content,
                         Path = $"/{Path.Combine(path)}"
@@ -642,9 +657,7 @@
         private dynamic SaveFile(string path, string content)
         {
             var filePath = Path.Combine(_webRootPath, path);
-
             System.IO.File.WriteAllText(filePath, content);
-
             var fileName = Path.GetFileName(path);
             var fileExtension = Path.GetExtension(fileName);
 
@@ -660,6 +673,7 @@
                         Extension = fileExtension,
                         Readable = 1,
                         Writable = 1
+
                         // created vb.
                     }
                 }
@@ -675,7 +689,6 @@
             if (fileAttributes == FileAttributes.Directory)
             {
                 var directoryName = Path.GetDirectoryName(path).Split('\\').Last();
-
                 Directory.Delete(Path.Combine(_webRootPath, path), true);
 
                 var result = new
@@ -689,6 +702,7 @@
                             Name = directoryName,
                             Readable = 1,
                             Writable = 1,
+
                             // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                             Path = path
@@ -701,8 +715,7 @@
             else
             {
                 var fileName = Path.GetFileName(Path.Combine(_webRootPath, path));
-                var fileExtension = Path.GetExtension(fileName).Replace(".", "");
-
+                var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
                 System.IO.File.Delete(Path.Combine(_webRootPath, path));
 
                 var result = new
@@ -717,8 +730,10 @@
                             Extension = fileExtension,
                             Readable = 1,
                             Writable = 1,
+
                             // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+
                             // Path = $"/{fileName}"
                         }
                     }
@@ -731,10 +746,9 @@
         private dynamic Download(string path)
         {
             var fileName = Path.GetFileName(Path.Combine(_webRootPath, path));
-            var fileExtension = Path.GetExtension(fileName).Replace(".", "");
+            var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
 
             // undone dosya var mý kontrolü...
-
             var result = new
             {
                 Data = new
@@ -747,9 +761,11 @@
                         Extension = fileExtension,
                         Readable = 1,
                         Writable = 1,
+
                         // created date, size vb.
                         Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                        //Path = $"{path}"
+
+                        // Path = $"{path}"
                     }
                 }
             };
@@ -815,12 +831,11 @@
 
             if (!dir.Exists)
             {
-                throw new DirectoryNotFoundException(
-                    "Source directory does not exist or could not be found: "
-                    + sourceDirName);
+                throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + sourceDirName);
             }
 
             var dirs = dir.GetDirectories();
+
             // If the destination directory doesn't exist, create it.
             if (!Directory.Exists(destDirName))
             {
@@ -847,8 +862,15 @@
         {
             path = path.Replace("\\", "/");
 
-            if (addSeperatorToBegin) path = "/" + path;
-            if (addSeperatorToLast) path = path + "/";
+            if (addSeperatorToBegin)
+            {
+                path = "/" + path;
+            }
+
+            if (addSeperatorToLast)
+            {
+                path = path + "/";
+            }
 
             return path;
         }

@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -53,7 +53,6 @@ namespace TicketDesk.Web.Client
                 DemoPushNotificationDataManager.SetupDemoPushNotificationData(context);
             }
 
-
             if (context.TicketDeskPushNotificationSettings.IsEnabled)
             {
                 EnsureBroadcastNotificaitonsConfiguration(context);
@@ -69,7 +68,7 @@ namespace TicketDesk.Web.Client
 
                 if (context.TicketDeskPushNotificationSettings.IsBackgroundQueueEnabled)
                 {
-                    //register for static notifications created event handler 
+                    //register for static notifications created event handler
                     TdDomainContext.NotificationsCreated += (sender, notifications) =>
                     {
                         HostingEnvironment.QueueBackgroundWorkItem(CreateTicketEventNotifications(notifications));
@@ -92,6 +91,7 @@ namespace TicketDesk.Web.Client
                     };
                 }
             }
+
             context.Dispose(); //ensure that no one accidentally holds a reference to this in closure
         }
 
@@ -109,13 +109,9 @@ namespace TicketDesk.Web.Client
                 };
                 context.SubscriberPushNotificationSettingsManager.AddSettingsForSubscriber(broadcastUserSettings);
             }
-            if
-            (
-                broadcastAppSettings.BroadcastMode ==
-                ApplicationPushNotificationSetting.PushNotificationBroadcastMode.CustomAddress
-                &&
-                !string.IsNullOrEmpty(broadcastAppSettings.SendToCustomEmailAddress)
-            )
+
+            if (broadcastAppSettings.BroadcastMode == ApplicationPushNotificationSetting.PushNotificationBroadcastMode.CustomAddress
+                 && !string.IsNullOrEmpty(broadcastAppSettings.SendToCustomEmailAddress))
             {
                 broadcastUserSettings.PushNotificationDestinations.Add(
                     new PushNotificationDestination
@@ -129,24 +125,23 @@ namespace TicketDesk.Web.Client
             }
             else
             {
-
-
                 var userManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
                 var roleManager = DependencyResolver.Current.GetService<TicketDeskRoleManager>();
                 var usersForNotification = roleManager.GetTdHelpDeskUsers(userManager)
                     .Union(roleManager.GetTdTdAdministrators(userManager))
                     .Distinct(new UniqueNameEmailDisplayUserEqualityComparer()).ToArray();
 
-
                 var existingDestinations = broadcastUserSettings
                     .PushNotificationDestinations
                     .Where(pnd => pnd.DestinationType == "email" && pnd.SubscriberId == "new ticket broadcast")
                     .ToArray();
+
                 //remove users not in list anymore
                 var usersToRemove = existingDestinations
                     .Where(us => !usersForNotification
-                        .Any(un => un.Email == us.DestinationAddress && un.DisplayName == us.SubscriberName))
+                    .Any(un => un.Email == us.DestinationAddress && un.DisplayName == us.SubscriberName))
                     .ToList();
+
                 foreach (var us in usersToRemove)
                 {
                     broadcastUserSettings.PushNotificationDestinations.Remove(us);
@@ -155,8 +150,7 @@ namespace TicketDesk.Web.Client
                 //add users in list, but not already in destinations
                 foreach (var nu in usersForNotification)
                 {
-                    if (!existingDestinations.Any(ed => nu.Email == ed.DestinationAddress &&
-                                                        nu.DisplayName == ed.SubscriberName))
+                    if (!existingDestinations.Any(ed => nu.Email == ed.DestinationAddress && nu.DisplayName == ed.SubscriberName))
                     {
                         broadcastUserSettings.PushNotificationDestinations.Add(
                             new PushNotificationDestination
@@ -170,10 +164,10 @@ namespace TicketDesk.Web.Client
                     }
                 }
             }
+
             broadcastUserSettings.IsEnabled = broadcastAppSettings.IsBroadcastEnabled;
             context.SaveChanges();
         }
-
 
         private static Action<CancellationToken> CreateNewTicketBroadcastNotification(IEnumerable<Ticket> tickets)
         {
@@ -208,7 +202,7 @@ namespace TicketDesk.Web.Client
                 }
                 catch
                 {
-                    //TODO: log this somewhere                    
+                    //TODO: log this somewhere
                 }
             };
         }
@@ -252,7 +246,7 @@ namespace TicketDesk.Web.Client
                 }
                 catch
                 {
-                    //TODO: Log this somewhere                    
+                    //TODO: Log this somewhere
                 }
             };
         }

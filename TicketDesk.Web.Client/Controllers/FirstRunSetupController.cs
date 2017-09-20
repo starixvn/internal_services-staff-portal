@@ -132,7 +132,7 @@ namespace TicketDesk.Web.Client.Controllers
 
                 if (upgradeSuccess)
                 {
-                    var filter = GlobalFilters.Filters.FirstOrDefault(f => f.Instance is DbSetupFilter);
+                    var filter = GlobalFilters.Filters.FirstOrDefault(f => f.Instance is DbSetupFilterAttribute);
                     if (filter != null)
                     {
                         GlobalFilters.Filters.Remove(filter.Instance);
@@ -150,7 +150,7 @@ namespace TicketDesk.Web.Client.Controllers
 
         private void UpdateSearchIndex()
         {
-            //TODO: duplicated in DatabaseConfig.cs, should refactor extension method or something... just not sure what the most appropriate place is
+            // TODO: duplicated in DatabaseConfig.cs, should refactor extension method or something... just not sure what the most appropriate place is
             HostingEnvironment.QueueBackgroundWorkItem(async (ct) =>
             {
                 using (var ctx = new TdDomainContext(null))
@@ -173,7 +173,7 @@ namespace TicketDesk.Web.Client.Controllers
                 ctx.Database.Initialize(true);
             }
 
-            var filter = GlobalFilters.Filters.FirstOrDefault(f => f.Instance is DbSetupFilter);
+            var filter = GlobalFilters.Filters.FirstOrDefault(f => f.Instance is DbSetupFilterAttribute);
             if (filter != null)
             {
                 GlobalFilters.Filters.Remove(filter.Instance);
@@ -190,8 +190,8 @@ namespace TicketDesk.Web.Client.Controllers
             }
             else
             {
-                //should only happen if user entered one of the demo user names when setting up the DB
-                //reset the password to the one the user entered here, and set the admin role if needed
+                // should only happen if user entered one of the demo user names when setting up the DB
+                // reset the password to the one the user entered here, and set the admin role if needed
                 var token = await UserManager.GeneratePasswordResetTokenAsync(existingUser.Id);
                 await UserManager.ResetPasswordAsync(existingUser.Id, token, password);
                 existingUser.DisplayName = displayName;

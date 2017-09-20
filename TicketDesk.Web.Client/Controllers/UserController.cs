@@ -36,8 +36,6 @@ using TicketDesk.Web.Identity.Model;
 
 namespace TicketDesk.Web.Client.Controllers
 {
-    using Fanex.NAP.Core.Domain;
-
     [RoutePrefix("user")]
     [Route("{action}")]
     public class UserController : BaseController
@@ -114,6 +112,7 @@ namespace TicketDesk.Web.Client.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+
                 AddErrors(result);
             }
 
@@ -135,7 +134,7 @@ namespace TicketDesk.Web.Client.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [Route("sign-in")]
-        public async Task<ActionResult> SignIn(UserSignInViewModel model, string returnUrl)
+        public ActionResult SignIn(UserSignInViewModel model, string returnUrl)
         {
             ViewBag.IsDemoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false").Equals("true", StringComparison.InvariantCultureIgnoreCase);
 

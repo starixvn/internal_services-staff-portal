@@ -27,11 +27,26 @@ namespace TicketDesk.Web.Client.Controllers
             NotificationContext = notificationContext;
         }
 
+        public enum AccountMessageId
+        {
+            ChangePasswordSuccess,
+            ProfileSaveSuccess,
+            Error
+        }
+
         private TicketDeskUserManager UserManager { get; set; }
 
         private TicketDeskSignInManager SignInManager { get; set; }
 
         private TdPushNotificationContext NotificationContext { get; set; }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
 
         [Route("manage")]
         public ActionResult Manage(AccountMessageId? message)
@@ -103,7 +118,8 @@ namespace TicketDesk.Web.Client.Controllers
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             var oldEmail = user.Email;
 
-            var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false").Equals("true", StringComparison.InvariantCultureIgnoreCase);
+            var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false")
+                    .Equals("true", StringComparison.InvariantCultureIgnoreCase);
             if (demoMode && oldEmail.EndsWith("@example.com", StringComparison.InvariantCultureIgnoreCase))
             {
                 ModelState.AddModelError("Email", Strings.UnableToChangeDemoUser);
@@ -121,8 +137,7 @@ namespace TicketDesk.Web.Client.Controllers
 
                     AuthenticationManager.SignOut();
                     await SignInManager.SignInAsync(user, false, false);
-                    //.SignIn(new AuthenticationProperties { IsPersistent = false },
-                    //await user.GenerateUserIdentityAsync(UserManager);
+
                     return RedirectToAction("Manage", new { Message = AccountMessageId.ProfileSaveSuccess });
                 }
             }
@@ -143,21 +158,6 @@ namespace TicketDesk.Web.Client.Controllers
             dest.DestinationAddress = user.Email;
             dest.SubscriberName = user.DisplayName;
             await NotificationContext.SaveChangesAsync();
-        }
-
-        public enum AccountMessageId
-        {
-            ChangePasswordSuccess,
-            ProfileSaveSuccess,
-            Error
-        }
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
         }
 
         private async Task SignInAsync(TicketDeskUser user, bool isPersistent)

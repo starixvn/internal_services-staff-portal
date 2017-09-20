@@ -56,7 +56,7 @@ namespace TicketDesk.Web.Client
             string cssClassName = "",
             string tagName = "div")
         {
-            //TODO: consider changing this to use Display(description="") instead? Same with enum extension
+            // TODO: consider changing this to use Display(description="") instead? Same with enum extension
             var memberExpression = expression.Body as MemberExpression;
             if (memberExpression == null)
             {

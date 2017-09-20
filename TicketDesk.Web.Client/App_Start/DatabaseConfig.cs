@@ -27,6 +27,20 @@ namespace TicketDesk.Web.Client
 {
     public static class DatabaseConfig
     {
+        public static bool IsDatabaseReady
+        {
+            get
+            {
+                bool result;
+                using (var ctx = new TdDomainContext(null))
+                {
+                    result = (ctx.Database.Exists() && !IsEmptyDatabase(ctx)) && !IsLegacyDatabase(ctx);
+                }
+
+                return result;
+            }
+        }
+
         public static void RegisterDatabase()
         {
             var setupEnabled = ConfigurationManager.AppSettings["ticketdesk:SetupEnabled"];
@@ -36,7 +50,7 @@ namespace TicketDesk.Web.Client
             if (firstRunEnabled && !IsDatabaseReady)
             {
                 // add a global filter to send requests to the database managment first run functions
-                GlobalFilters.Filters.Add(new DbSetupFilter());
+                GlobalFilters.Filters.Add(new DbSetupFilterAttribute());
             }
             else
             {
@@ -48,8 +62,9 @@ namespace TicketDesk.Web.Client
                     {
                         ctx.Database.Initialize(!ctx.Database.CompatibleWithModel(true));
                     }
-                    catch (Exception) // no metadata in DB, force run initializer anyway
+                    catch (Exception)
                     {
+                        // no metadata in DB, force run initializer anyway
                         ctx.Database.Initialize(true);
                     }
 
@@ -69,20 +84,6 @@ namespace TicketDesk.Web.Client
                         });
                     }
                 }
-            }
-        }
-
-        public static bool IsDatabaseReady
-        {
-            get
-            {
-                bool result;
-                using (var ctx = new TdDomainContext(null))
-                {
-                    result = (ctx.Database.Exists() && !IsEmptyDatabase(ctx)) && !IsLegacyDatabase(ctx);
-                }
-
-                return result;
             }
         }
 
@@ -116,6 +117,7 @@ namespace TicketDesk.Web.Client
             var firstRunDemoRefresh = !string.IsNullOrEmpty(demoRefresh)
                                     && demoRefresh.Equals("true", StringComparison.InvariantCultureIgnoreCase)
                                     && IsDatabaseReady;
+
             // only do this if database was ready on startup, otherwise migrator will take care of it
             return firstRunDemoRefresh;
         }
@@ -176,7 +178,7 @@ namespace TicketDesk.Web.Client
                     if (it > 0)
                     {
                         var oldVersion = context.Database.SqlQuery<string>("select SettingValue from Settings where SettingName = 'Version'");
-                        isLegacy = (oldVersion.Any() && oldVersion.First().Equals("2.0.2"));
+                        isLegacy = oldVersion.Any() && oldVersion.First().Equals("2.0.2");
                     }
                 }
             }

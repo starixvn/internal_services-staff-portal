@@ -33,39 +33,10 @@ namespace TicketDesk.Web.Client.Controllers
         // GET: EmailTest
         public ActionResult Index(int id)
         {
-            //TODO: Remove/move to admin
+            // TODO: Remove/move to admin
             var ticket = Context.Tickets.Include(t => t.TicketTags).First(t => t.TicketId == id);
             var root = Context.TicketDeskSettings.ClientSettings.GetDefaultSiteRootUrl();
             var email = new TicketEmail { Ticket = ticket, SiteRootUrl = root };
-
-            //email.Send();
-            //string content;
-            //var mailService = new Postal.EmailService();
-            //SerializableMailMessage message = mailService.CreateMailMessage(email);
-
-            //var client = new SmtpClient()
-            //{
-            //    Host = "localhost",
-            //    Port = 25
-            //};
-
-            //client.Send(message);
-            ////serialize:
-            //    using (var ms = new MemoryStream())
-            //{
-            //    new BinaryFormatter().Serialize(ms, message);
-            //    content = Convert.ToBase64String(ms.ToArray());
-            //}
-
-            ////deserialize:
-
-            //var memorydata = Convert.FromBase64String(content);
-            //using (var rs = new MemoryStream(memorydata))
-            //{
-            //    var sf = new BinaryFormatter();
-            //    var m = (SerializableMailMessage)sf.Deserialize(rs) ;
-            //    client.Send(m);
-            //}
 
             return new EmailViewResult(email);
         }

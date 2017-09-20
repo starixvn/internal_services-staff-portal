@@ -48,8 +48,8 @@ namespace TicketDesk.Web.Client.Controllers
         [Route("{listName?}/{page:int?}")]
         public async Task<ActionResult> Index(int? page, string listName)
         {
-            //Role
-            //listName = listName ?? (Context.SecurityProvider.IsTdHelpDeskUser ? "unassigned" : "mytickets");
+            // Role
+
             listName = listName ?? (Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket, Constant.Policy.Read) ? "unassigned" : "mytickets");
             var pageNumber = page ?? 1;
 
@@ -99,9 +99,11 @@ namespace TicketDesk.Web.Client.Controllers
 
             if (isMultiSort)
             {
-                if (sortCol != null) // column already in sort, remove from sort
+                // column already in sort, remove from sort
+                if (sortCol != null)
                 {
-                    if (currentListSetting.SortColumns.Count > 1) //only remove if there are more than one sort
+                    // only remove if there are more than one sort
+                    if (currentListSetting.SortColumns.Count > 1)
                     {
                         currentListSetting.SortColumns.Remove(sortCol);
                     }
@@ -113,7 +115,8 @@ namespace TicketDesk.Web.Client.Controllers
             }
             else
             {
-                if (sortCol != null) // column already in sort, just flip direction
+                // column already in sort, just flip direction
+                if (sortCol != null)
                 {
                     sortCol.SortDirection = (sortCol.SortDirection == ColumnSortDirection.Ascending) ? ColumnSortDirection.Descending : ColumnSortDirection.Ascending;
                 }

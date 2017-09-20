@@ -64,14 +64,14 @@
         [NapAuth(FunctionKey = FunctionKeys.ProjectSettings, Policy = Constant.Policy.Host)]
         public async Task<ActionResult> Delete(int projectId, int reassignTo)
         {
-            //does project to delete exist?
+            // does project to delete exist?
             var project = await Context.Projects.FindAsync(projectId);
             if (project == null)
             {
                 return RedirectToAction("Index");
             }
 
-            //is there more than one project, and does target project exist?
+            // is there more than one project, and does target project exist?
             var numProjects = await Context.Projects.CountAsync();
             var reassignProject = await Context.Projects.FindAsync(reassignTo);
             if (numProjects < 2 || reassignProject == null)
@@ -79,7 +79,7 @@
                 return RedirectToAction("Edit", new { projectId });
             }
 
-            //move tickets, then remove project
+            // move tickets, then remove project
             var ticketsToReassign = Context.Tickets.Where(t => t.ProjectId == projectId);
             foreach (var ticket in ticketsToReassign)
             {

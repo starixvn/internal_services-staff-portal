@@ -109,7 +109,7 @@ namespace TicketDesk.Web.Client.Controllers
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch (DbEntityValidationException)
                 {
-                    //TODO: catch rule exceptions? or can annotations handle this fully now?
+                    // TODO: catch rule exceptions? or can annotations handle this fully now?
                 }
             }
 
@@ -122,7 +122,7 @@ namespace TicketDesk.Web.Client.Controllers
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketFiles(int ticketId)
         {
-            //WARNING! This is also used as a child action and cannot be made async in MVC 5
+            // WARNING! This is also used as a child action and cannot be made async in MVC 5
             var attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(CultureInfo.InvariantCulture), false);
             ViewBag.TicketId = ticketId;
             return PartialView("_TicketFiles", attachments);
@@ -132,7 +132,7 @@ namespace TicketDesk.Web.Client.Controllers
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketEvents(int ticketId)
         {
-            //WARNING! This is also used as a child action and cannot be made async in MVC 5
+            // WARNING! This is also used as a child action and cannot be made async in MVC 5
             var ticket = Context.Tickets.Find(ticketId);
             return PartialView("_TicketEvents", ticket.TicketEvents);
         }
@@ -141,7 +141,7 @@ namespace TicketDesk.Web.Client.Controllers
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketDetails(int ticketId)
         {
-            //WARNING! This is also used as a child action and cannot be made async in MVC 5
+            // WARNING! This is also used as a child action and cannot be made async in MVC 5
             var ticket = Context.Tickets.Find(ticketId);
             ViewBag.DisplayProjects = Context.Projects.Any();
 
@@ -182,11 +182,11 @@ namespace TicketDesk.Web.Client.Controllers
             if (ticket.ProjectId == default(int))
             {
                 var projects = await Context.Projects.Select(s => s.ProjectId).ToListAsync();
-                var isMulti = (projects.Count > 1);
+                var isMulti = projects.Count > 1;
                 ViewBag.IsMultiProject = isMulti;
 
-                //set to first project if only one project exists, otherwise use user's selected project
-                ticket.ProjectId = (isMulti) ? await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context) : projects.FirstOrDefault();
+                // set to first project if only one project exists, otherwise use user's selected project
+                ticket.ProjectId = isMulti ? await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context) : projects.FirstOrDefault();
             }
         }
 

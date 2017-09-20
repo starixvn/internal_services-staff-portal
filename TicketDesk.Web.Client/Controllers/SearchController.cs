@@ -51,7 +51,9 @@ namespace TicketDesk.Web.Client.Controllers
                 if (Context.Projects.Count() > 1)
                 {
                     ViewBag.IsMultiProject = true;
-                    ViewBag.SearchProjectName = (projectId == 0) ? Strings.ShowingFromAllProjects : string.Format(Strings.ShowingFromProject, Context.Projects.First(p => p.ProjectId == projectId).ProjectName);
+                    ViewBag.SearchProjectName = (projectId == 0)
+                        ? Strings.ShowingFromAllProjects
+                        : string.Format(Strings.ShowingFromProject, Context.Projects.First(p => p.ProjectId == projectId).ProjectName);
                 }
 
                 return View(model);

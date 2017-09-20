@@ -10,7 +10,9 @@
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             if (filterContext.Result is JsonResult == false)
+            {
                 return;
+            }
 
             filterContext.Result = new CustomJsonResult((JsonResult)filterContext.Result);
         }
@@ -30,18 +32,24 @@
             public override void ExecuteResult(ControllerContext context)
             {
                 if (context == null)
+                {
                     throw new ArgumentNullException("context");
+                }
 
                 if (this.JsonRequestBehavior == JsonRequestBehavior.DenyGet
                     && string.Equals(context.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
+                {
                     throw new InvalidOperationException("GET not allowed! Change JsonRequestBehavior to AllowGet.");
+                }
 
                 var response = context.HttpContext.Response;
 
                 response.ContentType = string.IsNullOrEmpty(this.ContentType) ? "application/json" : this.ContentType;
 
                 if (this.ContentEncoding != null)
+                {
                     response.ContentEncoding = this.ContentEncoding;
+                }
 
                 if (this.Data != null)
                 {

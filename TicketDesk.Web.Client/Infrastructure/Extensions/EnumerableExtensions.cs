@@ -37,6 +37,7 @@ namespace TicketDesk.Web.Client
                 {
                     return retVal;
                 }
+
                 retVal++;
             }
 

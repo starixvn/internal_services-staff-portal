@@ -63,14 +63,14 @@ namespace TicketDesk.Web.Client.Controllers
         private async Task SetProjectInfoForModelAsync(Ticket ticket)
         {
             var projectCount = await Context.Projects.CountAsync();
-            var isMulti = (projectCount > 1);
+            var isMulti = projectCount > 1;
             ViewBag.IsMultiProject = isMulti;
         }
 
         [Route("activity-buttons")]
         public ActionResult ActivityButtons(int ticketId)
         {
-            //WARNING! This is also used as a child action and cannot be made async in MVC 5
+            // WARNING! This is also used as a child action and cannot be made async in MVC 5
             var ticket = Context.Tickets.Find(ticketId);
             var activities = Context.TicketActions.GetValidTicketActivities(ticket);
             return PartialView("_ActivityButtons", activities);
@@ -129,7 +129,19 @@ namespace TicketDesk.Web.Client.Controllers
         {
             details = details.StripHtmlWhenEmpty();
             var projectName = await Context.Projects.Where(p => p.ProjectId == projectId).Select(s => s.ProjectName).FirstOrDefaultAsync();
-            var activityFn = Context.TicketActions.EditTicketInfo(comment, projectId, projectName, title, details, priority, ticketType, category, owner, tagList, Context.TicketDeskSettings);
+            var activityFn = Context.TicketActions.EditTicketInfo(
+                comment,
+                projectId,
+                projectName,
+                title,
+                details,
+                priority,
+                ticketType,
+                category,
+                owner,
+                tagList,
+                Context.TicketDeskSettings);
+
             return await PerformTicketAction(ticketId, activityFn, TicketActivity.EditTicketInfo);
         }
 
@@ -161,11 +173,12 @@ namespace TicketDesk.Web.Client.Controllers
             {
                 return new EmptyResult();
             }
-            //most of this action is performed directly against the storage provider, outside the business domain's control.
-            //  All the business domain has to do is record the activity log and comments
+
+            // most of this action is performed directly against the storage provider, outside the business domain's control.
+            // All the business domain has to do is record the activity log and comments
             Action<Ticket> activityFn = ticket =>
            {
-               //TODO: it might make sense to move the string building part of this over to the TicketDeskFileStore too?
+               // TODO: it might make sense to move the string building part of this over to the TicketDeskFileStore too?
                var sb = new StringBuilder(comment);
                if (!string.IsNullOrEmpty(deleteFiles))
                {
@@ -202,7 +215,7 @@ namespace TicketDesk.Web.Client.Controllers
 
                comment = sb.ToString();
 
-               //perform the simple business domain functions
+               // perform the simple business domain functions
                var domainActivityFn = Context.TicketActions.ModifyAttachments(comment);
                domainActivityFn(ticket);
            };
@@ -291,14 +304,16 @@ namespace TicketDesk.Web.Client.Controllers
                     ModelState.AddModelError("Security", ex);
                 }
 
-                var result = await Context.SaveChangesAsync(); //save changes catches lastupdatedby and date automatically
+                // save changes catches lastupdatedby and date automatically
+                var result = await Context.SaveChangesAsync();
                 if (result > 0)
                 {
-                    return new EmptyResult(); //standard success case
+                    // standard success case
+                    return new EmptyResult();
                 }
             }
 
-            //fail case, return the view and let the client/view sort out the errors
+            // fail case, return the view and let the client/view sort out the errors
             ViewBag.CommentRequired = activity.IsCommentRequired();
             ViewBag.Activity = activity;
             ViewBag.IsEditorDefaultHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";

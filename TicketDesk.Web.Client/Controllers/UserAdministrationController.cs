@@ -48,7 +48,6 @@
         [Route("user/{id?}")]
         public async Task<ActionResult> Edit(string id)
         {
-            //ViewBag.AllRolesList = await RoleManager.Roles.ToListAsync();
             var user = await UserManager.FindByIdAsync(id);
             if (user == null)
             {
@@ -82,13 +81,13 @@
             }
             else
             {
-                //deal with locks first
+                // deal with locks first
                 if (await SetLockout(model, user))
                 {
-                    //do user info updates
+                    // do user info updates
                     if (await UpdateUserInfo(user, model))
                     {
-                        //if any roles other than pending are selected, make sure we remove the pending role from the model first
+                        // if any roles other than pending are selected, make sure we remove the pending role from the model first
                         if (tdPendingRole != null)
                         {
                             if (model.Roles.Any(r => r != tdPendingRole.Id))
@@ -99,33 +98,35 @@
                             }
                         }
 
-                        //get role changes
+                        // get role changes
                         var roleIdsToRemove = user.Roles.Select(ur => ur.RoleId).Except(model.Roles).ToList();
 
                         if (User.Identity.GetUserId() == user.Id)
                         {
-                            //stop current user from removing their own admin role
+                            // stop current user from removing their own admin role
                             roleIdsToRemove = roleIdsToRemove.Except(RoleManager.Roles.Where(r => r.Name == "tdAdministrators").Select(r => r.Id)).ToList();
                         }
 
                         var roleIdsToAdd = model.Roles.Except(user.Roles.Select(ur => ur.RoleId)).ToList();
-                        //do role removes
+
+                        // do role removes
                         if (await RemoveRoles(roleIdsToRemove, user))
                         {
-                            //do role adds
+                            // do role adds
                             if (await AddRoles(roleIdsToAdd, user))
                             {
-                                //everything worked, return to index (if anything failed, will return to the edit user view)
+                                // everything worked, return to index (if anything failed, will return to the edit user view)
                                 return RedirectToAction("Index");
                             }
                         }
                     }
                 }
             }
-            //Since the above operations could be partially committed before a failure,
-            //  we will re-get the user so we are sure the screen will accurately show
-            //  the current data. Model errors will have been added by the respective
-            //  update operations that failed
+
+            // Since the above operations could be partially committed before a failure,
+            // we will re-get the user so we are sure the screen will accurately show
+            // the current data. Model errors will have been added by the respective
+            // update operations that failed
             user = await UserManager.FindByIdAsync(model.User.Id);
             model = new UserAccountInfoViewModel(user, user.Roles.Select(r => r.RoleId));
             return View(model);

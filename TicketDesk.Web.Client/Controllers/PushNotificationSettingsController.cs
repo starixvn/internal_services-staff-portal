@@ -143,7 +143,8 @@ namespace TicketDesk.Web.Client.Controllers
                         .First(m => m.Name == "TryUpdateModel" && m.IsGenericMethod && m.GetParameters().Count() == 1)
                         .MakeGenericMethod(provider.Configuration.GetType());
 
-                if ((bool)method.Invoke(this, new[] { provider.Configuration })) //TryUpdateModel call
+                // TryUpdateModel call
+                if ((bool)method.Invoke(this, new[] { provider.Configuration }))
                 {
                     settings.ProviderConfigurationData = JObject.FromObject(provider.Configuration);
                     settings.IsEnabled = isEnabled;
@@ -165,7 +166,8 @@ namespace TicketDesk.Web.Client.Controllers
             if (settings == null)
             {
                 settings = ApplicationPushNotificationSetting.PushNotificationDeliveryProviderSetting.FromProvider(provider);
-                //created new settings, add to context (will not be saved here, but may be committed by caller
+
+                // created new settings, add to context (will not be saved here, but may be committed by caller
                 NoteContext.TicketDeskPushNotificationSettings.DeliveryProviderSettings.Add(settings);
             }
 
