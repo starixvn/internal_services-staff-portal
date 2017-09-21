@@ -29,5 +29,29 @@
 
             return commandResult;
         }
+
+        public CommandResult UploadFile(UploadFileCriteria criteria)
+        {
+            var commandResult = new CommandResult();
+
+            if (criteria != null && criteria.IsValid())
+            {
+                commandResult = Repository.ExecuteNonQuery(criteria);
+            }
+
+            return commandResult;
+        }
+
+        public CommandResult DeleteFile(DeleteFileCriteria criteria)
+        {
+            var commandResult = new CommandResult();
+
+            if (criteria != null && criteria.IsValid())
+            {
+                commandResult = Repository.ExecuteNonQuery(criteria);
+            }
+
+            return commandResult;
+        }
     }
 }

@@ -66,6 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileManager\DeleteFileCriteria.cs" />
+    <Compile Include="FileManager\UploadFileCriteria.cs" />
     <Compile Include="FileManager\AddFolderCriteria.cs" />
     <Compile Include="FileManager\DeleteFolderCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

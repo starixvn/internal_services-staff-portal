@@ -8,5 +8,9 @@
         CommandResult AddFolder(AddFolderCriteria criteria);
 
         CommandResult DeleteFolder(DeleteFolderCriteria criteria);
+
+        CommandResult UploadFile(UploadFileCriteria criteria);
+
+        CommandResult DeleteFile(DeleteFileCriteria criteria);
     }
 }

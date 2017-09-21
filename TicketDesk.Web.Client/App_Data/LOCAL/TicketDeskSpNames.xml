@@ -8,5 +8,7 @@
     <Function Name="Document">
         <Setting Key="DMS_Folder_Insert" SpName="DMS_Folder_Insert" DbName="bodb_TicketDesk"></Setting>
         <Setting Key="DMS_Folder_Delete" SpName="DMS_Folder_Delete" DbName="bodb_TicketDesk"></Setting>
+        <Setting Key="DMS_File_Insert" SpName="DMS_File_Insert" DbName="bodb_TicketDesk"></Setting>
+        <Setting Key="DMS_File_Delete" SpName="DMS_File_Delete" DbName="bodb_TicketDesk"></Setting>
     </Function>
 </Functions>

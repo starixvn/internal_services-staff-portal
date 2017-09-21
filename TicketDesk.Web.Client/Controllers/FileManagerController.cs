@@ -269,7 +269,7 @@
             {
                 UserId = CurrentSession.UserId,
                 FolderName = directory.Name,
-                Directory = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path), false, false)
+                Directory = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path))
             };
 
             fileManagerService.AddFolder(criteria);
@@ -329,6 +329,17 @@
                         Size = file.ContentLength
                     }
                 });
+
+                var criteria = new UploadFileCriteria
+                {
+                    UserId = CurrentSession.UserId,
+                    FileName = file.FileName,
+                    FileSize = file.ContentLength,
+                    ContentType = file.ContentType,
+                    Directory = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path))
+                };
+
+                fileManagerService.UploadFile(criteria);
             }
 
             return result;
@@ -700,69 +711,89 @@
 
             if (fileAttributes == FileAttributes.Directory)
             {
-                var folders = Path.GetDirectoryName(path).Split('\\');
-                var directoryName = folders.Last();
-                Directory.Delete(Path.Combine(_webRootPath, path), true);
-
-                var result = new
-                {
-                    Data = new
-                    {
-                        Id = path,
-                        Type = "folder",
-                        Attributes = new
-                        {
-                            Name = directoryName,
-                            Readable = 1,
-                            Writable = 1,
-
-                            // created date, size vb.
-                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                            Path = path
-                        }
-                    }
-                };
-
-                var criteria = new DeleteFolderCriteria
-                {
-                    UserId = CurrentSession.UserId,
-                    FolderName = directoryName,
-                    Directory = MakeWebPath(Path.Combine(_webPath, string.Join("/", folders.Take(folders.Length - 1))), false, false)
-                };
-
-                fileManagerService.DeleteFolder(criteria);
-
-                return result;
+                return DeleteDirectory(path);
             }
             else
             {
-                var fileName = Path.GetFileName(Path.Combine(_webRootPath, path));
-                var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
-                System.IO.File.Delete(Path.Combine(_webRootPath, path));
-
-                var result = new
-                {
-                    Data = new
-                    {
-                        Id = path,
-                        Type = "file",
-                        Attributes = new
-                        {
-                            Name = fileName,
-                            Extension = fileExtension,
-                            Readable = 1,
-                            Writable = 1,
-
-                            // created date, size vb.
-                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-
-                            // Path = $"/{fileName}"
-                        }
-                    }
-                };
-
-                return result;
+                return DeleteFile(path);
             }
+        }
+
+        private dynamic DeleteDirectory(string path)
+        {
+            var webPath = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path));
+            var directoryName = Path.GetDirectoryName(path).Split('\\').Last();
+            Directory.Delete(Path.Combine(_webRootPath, path), true);
+
+            var result = new
+            {
+                Data = new
+                {
+                    Id = path,
+                    Type = "folder",
+                    Attributes = new
+                    {
+                        Name = directoryName,
+                        Readable = 1,
+                        Writable = 1,
+
+                        // created date, size vb.
+                        Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                        Path = path
+                    }
+                }
+            };
+
+            var criteria = new DeleteFolderCriteria
+            {
+                UserId = CurrentSession.UserId,
+                FolderName = directoryName,
+                Directory = webPath.Substring(0, webPath.LastIndexOf("/"))
+            };
+
+            fileManagerService.DeleteFolder(criteria);
+
+            return result;
+        }
+
+        private dynamic DeleteFile(string path)
+        {
+            var webPath = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path));
+            var fileName = Path.GetFileName(Path.Combine(_webRootPath, path));
+            var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
+            System.IO.File.Delete(Path.Combine(_webRootPath, path));
+
+            var result = new
+            {
+                Data = new
+                {
+                    Id = path,
+                    Type = "file",
+                    Attributes = new
+                    {
+                        Name = fileName,
+                        Extension = fileExtension,
+                        Readable = 1,
+                        Writable = 1,
+
+                        // created date, size vb.
+                        Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+
+                        // Path = $"/{fileName}"
+                    }
+                }
+            };
+
+            var criteria = new DeleteFileCriteria
+            {
+                UserId = CurrentSession.UserId,
+                FileName = fileName,
+                Directory = webPath.Substring(0, webPath.LastIndexOf("/"))
+            };
+
+            fileManagerService.DeleteFile(criteria);
+
+            return result;
         }
 
         private dynamic Download(string path)
