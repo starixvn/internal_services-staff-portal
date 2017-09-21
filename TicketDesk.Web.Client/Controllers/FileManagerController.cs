@@ -10,7 +10,6 @@
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Text;
     using System.Web;
     using System.Web.Configuration;
     using System.Web.Mvc;
@@ -46,31 +45,11 @@
             string path,
             string name,
             IEnumerable<HttpPostedFileBase> files,
-            string old,
-            string @new,
-            string source,
-            string target,
-            string content,
             bool thumbnail = false)
         {
             if (!string.IsNullOrWhiteSpace(path) && path.StartsWith("/"))
             {
                 path = path.Substring(1);
-            }
-
-            if (!string.IsNullOrWhiteSpace(@new) && @new.StartsWith("/"))
-            {
-                @new = @new == "/" ? string.Empty : @new.Substring(1);
-            }
-
-            if (!string.IsNullOrWhiteSpace(source) && source.StartsWith("/"))
-            {
-                source = source.Substring(1);
-            }
-
-            if (!string.IsNullOrWhiteSpace(target) && target.StartsWith("/"))
-            {
-                target = target.Substring(1);
             }
 
             switch (mode)
@@ -86,21 +65,6 @@
 
                 case "upload":
                     return Json(Upload(path, files), JsonRequestBehavior.AllowGet);
-
-                case "rename":
-                    return Json(Rename(old, @new), JsonRequestBehavior.AllowGet);
-
-                case "move":
-                    return Json(Move(old, @new), JsonRequestBehavior.AllowGet);
-
-                case "copy":
-                    return Json(Copy(source, target), JsonRequestBehavior.AllowGet);
-
-                case "editfile":
-                    return Json(EditFile(path), JsonRequestBehavior.AllowGet);
-
-                case "savefile":
-                    return Json(SaveFile(path, content), JsonRequestBehavior.AllowGet);
 
                 case "delete":
                     return Json(Delete(path), JsonRequestBehavior.AllowGet);
@@ -345,366 +309,6 @@
             return result;
         }
 
-        private dynamic Rename(string old, string @new)
-        {
-            var oldPath = Path.Combine(_webRootPath, old);
-            var fileAttributes = System.IO.File.GetAttributes(oldPath);
-
-            if (fileAttributes == FileAttributes.Directory)
-            {
-                var oldDirectoryName = Path.GetDirectoryName(old).Split('\\').Last();
-                var newDirectoryPath = old.Replace(oldDirectoryName, @new);
-                var newPath = Path.Combine(_webRootPath, newDirectoryPath);
-                var directoryExist = Directory.Exists(newPath);
-
-                if (directoryExist)
-                {
-                    var errorResult = new { Errors = new List<dynamic>() };
-
-                    errorResult.Errors.Add(new
-                    {
-                        Code = "500",
-                        Message = "DIRECTORY_ALREADY_EXISTS",
-                        Arguments = new List<string>
-                        {
-                            @new
-                        }
-                    });
-
-                    return errorResult;
-                }
-
-                Directory.Move(oldPath, newPath);
-
-                var result = new
-                {
-                    Data = new
-                    {
-                        Id = newDirectoryPath,
-                        Type = "folder",
-                        Attributes = new
-                        {
-                            Name = @new,
-                            Readable = 1,
-                            Writable = 1,
-
-                            // created date, size vb.
-                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                        }
-                    }
-                };
-
-                return result;
-            }
-            else
-            {
-                var oldFileName = Path.GetFileName(old);
-                var newFilePath = old.Replace(oldFileName, @new);
-                var newPath = Path.Combine(_webRootPath, newFilePath);
-                var fileExist = System.IO.File.Exists(newPath);
-
-                if (fileExist)
-                {
-                    var errorResult = new { Errors = new List<dynamic>() };
-
-                    errorResult.Errors.Add(new
-                    {
-                        Code = "500",
-                        Message = "FILE_ALREADY_EXISTS",
-                        Arguments = new List<string>
-                        {
-                            @new
-                        }
-                    });
-
-                    return errorResult;
-                }
-
-                System.IO.File.Move(oldPath, newPath);
-
-                var result = new
-                {
-                    Data = new
-                    {
-                        Id = newFilePath,
-                        Type = "file",
-                        Attributes = new
-                        {
-                            Name = @new,
-                            Extension = Path.GetExtension(newPath).Replace(".", string.Empty),
-                            Readable = 1,
-                            Writable = 1,
-
-                            // created date, size vb.
-                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                        }
-                    }
-                };
-
-                return result;
-            }
-        }
-
-        private dynamic Move(string old, string @new)
-        {
-            var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, old));
-
-            if (fileAttributes == FileAttributes.Directory)
-            {
-                var directoryName = Path.GetDirectoryName(old).Split('\\').Last();
-                var newDirectoryPath = Path.Combine(@new, directoryName);
-                var oldPath = Path.Combine(_webRootPath, old);
-                var newPath = Path.Combine(_webRootPath, @new, directoryName);
-                var directoryExist = Directory.Exists(newPath);
-
-                if (directoryExist)
-                {
-                    var errorResult = new { Errors = new List<dynamic>() };
-
-                    errorResult.Errors.Add(new
-                    {
-                        Code = "500",
-                        Message = "DIRECTORY_ALREADY_EXISTS",
-                        Arguments = new List<string>
-                        {
-                            directoryName
-                        }
-                    });
-
-                    return errorResult;
-                }
-
-                Directory.Move(oldPath, newPath);
-
-                var result = new
-                {
-                    Data = new
-                    {
-                        Id = newDirectoryPath,
-                        Type = "folder",
-                        Attributes = new
-                        {
-                            Name = directoryName,
-                            Readable = 1,
-                            Writable = 1,
-
-                            // created date, size vb.
-                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                        }
-                    }
-                };
-
-                return result;
-            }
-            else
-            {
-                var fileName = Path.GetFileName(old);
-                var newFilePath = Path.Combine(@new, fileName);
-                var oldPath = Path.Combine(_webRootPath, old);
-                var newPath = @new == "/" ? Path.Combine(_webRootPath, fileName.Replace("/", string.Empty)) : Path.Combine(_webRootPath, @new, fileName);
-                var fileExist = System.IO.File.Exists(newPath);
-
-                if (fileExist)
-                {
-                    var errorResult = new { Errors = new List<dynamic>() };
-
-                    errorResult.Errors.Add(new
-                    {
-                        Code = "500",
-                        Message = "FILE_ALREADY_EXISTS",
-                        Arguments = new List<string>
-                        {
-                            fileName
-                        }
-                    });
-
-                    return errorResult;
-                }
-
-                System.IO.File.Move(oldPath, newPath);
-
-                var result = new
-                {
-                    Data = new
-                    {
-                        Id = newFilePath,
-                        Type = "file",
-                        Attributes = new
-                        {
-                            Name = fileName,
-                            Extension = Path.GetExtension(@new).Replace(".", string.Empty),
-                            Readable = 1,
-                            Writable = 1,
-
-                            // created date, size vb.
-                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                        }
-                    }
-                };
-
-                return result;
-            }
-        }
-
-        private dynamic Copy(string source, string target)
-        {
-            var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, source));
-
-            if (fileAttributes == FileAttributes.Directory)
-            {
-                var directoryName = Path.GetDirectoryName(source).Split('\\').Last();
-                var newDirectoryPath = Path.Combine(target, directoryName);
-                var oldPath = Path.Combine(_webRootPath, source);
-                var newPath = Path.Combine(_webRootPath, target, directoryName);
-                var directoryExist = Directory.Exists(newPath);
-
-                if (directoryExist)
-                {
-                    var errorResult = new { Errors = new List<dynamic>() };
-
-                    errorResult.Errors.Add(new
-                    {
-                        Code = "500",
-                        Message = "DIRECTORY_ALREADY_EXISTS",
-                        Arguments = new List<string>
-                        {
-                            directoryName
-                        }
-                    });
-
-                    return errorResult;
-                }
-
-                DirectoryCopy(oldPath, newPath);
-
-                var result = new
-                {
-                    Data = new
-                    {
-                        Id = newDirectoryPath,
-                        Type = "folder",
-                        Attributes = new
-                        {
-                            Name = directoryName,
-                            Readable = 1,
-                            Writable = 1,
-
-                            // created date, size vb.
-                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                        }
-                    }
-                };
-
-                return result;
-            }
-            else
-            {
-                var fileName = Path.GetFileName(source);
-                var newFilePath = Path.Combine(@target, fileName);
-                var oldPath = Path.Combine(_webRootPath, source);
-                var newPath = Path.Combine(_webRootPath, target, fileName);
-                var fileExist = System.IO.File.Exists(newPath);
-
-                if (fileExist)
-                {
-                    var errorResult = new { Errors = new List<dynamic>() };
-
-                    errorResult.Errors.Add(new
-                    {
-                        Code = "500",
-                        Message = "FILE_ALREADY_EXISTS",
-                        Arguments = new List<string>
-                        {
-                            fileName
-                        }
-                    });
-
-                    return errorResult;
-                }
-
-                System.IO.File.Copy(oldPath, newPath);
-
-                var result = new
-                {
-                    Data = new
-                    {
-                        Id = newFilePath,
-                        Type = "file",
-                        Attributes = new
-                        {
-                            Name = fileName,
-                            Extension = Path.GetExtension(fileName).Replace(".", string.Empty),
-                            Readable = 1,
-                            Writable = 1,
-
-                            // created date, size vb.
-                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                        }
-                    }
-                };
-
-                return result;
-            }
-        }
-
-        private dynamic EditFile(string path)
-        {
-            var fileName = Path.GetFileName(path);
-            var fileExtension = Path.GetExtension(path).Replace(".", string.Empty);
-            var filePath = Path.Combine(_webRootPath, path);
-            var content = System.IO.File.ReadAllText(filePath, Encoding.UTF8);
-
-            var result = new
-            {
-                Data = new
-                {
-                    Id = path,
-                    Type = "file",
-                    Attributes = new
-                    {
-                        Name = fileName,
-                        Extension = fileExtension,
-                        Writable = 1,
-                        Readable = 1,
-
-                        // created vb.
-                        Content = content,
-                        Path = $"/{Path.Combine(path)}"
-                    }
-                }
-            };
-
-            return result;
-        }
-
-        private dynamic SaveFile(string path, string content)
-        {
-            var filePath = Path.Combine(_webRootPath, path);
-            System.IO.File.WriteAllText(filePath, content);
-            var fileName = Path.GetFileName(path);
-            var fileExtension = Path.GetExtension(fileName);
-
-            var result = new
-            {
-                Data = new
-                {
-                    Id = path,
-                    Type = "file",
-                    Attributes = new
-                    {
-                        Name = fileName,
-                        Extension = fileExtension,
-                        Readable = 1,
-                        Writable = 1
-
-                        // created vb.
-                    }
-                }
-            };
-
-            return result;
-        }
-
         private dynamic Delete(string path)
         {
             var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, path));
@@ -723,6 +327,26 @@
         {
             var webPath = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path));
             var directoryName = Path.GetDirectoryName(path).Split('\\').Last();
+            var rootpath = Path.Combine(_webRootPath, path);
+            var rootDirectory = new DirectoryInfo(rootpath);
+
+            if(rootDirectory.GetDirectories().Length > 0 || rootDirectory.GetFiles().Length > 0)
+            {
+                var errorResult = new { Errors = new List<dynamic>() };
+
+                errorResult.Errors.Add(new
+                {
+                    Code = "500",
+                    Message = "Can't delete the current folder because it contains the subfolders or a file list",
+                    Arguments = new List<string>
+                    {
+                        directoryName
+                    }
+                });
+
+                return errorResult;
+            }
+
             Directory.Delete(Path.Combine(_webRootPath, path), true);
 
             var result = new
@@ -875,40 +499,6 @@
             };
 
             return result;
-        }
-
-        private static void DirectoryCopy(string sourceDirName, string destDirName)
-        {
-            // Get the subdirectories for the specified directory.
-            var dir = new DirectoryInfo(sourceDirName);
-
-            if (!dir.Exists)
-            {
-                throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + sourceDirName);
-            }
-
-            var dirs = dir.GetDirectories();
-
-            // If the destination directory doesn't exist, create it.
-            if (!Directory.Exists(destDirName))
-            {
-                Directory.CreateDirectory(destDirName);
-            }
-
-            // Get the files in the directory and copy them to the new location.
-            var files = dir.GetFiles();
-            foreach (var file in files)
-            {
-                var temppath = Path.Combine(destDirName, file.Name);
-                file.CopyTo(temppath, false);
-            }
-
-            // If copying subdirectories, copy them and their contents to new location.
-            foreach (var subdir in dirs)
-            {
-                var temppath = Path.Combine(destDirName, subdir.Name);
-                DirectoryCopy(subdir.FullName, temppath);
-            }
         }
 
         private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
