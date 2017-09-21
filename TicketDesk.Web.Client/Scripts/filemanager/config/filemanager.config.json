@@ -16,7 +16,6 @@
             "select",
             "upload",
             "download",
-            "copy",
             "delete"
         ]
     },

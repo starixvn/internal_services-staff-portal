@@ -1,8 +1,10 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Criteria.FileManager;
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Service;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -20,13 +22,15 @@
         private readonly string _webRootPath;
         private readonly string _webPath;
         private readonly List<string> _allowedExtensions;
+        private readonly IFileManagerService fileManagerService;
 
-        public FileManagerController()
+        public FileManagerController(IFileManagerService fileManagerService)
         {
-            // FileManager Content Folder Path
             _webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
             _webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _webPath);
             _allowedExtensions = new List<string> { "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md" };
+
+            this.fileManagerService = fileManagerService;
         }
 
         [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
@@ -41,7 +45,7 @@
             string mode,
             string path,
             string name,
-            List<HttpPostedFileBase> files,
+            IEnumerable<HttpPostedFileBase> files,
             string old,
             string @new,
             string source,
@@ -220,7 +224,6 @@
         private dynamic AddFolder(string path, string name)
         {
             var newDirectoryPath = Path.Combine(_webRootPath, path, name);
-
             var directoryExist = Directory.Exists(newDirectoryPath);
 
             if (directoryExist)
@@ -261,6 +264,15 @@
                         }
                     }
             };
+
+            var criteria = new AddFolderCriteria
+            {
+                UserId = CurrentSession.UserId,
+                FolderName = directory.Name,
+                Directory = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path), false, false)
+            };
+
+            fileManagerService.AddFolder(criteria);
 
             return result;
         }
@@ -688,7 +700,8 @@
 
             if (fileAttributes == FileAttributes.Directory)
             {
-                var directoryName = Path.GetDirectoryName(path).Split('\\').Last();
+                var folders = Path.GetDirectoryName(path).Split('\\');
+                var directoryName = folders.Last();
                 Directory.Delete(Path.Combine(_webRootPath, path), true);
 
                 var result = new
@@ -709,6 +722,15 @@
                         }
                     }
                 };
+
+                var criteria = new DeleteFolderCriteria
+                {
+                    UserId = CurrentSession.UserId,
+                    FolderName = directoryName,
+                    Directory = MakeWebPath(Path.Combine(_webPath, string.Join("/", folders.Take(folders.Length - 1))), false, false)
+                };
+
+                fileManagerService.DeleteFolder(criteria);
 
                 return result;
             }

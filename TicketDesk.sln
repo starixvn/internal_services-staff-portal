@@ -47,6 +47,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.PushNotification
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.Localization", "TicketDesk.Localization\TicketDesk.Localization.csproj", "{BE8715F9-E858-473E-A2B6-561C9EDCA416}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.Core", "TicketDesk.Core\TicketDesk.Core.csproj", "{F2DC8FB5-9DA1-4525-9B12-9BB855E7C635}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.Criteria", "TicketDesk.Criteria\TicketDesk.Criteria.csproj", "{E128A22B-91A4-4F5C-B306-4AB4129C9D1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.Service", "TicketDesk.Service\TicketDesk.Service.csproj", "{00764825-D0EB-4060-A5B3-341CD845605A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +107,18 @@ Global
 		{BE8715F9-E858-473E-A2B6-561C9EDCA416}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE8715F9-E858-473E-A2B6-561C9EDCA416}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE8715F9-E858-473E-A2B6-561C9EDCA416}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2DC8FB5-9DA1-4525-9B12-9BB855E7C635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2DC8FB5-9DA1-4525-9B12-9BB855E7C635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2DC8FB5-9DA1-4525-9B12-9BB855E7C635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2DC8FB5-9DA1-4525-9B12-9BB855E7C635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E128A22B-91A4-4F5C-B306-4AB4129C9D1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E128A22B-91A4-4F5C-B306-4AB4129C9D1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E128A22B-91A4-4F5C-B306-4AB4129C9D1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E128A22B-91A4-4F5C-B306-4AB4129C9D1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00764825-D0EB-4060-A5B3-341CD845605A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00764825-D0EB-4060-A5B3-341CD845605A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00764825-D0EB-4060-A5B3-341CD845605A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00764825-D0EB-4060-A5B3-341CD845605A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

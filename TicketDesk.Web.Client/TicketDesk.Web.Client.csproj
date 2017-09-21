@@ -379,6 +379,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\LOCAL\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\LOCAL\TicketDeskSpNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -2234,6 +2237,14 @@
       <Project>{ca72a1aa-6f1a-4d5f-b98b-fd73f5407563}</Project>
       <Name>S22.Mail</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Core\TicketDesk.Core.csproj">
+      <Project>{f2dc8fb5-9da1-4525-9b12-9bb855e7c635}</Project>
+      <Name>TicketDesk.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Criteria\TicketDesk.Criteria.csproj">
+      <Project>{e128a22b-91a4-4f5c-b306-4ab4129c9d1d}</Project>
+      <Name>TicketDesk.Criteria</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TicketDesk.Domain.Legacy\TicketDesk.Domain.Legacy.csproj">
       <Project>{a85d9882-1db3-40ec-a23e-6b4562f48bcf}</Project>
       <Name>TicketDesk.Domain.Legacy</Name>
@@ -2265,6 +2276,10 @@
     <ProjectReference Include="..\TicketDesk.Search.Lucene\TicketDesk.Search.Lucene.csproj">
       <Project>{54390f7f-a440-40f7-8b1a-28ab599a5213}</Project>
       <Name>TicketDesk.Search.Lucene</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Service\TicketDesk.Service.csproj">
+      <Project>{00764825-d0eb-4060-a5b3-341cd845605a}</Project>
+      <Name>TicketDesk.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\TicketDesk.Web.Identity\TicketDesk.Web.Identity.csproj">
       <Project>{bd3617c2-a91e-40f3-a441-b085d2491399}</Project>

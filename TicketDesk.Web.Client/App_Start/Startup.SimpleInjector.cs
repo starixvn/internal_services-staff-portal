@@ -27,6 +27,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using TicketDesk.Domain;
+using TicketDesk.Service;
 using TicketDesk.Web.Identity;
 using TicketDesk.Web.Identity.Model;
 
@@ -50,7 +51,7 @@ namespace TicketDesk.Web.Client
 
             container.RegisterSingleton(app);
 
-            //allows objects to be reused when inside web request, or created fresh when used on background threads or outside a request context
+            // allows objects to be reused when inside web request, or created fresh when used on background threads or outside a request context
             var hybridLifestyle = Lifestyle.CreateHybrid(
                 () => HttpContext.Current != null, new WebRequestLifestyle(), Lifestyle.Transient);
 
@@ -80,7 +81,7 @@ namespace TicketDesk.Web.Client
                 }
                 catch (InvalidOperationException)
                 {
-                    //avoid exception when this is called before the owin environment is fully initialized
+                    // avoid exception when this is called before the owin environment is fully initialized
                     if (container.IsVerifying())
                     {
                         return new FakeAuthenticationManager();
@@ -96,16 +97,17 @@ namespace TicketDesk.Web.Client
 
             container.Register<TicketDeskRoleManager>(hybridLifestyle);
 
+            container.Register<IUserService>(() => new UserService(), hybridLifestyle);
+            container.Register<IGroupService>(() => new GroupService(), hybridLifestyle);
+            container.Register<ISiteService>(() => new SiteService(), hybridLifestyle);
+            container.Register<IMenuItemService>(() => new MenuItemService(), hybridLifestyle);
+            container.Register<IFunctionService>(() => new FunctionService(), hybridLifestyle);
+            container.Register<IFileManagerService>(() => new FileManagerService(), hybridLifestyle);
+
             container.RegisterInitializer<TicketDeskUserManager>(manager =>
                 manager.ConfigureDataProtection(app));
 
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
-
-            container.Register<IUserService>(() => new UserService(), Lifestyle.Transient);
-            container.Register<IGroupService>(() => new GroupService(), Lifestyle.Transient);
-            container.Register<ISiteService>(() => new SiteService(), Lifestyle.Transient);
-            container.Register<IMenuItemService>(() => new MenuItemService(), Lifestyle.Transient);
-            container.Register<IFunctionService>(() => new FunctionService(), Lifestyle.Transient);
 
             return container;
         }

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+    <Function Name="Example">
+        <Setting Key="Name_should_be_the_same_as_key" SpName="Name_should_be_the_same_as_key" DbName="bodb_TicketDesk">
+            <Mapping DataField="sp-returned-field-name" ObjectProperty="mapped-field-name" />
+        </Setting>
+    </Function>
+    <Function Name="Document">
+        <Setting Key="DMS_Folder_Insert" SpName="DMS_Folder_Insert" DbName="bodb_TicketDesk"></Setting>
+        <Setting Key="DMS_Folder_Delete" SpName="DMS_Folder_Delete" DbName="bodb_TicketDesk"></Setting>
+    </Function>
+</Functions>
