@@ -35,20 +35,20 @@ namespace TicketDesk.Domain
         /// registered delegate will keep a reference to the isntance that that
         /// registered. You can cause memory leaks if you aren't careful with
         /// static events.
-        ///</remarks>
+        /// </remarks>
         public static event EventHandler<IEnumerable<Ticket>> TicketsChanged;
 
         public static event EventHandler<IEnumerable<Ticket>> TicketsCreated;
 
         private static void RaiseTicketsCreated(TdDomainContext sender, IEnumerable<Ticket> tickets)
         {
-            //TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
+            // TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
             TicketsCreated?.Invoke(sender, tickets);
         }
 
         private static void RaiseTicketsChanged(TdDomainContext sender, IEnumerable<Ticket> tickets)
         {
-            //TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
+            // TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
             TicketsChanged?.Invoke(sender, tickets);
         }
 
@@ -56,7 +56,7 @@ namespace TicketDesk.Domain
 
         private static void RaiseNotificationsCreated(TdDomainContext sender, IEnumerable<TicketEventNotification> notifications)
         {
-            //TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
+            // TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
             NotificationsCreated?.Invoke(sender, notifications);
         }
 
@@ -87,9 +87,9 @@ namespace TicketDesk.Domain
             ApplicationSettings = Set<ApplicationSetting>();
             UserSettings = Set<UserSetting>();
 
-            //TODO: This is only public because it is used by migrations and related functions
-            //  This ctor can be removed or made internal by creating a class that implements IDbContextFactory<TicketDeskContext>
-            //      As I understand it, if the factory exists EF will use it instead of looking for a public ctor with no params
+            // TODO: This is only public because it is used by migrations and related functions
+            // This ctor can be removed or made internal by creating a class that implements IDbContextFactory<TicketDeskContext>
+            // As I understand it, if the factory exists EF will use it instead of looking for a public ctor with no params
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -99,7 +99,7 @@ namespace TicketDesk.Domain
                 .WithMany()
                 .WillCascadeOnDelete(false);
 
-            //json flattening: see this for more info: http://www.reddnet.net/entity-framework-json-column/
+            // json flattening: see this for more info: http://www.reddnet.net/entity-framework-json-column/
             modelBuilder.ComplexType<UserTicketListSettingsCollection>()
                 .Property(p => p.Serialized)
                 .HasColumnName("ListSettingsJson");
@@ -122,15 +122,20 @@ namespace TicketDesk.Domain
         }
 
         public DbSet<Project> Projects { get; set; }
+
         public DbSet<TicketEvent> TicketEvents { get; set; }
+
         public DbSet<Ticket> Tickets { get; set; }
+
         public DbSet<TicketTag> TicketTags { get; set; }
+
         public DbSet<TicketSubscriber> TicketSubscribers { get; set; }
+
         public DbSet<TicketEventNotification> TicketEventNotifications { get; set; }
 
-        //These DbSets contain json serialized content. Callers cannot use standard LINQ to Entities
-        //  expressions with these safely. Marking internal to prevent callers having direct access
-        //  We'll provide a thin layer of abstraction for safely handling external interactions instead.
+        // These DbSets contain json serialized content. Callers cannot use standard LINQ to Entities
+        // expressions with these safely. Marking internal to prevent callers having direct access
+        // We'll provide a thin layer of abstraction for safely handling external interactions instead.
         internal DbSet<ApplicationSetting> ApplicationSettings { get; set; }
 
         internal DbSet<UserSetting> UserSettings { get; set; }
@@ -141,8 +146,7 @@ namespace TicketDesk.Domain
         {
             get
             {
-                return _userSettingsManager ??
-                       (_userSettingsManager = new UserSettingsManager(this));
+                return _userSettingsManager ?? (_userSettingsManager = new UserSettingsManager(this));
             }
         }
 
@@ -152,21 +156,22 @@ namespace TicketDesk.Domain
         /// <value>The application settings.</value>
         public ApplicationSetting TicketDeskSettings
         {
-            //TODO: these change infrequently, cache these
+            // TODO: these change infrequently, cache these
             get
             {
                 var aps = ApplicationSettings.GetTicketDeskSettings();
-                //this should only ever happen once, but if no settings are in DB, make default set
+                // this should only ever happen once, but if no settings are in DB, make default set
                 if (aps == null)
                 {
                     aps = new ApplicationSetting();
-                    //do this on another instance, because we don't want to commit other things that may be tracking on this instance
+                    // do this on another instance, because we don't want to commit other things that may be tracking on this instance
                     using (var tempContext = new TdDomainContext()) //this feels like cheating :)
                     {
                         ApplicationSettings.Add(aps);
                         tempContext.SaveChanges();
                     }
                 }
+
                 return aps;
             }
             set
@@ -176,6 +181,7 @@ namespace TicketDesk.Domain
                 {
                     ApplicationSettings.Remove(oldSettings);
                 }
+
                 ApplicationSettings.Add(value);
             }
         }
@@ -200,7 +206,7 @@ namespace TicketDesk.Domain
         {
             var result = new DbEntityValidationResult(entityEntry, new List<DbValidationError>());
 
-            //skip the custom validation if a security provider wasn't supplied
+            // skip the custom validation if a security provider wasn't supplied
             if (SecurityProvider != null && entityEntry.Entity is Ticket && entityEntry.State == EntityState.Added)
             {
                 var ticket = entityEntry.Entity as Ticket;
@@ -211,6 +217,7 @@ namespace TicketDesk.Domain
                         Strings.ExceptionSecurityUserCannotCreateNewTicket));
                 }
             }
+
             return result.ValidationErrors.Count > 0 ? result : base.ValidateEntity(entityEntry, items);
         }
 
@@ -222,6 +229,7 @@ namespace TicketDesk.Domain
             {
                 RaiseEntityChangeEvents(pendingEntityChanges);
             }
+
             return result;
         }
 
@@ -233,6 +241,7 @@ namespace TicketDesk.Domain
             {
                 RaiseEntityChangeEvents(pendingEntityChanges);
             }
+
             return result;
         }
 
@@ -255,11 +264,12 @@ namespace TicketDesk.Domain
                 ProcessDeletedProjects();
                 PreProcessNewTickets();
                 PreProcessModifiedTickets(pending.PendingTicketChanges);
-                //IMPORTANT! ticket event changes may not exist until after preprocess methods above
-                //  are called. Order dependent operations!
+                // IMPORTANT! ticket event changes may not exist until after preprocess methods above
+                // are called. Order dependent operations!
                 CreateEventNotifications();
                 pending.PendingEventNotificationChanges = GetTicketEventNotificationChanges().ToArray();
             }
+
             return pending;
         }
 
@@ -313,18 +323,18 @@ namespace TicketDesk.Domain
             modifiedTicket.LastUpdateBy = SecurityProvider.CurrentUserId;
             modifiedTicket.LastUpdateDate = now;
 
-            if (o.State != EntityState.Added)//can't access orig values for new entities
+            if (o.State != EntityState.Added) // can't access orig values for new entities
             {
                 var origTicket = (Ticket)o.OriginalValues.ToObject();
                 if (modifiedTicket.TicketStatus != origTicket.TicketStatus)
-                //if status change, force update to status by/date
+                // if status change, force update to status by/date
                 {
                     modifiedTicket.CurrentStatusDate = now;
                     modifiedTicket.CurrentStatusSetBy = SecurityProvider.CurrentUserId;
                 }
+
                 if (modifiedTicket.TagList != origTicket.TagList)
                 {
-                    //var tagsToDie = origTicket.TicketTags.Select(ot => ot.TicketTagId);
                     var tagNames = modifiedTicket.TagList.Split(',');
                     var tagsInList = modifiedTicket.TicketTags.Where(ot => tagNames.Contains(ot.TagName)).ToArray();
                     var tagsToKill = modifiedTicket.TicketTags.Except(tagsInList).ToArray();
@@ -338,15 +348,15 @@ namespace TicketDesk.Domain
                     modifiedTicket.TicketTags.AddRange(newTags);
                 }
             }
+
             modifiedTicket.EnsureSubscribers();
         }
 
         private void PrePopulateNewTicket(Ticket newTicket)
         {
-            //TODO: Move this somewhere else?
-
-            //TODO: double check owner if populated, make sure submitter can set this field if it isn't their id already
-            //TODO: double check assigned if populated, make sure submitter can set this field.
+            // TODO: Move this somewhere else?
+            // TODO: double check owner if populated, make sure submitter can set this field if it isn't their id already
+            // TODO: double check assigned if populated, make sure submitter can set this field.
 
             var now = DateTime.Now;
             newTicket.Owner = newTicket.Owner ?? SecurityProvider.CurrentUserId;
@@ -356,8 +366,7 @@ namespace TicketDesk.Domain
             newTicket.CurrentStatusDate = now;
             newTicket.CurrentStatusSetBy = SecurityProvider.CurrentUserId;
 
-            //last update info will be set by PrePopulateModifiedTicket method, no need to set it here too
-
+            // last update info will be set by PrePopulateModifiedTicket method, no need to set it here too
             if (newTicket.TagList != null && newTicket.TagList.Any())
             {
                 newTicket.TicketTags.AddRange(newTicket.TagList.Split(',').Select(tag =>
@@ -385,7 +394,7 @@ namespace TicketDesk.Domain
             return ChangeTracker.Entries<Ticket>()
                 .Where(t => t.State == EntityState.Added)
                 .Select(t => t.Entity)
-                .ToArray(); //execute now, because after save changes this query will return no results
+                .ToArray(); // execute now, because after save changes this query will return no results
         }
 
         private IEnumerable<Ticket> GetTicketChanges()
@@ -395,7 +404,7 @@ namespace TicketDesk.Domain
             var pendingTicketChanges = ChangeTracker.Entries<Ticket>()
                 .Where(t => t.State != EntityState.Unchanged || pendingEventChanges.Select(c => c.TicketId).Contains(t.Entity.TicketId))
                 .Select(t => t.Entity)
-                .ToArray(); //execute now, because after save changes this query will return no results
+                .ToArray(); // execute now, because after save changes this query will return no results
             return pendingTicketChanges;
         }
 
@@ -404,7 +413,7 @@ namespace TicketDesk.Domain
             var pendingEventChanges =
                 ChangeTracker.Entries<TicketEvent>().Where(t => t.State != EntityState.Unchanged)
                 .Select(t => t.Entity)
-                .ToArray();//execute now, because after save changes this query will return no results
+                .ToArray(); // execute now, because after save changes this query will return no results
 
             return pendingEventChanges;
         }
@@ -421,7 +430,9 @@ namespace TicketDesk.Domain
         private class PendingEventEntities
         {
             public IEnumerable<Ticket> PendingNewTickets { get; set; }
+
             public IEnumerable<Ticket> PendingTicketChanges { get; set; }
+
             public IEnumerable<TicketEventNotification> PendingEventNotificationChanges { get; set; }
         }
     }

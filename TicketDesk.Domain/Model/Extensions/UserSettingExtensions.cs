@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -41,8 +41,8 @@ namespace TicketDesk.Domain.Model
 
                 var kString = string.Join(",", skeys);
                 baseQuery = baseQuery.OrderBy(kString);
-
             }
+
             return baseQuery;
         }
 
@@ -69,25 +69,25 @@ namespace TicketDesk.Domain.Model
 
                     fkeys[i] = string.Format("it.{0} {1} {2}", filterColumn.ColumnName, optr, "@" + filterColumn.ColumnName);
 
-                    //most of the time esql works with whatever type of param value you pass in, but
+                    // most of the time esql works with whatever type of param value you pass in, but
                     // enums in our collection are serialized to/from json as integers.
                     // Check if enum, and explicitly convert int value to the correct enum value
                     if (filterColumn.ColumnValueType != null && filterColumn.ColumnValueType.IsEnum)
                     {
                         filterColumn.ColumnValue = Enum.Parse(filterColumn.ColumnValueType, filterColumn.ColumnValue.ToString());
                     }
-                    //assigning the type in ctor, then value directly as a param works around issues when the colum val is null.
 
+                    //assigning the type in ctor, then value directly as a param works around issues when the colum val is null.
                     fParams[i] = new ObjectParameter(filterColumn.ColumnName, filterColumn.ColumnValueType)
                     {
                         Value = filterColumn.ColumnValue
                     };
-
                 }
 
                 var wString = string.Join(" and ", fkeys);
                 baseQuery = baseQuery.Where(wString, fParams);
             }
+
             return baseQuery;
         }
     }

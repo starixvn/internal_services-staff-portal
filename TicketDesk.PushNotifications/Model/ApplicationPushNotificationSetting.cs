@@ -3,29 +3,28 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using TicketDesk.PushNotifications.Delivery;
 using TicketDesk.Localization;
 using TicketDesk.Localization.PushNotifications;
+using TicketDesk.PushNotifications.Delivery;
 
 namespace TicketDesk.PushNotifications.Model
 {
     [Table("ApplicationPushNotificationSettings", Schema = "notifications")]
     public class ApplicationPushNotificationSetting
     {
-
         public ApplicationPushNotificationSetting()
         {
             ApplicationName = "TicketDesk";
@@ -51,13 +50,14 @@ namespace TicketDesk.PushNotifications.Model
         [ScaffoldColumn(false)]
         public string Serialized
         {
-            get => JsonConvert.SerializeObject(this);
+            get { return JsonConvert.SerializeObject(this); }
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
                     return;
                 }
+
                 var jsettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
                 var jData = JsonConvert.DeserializeObject<ApplicationPushNotificationSetting>(value, jsettings);
                 IsEnabled = jData.IsEnabled;
@@ -80,8 +80,7 @@ namespace TicketDesk.PushNotifications.Model
         public bool IsEnabled { get; set; }
 
         [NotMapped]
-        [Display(Name = "BackgroundQueueEnabled", Prompt = "BackgroundQueueEnabled_Prompt",
-            ResourceType = typeof(Strings))]
+        [Display(Name = "BackgroundQueueEnabled", Prompt = "BackgroundQueueEnabled_Prompt", ResourceType = typeof(Strings))]
         [LocalizedDescription("BackgroundQueueEnabled_Description", NameResourceType = typeof(Strings))]
         public bool IsBackgroundQueueEnabled { get; set; }
 
@@ -105,7 +104,6 @@ namespace TicketDesk.PushNotifications.Model
 
         [NotMapped]
         public BroadcastSetting BroadcastSettings { get; set; }
-
 
         public class BroadcastSetting
         {
@@ -164,7 +162,6 @@ namespace TicketDesk.PushNotifications.Model
             }
         }
 
-
         public class AntiNoiseSetting
         {
             public AntiNoiseSetting()
@@ -200,8 +197,8 @@ namespace TicketDesk.PushNotifications.Model
         {
             [Display(Name = "PushNotificationBroadcastModeAllStaff", ResourceType = typeof(Strings))]
             AllStaff,
-            [Display(Name = "PushNotificationBroadcastModeCustomAddress", ResourceType = typeof(Strings))]
 
+            [Display(Name = "PushNotificationBroadcastModeCustomAddress", ResourceType = typeof(Strings))]
             CustomAddress
         }
     }

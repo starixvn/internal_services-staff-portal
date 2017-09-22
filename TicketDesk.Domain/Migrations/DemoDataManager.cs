@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -30,17 +30,16 @@ namespace TicketDesk.Domain.Migrations
             context.TicketEvents.RemoveRange(context.TicketEvents);
             context.Tickets.RemoveRange(context.Tickets);
             context.Projects.RemoveRange(context.Projects.Where(p => p.ProjectName != "Default"));
-            context.TicketDeskSettings = new ApplicationSetting() {};
+            context.TicketDeskSettings = new ApplicationSetting() { };
 
             context.SaveChanges();
         }
 
         public static void SetupDemoData(TdDomainContext context)
         {
-            
             RemoveAllData(context);
             context.SaveChanges();
-            context.Projects.AddOrUpdate(p => p.ProjectName, new Project() {ProjectName = "NullSoft", ProjectDescription = "NullSoft Rocks"});
+            context.Projects.AddOrUpdate(p => p.ProjectName, new Project() { ProjectName = "NullSoft", ProjectDescription = "NullSoft Rocks" });
             var dProj = context.Projects.First();
             context.Tickets.AddOrUpdate(t => t.Title,
                    new Ticket
@@ -64,7 +63,6 @@ namespace TicketDesk.Domain.Migrations
                        TicketTags = new List<TicketTag> { new TicketTag() { TagName = "test" }, { new TicketTag() { TagName = "moretest" } } },
                        TicketType = "Problem",
                        TicketEvents = new[] { TicketEvent.CreateActivityEvent("17f78f38-fa68-445f-90de-38896140db28", TicketActivity.Create, null, null, null) }
-
                    });
 
             var titles = new[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1", "J1", "K1", "L1", "M1", "N1", "O1", "P1", "Q1", "R1" };
@@ -87,7 +85,6 @@ namespace TicketDesk.Domain.Migrations
                     cc = "Software";
                     oo = "17f78f38-fa68-445f-90de-38896140db28";
                 }
-
 
                 var now = DateTimeOffset.Now.AddDays(n);
                 context.Tickets.AddOrUpdate(t => t.Title,
@@ -115,8 +112,8 @@ namespace TicketDesk.Domain.Migrations
                         TicketEvents = new[] { TicketEvent.CreateActivityEvent(oo, TicketActivity.Create, null, null, null) }
                     });
             }
+
             context.SaveChanges();
         }
-
     }
 }

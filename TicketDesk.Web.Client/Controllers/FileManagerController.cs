@@ -182,10 +182,7 @@
                 data.Add(item);
             }
 
-            var result = new
-            {
-                Data = data
-            };
+            var result = new { Data = data };
 
             return result;
         }

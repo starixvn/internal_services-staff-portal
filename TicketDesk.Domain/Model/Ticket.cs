@@ -3,15 +3,13 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
-
-using System.Linq;
 
 namespace TicketDesk.Domain.Model
 {
@@ -19,6 +17,7 @@ namespace TicketDesk.Domain.Model
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
     using TicketDesk.Localization;
     using TicketDesk.Localization.Domain;
 
@@ -32,6 +31,7 @@ namespace TicketDesk.Domain.Model
             TicketTags = new HashSet<TicketTag>();
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
+
         [Key]
         [Display(ResourceType = typeof(Strings), Name = "TicketTicketId", ShortName = "TicketTicketIdShort")]
         public int TicketId { get; set; }
@@ -40,7 +40,6 @@ namespace TicketDesk.Domain.Model
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(ResourceType = typeof(Strings), Name = "TicketProject", ShortName = "TicketProjectShort")]
         public int ProjectId { get; set; }
-
 
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
         [StringLength(50, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
@@ -78,7 +77,6 @@ namespace TicketDesk.Domain.Model
         public DateTimeOffset CreatedDate { get; set; }
 
         private string _owner;
-
 
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
         [StringLength(256, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
@@ -159,7 +157,6 @@ namespace TicketDesk.Domain.Model
         [NotMapped]
         internal string PreviousAssignedUser { get; set; }
 
-
         [NotMapped]
         public bool IsAssigned
         {
@@ -221,7 +218,7 @@ namespace TicketDesk.Domain.Model
                         validActivities |= TicketActivity.CancelMoreInfo;
                     }
                 }
-                else //!moreInfo
+                else // !moreInfo
                 {
                     validActivities |= TicketActivity.AddComment;
                     if (isAssignedToMe)
@@ -230,7 +227,7 @@ namespace TicketDesk.Domain.Model
                     }
                 }
             }
-            else //not open (resolved or closed)
+            else // not open (resolved or closed)
             {
                 validActivities |= TicketActivity.ReOpen;
             }
@@ -250,7 +247,7 @@ namespace TicketDesk.Domain.Model
                         validActivities |= TicketActivity.ReAssign;
                     }
                 }
-                else//!assigned
+                else // !assigned
                 {
                     validActivities |= TicketActivity.Assign;
                 }
@@ -264,7 +261,7 @@ namespace TicketDesk.Domain.Model
                 {
                     validActivities |= TicketActivity.Pass | TicketActivity.GiveUp;
                 }
-                else//!isAssignedToMe
+                else // !isAssignedToMe
                 {
                     validActivities |= TicketActivity.TakeOver;
                 }

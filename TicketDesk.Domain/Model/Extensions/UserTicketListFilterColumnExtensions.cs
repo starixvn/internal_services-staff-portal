@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System.Collections.Generic;
@@ -18,7 +18,6 @@ namespace TicketDesk.Domain.Model
 {
     public static class UserTicketListFilterColumnExtensions
     {
-       
         /// <summary>
         /// Changes the preferences to filter by the specified assigned user.
         /// </summary>
@@ -90,12 +89,12 @@ namespace TicketDesk.Domain.Model
                         };
                         filters.Add(fColumn);
                     }
+
                     fColumn.UseEqualityComparison = true;
                     fColumn.ColumnValue = ownerValue;
                 }
             }
         }
-
 
         /// <summary>
         /// Changes the preferences to filter by the specified current status.
@@ -106,7 +105,6 @@ namespace TicketDesk.Domain.Model
         {
             if (!string.IsNullOrEmpty(statusValue))
             {
-
                 var fColumn = filters.SingleOrDefault(fc => fc.ColumnName == "TicketStatus");
 
                 if (statusValue == "Any")//TODO: need an invariant value with Localized display text
@@ -132,7 +130,6 @@ namespace TicketDesk.Domain.Model
                     fColumn.UseEqualityComparison = equality;
                     fColumn.ColumnValue = (statusValue == "Open") ? "Closed" : statusValue;//TODO: need an invariant value with Localized display text
                 }
-
             }
         }
     }

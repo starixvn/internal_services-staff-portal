@@ -13,7 +13,6 @@
 
 namespace TicketDesk.Domain
 {
-    using Fanex.NAP.Core.Business;
     using System;
     using System.Security;
     using TicketDesk.Domain.Model;
@@ -52,6 +51,15 @@ namespace TicketDesk.Domain
             get;
         }
 
+        public abstract IContextHelper NapContextHelper { get; set; }
+
+        public abstract int NapCurrentUserId { get; }
+
+        public abstract bool IsReadTicketCenter { get; }
+
+        public abstract bool IsHostTicketCenter { get; }
+
+        public abstract bool IsReadNewTicket { get; }
 
         internal TicketActivity GetReadTicketActivityPermission()
         {
@@ -76,20 +84,20 @@ namespace TicketDesk.Domain
                 TicketActivity.GiveUp |
                 TicketActivity.Resolve;
         }
+
         internal TicketActivity GetNewTicketPermission()
         {
             return TicketActivity.EditTicketInfo | TicketActivity.Create;
         }
 
-
-
         public TicketActivity GetValidTicketActivities(Ticket ticket)
         {
-            //Role
+            // Role
             if (!(IsReadTicketCenter || IsHostTicketCenter || IsReadNewTicket))
             {
                 throw new SecurityException("User is not authorized to read ticket data.");
             }
+
             var validTicketActivities = ticket.GetAvailableActivites(CurrentUserId);
 
             var allowedActivities = TicketActivity.None;
@@ -109,23 +117,12 @@ namespace TicketDesk.Domain
                 allowedActivities |= GetHostTicketActivityPermission();
             }
 
-            return (validTicketActivities & allowedActivities);
+            return validTicketActivities & allowedActivities;
         }
 
         public bool IsTicketActivityValid(Ticket ticket, TicketActivity activity)
         {
             return GetValidTicketActivities(ticket).HasFlag(activity);
         }
-
-        public abstract IContextHelper NapContextHelper { get; set; }
-
-        public abstract int NapCurrentUserId { get; }
-
-        public abstract bool IsReadTicketCenter { get; }
-
-        public abstract bool IsHostTicketCenter { get; }
-
-        public abstract bool IsReadNewTicket { get; }
-
     }
 }

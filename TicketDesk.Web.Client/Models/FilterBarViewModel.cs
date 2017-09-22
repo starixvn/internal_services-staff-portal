@@ -3,22 +3,22 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using TicketDesk.Domain.Model;
-using TicketDesk.Web.Identity;
 using TicketDesk.Localization.Models;
+using TicketDesk.Web.Identity;
 
 namespace TicketDesk.Web.Client.Models
 {
@@ -35,9 +35,7 @@ namespace TicketDesk.Web.Client.Models
             UserManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
         }
 
-
-        //TODO: Refactor all selectlists here to use the select list extensions B
-
+        // TODO: Refactor all selectlists here to use the select list extensions B
         public SelectList ItemsPerPageSelectList
         {
             get
@@ -62,12 +60,11 @@ namespace TicketDesk.Web.Client.Models
         {
             get
             {
-
                 string selectedStatus = "Any";
                 var fColumn = CurrentListSetting.FilterColumns.SingleOrDefault(fc => fc.ColumnName == "TicketStatus");
                 if (fColumn != null)
                 {
-                    if (!fColumn.ColumnValue.ToString().Equals("Closed", StringComparison.InvariantCultureIgnoreCase)) 
+                    if (!fColumn.ColumnValue.ToString().Equals("Closed", StringComparison.InvariantCultureIgnoreCase))
                     {
                         selectedStatus = fColumn.ColumnValue.ToString();
                     }
@@ -78,14 +75,14 @@ namespace TicketDesk.Web.Client.Models
                 }
 
                 return new SelectList(
-                    new[] 
-                    {   
-                        new { Text=Strings.TicketStatus_Any, Value="Any"}, 
-                        new { Text=Strings.TicketStatus_Open, Value="Open"},
-                        new { Text=Strings.TicketStatus_Active, Value="Active"},
-                        new { Text=Strings.TicketStatus_MoreInfo, Value="MoreInfo"},
-                        new { Text=Strings.TicketStatus_Resolved, Value="Resolved"},
-                        new { Text=Strings.TicketStatus_Closed, Value="Closed"}
+                    new[]
+                    {
+                        new { Text=Strings.TicketStatus_Any, Value="Any" },
+                        new { Text=Strings.TicketStatus_Open, Value="Open" },
+                        new { Text=Strings.TicketStatus_Active, Value="Active" },
+                        new { Text=Strings.TicketStatus_MoreInfo, Value="MoreInfo" },
+                        new { Text=Strings.TicketStatus_Resolved, Value="Resolved" },
+                        new { Text=Strings.TicketStatus_Closed, Value="Closed" }
                     },
                 "Value",
                 "Text",
@@ -93,7 +90,6 @@ namespace TicketDesk.Web.Client.Models
                 );
             }
         }
-
 
         public Dictionary<string, object> OwnerFilterHtmlAttributes
         {
@@ -110,8 +106,6 @@ namespace TicketDesk.Web.Client.Models
             }
         }
 
-       
-
         public SelectList SubmittersSelectList
         {
             get
@@ -122,15 +116,13 @@ namespace TicketDesk.Web.Client.Models
                 {
                     selectedUserName = fColumn.ColumnValue.ToString();
                 }
-               
+
                 var lusers = GetUsersInRole("TdInternalUsers");
                 lusers.Insert(0, new UserItem { Name = "anyone", DisplayName = Strings.AssignedTo_Anyone });
 
                 return new SelectList(lusers, "Name", "DisplayName", selectedUserName);
             }
         }
-
-       
 
         public SelectList AssignedToSelectList
         {
@@ -140,9 +132,8 @@ namespace TicketDesk.Web.Client.Models
                 var fColumn = CurrentListSetting.FilterColumns.SingleOrDefault(fc => fc.ColumnName == "AssignedTo");
                 if (fColumn != null)
                 {
-                    //when filter for column exists, but the value is null it means the selection was unassigned
+                    // when filter for column exists, but the value is null it means the selection was unassigned
                     selectedUserName = (fColumn.ColumnValue ?? "unassigned").ToString();
-                        //(string.IsNullOrEmpty(fColumn.ColumnValue.ToString())) ? "unassigned" : fColumn.ColumnValue.ToString();
                 }
 
                 var lusers = GetUsersInRole("TdHelpDeskUsers");
@@ -179,7 +170,7 @@ namespace TicketDesk.Web.Client.Models
                 {
                     statusHtmlAttributes.Add("Disabled", true);
                 }
-                
+
                 return statusHtmlAttributes;
             }
         }
@@ -188,13 +179,12 @@ namespace TicketDesk.Web.Client.Models
         {
             //TODO: add caching and reuse UserDisplayInfo from UserDisplayInfoCache
             public string Name { get; set; }
+
             public string DisplayName { get; set; }
         }
 
         private List<UserItem> GetUsersInRole(string roleName)
         {
-
-
             //TODO: Add caching for this in role manager
             return RoleManager
                 .FindByName(roleName)

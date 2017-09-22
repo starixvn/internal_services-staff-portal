@@ -11,20 +11,20 @@
 // attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
+using Ganss.XSS;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Ganss.XSS;
 using TicketDesk.IO;
+using TicketDesk.Localization.Models;
 using TicketDesk.Search.Common;
 using TicketDesk.Web.Client;
 using TicketDesk.Web.Client.Models;
 using TicketDesk.Web.Identity;
 using TicketDesk.Web.Identity.Model;
-using TicketDesk.Localization.Models;
 
 namespace TicketDesk.Domain.Model
 {
@@ -41,7 +41,7 @@ namespace TicketDesk.Domain.Model
                 Status = t.TicketStatus.ToString(),
                 LastUpdateDate = t.LastUpdateDate,
                 Tags = string.IsNullOrEmpty(t.TagList) ? new string[] { } : t.TagList.Split(','),
-                //not null comments only, otherwise we end up indexing empty array item, or blowing up azure required field
+                // not null comments only, otherwise we end up indexing empty array item, or blowing up azure required field
                 Events = t.TicketEvents.Where(c => !string.IsNullOrEmpty(c.Comment)).Select(c => c.Comment).ToArray()
             });
         }
@@ -119,14 +119,20 @@ namespace TicketDesk.Domain.Model
             {
                 all = all.Where(u => u.Id != sec.CurrentUserId);
             }
+
             if (excludeCurrentOwner)
             {
                 all = all.Where(u => u.Id != ticket.Owner);
             }
+
             return all.ToUserSelectList(false, ticket.Owner);
         }
 
-        public static SelectList GetAssignedToList(this Ticket ticket, bool excludeCurrentUser = false, bool excludeCurrentAssignedTo = false, bool includeEmptyText = true)
+        public static SelectList GetAssignedToList(
+            this Ticket ticket,
+            bool excludeCurrentUser = false,
+            bool excludeCurrentAssignedTo = false,
+            bool includeEmptyText = true)
         {
             var roleManager = DependencyResolver.Current.GetService<TicketDeskRoleManager>();
             var userManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
@@ -136,47 +142,43 @@ namespace TicketDesk.Domain.Model
             {
                 all = all.Where(u => u.Id != sec.CurrentUserId);
             }
+
             if (excludeCurrentAssignedTo)
             {
                 all = all.Where(u => u.Id != ticket.AssignedTo);
             }
+
             return includeEmptyText ? all.ToUserSelectList(ticket.AssignedTo, Strings.AssignedTo_Unassigned) : all.ToUserSelectList(false, ticket.AssignedTo);
         }
 
         public static bool AllowEditTags(this Ticket ticket)
         {
-            //TODO: is this the best place to put this check?
-            //ROLE
-            //return context.SecurityProvider.IsTdHelpDeskUser || context.TicketDeskSettings.Permissions.AllowInternalUsersToEditTags;
+            // TODO: is this the best place to put this check?
+            // ROLE
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
             return context.SecurityProvider.IsHostTicketCenter || context.TicketDeskSettings.Permissions.AllowInternalUsersToEditTags;
         }
 
         public static bool AllowSetOwner(this Ticket ticket)
         {
-            //TODO: is this the best place to put this check? Is this one even worth the extension?
-            //ROLE
-            //return (context.SecurityProvider.IsTdInternalUser && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetOwner) || (context.SecurityProvider.IsTdHelpDeskUser || context.SecurityProvider.IsTdAdministrator);
-
+            // TODO: is this the best place to put this check? Is this one even worth the extension?
+            // ROLE
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
             return (context.SecurityProvider.IsReadTicketCenter && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetOwner) || (context.SecurityProvider.IsHostTicketCenter);
         }
 
         public static bool AllowSetAssigned(this Ticket ticket)
         {
-            //TODO: is this the best place to put this check? Is this one even worth the extension?
-            //ROLE
-            //return (context.SecurityProvider.IsTdInternalUser && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetAssigned) || (context.SecurityProvider.IsTdHelpDeskUser || context.SecurityProvider.IsTdAdministrator);
-
+            // TODO: is this the best place to put this check? Is this one even worth the extension?
+            // ROLE
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
             return (context.SecurityProvider.IsReadTicketCenter && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetAssigned) || (context.SecurityProvider.IsHostTicketCenter);
         }
 
         public static bool AllowEditPriorityList(this Ticket ticket)
         {
-            //TODO: is this the best place to put this check?
-            //ROLE
-            //return (context.SecurityProvider.IsTdAdministrator || context.SecurityProvider.IsTdHelpDeskUser) || (context.SecurityProvider.IsTdInternalUser &&  context.TicketDeskSettings.Permissions.AllowInternalUsersToEditPriority);
+            // TODO: is this the best place to put this check?
+            // ROLE
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
             return (context.SecurityProvider.IsHostTicketCenter) || (context.SecurityProvider.IsReadTicketCenter && context.TicketDeskSettings.Permissions.AllowInternalUsersToEditPriority);
         }
@@ -199,6 +201,7 @@ namespace TicketDesk.Domain.Model
                     true,
                     false);
             }
+
             return attachments.Select(a => a.Name);
         }
     }

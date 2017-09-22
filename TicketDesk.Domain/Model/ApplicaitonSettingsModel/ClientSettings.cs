@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Newtonsoft.Json;
-
-namespace TicketDesk.Domain.Model
+﻿namespace TicketDesk.Domain.Model
 {
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public class ClientSetting
     {
         public ClientSetting()
@@ -17,13 +17,18 @@ namespace TicketDesk.Domain.Model
         [ScaffoldColumn(false)]
         public string Serialized
         {
-            get { return JsonConvert.SerializeObject(this); }
+            get
+            {
+                return JsonConvert.SerializeObject(this);
+            }
+
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
                     return;
                 }
+
                 var jsettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
                 var jData = JsonConvert.DeserializeObject<ClientSetting>(value, jsettings);
                 Settings = jData.Settings;
@@ -31,7 +36,6 @@ namespace TicketDesk.Domain.Model
         }
 
         [NotMapped]
-        public IDictionary<string,string> Settings { get; set; }
-
+        public IDictionary<string, string> Settings { get; set; }
     }
 }

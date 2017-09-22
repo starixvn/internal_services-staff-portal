@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Newtonsoft.Json;
-using TicketDesk.Localization.Domain;
-
-namespace TicketDesk.Domain.Model
+﻿namespace TicketDesk.Domain.Model
 {
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using TicketDesk.Localization.Domain;
+
     public class ApplicationSecuritySetting
     {
+        private ICollection<string> defaultNewUserRoles;
+
         public ApplicationSecuritySetting()
         {
-            DefaultNewUserRoles = new List<string>(new[] {"TdPendingUsers"});
+            DefaultNewUserRoles = new List<string>(new[] { "TdPendingUsers" });
         }
 
         [JsonIgnore]
@@ -18,34 +20,40 @@ namespace TicketDesk.Domain.Model
         [ScaffoldColumn(false)]
         public string Serialized
         {
-            get { return JsonConvert.SerializeObject(this); }
+            get
+            {
+                return JsonConvert.SerializeObject(this);
+            }
+
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
                     return;
                 }
-                var jsettings = new JsonSerializerSettings {ObjectCreationHandling = ObjectCreationHandling.Replace};
+
+                var jsettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
                 var jData = JsonConvert.DeserializeObject<ApplicationSecuritySetting>(value, jsettings);
                 DefaultNewUserRoles = jData.DefaultNewUserRoles;
             }
         }
 
-        private ICollection<string> defaultNewUserRoles;
-
-
-
         [NotMapped]
         [Display(Name = "DefaultNewUserRoles", ResourceType = typeof(Strings))]
         public ICollection<string> DefaultNewUserRoles
         {
-            get { return defaultNewUserRoles;}
+            get
+            {
+                return defaultNewUserRoles;
+            }
+
             set
             {
                 if (!value.Contains("TdPendingUsers"))
                 {
                     value.Add("TdPendingUsers");
                 }
+
                 defaultNewUserRoles = value;
             }
         }

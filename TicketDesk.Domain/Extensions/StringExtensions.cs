@@ -28,8 +28,10 @@ namespace TicketDesk.Domain
                 {
                     cFriendlyName.Add(' ');
                 }
+
                 cFriendlyName.Add(c);
             }
+
             return new string(cFriendlyName.ToArray());
         }
     }

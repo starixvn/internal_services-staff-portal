@@ -3,28 +3,27 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
+using Newtonsoft.Json.Linq;
+using S22.Mail;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using S22.Mail;
-using SendGrid;
-using TicketDesk.PushNotifications.Model;
 using TicketDesk.Localization;
 using TicketDesk.Localization.PushNotifications;
-using System;
-using SendGrid.Helpers.Mail;
-using System.Collections.Generic;
+using TicketDesk.PushNotifications.Model;
 
 namespace TicketDesk.PushNotifications.Delivery
 {
@@ -42,7 +41,7 @@ namespace TicketDesk.PushNotifications.Delivery
         {
             var cfg = (SendGridDeliveryProviderConfiguration)Configuration;
             var sent = false;
-            //implicit conversion operator
+            // implicit conversion operator
             MailMessage smsg = message as SerializableMailMessage;
             if (smsg != null)
             {
@@ -56,7 +55,7 @@ namespace TicketDesk.PushNotifications.Delivery
                         Subject = smsg.Subject,
                         Contents = new List<Content>() {
                             new Content("text/html", hView.ContentStream.ReadToString()),
-                            //new Content("text", tView.ContentStream.ReadToString())
+                            // new Content("text", tView.ContentStream.ReadToString())
                         },
                         Personalizations = new List<Personalization>()
                         {
@@ -65,7 +64,7 @@ namespace TicketDesk.PushNotifications.Delivery
                                 Tos = new List<EmailAddress>()
                                 {
                                     new EmailAddress(notificationItem.Destination.DestinationAddress, notificationItem.Destination.SubscriberName)
-                                }                                
+                                }
                             }
                         },
                     };
@@ -77,24 +76,24 @@ namespace TicketDesk.PushNotifications.Delivery
 
                     if (cfg.EnableClickTracking ?? false)
                     {
-                        sendGridMessage.TrackingSettings.ClickTracking.Enable = true;;
+                        sendGridMessage.TrackingSettings.ClickTracking.Enable = true;
                     }
                     if (cfg.EnableGravatar ?? false)
                     {
-                        //sendGridMessage.MailSettings.EnableGravatar();
+                        // sendGridMessage.MailSettings.EnableGravatar();
                     }
                     if (cfg.EnableOpenTracking ?? false)
                     {
-                        sendGridMessage.TrackingSettings.OpenTracking.Enable = true;;
+                        sendGridMessage.TrackingSettings.OpenTracking.Enable = true;
                     }
                     if (cfg.SendToSink ?? false)
-                    {                        
-                        //sendGridMessage.SendToSink();
+                    {
+                        // sendGridMessage.SendToSink();
                     }
 
-                    //var transport = new Web(cfg.ApiKey);
-                    //await transport.DeliverAsync(sendGridMessage);
-                    //sent = true;
+                    // var transport = new Web(cfg.ApiKey);
+                    // await transport.DeliverAsync(sendGridMessage);
+                    // sent = true;
 
                     var sg = new SendGridClient(cfg.ApiKey);
                     var response = await sg.SendEmailAsync(sendGridMessage);
@@ -103,14 +102,12 @@ namespace TicketDesk.PushNotifications.Delivery
                 catch
                 {
                     sent = false;
-                    //TODO: log this somewhere                    
+                    // TODO: log this somewhere
                 }
-
             }
+
             return sent;
         }
-
-
     }
 
     public static class StreamExtensions

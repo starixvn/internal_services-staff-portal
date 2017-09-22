@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System.ComponentModel.DataAnnotations;
@@ -19,6 +19,8 @@ namespace TicketDesk.Domain.Model
 {
     public class TicketEventNotification
     {
+        private bool _isNew;
+
         public TicketEventNotification()
         {
             _isNew = true;
@@ -40,12 +42,11 @@ namespace TicketDesk.Domain.Model
         [Index]
         public string SubscriberId { get; set; }
 
-        private bool _isNew;
         /// <summary>
         /// Gets or sets a value indicating whether this notification is new.
         /// </summary>
         /// <remarks>
-        /// Typically, this would be used to alert a user that chages have happened, and once alerted 
+        /// Typically, this would be used to alert a user that chages have happened, and once alerted
         /// this would be toggled to false to prevent alerting them again.
         /// </remarks>
         /// <value><c>true</c> if this instance is new; otherwise, <c>false</c>.</value>
@@ -64,11 +65,12 @@ namespace TicketDesk.Domain.Model
         }
 
         private bool _isRead;
+
         /// <summary>
         /// Gets or sets a value indicating whether this notification has been read.
         /// </summary>
         /// <remarks>
-        /// Typcially, this would be used to highlight uread items. Once viewed it would be 
+        /// Typcially, this would be used to highlight uread items. Once viewed it would be
         /// toggled to false to prevent it from being highlighted in the future.
         /// </remarks>
         /// <value><c>true</c> if this instance is read; otherwise, <c>false</c>.</value>
@@ -77,11 +79,12 @@ namespace TicketDesk.Domain.Model
             get { return _isRead; }
             set
             {
-                //when marking as read, new flag is implicitly chaged to false;
+                // when marking as read, new flag is implicitly chaged to false;
                 if (value)
                 {
                     IsNew = false;
                 }
+
                 _isRead = value;
             }
         }
@@ -94,7 +97,5 @@ namespace TicketDesk.Domain.Model
         public virtual TicketEvent TicketEvent { get; set; }
 
         public virtual TicketSubscriber TicketSubscriber { get; set; }
-
-
     }
 }

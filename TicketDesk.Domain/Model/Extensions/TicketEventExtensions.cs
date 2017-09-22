@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System.Collections.Generic;
@@ -25,7 +25,8 @@ namespace TicketDesk.Domain.Model
         /// <param name="activity">The activity.</param>
         /// <param name="comment">The comment content.</param>
         /// <returns>TicketEvent.</returns>
-        public static TicketEvent AddActivityEvent(this ICollection<TicketEvent> set,
+        public static TicketEvent AddActivityEvent(
+            this ICollection<TicketEvent> set,
             string eventByUserId,
             TicketActivity activity,
             string comment)
@@ -43,7 +44,8 @@ namespace TicketDesk.Domain.Model
         /// <param name="newPriority">The new priority.</param>
         /// <param name="userName">Name of the user.</param>
         /// <returns>TicketEvent.</returns>
-        public static TicketEvent AddActivityEvent(this ICollection<TicketEvent> set,
+        public static TicketEvent AddActivityEvent(
+            this ICollection<TicketEvent> set,
             string eventByUserId,
             TicketActivity activity,
             string comment,
@@ -60,8 +62,5 @@ namespace TicketDesk.Domain.Model
             set.Add(tc);
             return tc;
         }
-
-
-
     }
 }
