@@ -26,6 +26,8 @@ namespace TicketDesk.Domain
 {
     public sealed class TdDomainContext : DbContext
     {
+        private UserSettingsManager _userSettingsManager;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TdDomainContext"/> class.
         /// </summary>
@@ -93,8 +95,6 @@ namespace TicketDesk.Domain
 
         internal DbSet<UserSetting> UserSettings { get; set; }
 
-        private UserSettingsManager _userSettingsManager;
-
         public UserSettingsManager UserSettingsManager
         {
             get
@@ -113,12 +113,15 @@ namespace TicketDesk.Domain
             get
             {
                 var aps = ApplicationSettings.GetTicketDeskSettings();
+
                 // this should only ever happen once, but if no settings are in DB, make default set
                 if (aps == null)
                 {
                     aps = new ApplicationSetting();
+
                     // do this on another instance, because we don't want to commit other things that may be tracking on this instance
-                    using (var tempContext = new TdDomainContext()) //this feels like cheating :)
+                    // this feels like cheating :)
+                    using (var tempContext = new TdDomainContext())
                     {
                         ApplicationSettings.Add(aps);
                         tempContext.SaveChanges();

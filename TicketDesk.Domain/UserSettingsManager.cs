@@ -34,7 +34,7 @@ namespace TicketDesk.Domain
 
             settings.ListSettings = new UserTicketListSettingsCollection
             {
-                    UserTicketListSetting.GetDefaultListSettings(userId,Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket, Constant.Policy.Read))
+                UserTicketListSetting.GetDefaultListSettings(userId, Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket, Constant.Policy.Read))
             };
         }
 

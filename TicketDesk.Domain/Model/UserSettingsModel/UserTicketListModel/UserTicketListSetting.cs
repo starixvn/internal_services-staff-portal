@@ -151,10 +151,12 @@ namespace TicketDesk.Domain.Model
             {
                 FilterColumns.ChangeTicketStatusFilter(ticketStatus);
             }
+
             if (!DisabledFilterColumnNames.Contains("Owner"))
             {
                 FilterColumns.ChangeOwnerFilter(owner);
             }
+
             if (!DisabledFilterColumnNames.Contains("AssignedTo"))
             {
                 FilterColumns.ChangeAssignedFilter(assignedTo);

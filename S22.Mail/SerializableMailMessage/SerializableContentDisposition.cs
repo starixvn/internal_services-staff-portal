@@ -8,6 +8,39 @@ namespace S22.Mail
     [Serializable]
     public class SerializableContentDisposition
     {
+        private SerializableContentDisposition(ContentDisposition disposition)
+        {
+            CreationDate = disposition.CreationDate;
+            DispositionType = disposition.DispositionType;
+            FileName = disposition.FileName;
+            Inline = disposition.Inline;
+            ModificationDate = disposition.ModificationDate;
+            Parameters = new StringDictionary();
+            foreach (string k in disposition.Parameters.Keys)
+            {
+                Parameters.Add(k, disposition.Parameters[k]);
+            }
+
+            ReadDate = disposition.ReadDate;
+            Size = disposition.Size;
+        }
+
+        public DateTime CreationDate { get; set; }
+
+        public string DispositionType { get; set; }
+
+        public string FileName { get; set; }
+
+        public bool Inline { get; set; }
+
+        public DateTime ModificationDate { get; set; }
+
+        public StringDictionary Parameters { get; private set; }
+
+        public DateTime ReadDate { get; set; }
+
+        public long Size { get; set; }
+
         public static implicit operator ContentDisposition(SerializableContentDisposition disposition)
         {
             if (disposition == null)
@@ -41,39 +74,6 @@ namespace S22.Mail
 
             return new SerializableContentDisposition(disposition);
         }
-
-        private SerializableContentDisposition(ContentDisposition disposition)
-        {
-            CreationDate = disposition.CreationDate;
-            DispositionType = disposition.DispositionType;
-            FileName = disposition.FileName;
-            Inline = disposition.Inline;
-            ModificationDate = disposition.ModificationDate;
-            Parameters = new StringDictionary();
-            foreach (string k in disposition.Parameters.Keys)
-            {
-                Parameters.Add(k, disposition.Parameters[k]);
-            }
-
-            ReadDate = disposition.ReadDate;
-            Size = disposition.Size;
-        }
-
-        public DateTime CreationDate { get; set; }
-
-        public string DispositionType { get; set; }
-
-        public string FileName { get; set; }
-
-        public bool Inline { get; set; }
-
-        public DateTime ModificationDate { get; set; }
-
-        public StringDictionary Parameters { get; private set; }
-
-        public DateTime ReadDate { get; set; }
-
-        public long Size { get; set; }
     }
 }
 #pragma warning restore 1591

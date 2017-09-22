@@ -10,6 +10,33 @@ namespace S22.Mail
     [Serializable]
     public class SerializableAttachment
     {
+        private SerializableAttachment(Attachment attachment)
+        {
+            Name = attachment.Name;
+            NameEncoding = attachment.NameEncoding;
+            ContentDisposition = attachment.ContentDisposition;
+            ContentId = attachment.ContentId;
+            ContentStream = new MemoryStream();
+            attachment.ContentStream.CopyTo(ContentStream);
+            attachment.ContentStream.Position = 0;
+            ContentType = attachment.ContentType;
+            TransferEncoding = attachment.TransferEncoding;
+        }
+
+        public SerializableContentDisposition ContentDisposition { get; private set; }
+
+        public string Name { get; set; }
+
+        public Encoding NameEncoding { get; set; }
+
+        public string ContentId { get; set; }
+
+        public Stream ContentStream { get; private set; }
+
+        public SerializableContentType ContentType { get; set; }
+
+        public TransferEncoding TransferEncoding { get; set; }
+
         public static implicit operator Attachment(SerializableAttachment attachment)
         {
             if (attachment == null)
@@ -49,33 +76,6 @@ namespace S22.Mail
 
             return new SerializableAttachment(attachment);
         }
-
-        private SerializableAttachment(Attachment attachment)
-        {
-            Name = attachment.Name;
-            NameEncoding = attachment.NameEncoding;
-            ContentDisposition = attachment.ContentDisposition;
-            ContentId = attachment.ContentId;
-            ContentStream = new MemoryStream();
-            attachment.ContentStream.CopyTo(ContentStream);
-            attachment.ContentStream.Position = 0;
-            ContentType = attachment.ContentType;
-            TransferEncoding = attachment.TransferEncoding;
-        }
-
-        public SerializableContentDisposition ContentDisposition { get; private set; }
-
-        public string Name { get; set; }
-
-        public Encoding NameEncoding { get; set; }
-
-        public string ContentId { get; set; }
-
-        public Stream ContentStream { get; private set; }
-
-        public SerializableContentType ContentType { get; set; }
-
-        public TransferEncoding TransferEncoding { get; set; }
     }
 }
 #pragma warning restore 1591

@@ -1,19 +1,19 @@
-﻿using System.Linq;
-
-namespace TicketDesk.Domain.Model
+﻿namespace TicketDesk.Domain.Model
 {
+    using System.Linq;
+
     public static class UserTicketListSettingsCollectionExtensions
     {
-
         internal static bool HasRequiredDefaultListSettings(this UserTicketListSettingsCollection listSettings, bool isHelpDeskOrAdmin)
         {
             var hasLists = true;
             if (isHelpDeskOrAdmin)
             {
-                hasLists = 
-                    listSettings.Any(s => s.ListName == "unassigned") && 
+                hasLists =
+                    listSettings.Any(s => s.ListName == "unassigned") &&
                     listSettings.Any(s => s.ListName == "assignedToMe");
             }
+
             return
                 hasLists &&
                 listSettings.Any(s => s.ListName == "mytickets") &&

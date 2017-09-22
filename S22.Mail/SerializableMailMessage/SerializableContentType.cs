@@ -8,6 +8,32 @@ namespace S22.Mail
     [Serializable]
     public class SerializableContentType
     {
+        private SerializableContentType(ContentType contentType)
+        {
+            Boundary = contentType.Boundary;
+            CharSet = contentType.CharSet;
+            MediaType = contentType.MediaType;
+            Name = contentType.Name;
+            Parameters = new StringDictionary();
+            foreach (string k in contentType.Parameters.Keys)
+            {
+                if (contentType.Parameters.ContainsKey(k) == false)
+                {
+                    Parameters.Add(k, contentType.Parameters[k]);
+                }
+            }
+        }
+
+        public string Boundary { get; set; }
+
+        public string CharSet { get; set; }
+
+        public string MediaType { get; set; }
+
+        public string Name { get; set; }
+
+        public StringDictionary Parameters { get; private set; }
+
         public static implicit operator ContentType(SerializableContentType contentType)
         {
             if (contentType == null)
@@ -38,32 +64,6 @@ namespace S22.Mail
 
             return new SerializableContentType(contentType);
         }
-
-        private SerializableContentType(ContentType contentType)
-        {
-            Boundary = contentType.Boundary;
-            CharSet = contentType.CharSet;
-            MediaType = contentType.MediaType;
-            Name = contentType.Name;
-            Parameters = new StringDictionary();
-            foreach (string k in contentType.Parameters.Keys)
-            {
-                if (contentType.Parameters.ContainsKey(k) == false)
-                {
-                    Parameters.Add(k, contentType.Parameters[k]);
-                }
-            }
-        }
-
-        public string Boundary { get; set; }
-
-        public string CharSet { get; set; }
-
-        public string MediaType { get; set; }
-
-        public string Name { get; set; }
-
-        public StringDictionary Parameters { get; private set; }
     }
 }
 #pragma warning restore 1591

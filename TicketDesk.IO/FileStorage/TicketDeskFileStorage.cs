@@ -55,9 +55,11 @@ namespace TicketDesk.IO
             {
                 if (!isPending)
                 {
-                    Current.TryCreateFolder(GetFileFolderPath(newContainerId, false));//don't care about return value
+                    // don't care about return value
+                    Current.TryCreateFolder(GetFileFolderPath(newContainerId, false));
                 }
-                //hadle case where filename already exists ; add (x) to filename
+
+                // hadle case where filename already exists ; add (x) to filename
                 var count = 1;
                 var fileNameOnly = Path.GetFileNameWithoutExtension(fileName);
                 var extension = Path.GetExtension(fileName);
@@ -71,6 +73,7 @@ namespace TicketDesk.IO
 
                 return true;
             }
+
             return false;
         }
 

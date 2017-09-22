@@ -105,6 +105,7 @@ namespace TicketDesk.Domain.Model
             {
                 return _assignedTo;
             }
+
             set
             {
                 PreviousAssignedUser = _assignedTo;

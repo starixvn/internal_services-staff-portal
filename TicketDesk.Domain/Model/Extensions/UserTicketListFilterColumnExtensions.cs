@@ -121,7 +121,7 @@ namespace TicketDesk.Domain.Model
                 else
                 {
                     // TODO: need an invariant value with Localized display text
-                    bool equality = (statusValue != "Open");
+                    bool equality = statusValue != "Open";
                     if (fColumn == null)
                     {
                         fColumn = new UserTicketListFilterColumn("TicketStatus")

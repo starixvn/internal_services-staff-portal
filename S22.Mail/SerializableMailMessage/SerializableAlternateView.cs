@@ -1,4 +1,5 @@
 ﻿#pragma warning disable 1591
+
 namespace S22.Mail
 {
     using System;
@@ -9,34 +10,6 @@ namespace S22.Mail
     [Serializable]
     public class SerializableAlternateView
     {
-        public static implicit operator AlternateView(SerializableAlternateView view)
-        {
-            if (view == null)
-            {
-                return null;
-            }
-
-            AlternateView v = new AlternateView(new MemoryStream(view.Content));
-
-            v.BaseUri = view.BaseUri;
-            foreach (SerializableLinkedResource res in view.LinkedResources)
-            {
-                v.LinkedResources.Add(res);
-            }
-
-            v.ContentId = view.ContentId;
-            v.ContentType = view.ContentType;
-            v.TransferEncoding = view.TransferEncoding;
-            return v;
-        }
-
-        public static implicit operator SerializableAlternateView(AlternateView view)
-        {
-            if (view == null)
-                return null;
-            return new SerializableAlternateView(view);
-        }
-
         private SerializableAlternateView(AlternateView view)
         {
             BaseUri = view.BaseUri;
@@ -48,7 +21,6 @@ namespace S22.Mail
 
             ContentId = view.ContentId;
             Content = GetBytesFromStream(view.ContentStream);
-            // view.ContentStream.CopyTo(ContentStream);
             view.ContentStream.Position = 0;
             ContentType = view.ContentType;
             TransferEncoding = view.TransferEncoding;
@@ -74,6 +46,38 @@ namespace S22.Mail
                 return ms.ToArray();
             }
         }
+
+        public static implicit operator AlternateView(SerializableAlternateView view)
+        {
+            if (view == null)
+            {
+                return null;
+            }
+
+            AlternateView v = new AlternateView(new MemoryStream(view.Content));
+
+            v.BaseUri = view.BaseUri;
+            foreach (SerializableLinkedResource res in view.LinkedResources)
+            {
+                v.LinkedResources.Add(res);
+            }
+
+            v.ContentId = view.ContentId;
+            v.ContentType = view.ContentType;
+            v.TransferEncoding = view.TransferEncoding;
+            return v;
+        }
+
+        public static implicit operator SerializableAlternateView(AlternateView view)
+        {
+            if (view == null)
+            {
+                return null;
+            }
+
+            return new SerializableAlternateView(view);
+        }
     }
 }
+
 #pragma warning restore 1591

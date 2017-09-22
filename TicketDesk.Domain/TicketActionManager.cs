@@ -21,6 +21,11 @@ namespace TicketDesk.Domain
 {
     public class TicketActionManager
     {
+        internal TicketActionManager(TdDomainSecurityProviderBase securityProvider)
+        {
+            SecurityProvider = securityProvider;
+        }
+
         // TODO: we should enforce required comments on the back-end
         public static TicketActionManager GetInstance(TdDomainSecurityProviderBase securityProvider)
         {
@@ -28,11 +33,6 @@ namespace TicketDesk.Domain
         }
 
         private TdDomainSecurityProviderBase SecurityProvider { get; set; }
-
-        internal TicketActionManager(TdDomainSecurityProviderBase securityProvider)
-        {
-            SecurityProvider = securityProvider;
-        }
 
         /// <summary>
         /// Determines whether the ticket activity is valid for the specified ticket.
@@ -326,7 +326,8 @@ namespace TicketDesk.Domain
         {
             return ticket =>
             {
-                if (SecurityProvider.CurrentUserId == assignTo) //attempting to assign/reassign to self
+                // attempting to assign/reassign to self
+                if (SecurityProvider.CurrentUserId == assignTo)
                 {
                     TakeOver(comment, priority)(ticket);
                 }

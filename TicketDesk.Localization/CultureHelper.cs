@@ -44,6 +44,7 @@ namespace TicketDesk.Localization
                 {
                     name = GetImplementedCulture(section.Culture, name);
                 }
+
                 return name;
             }
         }
@@ -81,20 +82,36 @@ namespace TicketDesk.Localization
         public static string GetImplementedCulture(string name, string defaultCulture)
         {
             // make sure it's not null
+            // return Default culture
             if (string.IsNullOrEmpty(name))
-                return defaultCulture; // return Default culture
+            {
+                return defaultCulture;
+            }
+
             // make sure it is a valid culture first
+            // return Default culture if it is invalid
             if (_validCultures.Where(c => c.Equals(name, StringComparison.InvariantCultureIgnoreCase)).Count() == 0)
-                return defaultCulture; // return Default culture if it is invalid
+            {
+                return defaultCulture;
+            }
+
             // if it is implemented, accept it
             if (_cultures.Keys.Where(c => c.Equals(name, StringComparison.InvariantCultureIgnoreCase)).Count() > 0)
-                return name; // accept it
+            {
+                return name;
+            }
+
             // Find a close match. For example, if you have "en-US" defined and the user requests "en-GB", 
             // the function will return closes match that is "en-US" because at least the language is the same (ie English)  
             var n = GetNeutralCulture(name);
             foreach (var c in _cultures.Keys)
+            {
                 if (c.StartsWith(n))
+                {
                     return c;
+                }
+            }
+
             // else 
             // It is not implemented
             return defaultCulture; // return Default culture as no match found
@@ -128,7 +145,9 @@ namespace TicketDesk.Localization
         public static void SetCurrentCulture(string name, bool onlyImplementedCulture = true)
         {
             if (onlyImplementedCulture)
+            {
                 name = CultureHelper.GetImplementedCulture(name);
+            }
 
             var newCulture = new System.Globalization.CultureInfo(name);
             Thread.CurrentThread.CurrentCulture = newCulture;
