@@ -29,6 +29,11 @@
             _webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _webPath);
             _allowedExtensions = new List<string> { "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md" };
 
+            if (!Directory.Exists(_webRootPath))
+            {
+                Directory.CreateDirectory(_webRootPath);
+            }
+
             this.fileManagerService = fileManagerService;
         }
 
