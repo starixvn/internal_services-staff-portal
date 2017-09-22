@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -30,7 +30,11 @@ namespace TicketDesk.PushNotifications.Model
 
         public string TicketEventsList
         {
-            get { return string.Join(",", TicketEvents.Select(p => p.ToString()).ToArray()); }
+            get
+            {
+                return string.Join(",", TicketEvents.Select(p => p.ToString()).ToArray());
+            }
+
             set
             {
                 TicketEvents = string.IsNullOrEmpty(value) ?
@@ -41,7 +45,11 @@ namespace TicketDesk.PushNotifications.Model
 
         public string CanceledEventsList
         {
-            get { return string.Join(",", CanceledEvents.Select(p => p.ToString()).ToArray()); }
+            get
+            {
+                return string.Join(",", CanceledEvents.Select(p => p.ToString()).ToArray());
+            }
+
             set
             {
                 CanceledEvents = string.IsNullOrEmpty(value) ?
@@ -51,23 +59,24 @@ namespace TicketDesk.PushNotifications.Model
         }
 
         [NotMapped]
-        public ICollection<int> TicketEvents{get; set;}
+        public ICollection<int> TicketEvents { get; set; }
 
         [NotMapped]
         public ICollection<int> CanceledEvents { get; set; }
-        
 
         public void AddNewEvent(TicketPushNotificationEventInfo eventInfo, ApplicationPushNotificationSetting appSettings, SubscriberNotificationSetting userSetting)
         {
-            //no matter what, update to the current message content
+            // no matter what, update to the current message content
             PushNotificationItem.MessageContent = eventInfo.MessageContent;
 
             if (eventInfo.CancelNotification)
             {
-                //remove event
+                // remove event
                 TicketEvents.Remove(eventInfo.EventId);
                 CanceledEvents.Add(eventInfo.EventId);
-                if (!TicketEvents.Any())//no events left, scrap entire notification
+
+                // no events left, scrap entire notification
+                if (!TicketEvents.Any())
                 {
                     PushNotificationItem.DeliveryStatus = PushNotificationItemStatus.Canceled;
                     PushNotificationItem.ScheduledSendDate = null;
@@ -75,9 +84,10 @@ namespace TicketDesk.PushNotifications.Model
             }
             else
             {
-                //add this event
+                // add this event
                 TicketEvents.Add(eventInfo.EventId);
-                //kick the schedule out if consolidation enabled
+
+                // kick the schedule out if consolidation enabled
                 PushNotificationItem.ScheduledSendDate = PushNotificationItem.GetSendDate(appSettings, userSetting);
             }
         }

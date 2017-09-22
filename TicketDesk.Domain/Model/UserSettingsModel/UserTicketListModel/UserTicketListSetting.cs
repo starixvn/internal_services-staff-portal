@@ -3,23 +3,20 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
-
 
 using System.Collections.Generic;
 using System.Linq;
 using TicketDesk.Localization.Domain;
 
-
 namespace TicketDesk.Domain.Model
 {
-
     /// <summary>
     /// Represents a user's settings for a particular list view
     /// </summary>
@@ -31,11 +28,11 @@ namespace TicketDesk.Domain.Model
         /// Initializes a new instance of the <see cref="UserTicketListSetting"/> class.
         /// </summary>
         /// <remarks>
-        /// Required for serialization by the profile provider 
+        /// Required for serialization by the profile provider
         /// </remarks>
         public UserTicketListSetting()
-        { }
-
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserTicketListSetting" /> class with a default sort and filter.
@@ -56,7 +53,6 @@ namespace TicketDesk.Domain.Model
             {
                 FilterColumns.Add(new UserTicketListFilterColumn("TicketStatus", false, "Closed"));
             }
-            
         }
 
         /// <summary>
@@ -77,7 +73,7 @@ namespace TicketDesk.Domain.Model
             ItemsPerPage = itemsPerPage;
             SortColumns = sortColumns;
             FilterColumns = filterColumns;
-            DisabledFilterColumnNames = (disabledFilterColumnNames) ?? new List<string>();
+            DisabledFilterColumnNames = disabledFilterColumnNames ?? new List<string>();
         }
 
         /// <summary>
@@ -90,14 +86,22 @@ namespace TicketDesk.Domain.Model
         /// Gets or sets the display name of the list view.
         /// </summary>
         /// <value>The display name of the list view.</value>
-        public string ListDisplayName {
-            get {
+        public string ListDisplayName
+        {
+            get
+            {
                 if (DefaultListName.ContainsKey(this.ListName))
+                {
                     return DefaultListName[this.ListName];
+                }
                 else
+                {
                     return this.listDisplayName;
+                }
             }
-            set {
+
+            set
+            {
                 this.listDisplayName = value;
             }
         }
@@ -157,16 +161,13 @@ namespace TicketDesk.Domain.Model
             }
         }
 
-        
-
         internal static List<UserTicketListSetting> GetDefaultListSettings(string userId, bool isHelpDeskUserOrAdmin)
         {
-            
             var settings = new List<UserTicketListSetting>();
 
             var disableStatusColumn = new List<string> { "TicketStatus" };
             var disableOwnerColumn = new List<string> { "Owner" };
-            var disableAssignedColumn  = new List<string> { "AssignedTo" };
+            var disableAssignedColumn = new List<string> { "AssignedTo" };
 
             var disOrder = 0;
 
@@ -195,14 +196,12 @@ namespace TicketDesk.Domain.Model
             myFilterColumns.Add(new UserTicketListFilterColumn("Owner", true, userId));
             settings.Add(new UserTicketListSetting("mytickets", DefaultListName["mytickets"], disOrder++, 20, mySortColumns, myFilterColumns, disableOwnerColumn));
 
-
             var openSortColumns = new List<UserTicketListSortColumn>();
             var openFilterColumns = new List<UserTicketListFilterColumn>();
             openSortColumns.Add(new UserTicketListSortColumn("TicketStatus", ColumnSortDirection.Ascending));
             openSortColumns.Add(new UserTicketListSortColumn("LastUpdateDate", ColumnSortDirection.Descending));
             openFilterColumns.Add(new UserTicketListFilterColumn("TicketStatus", false, TicketStatus.Closed));
             settings.Add(new UserTicketListSetting("opentickets", DefaultListName["opentickets"], disOrder++, 20, openSortColumns, openFilterColumns, disableStatusColumn));
-
 
             var historyticketsSortColumns = new List<UserTicketListSortColumn>();
             var historyticketsFilterColumns = new List<UserTicketListFilterColumn>();
@@ -243,7 +242,5 @@ namespace TicketDesk.Domain.Model
                 };
             }
         }
-
     }
 }
-

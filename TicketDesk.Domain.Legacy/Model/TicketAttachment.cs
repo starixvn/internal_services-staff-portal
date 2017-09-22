@@ -25,9 +25,5 @@ namespace TicketDesk.Domain.Legacy.Model
         [DisplayName("Is Pending")]
         [DefaultValue(false)]
         public bool IsPending { get; set; }
-    
-
-
-       
     }
 }

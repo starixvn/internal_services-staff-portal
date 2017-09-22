@@ -27,44 +27,6 @@ namespace TicketDesk.Domain
     public sealed class TdDomainContext : DbContext
     {
         /// <summary>
-        /// Occurs when tickets have been changed and persisted to the database.
-        /// </summary>
-        /// <remarks>
-        /// WARNING: Do not to register events from instance objects unless you
-        /// are sure they will de-register when they go out of scope. The
-        /// registered delegate will keep a reference to the isntance that that
-        /// registered. You can cause memory leaks if you aren't careful with
-        /// static events.
-        /// </remarks>
-        public static event EventHandler<IEnumerable<Ticket>> TicketsChanged;
-
-        public static event EventHandler<IEnumerable<Ticket>> TicketsCreated;
-
-        private static void RaiseTicketsCreated(TdDomainContext sender, IEnumerable<Ticket> tickets)
-        {
-            // TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
-            TicketsCreated?.Invoke(sender, tickets);
-        }
-
-        private static void RaiseTicketsChanged(TdDomainContext sender, IEnumerable<Ticket> tickets)
-        {
-            // TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
-            TicketsChanged?.Invoke(sender, tickets);
-        }
-
-        public static event EventHandler<IEnumerable<TicketEventNotification>> NotificationsCreated;
-
-        private static void RaiseNotificationsCreated(TdDomainContext sender, IEnumerable<TicketEventNotification> notifications)
-        {
-            // TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
-            NotificationsCreated?.Invoke(sender, notifications);
-        }
-
-        public TdDomainSecurityProviderBase SecurityProvider { get; private set; }
-
-        public TicketActionManager TicketActions { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="TdDomainContext"/> class.
         /// </summary>
         /// <remarks>
@@ -92,34 +54,25 @@ namespace TicketDesk.Domain
             // As I understand it, if the factory exists EF will use it instead of looking for a public ctor with no params
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<TicketEventNotification>()
-                .HasRequired(c => c.TicketSubscriber)
-                .WithMany()
-                .WillCascadeOnDelete(false);
+        /// <summary>
+        /// Occurs when tickets have been changed and persisted to the database.
+        /// </summary>
+        /// <remarks>
+        /// WARNING: Do not to register events from instance objects unless you
+        /// are sure they will de-register when they go out of scope. The
+        /// registered delegate will keep a reference to the isntance that that
+        /// registered. You can cause memory leaks if you aren't careful with
+        /// static events.
+        /// </remarks>
+        public static event EventHandler<IEnumerable<Ticket>> TicketsChanged;
 
-            // json flattening: see this for more info: http://www.reddnet.net/entity-framework-json-column/
-            modelBuilder.ComplexType<UserTicketListSettingsCollection>()
-                .Property(p => p.Serialized)
-                .HasColumnName("ListSettingsJson");
+        public static event EventHandler<IEnumerable<Ticket>> TicketsCreated;
 
-            modelBuilder.ComplexType<ApplicationSelectListSetting>()
-                .Property(p => p.Serialized)
-                .HasColumnName("SelectListSettingsJson");
+        public static event EventHandler<IEnumerable<TicketEventNotification>> NotificationsCreated;
 
-            modelBuilder.ComplexType<ApplicationPermissionsSetting>()
-                .Property(p => p.Serialized)
-                .HasColumnName("PermissionsSettingsJson");
+        public TdDomainSecurityProviderBase SecurityProvider { get; private set; }
 
-            modelBuilder.ComplexType<ApplicationSecuritySetting>()
-               .Property(p => p.Serialized)
-               .HasColumnName("SecuritySettingsJson");
-
-            modelBuilder.ComplexType<ClientSetting>()
-               .Property(p => p.Serialized)
-               .HasColumnName("ClientSettingsJson");
-        }
+        public TicketActionManager TicketActions { get; private set; }
 
         public DbSet<Project> Projects { get; set; }
 
@@ -174,6 +127,7 @@ namespace TicketDesk.Domain
 
                 return aps;
             }
+
             set
             {
                 var oldSettings = ApplicationSettings.GetTicketDeskSettings();
@@ -184,6 +138,53 @@ namespace TicketDesk.Domain
 
                 ApplicationSettings.Add(value);
             }
+        }
+
+        private static void RaiseTicketsCreated(TdDomainContext sender, IEnumerable<Ticket> tickets)
+        {
+            // TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
+            TicketsCreated?.Invoke(sender, tickets);
+        }
+
+        private static void RaiseTicketsChanged(TdDomainContext sender, IEnumerable<Ticket> tickets)
+        {
+            // TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
+            TicketsChanged?.Invoke(sender, tickets);
+        }
+
+        private static void RaiseNotificationsCreated(TdDomainContext sender, IEnumerable<TicketEventNotification> notifications)
+        {
+            // TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
+            NotificationsCreated?.Invoke(sender, notifications);
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TicketEventNotification>()
+                .HasRequired(c => c.TicketSubscriber)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            // json flattening: see this for more info: http://www.reddnet.net/entity-framework-json-column/
+            modelBuilder.ComplexType<UserTicketListSettingsCollection>()
+                .Property(p => p.Serialized)
+                .HasColumnName("ListSettingsJson");
+
+            modelBuilder.ComplexType<ApplicationSelectListSetting>()
+                .Property(p => p.Serialized)
+                .HasColumnName("SelectListSettingsJson");
+
+            modelBuilder.ComplexType<ApplicationPermissionsSetting>()
+                .Property(p => p.Serialized)
+                .HasColumnName("PermissionsSettingsJson");
+
+            modelBuilder.ComplexType<ApplicationSecuritySetting>()
+               .Property(p => p.Serialized)
+               .HasColumnName("SecuritySettingsJson");
+
+            modelBuilder.ComplexType<ClientSetting>()
+               .Property(p => p.Serialized)
+               .HasColumnName("ClientSettingsJson");
         }
 
         /// <summary>
@@ -212,9 +213,7 @@ namespace TicketDesk.Domain
                 var ticket = entityEntry.Entity as Ticket;
                 if (!TicketActions.IsTicketActivityValid(ticket, TicketActivity.Create))
                 {
-                    result.ValidationErrors.Add(new
-                        DbValidationError("authorization",
-                        Strings.ExceptionSecurityUserCannotCreateNewTicket));
+                    result.ValidationErrors.Add(new DbValidationError("authorization", Strings.ExceptionSecurityUserCannotCreateNewTicket));
                 }
             }
 
@@ -264,6 +263,7 @@ namespace TicketDesk.Domain
                 ProcessDeletedProjects();
                 PreProcessNewTickets();
                 PreProcessModifiedTickets(pending.PendingTicketChanges);
+
                 // IMPORTANT! ticket event changes may not exist until after preprocess methods above
                 // are called. Order dependent operations!
                 CreateEventNotifications();
@@ -323,11 +323,13 @@ namespace TicketDesk.Domain
             modifiedTicket.LastUpdateBy = SecurityProvider.CurrentUserId;
             modifiedTicket.LastUpdateDate = now;
 
-            if (o.State != EntityState.Added) // can't access orig values for new entities
+            // can't access orig values for new entities
+            if (o.State != EntityState.Added)
             {
                 var origTicket = (Ticket)o.OriginalValues.ToObject();
-                if (modifiedTicket.TicketStatus != origTicket.TicketStatus)
+
                 // if status change, force update to status by/date
+                if (modifiedTicket.TicketStatus != origTicket.TicketStatus)
                 {
                     modifiedTicket.CurrentStatusDate = now;
                     modifiedTicket.CurrentStatusSetBy = SecurityProvider.CurrentUserId;
@@ -357,7 +359,6 @@ namespace TicketDesk.Domain
             // TODO: Move this somewhere else?
             // TODO: double check owner if populated, make sure submitter can set this field if it isn't their id already
             // TODO: double check assigned if populated, make sure submitter can set this field.
-
             var now = DateTime.Now;
             newTicket.Owner = newTicket.Owner ?? SecurityProvider.CurrentUserId;
             newTicket.CreatedBy = SecurityProvider.CurrentUserId;
@@ -391,29 +392,32 @@ namespace TicketDesk.Domain
 
         private IEnumerable<Ticket> GetNewTickets()
         {
+            // execute now, because after save changes this query will return no results
             return ChangeTracker.Entries<Ticket>()
                 .Where(t => t.State == EntityState.Added)
                 .Select(t => t.Entity)
-                .ToArray(); // execute now, because after save changes this query will return no results
+                .ToArray();
         }
 
         private IEnumerable<Ticket> GetTicketChanges()
         {
             var pendingEventChanges = GetTicketEventChanges();
 
+            // execute now, because after save changes this query will return no results
             var pendingTicketChanges = ChangeTracker.Entries<Ticket>()
                 .Where(t => t.State != EntityState.Unchanged || pendingEventChanges.Select(c => c.TicketId).Contains(t.Entity.TicketId))
                 .Select(t => t.Entity)
-                .ToArray(); // execute now, because after save changes this query will return no results
+                .ToArray();
             return pendingTicketChanges;
         }
 
         private IEnumerable<TicketEvent> GetTicketEventChanges()
         {
+            // execute now, because after save changes this query will return no results
             var pendingEventChanges =
                 ChangeTracker.Entries<TicketEvent>().Where(t => t.State != EntityState.Unchanged)
                 .Select(t => t.Entity)
-                .ToArray(); // execute now, because after save changes this query will return no results
+                .ToArray();
 
             return pendingEventChanges;
         }

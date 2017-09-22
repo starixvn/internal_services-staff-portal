@@ -17,16 +17,15 @@ namespace TicketDesk.Web.Identity.Model
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Caching;
-    using Microsoft.AspNet.Identity;
 
     public class UserDisplayInfoCache : List<UserDisplayInfo>
     {
-        private TicketDeskUserManager Manager { get; set; }
-
         public UserDisplayInfoCache(TicketDeskUserManager manager)
         {
             Manager = manager;
         }
+
+        private TicketDeskUserManager Manager { get; set; }
 
         public void ClearCache()
         {
@@ -57,6 +56,7 @@ namespace TicketDesk.Web.Identity.Model
 
                 cache.Add(key, cacheCollection, policy);
             }
+
             return cacheCollection;
         }
     }
@@ -64,7 +64,9 @@ namespace TicketDesk.Web.Identity.Model
     public class UserDisplayInfo
     {
         public string Id { get; set; }
+
         public string Email { get; set; }
+
         public string DisplayName { get; set; }
     }
 }

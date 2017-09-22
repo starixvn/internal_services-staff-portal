@@ -24,8 +24,9 @@ namespace TicketDesk.Domain.Model
         /// <param name="useEqualityComparison">The equality comparison selection.</param>
         /// <param name="columnValue">The column value to test for.</param>
         public UserTicketListFilterColumn(string columnName, bool? useEqualityComparison, object columnValue)
-        : this(columnName, useEqualityComparison, columnValue, columnValue.GetType())
-        { }
+            : this(columnName, useEqualityComparison, columnValue, columnValue.GetType())
+        {
+        }
 
         public UserTicketListFilterColumn(string columnName, bool? useEqualityComparison, object columnValue, Type columnValueType)
         {
@@ -47,7 +48,9 @@ namespace TicketDesk.Domain.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="UserTicketListFilterColumn"/> class.
         /// </summary>
-        public UserTicketListFilterColumn() { }
+        public UserTicketListFilterColumn()
+        {
+        }
 
         /// <summary>
         /// Gets or sets an indicator of what kind of comparison should be used in the filter.

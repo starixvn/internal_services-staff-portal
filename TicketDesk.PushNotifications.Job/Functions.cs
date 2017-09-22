@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Azure.WebJobs;
+using System;
 using System.Threading;
-using Microsoft.Azure.WebJobs;
 
 namespace TicketDesk.PushNotifications.Job
 {
@@ -18,6 +18,7 @@ namespace TicketDesk.PushNotifications.Job
                 i = task.Result;
                 if (i > 0) { Console.Out.WriteLine("one message delivered"); }
             }
+
             Console.Out.WriteLine("delivery complete");
         }
 

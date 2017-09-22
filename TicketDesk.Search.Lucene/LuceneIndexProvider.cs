@@ -65,7 +65,7 @@ namespace TicketDesk.Search.Lucene
                 } // ReSharper disable once EmptyGeneralCatchClause
                 catch
                 {
-                    //TODO: log this somewhere
+                    // TODO: log this somewhere
                 }
 
                 return true;
@@ -86,7 +86,7 @@ namespace TicketDesk.Search.Lucene
             } // ReSharper disable once EmptyGeneralCatchClause
             catch
             {
-                //TODO: log this somewhere
+                // TODO: log this somewhere
             }
 
             return Task.FromResult(true);

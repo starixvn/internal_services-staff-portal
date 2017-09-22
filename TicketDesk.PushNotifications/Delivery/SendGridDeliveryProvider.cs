@@ -41,6 +41,7 @@ namespace TicketDesk.PushNotifications.Delivery
         {
             var cfg = (SendGridDeliveryProviderConfiguration)Configuration;
             var sent = false;
+
             // implicit conversion operator
             MailMessage smsg = message as SerializableMailMessage;
             if (smsg != null)
@@ -53,9 +54,9 @@ namespace TicketDesk.PushNotifications.Delivery
                     {
                         From = new EmailAddress(cfg.FromAddress, cfg.FromDisplayName),
                         Subject = smsg.Subject,
-                        Contents = new List<Content>() {
-                            new Content("text/html", hView.ContentStream.ReadToString()),
-                            // new Content("text", tView.ContentStream.ReadToString())
+                        Contents = new List<Content>()
+                        {
+                            new Content("text/html", hView.ContentStream.ReadToString())
                         },
                         Personalizations = new List<Personalization>()
                         {
@@ -78,14 +79,17 @@ namespace TicketDesk.PushNotifications.Delivery
                     {
                         sendGridMessage.TrackingSettings.ClickTracking.Enable = true;
                     }
+
                     if (cfg.EnableGravatar ?? false)
                     {
                         // sendGridMessage.MailSettings.EnableGravatar();
                     }
+
                     if (cfg.EnableOpenTracking ?? false)
                     {
                         sendGridMessage.TrackingSettings.OpenTracking.Enable = true;
                     }
+
                     if (cfg.SendToSink ?? false)
                     {
                         // sendGridMessage.SendToSink();

@@ -66,8 +66,8 @@ namespace TicketDesk.Web.Identity.Migrations
             var users = new List<TicketDeskUser> { staff, reguser };
             var rolesNames = new Dictionary<string, string[]>
             {
-                {"staff@example.com", new[] {"TdHelpDeskUsers"}},
-                {"user@example.com", new[] {"TdInternalUsers"}}
+                { "staff@example.com", new[] { "TdHelpDeskUsers" } },
+                { "user@example.com", new[] { "TdInternalUsers" } }
             };
 
             if (currentUserId == null && userManager.FindByName("admin@example.com") == null)
@@ -89,6 +89,7 @@ namespace TicketDesk.Web.Identity.Migrations
                 {
                     userManager.Delete(user);
                 }
+
                 user = tdUser;
                 userManager.Create(user, "123456");
 

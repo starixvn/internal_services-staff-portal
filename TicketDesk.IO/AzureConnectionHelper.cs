@@ -27,14 +27,14 @@ namespace TicketDesk.IO
             {
                 if (_cloudStorageAccount == null)
                 {
-                     var connectionString = CloudConfigConnString ??
-                                           ConfigManagerConnString;
+                     var connectionString = CloudConfigConnString ?? ConfigManagerConnString;
                     CloudStorageAccount cloudStorageAccount;
                     if (CloudStorageAccount.TryParse(connectionString, out cloudStorageAccount))
                     {
                         _cloudStorageAccount = cloudStorageAccount;
                     }
                 }
+
                 return _cloudStorageAccount;
             }
         }

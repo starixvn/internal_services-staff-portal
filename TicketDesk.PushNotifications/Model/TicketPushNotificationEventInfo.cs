@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -28,7 +28,7 @@ namespace TicketDesk.PushNotifications.Model
 
         public bool CancelNotification { get; set; }
 
-        public string MessageContent { get; set; } 
+        public string MessageContent { get; set; }
 
         internal IEnumerable<TicketPushNotificationItem> ToPushNotificationItems(
             ApplicationPushNotificationSetting appSettings, SubscriberNotificationSetting userSettings)
@@ -36,29 +36,33 @@ namespace TicketDesk.PushNotifications.Model
             var now = DateTimeOffset.Now;
             return userSettings.PushNotificationDestinations.Select(dest =>
             new TicketPushNotificationItem()
+            {
+                PushNotificationItem = new PushNotificationItem
                 {
-                    PushNotificationItem = new PushNotificationItem
-                    {
-                        ContentSourceId = TicketId,
-                        ContentSourceType = "ticket",
-                        SubscriberId = SubscriberId,
-                        Destination = dest,
-                        DestinationId = dest.DestinationId,
-                        DeliveryStatus = userSettings.IsEnabled ? (CancelNotification) ? PushNotificationItemStatus.Canceled : PushNotificationItemStatus.Scheduled : PushNotificationItemStatus.Disabled,
-                        RetryCount = 0,
-                        CreatedDate = now,
-                        ScheduledSendDate = CancelNotification ? null : GetSendDate(now, appSettings, userSettings),
-                        MessageContent = MessageContent
-
-                    },
-                    TicketEvents = CancelNotification ? new Collection<int>() : new Collection<int>(new[] { EventId }),
-                    CanceledEvents = CancelNotification ? new Collection<int>(new[] { EventId }) : new Collection<int>()
-                }
+                    ContentSourceId = TicketId,
+                    ContentSourceType = "ticket",
+                    SubscriberId = SubscriberId,
+                    Destination = dest,
+                    DestinationId = dest.DestinationId,
+                    DeliveryStatus = userSettings.IsEnabled
+                            ? CancelNotification
+                                ? PushNotificationItemStatus.Canceled : PushNotificationItemStatus.Scheduled
+                            : PushNotificationItemStatus.Disabled,
+                    RetryCount = 0,
+                    CreatedDate = now,
+                    ScheduledSendDate = CancelNotification ? null : GetSendDate(now, appSettings, userSettings),
+                    MessageContent = MessageContent
+                },
+                TicketEvents = CancelNotification ? new Collection<int>() : new Collection<int>(new[] { EventId }),
+                CanceledEvents = CancelNotification ? new Collection<int>(new[] { EventId }) : new Collection<int>()
+            }
             ).ToList();
         }
 
-
-        private static DateTimeOffset? GetSendDate(DateTimeOffset now, ApplicationPushNotificationSetting appSettings, SubscriberNotificationSetting userNoteSettings)
+        private static DateTimeOffset? GetSendDate(
+            DateTimeOffset now,
+            ApplicationPushNotificationSetting appSettings,
+            SubscriberNotificationSetting userNoteSettings)
         {
             DateTimeOffset? send = null;
             if (userNoteSettings.IsEnabled)
@@ -68,8 +72,8 @@ namespace TicketDesk.PushNotifications.Model
                     : 0;
                 send = now.AddMinutes(addMinutes);
             }
-            return send;
 
+            return send;
         }
     }
 }

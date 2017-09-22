@@ -3,26 +3,27 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
+using AzureBlobFileSystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using AzureBlobFileSystem;
 
 namespace TicketDesk.IO
 {
     public static class TicketDeskFileStore
     {
         private static IStorageProvider _currentProvider;
+
         internal static IStorageProvider Current
         {
             get
@@ -40,6 +41,7 @@ namespace TicketDesk.IO
                         _currentProvider = new FileSystemStorageProvider(dir);
                     }
                 }
+
                 return _currentProvider;
             }
         }
@@ -62,17 +64,17 @@ namespace TicketDesk.IO
                 while (Current.FileExists(newPath))
                 {
                     var tempFileName = string.Format("{0}({1}){2}", fileNameOnly, count++, extension);
-                    newPath = GetFilePath(tempFileName,newContainerId, isPending);
+                    newPath = GetFilePath(tempFileName, newContainerId, isPending);
                 }
-                
-                Current.RenameFile(oldPath,newPath);
-               
+
+                Current.RenameFile(oldPath, newPath);
+
                 return true;
             }
             return false;
         }
 
-        public static Stream GetFile(string fileName,string containerId, bool isPending)
+        public static Stream GetFile(string fileName, string containerId, bool isPending)
         {
             var f = Current.GetFile(GetFilePath(fileName, containerId, isPending));
             return f.OpenRead();
@@ -86,11 +88,11 @@ namespace TicketDesk.IO
             {
                 files = files.Where(f => f.GetName().EndsWith(containerId));
             }
+
             return files.Select(f => new TicketDeskFileInfo
             {
-                Name = TrimIdFromName(f.GetName(),containerId),
+                Name = TrimIdFromName(f.GetName(), containerId),
                 Size = f.GetSize()
-                
             });
         }
 
@@ -101,6 +103,7 @@ namespace TicketDesk.IO
             {
                 await inputStream.CopyToAsync(writer.BaseStream);
             }
+
             return true;
         }
 
@@ -112,6 +115,7 @@ namespace TicketDesk.IO
             {
                 Current.DeleteFile(path);
             }
+
             return true;
         }
 
@@ -126,6 +130,7 @@ namespace TicketDesk.IO
             {
                 fileName = string.Format("{0}.{1}", fileName, containerId);
             }
+
             var path = GetFileFolderPath(containerId, isPending);
             return Current.Combine(path, fileName);
         }

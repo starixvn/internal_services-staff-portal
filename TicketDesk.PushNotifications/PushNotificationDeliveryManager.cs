@@ -3,14 +3,15 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -18,7 +19,6 @@ using System.Linq;
 using System.Management.Instrumentation;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using TicketDesk.PushNotifications.Delivery;
 using TicketDesk.PushNotifications.Model;
 
@@ -47,6 +47,7 @@ namespace TicketDesk.PushNotifications
                         }
                     }
                 }
+
                 return _deliveryProviders;
             }
             set { _deliveryProviders = value; }
@@ -57,12 +58,13 @@ namespace TicketDesk.PushNotifications
             var provType = Type.GetType(settings.ProviderAssemblyQualifiedName);
             if (provType != null)
             {
-                var ci = provType.GetConstructor(new[] {typeof (JObject)});
+                var ci = provType.GetConstructor(new[] { typeof(JObject) });
                 if (ci != null)
                 {
-                   return (IPushNotificationDeliveryProvider) ci.Invoke(new object[] {settings.ProviderConfigurationData});
+                    return (IPushNotificationDeliveryProvider)ci.Invoke(new object[] { settings.ProviderConfigurationData });
                 }
             }
+
             return null;
         }
 
@@ -73,9 +75,9 @@ namespace TicketDesk.PushNotifications
             {
                 throw new InstanceNotFoundException("Cannot locate a constructor for " + typeof(JObject).Name);
             }
+
             return (IPushNotificationDeliveryProvider)ci.Invoke(new object[] { null });
         }
-
 
         public static async Task SendNotificationAsync
         (
@@ -110,7 +112,7 @@ namespace TicketDesk.PushNotifications
         {
             using (var context = new TdPushNotificationContext())
             {
-                //get the next notification that is ready to send
+                // get the next notification that is ready to send
                 var readyNote =
                     await context.PushNotificationItems.Include(n => n.Destination).OrderBy(n => n.ScheduledSendDate).FirstOrDefaultAsync(
                         n =>
@@ -121,9 +123,9 @@ namespace TicketDesk.PushNotifications
                 {
                     return 0;
                 }
+
                 await SendNotificationMessageAsync(context, readyNote, ct);
                 return await context.SaveChangesAsync(ct);
-                
             }
         }
 
@@ -132,11 +134,11 @@ namespace TicketDesk.PushNotifications
             var retryMax = context.TicketDeskPushNotificationSettings.RetryAttempts;
             var retryIntv = context.TicketDeskPushNotificationSettings.RetryIntervalMinutes;
 
-            //find a provider for the notification destination type
+            // find a provider for the notification destination type
             var provider = DeliveryProviders.FirstOrDefault(p => p.DestinationType == readyNote.Destination.DestinationType);
             if (provider == null)
             {
-                //no provider
+                // no provider
                 readyNote.DeliveryStatus = PushNotificationItemStatus.NotAvailable;
                 readyNote.ScheduledSendDate = null;
             }

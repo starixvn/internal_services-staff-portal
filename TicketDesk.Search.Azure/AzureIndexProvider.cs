@@ -3,21 +3,21 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
+using RedDog.Search.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using RedDog.Search.Model;
 using TicketDesk.Search.Common;
 
 namespace TicketDesk.Search.Azure
@@ -25,7 +25,6 @@ namespace TicketDesk.Search.Azure
     public class AzureIndexProvider : AzureSearchConector, ISearchIndexProvider
     {
         private const string IndexName = "ticketdesk-searchindex";
-
 
         /// <summary>
         /// Gets a value indicating whether this provider is correctly configured and available for use.
@@ -35,11 +34,9 @@ namespace TicketDesk.Search.Azure
         {
             get
             {
-                var svcInfo = TryGetInfoFromConnectionString() ??
-                                 TryGetInfoFromAppSettings();
+                var svcInfo = TryGetInfoFromConnectionString() ?? TryGetInfoFromAppSettings();
 
-                return svcInfo != null && !string.IsNullOrEmpty(svcInfo.ServiceName) &&
-                       !string.IsNullOrEmpty(svcInfo.QueryKey);
+                return svcInfo != null && !string.IsNullOrEmpty(svcInfo.ServiceName) && !string.IsNullOrEmpty(svcInfo.QueryKey);
             }
         }
 
@@ -53,10 +50,12 @@ namespace TicketDesk.Search.Azure
             var ret = true;
             foreach (var item in items)
             {
-                if (!await SendItemToIndexAsync(item.ToIndexOperation()))//TODO: can we do this in parallel with Azure search?
+                // TODO: can we do this in parallel with Azure search?
+                if (!await SendItemToIndexAsync(item.ToIndexOperation()))
                 {
-                    //TODO: beef this up so we return a list of failures for the caller to handle
-                    if (ret)//if any item fails, return false - but go ahead and process the rest of the batch
+                    // TODO: beef this up so we return a list of failures for the caller to handle
+                    // if any item fails, return false - but go ahead and process the rest of the batch
+                    if (ret)
                     {
                         ret = false;
                     }
@@ -75,11 +74,12 @@ namespace TicketDesk.Search.Azure
                 {
                     Trace.Write("Error: " + result.Error.Message);
                 }
+
                 ret = result.IsSuccess;
             }
+
             return ret;
         }
-
 
         internal async Task<bool> SendItemToIndexAsync(IndexOperation itemOperation)
         {
@@ -88,10 +88,9 @@ namespace TicketDesk.Search.Azure
             {
                 Trace.Write("Error: " + result.Error.Message);
             }
+
             return result.IsSuccess;
         }
-
-        
 
         /// <summary>
         /// Creates the index if it doesn't exist, will not overwrite an existing index.
@@ -109,8 +108,10 @@ namespace TicketDesk.Search.Azure
                 {
                     Trace.WriteLine("Error: " + result.Error.Message);
                 }
+
                 ret = result.IsSuccess;
             }
+
             return ret;
         }
 
@@ -126,6 +127,7 @@ namespace TicketDesk.Search.Azure
             {
                 Trace.Write("Error: " + result.Error.Message);
             }
+
             return ret;
         }
 
@@ -148,7 +150,6 @@ namespace TicketDesk.Search.Azure
                     opt.IsRetrievable().IsSearchable().IsFilterable())
                 .WithStringCollectionField("events", opt =>
                     opt.IsSearchable());
-
 
             index.ScoringProfiles = new Collection<ScoringProfile>
             {
@@ -181,6 +182,7 @@ namespace TicketDesk.Search.Azure
                     }
                 }
             };
+
             index.DefaultScoringProfile = "fieldBooster";
             return index;
         }

@@ -57,8 +57,7 @@ namespace TicketDesk.Domain.Model
                  activity,
                  comment,
                  newPriority,
-                 userName
-            );
+                 userName);
             set.Add(tc);
             return tc;
         }

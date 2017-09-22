@@ -21,6 +21,8 @@ namespace TicketDesk.Domain.Model
     {
         private bool _isNew;
 
+        private bool _isRead;
+
         public TicketEventNotification()
         {
             _isNew = true;
@@ -52,19 +54,22 @@ namespace TicketDesk.Domain.Model
         /// <value><c>true</c> if this instance is new; otherwise, <c>false</c>.</value>
         public bool IsNew
         {
-            get { return _isNew; }
+            get
+            {
+                return _isNew;
+            }
+
             set
             {
-                //when marking as new, read flag implicitly changed to false
+                // when marking as new, read flag implicitly changed to false
                 if (value)
                 {
                     _isRead = false;
                 }
+
                 _isNew = value;
             }
         }
-
-        private bool _isRead;
 
         /// <summary>
         /// Gets or sets a value indicating whether this notification has been read.
@@ -76,7 +81,11 @@ namespace TicketDesk.Domain.Model
         /// <value><c>true</c> if this instance is read; otherwise, <c>false</c>.</value>
         public bool IsRead
         {
-            get { return _isRead; }
+            get
+            {
+                return _isRead;
+            }
+
             set
             {
                 // when marking as read, new flag is implicitly chaged to false;

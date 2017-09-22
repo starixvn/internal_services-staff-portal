@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -21,15 +21,14 @@ namespace TicketDesk.Domain
 {
     public class TicketActionManager
     {
-
-        //TODO: we should enforce required comments on the back-end
-
+        // TODO: we should enforce required comments on the back-end
         public static TicketActionManager GetInstance(TdDomainSecurityProviderBase securityProvider)
         {
             return new TicketActionManager(securityProvider);
         }
 
-        TdDomainSecurityProviderBase SecurityProvider { get; set; }
+        private TdDomainSecurityProviderBase SecurityProvider { get; set; }
+
         internal TicketActionManager(TdDomainSecurityProviderBase securityProvider)
         {
             SecurityProvider = securityProvider;
@@ -39,7 +38,7 @@ namespace TicketDesk.Domain
         /// Determines whether the ticket activity is valid for the specified ticket.
         /// </summary>
         /// <remarks>
-        /// This is a convienience method to provide a more natual api for the client. 
+        /// This is a convienience method to provide a more natual api for the client.
         /// It just calls the equivalent method from the security provider.
         /// </remarks>
         /// <param name="ticket">The ticket.</param>
@@ -54,7 +53,7 @@ namespace TicketDesk.Domain
         /// Gets the valid ticket activities.
         /// </summary>
         /// <remarks>
-        /// This is a convienience method to provide a more natual api for the client. 
+        /// This is a convienience method to provide a more natual api for the client.
         /// It just calls the equivalent method from the security provider.
         /// </remarks>
         /// <param name="ticket">The ticket.</param>
@@ -63,7 +62,6 @@ namespace TicketDesk.Domain
         {
             return SecurityProvider.GetValidTicketActivities(ticket);
         }
-
 
         public Action<Ticket> AddComment(string comment)
         {
@@ -81,7 +79,6 @@ namespace TicketDesk.Domain
         {
             return ChangeAssignment(comment, assignTo, priority, TicketActivity.Assign);
         }
-
 
         public Action<Ticket> CancelMoreInfo(string comment)
         {
@@ -128,7 +125,6 @@ namespace TicketDesk.Domain
             {
                 if (CheckSecurity(ticket, activity))
                 {
-
                     var sb = new StringBuilder(comment);
                     sb.AppendLine();
 
@@ -136,12 +132,13 @@ namespace TicketDesk.Domain
                     sb.AppendLine(Strings.Changes_Title);
                     sb.AppendLine("</dt>");
 
-                    //TODO: resource these strings!
+                    // TODO: resource these strings!
                     if (ticket.Title != title)
                     {
                         sb.AppendLine(string.Format("<dd>    {0}</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Title)));
                         ticket.Title = title;
                     }
+
                     if (ticket.ProjectId != projectId)
                     {
                         sb.AppendLine(string.Format("<dd>    " + Strings.Changes_From_To + "</dd>",
@@ -150,36 +147,43 @@ namespace TicketDesk.Domain
                             projectName));
                         ticket.ProjectId = projectId;
                     }
+
                     if (ticket.Details != details)
                     {
                         sb.AppendLine(string.Format("<dd>    {0}</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Details)));
                         ticket.Details = details;
                     }
+
                     if ((SecurityProvider.IsHostTicketCenter || settings.Permissions.AllowInternalUsersToEditTags) && ticket.TagList != tagList)
                     {
                         sb.AppendLine(string.Format("<dd>    {0}</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.TagList)));
                         ticket.TagList = tagList;
                     }
+
                     if ((SecurityProvider.IsHostTicketCenter || settings.Permissions.AllowInternalUsersToEditPriority) && ticket.Priority != priority)
                     {
                         sb.AppendLine(string.Format("<dd>    " + Strings.Changes_From_To + "</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Priority), ticket.Priority, priority));
                         ticket.Priority = priority;
                     }
+
                     if (ticket.TicketType != ticketType)
                     {
                         sb.AppendLine(string.Format("<dd>    " + Strings.Changes_From_To + "</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.TicketType), ticket.TicketType, ticketType));
                         ticket.TicketType = ticketType;
                     }
+
                     if (ticket.Category != category)
                     {
                         sb.AppendLine(string.Format("<dd>    " + Strings.Changes_From_To + "</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Category), ticket.Category, category));
                         ticket.Category = category;
                     }
+
                     if (SecurityProvider.IsHostTicketCenter && ticket.Owner != owner)
                     {
                         sb.AppendLine(string.Format("<dd>    " + Strings.Changes_From_To + "</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Owner), SecurityProvider.GetUserDisplayName(ticket.Owner), SecurityProvider.GetUserDisplayName(owner)));
                         ticket.Owner = owner;
                     }
+
                     sb.AppendLine("</dl>");
                     comment = sb.ToString();
                     ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
@@ -209,14 +213,13 @@ namespace TicketDesk.Domain
                 {
                     ticket.AssignedTo = null;
                     ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
-
                 }
             };
         }
 
         public Action<Ticket> ModifyAttachments(string comment)
         {
-            //The vast majority of attachements management occur outside the business domain, so all we do here is log the activity event
+            // The vast majority of attachements management occur outside the business domain, so all we do here is log the activity event
             const TicketActivity activity = TicketActivity.ModifyAttachments;
             return ticket =>
             {
@@ -313,9 +316,9 @@ namespace TicketDesk.Domain
                             ticket.Priority = priority;
                         }
                     }
+
                     ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment, priority, null);
                 }
-
             };
         }
 
@@ -356,8 +359,8 @@ namespace TicketDesk.Domain
             {
                 throw new SecurityException(Strings.CheckSecurity_NotAuthorized);
             }
+
             return true;
         }
-
     }
 }

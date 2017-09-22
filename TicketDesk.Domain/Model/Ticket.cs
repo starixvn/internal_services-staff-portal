@@ -23,6 +23,10 @@ namespace TicketDesk.Domain.Model
 
     public class Ticket
     {
+        private string _owner;
+
+        private string _assignedTo;
+
         public Ticket()
         {
             // ReSharper disable DoNotCallOverridableMethodsInConstructor
@@ -76,8 +80,6 @@ namespace TicketDesk.Domain.Model
         [Display(ResourceType = typeof(Strings), Name = "TicketCreatedDate", ShortName = "TicketCreatedDateShort")]
         public DateTimeOffset CreatedDate { get; set; }
 
-        private string _owner;
-
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
         [StringLength(256, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
         [Display(ResourceType = typeof(Strings), Name = "TicketOwner", ShortName = "TicketOwnerShort")]
@@ -87,14 +89,13 @@ namespace TicketDesk.Domain.Model
             {
                 return _owner;
             }
+
             set
             {
                 PreviousOwner = _owner;
                 _owner = value;
             }
         }
-
-        private string _assignedTo;
 
         [StringLength(256, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
         [Display(ResourceType = typeof(Strings), Name = "TicketAssignedTo", ShortName = "TicketAssignedToShort")]
@@ -187,9 +188,9 @@ namespace TicketDesk.Domain.Model
 
         public TicketActivity GetAvailableActivites(string userId)
         {
-            var isOwnedByMe = (Owner == userId);
-            var isMoreInfo = (TicketStatus == TicketStatus.MoreInfo);
-            var isAssignedToMe = (!string.IsNullOrEmpty(AssignedTo) && AssignedTo == userId);
+            var isOwnedByMe = Owner == userId;
+            var isMoreInfo = TicketStatus == TicketStatus.MoreInfo;
+            var isAssignedToMe = !string.IsNullOrEmpty(AssignedTo) && AssignedTo == userId;
             var isResolved = TicketStatus == TicketStatus.Resolved;
 
             var validActivities = TicketActivity.None;
@@ -210,6 +211,7 @@ namespace TicketDesk.Domain.Model
                 {
                     validActivities |= TicketActivity.EditTicketInfo;
                 }
+
                 if (isMoreInfo)
                 {
                     validActivities |= TicketActivity.SupplyMoreInfo;
@@ -231,6 +233,7 @@ namespace TicketDesk.Domain.Model
             {
                 validActivities |= TicketActivity.ReOpen;
             }
+
             if (isResolved)
             {
                 if (isOwnedByMe)
@@ -238,6 +241,7 @@ namespace TicketDesk.Domain.Model
                     validActivities |= TicketActivity.Close;
                 }
             }
+
             if (IsOpen || isResolved)
             {
                 if (IsAssigned)
@@ -266,6 +270,7 @@ namespace TicketDesk.Domain.Model
                     validActivities |= TicketActivity.TakeOver;
                 }
             }
+
             return validActivities;
         }
 

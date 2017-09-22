@@ -27,18 +27,6 @@ namespace TicketDesk.Domain.Model
     public class UserTicketListSettingsCollection : Collection<UserTicketListSetting>
     {
         /// <summary>
-        /// Adds the specified settings.
-        /// </summary>
-        /// <param name="settings">The settings.</param>
-        public void Add(ICollection<UserTicketListSetting> settings)
-        {
-            foreach (var listSetting in settings)
-            {
-                Add(listSetting);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the json serialized representation of the entire collection.
         /// </summary>
         /// <remarks>
@@ -49,7 +37,11 @@ namespace TicketDesk.Domain.Model
         [JsonIgnore]
         public string Serialized
         {
-            get { return JsonConvert.SerializeObject(this); }
+            get
+            {
+                return JsonConvert.SerializeObject(this);
+            }
+
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -61,6 +53,18 @@ namespace TicketDesk.Domain.Model
                 var jData = JsonConvert.DeserializeObject<List<UserTicketListSetting>>(value, jsettings);
                 Items.Clear();
                 Add(jData);
+            }
+        }
+
+        /// <summary>
+        /// Adds the specified settings.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
+        public void Add(ICollection<UserTicketListSetting> settings)
+        {
+            foreach (var listSetting in settings)
+            {
+                Add(listSetting);
             }
         }
     }

@@ -29,7 +29,9 @@ namespace TicketDesk.Domain.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="UserTicketListSortColumn"/> class.
         /// </summary>
-        public UserTicketListSortColumn() { }
+        public UserTicketListSortColumn()
+        {
+        }
 
         /// <summary>
         /// Gets or sets the sort direction.

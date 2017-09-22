@@ -3,18 +3,18 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
-using System.Configuration;
-using System.Linq;
 using RedDog.Search;
 using RedDog.Search.Http;
+using System.Configuration;
+using System.Linq;
 
 namespace TicketDesk.Search.Azure
 {
@@ -40,11 +40,11 @@ namespace TicketDesk.Search.Azure
             {
                 if (_connection == null)
                 {
-                    var svcInfo = TryGetInfoFromConnectionString() ??
-                                  TryGetInfoFromAppSettings();
+                    var svcInfo = TryGetInfoFromConnectionString() ?? TryGetInfoFromAppSettings();
 
                     _connection = ApiConnection.Create(svcInfo.ServiceName, svcInfo.QueryKey);
                 }
+
                 return _connection;
             }
         }
@@ -58,6 +58,7 @@ namespace TicketDesk.Search.Azure
             {
                 info = new ServiceInfo { ServiceName = service, QueryKey = key };
             }
+
             return info;
         }
 
@@ -87,19 +88,21 @@ namespace TicketDesk.Search.Azure
                 }
                 catch
                 {
-                    //no need to get all null-checky and collection count happy... if 
-                    //something went wrong above, then the connection string existed, but 
+                    //no need to get all null-checky and collection count happy... if
+                    //something went wrong above, then the connection string existed, but
                     //is configured incorrectly
                     throw new ConfigurationErrorsException(
                         "The AzureSearch connection string is invalid, or incorrectly formatted");
                 }
             }
+
             return info;
         }
 
         public class ServiceInfo
         {
             public string ServiceName { get; set; }
+
             internal string QueryKey { get; set; }
         }
     }

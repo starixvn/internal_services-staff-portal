@@ -58,7 +58,8 @@ namespace TicketDesk.PushNotifications.Model
 
         internal DateTimeOffset? GetSendDate(ApplicationPushNotificationSetting appSettings, SubscriberNotificationSetting userNoteSettings)
         {
-            var send = ScheduledSendDate;//we'll leave this alone if consolidation isn't used
+            // we'll leave this alone if consolidation isn't used
+            var send = ScheduledSendDate;
 
             if (userNoteSettings.IsEnabled && appSettings.AntiNoiseSettings.IsConsolidationEnabled && ScheduledSendDate.HasValue)
             {
@@ -70,7 +71,7 @@ namespace TicketDesk.PushNotifications.Model
 
                 var delay = appSettings.AntiNoiseSettings.InitialConsolidationDelayMinutes;
 
-                //ensure we don't bump thing over the max wait
+                // ensure we don't bump thing over the max wait
                 if (delay + currentDelayMinutes > maxDelayMinutes)
                 {
                     delay = maxDelayMinutes - currentDelayMinutes;

@@ -32,14 +32,16 @@ namespace TicketDesk.Domain.Legacy
             {
                 throw new InvalidOperationException("This migrator is already running an operation");
             }
+
             _isRunning = true;
 
-            //if not supplied by caller, init our own cancel source
+            // if not supplied by caller, init our own cancel source
             if (Canceler == null)
             {
                 Canceler = new CancellationTokenSource();
             }
-            //setup run time stats
+
+            // setup run time stats
             var startImport = DateTime.Now;
             try
             {
@@ -53,7 +55,7 @@ namespace TicketDesk.Domain.Legacy
             }
             catch (OperationCanceledException)
             {
-                //we'll eat the exceptions if thrown due to cancellation
+                // we'll eat the exceptions if thrown due to cancellation
             }
             catch (AggregateException ax)
             {
@@ -61,6 +63,7 @@ namespace TicketDesk.Domain.Legacy
                 {
                     RaiseStatusChangedOnMainThread(new[] { ex.GetType().Name, ex.Message, ex.StackTrace });
                 }
+
                 throw ax;
             }
             catch (Exception ex)
@@ -71,21 +74,21 @@ namespace TicketDesk.Domain.Legacy
                     RaiseStatusChangedOnMainThread(new[]
                     {ex.InnerException.GetType().Name, ex.InnerException.Message, ex.InnerException.StackTrace});
                 }
+
                 throw ex;
             }
             finally
             {
-
                 // if user canceled
                 if (Canceler.IsCancellationRequested)
                 {
                     RaiseStatusChangedOnMainThread(new[] { "Cancellation requested" });
                 }
-                //output run time stats
+
+                // output run time stats
                 var endImport = DateTime.Now;
                 var ts = endImport - startImport;
-                var time = string.Format("Total Execution Time: {0:00} hr {1:00} mn {2:00} sec ",
-                    Math.Truncate(ts.TotalHours), ts.Minutes, ts.Seconds);
+                var time = string.Format("Total Execution Time: {0:00} hr {1:00} mn {2:00} sec ", Math.Truncate(ts.TotalHours), ts.Minutes, ts.Seconds);
                 RaiseStatusChangedOnMainThread(new[] { time });
                 _isRunning = false;
             }
@@ -99,6 +102,7 @@ namespace TicketDesk.Domain.Legacy
             {
                 TdLegacyDatabaseInitializer<TdDomainContext>.InitDatabase(ctx);
             }
+
             RaiseStatusChangedOnMainThread(new[] { "Converion complete." });
             RaiseStatusChangedOnMainThread(new[] { "Migrating database to latest version." });
 
@@ -107,14 +111,14 @@ namespace TicketDesk.Domain.Legacy
                 Database.SetInitializer(new MigrateDatabaseToLatestVersion<TdDomainContext, Configuration>(true));
                 ctx.Database.Initialize(true);
             }
+
             RaiseStatusChangedOnMainThread(new[] { "Database migrated to latest version." });
         }
 
         private void MigrateImages()
         {
             const string contentQueryText = "SELECT FileContents FROM dbo.TicketAttachments WHERE FileId = @p0";
-            const string modelQuery =
-                "SELECT TicketId, FileId, FileName, FileSize, IsPending FROM dbo.TicketAttachments";
+            const string modelQuery = "SELECT TicketId, FileId, FileName, FileSize, IsPending FROM dbo.TicketAttachments";
             const int pgSize = 20;
 
             using (var ctx = new TdDomainContext(null))
@@ -136,9 +140,7 @@ namespace TicketDesk.Domain.Legacy
                             {
                                 var contentQuery = ctx.Database.SqlQuery<byte[]>(contentQueryText, file.FileId);
                                 var stream = new MemoryStream(contentQuery.First());
-                                
 
-                               
                                 TicketDeskFileStore
                                     .SaveAttachmentAsync(stream, file.FileName, container, false)
                                     .Wait();
@@ -150,12 +152,11 @@ namespace TicketDesk.Domain.Legacy
                             }
                         }
                     }
-
                 }
+
                 RaiseStatusChangedOnMainThread(new[] { "Image import complete." });
             }
         }
-
 
         #region utility
 
@@ -179,6 +180,7 @@ namespace TicketDesk.Domain.Legacy
                 }
             }
         }
-        #endregion
+
+        #endregion utility
     }
 }

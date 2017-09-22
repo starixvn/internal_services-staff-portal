@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System.Linq;
@@ -24,7 +24,7 @@ namespace TicketDesk.Web.Client
     public static class SortableColumnHeaderHelper
     {
         public static IHtmlString SortableColumnHeader(this AjaxHelper helper, HtmlHelper htmlHelper,
-            UserTicketListSetting currentDisplayPreferences,int currentPage, string action, string listName, string sortColumn,
+            UserTicketListSetting currentDisplayPreferences, int currentPage, string action, string listName, string sortColumn,
             string linkText, AjaxOptions ajaxOptions)
         {
             var imgContent = string.Empty;
@@ -49,14 +49,16 @@ namespace TicketDesk.Web.Client
             sb.AppendLine("<span style='white-space:nowrap;'>");
             var lLine =
                 // ReSharper disable once Mvc.ActionNotResolved
-                helper.ActionLink(linkContent, "SortList", new {page = currentPage,  ListName = listName, ColumnName = sortColumn },
+                helper.ActionLink(
+                    linkContent,
+                    "SortList",
+                    new { page = currentPage, ListName = listName, ColumnName = sortColumn },
                     ajaxOptions,
                     new
                     {
                         OnMouseDown = "ticketCenter.sorts.setShiftStatus(event);",
                         Title = Strings.RemoveColumnsFromSort
                     }).ToString();
-
 
             sb.AppendLine(lLine + indexContent);
             sb.AppendLine(imgContent);

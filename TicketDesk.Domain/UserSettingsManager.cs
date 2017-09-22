@@ -21,12 +21,12 @@ namespace TicketDesk.Domain
 
     public class UserSettingsManager
     {
-        private TdDomainContext Context { get; set; }
-
         public UserSettingsManager(TdDomainContext context)
         {
             Context = context;
         }
+
+        private TdDomainContext Context { get; set; }
 
         public async Task ResetAllListSettingsForUserAsync(string userId)
         {
@@ -40,14 +40,13 @@ namespace TicketDesk.Domain
 
         public async Task<UserSetting> GetSettingsForUserAsync(string userId)
         {
-            //Role
-            //var isHelpDeskUser = Context.SecurityProvider.IsTdHelpDeskUser ||
-            //                        Context.SecurityProvider.IsTdAdministrator;
+            // Role
+            // var isHelpDeskUser = Context.SecurityProvider.IsTdHelpDeskUser || Context.SecurityProvider.IsTdAdministrator;
 
             var isShowListAssignedTicket = Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket, Constant.Policy.Read);
             var settings = await Context.UserSettings.FindAsync(userId);
 
-            //ensure settings exist
+            // ensure settings exist
             if (settings == null)
             {
                 settings = UserSetting.GetDefaultSettingsForUser(userId, isShowListAssignedTicket);
@@ -57,7 +56,8 @@ namespace TicketDesk.Domain
                     await tempCtx.SaveChangesAsync();
                 }
             }
-            //ensure that the user has all required lists for their role, if not blow away list settings and recreate
+
+            // ensure that the user has all required lists for their role, if not blow away list settings and recreate
             if (!settings.ListSettings.HasRequiredDefaultListSettings(isShowListAssignedTicket))
             {
                 settings.ListSettings = new UserTicketListSettingsCollection
@@ -70,6 +70,7 @@ namespace TicketDesk.Domain
                     await tempCtx.SaveChangesAsync();
                 }
             }
+
             return settings;
         }
 
@@ -78,7 +79,7 @@ namespace TicketDesk.Domain
             var existing = await Context.UserSettings.FindAsync(settings.UserId);
             if (existing != null)
             {
-                //replace existing with new settings
+                // replace existing with new settings
                 // ReSharper disable once RedundantAssignment
                 existing = settings;
             }

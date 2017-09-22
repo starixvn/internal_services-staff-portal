@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TicketDesk.PushNotifications.Model
+﻿namespace TicketDesk.PushNotifications.Model
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class NewTicketPushNotificationInfo
     {
         public int TicketId { get; set; }
-
 
         public string MessageContent { get; set; }
 
@@ -35,7 +32,6 @@ namespace TicketDesk.PushNotifications.Model
                     MessageContent = MessageContent
                 }
             ).ToList();
-
         }
     }
 }

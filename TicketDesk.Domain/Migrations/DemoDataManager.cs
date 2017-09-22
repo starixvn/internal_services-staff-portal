@@ -41,29 +41,30 @@ namespace TicketDesk.Domain.Migrations
             context.SaveChanges();
             context.Projects.AddOrUpdate(p => p.ProjectName, new Project() { ProjectName = "NullSoft", ProjectDescription = "NullSoft Rocks" });
             var dProj = context.Projects.First();
-            context.Tickets.AddOrUpdate(t => t.Title,
-                   new Ticket
-                   {
-                       ProjectId = dProj.ProjectId,
-                       Title = "Test Unassigned Ticket",
-                       AffectsCustomer = false,
-                       Category = "Hardware",
-                       CreatedBy = "17f78f38-fa68-445f-90de-38896140db28",
-                       TicketStatus = TicketStatus.Active,
-                       CurrentStatusDate = DateTimeOffset.Now,
-                       CurrentStatusSetBy = "72bdddfb-805a-4883-94b9-aa494f5f52dc",
-                       Details =
-                           "Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada semper mi, id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.",
-                       IsHtml = false,
-                       LastUpdateBy = "72bdddfb-805a-4883-94b9-aa494f5f52dc",
-                       LastUpdateDate = DateTimeOffset.Now,
-                       Owner = "17f78f38-fa68-445f-90de-38896140db28",
-                       Priority = "Low",
-                       TagList = "test,moretest",
-                       TicketTags = new List<TicketTag> { new TicketTag() { TagName = "test" }, { new TicketTag() { TagName = "moretest" } } },
-                       TicketType = "Problem",
-                       TicketEvents = new[] { TicketEvent.CreateActivityEvent("17f78f38-fa68-445f-90de-38896140db28", TicketActivity.Create, null, null, null) }
-                   });
+            context.Tickets.AddOrUpdate(t =>
+                t.Title,
+                new Ticket
+                {
+                    ProjectId = dProj.ProjectId,
+                    Title = "Test Unassigned Ticket",
+                    AffectsCustomer = false,
+                    Category = "Hardware",
+                    CreatedBy = "17f78f38-fa68-445f-90de-38896140db28",
+                    TicketStatus = TicketStatus.Active,
+                    CurrentStatusDate = DateTimeOffset.Now,
+                    CurrentStatusSetBy = "72bdddfb-805a-4883-94b9-aa494f5f52dc",
+                    Details =
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada semper mi, id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.",
+                    IsHtml = false,
+                    LastUpdateBy = "72bdddfb-805a-4883-94b9-aa494f5f52dc",
+                    LastUpdateDate = DateTimeOffset.Now,
+                    Owner = "17f78f38-fa68-445f-90de-38896140db28",
+                    Priority = "Low",
+                    TagList = "test,moretest",
+                    TicketTags = new List<TicketTag> { new TicketTag() { TagName = "test" }, { new TicketTag() { TagName = "moretest" } } },
+                    TicketType = "Problem",
+                    TicketEvents = new[] { TicketEvent.CreateActivityEvent("17f78f38-fa68-445f-90de-38896140db28", TicketActivity.Create, null, null, null) }
+                });
 
             var titles = new[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1", "J1", "K1", "L1", "M1", "N1", "O1", "P1", "Q1", "R1" };
             var n = 0;
@@ -87,7 +88,8 @@ namespace TicketDesk.Domain.Migrations
                 }
 
                 var now = DateTimeOffset.Now.AddDays(n);
-                context.Tickets.AddOrUpdate(t => t.Title,
+                context.Tickets.AddOrUpdate(t =>
+                    t.Title,
                     new Ticket
                     {
                         ProjectId = dProj.ProjectId,

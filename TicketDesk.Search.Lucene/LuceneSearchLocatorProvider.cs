@@ -31,12 +31,12 @@ namespace TicketDesk.Search.Lucene
         {
             return Task.Run(() =>
             {
-                //new searcher each time,
-                //  because they don't see commits from any writer after being opened.
-                //  even in huge deployments though, TD's number of concurrent searches
-                //  would be tiny... not worth coding a mechanism to detect updates and
-                //  reuse a searcher until the index is updated. In actuality, index
-                //  updates would certainly be more frequent than index searches.
+                // new searcher each time,
+                // because they don't see commits from any writer after being opened.
+                // even in huge deployments though, TD's number of concurrent searches
+                // would be tiny... not worth coding a mechanism to detect updates and
+                // reuse a searcher until the index is updated. In actuality, index
+                // updates would certainly be more frequent than index searches.
 
                 var searcher = new IndexSearcher(TdIndexDirectory, true);
 

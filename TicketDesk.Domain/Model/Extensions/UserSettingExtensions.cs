@@ -77,7 +77,7 @@ namespace TicketDesk.Domain.Model
                         filterColumn.ColumnValue = Enum.Parse(filterColumn.ColumnValueType, filterColumn.ColumnValue.ToString());
                     }
 
-                    //assigning the type in ctor, then value directly as a param works around issues when the colum val is null.
+                    // assigning the type in ctor, then value directly as a param works around issues when the colum val is null.
                     fParams[i] = new ObjectParameter(filterColumn.ColumnName, filterColumn.ColumnValueType)
                     {
                         Value = filterColumn.ColumnValue

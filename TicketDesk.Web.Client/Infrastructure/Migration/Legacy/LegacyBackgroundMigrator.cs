@@ -16,9 +16,9 @@ namespace TicketDesk.Domain.Legacy
         public static void BeginMigration(LegacyMigrator migrator)
         {
             if (
-                MigrationTask == null || 
+                MigrationTask == null ||
                 (
-                    MigrationTask.Status != TaskStatus.Running || 
+                    MigrationTask.Status != TaskStatus.Running ||
                     MigrationTask.Status != TaskStatus.Created ||
                     MigrationTask.Status != TaskStatus.WaitingForActivation ||
                     MigrationTask.Status != TaskStatus.WaitingForChildrenToComplete ||
@@ -37,12 +37,12 @@ namespace TicketDesk.Domain.Legacy
                         Migrator.StatusChanged += Migrator_StatusChanged;
                         Migrator.Migrate();
                         token.ThrowIfCancellationRequested();
-                    }, token);
-                    
+                    },
+                    token);
                 }
                 catch (OperationCanceledException)
                 {
-                    //we'll eat the exceptions if thrown due to cancellation
+                    // we'll eat the exceptions if thrown due to cancellation
                 }
             }
         }
@@ -67,6 +67,7 @@ namespace TicketDesk.Domain.Legacy
             {
                 MessageStack = null;
             }
+
             if (MigrationTask != null)
             {
                 MigrationTask.Dispose();
@@ -94,7 +95,6 @@ namespace TicketDesk.Domain.Legacy
         {
             get { return _messages ?? (_messages = new StringBuilder()); }
             private set { _messages = value; }
-
         }
     }
 }

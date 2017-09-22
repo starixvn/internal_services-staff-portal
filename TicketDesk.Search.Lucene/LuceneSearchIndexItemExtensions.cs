@@ -60,8 +60,7 @@ namespace TicketDesk.Search.Lucene
                 DateTools.DateToString(item.LastUpdateDate.DateTime, DateTools.Resolution.SECOND),
                 Field.Store.YES,
                 Field.Index.NOT_ANALYZED,
-                Field.TermVector.NO
-                );
+                Field.TermVector.NO);
             var details = new Field(
                 "details",
                 item.Details ?? string.Empty,

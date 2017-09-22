@@ -11,12 +11,11 @@
 // attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
+using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNet.Identity;
-using TicketDesk.Web.Identity.Model;
 using TicketDesk.Localization.Identity;
-using Fanex.NAP.Core.Configuration;
+using TicketDesk.Web.Identity.Model;
 
 namespace TicketDesk.Web.Identity
 {
@@ -25,56 +24,6 @@ namespace TicketDesk.Web.Identity
         public TicketDeskRoleManager(IRoleStore<TicketDeskRole, string> roleStore)
             : base(roleStore)
         {
-        }
-
-        public IOrderedEnumerable<TicketDeskUser> GetTdInternalUsers(TicketDeskUserManager userManager)
-        {
-            return GetUsersInRole(new[] { "TdInternalUsers", "TdHelpDeskUsers", "TdAdministrators" }, userManager);
-        }
-
-        public IOrderedEnumerable<TicketDeskUser> GetTdTdAdministrators(TicketDeskUserManager userManager)
-        {
-            return GetUsersInRole(new[] { "TdAdministrators" }, userManager);
-        }
-
-        public IOrderedEnumerable<TicketDeskUser> GetTdHelpDeskUsers(TicketDeskUserManager userManager)
-        {
-            return GetUsersInRole(new[] { "TdHelpDeskUsers", "TdAdministrators" }, userManager);
-        }
-
-        public IOrderedEnumerable<TicketDeskUser> GetTdPendingUsers(TicketDeskUserManager userManager)
-        {
-            return GetUsersInRole(new[] { "TdPendingUsers" }, userManager);
-        }
-
-        public IOrderedEnumerable<TicketDeskUser> GetUsersInRole(string[] roleNames, TicketDeskUserManager userManager)
-        {
-            //NOTE : WILL IMPLEMENT follow function policy
-            var foundUsers = new List<TicketDeskUser>();
-
-            foundUsers.AddRange(userManager.NapContextHelper.UserService.GetBySite(userManager.NapContextHelper.SiteId).Select(u => new TicketDeskUser
-            {
-                Id = u.Id.ToString(),
-                Email = u.Email,
-                DisplayName = u.FirstName + " " + u.LastName
-            }));
-
-            return foundUsers.OrderBy(u => u.DisplayName);
-        }
-
-        /// <summary>
-        /// Ensures the correct set of TD standard roles exist.
-        /// </summary>
-        public void EnsureDefaultRolesExist()
-        {
-            //var roles = TdIdentityContext.DefaultRoles;
-            foreach (var defaultRole in DefaultRoles)
-            {
-                if (!this.RoleExists(defaultRole.Name))
-                {
-                    this.Create(defaultRole);
-                }
-            }
         }
 
         public static IEnumerable<TicketDeskRole> DefaultRoles
@@ -160,6 +109,56 @@ namespace TicketDesk.Web.Identity
                         Strings.Role_PendingApproval_Description
                      }
                 };
+            }
+        }
+
+        public IOrderedEnumerable<TicketDeskUser> GetTdInternalUsers(TicketDeskUserManager userManager)
+        {
+            return GetUsersInRole(new[] { "TdInternalUsers", "TdHelpDeskUsers", "TdAdministrators" }, userManager);
+        }
+
+        public IOrderedEnumerable<TicketDeskUser> GetTdTdAdministrators(TicketDeskUserManager userManager)
+        {
+            return GetUsersInRole(new[] { "TdAdministrators" }, userManager);
+        }
+
+        public IOrderedEnumerable<TicketDeskUser> GetTdHelpDeskUsers(TicketDeskUserManager userManager)
+        {
+            return GetUsersInRole(new[] { "TdHelpDeskUsers", "TdAdministrators" }, userManager);
+        }
+
+        public IOrderedEnumerable<TicketDeskUser> GetTdPendingUsers(TicketDeskUserManager userManager)
+        {
+            return GetUsersInRole(new[] { "TdPendingUsers" }, userManager);
+        }
+
+        public IOrderedEnumerable<TicketDeskUser> GetUsersInRole(string[] roleNames, TicketDeskUserManager userManager)
+        {
+            // NOTE : WILL IMPLEMENT follow function policy
+            var foundUsers = new List<TicketDeskUser>();
+
+            foundUsers.AddRange(userManager.NapContextHelper.UserService.GetBySite(userManager.NapContextHelper.SiteId).Select(u => new TicketDeskUser
+            {
+                Id = u.Id.ToString(),
+                Email = u.Email,
+                DisplayName = u.FirstName + " " + u.LastName
+            }));
+
+            return foundUsers.OrderBy(u => u.DisplayName);
+        }
+
+        /// <summary>
+        /// Ensures the correct set of TD standard roles exist.
+        /// </summary>
+        public void EnsureDefaultRolesExist()
+        {
+            // var roles = TdIdentityContext.DefaultRoles;
+            foreach (var defaultRole in DefaultRoles)
+            {
+                if (!this.RoleExists(defaultRole.Name))
+                {
+                    this.Create(defaultRole);
+                }
             }
         }
     }

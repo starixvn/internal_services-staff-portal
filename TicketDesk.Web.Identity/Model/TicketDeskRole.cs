@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNet.Identity.EntityFramework;
-using TicketDesk.Localization.Identity;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations;
 using TicketDesk.Localization;
+using TicketDesk.Localization.Identity;
 
 namespace TicketDesk.Web.Identity.Model
 {
@@ -10,7 +10,9 @@ namespace TicketDesk.Web.Identity.Model
         private string displayName;
         private string description;
 
-        public TicketDeskRole() : base() { }
+        public TicketDeskRole() : base()
+        {
+        }
 
         public TicketDeskRole(string roleName, string displayName, string description)
             : base(roleName)
@@ -27,16 +29,20 @@ namespace TicketDesk.Web.Identity.Model
             get
             {
                 if (TicketDeskRoleManager.DefaultRolesDisplayName.ContainsKey(this.Name))
+                {
                     return TicketDeskRoleManager.DefaultRolesDisplayName[this.Name];
+                }
                 else
+                {
                     return this.displayName;
+                }
             }
+
             set
             {
                 this.displayName = value;
             }
         }
-
 
         [StringLength(500, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
         [Display(Name = "RoleDescription", ResourceType = typeof(Strings))]
@@ -45,10 +51,15 @@ namespace TicketDesk.Web.Identity.Model
             get
             {
                 if (TicketDeskRoleManager.DefaultRolesDescription.ContainsKey(this.Name))
+                {
                     return TicketDeskRoleManager.DefaultRolesDescription[this.Name];
+                }
                 else
+                {
                     return this.displayName;
+                }
             }
+
             set
             {
                 this.description = value;

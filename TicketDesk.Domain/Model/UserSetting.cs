@@ -28,11 +28,6 @@ namespace TicketDesk.Domain.Model
 
         public int? SelectedProjectId { get; set; }
 
-        public UserTicketListSetting GetUserListSettingByName(string listName)
-        {
-            return ListSettings.FirstOrDefault(us => us.ListName.Equals(listName, StringComparison.InvariantCultureIgnoreCase));
-        }
-
         public static UserSetting GetDefaultSettingsForUser(string userId, bool isHelpDeskUser)
         {
             var collection = new UserTicketListSettingsCollection
@@ -41,6 +36,11 @@ namespace TicketDesk.Domain.Model
             };
 
             return new UserSetting { UserId = userId, ListSettings = collection };
+        }
+
+        public UserTicketListSetting GetUserListSettingByName(string listName)
+        {
+            return ListSettings.FirstOrDefault(us => us.ListName.Equals(listName, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

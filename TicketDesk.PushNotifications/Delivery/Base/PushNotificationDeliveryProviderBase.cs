@@ -21,26 +21,26 @@ namespace TicketDesk.PushNotifications.Delivery
     {
         public abstract string DestinationType { get; }
 
+        public abstract IDeliveryProviderConfiguration Configuration { get; set; }
+
         public abstract Task<object> GenerateMessageAsync(PushNotificationItem notificationItem, CancellationToken ct);
 
         public abstract Task<bool> SendNotificationAsync(PushNotificationItem notificationItem, object message, CancellationToken ct);
 
-        public abstract IDeliveryProviderConfiguration Configuration { get; set; }
-
         public async Task SendReadyMessageAsync(PushNotificationItem notificationItem, int retryMax, int retryIntv, CancellationToken ct)
         {
-            //do the meat
+            // do the meat
             var message = await GenerateMessageAsync(notificationItem, ct);
             var result = await SendNotificationAsync(notificationItem, message, ct);
 
-            //if we're in a retry case, increment retry count
+            // if we're in a retry case, increment retry count
             if (notificationItem.DeliveryStatus == PushNotificationItemStatus.Retrying)
             {
                 notificationItem.RetryCount++;
             }
             if (result)
             {
-                //if sent, mark sent and remove schedule
+                // if sent, mark sent and remove schedule
                 notificationItem.DeliveryStatus = PushNotificationItemStatus.Sent;
                 notificationItem.ScheduledSendDate = null;
             }
@@ -48,7 +48,7 @@ namespace TicketDesk.PushNotifications.Delivery
             {
                 if (notificationItem.RetryCount <= retryMax)
                 {
-                    //mark for retry, update schedule
+                    // mark for retry, update schedule
                     notificationItem.DeliveryStatus = PushNotificationItemStatus.Retrying;
                     if (notificationItem.ScheduledSendDate != null)
                     {
@@ -58,7 +58,7 @@ namespace TicketDesk.PushNotifications.Delivery
                 }
                 else
                 {
-                    //too many retry attempts, mark fail and clear schedule
+                    // too many retry attempts, mark fail and clear schedule
                     notificationItem.DeliveryStatus = PushNotificationItemStatus.Failed;
                     notificationItem.ScheduledSendDate = null;
                 }
