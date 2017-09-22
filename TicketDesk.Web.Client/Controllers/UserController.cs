@@ -1,41 +1,20 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using Fanex.Common;
-using Fanex.NAP.Core.Criteria.User;
-using Fanex.NAP.Core.Model;
-using Fanex.NAP.Core.Service.Interface;
-using Fanex.NAP.Core.Web;
-using Fanex.NAP.Core.Web.Auth;
-using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Hosting;
-using System.Web.Mvc;
-using System.Web.Security;
-using TicketDesk.Domain;
-using TicketDesk.PushNotifications;
-using TicketDesk.PushNotifications.Model;
-using TicketDesk.Web.Client.Models;
-using TicketDesk.Web.Identity;
-using TicketDesk.Web.Identity.Model;
-
-namespace TicketDesk.Web.Client.Controllers
+﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Fanex.Common;
+    using Fanex.NAP.Core.Criteria.User;
+    using Fanex.NAP.Core.Model;
+    using Fanex.NAP.Core.Service.Interface;
+    using Fanex.NAP.Core.Web;
+    using Fanex.NAP.Core.Web.Auth;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Security;
+    using TicketDesk.Web.Client.Models;
+
     [RoutePrefix("user")]
     [Route("{action}")]
     public class UserController : BaseController
@@ -45,79 +24,13 @@ namespace TicketDesk.Web.Client.Controllers
         private readonly IMenuItemService menuItemService;
 
         public UserController(
-            TicketDeskUserManager userManager,
-            TicketDeskSignInManager signInManager,
-            TdDomainContext domainContext,
             IGroupService groupService,
             ISiteService siteService,
             IMenuItemService menuItemService)
         {
-            UserManager = userManager;
-            SignInManager = signInManager;
-            DomainContext = domainContext;
             this.groupService = groupService;
             this.siteService = siteService;
             this.menuItemService = menuItemService;
-        }
-
-        private TicketDeskUserManager UserManager { get; set; }
-
-        private TicketDeskSignInManager SignInManager { get; set; }
-
-        private TdDomainContext DomainContext { get; set; }
-
-        [AllowAnonymous]
-        [Route("register")]
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        [Route("register")]
-        public async Task<ActionResult> Register(UserRegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new TicketDeskUser { UserName = model.Email, Email = model.Email, DisplayName = model.DisplayName };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await UserManager.AddToRolesAsync(user.Id, DomainContext.TicketDeskSettings.SecuritySettings.DefaultNewUserRoles.ToArray());
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    HostingEnvironment.QueueBackgroundWorkItem(ct =>
-                    {
-                        using (var notificationContext = new TdPushNotificationContext())
-                        {
-                            notificationContext.SubscriberPushNotificationSettingsManager.AddSettingsForSubscriber(
-                                new SubscriberNotificationSetting
-                                {
-                                    SubscriberId = user.Id,
-                                    IsEnabled = true,
-                                    PushNotificationDestinations = new[]
-                                    {
-                                        new PushNotificationDestination()
-                                        {
-                                            DestinationType = "email",
-                                            DestinationAddress = user.Email,
-                                            SubscriberName = user.DisplayName
-                                        }
-                                    }
-                                });
-                            notificationContext.SaveChanges();
-                        }
-                    });
-
-                    return RedirectToAction("Index", "Home");
-                }
-
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
         }
 
         [AllowAnonymous]
@@ -125,7 +38,8 @@ namespace TicketDesk.Web.Client.Controllers
         public ActionResult SignIn(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            ViewBag.IsDemoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false").Equals("true", StringComparison.InvariantCultureIgnoreCase);
+            ViewBag.IsDemoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false")
+                .Equals("true", StringComparison.InvariantCultureIgnoreCase);
 
             return View();
         }
@@ -136,7 +50,8 @@ namespace TicketDesk.Web.Client.Controllers
         [Route("sign-in")]
         public ActionResult SignIn(UserSignInViewModel model, string returnUrl)
         {
-            ViewBag.IsDemoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false").Equals("true", StringComparison.InvariantCultureIgnoreCase);
+            ViewBag.IsDemoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false")
+                .Equals("true", StringComparison.InvariantCultureIgnoreCase);
 
             if (!ModelState.IsValid)
             {
@@ -235,14 +150,6 @@ namespace TicketDesk.Web.Client.Controllers
             Response.Cookies.Add(authCookie);
         }
 
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error);
-            }
-        }
-
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -253,10 +160,6 @@ namespace TicketDesk.Web.Client.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        /// <summary>
-        /// Get Menus from NAP
-        /// </summary>
-        /// <param name="userId"></param>
         private void CreateUserMenu(int userId)
         {
             CurrentSession.MenuItemList = (IList<MenuItem>)menuItemService.GetByUserAndSiteIncludeGroup(

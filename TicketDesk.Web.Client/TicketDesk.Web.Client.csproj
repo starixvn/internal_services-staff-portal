@@ -2181,7 +2181,6 @@
     <Content Include="Views\FirstRunSetup\_LegacySecurity.cshtml" />
     <Content Include="Views\FirstRunSetup\_SetupCompleteInfo.cshtml" />
     <Content Include="Views\ApplicationSettings\Index.cshtml" />
-    <Content Include="Views\Shared\_AdminMenu.cshtml" />
     <Content Include="Views\PushNotificationSettings\Index.cshtml" />
     <Content Include="Views\PushNotificationSettings\ListDeliveryProviderSettings.cshtml" />
     <Content Include="Views\PushNotificationSettings\ConfigureDeliveryProvider.cshtml" />
@@ -2191,9 +2190,7 @@
     <Content Include="Views\Emails\Ticket.cshtml" />
     <Content Include="Views\Emails\Ticket.Text.cshtml" />
     <Content Include="Views\Ticket\_TicketFiles.cshtml" />
-    <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\SignIn.cshtml" />
-    <Content Include="Views\User\Lockout.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
@@ -2203,7 +2200,6 @@
     <Content Include="Views\ProjectSettings\Index.cshtml" />
     <Content Include="Views\ProjectSettings\Edit.cshtml" />
     <Content Include="Views\ProjectSettings\New.cshtml" />
-    <Content Include="Views\Shared\_AdminMenuItems.cshtml" />
     <Content Include="Views\Shared\_ProjectMenu.cshtml" />
     <Content Include="Views\FirstRunSetup\CheckUpgradeProgress.cshtml" />
     <Content Include="Views\Shared\_LanguageOptions.cshtml" />
@@ -2226,8 +2222,6 @@
     <Folder Include="Scripts\filemanager\.git\objects\info\" />
     <Folder Include="Scripts\filemanager\.git\refs\tags\" />
     <Folder Include="uploads\" />
-    <Folder Include="Views\Base\" />
-    <Folder Include="Views\ProjectSelector\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
