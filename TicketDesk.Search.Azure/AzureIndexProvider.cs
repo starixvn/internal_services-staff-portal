@@ -61,6 +61,7 @@ namespace TicketDesk.Search.Azure
                     }
                 }
             }
+
             return ret;
         }
 
@@ -134,22 +135,14 @@ namespace TicketDesk.Search.Azure
         private Index GetIndexDefinition()
         {
             var index = new Index(IndexName)
-                .WithStringField("id", opt =>
-                    opt.IsKey().IsRetrievable().IsSearchable().IsSortable().IsFilterable())
-                .WithStringField("projectid", opt =>
-                    opt.IsRetrievable().IsSortable().IsFilterable())
-                .WithStringField("title", opt =>
-                    opt.IsRetrievable().IsSearchable())
-                .WithStringField("status", opt =>
-                    opt.IsRetrievable().IsSearchable().IsSortable().IsFilterable())
-                .WithDateTimeField("lastupdatedate", opt =>
-                    opt.IsSortable().IsFilterable())
-                .WithStringField("details", opt =>
-                    opt.IsSearchable())
-                .WithStringCollectionField("tags", opt =>
-                    opt.IsRetrievable().IsSearchable().IsFilterable())
-                .WithStringCollectionField("events", opt =>
-                    opt.IsSearchable());
+                .WithStringField("id", opt => opt.IsKey().IsRetrievable().IsSearchable().IsSortable().IsFilterable())
+                .WithStringField("projectid", opt => opt.IsRetrievable().IsSortable().IsFilterable())
+                .WithStringField("title", opt => opt.IsRetrievable().IsSearchable())
+                .WithStringField("status", opt => opt.IsRetrievable().IsSearchable().IsSortable().IsFilterable())
+                .WithDateTimeField("lastupdatedate", opt => opt.IsSortable().IsFilterable())
+                .WithStringField("details", opt => opt.IsSearchable())
+                .WithStringCollectionField("tags", opt => opt.IsRetrievable().IsSearchable().IsFilterable())
+                .WithStringCollectionField("events", opt => opt.IsSearchable());
 
             index.ScoringProfiles = new Collection<ScoringProfile>
             {

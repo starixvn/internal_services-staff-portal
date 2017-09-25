@@ -88,9 +88,9 @@ namespace TicketDesk.Search.Azure
                 }
                 catch
                 {
-                    //no need to get all null-checky and collection count happy... if
-                    //something went wrong above, then the connection string existed, but
-                    //is configured incorrectly
+                    // no need to get all null-checky and collection count happy... if
+                    // something went wrong above, then the connection string existed, but
+                    // is configured incorrectly
                     throw new ConfigurationErrorsException(
                         "The AzureSearch connection string is invalid, or incorrectly formatted");
                 }

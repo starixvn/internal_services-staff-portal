@@ -1,17 +1,17 @@
 ﻿// TicketDesk - Attribution notice
 // Original Code By:
 //       zvolkov - http://www.zvolkov.com/clog/2012/04/01/an-improved-comma-separated-values-array-model-binder/
-//    
+//
 // Contributor(s):
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -56,14 +56,20 @@ namespace TicketDesk.Web.Client
 
                         foreach (var splitValue in actualValue.AttemptedValue.Split(new[] { ',' }))
                         {
-                            if (!String.IsNullOrWhiteSpace(splitValue))
+                            if (!string.IsNullOrWhiteSpace(splitValue))
+                            {
                                 list.Add(Convert.ChangeType(splitValue, valueType));
+                            }
                         }
 
                         if (type.IsArray)
+                        {
                             return ToArrayMethod.MakeGenericMethod(valueType).Invoke(this, new[] { list });
+                        }
                         else
+                        {
                             return list;
+                        }
                     }
                 }
             }

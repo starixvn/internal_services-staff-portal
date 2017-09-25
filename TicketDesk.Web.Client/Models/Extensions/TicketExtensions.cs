@@ -41,6 +41,7 @@ namespace TicketDesk.Domain.Model
                 Status = t.TicketStatus.ToString(),
                 LastUpdateDate = t.LastUpdateDate,
                 Tags = string.IsNullOrEmpty(t.TagList) ? new string[] { } : t.TagList.Split(','),
+
                 // not null comments only, otherwise we end up indexing empty array item, or blowing up azure required field
                 Events = t.TicketEvents.Where(c => !string.IsNullOrEmpty(c.Comment)).Select(c => c.Comment).ToArray()
             });
@@ -79,7 +80,7 @@ namespace TicketDesk.Domain.Model
 
         public static HtmlString HtmlDetails(this Ticket ticket)
         {
-            var content = (ticket.IsHtml) ? ticket.Details : ticket.Details.HtmlFromMarkdown();
+            var content = ticket.IsHtml ? ticket.Details : ticket.Details.HtmlFromMarkdown();
             var san = new HtmlSanitizer();
             return new HtmlString(san.Sanitize(content));
         }

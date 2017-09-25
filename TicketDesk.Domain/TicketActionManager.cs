@@ -292,6 +292,7 @@ namespace TicketDesk.Domain
                     {
                         ticket.TicketStatus = TicketStatus.Active;
                     }
+
                     ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };

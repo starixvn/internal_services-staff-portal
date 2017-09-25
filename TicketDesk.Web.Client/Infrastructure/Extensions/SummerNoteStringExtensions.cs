@@ -8,7 +8,7 @@ namespace TicketDesk.Web.Client
         {
             if (!string.IsNullOrEmpty(content))
             {
-                var ctext = Regex.Replace(content, "<[^>]*>", "").ToLowerInvariant();
+                var ctext = Regex.Replace(content, "<[^>]*>", string.Empty).ToLowerInvariant();
                 var hasText = ctext.Replace("\n", " ").Replace("&nbsp;", " ").Trim().Length > 0;
                 if (!hasText)
                 {

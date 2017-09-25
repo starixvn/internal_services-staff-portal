@@ -30,7 +30,7 @@ namespace TicketDesk.Domain.Model
 
         public static HtmlString HtmlComment(this TicketEvent ticketEvent)
         {
-            var content = (ticketEvent.IsHtml) ? ticketEvent.Comment : ticketEvent.Comment.HtmlFromMarkdown();
+            var content = ticketEvent.IsHtml ? ticketEvent.Comment : ticketEvent.Comment.HtmlFromMarkdown();
             var san = new HtmlSanitizer();
 
             return new HtmlString(san.Sanitize(content));

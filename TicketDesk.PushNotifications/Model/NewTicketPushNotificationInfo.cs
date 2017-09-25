@@ -10,9 +10,7 @@
 
         public string MessageContent { get; set; }
 
-        internal IEnumerable<PushNotificationItem> ToPushNotificationItems(
-            SubscriberNotificationSetting userSettings
-            )
+        internal IEnumerable<PushNotificationItem> ToPushNotificationItems(SubscriberNotificationSetting userSettings)
         {
             var now = DateTimeOffset.Now;
             return userSettings.PushNotificationDestinations.Select(dest =>
@@ -23,9 +21,7 @@
                     SubscriberId = "new ticket broadcast",
                     Destination = dest,
                     DestinationId = dest.DestinationId,
-                    DeliveryStatus = userSettings.IsEnabled
-                        ? PushNotificationItemStatus.Scheduled
-                        : PushNotificationItemStatus.Disabled,
+                    DeliveryStatus = userSettings.IsEnabled ? PushNotificationItemStatus.Scheduled : PushNotificationItemStatus.Disabled,
                     RetryCount = 0,
                     CreatedDate = now,
                     ScheduledSendDate = now,

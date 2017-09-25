@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TicketDesk.Web.Identity.Model;
 
 namespace TicketDesk.Web.Identity.Model
 {
@@ -28,5 +27,4 @@ namespace TicketDesk.Web.Identity.Model
             return obj.DisplayName.GetHashCode() + obj.Email.GetHashCode();
         }
     }
-
 }

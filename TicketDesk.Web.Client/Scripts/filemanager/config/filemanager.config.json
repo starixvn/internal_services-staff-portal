@@ -57,7 +57,7 @@
         "multiple": true,
         "maxNumberOfFiles": 5,
         "chunkSize": false,
-        "fileSizeLimit": 10000000
+        "fileSizeLimit": 100000000
     },
     "clipboard": {
         "enabled": true,

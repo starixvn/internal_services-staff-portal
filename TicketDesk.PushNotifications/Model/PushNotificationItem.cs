@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -18,7 +18,6 @@ using TicketDesk.Localization;
 
 namespace TicketDesk.PushNotifications.Model
 {
-
     [Table("PushNotificationItems", Schema = "notifications")]
     public class PushNotificationItem
     {
@@ -45,7 +44,7 @@ namespace TicketDesk.PushNotifications.Model
         public int DestinationId { get; set; }
 
         public PushNotificationDestination Destination { get; set; }
-        
+
         public DateTimeOffset CreatedDate { get; set; }
 
         public DateTimeOffset? ScheduledSendDate { get; set; }
@@ -79,6 +78,7 @@ namespace TicketDesk.PushNotifications.Model
 
                 send = now.AddMinutes(delay);
             }
+
             return send;
         }
     }

@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -16,10 +16,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
+using TicketDesk.Localization;
+using TicketDesk.Localization.Models;
 using TicketDesk.Web.Identity;
 using TicketDesk.Web.Identity.Model;
-using TicketDesk.Localization.Models;
-using TicketDesk.Localization;
 
 namespace TicketDesk.Web.Client.Models
 {
@@ -68,7 +68,7 @@ namespace TicketDesk.Web.Client.Models
             User = user;
             IsLocked = lockDate > DateTime.UtcNow && lockDate < DateTime.MaxValue.ToUniversalTime();
             IsDisabled = lockDate == DateTime.MaxValue.ToUniversalTime();
-            Roles = roles ?? new string[] {};
+            Roles = roles ?? new string[] { };
         }
 
         public TicketDeskUser User { get; set; }
@@ -100,7 +100,5 @@ namespace TicketDesk.Web.Client.Models
                     Roles.ToArray());
             }
         }
-
-
     }
 }

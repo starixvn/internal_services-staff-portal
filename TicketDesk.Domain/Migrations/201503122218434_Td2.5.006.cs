@@ -1,7 +1,7 @@
 namespace TicketDesk.Domain.Migrations
 {
     using System.Data.Entity.Migrations;
-    
+
     public partial class Td25006 : DbMigration
     {
         public override void Up()
@@ -17,7 +17,7 @@ namespace TicketDesk.Domain.Migrations
             AlterColumn("dbo.UserSettings", "UserId", c => c.String(nullable: false, maxLength: 256));
             AddPrimaryKey("dbo.UserSettings", "UserId");
         }
-        
+
         public override void Down()
         {
             DropPrimaryKey("dbo.UserSettings");

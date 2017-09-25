@@ -1,7 +1,7 @@
 namespace TicketDesk.Domain.Migrations
 {
     using System.Data.Entity.Migrations;
-    
+
     public partial class Td25008 : DbMigration
     {
         public override void Up()
@@ -12,7 +12,7 @@ namespace TicketDesk.Domain.Migrations
             DropColumn("dbo.TicketEvents", "NotificationsSent");
             DropColumn("dbo.TicketSubscribers", "Subscriber");
         }
-        
+
         public override void Down()
         {
             AddColumn("dbo.TicketSubscribers", "Subscriber", c => c.String(nullable: false, maxLength: 256));

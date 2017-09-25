@@ -37,9 +37,7 @@ namespace TicketDesk.Search.Lucene
                 // would be tiny... not worth coding a mechanism to detect updates and
                 // reuse a searcher until the index is updated. In actuality, index
                 // updates would certainly be more frequent than index searches.
-
                 var searcher = new IndexSearcher(TdIndexDirectory, true);
-
                 var fields = new[] { "id", "title", "details", "tags", "events" };
                 var parser = new MultiFieldQueryParser(Version.LUCENE_30,
                     fields,

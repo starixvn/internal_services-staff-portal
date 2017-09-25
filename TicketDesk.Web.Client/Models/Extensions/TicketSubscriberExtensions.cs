@@ -6,12 +6,11 @@ namespace TicketDesk.Domain.Model
 {
     public static class TicketSubscriberExtensions
     {
-
-
         public static UserDisplayInfo GetSubscriberDisplayInfo(this TicketSubscriber subscriber)
         {
             return GetUserInfo(subscriber.SubscriberId);
         }
+
         public static UserDisplayInfo GetUserInfo(string userId)
         {
             var userManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();

@@ -61,8 +61,20 @@ namespace TicketDesk.Web.Identity.Migrations
 
             roleManager.EnsureDefaultRolesExist();
 
-            var staff = new TicketDeskUser { Id = "72bdddfb-805a-4883-94b9-aa494f5f52dc", UserName = "staff@example.com", Email = "staff@example.com", DisplayName = "HelpDesk User" };
-            var reguser = new TicketDeskUser { Id = "17f78f38-fa68-445f-90de-38896140db28", UserName = "user@example.com", Email = "user@example.com", DisplayName = "Regular User" };
+            var staff = new TicketDeskUser
+            {
+                Id = "72bdddfb-805a-4883-94b9-aa494f5f52dc",
+                UserName = "staff@example.com",
+                Email = "staff@example.com",
+                DisplayName = "HelpDesk User"
+            };
+            var reguser = new TicketDeskUser
+            {
+                Id = "17f78f38-fa68-445f-90de-38896140db28",
+                UserName = "user@example.com",
+                Email = "user@example.com",
+                DisplayName = "Regular User"
+            };
             var users = new List<TicketDeskUser> { staff, reguser };
             var rolesNames = new Dictionary<string, string[]>
             {

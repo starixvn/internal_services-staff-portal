@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -42,7 +42,6 @@ namespace TicketDesk.Web.Client.Models
             get { return _azureInfo ?? (_azureInfo = new AzureInfoViewModel(DatabaseInfo.DbEdition, DatabaseInfo.DatabaseName)); }
         }
 
-
         public class DatabaseInfoViewModel
         {
             public DatabaseInfoViewModel()
@@ -50,7 +49,7 @@ namespace TicketDesk.Web.Client.Models
                 var connectionString = ConfigurationManager.ConnectionStrings["TicketDesk"].ConnectionString;
                 DbEdition = GetSqlEdition(connectionString);
                 IsLocalDb = GetIsLocalDb(connectionString);
-               
+
                 var builder = new SqlConnectionStringBuilder(connectionString);
                 var dsource = builder.DataSource.Split('\\');
                 ServerName = dsource.Length > 0 ? dsource[0] : null;
@@ -58,8 +57,6 @@ namespace TicketDesk.Web.Client.Models
 
                 IsFileDatabase = !string.IsNullOrEmpty(builder.AttachDBFilename);
                 DatabaseName = IsFileDatabase ? builder.AttachDBFilename : builder.InitialCatalog;
-
-
             }
 
             public string DbEdition { get; private set; }
@@ -83,7 +80,11 @@ namespace TicketDesk.Web.Client.Models
                     conn.Close();
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
-                catch { }
+                catch
+                {
+                    // TODO
+                }
+
                 return edition;
             }
 
@@ -102,14 +103,18 @@ namespace TicketDesk.Web.Client.Models
                     conn.Close();
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
-                catch {  }
+                catch
+                {
+                    // TODO
+                }
+
                 return isLocalDb;
             }
+
             private SqlConnection GetMasterCatalogConnection(string connectionString)
             {
-
                 var builder = new SqlConnectionStringBuilder(connectionString);
-                builder.AttachDBFilename = "";
+                builder.AttachDBFilename = string.Empty;
                 builder.InitialCatalog = "Master";
                 builder.ConnectTimeout = 5;
                 return new SqlConnection(builder.ToString());
@@ -128,10 +133,15 @@ namespace TicketDesk.Web.Client.Models
             }
 
             public bool DatabaseExists { get; private set; }
-            public bool IsDatabaseReady { get { return DatabaseConfig.IsDatabaseReady; }}
-            public bool IsLegacyDatabase { get { return DatabaseConfig.IsLegacyDatabase(); }}
+
+            public bool IsDatabaseReady { get { return DatabaseConfig.IsDatabaseReady; } }
+
+            public bool IsLegacyDatabase { get { return DatabaseConfig.IsLegacyDatabase(); } }
+
             public bool IsEmptyDatabase { get { return DatabaseConfig.IsEmptyDatabase(); } }
+
             public bool IsCompatibleWithEfModel { get; private set; }
+
             public bool HasLegacySecurityObjects { get { return DatabaseConfig.HasLegacySecurity(); } }
         }
 
@@ -145,17 +155,19 @@ namespace TicketDesk.Web.Client.Models
                 AzureSqlService = IsSqlAzure ? dbName : null;
                 AzureSearchService = GetAzureSearchServiceName();
                 AzureStorageService = GetAzureStorageServiceName();
-
-
             }
+
             public string AzureWebSiteName { get; private set; }
+
             public bool IsAzureWebSite { get; private set; }
+
             public string AzureSqlService { get; private set; }
+
             public bool IsSqlAzure { get; private set; }
 
             public string AzureSearchService { get; private set; }
-            public string AzureStorageService { get; private set; }
 
+            public string AzureStorageService { get; private set; }
 
             public bool HasAzureServices
             {
@@ -166,7 +178,6 @@ namespace TicketDesk.Web.Client.Models
                         IsSqlAzure ||
                         !string.IsNullOrEmpty(AzureSearchService) ||
                         !string.IsNullOrEmpty(AzureStorageService);
-
                 }
             }
 
@@ -178,8 +189,10 @@ namespace TicketDesk.Web.Client.Models
                 {
                     svc = azSearchInfo.ServiceName;
                 }
+
                 return svc;
             }
+
             private string GetAzureStorageServiceName()
             {
                 string svcName = null;
@@ -196,21 +209,19 @@ namespace TicketDesk.Web.Client.Models
                             .Select(p => p.Split('='))
                             .Select(t => new { key = t[0], value = t[1] }).ToList();
 
-                        var service =
-                            parts.FirstOrDefault(
-                                p => p.key.Equals("AccountName", StringComparison.InvariantCultureIgnoreCase));
+                        var service = parts.FirstOrDefault(p => p.key.Equals("AccountName", StringComparison.InvariantCultureIgnoreCase));
                         if (service != null)
                         {
                             svcName = service.value;
-
                         }
                     }
                     // ReSharper disable once EmptyGeneralCatchClause
                     catch
                     {
+                        // TODO
                     }
-
                 }
+
                 return svcName;
             }
         }

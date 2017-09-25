@@ -13,12 +13,11 @@
 
 namespace TicketDesk.Web.Identity
 {
-    using System;
-    using Microsoft.AspNet.Identity;
-    using TicketDesk.Web.Identity.Model;
-    using Domain.Infrastructure;
     using Domain;
-    using Fanex.NAP.Core.Business;
+    using Domain.Infrastructure;
+    using Microsoft.AspNet.Identity;
+    using System;
+    using TicketDesk.Web.Identity.Model;
 
     public class TicketDeskUserManager : UserManager<TicketDeskUser>
     {
@@ -27,7 +26,7 @@ namespace TicketDesk.Web.Identity
         {
             ConfigureUserManager();
 
-            //NAP configure
+            // NAP configure
             NapContextHelper = new ContextHelper();
             NapCurrentUserId = NapContextHelper.CurrentSession.UserId;
             CurrentUserId = NapCurrentUserId.ToString();
@@ -40,7 +39,9 @@ namespace TicketDesk.Web.Identity
         public string CurrentUserId { get; }
 
         public UserDisplayInfoCache InfoCache
-        { get { return new UserDisplayInfoCache(this); } }
+        {
+            get { return new UserDisplayInfoCache(this); }
+        }
 
         public bool IsTdHelpDeskUser(string userId)
         {

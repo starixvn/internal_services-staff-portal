@@ -1,7 +1,7 @@
 namespace TicketDesk.Domain.Migrations
 {
     using System.Data.Entity.Migrations;
-    
+
     public partial class Td25010 : DbMigration
     {
         public override void Up()
@@ -15,7 +15,7 @@ namespace TicketDesk.Domain.Migrations
             AddForeignKey("dbo.TicketEventNotifications", new[] { "TicketId", "SubscriberId" }, "dbo.TicketSubscribers", new[] { "TicketId", "SubscriberId" });
             DropColumn("dbo.TicketSubscribers", "SubscriberUserName");
         }
-        
+
         public override void Down()
         {
             AddColumn("dbo.TicketSubscribers", "SubscriberUserName", c => c.String(nullable: false, maxLength: 256));

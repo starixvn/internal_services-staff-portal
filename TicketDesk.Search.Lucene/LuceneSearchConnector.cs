@@ -28,8 +28,6 @@ namespace TicketDesk.Search.Lucene
         private Analyzer _tdIndexAnalyzer;
         private IndexWriter _tdIndexWriter;
 
-        protected string IndexLocation { get; private set; }
-
         internal LuceneSearchConnector(string indexLocation)
         {
             var fi = new DirectoryInfo(indexLocation);
@@ -43,6 +41,8 @@ namespace TicketDesk.Search.Lucene
                 IndexLocation = indexLocation;
             }
         }
+
+        protected string IndexLocation { get; private set; }
 
         public IndexWriter TdIndexWriter
         {
@@ -74,8 +74,8 @@ namespace TicketDesk.Search.Lucene
             {
                 if (IndexWriter.IsLocked(TdIndexDirectory))
                 {
-                    //directory locked, blow away the lock and hope there isn't
-                    //  really another writer open elsewhere
+                    // directory locked, blow away the lock and hope there isn't
+                    // really another writer open elsewhere
                     IndexWriter.Unlock(TdIndexDirectory);
                 }
 
@@ -127,9 +127,20 @@ namespace TicketDesk.Search.Lucene
 
         public void Dispose()
         {
-            if (_tdIndexWriter != null) { _tdIndexWriter.Dispose(); }
-            if (TdIndexAnalyzer != null) { TdIndexAnalyzer.Dispose(); }
-            if (TdIndexDirectory != null) { TdIndexDirectory.Dispose(); }
+            if (_tdIndexWriter != null)
+            {
+                _tdIndexWriter.Dispose();
+            }
+
+            if (TdIndexAnalyzer != null)
+            {
+                TdIndexAnalyzer.Dispose();
+            }
+
+            if (TdIndexDirectory != null)
+            {
+                TdIndexDirectory.Dispose();
+            }
         }
     }
 }

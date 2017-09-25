@@ -41,11 +41,11 @@ namespace TicketDesk.Web.Client
 
             if (!DatabaseConfig.IsDatabaseReady || demoMode.Equals("true", StringComparison.InvariantCultureIgnoreCase))
             {
-                //disable if database hasn't been created, of if running in demo mode
+                // disable if database hasn't been created, of if running in demo mode
                 return;
             }
 
-            //configuration supplied by the IoC configuration
+            // configuration supplied by the IoC configuration
             var context = DependencyResolver.Current.GetService<TdPushNotificationContext>();
 
             if (DatabaseConfig.IsFirstRunDemoRefreshEnabled())
@@ -57,7 +57,7 @@ namespace TicketDesk.Web.Client
             {
                 EnsureBroadcastNotificaitonsConfiguration(context);
 
-                //TODO: poor man's detection of appropriate scheduler
+                // TODO: poor man's detection of appropriate scheduler
                 var siteName = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME");
                 var isAzureWebSite = !string.IsNullOrEmpty(siteName);
                 if (!isAzureWebSite)
@@ -68,7 +68,7 @@ namespace TicketDesk.Web.Client
 
                 if (context.TicketDeskPushNotificationSettings.IsBackgroundQueueEnabled)
                 {
-                    //register for static notifications created event handler
+                    // register for static notifications created event handler
                     TdDomainContext.NotificationsCreated += (sender, notifications) =>
                     {
                         HostingEnvironment.QueueBackgroundWorkItem(CreateTicketEventNotifications(notifications));
@@ -92,7 +92,8 @@ namespace TicketDesk.Web.Client
                 }
             }
 
-            context.Dispose(); //ensure that no one accidentally holds a reference to this in closure
+            // ensure that no one accidentally holds a reference to this in closure
+            context.Dispose();
         }
 
         private static void EnsureBroadcastNotificaitonsConfiguration(TdPushNotificationContext context)
@@ -136,7 +137,7 @@ namespace TicketDesk.Web.Client
                     .Where(pnd => pnd.DestinationType == "email" && pnd.SubscriberId == "new ticket broadcast")
                     .ToArray();
 
-                //remove users not in list anymore
+                // remove users not in list anymore
                 var usersToRemove = existingDestinations
                     .Where(us => !usersForNotification
                     .Any(un => un.Email == us.DestinationAddress && un.DisplayName == us.SubscriberName))
@@ -147,7 +148,7 @@ namespace TicketDesk.Web.Client
                     broadcastUserSettings.PushNotificationDestinations.Remove(us);
                 }
 
-                //add users in list, but not already in destinations
+                // add users in list, but not already in destinations
                 foreach (var nu in usersForNotification)
                 {
                     if (!existingDestinations.Any(ed => nu.Email == ed.DestinationAddress && nu.DisplayName == ed.SubscriberName))
@@ -202,7 +203,7 @@ namespace TicketDesk.Web.Client
                 }
                 catch
                 {
-                    //TODO: log this somewhere
+                    // TODO: log this somewhere
                 }
             };
         }
@@ -218,7 +219,8 @@ namespace TicketDesk.Web.Client
                     var notificationIds = notifications.Select(n => n.EventId).ToArray();
                     var domainContext = DependencyResolver.Current.GetService<TdDomainContext>();
                     var multiProject = domainContext.Projects.Count() > 1;
-                    //fetch these back and make sure all dependent entities we need are loaded
+
+                    // fetch these back and make sure all dependent entities we need are loaded
                     var notes = domainContext.TicketEventNotifications
                         .Include(t => t.TicketEvent)
                         .Include(t => t.TicketEvent.Ticket)
@@ -246,7 +248,7 @@ namespace TicketDesk.Web.Client
                 }
                 catch
                 {
-                    //TODO: Log this somewhere
+                    // TODO: Log this somewhere
                 }
             };
         }

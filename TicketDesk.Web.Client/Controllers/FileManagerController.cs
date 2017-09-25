@@ -332,7 +332,7 @@
             var rootpath = Path.Combine(_webRootPath, path);
             var rootDirectory = new DirectoryInfo(rootpath);
 
-            if(rootDirectory.GetDirectories().Length > 0 || rootDirectory.GetFiles().Length > 0)
+            if (rootDirectory.GetDirectories().Length > 0 || rootDirectory.GetFiles().Length > 0)
             {
                 var errorResult = new { Errors = new List<dynamic>() };
 

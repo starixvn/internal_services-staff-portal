@@ -86,6 +86,7 @@ namespace TicketDesk.Web.Client
                     {
                         return new FakeAuthenticationManager();
                     }
+
                     throw;
                 }
 

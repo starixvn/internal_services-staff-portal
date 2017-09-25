@@ -17,6 +17,30 @@ namespace S22.Imap
     internal static class MailMessageExtension
     {
         /// <summary>
+        /// A map for mapping the values of the MailPriority enumeration to
+        /// their corresponding MIME priority values as defined in
+        /// RFC2156.
+        /// </summary>
+        private static Dictionary<MailPriority, string> PriorityMap = new Dictionary<MailPriority, string>()
+        {
+            { MailPriority.Low, "non-urgent" },
+            { MailPriority.Normal, "normal" },
+            { MailPriority.High, "urgent" }
+        };
+
+        /// <summary>
+        /// A map for mapping the values of the MailPriority enumeration to
+        /// their corresponding MIME importance values as defined in
+        /// RFC2156.
+        /// </summary>
+        private static Dictionary<MailPriority, string> ImportanceMap = new Dictionary<MailPriority, string>()
+        {
+            { MailPriority.Low, "low" },
+            { MailPriority.Normal, "normal" },
+            { MailPriority.High, "high" }
+        };
+
+        /// <summary>
         /// Constructs a textual representation of a mail message from the specified
         /// MailMessage instance compliant with the RFC822 and MIME standards.
         /// </summary>
@@ -132,30 +156,6 @@ namespace S22.Imap
 
             return header;
         }
-
-        /// <summary>
-        /// A map for mapping the values of the MailPriority enumeration to
-        /// their corresponding MIME priority values as defined in
-        /// RFC2156.
-        /// </summary>
-        private static Dictionary<MailPriority, string> PriorityMap =
-            new Dictionary<MailPriority, string>() {
-                { MailPriority.Low, "non-urgent" },
-                { MailPriority.Normal, "normal" },
-                { MailPriority.High, "urgent" }
-            };
-
-        /// <summary>
-        /// A map for mapping the values of the MailPriority enumeration to
-        /// their corresponding MIME importance values as defined in
-        /// RFC2156.
-        /// </summary>
-        private static Dictionary<MailPriority, string> ImportanceMap =
-            new Dictionary<MailPriority, string>() {
-                { MailPriority.Low, "low" },
-                { MailPriority.Normal, "normal" },
-                { MailPriority.High, "high" }
-            };
 
         /// <summary>
         /// Takes a unicode string and encodes it using Q-encoding.
@@ -332,13 +332,14 @@ namespace S22.Imap
         private static void AddAttachment(StringBuilder builder, AttachmentBase view)
         {
             // Append the MIME headers for this body part
-            string contentType = "Content-Type: " + view.ContentType.MediaType;
+            var contentType = new StringBuilder();
+            contentType.Append("Content-Type: " + view.ContentType.MediaType);
             foreach (string key in view.ContentType.Parameters.Keys)
             {
-                contentType = contentType + "; " + key + "=" + view.ContentType.Parameters[key];
+                contentType.Append("; " + key + "=" + view.ContentType.Parameters[key]);
             }
 
-            builder.AppendLine(contentType);
+            builder.AppendLine(contentType.ToString());
             builder.AppendLine("Content-Transfer-Encoding: base64");
             if (!string.IsNullOrEmpty(view.ContentId))
             {

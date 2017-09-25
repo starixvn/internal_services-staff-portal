@@ -39,6 +39,15 @@ namespace TicketDesk.PushNotifications.Model
             BroadcastSettings = new BroadcastSetting();
         }
 
+        public enum PushNotificationBroadcastMode
+        {
+            [Display(Name = "PushNotificationBroadcastModeAllStaff", ResourceType = typeof(Strings))]
+            AllStaff,
+
+            [Display(Name = "PushNotificationBroadcastModeCustomAddress", ResourceType = typeof(Strings))]
+            CustomAddress
+        }
+
         [Key]
         [JsonIgnore]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -195,15 +204,6 @@ namespace TicketDesk.PushNotifications.Model
             [Display(Name = "ExcludeSubscribersOwnEvents", Prompt = "ExcludeSubscribersOwnEvents_Prompt", ResourceType = typeof(Strings))]
             [LocalizedDescription("ExcludeSubscribersOwnEvents_Description", NameResourceType = typeof(Strings))]
             public bool ExcludeSubscriberEvents { get; set; }
-        }
-
-        public enum PushNotificationBroadcastMode
-        {
-            [Display(Name = "PushNotificationBroadcastModeAllStaff", ResourceType = typeof(Strings))]
-            AllStaff,
-
-            [Display(Name = "PushNotificationBroadcastModeCustomAddress", ResourceType = typeof(Strings))]
-            CustomAddress
         }
     }
 }

@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System.Linq;
@@ -39,7 +39,7 @@ namespace TicketDesk.Domain.Model
         {
             var roleManager = DependencyResolver.Current.GetService<TicketDeskRoleManager>();
             return roleManager.Roles.ToMultiSelectList(
-                r => r.Name, 
+                r => r.Name,
                 r => r.DisplayName,
                 settings.SecuritySettings.DefaultNewUserRoles.ToArray(),
                 false);
@@ -49,15 +49,15 @@ namespace TicketDesk.Domain.Model
         {
             return string.Join(",", settings.SelectLists.PriorityList);
         }
+
         public static string GetTicketTypes(this ApplicationSetting settings)
         {
             return string.Join(",", settings.SelectLists.TicketTypesList);
         }
+
         public static string GetCategories(this ApplicationSetting settings)
         {
             return string.Join(",", settings.SelectLists.CategoryList);
         }
-
-
     }
 }

@@ -7,7 +7,6 @@ namespace TicketDesk.Web.Client
     /// </summary>
     public class SummernoteModelBinder : IModelBinder
     {
-
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             string comment = null;
@@ -17,10 +16,12 @@ namespace TicketDesk.Web.Client
                 comment = val.AttemptedValue as string;
                 comment = comment.StripHtmlWhenEmpty();
             }
+
             return comment;
         }
 
-        public ValueProviderResult GetValueFromValueProvider(ModelBindingContext bindingContext,
+        public ValueProviderResult GetValueFromValueProvider(
+            ModelBindingContext bindingContext,
             bool performRequestValidation)
         {
             var unvalidatedValueProvider = bindingContext.ValueProvider as IUnvalidatedValueProvider;
@@ -29,10 +30,4 @@ namespace TicketDesk.Web.Client
                 : bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
         }
     }
-
-    public static class se
-    {
-        
-    }
-
 }

@@ -401,6 +401,7 @@ namespace S22.Imap
             }
             catch
             {
+                // TODO
             }
 
             try
@@ -443,6 +444,7 @@ namespace S22.Imap
             }
             catch
             {
+                // TODO
             }
 
             return view;
@@ -512,8 +514,8 @@ namespace S22.Imap
                 MIMEPart p = new MIMEPart();
 
                 // Read the part header
-                StringBuilder header = new StringBuilder();
-                while (!String.IsNullOrEmpty(line = reader.ReadLine()))
+                var header = new StringBuilder();
+                while (!string.IsNullOrEmpty(line = reader.ReadLine()))
                 {
                     header.AppendLine(line);
                 }
@@ -528,7 +530,7 @@ namespace S22.Imap
                 }
 
                 // Read the part body
-                StringBuilder body = new StringBuilder();
+                var body = new StringBuilder();
                 while ((line = reader.ReadLine()) != null)
                 {
                     if (line.StartsWith(start))
@@ -543,7 +545,7 @@ namespace S22.Imap
 
                 // Add the MIME part to the list unless body is null which means the
                 // body contained nested multipart content
-                if (!String.IsNullOrEmpty(p.body))
+                if (!string.IsNullOrEmpty(p.body))
                 {
                     list.Add(p);
                 }

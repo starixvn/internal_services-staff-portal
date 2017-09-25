@@ -50,6 +50,7 @@ namespace TicketDesk.PushNotifications
 
                 return _deliveryProviders;
             }
+
             set { _deliveryProviders = value; }
         }
 
@@ -79,29 +80,31 @@ namespace TicketDesk.PushNotifications
             return (IPushNotificationDeliveryProvider)ci.Invoke(new object[] { null });
         }
 
-        public static async Task SendNotificationAsync
-        (
+        public static async Task SendNotificationAsync(
             int contentSourceId,
             string contentSourceType,
             string subscriberId,
-            int destinationId
-        )
+            int destinationId)
         {
             using (var context = new TdPushNotificationContext())
             {
                 var readyNote = await context.PushNotificationItems
                     .FirstOrDefaultAsync(n =>
                         (
-                            n.ContentSourceId == contentSourceId &&
-                            n.ContentSourceType == contentSourceType &&
-                            n.SubscriberId == subscriberId &&
-                            n.DestinationId == destinationId
-                        ) &&
-                        (
-                            n.DeliveryStatus == PushNotificationItemStatus.Scheduled ||
-                            n.DeliveryStatus == PushNotificationItemStatus.Retrying)
+                            n.ContentSourceId == contentSourceId
+                            && n.ContentSourceType == contentSourceType
+                            && n.SubscriberId == subscriberId
+                            && n.DestinationId == destinationId
+                        )
+                        && (
+                            n.DeliveryStatus == PushNotificationItemStatus.Scheduled
+                            || n.DeliveryStatus == PushNotificationItemStatus.Retrying)
                         );
-                if (readyNote == null) { return; }
+
+                if (readyNote == null)
+                {
+                    return;
+                }
 
                 await SendNotificationMessageAsync(context, readyNote, CancellationToken.None);
                 await context.SaveChangesAsync();

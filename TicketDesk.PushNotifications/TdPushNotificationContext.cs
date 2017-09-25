@@ -32,13 +32,6 @@ namespace TicketDesk.PushNotifications
             PushNotificationDestinations = Set<PushNotificationDestination>();
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ApplicationPushNotificationSetting>()
-             .Property(p => p.Serialized)
-             .HasColumnName("PushNotificationSettingsJson");
-        }
-
         // This DbSet is managed entirely within this assembly, marking internal
         internal DbSet<PushNotificationItem> PushNotificationItems { get; set; }
 
@@ -75,6 +68,7 @@ namespace TicketDesk.PushNotifications
                 if (apn == null)
                 {
                     var napn = new ApplicationPushNotificationSetting();
+
                     // do this on another instance, because we don't want to commit other things that may be tracking on this instance
                     // this feels like cheating :)
                     using (var tempContext = new TdPushNotificationContext())
@@ -88,6 +82,7 @@ namespace TicketDesk.PushNotifications
                 }
                 return apn;
             }
+
             set
             {
                 var oldSettings = ApplicationPushNotificationSettings.GetTicketDeskSettings();
@@ -98,6 +93,13 @@ namespace TicketDesk.PushNotifications
 
                 ApplicationPushNotificationSettings.Add(value);
             }
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ApplicationPushNotificationSetting>()
+             .Property(p => p.Serialized)
+             .HasColumnName("PushNotificationSettingsJson");
         }
 
         public bool AddNotifications(IEnumerable<NewTicketPushNotificationInfo> infoItems)

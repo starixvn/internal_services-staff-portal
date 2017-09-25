@@ -49,7 +49,6 @@ namespace TicketDesk.Web.Client.Controllers
         public async Task<ActionResult> Index(int? page, string listName)
         {
             // Role
-
             listName = listName ?? (Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket, Constant.Policy.Read) ? "unassigned" : "mytickets");
             var pageNumber = page ?? 1;
 
@@ -108,8 +107,9 @@ namespace TicketDesk.Web.Client.Controllers
                         currentListSetting.SortColumns.Remove(sortCol);
                     }
                 }
-                else // column not in sort, add to sort
+                else
                 {
+                    // column not in sort, add to sort
                     currentListSetting.SortColumns.Add(new UserTicketListSortColumn(columnName, ColumnSortDirection.Ascending));
                 }
             }
@@ -120,8 +120,9 @@ namespace TicketDesk.Web.Client.Controllers
                 {
                     sortCol.SortDirection = (sortCol.SortDirection == ColumnSortDirection.Ascending) ? ColumnSortDirection.Descending : ColumnSortDirection.Ascending;
                 }
-                else // column not in sort, replace sort with new simple sort for column
+                else
                 {
+                    // column not in sort, replace sort with new simple sort for column
                     currentListSetting.SortColumns.Clear();
                     currentListSetting.SortColumns.Add(new UserTicketListSortColumn(columnName, ColumnSortDirection.Ascending));
                 }

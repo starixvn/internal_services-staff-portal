@@ -4,12 +4,12 @@
 //      zakbor0 (https://github.com/zakbor0)
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -90,19 +90,19 @@ namespace TicketDesk.Localization
 
             // make sure it is a valid culture first
             // return Default culture if it is invalid
-            if (_validCultures.Where(c => c.Equals(name, StringComparison.InvariantCultureIgnoreCase)).Count() == 0)
+            if (!_validCultures.Any(c => c.Equals(name, StringComparison.InvariantCultureIgnoreCase)))
             {
                 return defaultCulture;
             }
 
             // if it is implemented, accept it
-            if (_cultures.Keys.Where(c => c.Equals(name, StringComparison.InvariantCultureIgnoreCase)).Count() > 0)
+            if (_cultures.Keys.Any(c => c.Equals(name, StringComparison.InvariantCultureIgnoreCase)))
             {
                 return name;
             }
 
-            // Find a close match. For example, if you have "en-US" defined and the user requests "en-GB", 
-            // the function will return closes match that is "en-US" because at least the language is the same (ie English)  
+            // Find a close match. For example, if you have "en-US" defined and the user requests "en-GB",
+            // the function will return closes match that is "en-US" because at least the language is the same (ie English)
             var n = GetNeutralCulture(name);
             foreach (var c in _cultures.Keys)
             {
@@ -112,7 +112,7 @@ namespace TicketDesk.Localization
                 }
             }
 
-            // else 
+            // else
             // It is not implemented
             return defaultCulture; // return Default culture as no match found
         }

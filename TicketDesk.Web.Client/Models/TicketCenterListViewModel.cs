@@ -48,7 +48,7 @@ namespace TicketDesk.Web.Client.Models
         private TicketCenterListViewModel()
         {
             DisplayProjects = false;
-        }//private ctor
+        }
 
         public int CurrentPage { get; set; }
 

@@ -1,7 +1,7 @@
 namespace TicketDesk.Domain.Migrations
 {
     using System.Data.Entity.Migrations;
-    
+
     public partial class Td25013 : DbMigration
     {
         public override void Up()
@@ -9,7 +9,7 @@ namespace TicketDesk.Domain.Migrations
             DropColumn("dbo.ApplicationSettings", "PushNotificationSettingsJson");
             DropColumn("dbo.UserSettings", "PushNotificationSettingsJson");
         }
-        
+
         public override void Down()
         {
             AddColumn("dbo.UserSettings", "PushNotificationSettingsJson", c => c.String());

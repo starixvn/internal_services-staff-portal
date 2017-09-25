@@ -41,8 +41,6 @@ namespace TicketDesk.Domain
         public async Task<UserSetting> GetSettingsForUserAsync(string userId)
         {
             // Role
-            // var isHelpDeskUser = Context.SecurityProvider.IsTdHelpDeskUser || Context.SecurityProvider.IsTdAdministrator;
-
             var isShowListAssignedTicket = Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket, Constant.Policy.Read);
             var settings = await Context.UserSettings.FindAsync(userId);
 

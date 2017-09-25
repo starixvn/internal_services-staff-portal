@@ -3,12 +3,12 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
 using System;
@@ -30,8 +30,7 @@ namespace TicketDesk.Web.Client
 
         #region general select list
 
-        public static MultiSelectList ToMultiSelectList<TSource, TValue>
-        (
+        public static MultiSelectList ToMultiSelectList<TSource, TValue>(
             this IEnumerable<TSource> items,
             Func<TSource, TValue> valueField,
             Func<TSource, string> textField,
@@ -44,8 +43,7 @@ namespace TicketDesk.Web.Client
             return new MultiSelectList(list, "ID", "Name", selectedValues);
         }
 
-        public static MultiSelectList ToMultiSelectList<TSource, TValue>
-       (
+        public static MultiSelectList ToMultiSelectList<TSource, TValue>(
            this IEnumerable<TSource> items,
            Func<TSource, TValue?> valueField,
            Func<TSource, string> textField,
@@ -58,8 +56,7 @@ namespace TicketDesk.Web.Client
             return new MultiSelectList(list, "ID", "Name", selectedValues);
         }
 
-        public static SelectList ToSelectList<TSource, TValue>
-        (
+        public static SelectList ToSelectList<TSource, TValue>(
             this IEnumerable<TSource> items,
             Func<TSource, TValue> valueField,
             Func<TSource, string> textField,
@@ -72,8 +69,7 @@ namespace TicketDesk.Web.Client
             return new SelectList(list, "ID", "Name", selectedValue);
         }
 
-        public static SelectList ToSelectList<TSource, TValue>
-       (
+        public static SelectList ToSelectList<TSource, TValue>(
            this IEnumerable<TSource> items,
            Func<TSource, TValue?> valueField,
            Func<TSource, string> textField,
@@ -86,8 +82,7 @@ namespace TicketDesk.Web.Client
             return new SelectList(list, "ID", "Name", selectedValue);
         }
 
-        public static SelectList ToSelectList<TSource, TValue>
-         (
+        public static SelectList ToSelectList<TSource, TValue>(
              this IEnumerable<TSource> items,
              Func<TSource, TValue> valueField,
              Func<TSource, string> textField,
@@ -102,7 +97,7 @@ namespace TicketDesk.Web.Client
             return new SelectList(list, "ID", "Name", selectedValue);
         }
 
-        #endregion
+        #endregion general select list
 
         #region empty / default select lists
 
@@ -115,6 +110,7 @@ namespace TicketDesk.Web.Client
                 AddDefaultItem(items, includeDefaultItem);
                 return new SelectList(items, "ID", "Name");
             }
+
             return null;
         }
 
@@ -123,7 +119,7 @@ namespace TicketDesk.Web.Client
             return new SelectListQueryItem<T> { Name = DefaultItemText, Id = default(T) };
         }
 
-        #endregion
+        #endregion empty / default select lists
 
         #region select list for enum
 
@@ -165,8 +161,7 @@ namespace TicketDesk.Web.Client
             return list.ToSelectList(i => i.ID, i => i.Name, selectedValues, includeDefaultItem);
         }
 
-
-        #endregion
+        #endregion select list for enum
 
         #region utility
 
@@ -184,9 +179,6 @@ namespace TicketDesk.Web.Client
             }
         }
 
-        #endregion
-
-
-
+        #endregion utility
     }
 }

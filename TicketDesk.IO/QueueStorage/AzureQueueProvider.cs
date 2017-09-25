@@ -24,8 +24,6 @@ namespace TicketDesk.IO
     /// </summary>
     public class AzureQueueProvider
     {
-        private CloudQueue Queue { get; set; }
-
         public AzureQueueProvider(string indexName)
         {
             var account = AzureConnectionHelper.CloudStorageAccount;
@@ -37,6 +35,8 @@ namespace TicketDesk.IO
                 t.Wait();
             }
         }
+
+        private CloudQueue Queue { get; set; }
 
         public bool IsConfigured { get { return Queue != null; } }
 
