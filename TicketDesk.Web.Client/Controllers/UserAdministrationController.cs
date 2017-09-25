@@ -73,7 +73,8 @@
             }
 
             var user = await UserManager.FindByIdAsync(model.User.Id);
-            var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false").Equals("true", StringComparison.InvariantCultureIgnoreCase);
+            var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false")
+                .Equals("true", StringComparison.InvariantCultureIgnoreCase);
 
             if (demoMode && model.User.Email.EndsWith("@example.com", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -88,14 +89,11 @@
                     if (await UpdateUserInfo(user, model))
                     {
                         // if any roles other than pending are selected, make sure we remove the pending role from the model first
-                        if (tdPendingRole != null)
+                        if (tdPendingRole != null && model.Roles.Any(r => r != tdPendingRole.Id))
                         {
-                            if (model.Roles.Any(r => r != tdPendingRole.Id))
-                            {
-                                var mRoles = model.Roles.ToList();
-                                mRoles.Remove(tdPendingRole.Id);
-                                model.Roles = mRoles;
-                            }
+                            var mRoles = model.Roles.ToList();
+                            mRoles.Remove(tdPendingRole.Id);
+                            model.Roles = mRoles;
                         }
 
                         // get role changes

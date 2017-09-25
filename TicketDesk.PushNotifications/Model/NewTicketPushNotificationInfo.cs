@@ -26,8 +26,7 @@
                     CreatedDate = now,
                     ScheduledSendDate = now,
                     MessageContent = MessageContent
-                }
-            ).ToList();
+                }).ToList();
         }
     }
 }

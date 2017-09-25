@@ -16,7 +16,7 @@ using System.Web.Optimization;
 
 namespace TicketDesk.Web.Client
 {
-    //TODO: This may not be OWIN compliant in OWIN hosts other than Microsoft.Owin.Host.SystemWeb
+    // TODO: This may not be OWIN compliant in OWIN hosts other than Microsoft.Owin.Host.SystemWeb
     public partial class Startup
     {
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
@@ -52,7 +52,8 @@ namespace TicketDesk.Web.Client
                     .Include("~/Scripts/filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new ScriptBundle("~/bundles/file-manager")
-                .Include("~/Scripts/filemanager/scripts/jquery-ui/jquery-ui.min.js",
+                .Include(
+                    "~/Scripts/filemanager/scripts/jquery-ui/jquery-ui.min.js",
                     "~/Scripts/filemanager/scripts/jquery-browser.js",
                     "~/Scripts/filemanager/scripts/knockout-3.4.0.js",
                     "~/Scripts/filemanager/scripts/jquery-mousewheel/jquery.mousewheel.min.js",
@@ -127,17 +128,16 @@ namespace TicketDesk.Web.Client
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                    "~/Scripts/modernizr-*"));
+            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include("~/Scripts/modernizr-*"));
 
-            //Localization bundles en-US (empty bundles to avoid 404)
+            // Localization bundles en-US (empty bundles to avoid 404)
             bundles.Add(new ScriptBundle("~/bundles/select2_locale_en-US"));
             bundles.Add(new ScriptBundle("~/bundles/common_locale_en-US").Include(
                     "~/Scripts/jquery.globalize/cultures/globalize.culture.en-US.js",
                     "~/Scripts/ticketdesk/locale_en-US.js"));
             bundles.Add(new ScriptBundle("~/bundles/summernote_locale_en-US"));
 
-            //Localization bundles pt-BR
+            // Localization bundles pt-BR
             bundles.Add(new ScriptBundle("~/bundles/select2_locale_pt-BR").Include(
                     "~/Scripts/Select2-locales/select2_locale_pt-BR.js"));
             bundles.Add(new ScriptBundle("~/bundles/common_locale_pt-BR").Include(

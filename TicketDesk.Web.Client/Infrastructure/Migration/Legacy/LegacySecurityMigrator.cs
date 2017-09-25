@@ -1,31 +1,13 @@
-﻿// TicketDesk - Attribution notice
-//
-// Membership object delete scripts from: 
-//      dmorrison : https://gist.github.com/dmorrison/942148
-//
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public 
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
-//
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
-// provided to the recipient.
-
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.SqlClient;
-using System.Linq;
-using Microsoft.AspNet.Identity;
-using TicketDesk.Web.Identity;
-using TicketDesk.Web.Identity.Model;
-
-namespace TicketDesk.Domain.Legacy
+﻿namespace TicketDesk.Domain.Legacy
 {
+    using Microsoft.AspNet.Identity;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.SqlClient;
+    using System.Linq;
+    using TicketDesk.Web.Identity;
+    using TicketDesk.Web.Identity.Model;
 
     /// <summary>
     /// Handles security migration functions for upgrades from TD 2.x databases.
@@ -36,12 +18,15 @@ namespace TicketDesk.Domain.Legacy
         {
             // ReSharper disable UnusedAutoPropertyAccessor.Local
             internal Guid UserId { get; set; }
+
             internal string Email { get; set; }
+
             internal string Password { get; set; }
+
             internal string Comment { get; set; }
+
             internal int PasswordFormat { get; set; }
             // ReSharper restore UnusedAutoPropertyAccessor.Local
-
         }
 
         /// <summary>
@@ -54,8 +39,7 @@ namespace TicketDesk.Domain.Legacy
         public static bool MigrateSecurity(TdIdentityContext context, TicketDeskUserManager userManager, TicketDeskRoleManager roleManager)
         {
             roleManager.EnsureDefaultRolesExist();
-            var appId =
-                context.Database.SqlQuery<Guid>(
+            var appId = context.Database.SqlQuery<Guid>(
                     "select ApplicationId from aspnet_Applications where ApplicationName = 'TicketDesk'").First().ToString();
             var users = context.Database.SqlQuery<LegacyUser>(
                 "select UserId, Email, Password, PasswordFormat, Comment from aspnet_Membership where ApplicationId = '" + appId + "' and IsApproved = 1 and IsLockedOut = 0").ToList();
@@ -88,24 +72,27 @@ namespace TicketDesk.Domain.Legacy
                             case "administrators":
                                 newRoles.Add("TdAdministrators");
                                 break;
+
                             case "helpdesk":
                                 newRoles.Add("TdHelpDeskUsers");
                                 break;
+
                             case "ticketsubmitters":
                                 newRoles.Add("TdInternalUsers");
                                 break;
+
                             default:
                                 newRoles.Add("TdPendingUsers");
                                 break;
                         }
                     }
+
                     userManager.AddToRoles(newUser.Id, newRoles.ToArray());
                 }
             }
+
             return true;
         }
-
-       
 
         public static void RemoveLegacyMembershipObjects(TdIdentityContext context)
         {

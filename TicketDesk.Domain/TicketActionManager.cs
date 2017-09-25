@@ -26,13 +26,13 @@ namespace TicketDesk.Domain
             SecurityProvider = securityProvider;
         }
 
+        private TdDomainSecurityProviderBase SecurityProvider { get; set; }
+
         // TODO: we should enforce required comments on the back-end
         public static TicketActionManager GetInstance(TdDomainSecurityProviderBase securityProvider)
         {
             return new TicketActionManager(securityProvider);
         }
-
-        private TdDomainSecurityProviderBase SecurityProvider { get; set; }
 
         /// <summary>
         /// Determines whether the ticket activity is valid for the specified ticket.
@@ -141,7 +141,8 @@ namespace TicketDesk.Domain
 
                     if (ticket.ProjectId != projectId)
                     {
-                        sb.AppendLine(string.Format("<dd>    " + Strings.Changes_From_To + "</dd>",
+                        sb.AppendLine(string.Format(
+                            "<dd>    " + Strings.Changes_From_To + "</dd>",
                             PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.ProjectId),
                             ticket.Project.ProjectName,
                             projectName));
@@ -162,25 +163,41 @@ namespace TicketDesk.Domain
 
                     if ((SecurityProvider.IsHostTicketCenter || settings.Permissions.AllowInternalUsersToEditPriority) && ticket.Priority != priority)
                     {
-                        sb.AppendLine(string.Format("<dd>    " + Strings.Changes_From_To + "</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Priority), ticket.Priority, priority));
+                        sb.AppendLine(string.Format(
+                            "<dd>    " + Strings.Changes_From_To + "</dd>",
+                            PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Priority),
+                            ticket.Priority,
+                            priority));
                         ticket.Priority = priority;
                     }
 
                     if (ticket.TicketType != ticketType)
                     {
-                        sb.AppendLine(string.Format("<dd>    " + Strings.Changes_From_To + "</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.TicketType), ticket.TicketType, ticketType));
+                        sb.AppendLine(string.Format(
+                            "<dd>    " + Strings.Changes_From_To + "</dd>",
+                            PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.TicketType),
+                            ticket.TicketType,
+                            ticketType));
                         ticket.TicketType = ticketType;
                     }
 
                     if (ticket.Category != category)
                     {
-                        sb.AppendLine(string.Format("<dd>    " + Strings.Changes_From_To + "</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Category), ticket.Category, category));
+                        sb.AppendLine(string.Format(
+                            "<dd>    " + Strings.Changes_From_To + "</dd>",
+                            PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Category),
+                            ticket.Category,
+                            category));
                         ticket.Category = category;
                     }
 
                     if (SecurityProvider.IsHostTicketCenter && ticket.Owner != owner)
                     {
-                        sb.AppendLine(string.Format("<dd>    " + Strings.Changes_From_To + "</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Owner), SecurityProvider.GetUserDisplayName(ticket.Owner), SecurityProvider.GetUserDisplayName(owner)));
+                        sb.AppendLine(string.Format(
+                            "<dd>    " + Strings.Changes_From_To + "</dd>",
+                            PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Owner),
+                            SecurityProvider.GetUserDisplayName(ticket.Owner),
+                            SecurityProvider.GetUserDisplayName(owner)));
                         ticket.Owner = owner;
                     }
 

@@ -221,8 +221,9 @@ namespace TicketDesk.Domain.Model
                         validActivities |= TicketActivity.CancelMoreInfo;
                     }
                 }
-                else // !moreInfo
+                else
                 {
+                    // !moreInfo
                     validActivities |= TicketActivity.AddComment;
                     if (isAssignedToMe)
                     {
@@ -230,17 +231,15 @@ namespace TicketDesk.Domain.Model
                     }
                 }
             }
-            else // not open (resolved or closed)
+            else
             {
+                // not open (resolved or closed)
                 validActivities |= TicketActivity.ReOpen;
             }
 
-            if (isResolved)
+            if (isResolved && isOwnedByMe)
             {
-                if (isOwnedByMe)
-                {
-                    validActivities |= TicketActivity.Close;
-                }
+                validActivities |= TicketActivity.Close;
             }
 
             if (IsOpen || isResolved)
@@ -252,8 +251,9 @@ namespace TicketDesk.Domain.Model
                         validActivities |= TicketActivity.ReAssign;
                     }
                 }
-                else // !assigned
+                else
                 {
+                    // !assigned
                     validActivities |= TicketActivity.Assign;
                 }
 
@@ -266,8 +266,9 @@ namespace TicketDesk.Domain.Model
                 {
                     validActivities |= TicketActivity.Pass | TicketActivity.GiveUp;
                 }
-                else // !isAssignedToMe
+                else
                 {
+                    // !isAssignedToMe
                     validActivities |= TicketActivity.TakeOver;
                 }
             }

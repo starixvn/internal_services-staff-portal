@@ -41,8 +41,8 @@ namespace TicketDesk.Domain.Migrations
             context.SaveChanges();
             context.Projects.AddOrUpdate(p => p.ProjectName, new Project() { ProjectName = "NullSoft", ProjectDescription = "NullSoft Rocks" });
             var dProj = context.Projects.First();
-            context.Tickets.AddOrUpdate(t =>
-                t.Title,
+            context.Tickets.AddOrUpdate(
+                t => t.Title,
                 new Ticket
                 {
                     ProjectId = dProj.ProjectId,
@@ -53,8 +53,8 @@ namespace TicketDesk.Domain.Migrations
                     TicketStatus = TicketStatus.Active,
                     CurrentStatusDate = DateTimeOffset.Now,
                     CurrentStatusSetBy = "72bdddfb-805a-4883-94b9-aa494f5f52dc",
-                    Details =
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada semper mi, id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.",
+                    Details = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada semper mi,
+                                id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.",
                     IsHtml = false,
                     LastUpdateBy = "72bdddfb-805a-4883-94b9-aa494f5f52dc",
                     LastUpdateDate = DateTimeOffset.Now,
@@ -66,7 +66,11 @@ namespace TicketDesk.Domain.Migrations
                     TicketEvents = new[] { TicketEvent.CreateActivityEvent("17f78f38-fa68-445f-90de-38896140db28", TicketActivity.Create, null, null, null) }
                 });
 
-            var titles = new[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1", "J1", "K1", "L1", "M1", "N1", "O1", "P1", "Q1", "R1" };
+            var titles = new[]
+            {
+                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
+                "R", "A1", "B1", "C1", "D1", "E1", "F1", "G1", "H1", "I1", "J1", "K1", "L1", "M1", "N1", "O1", "P1", "Q1", "R1"
+            };
             var n = 0;
             foreach (var p in titles)
             {
@@ -88,8 +92,8 @@ namespace TicketDesk.Domain.Migrations
                 }
 
                 var now = DateTimeOffset.Now.AddDays(n);
-                context.Tickets.AddOrUpdate(t =>
-                    t.Title,
+                context.Tickets.AddOrUpdate(
+                    t => t.Title,
                     new Ticket
                     {
                         ProjectId = dProj.ProjectId,
@@ -101,8 +105,8 @@ namespace TicketDesk.Domain.Migrations
                         TicketStatus = (p == "L") ? TicketStatus.Closed : TicketStatus.Active,
                         CurrentStatusDate = now,
                         CurrentStatusSetBy = "72bdddfb-805a-4883-94b9-aa494f5f52dc",
-                        Details =
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada semper mi, id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.",
+                        Details = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit fusce vel sapien elit in malesuada semper mi,
+                                    id sollicitudin urna fermentum ut fusce varius nisl ac ipsum gravida vel pretium tellus.",
                         IsHtml = false,
                         LastUpdateBy = "72bdddfb-805a-4883-94b9-aa494f5f52dc",
                         LastUpdateDate = now.AddHours(2),

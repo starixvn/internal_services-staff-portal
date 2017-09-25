@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace S22.Imap
+﻿namespace S22.Imap
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Possible values for the "Type" property of the Bodypart class.
     /// For a detailed description of MIME Media Types refer to
@@ -55,7 +55,7 @@ namespace S22.Imap
 
     internal static class ContentTypeMap
     {
-        public static ContentType fromString(string contentType)
+        public static ContentType FromString(string contentType)
         {
             Dictionary<string, ContentType> Map = new Dictionary<string, ContentType>(StringComparer.OrdinalIgnoreCase)
             {

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace S22.Imap
+﻿namespace S22.Imap
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Possible values for the "Encoding" property of the Bodypart class. The content
     /// transfer encoding indicates whether or not a binary-to-text encoding
@@ -46,7 +46,7 @@ namespace S22.Imap
 
     internal static class ContentTransferEncodingMap
     {
-        public static ContentTransferEncoding fromString(string transferEncoding)
+        public static ContentTransferEncoding FromString(string transferEncoding)
         {
             Dictionary<string, ContentTransferEncoding> Map = new Dictionary<string, ContentTransferEncoding>(StringComparer.OrdinalIgnoreCase)
             {

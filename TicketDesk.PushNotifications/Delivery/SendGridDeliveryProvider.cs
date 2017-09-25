@@ -1,32 +1,30 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using Newtonsoft.Json.Linq;
-using S22.Mail;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Mail;
-using System.Threading;
-using System.Threading.Tasks;
-using TicketDesk.Localization;
-using TicketDesk.Localization.PushNotifications;
-using TicketDesk.PushNotifications.Model;
-
-namespace TicketDesk.PushNotifications.Delivery
+﻿namespace TicketDesk.PushNotifications.Delivery
 {
+    using Newtonsoft.Json.Linq;
+    using S22.Mail;
+    using SendGrid;
+    using SendGrid.Helpers.Mail;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Net.Mail;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using TicketDesk.Localization;
+    using TicketDesk.Localization.PushNotifications;
+    using TicketDesk.PushNotifications.Model;
+
+    public static class StreamExtensions
+    {
+        public static string ReadToString(this Stream contentStream)
+        {
+            using (var reader = new StreamReader(contentStream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+    }
+
     [LocalizedDescription("SendGridProvider", NameResourceType = typeof(Strings))]
     public sealed class SendGridDeliveryProvider : EmailDeliveryProviderBase
     {
@@ -106,22 +104,12 @@ namespace TicketDesk.PushNotifications.Delivery
                 catch
                 {
                     sent = false;
+
                     // TODO: log this somewhere
                 }
             }
 
             return sent;
-        }
-    }
-
-    public static class StreamExtensions
-    {
-        public static string ReadToString(this Stream contentStream)
-        {
-            using (var reader = new StreamReader(contentStream))
-            {
-                return reader.ReadToEnd();
-            }
         }
     }
 }

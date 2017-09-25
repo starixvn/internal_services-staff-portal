@@ -166,9 +166,14 @@ namespace TicketDesk.Web.Client.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("modify-attachments")]
-        public async Task<ActionResult> ModifyAttachments(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment, Guid tempId, string deleteFiles)
+        public async Task<ActionResult> ModifyAttachments(
+            int ticketId,
+            [ModelBinder(typeof(SummernoteModelBinder))] string comment,
+            Guid tempId,
+            string deleteFiles)
         {
-            var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false").Equals("true", StringComparison.InvariantCultureIgnoreCase);
+            var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false")
+                .Equals("true", StringComparison.InvariantCultureIgnoreCase);
             if (demoMode)
             {
                 return new EmptyResult();

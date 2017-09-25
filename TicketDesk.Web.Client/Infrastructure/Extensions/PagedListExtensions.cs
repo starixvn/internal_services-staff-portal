@@ -69,7 +69,7 @@ namespace TicketDesk.Web.Client
 
     public static class PagedListAsyncExtensions
     {
-        public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, Int32 pageNumber, Int32 pageSize)
+        public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, int pageNumber, int pageSize)
         {
             return await PagedListAsync<T>.Create(superset, pageNumber, pageSize);
         }

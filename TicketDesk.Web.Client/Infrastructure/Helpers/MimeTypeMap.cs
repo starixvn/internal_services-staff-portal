@@ -21,9 +21,9 @@ namespace TicketDesk.Web.Client
 {
     public static class MimeTypeMap
     {
-        private static readonly IDictionary<string, string> Mappings = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
-
         #region Big freaking list of mime types
+        private static readonly IDictionary<string, string> Mappings = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
+        {
         // combination of values from Windows 7 Registry and
         // from C:\Windows\System32\inetsrv\config\applicationHost.config
         // some added, including .7z and .dat
@@ -587,8 +587,8 @@ namespace TicketDesk.Web.Client
         { ".xwd", "image/x-xwindowdump" },
         { ".z", "application/x-compress" },
         { ".zip", "application/x-zip-compressed" },
-        #endregion Big freaking list of mime types
         };
+        #endregion Big freaking list of mime types
 
         public static string GetMimeType(string extension)
         {

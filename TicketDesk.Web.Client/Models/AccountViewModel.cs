@@ -83,11 +83,6 @@ namespace TicketDesk.Web.Client.Models
 
         public IEnumerable<string> Roles { get; set; }
 
-        public IEnumerable<string> GetRoleNames(IEnumerable<TicketDeskRole> allRolesList)
-        {
-            return allRolesList.Where(ar => Roles.Any(r => r == ar.Id)).Select(ar => ar.DisplayName);
-        }
-
         public MultiSelectList UserRolesList
         {
             get
@@ -99,6 +94,11 @@ namespace TicketDesk.Web.Client.Models
                     r => r.DisplayName,
                     Roles.ToArray());
             }
+        }
+
+        public IEnumerable<string> GetRoleNames(IEnumerable<TicketDeskRole> allRolesList)
+        {
+            return allRolesList.Where(ar => Roles.Any(r => r == ar.Id)).Select(ar => ar.DisplayName);
         }
     }
 }

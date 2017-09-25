@@ -165,7 +165,8 @@ namespace TicketDesk.Domain.Model
             // TODO: is this the best place to put this check? Is this one even worth the extension?
             // ROLE
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
-            return (context.SecurityProvider.IsReadTicketCenter && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetOwner) || (context.SecurityProvider.IsHostTicketCenter);
+            return (context.SecurityProvider.IsReadTicketCenter && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetOwner)
+                || context.SecurityProvider.IsHostTicketCenter;
         }
 
         public static bool AllowSetAssigned(this Ticket ticket)
@@ -173,7 +174,8 @@ namespace TicketDesk.Domain.Model
             // TODO: is this the best place to put this check? Is this one even worth the extension?
             // ROLE
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
-            return (context.SecurityProvider.IsReadTicketCenter && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetAssigned) || (context.SecurityProvider.IsHostTicketCenter);
+            return (context.SecurityProvider.IsReadTicketCenter && context.TicketDeskSettings.Permissions.AllowInternalUsersToSetAssigned)
+                || context.SecurityProvider.IsHostTicketCenter;
         }
 
         public static bool AllowEditPriorityList(this Ticket ticket)
@@ -181,7 +183,8 @@ namespace TicketDesk.Domain.Model
             // TODO: is this the best place to put this check?
             // ROLE
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
-            return (context.SecurityProvider.IsHostTicketCenter) || (context.SecurityProvider.IsReadTicketCenter && context.TicketDeskSettings.Permissions.AllowInternalUsersToEditPriority);
+            return context.SecurityProvider.IsHostTicketCenter
+                || (context.SecurityProvider.IsReadTicketCenter && context.TicketDeskSettings.Permissions.AllowInternalUsersToEditPriority);
         }
 
         /// <summary>

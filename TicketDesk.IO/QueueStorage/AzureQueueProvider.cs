@@ -38,7 +38,10 @@ namespace TicketDesk.IO
 
         private CloudQueue Queue { get; set; }
 
-        public bool IsConfigured { get { return Queue != null; } }
+        public bool IsConfigured
+        {
+            get { return Queue != null; }
+        }
 
         public async Task EnqueueItemsAsync(IEnumerable<object> items)
         {

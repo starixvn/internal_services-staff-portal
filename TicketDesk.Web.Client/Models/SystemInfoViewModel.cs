@@ -60,10 +60,15 @@ namespace TicketDesk.Web.Client.Models
             }
 
             public string DbEdition { get; private set; }
+
             public bool IsLocalDb { get; private set; }
+
             public bool IsFileDatabase { get; private set; }
+
             public string ServerName { get; private set; }
+
             public string SqlInstance { get; private set; }
+
             public string DatabaseName { get; private set; }
 
             private string GetSqlEdition(string connectionString)
@@ -134,15 +139,27 @@ namespace TicketDesk.Web.Client.Models
 
             public bool DatabaseExists { get; private set; }
 
-            public bool IsDatabaseReady { get { return DatabaseConfig.IsDatabaseReady; } }
+            public bool IsDatabaseReady
+            {
+                get { return DatabaseConfig.IsDatabaseReady; }
+            }
 
-            public bool IsLegacyDatabase { get { return DatabaseConfig.IsLegacyDatabase(); } }
+            public bool IsLegacyDatabase
+            {
+                get { return DatabaseConfig.IsLegacyDatabase(); }
+            }
 
-            public bool IsEmptyDatabase { get { return DatabaseConfig.IsEmptyDatabase(); } }
+            public bool IsEmptyDatabase
+            {
+                get { return DatabaseConfig.IsEmptyDatabase(); }
+            }
 
             public bool IsCompatibleWithEfModel { get; private set; }
 
-            public bool HasLegacySecurityObjects { get { return DatabaseConfig.HasLegacySecurity(); } }
+            public bool HasLegacySecurityObjects
+            {
+                get { return DatabaseConfig.HasLegacySecurity(); }
+            }
         }
 
         public class AzureInfoViewModel

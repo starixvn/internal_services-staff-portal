@@ -10,7 +10,6 @@ namespace TicketDesk.Domain.Model
             // TODO: We have to take the source context as a param because we have sync callers (child action in navigation).
             // Trying to use dependency resolver with a sync caller results in the context being invoked without a security provider.
             // The entire concept of child actions are heavily refactored in MVC 6, so this should not be an issue in future versions.
-
             var currentUserId = context.SecurityProvider.CurrentUserId;
             var projects = context.Projects;
             var settings = await userSettingsManager.GetSettingsForUserAsync(currentUserId);

@@ -1,25 +1,25 @@
-﻿using System;
-using System.ComponentModel;
-using System.Data.Entity;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using TicketDesk.Domain.Legacy.Model;
-using TicketDesk.Domain.Migrations;
-using TicketDesk.IO;
-
-namespace TicketDesk.Domain.Legacy
+﻿namespace TicketDesk.Domain.Legacy
 {
+    using System;
+    using System.ComponentModel;
+    using System.Data.Entity;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Threading;
+    using TicketDesk.Domain.Legacy.Model;
+    using TicketDesk.Domain.Migrations;
+    using TicketDesk.IO;
+
     public delegate void MigratorStatusChangedHandler(string[] messages);
 
     public class LegacyMigrator
     {
-        public event MigratorStatusChangedHandler StatusChanged;
-
         private bool _isRunning = false;
 
         public CancellationTokenSource Canceler { get; set; }
+
+        public event MigratorStatusChangedHandler StatusChanged;
 
         public void CancelImport()
         {
@@ -71,8 +71,7 @@ namespace TicketDesk.Domain.Legacy
                 RaiseStatusChangedOnMainThread(new[] { ex.GetType().Name, ex.Message, ex.StackTrace });
                 if (ex.InnerException != null)
                 {
-                    RaiseStatusChangedOnMainThread(new[]
-                    {ex.InnerException.GetType().Name, ex.InnerException.Message, ex.InnerException.StackTrace});
+                    RaiseStatusChangedOnMainThread(new[] { ex.InnerException.GetType().Name, ex.InnerException.Message, ex.InnerException.StackTrace });
                 }
 
                 throw ex;
@@ -117,20 +116,20 @@ namespace TicketDesk.Domain.Legacy
 
         private void MigrateImages()
         {
-            const string contentQueryText = "SELECT FileContents FROM dbo.TicketAttachments WHERE FileId = @p0";
-            const string modelQuery = "SELECT TicketId, FileId, FileName, FileSize, IsPending FROM dbo.TicketAttachments";
-            const int pgSize = 20;
+            const string ContentQueryText = "SELECT FileContents FROM dbo.TicketAttachments WHERE FileId = @p0";
+            const string ModelQuery = "SELECT TicketId, FileId, FileName, FileSize, IsPending FROM dbo.TicketAttachments";
+            const int PageSize = 20;
 
             using (var ctx = new TdDomainContext(null))
             {
-                var q = ctx.Database.SqlQuery<TicketAttachment>(modelQuery);
+                var q = ctx.Database.SqlQuery<TicketAttachment>(ModelQuery);
                 var numRec = q.Count();
                 RaiseStatusChangedOnMainThread(new[] { string.Format("Importing {0} Images from legacy database.", numRec) });
                 var i = 0;
                 while (i < numRec)
                 {
-                    var res = q.Skip(i).Take(pgSize).ToArray();
-                    i += pgSize;
+                    var res = q.Skip(i).Take(PageSize).ToArray();
+                    i += PageSize;
                     foreach (var file in res)
                     {
                         if (file.TicketId.HasValue)
@@ -138,12 +137,10 @@ namespace TicketDesk.Domain.Legacy
                             var container = file.TicketId.Value.ToString(CultureInfo.InvariantCulture);
                             if (!TicketDeskFileStore.FileExists(file.FileName, container, false))
                             {
-                                var contentQuery = ctx.Database.SqlQuery<byte[]>(contentQueryText, file.FileId);
+                                var contentQuery = ctx.Database.SqlQuery<byte[]>(ContentQueryText, file.FileId);
                                 var stream = new MemoryStream(contentQuery.First());
 
-                                TicketDeskFileStore
-                                    .SaveAttachmentAsync(stream, file.FileName, container, false)
-                                    .Wait();
+                                TicketDeskFileStore.SaveAttachmentAsync(stream, file.FileName, container, false).Wait();
                                 RaiseStatusChangedOnMainThread(new[] { string.Format("    Image {0} for ticket #{1} imported.", file.FileName, file.TicketId) });
                             }
                             else

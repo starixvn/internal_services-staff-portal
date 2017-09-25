@@ -35,6 +35,16 @@ namespace S22.Imap
     public class ContentDisposition
     {
         /// <summary>
+        /// Maps MIME content disposition string values to their corresponding
+        /// counter-parts of the ContentDispositionType enumeration.
+        /// </summary>
+        static internal Dictionary<string, ContentDispositionType> Map = new Dictionary<string, ContentDispositionType>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "Inline", ContentDispositionType.Inline },
+            { "Attachment", ContentDispositionType.Attachment }
+        };
+
+        /// <summary>
         /// Initializes a new instance of the ContentDisposition class with
         /// default values.
         /// </summary>
@@ -63,21 +73,11 @@ namespace S22.Imap
         /// This field may be empty.
         /// </summary>
         public string Filename { get; set; }
-
-        /// <summary>
-        /// Maps MIME content disposition string values to their corresponding
-        /// counter-parts of the ContentDispositionType enumeration.
-        /// </summary>
-        static internal Dictionary<string, ContentDispositionType> Map = new Dictionary<string, ContentDispositionType>(StringComparer.OrdinalIgnoreCase)
-        {
-            { "Inline", ContentDispositionType.Inline },
-            { "Attachment", ContentDispositionType.Attachment }
-        };
     }
 
     internal static class ContentDispositionTypeMap
     {
-        public static ContentDispositionType fromString(string disposition)
+        public static ContentDispositionType FromString(string disposition)
         {
             Dictionary<string, ContentDispositionType> Map = new Dictionary<string, ContentDispositionType>(StringComparer.OrdinalIgnoreCase)
             {

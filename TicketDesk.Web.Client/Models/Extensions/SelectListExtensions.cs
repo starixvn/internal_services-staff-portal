@@ -26,7 +26,10 @@ namespace TicketDesk.Web.Client
     /// </summary>
     public static class SelectListExtensions
     {
-        private static string DefaultItemText { get { return Strings.SelectList_DefaultItem; } }
+        private static string DefaultItemText
+        {
+            get { return Strings.SelectList_DefaultItem; }
+        }
 
         #region general select list
 
@@ -48,8 +51,7 @@ namespace TicketDesk.Web.Client
            Func<TSource, TValue?> valueField,
            Func<TSource, string> textField,
            ICollection selectedValues = null,
-           bool includeDefaultItem = false
-       ) where TValue : struct
+           bool includeDefaultItem = false) where TValue : struct
         {
             var list = items.Select(i => new SelectListQueryItem<TValue?> { Id = valueField(i), Name = textField(i) }).ToList();
             AddDefaultItem(list, includeDefaultItem);
@@ -61,8 +63,7 @@ namespace TicketDesk.Web.Client
             Func<TSource, TValue> valueField,
             Func<TSource, string> textField,
             object selectedValue = null,
-            bool includeDefaultItem = true
-        ) where TValue : class
+            bool includeDefaultItem = true) where TValue : class
         {
             var list = items.Select(i => new SelectListQueryItem<TValue> { Id = valueField(i), Name = textField(i) }).ToList();
             AddDefaultItem(list, includeDefaultItem);
@@ -74,8 +75,7 @@ namespace TicketDesk.Web.Client
            Func<TSource, TValue?> valueField,
            Func<TSource, string> textField,
            object selectedValue = null,
-           bool includeDefaultItem = true
-       ) where TValue : struct
+           bool includeDefaultItem = true) where TValue : struct
         {
             var list = items.Select(i => new SelectListQueryItem<TValue?> { Id = valueField(i), Name = textField(i) }).ToList();
             AddDefaultItem(list, includeDefaultItem);
@@ -88,9 +88,7 @@ namespace TicketDesk.Web.Client
              Func<TSource, string> textField,
              string emptyText,
              TValue emptyValue,
-             object selectedValue = null
-
-         ) where TValue : class
+             object selectedValue = null) where TValue : class
         {
             var list = items.Select(i => new SelectListQueryItem<TValue> { Id = valueField(i), Name = textField(i) }).ToList();
             list.Insert(0, new SelectListQueryItem<TValue> { Name = emptyText, Id = emptyValue });
@@ -165,18 +163,19 @@ namespace TicketDesk.Web.Client
 
         #region utility
 
-        internal class SelectListQueryItem<T>
-        {
-            public string Name { get; set; }
-            public T Id { get; set; }
-        }
-
         private static void AddDefaultItem<T>(IList<SelectListQueryItem<T>> list, bool includeDefaultItem)
         {
             if (includeDefaultItem)
             {
                 list.Insert(0, GetDefaultSelectListItem<T>());
             }
+        }
+
+        internal class SelectListQueryItem<T>
+        {
+            public string Name { get; set; }
+
+            public T Id { get; set; }
         }
 
         #endregion utility

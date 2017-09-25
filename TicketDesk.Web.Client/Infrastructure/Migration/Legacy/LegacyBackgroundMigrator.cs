@@ -1,29 +1,26 @@
-﻿using System;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace TicketDesk.Domain.Legacy
+﻿namespace TicketDesk.Domain.Legacy
 {
+    using System;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public static class LegacyBackgroundMigrator
     {
-        public static Task MigrationTask { get; private set; }
-
         public static CancellationTokenSource Canceler;
 
         private static LegacyMigrator Migrator { get; set; }
 
+        public static Task MigrationTask { get; private set; }
+
         public static void BeginMigration(LegacyMigrator migrator)
         {
-            if (
-                MigrationTask == null ||
-                (
-                    MigrationTask.Status != TaskStatus.Running ||
-                    MigrationTask.Status != TaskStatus.Created ||
-                    MigrationTask.Status != TaskStatus.WaitingForActivation ||
-                    MigrationTask.Status != TaskStatus.WaitingForChildrenToComplete ||
-                    MigrationTask.Status != TaskStatus.WaitingToRun
-                ))
+            if (MigrationTask == null
+                || (MigrationTask.Status != TaskStatus.Running
+                    || MigrationTask.Status != TaskStatus.Created
+                    || MigrationTask.Status != TaskStatus.WaitingForActivation
+                    || MigrationTask.Status != TaskStatus.WaitingForChildrenToComplete
+                    || MigrationTask.Status != TaskStatus.WaitingToRun))
             {
                 Canceler = new CancellationTokenSource();
                 var token = Canceler.Token;
@@ -63,10 +60,7 @@ namespace TicketDesk.Domain.Legacy
         /// </summary>
         public static void Reset()
         {
-            if (MessageStack != null)
-            {
-                MessageStack = null;
-            }
+            MessageStack = null;
 
             if (MigrationTask != null)
             {

@@ -20,7 +20,8 @@ namespace TicketDesk.Web.Client
 {
     public partial class Startup
     {
-        // TODO: while it is convienient to have all this set here, it may be more consistent to split the sub-domain db init up --perhaps move each into their own domain (identity and push notifications)
+        // TODO: while it is convienient to have all this set here,
+        // it may be more consistent to split the sub-domain db init up --perhaps move each into their own domain (identity and push notifications)
         public void ConfigureDatabase()
         {
             // kill initializer - features that may need one will reset this later

@@ -205,6 +205,7 @@ namespace S22.Imap
                     }
                     catch
                     {
+                        // TODO
                     }
                 }
             }
@@ -458,7 +459,8 @@ namespace S22.Imap
         /// will be parsed.</param>
         /// <returns>An array of initialized MIMEPart instances representing
         /// the body parts of the mail message.</returns>
-        private static MIMEPart[] ParseMailBody(string body,
+        private static MIMEPart[] ParseMailBody(
+            string body,
             NameValueCollection header)
         {
             NameValueCollection contentType = ParseMIMEField(header["Content-Type"]);
@@ -573,11 +575,11 @@ namespace S22.Imap
             Match m = Regex.Match(contentType["value"], "(.+)/(.+)");
             if (m.Success)
             {
-                p.Type = ContentTypeMap.fromString(m.Groups[1].Value);
+                p.Type = ContentTypeMap.FromString(m.Groups[1].Value);
                 p.Subtype = m.Groups[2].Value;
             }
 
-            p.Encoding = ContentTransferEncodingMap.fromString(mimePart.header["Content-Transfer-Encoding"]);
+            p.Encoding = ContentTransferEncodingMap.FromString(mimePart.header["Content-Transfer-Encoding"]);
             p.Id = mimePart.header["Content-Id"];
             foreach (string k in contentType.AllKeys)
             {
@@ -588,7 +590,7 @@ namespace S22.Imap
             if (mimePart.header["Content-Disposition"] != null)
             {
                 NameValueCollection disposition = ParseMIMEField(mimePart.header["Content-Disposition"]);
-                p.Disposition.Type = ContentDispositionTypeMap.fromString(disposition["value"]);
+                p.Disposition.Type = ContentDispositionTypeMap.FromString(disposition["value"]);
                 p.Disposition.Filename = disposition["Filename"];
                 foreach (string k in disposition.AllKeys)
                 {

@@ -41,7 +41,11 @@ namespace TicketDesk.Domain.Model
         /// <param name="listDisplayName">Display name of the list.</param>
         /// <param name="listMenuDisplayOrder">The list menu display order.</param>
         /// <param name="includeClosedTickets">if set to <c>true</c> [include closed tickets].</param>
-        public UserTicketListSetting(string listName, string listDisplayName, int listMenuDisplayOrder, bool includeClosedTickets)
+        public UserTicketListSetting(
+            string listName,
+            string listDisplayName,
+            int listMenuDisplayOrder,
+            bool includeClosedTickets)
         {
             ListName = listName;
             ListDisplayName = listDisplayName;
@@ -65,7 +69,14 @@ namespace TicketDesk.Domain.Model
         /// <param name="sortColumns">The sort columns.</param>
         /// <param name="filterColumns">The filter columns.</param>
         /// <param name="disabledFilterColumnNames">The disabled filter column names.</param>
-        public UserTicketListSetting(string listName, string listDisplayName, int listMenuDisplayOrder, int itemsPerPage, List<UserTicketListSortColumn> sortColumns, List<UserTicketListFilterColumn> filterColumns, List<string> disabledFilterColumnNames)
+        public UserTicketListSetting(
+            string listName,
+            string listDisplayName,
+            int listMenuDisplayOrder,
+            int itemsPerPage,
+            List<UserTicketListSortColumn> sortColumns,
+            List<UserTicketListFilterColumn> filterColumns,
+            List<string> disabledFilterColumnNames)
         {
             ListName = listName;
             ListDisplayName = listDisplayName;
@@ -135,6 +146,36 @@ namespace TicketDesk.Domain.Model
         /// </summary>
         /// <value>The disabled filter column names.</value>
         public IEnumerable<string> DisabledFilterColumnNames { get; set; }
+
+        internal static IDictionary<string, string> DefaultListName
+        {
+            get
+            {
+                return new Dictionary<string, string>()
+                {
+                    {
+                        "unassigned",
+                        Strings.DefaultListNameUnassigned
+                    },
+                    {
+                        "assignedToMe",
+                        Strings.DefaultListNameAssignedToMe
+                    },
+                    {
+                        "mytickets",
+                        Strings.DefaultListNameMyTickets
+                     },
+                    {
+                        "opentickets",
+                        Strings.DefaultListNameOpenTickets
+                     },
+                    {
+                        "historytickets",
+                        Strings.DefaultListNameHistoryTickets
+                     }
+                };
+            }
+        }
 
         /// <summary>
         /// Modifies the filter settings.
@@ -213,36 +254,6 @@ namespace TicketDesk.Domain.Model
             settings.Add(new UserTicketListSetting("historytickets", DefaultListName["historytickets"], disOrder, 20, historyticketsSortColumns, historyticketsFilterColumns, disableStatusColumn));
 
             return settings;
-        }
-
-        internal static IDictionary<string, string> DefaultListName
-        {
-            get
-            {
-                return new Dictionary<string, string>()
-                {
-                    {
-                        "unassigned",
-                        Strings.DefaultListNameUnassigned
-                    },
-                    {
-                        "assignedToMe",
-                        Strings.DefaultListNameAssignedToMe
-                    },
-                    {
-                        "mytickets",
-                        Strings.DefaultListNameMyTickets
-                     },
-                    {
-                        "opentickets",
-                        Strings.DefaultListNameOpenTickets
-                     },
-                    {
-                        "historytickets",
-                        Strings.DefaultListNameHistoryTickets
-                     }
-                };
-            }
         }
     }
 }

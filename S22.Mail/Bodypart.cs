@@ -77,13 +77,13 @@ namespace S22.Imap
         /// is the size in its transfer encoding and not the resulting
         /// size after any decoding.
         /// </summary>
-        public Int64 Size { get; set; }
+        public long Size { get; set; }
 
         /// <summary>
         /// The size of the body in text lines. This field is only
         /// present in body parts with a content-type of text.
         /// </summary>
-        public Int64 Lines { get; set; }
+        public long Lines { get; set; }
 
         /// <summary>
         /// The computed MD5-Hash of the body part. This field is not

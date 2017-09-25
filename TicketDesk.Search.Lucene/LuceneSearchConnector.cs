@@ -24,6 +24,10 @@ namespace TicketDesk.Search.Lucene
 {
     public abstract class LuceneSearchConnector : IDisposable
     {
+        private readonly object _getWriterLock = new object();
+        private readonly object _getDirectoryLock = new object();
+        private readonly object _getAnalyzerLock = new object();
+
         private Directory _tdIndexDirectory;
         private Analyzer _tdIndexAnalyzer;
         private IndexWriter _tdIndexWriter;
@@ -57,37 +61,6 @@ namespace TicketDesk.Search.Lucene
             }
         }
 
-        public void ShutDownWriter()
-        {
-            _tdIndexWriter.Optimize();
-            _tdIndexWriter.Dispose();
-            _tdIndexDirectory.Dispose();
-            _tdIndexWriter = null;
-            _tdIndexDirectory = null;
-        }
-
-        private readonly object _getWriterLock = new object();
-
-        public void InitWriter()
-        {
-            lock (_getWriterLock)
-            {
-                if (IndexWriter.IsLocked(TdIndexDirectory))
-                {
-                    // directory locked, blow away the lock and hope there isn't
-                    // really another writer open elsewhere
-                    IndexWriter.Unlock(TdIndexDirectory);
-                }
-
-                _tdIndexWriter = new IndexWriter(
-                    TdIndexDirectory,
-                    TdIndexAnalyzer,
-                    IndexWriter.MaxFieldLength.UNLIMITED);
-            }
-        }
-
-        private readonly object _getDirectoryLock = new object();
-
         protected Directory TdIndexDirectory
         {
             get
@@ -112,8 +85,6 @@ namespace TicketDesk.Search.Lucene
             }
         }
 
-        private readonly object _getAnalyzerLock = new object();
-
         protected Analyzer TdIndexAnalyzer
         {
             get
@@ -123,6 +94,33 @@ namespace TicketDesk.Search.Lucene
                     return _tdIndexAnalyzer ?? (_tdIndexAnalyzer = new StandardAnalyzer(Version.LUCENE_30));
                 }
             }
+        }
+
+        public void InitWriter()
+        {
+            lock (_getWriterLock)
+            {
+                if (IndexWriter.IsLocked(TdIndexDirectory))
+                {
+                    // directory locked, blow away the lock and hope there isn't
+                    // really another writer open elsewhere
+                    IndexWriter.Unlock(TdIndexDirectory);
+                }
+
+                _tdIndexWriter = new IndexWriter(
+                    TdIndexDirectory,
+                    TdIndexAnalyzer,
+                    IndexWriter.MaxFieldLength.UNLIMITED);
+            }
+        }
+
+        public void ShutDownWriter()
+        {
+            _tdIndexWriter.Optimize();
+            _tdIndexWriter.Dispose();
+            _tdIndexDirectory.Dispose();
+            _tdIndexWriter = null;
+            _tdIndexDirectory = null;
         }
 
         public void Dispose()

@@ -27,7 +27,11 @@
         {
             _webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
             _webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _webPath);
-            _allowedExtensions = new List<string> { "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md" };
+            _allowedExtensions = new List<string>
+            {
+                "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf",
+                "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md"
+            };
 
             if (!Directory.Exists(_webRootPath))
             {
@@ -97,6 +101,23 @@
             }
 
             return RedirectToAction("index");
+        }
+
+        private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
+        {
+            path = path.Replace("\\", "/");
+
+            if (addSeperatorToBegin)
+            {
+                path = "/" + path;
+            }
+
+            if (addSeperatorToLast)
+            {
+                path = path + "/";
+            }
+
+            return path;
         }
 
         private dynamic Initiate()
@@ -191,7 +212,7 @@
         private dynamic AddFolder(string path, string name)
         {
             var invalidCharaters = new string[] { "\\", "/", ":", "*", "?", "\"", "<", ">", "|" };
-            if(invalidCharaters.Any(s => name.Contains(s)))
+            if (invalidCharaters.Any(s => name.Contains(s)))
             {
                 var errorResult = new { Errors = new List<dynamic>() };
 
@@ -520,23 +541,6 @@
             };
 
             return result;
-        }
-
-        private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
-        {
-            path = path.Replace("\\", "/");
-
-            if (addSeperatorToBegin)
-            {
-                path = "/" + path;
-            }
-
-            if (addSeperatorToLast)
-            {
-                path = path + "/";
-            }
-
-            return path;
         }
     }
 }

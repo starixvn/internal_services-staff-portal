@@ -38,6 +38,7 @@ namespace TicketDesk.PushNotifications.Delivery
             {
                 notificationItem.RetryCount++;
             }
+
             if (result)
             {
                 // if sent, mark sent and remove schedule

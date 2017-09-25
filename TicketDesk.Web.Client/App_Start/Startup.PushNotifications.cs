@@ -47,7 +47,6 @@ namespace TicketDesk.Web.Client
 
             // configuration supplied by the IoC configuration
             var context = DependencyResolver.Current.GetService<TdPushNotificationContext>();
-
             if (DatabaseConfig.IsFirstRunDemoRefreshEnabled())
             {
                 DemoPushNotificationDataManager.SetupDemoPushNotificationData(context);
@@ -121,8 +120,7 @@ namespace TicketDesk.Web.Client
                         DestinationAddress = broadcastAppSettings.SendToCustomEmailAddress,
                         DestinationType = "email",
                         SubscriberName = broadcastAppSettings.SendToCustomEmailDisplayName
-                    }
-                );
+                    });
             }
             else
             {
@@ -160,8 +158,7 @@ namespace TicketDesk.Web.Client
                                 DestinationAddress = nu.Email,
                                 DestinationType = "email",
                                 SubscriberName = nu.DisplayName
-                            }
-                        );
+                            });
                     }
                 }
             }
@@ -233,15 +230,10 @@ namespace TicketDesk.Web.Client
                     {
                         using (var noteContext = new TdPushNotificationContext())
                         {
-                            var subscriberExclude =
-                                noteContext.TicketDeskPushNotificationSettings.AntiNoiseSettings
-                                    .ExcludeSubscriberEvents;
-
-                            var noteEvents = notes.ToNotificationEventInfoCollection(subscriberExclude,
-                                multiProject);
+                            var subscriberExclude = noteContext.TicketDeskPushNotificationSettings.AntiNoiseSettings.ExcludeSubscriberEvents;
+                            var noteEvents = notes.ToNotificationEventInfoCollection(subscriberExclude, multiProject);
 
                             noteContext.AddNotifications(noteEvents);
-
                             noteContext.SaveChanges();
                         }
                     }

@@ -51,7 +51,10 @@ namespace TicketDesk.PushNotifications
                 return _deliveryProviders;
             }
 
-            set { _deliveryProviders = value; }
+            set
+            {
+                _deliveryProviders = value;
+            }
         }
 
         public static IPushNotificationDeliveryProvider CreateDeliveryProviderInstance(ApplicationPushNotificationSetting.PushNotificationDeliveryProviderSetting settings)
@@ -90,16 +93,12 @@ namespace TicketDesk.PushNotifications
             {
                 var readyNote = await context.PushNotificationItems
                     .FirstOrDefaultAsync(n =>
-                        (
-                            n.ContentSourceId == contentSourceId
+                        (n.ContentSourceId == contentSourceId
                             && n.ContentSourceType == contentSourceType
                             && n.SubscriberId == subscriberId
-                            && n.DestinationId == destinationId
-                        )
-                        && (
-                            n.DeliveryStatus == PushNotificationItemStatus.Scheduled
-                            || n.DeliveryStatus == PushNotificationItemStatus.Retrying)
-                        );
+                            && n.DestinationId == destinationId)
+                        && (n.DeliveryStatus == PushNotificationItemStatus.Scheduled
+                            || n.DeliveryStatus == PushNotificationItemStatus.Retrying));
 
                 if (readyNote == null)
                 {
@@ -118,9 +117,9 @@ namespace TicketDesk.PushNotifications
                 // get the next notification that is ready to send
                 var readyNote =
                     await context.PushNotificationItems.Include(n => n.Destination).OrderBy(n => n.ScheduledSendDate).FirstOrDefaultAsync(
-                        n =>
-                            (n.DeliveryStatus == PushNotificationItemStatus.Scheduled || n.DeliveryStatus == PushNotificationItemStatus.Retrying) &&
-                            n.ScheduledSendDate <= DateTimeOffset.Now, ct);
+                        n => (n.DeliveryStatus == PushNotificationItemStatus.Scheduled || n.DeliveryStatus == PushNotificationItemStatus.Retrying)
+                             && n.ScheduledSendDate <= DateTimeOffset.Now,
+                        ct);
 
                 if (readyNote == null)
                 {

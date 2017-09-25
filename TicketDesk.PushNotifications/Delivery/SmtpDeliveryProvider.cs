@@ -65,6 +65,7 @@ namespace TicketDesk.PushNotifications.Delivery
                 catch (Exception ex)
                 {
                     sent = false;
+
                     // TODO: log this somewhere
                     throw new Exception(string.Empty, ex);
                 }

@@ -25,7 +25,9 @@ namespace TicketDesk.Search.Lucene
     public class LuceneSearchLocatorProvider : LuceneSearchConnector, ISearchLocatorProvider
     {
         public LuceneSearchLocatorProvider()
-            : base("ticketdesk-searchindex") { }
+            : base("ticketdesk-searchindex")
+        {
+        }
 
         public Task<IEnumerable<SearchResultItem>> SearchAsync(string searchText, int projectId)
         {

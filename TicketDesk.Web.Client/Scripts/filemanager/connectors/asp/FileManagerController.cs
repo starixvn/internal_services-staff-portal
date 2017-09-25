@@ -21,14 +21,23 @@ namespace RfmNetCore.Controllers
             // FileManager Content Folder Path
             _webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
             _webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _webPath);
-            _allowedExtensions = new List<string> { "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md" };
+            _allowedExtensions = new List<string>
+            {
+                "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf",
+                "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md"
+            };
+
+            if (!Directory.Exists(_webRootPath))
+            {
+                Directory.CreateDirectory(_webRootPath);
+            }
         }
 
         public ActionResult Index(
             string mode,
             string path,
             string name,
-            List<HttpPostedFileBase> files,
+            IEnumerable<HttpPostedFileBase> files,
             string old,
             string @new,
             string source,
@@ -37,13 +46,24 @@ namespace RfmNetCore.Controllers
             bool thumbnail = false)
         {
             if (!string.IsNullOrWhiteSpace(path) && path.StartsWith("/"))
+            {
                 path = path.Substring(1);
+            }
+
             if (!string.IsNullOrWhiteSpace(@new) && @new.StartsWith("/"))
+            {
                 @new = @new == "/" ? string.Empty : @new.Substring(1);
+            }
+
             if (!string.IsNullOrWhiteSpace(source) && source.StartsWith("/"))
+            {
                 source = source.Substring(1);
+            }
+
             if (!string.IsNullOrWhiteSpace(target) && target.StartsWith("/"))
+            {
                 target = target.Substring(1);
+            }
 
             switch (mode)
             {
@@ -87,6 +107,7 @@ namespace RfmNetCore.Controllers
                         var file = DownloadFile(path);
                         return File(file.FileBytes, "application/x-msdownload", file.FileName);
                     }
+
                 case "getimage":
                     return GetImage(path, thumbnail);
 
@@ -98,6 +119,50 @@ namespace RfmNetCore.Controllers
             }
 
             throw new Exception("Unknown Request!");
+        }
+
+        private static void DirectoryCopy(string sourceDirName, string destDirName)
+        {
+            // Get the subdirectories for the specified directory.
+            var dir = new DirectoryInfo(sourceDirName);
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + sourceDirName);
+            }
+
+            var dirs = dir.GetDirectories();
+
+            // If the destination directory doesn't exist, create it.
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+            }
+
+            // Get the files in the directory and copy them to the new location.
+            var files = dir.GetFiles();
+            foreach (var file in files)
+            {
+                var temppath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(temppath, false);
+            }
+
+            // If copying subdirectories, copy them and their contents to new location.
+            foreach (var subdir in dirs)
+            {
+                var temppath = Path.Combine(destDirName, subdir.Name);
+                DirectoryCopy(subdir.FullName, temppath);
+            }
+        }
+
+        private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
+        {
+            path = path.Replace("\\", "/");
+
+            if (addSeperatorToBegin) path = "/" + path;
+            if (addSeperatorToLast) path = path + "/";
+
+            return path;
         }
 
         private dynamic Initiate()
@@ -131,7 +196,10 @@ namespace RfmNetCore.Controllers
 
         private dynamic GetFolder(string path)
         {
-            if (path == null) path = string.Empty;
+            if (path == null)
+            {
+                path = string.Empty;
+            }
 
             var rootpath = Path.Combine(_webRootPath, path);
 
@@ -174,7 +242,7 @@ namespace RfmNetCore.Controllers
                         Writable = 1,
                         Created = file.CreationTime.ToString(CultureInfo.InvariantCulture),
                         Modified = file.LastWriteTime.ToString(CultureInfo.InvariantCulture),
-                        Extension = file.Extension.Replace(".", ""),
+                        Extension = file.Extension.Replace(".", string.Empty),
                         Size = file.Length,
                         Timestamp = (int)(DateTime.Now - file.LastWriteTime).Ticks
                     }
@@ -241,7 +309,10 @@ namespace RfmNetCore.Controllers
 
         private dynamic Upload(string path, IEnumerable<HttpPostedFileBase> files)
         {
-            var result = new { Data = new List<dynamic>() };
+            var result = new
+            {
+                Data = new List<dynamic>()
+            };
 
             foreach (var file in files)
             {
@@ -276,7 +347,7 @@ namespace RfmNetCore.Controllers
                     Attributes = new
                     {
                         Name = file.FileName,
-                        Extension = Path.GetExtension(file.FileName).Replace(".", ""),
+                        Extension = Path.GetExtension(file.FileName).Replace(".", string.Empty),
                         Path = MakeWebPath(Path.Combine(_webPath, path, file.FileName), true),
                         Readable = 1,
                         Writable = 1,
@@ -334,7 +405,6 @@ namespace RfmNetCore.Controllers
                             Name = @new,
                             Readable = 1,
                             Writable = 1,
-                            // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         }
                     }
@@ -378,10 +448,9 @@ namespace RfmNetCore.Controllers
                         Attributes = new
                         {
                             Name = @new,
-                            Extension = Path.GetExtension(newPath).Replace(".", ""),
+                            Extension = Path.GetExtension(newPath).Replace(".", string.Empty),
                             Readable = 1,
                             Writable = 1,
-                            // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         }
                     }
@@ -434,7 +503,6 @@ namespace RfmNetCore.Controllers
                             Name = directoryName,
                             Readable = 1,
                             Writable = 1,
-                            // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         }
                     }
@@ -449,7 +517,7 @@ namespace RfmNetCore.Controllers
                 var oldPath = Path.Combine(_webRootPath, old);
 
                 var newPath = @new == "/"
-                    ? Path.Combine(_webRootPath, fileName.Replace("/", ""))
+                    ? Path.Combine(_webRootPath, fileName.Replace("/", string.Empty))
                     : Path.Combine(_webRootPath, @new, fileName);
 
                 var fileExist = System.IO.File.Exists(newPath);
@@ -482,10 +550,9 @@ namespace RfmNetCore.Controllers
                         Attributes = new
                         {
                             Name = fileName,
-                            Extension = Path.GetExtension(@new).Replace(".", ""),
+                            Extension = Path.GetExtension(@new).Replace(".", string.Empty),
                             Readable = 1,
                             Writable = 1,
-                            // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         }
                     }
@@ -538,7 +605,6 @@ namespace RfmNetCore.Controllers
                             Name = directoryName,
                             Readable = 1,
                             Writable = 1,
-                            // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         }
                     }
@@ -583,10 +649,9 @@ namespace RfmNetCore.Controllers
                         Attributes = new
                         {
                             Name = fileName,
-                            Extension = Path.GetExtension(fileName).Replace(".", ""),
+                            Extension = Path.GetExtension(fileName).Replace(".", string.Empty),
                             Readable = 1,
                             Writable = 1,
-                            // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         }
                     }
@@ -599,7 +664,7 @@ namespace RfmNetCore.Controllers
         private dynamic EditFile(string path)
         {
             var fileName = Path.GetFileName(path);
-            var fileExtension = Path.GetExtension(path).Replace(".", "");
+            var fileExtension = Path.GetExtension(path).Replace(".", string.Empty);
             var filePath = Path.Combine(_webRootPath, path);
 
             var content = System.IO.File.ReadAllText(filePath, Encoding.UTF8);
@@ -616,7 +681,6 @@ namespace RfmNetCore.Controllers
                         Extension = fileExtension,
                         Writable = 1,
                         Readable = 1,
-                        // created vb.
                         Content = content,
                         Path = $"/{Path.Combine(path)}"
                     }
@@ -647,7 +711,6 @@ namespace RfmNetCore.Controllers
                         Extension = fileExtension,
                         Readable = 1,
                         Writable = 1
-                        // created vb.
                     }
                 }
             };
@@ -676,7 +739,6 @@ namespace RfmNetCore.Controllers
                             Name = directoryName,
                             Readable = 1,
                             Writable = 1,
-                            // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                             Path = path
                         }
@@ -688,7 +750,7 @@ namespace RfmNetCore.Controllers
             else
             {
                 var fileName = Path.GetFileName(Path.Combine(_webRootPath, path));
-                var fileExtension = Path.GetExtension(fileName).Replace(".", "");
+                var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
 
                 System.IO.File.Delete(Path.Combine(_webRootPath, path));
 
@@ -704,9 +766,7 @@ namespace RfmNetCore.Controllers
                             Extension = fileExtension,
                             Readable = 1,
                             Writable = 1,
-                            // created date, size vb.
                             Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                            // Path = $"/{fileName}"
                         }
                     }
                 };
@@ -718,9 +778,7 @@ namespace RfmNetCore.Controllers
         private dynamic Download(string path)
         {
             var fileName = Path.GetFileName(Path.Combine(_webRootPath, path));
-            var fileExtension = Path.GetExtension(fileName).Replace(".", "");
-
-            // undone dosya var mý kontrolü...
+            var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
 
             var result = new
             {
@@ -734,9 +792,7 @@ namespace RfmNetCore.Controllers
                         Extension = fileExtension,
                         Readable = 1,
                         Writable = 1,
-                        // created date, size vb.
                         Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                        //Path = $"{path}"
                     }
                 }
             };
@@ -793,51 +849,6 @@ namespace RfmNetCore.Controllers
             };
 
             return result;
-        }
-
-        private static void DirectoryCopy(string sourceDirName, string destDirName)
-        {
-            // Get the subdirectories for the specified directory.
-            var dir = new DirectoryInfo(sourceDirName);
-
-            if (!dir.Exists)
-            {
-                throw new DirectoryNotFoundException(
-                    "Source directory does not exist or could not be found: "
-                    + sourceDirName);
-            }
-
-            var dirs = dir.GetDirectories();
-            // If the destination directory doesn't exist, create it.
-            if (!Directory.Exists(destDirName))
-            {
-                Directory.CreateDirectory(destDirName);
-            }
-
-            // Get the files in the directory and copy them to the new location.
-            var files = dir.GetFiles();
-            foreach (var file in files)
-            {
-                var temppath = Path.Combine(destDirName, file.Name);
-                file.CopyTo(temppath, false);
-            }
-
-            // If copying subdirectories, copy them and their contents to new location.
-            foreach (var subdir in dirs)
-            {
-                var temppath = Path.Combine(destDirName, subdir.Name);
-                DirectoryCopy(subdir.FullName, temppath);
-            }
-        }
-
-        private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
-        {
-            path = path.Replace("\\", "/");
-
-            if (addSeperatorToBegin) path = "/" + path;
-            if (addSeperatorToLast) path = path + "/";
-
-            return path;
         }
     }
 }

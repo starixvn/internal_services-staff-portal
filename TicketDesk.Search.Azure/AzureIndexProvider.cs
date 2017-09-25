@@ -153,10 +153,10 @@ namespace TicketDesk.Search.Azure
                     {
                         Weights = new Dictionary<string, double>
                         {
-                            {"id", 3D},
-                            {"tags", 2.5D},
-                            {"title", 2D},
-                            {"events", 0.75D}
+                            { "id", 3D },
+                            { "tags", 2.5D },
+                            { "title", 2D },
+                            { "events", 0.75D }
                         }
                     },
                     Functions =

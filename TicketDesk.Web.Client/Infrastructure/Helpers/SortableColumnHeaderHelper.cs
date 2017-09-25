@@ -23,9 +23,16 @@ namespace TicketDesk.Web.Client
 {
     public static class SortableColumnHeaderHelper
     {
-        public static IHtmlString SortableColumnHeader(this AjaxHelper helper, HtmlHelper htmlHelper,
-            UserTicketListSetting currentDisplayPreferences, int currentPage, string action, string listName, string sortColumn,
-            string linkText, AjaxOptions ajaxOptions)
+        public static IHtmlString SortableColumnHeader(
+            this AjaxHelper helper,
+            HtmlHelper htmlHelper,
+            UserTicketListSetting currentDisplayPreferences,
+            int currentPage,
+            string action,
+            string listName,
+            string sortColumn,
+            string linkText,
+            AjaxOptions ajaxOptions)
         {
             var imgContent = string.Empty;
             var linkContent = linkText;
@@ -35,8 +42,7 @@ namespace TicketDesk.Web.Client
             if (cColumn != null)
             {
                 var uh = new UrlHelper(helper.ViewContext.RequestContext);
-                var imgSrc =
-                    uh.Content((cColumn.SortDirection == ColumnSortDirection.Ascending)
+                var imgSrc = uh.Content((cColumn.SortDirection == ColumnSortDirection.Ascending)
                         ? "~/Content/Images/arrow_top.png"
                         : "~/Content/Images/arrow_down.png");
                 imgContent = string.Format("<img src='{0}' alt='{1}' />", imgSrc, cColumn.SortDirection.ToString());

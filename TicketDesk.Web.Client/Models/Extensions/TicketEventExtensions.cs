@@ -3,17 +3,17 @@
 //
 //      Stephen Redd (https://github.com/stephenredd)
 //
-// This file is distributed under the terms of the Microsoft Public 
+// This file is distributed under the terms of the Microsoft Public
 // License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use. 
+// for the complete terms of use.
 //
-// For any distribution that contains code from this file, this notice of 
-// attribution must remain intact, and a copy of the license must be 
+// For any distribution that contains code from this file, this notice of
+// attribution must remain intact, and a copy of the license must be
 // provided to the recipient.
 
+using Ganss.XSS;
 using System.Web;
 using System.Web.Mvc;
-using Ganss.XSS;
 using TicketDesk.Web.Client;
 using TicketDesk.Web.Identity;
 using TicketDesk.Web.Identity.Model;
@@ -34,7 +34,6 @@ namespace TicketDesk.Domain.Model
             var san = new HtmlSanitizer();
 
             return new HtmlString(san.Sanitize(content));
-            
         }
     }
 }

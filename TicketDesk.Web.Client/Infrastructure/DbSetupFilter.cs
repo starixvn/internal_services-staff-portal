@@ -26,7 +26,8 @@ namespace TicketDesk.Web.Client
             // only allowed to go to data management or login
             if (ctlr != "FirstRunSetup")
             {
-                filterContext.Result = new RedirectToRouteResult("first-run-setup",
+                filterContext.Result = new RedirectToRouteResult(
+                    "first-run-setup",
                     new RouteValueDictionary(
                         new
                         {

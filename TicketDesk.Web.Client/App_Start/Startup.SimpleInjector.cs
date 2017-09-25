@@ -48,15 +48,12 @@ namespace TicketDesk.Web.Client
         {
             var container = new Container();
             container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
-
             container.RegisterSingleton(app);
 
             // allows objects to be reused when inside web request, or created fresh when used on background threads or outside a request context
-            var hybridLifestyle = Lifestyle.CreateHybrid(
-                () => HttpContext.Current != null, new WebRequestLifestyle(), Lifestyle.Transient);
+            var hybridLifestyle = Lifestyle.CreateHybrid(() => HttpContext.Current != null, new WebRequestLifestyle(), Lifestyle.Transient);
 
             container.Register<TicketDeskContextSecurityProvider>(Lifestyle.Scoped);
-
             container.Register(() => HttpContext.Current != null ?
                     new TdDomainContext(container.GetInstance<TicketDeskContextSecurityProvider>()) :
                     new TdDomainContext(),
@@ -64,12 +61,10 @@ namespace TicketDesk.Web.Client
 
             container.Register(() => new TdIdentityContext(), hybridLifestyle);
 
-            container.Register<IUserStore<TicketDeskUser>>(() =>
-                new UserStore<TicketDeskUser>(container.GetInstance<TdIdentityContext>()),
-                hybridLifestyle);
+            container.Register<IUserStore<TicketDeskUser>>(() => new UserStore<TicketDeskUser>(container.GetInstance<TdIdentityContext>()), hybridLifestyle);
 
-            container.Register<IRoleStore<TicketDeskRole, string>>(() =>
-                new RoleStore<TicketDeskRole>(container.GetInstance<TdIdentityContext>()),
+            container.Register<IRoleStore<TicketDeskRole, string>>(
+                () => new RoleStore<TicketDeskRole>(container.GetInstance<TdIdentityContext>()),
                 hybridLifestyle);
 
             container.Register(() =>
@@ -95,7 +90,6 @@ namespace TicketDesk.Web.Client
             Lifestyle.Scoped);
 
             container.Register<SignInManager<TicketDeskUser, string>, TicketDeskSignInManager>(Lifestyle.Scoped);
-
             container.Register<TicketDeskRoleManager>(hybridLifestyle);
 
             container.Register<IUserService>(() => new UserService(), hybridLifestyle);
@@ -105,9 +99,7 @@ namespace TicketDesk.Web.Client
             container.Register<IFunctionService>(() => new FunctionService(), hybridLifestyle);
             container.Register<IFileManagerService>(() => new FileManagerService(), hybridLifestyle);
 
-            container.RegisterInitializer<TicketDeskUserManager>(manager =>
-                manager.ConfigureDataProtection(app));
-
+            container.RegisterInitializer<TicketDeskUserManager>(manager => manager.ConfigureDataProtection(app));
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
 
             return container;

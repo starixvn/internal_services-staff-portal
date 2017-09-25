@@ -1,7 +1,7 @@
-﻿using System.Linq;
-
-namespace TicketDesk.Domain.Model
+﻿namespace TicketDesk.Domain.Model
 {
+    using System.Linq;
+
     public static class ClientSettingExtensions
     {
         public static string GetDefaultTextEditorType(this ClientSetting clientSettings)
@@ -21,6 +21,5 @@ namespace TicketDesk.Domain.Model
                            .Select(s => s.Value)
                            .FirstOrDefault() ?? defaultValue;
         }
-
     }
 }
