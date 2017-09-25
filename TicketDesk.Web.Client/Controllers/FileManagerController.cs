@@ -43,8 +43,9 @@
             return View();
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
+        [ValidateInput(false)]
         [Route("filemanager")]
+        [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
         public ActionResult FileManager(
             string mode,
             string path,
@@ -189,6 +190,24 @@
 
         private dynamic AddFolder(string path, string name)
         {
+            var invalidCharaters = new string[] { "\\", "/", ":", "*", "?", "\"", "<", ">", "|" };
+            if(invalidCharaters.Any(s => name.Contains(s)))
+            {
+                var errorResult = new { Errors = new List<dynamic>() };
+
+                errorResult.Errors.Add(new
+                {
+                    Code = "500",
+                    Message = Messages.Messages.InvalidFolderName,
+                    Arguments = new List<string>
+                    {
+                        name
+                    }
+                });
+
+                return errorResult;
+            }
+
             var newDirectoryPath = Path.Combine(_webRootPath, path, name);
             var directoryExist = Directory.Exists(newDirectoryPath);
 

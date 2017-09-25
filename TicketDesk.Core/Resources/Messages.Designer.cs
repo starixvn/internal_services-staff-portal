@@ -61,6 +61,15 @@ namespace Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A folder name can&apos;t contain any of the following characters: \ / : * ? &quot; &lt; &gt; |.
+        /// </summary>
+        public static string InvalidFolderName {
+            get {
+                return ResourceManager.GetString("InvalidFolderName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid input..
         /// </summary>
         public static string InvalidInputData {
