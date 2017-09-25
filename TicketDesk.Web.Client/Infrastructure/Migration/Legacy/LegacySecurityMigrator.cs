@@ -14,21 +14,6 @@
     /// </summary>
     public static class LegacySecurityMigrator
     {
-        private class LegacyUser
-        {
-            // ReSharper disable UnusedAutoPropertyAccessor.Local
-            internal Guid UserId { get; set; }
-
-            internal string Email { get; set; }
-
-            internal string Password { get; set; }
-
-            internal string Comment { get; set; }
-
-            internal int PasswordFormat { get; set; }
-            // ReSharper restore UnusedAutoPropertyAccessor.Local
-        }
-
         /// <summary>
         /// Migrates the users and roles from a legacy database to the new TD 2.5 schema.
         /// </summary>
@@ -42,8 +27,10 @@
             var appId = context.Database.SqlQuery<Guid>(
                     "select ApplicationId from aspnet_Applications where ApplicationName = 'TicketDesk'").First().ToString();
             var users = context.Database.SqlQuery<LegacyUser>(
-                "select UserId, Email, Password, PasswordFormat, Comment from aspnet_Membership where ApplicationId = '" + appId + "' and IsApproved = 1 and IsLockedOut = 0").ToList();
-            const string roleQuery = "SELECT r.RoleName FROM aspnet_UsersInRoles u inner join aspnet_Roles r on u.RoleId = r.RoleId WHERE u.UserId = @userId and r.ApplicationId = @appId";
+                "select UserId, Email, Password, PasswordFormat, Comment from aspnet_Membership where ApplicationId = '"
+                + appId + "' and IsApproved = 1 and IsLockedOut = 0").ToList();
+            const string RoleQuery =
+                "SELECT r.RoleName FROM aspnet_UsersInRoles u inner join aspnet_Roles r on u.RoleId = r.RoleId WHERE u.UserId = @userId and r.ApplicationId = @appId";
 
             foreach (var user in users)
             {
@@ -60,10 +47,7 @@
 
                 if (result.Succeeded)
                 {
-                    var rolesForUser =
-                        context.Database.SqlQuery<string>(roleQuery,
-                        new SqlParameter("userId", user.UserId),
-                        new SqlParameter("appId", appId));
+                    var rolesForUser = context.Database.SqlQuery<string>(RoleQuery, new SqlParameter("userId", user.UserId), new SqlParameter("appId", appId));
                     var newRoles = new List<string>();
                     foreach (var role in rolesForUser)
                     {
@@ -205,6 +189,21 @@
             ";
 
             context.Database.ExecuteSqlCommand(TransactionalBehavior.EnsureTransaction, script);
+        }
+
+        private class LegacyUser
+        {
+            // ReSharper disable UnusedAutoPropertyAccessor.Local
+            internal Guid UserId { get; set; }
+
+            internal string Email { get; set; }
+
+            internal string Password { get; set; }
+
+            internal string Comment { get; set; }
+
+            internal int PasswordFormat { get; set; }
+            // ReSharper restore UnusedAutoPropertyAccessor.Local
         }
     }
 }

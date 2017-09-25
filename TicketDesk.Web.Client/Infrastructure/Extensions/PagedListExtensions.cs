@@ -20,6 +20,14 @@ using TicketDesk.Localization.Infrastructure;
 
 namespace TicketDesk.Web.Client
 {
+    public static class PagedListAsyncExtensions
+    {
+        public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, int pageNumber, int pageSize)
+        {
+            return await PagedListAsync<T>.Create(superset, pageNumber, pageSize);
+        }
+    }
+
     public class PagedListAsync<T> : BasePagedList<T>
     {
         private PagedListAsync()
@@ -64,14 +72,6 @@ namespace TicketDesk.Web.Client
             Subset.AddRange(pageNumber == 1
                 ? await superset.Skip(0).Take(pageSize).ToListAsync()
                 : await superset.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync());
-        }
-    }
-
-    public static class PagedListAsyncExtensions
-    {
-        public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, int pageNumber, int pageSize)
-        {
-            return await PagedListAsync<T>.Create(superset, pageNumber, pageSize);
         }
     }
 }

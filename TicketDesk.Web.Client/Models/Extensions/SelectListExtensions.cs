@@ -38,8 +38,7 @@ namespace TicketDesk.Web.Client
             Func<TSource, TValue> valueField,
             Func<TSource, string> textField,
             ICollection selectedValues = null,
-            bool includeDefaultItem = false
-        ) where TValue : class
+            bool includeDefaultItem = false) where TValue : class
         {
             var list = items.Select(i => new SelectListQueryItem<TValue> { Id = valueField(i), Name = textField(i) }).ToList();
             AddDefaultItem(list, includeDefaultItem);

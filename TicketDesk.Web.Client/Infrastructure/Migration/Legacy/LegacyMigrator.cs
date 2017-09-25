@@ -17,9 +17,9 @@
     {
         private bool _isRunning = false;
 
-        public CancellationTokenSource Canceler { get; set; }
-
         public event MigratorStatusChangedHandler StatusChanged;
+
+        public CancellationTokenSource Canceler { get; set; }
 
         public void CancelImport()
         {

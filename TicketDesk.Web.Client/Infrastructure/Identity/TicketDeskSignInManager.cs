@@ -28,14 +28,14 @@ namespace TicketDesk.Web.Client
         {
         }
 
-        public override Task<ClaimsIdentity> CreateUserIdentityAsync(TicketDeskUser user)
-        {
-            return user.GenerateUserIdentityAsync((TicketDeskUserManager)UserManager);
-        }
-
         public static TicketDeskSignInManager Create(IdentityFactoryOptions<TicketDeskSignInManager> options, IOwinContext context)
         {
             return new TicketDeskSignInManager(context.GetUserManager<TicketDeskUserManager>(), context.Authentication);
+        }
+
+        public override Task<ClaimsIdentity> CreateUserIdentityAsync(TicketDeskUser user)
+        {
+            return user.GenerateUserIdentityAsync((TicketDeskUserManager)UserManager);
         }
     }
 }

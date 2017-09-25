@@ -132,17 +132,15 @@
                 foreach (var schedNote in schedNotes)
                 {
                     // if no item for this destination in existing scheduled items list, add a new note for that destination
-                    if (existingItems.All(i => i.PushNotificationItem.DestinationId != schedNote.PushNotificationItem.DestinationId))
+                    // only add the new note if it contains an event... if only CanceledEvents exist
+                    // for new note, then the note came in pre-canceled by the sender. This happens
+                    // when the ticket event is marked as read from the start --usually when a
+                    // subscriber has initiated the event in the first place and anti-noise is set
+                    // to exclude subscriber's own events
+                    if (existingItems.All(i => i.PushNotificationItem.DestinationId != schedNote.PushNotificationItem.DestinationId)
+                        && schedNote.TicketEventsList.Any())
                     {
-                        if (schedNote.TicketEventsList.Any())
-                        {
-                            // only add the new note if it contains an event... if only CanceledEvents exist
-                            // for new note, then the note came in pre-canceled by the sender. This happens
-                            // when the ticket event is marked as read from the start --usually when a
-                            // subscriber has initiated the event in the first place and anti-noise is set
-                            // to exclude subscriber's own events
-                            TicketPushNotificationItems.Add(schedNote);
-                        }
+                        TicketPushNotificationItems.Add(schedNote);
                     }
                 }
             }

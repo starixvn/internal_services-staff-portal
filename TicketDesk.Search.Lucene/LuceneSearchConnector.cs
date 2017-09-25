@@ -32,7 +32,7 @@ namespace TicketDesk.Search.Lucene
         private Analyzer _tdIndexAnalyzer;
         private IndexWriter _tdIndexWriter;
 
-        internal LuceneSearchConnector(string indexLocation)
+        protected LuceneSearchConnector(string indexLocation)
         {
             var fi = new DirectoryInfo(indexLocation);
             if (!fi.Exists)

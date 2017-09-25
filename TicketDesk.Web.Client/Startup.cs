@@ -16,7 +16,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Owin;
 
-//[assembly: OwinStartup(typeof(Startup))]
+// [assembly: OwinStartup(typeof(Startup))]
 namespace TicketDesk.Web.Client
 {
     public partial class Startup

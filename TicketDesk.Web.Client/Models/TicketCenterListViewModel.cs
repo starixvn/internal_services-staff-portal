@@ -25,6 +25,14 @@ namespace TicketDesk.Web.Client.Models
     {
         private FilterBarViewModel _filterBar;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TicketCenterListViewModel" /> class.
+        /// </summary>
+        private TicketCenterListViewModel()
+        {
+            DisplayProjects = false;
+        }
+
         public int CurrentPage { get; set; }
 
         public bool DisplayProjects { get; set; }
@@ -48,6 +56,11 @@ namespace TicketDesk.Web.Client.Models
 
         public IOrderedEnumerable<UserTicketListSetting> UserListSettings { get; private set; }
 
+        public TicketDeskUserManager UserManager
+        {
+            get { return DependencyResolver.Current.GetService<TicketDeskUserManager>(); }
+        }
+
         public static async Task<TicketCenterListViewModel> GetViewModelAsync(int currentPage, string listName, TdDomainContext context, string userId)
         {
             var userSettings = await context.UserSettingsManager.GetSettingsForUserAsync(userId);
@@ -62,19 +75,6 @@ namespace TicketDesk.Web.Client.Models
             vm.Tickets = await vm.ListTicketsAsync(currentPage, context, userId);
 
             return vm;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TicketCenterListViewModel" /> class.
-        /// </summary>
-        private TicketCenterListViewModel()
-        {
-            DisplayProjects = false;
-        }
-
-        public TicketDeskUserManager UserManager
-        {
-            get { return DependencyResolver.Current.GetService<TicketDeskUserManager>(); }
         }
 
         public async Task<IPagedList<Ticket>> ListTicketsAsync(int pageIndex, TdDomainContext context, string napUserId)
