@@ -1,39 +1,28 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using TicketDesk.Domain.Model;
-using TicketDesk.Localization.Models;
-using TicketDesk.Web.Identity;
-
-namespace TicketDesk.Web.Client.Models
+﻿namespace TicketDesk.Web.Client.Models
 {
+    using Microsoft.AspNet.Identity;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+    using TicketDesk.Domain.Model;
+    using TicketDesk.Localization.Models;
+    using TicketDesk.Web.Identity;
+
     public class FilterBarViewModel
     {
-        private UserTicketListSetting CurrentListSetting { get; set; }
-        private TicketDeskRoleManager RoleManager { get; set; }
-        private TicketDeskUserManager UserManager { get; set; }
-
         public FilterBarViewModel(UserTicketListSetting currentListSetting)
         {
             CurrentListSetting = currentListSetting;
             RoleManager = DependencyResolver.Current.GetService<TicketDeskRoleManager>();
             UserManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
         }
+
+        private UserTicketListSetting CurrentListSetting { get; set; }
+
+        private TicketDeskRoleManager RoleManager { get; set; }
+
+        private TicketDeskUserManager UserManager { get; set; }
 
         // TODO: Refactor all selectlists here to use the select list extensions B
         public SelectList ItemsPerPageSelectList
@@ -43,16 +32,15 @@ namespace TicketDesk.Web.Client.Models
                 return new SelectList(
                     new[]
                     {
-                        new {Text = "10", Value = "10"},
-                        new {Text = "20", Value = "20"},
-                        new {Text = "30", Value = "30"},
-                        new {Text = "50", Value = "50"},
-                        new {Text = "100", Value = "100"}
+                        new { Text = "10", Value = "10" },
+                        new { Text = "20", Value = "20" },
+                        new { Text = "30", Value = "30" },
+                        new { Text = "50", Value = "50" },
+                        new { Text = "100", Value = "100" }
                     },
                     "Value",
                     "Text",
-                    CurrentListSetting.ItemsPerPage
-                    );
+                    CurrentListSetting.ItemsPerPage);
             }
         }
 
@@ -61,33 +49,32 @@ namespace TicketDesk.Web.Client.Models
             get
             {
                 string selectedStatus = "Any";
-                var fColumn = CurrentListSetting.FilterColumns.SingleOrDefault(fc => fc.ColumnName == "TicketStatus");
-                if (fColumn != null)
+                var filterColumn = CurrentListSetting.FilterColumns.SingleOrDefault(fc => fc.ColumnName == "TicketStatus");
+                if (filterColumn != null)
                 {
-                    if (!fColumn.ColumnValue.ToString().Equals("Closed", StringComparison.InvariantCultureIgnoreCase))
+                    if (!filterColumn.ColumnValue.ToString().Equals("Closed", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        selectedStatus = fColumn.ColumnValue.ToString();
+                        selectedStatus = filterColumn.ColumnValue.ToString();
                     }
                     else
                     {
-                        selectedStatus = (fColumn.UseEqualityComparison.HasValue && fColumn.UseEqualityComparison.Value) ? "Closed" : "Open";
+                        selectedStatus = (filterColumn.UseEqualityComparison.HasValue && filterColumn.UseEqualityComparison.Value) ? "Closed" : "Open";
                     }
                 }
 
                 return new SelectList(
                     new[]
                     {
-                        new { Text=Strings.TicketStatus_Any, Value="Any" },
-                        new { Text=Strings.TicketStatus_Open, Value="Open" },
-                        new { Text=Strings.TicketStatus_Active, Value="Active" },
-                        new { Text=Strings.TicketStatus_MoreInfo, Value="MoreInfo" },
-                        new { Text=Strings.TicketStatus_Resolved, Value="Resolved" },
-                        new { Text=Strings.TicketStatus_Closed, Value="Closed" }
+                        new { Text = Strings.TicketStatus_Any, Value = "Any" },
+                        new { Text = Strings.TicketStatus_Open, Value = "Open" },
+                        new { Text = Strings.TicketStatus_Active, Value = "Active" },
+                        new { Text = Strings.TicketStatus_MoreInfo, Value = "MoreInfo" },
+                        new { Text = Strings.TicketStatus_Resolved, Value = "Resolved" },
+                        new { Text = Strings.TicketStatus_Closed, Value = "Closed" }
                     },
                 "Value",
                 "Text",
-                selectedStatus
-                );
+                selectedStatus);
             }
         }
 
@@ -96,12 +83,13 @@ namespace TicketDesk.Web.Client.Models
             get
             {
                 var isOwnerFilterDisabled = CurrentListSetting.DisabledFilterColumnNames.Contains("Owner");
-                var cVal = String.Format("postback{0} form-control", (isOwnerFilterDisabled) ? " disabled" : string.Empty);
-                var ownerHtmlAttributes = new Dictionary<string, object> { { "Class", cVal } };
+                var classValue = string.Format("postback{0} form-control", isOwnerFilterDisabled ? " disabled" : string.Empty);
+                var ownerHtmlAttributes = new Dictionary<string, object> { { "Class", classValue } };
                 if (isOwnerFilterDisabled)
                 {
                     ownerHtmlAttributes.Add("Disabled", true);
                 }
+
                 return ownerHtmlAttributes;
             }
         }
@@ -111,10 +99,10 @@ namespace TicketDesk.Web.Client.Models
             get
             {
                 string selectedUserName = "anyone";
-                var fColumn = CurrentListSetting.FilterColumns.SingleOrDefault(fc => fc.ColumnName == "Owner");
-                if (fColumn != null)
+                var filterColumn = CurrentListSetting.FilterColumns.SingleOrDefault(fc => fc.ColumnName == "Owner");
+                if (filterColumn != null)
                 {
-                    selectedUserName = fColumn.ColumnValue.ToString();
+                    selectedUserName = filterColumn.ColumnValue.ToString();
                 }
 
                 var lusers = GetUsersInRole("TdInternalUsers");
@@ -129,11 +117,11 @@ namespace TicketDesk.Web.Client.Models
             get
             {
                 string selectedUserName = "anyone";
-                var fColumn = CurrentListSetting.FilterColumns.SingleOrDefault(fc => fc.ColumnName == "AssignedTo");
-                if (fColumn != null)
+                var filterColumn = CurrentListSetting.FilterColumns.SingleOrDefault(fc => fc.ColumnName == "AssignedTo");
+                if (filterColumn != null)
                 {
                     // when filter for column exists, but the value is null it means the selection was unassigned
-                    selectedUserName = (fColumn.ColumnValue ?? "unassigned").ToString();
+                    selectedUserName = (filterColumn.ColumnValue ?? "unassigned").ToString();
                 }
 
                 var lusers = GetUsersInRole("TdHelpDeskUsers");
@@ -149,12 +137,13 @@ namespace TicketDesk.Web.Client.Models
             get
             {
                 var isAssignedToFilterDisabled = CurrentListSetting.DisabledFilterColumnNames.Contains("AssignedTo");
-                var cVal = String.Format("postback{0} form-control", (isAssignedToFilterDisabled) ? " disabled" : string.Empty);
-                var assignedHtmlAttributes = new Dictionary<string, object> { { "Class", cVal } };
+                var classValue = string.Format("postback{0} form-control", isAssignedToFilterDisabled ? " disabled" : string.Empty);
+                var assignedHtmlAttributes = new Dictionary<string, object> { { "Class", classValue } };
                 if (isAssignedToFilterDisabled)
                 {
                     assignedHtmlAttributes.Add("Disabled", true);
                 }
+
                 return assignedHtmlAttributes;
             }
         }
@@ -164,8 +153,8 @@ namespace TicketDesk.Web.Client.Models
             get
             {
                 var isTicketStatusFilterDisabled = CurrentListSetting.DisabledFilterColumnNames.Contains("TicketStatus");
-                var cVal = String.Format("postback{0} form-control", (isTicketStatusFilterDisabled) ? " disabled" : string.Empty);
-                var statusHtmlAttributes = new Dictionary<string, object> { { "Class", cVal } };
+                var classValue = string.Format("postback{0} form-control", isTicketStatusFilterDisabled ? " disabled" : string.Empty);
+                var statusHtmlAttributes = new Dictionary<string, object> { { "Class", classValue } };
                 if (isTicketStatusFilterDisabled)
                 {
                     statusHtmlAttributes.Add("Disabled", true);
@@ -175,17 +164,9 @@ namespace TicketDesk.Web.Client.Models
             }
         }
 
-        internal class UserItem
-        {
-            //TODO: add caching and reuse UserDisplayInfo from UserDisplayInfoCache
-            public string Name { get; set; }
-
-            public string DisplayName { get; set; }
-        }
-
         private List<UserItem> GetUsersInRole(string roleName)
         {
-            //TODO: Add caching for this in role manager
+            // TODO: Add caching for this in role manager
             return RoleManager
                 .FindByName(roleName)
                 .Users
@@ -193,6 +174,14 @@ namespace TicketDesk.Web.Client.Models
                 .OrderBy(u => u.DisplayName)
                 .Select(u => new UserItem { Name = u.Id, DisplayName = u.DisplayName })
                 .ToList();
+        }
+
+        internal class UserItem
+        {
+            // TODO: add caching and reuse UserDisplayInfo from UserDisplayInfoCache
+            public string Name { get; set; }
+
+            public string DisplayName { get; set; }
         }
     }
 }

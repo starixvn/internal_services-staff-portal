@@ -94,7 +94,7 @@ namespace S22.Imap
             MIMEPart[] parts = ParseMailBody(reader.ReadToEnd(), m.Headers);
             foreach (MIMEPart p in parts)
             {
-                m.AddBodypart(BodypartFromMIME(p), p.body);
+                m.AddBodypart(BodypartFromMIME(p), p.Body);
             }
 
             return m;
@@ -474,8 +474,8 @@ namespace S22.Imap
                 {
                     new MIMEPart()
                     {
-                        body = body,
-                        header = new NameValueCollection()
+                        Body = body,
+                        Header = new NameValueCollection()
                         {
                             { "Content-Type", header["Content-Type"] },
                             { "Content-Id", header["Content-Id"] },
@@ -522,10 +522,10 @@ namespace S22.Imap
                     header.AppendLine(line);
                 }
 
-                p.header = ParseMailHeader(header.ToString());
+                p.Header = ParseMailHeader(header.ToString());
 
                 // Account for nested multipart content
-                NameValueCollection contentType = ParseMIMEField(p.header["Content-Type"]);
+                NameValueCollection contentType = ParseMIMEField(p.Header["Content-Type"]);
                 if (contentType["Boundary"] != null)
                 {
                     list.AddRange(ParseMIMEParts(reader, contentType["boundary"]));
@@ -543,11 +543,11 @@ namespace S22.Imap
                     body.AppendLine(line);
                 }
 
-                p.body = body.ToString();
+                p.Body = body.ToString();
 
                 // Add the MIME part to the list unless body is null which means the
                 // body contained nested multipart content
-                if (!string.IsNullOrEmpty(p.body))
+                if (!string.IsNullOrEmpty(p.Body))
                 {
                     list.Add(p);
                 }
@@ -570,7 +570,7 @@ namespace S22.Imap
         /// <returns>An initialized instance of the Bodypart class.</returns>
         private static Bodypart BodypartFromMIME(MIMEPart mimePart)
         {
-            NameValueCollection contentType = ParseMIMEField(mimePart.header["Content-Type"]);
+            NameValueCollection contentType = ParseMIMEField(mimePart.Header["Content-Type"]);
             Bodypart p = new Bodypart(null);
             Match m = Regex.Match(contentType["value"], "(.+)/(.+)");
             if (m.Success)
@@ -579,17 +579,17 @@ namespace S22.Imap
                 p.Subtype = m.Groups[2].Value;
             }
 
-            p.Encoding = ContentTransferEncodingMap.FromString(mimePart.header["Content-Transfer-Encoding"]);
-            p.Id = mimePart.header["Content-Id"];
+            p.Encoding = ContentTransferEncodingMap.FromString(mimePart.Header["Content-Transfer-Encoding"]);
+            p.Id = mimePart.Header["Content-Id"];
             foreach (string k in contentType.AllKeys)
             {
                 p.Parameters.Add(k, contentType[k]);
             }
 
-            p.Size = mimePart.body.Length;
-            if (mimePart.header["Content-Disposition"] != null)
+            p.Size = mimePart.Body.Length;
+            if (mimePart.Header["Content-Disposition"] != null)
             {
-                NameValueCollection disposition = ParseMIMEField(mimePart.header["Content-Disposition"]);
+                NameValueCollection disposition = ParseMIMEField(mimePart.Header["Content-Disposition"]);
                 p.Disposition.Type = ContentDispositionTypeMap.FromString(disposition["value"]);
                 p.Disposition.Filename = disposition["Filename"];
                 foreach (string k in disposition.AllKeys)

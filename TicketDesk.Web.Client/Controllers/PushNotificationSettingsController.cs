@@ -52,17 +52,17 @@ namespace TicketDesk.Web.Client.Controllers
             ViewBag.SiteRootUrl = GetRootUrlSetting();
             ViewBag.IsHost = NapContextHelper.HasRight(FunctionKeys.PushNotificationSettings, Constant.Policy.Host);
 
-            var dbSetting = NoteContext.TicketDeskPushNotificationSettings;
+            var databaseSetting = NoteContext.TicketDeskPushNotificationSettings;
 
-            return View(dbSetting);
+            return View(databaseSetting);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.PushNotificationSettings, Policy = Constant.Policy.Host)]
         public ActionResult Index(ApplicationPushNotificationSetting settings, string siteRootUrl)
         {
-            var dbSetting = NoteContext.TicketDeskPushNotificationSettings;
-            if (ModelState.IsValid && TryUpdateModel(dbSetting))
+            var databaseSetting = NoteContext.TicketDeskPushNotificationSettings;
+            if (ModelState.IsValid && TryUpdateModel(databaseSetting))
             {
                 NoteContext.SaveChanges();
                 DomainContext.TicketDeskSettings.ClientSettings.Settings["DefaultSiteRootUrl"] = siteRootUrl.TrimEnd('/');
@@ -76,7 +76,7 @@ namespace TicketDesk.Web.Client.Controllers
 
             Task.Delay(500).ContinueWith(t => System.Web.HttpRuntime.UnloadAppDomain()).ConfigureAwait(false);
 
-            return View(dbSetting);
+            return View(databaseSetting);
         }
 
         [Route("list-providers")]

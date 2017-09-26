@@ -1,19 +1,6 @@
-using System.Collections.Generic;
-
-namespace TicketDesk.Web.Identity.Model
+﻿namespace TicketDesk.Web.Identity.Model
 {
-    public class StandardUserEqualityComparer : IEqualityComparer<TicketDeskUser>
-    {
-        public bool Equals(TicketDeskUser x, TicketDeskUser y)
-        {
-            return x.Id == y.Id;
-        }
-
-        public int GetHashCode(TicketDeskUser obj)
-        {
-            return obj.Id.GetHashCode();
-        }
-    }
+    using System.Collections.Generic;
 
     public class UniqueNameEmailDisplayUserEqualityComparer : IEqualityComparer<TicketDeskUser>
     {

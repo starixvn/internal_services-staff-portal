@@ -55,9 +55,9 @@
             }
 
             var model = new UserAccountInfoViewModel(user, user.Roles.Select(r => r.RoleId));
-            var tdPendingRole = RoleManager.Roles.FirstOrDefault(r => r.Name == "TdPendingUsers");
+            var pendingRole = RoleManager.Roles.FirstOrDefault(r => r.Name == "TdPendingUsers");
 
-            ViewBag.TdPendingUsersRoleId = tdPendingRole == null ? string.Empty : tdPendingRole.Id;
+            ViewBag.TdPendingUsersRoleId = pendingRole == null ? string.Empty : pendingRole.Id;
             return View(model);
         }
 
@@ -65,8 +65,8 @@
         [HttpPost]
         public async Task<ActionResult> Edit(UserAccountInfoViewModel model)
         {
-            var tdPendingRole = RoleManager.Roles.FirstOrDefault(r => r.Name == "TdPendingUsers");
-            ViewBag.TdPendingUsersRoleId = tdPendingRole == null ? string.Empty : tdPendingRole.Id;
+            var pendingRole = RoleManager.Roles.FirstOrDefault(r => r.Name == "TdPendingUsers");
+            ViewBag.TdPendingUsersRoleId = pendingRole == null ? string.Empty : pendingRole.Id;
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -89,11 +89,11 @@
                     if (await UpdateUserInfo(user, model))
                     {
                         // if any roles other than pending are selected, make sure we remove the pending role from the model first
-                        if (tdPendingRole != null && model.Roles.Any(r => r != tdPendingRole.Id))
+                        if (pendingRole != null && model.Roles.Any(r => r != pendingRole.Id))
                         {
-                            var mRoles = model.Roles.ToList();
-                            mRoles.Remove(tdPendingRole.Id);
-                            model.Roles = mRoles;
+                            var roles = model.Roles.ToList();
+                            roles.Remove(pendingRole.Id);
+                            model.Roles = roles;
                         }
 
                         // get role changes

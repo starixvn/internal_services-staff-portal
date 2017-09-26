@@ -89,8 +89,7 @@ namespace TicketDesk.Web.Client.Controllers
             if (LegacyBackgroundMigrator.MigrationTask != null)
             {
                 ViewBag.Refresh = "True";
-                ViewBag.Messages = LegacyBackgroundMigrator.MessageStack.ToString()
-                    .Replace(System.Environment.NewLine, "<br />");
+                ViewBag.Messages = LegacyBackgroundMigrator.MessageStack.ToString().Replace(System.Environment.NewLine, "<br />");
                 var upgradeSuccess = false;
                 switch (LegacyBackgroundMigrator.MigrationTask.Status)
                 {
@@ -168,8 +167,7 @@ namespace TicketDesk.Web.Client.Controllers
         {
             using (var ctx = new TdDomainContext(null))
             {
-                Database.SetInitializer(
-                    new MigrateDatabaseToLatestVersion<TdDomainContext, Configuration>(true));
+                Database.SetInitializer(new MigrateDatabaseToLatestVersion<TdDomainContext, Configuration>(true));
                 ctx.Database.Initialize(true);
             }
 

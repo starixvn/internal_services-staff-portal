@@ -33,8 +33,8 @@
                 }
 
                 var jsettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
-                var jData = JsonConvert.DeserializeObject<ApplicationSecuritySetting>(value, jsettings);
-                DefaultNewUserRoles = jData.DefaultNewUserRoles;
+                var jsonData = JsonConvert.DeserializeObject<ApplicationSecuritySetting>(value, jsettings);
+                DefaultNewUserRoles = jsonData.DefaultNewUserRoles;
             }
         }
 

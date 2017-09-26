@@ -72,15 +72,15 @@ namespace TicketDesk.PushNotifications.Model
                 }
 
                 var jsettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
-                var jData = JsonConvert.DeserializeObject<ApplicationPushNotificationSetting>(value, jsettings);
-                IsEnabled = jData.IsEnabled;
-                IsBackgroundQueueEnabled = jData.IsBackgroundQueueEnabled;
-                DeliveryIntervalMinutes = jData.DeliveryIntervalMinutes;
-                RetryAttempts = jData.RetryAttempts;
-                RetryIntervalMinutes = jData.RetryIntervalMinutes;
-                DeliveryProviderSettings = jData.DeliveryProviderSettings;
-                AntiNoiseSettings = jData.AntiNoiseSettings;
-                BroadcastSettings = jData.BroadcastSettings;
+                var jsonData = JsonConvert.DeserializeObject<ApplicationPushNotificationSetting>(value, jsettings);
+                IsEnabled = jsonData.IsEnabled;
+                IsBackgroundQueueEnabled = jsonData.IsBackgroundQueueEnabled;
+                DeliveryIntervalMinutes = jsonData.DeliveryIntervalMinutes;
+                RetryAttempts = jsonData.RetryAttempts;
+                RetryIntervalMinutes = jsonData.RetryIntervalMinutes;
+                DeliveryProviderSettings = jsonData.DeliveryProviderSettings;
+                AntiNoiseSettings = jsonData.AntiNoiseSettings;
+                BroadcastSettings = jsonData.BroadcastSettings;
             }
         }
 

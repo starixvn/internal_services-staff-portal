@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace S22.Imap
+﻿namespace S22.Imap
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Possible values for the content disposition type which determines the presentation
     /// style

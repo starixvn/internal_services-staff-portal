@@ -54,9 +54,8 @@ namespace TicketDesk.Web.Client
             var hybridLifestyle = Lifestyle.CreateHybrid(() => HttpContext.Current != null, new WebRequestLifestyle(), Lifestyle.Transient);
 
             container.Register<TicketDeskContextSecurityProvider>(Lifestyle.Scoped);
-            container.Register(() => HttpContext.Current != null ?
-                    new TdDomainContext(container.GetInstance<TicketDeskContextSecurityProvider>()) :
-                    new TdDomainContext(),
+            container.Register(
+                () => HttpContext.Current != null ? new TdDomainContext(container.GetInstance<TicketDeskContextSecurityProvider>()) : new TdDomainContext(),
                 hybridLifestyle);
 
             container.Register(() => new TdIdentityContext(), hybridLifestyle);
@@ -67,27 +66,28 @@ namespace TicketDesk.Web.Client
                 () => new RoleStore<TicketDeskRole>(container.GetInstance<TdIdentityContext>()),
                 hybridLifestyle);
 
-            container.Register(() =>
-            {
-                IOwinContext context;
-                try
+            container.Register(
+                () =>
                 {
-                    context = HttpContext.Current.GetOwinContext();
-                }
-                catch (InvalidOperationException)
-                {
-                    // avoid exception when this is called before the owin environment is fully initialized
-                    if (container.IsVerifying())
+                    IOwinContext context;
+                    try
                     {
-                        return new FakeAuthenticationManager();
+                        context = HttpContext.Current.GetOwinContext();
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // avoid exception when this is called before the owin environment is fully initialized
+                        if (container.IsVerifying())
+                        {
+                            return new FakeAuthenticationManager();
+                        }
+
+                        throw;
                     }
 
-                    throw;
-                }
-
-                return context.Authentication;
-            },
-            Lifestyle.Scoped);
+                    return context.Authentication;
+                },
+                Lifestyle.Scoped);
 
             container.Register<SignInManager<TicketDeskUser, string>, TicketDeskSignInManager>(Lifestyle.Scoped);
             container.Register<TicketDeskRoleManager>(hybridLifestyle);

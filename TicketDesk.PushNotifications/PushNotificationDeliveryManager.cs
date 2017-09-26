@@ -57,7 +57,8 @@ namespace TicketDesk.PushNotifications
             }
         }
 
-        public static IPushNotificationDeliveryProvider CreateDeliveryProviderInstance(ApplicationPushNotificationSetting.PushNotificationDeliveryProviderSetting settings)
+        public static IPushNotificationDeliveryProvider CreateDeliveryProviderInstance(
+            ApplicationPushNotificationSetting.PushNotificationDeliveryProviderSetting settings)
         {
             var provType = Type.GetType(settings.ProviderAssemblyQualifiedName);
             if (provType != null)

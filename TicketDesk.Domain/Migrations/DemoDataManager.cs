@@ -40,12 +40,12 @@ namespace TicketDesk.Domain.Migrations
             RemoveAllData(context);
             context.SaveChanges();
             context.Projects.AddOrUpdate(p => p.ProjectName, new Project() { ProjectName = "NullSoft", ProjectDescription = "NullSoft Rocks" });
-            var dProj = context.Projects.First();
+            var project = context.Projects.First();
             context.Tickets.AddOrUpdate(
                 t => t.Title,
                 new Ticket
                 {
-                    ProjectId = dProj.ProjectId,
+                    ProjectId = project.ProjectId,
                     Title = "Test Unassigned Ticket",
                     AffectsCustomer = false,
                     Category = "Hardware",
@@ -96,7 +96,7 @@ namespace TicketDesk.Domain.Migrations
                     t => t.Title,
                     new Ticket
                     {
-                        ProjectId = dProj.ProjectId,
+                        ProjectId = project.ProjectId,
                         Title = "Test Ticket " + p,
                         AffectsCustomer = false,
                         AssignedTo = "64165817-9cb5-472f-8bfb-6a35ca54be6a",

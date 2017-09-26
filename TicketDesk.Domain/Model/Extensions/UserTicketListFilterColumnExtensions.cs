@@ -27,37 +27,37 @@ namespace TicketDesk.Domain.Model
         {
             if (!string.IsNullOrEmpty(assigned))
             {
-                var fColumn = filters.SingleOrDefault(fc => fc.ColumnName == "AssignedTo");
+                var filterColumn = filters.SingleOrDefault(fc => fc.ColumnName == "AssignedTo");
 
                 // TODO: need an invariant value with Localized display text
                 if (assigned == "anyone")
                 {
-                    if (fColumn != null)
+                    if (filterColumn != null)
                     {
-                        filters.Remove(fColumn);
+                        filters.Remove(filterColumn);
                     }
                 }
                 else
                 {
-                    if (fColumn == null)
+                    if (filterColumn == null)
                     {
-                        fColumn = new UserTicketListFilterColumn("AssignedTo")
+                        filterColumn = new UserTicketListFilterColumn("AssignedTo")
                         {
                             ColumnValueType = typeof(string)
                         };
-                        filters.Add(fColumn);
+                        filters.Add(filterColumn);
                     }
 
                     // TODO: need an invariant value with Localized display text
                     if (assigned == "unassigned")
                     {
-                        fColumn.UseEqualityComparison = null;
-                        fColumn.ColumnValue = null;
+                        filterColumn.UseEqualityComparison = null;
+                        filterColumn.ColumnValue = null;
                     }
                     else
                     {
-                        fColumn.UseEqualityComparison = true;
-                        fColumn.ColumnValue = assigned;
+                        filterColumn.UseEqualityComparison = true;
+                        filterColumn.ColumnValue = assigned;
                     }
                 }
             }
@@ -72,29 +72,29 @@ namespace TicketDesk.Domain.Model
         {
             if (!string.IsNullOrEmpty(ownerValue))
             {
-                var fColumn = filters.SingleOrDefault(fc => fc.ColumnName == "Owner");
+                var filterColumn = filters.SingleOrDefault(fc => fc.ColumnName == "Owner");
 
                 // TODO: need an invariant value with Localized display text
                 if (ownerValue == "anyone")
                 {
-                    if (fColumn != null)
+                    if (filterColumn != null)
                     {
-                        filters.Remove(fColumn);
+                        filters.Remove(filterColumn);
                     }
                 }
                 else
                 {
-                    if (fColumn == null)
+                    if (filterColumn == null)
                     {
-                        fColumn = new UserTicketListFilterColumn("Owner")
+                        filterColumn = new UserTicketListFilterColumn("Owner")
                         {
                             ColumnValueType = typeof(string)
                         };
-                        filters.Add(fColumn);
+                        filters.Add(filterColumn);
                     }
 
-                    fColumn.UseEqualityComparison = true;
-                    fColumn.ColumnValue = ownerValue;
+                    filterColumn.UseEqualityComparison = true;
+                    filterColumn.ColumnValue = ownerValue;
                 }
             }
         }
@@ -108,34 +108,34 @@ namespace TicketDesk.Domain.Model
         {
             if (!string.IsNullOrEmpty(statusValue))
             {
-                var fColumn = filters.SingleOrDefault(fc => fc.ColumnName == "TicketStatus");
+                var filterColumn = filters.SingleOrDefault(fc => fc.ColumnName == "TicketStatus");
 
                 // TODO: need an invariant value with Localized display text
                 if (statusValue == "Any")
                 {
-                    if (fColumn != null)
+                    if (filterColumn != null)
                     {
-                        filters.Remove(fColumn);
+                        filters.Remove(filterColumn);
                     }
                 }
                 else
                 {
                     // TODO: need an invariant value with Localized display text
                     bool equality = statusValue != "Open";
-                    if (fColumn == null)
+                    if (filterColumn == null)
                     {
-                        fColumn = new UserTicketListFilterColumn("TicketStatus")
+                        filterColumn = new UserTicketListFilterColumn("TicketStatus")
                         {
                             // enum, doesn't matter which value we call gettype from
                             ColumnValueType = TicketStatus.Closed.GetType()
                         };
-                        filters.Add(fColumn);
+                        filters.Add(filterColumn);
                     }
 
-                    fColumn.UseEqualityComparison = equality;
+                    filterColumn.UseEqualityComparison = equality;
 
                     // TODO: need an invariant value with Localized display text
-                    fColumn.ColumnValue = (statusValue == "Open") ? "Closed" : statusValue;
+                    filterColumn.ColumnValue = (statusValue == "Open") ? "Closed" : statusValue;
                 }
             }
         }

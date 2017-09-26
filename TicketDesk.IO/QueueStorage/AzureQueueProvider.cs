@@ -51,8 +51,8 @@ namespace TicketDesk.IO
 
         private async Task EnqueueItemAsyc(object item)
         {
-            var jItem = JsonConvert.SerializeObject(item);
-            var message = new CloudQueueMessage(jItem);
+            var jsonItem = JsonConvert.SerializeObject(item);
+            var message = new CloudQueueMessage(jsonItem);
             await Queue.AddMessageAsync(message);
         }
     }

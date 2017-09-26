@@ -30,8 +30,8 @@
                 }
 
                 var jsettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
-                var jData = JsonConvert.DeserializeObject<ClientSetting>(value, jsettings);
-                Settings = jData.Settings;
+                var jsonData = JsonConvert.DeserializeObject<ClientSetting>(value, jsettings);
+                Settings = jsonData.Settings;
             }
         }
 

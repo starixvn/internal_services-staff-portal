@@ -80,7 +80,7 @@
 
         public static void RemoveLegacyMembershipObjects(TdIdentityContext context)
         {
-            const string script = @"
+            const string Script = @"
                 drop table aspnet_PersonalizationAllUsers
                 drop table aspnet_PersonalizationPerUser
                 drop table aspnet_Profile
@@ -188,7 +188,7 @@
                 drop role aspnet_WebEvent_FullAccess
             ";
 
-            context.Database.ExecuteSqlCommand(TransactionalBehavior.EnsureTransaction, script);
+            context.Database.ExecuteSqlCommand(TransactionalBehavior.EnsureTransaction, Script);
         }
 
         private class LegacyUser

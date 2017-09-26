@@ -67,6 +67,7 @@
                     // try it again
                     apn = ApplicationPushNotificationSettings.GetTicketDeskSettings();
                 }
+
                 return apn;
             }
 

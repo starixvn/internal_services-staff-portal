@@ -80,9 +80,9 @@ namespace TicketDesk.Web.Client
             // cumbersome since interfaces can't specify static members, and any other
             // mechanism seems like it would be somewhat convoluted for would-be plug-in
             // autors to implement.
-            var azProvider = new AzureIndexProvider();
-            var config = azProvider.IsConfigured ?
-                new TdSearchContextConfiguration(azProvider, new AzureSearchLocatorProvider()) :
+            var azureProvider = new AzureIndexProvider();
+            var config = azureProvider.IsConfigured ?
+                new TdSearchContextConfiguration(azureProvider, new AzureSearchLocatorProvider()) :
                 new TdSearchContextConfiguration(new LuceneIndexProvider(), new LuceneSearchLocatorProvider());
             return config;
         }

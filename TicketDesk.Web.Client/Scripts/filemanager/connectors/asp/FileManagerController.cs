@@ -109,7 +109,7 @@ namespace RfmNetCore.Controllers
                     }
 
                 case "getimage":
-                    return GetImage(path, thumbnail);
+                    return GetImage(path);
 
                 case "readfile":
                     break;
@@ -118,7 +118,7 @@ namespace RfmNetCore.Controllers
                     return Json(Summarize(), JsonRequestBehavior.AllowGet);
             }
 
-            throw new Exception("Unknown Request!");
+            return RedirectToAction("Index");
         }
 
         private static void DirectoryCopy(string sourceDirName, string destDirName)
@@ -312,10 +312,7 @@ namespace RfmNetCore.Controllers
 
         private dynamic Upload(string path, IEnumerable<HttpPostedFileBase> files)
         {
-            var result = new
-            {
-                Data = new List<dynamic>()
-            };
+            var result = new { Data = new List<dynamic>() };
 
             foreach (var file in files)
             {
@@ -328,7 +325,6 @@ namespace RfmNetCore.Controllers
                 if (fileExist)
                 {
                     var errorResult = new { Errors = new List<dynamic>() };
-
                     errorResult.Errors.Add(new
                     {
                         Code = "500",
@@ -344,7 +340,6 @@ namespace RfmNetCore.Controllers
 
                 var filePath = Path.Combine(_webRootPath, path, file.FileName);
                 file.SaveAs(filePath);
-
                 result.Data.Add(new
                 {
                     Id = MakeWebPath(Path.Combine(path, file.FileName)),
@@ -839,7 +834,7 @@ namespace RfmNetCore.Controllers
             return file;
         }
 
-        private ActionResult GetImage(string path, bool thumbnail)
+        private ActionResult GetImage(string path)
         {
             var filepath = Path.Combine(_webRootPath, path);
             var fileName = Path.GetFileName(filepath);

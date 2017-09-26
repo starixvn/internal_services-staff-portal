@@ -41,11 +41,11 @@ namespace TicketDesk.Web.Client.Controllers
         [NapAuth(FunctionKey = FunctionKeys.ApplicationSettings, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            var dbSetting = Context.TicketDeskSettings;
+            var databaseSetting = Context.TicketDeskSettings;
             ViewBag.IsAzureSearchEnabled = IsAzureSearchDetected;
             ViewBag.IsHost = NapContextHelper.HasRight("ApplicationSettings", Constant.Policy.Host);
 
-            return View(dbSetting);
+            return View(databaseSetting);
         }
 
         [HttpPost]
@@ -58,21 +58,21 @@ namespace TicketDesk.Web.Client.Controllers
             List<string> defaultroles,
             string defaultTextEditorType)
         {
-            var dbSetting = Context.TicketDeskSettings;
-            if (ModelState.IsValid && TryUpdateModel(dbSetting))
+            var databaseSetting = Context.TicketDeskSettings;
+            if (ModelState.IsValid && TryUpdateModel(databaseSetting))
             {
-                dbSetting.SelectLists.CategoryList = categories.ToList();
-                dbSetting.SelectLists.PriorityList = priorities.ToList();
-                dbSetting.SelectLists.TicketTypesList = tickettypes.ToList();
-                dbSetting.SecuritySettings.DefaultNewUserRoles = defaultroles;
-                dbSetting.ClientSettings.Settings["DefaultTextEditorType"] = defaultTextEditorType;
+                databaseSetting.SelectLists.CategoryList = categories.ToList();
+                databaseSetting.SelectLists.PriorityList = priorities.ToList();
+                databaseSetting.SelectLists.TicketTypesList = tickettypes.ToList();
+                databaseSetting.SecuritySettings.DefaultNewUserRoles = defaultroles;
+                databaseSetting.ClientSettings.Settings["DefaultTextEditorType"] = defaultTextEditorType;
                 Context.SaveChanges();
             }
 
             ViewBag.IsAzureSearchEnabled = IsAzureSearchDetected;
             ViewBag.IsHost = NapContextHelper.HasRight(FunctionKeys.ApplicationSettings, Constant.Policy.Host);
 
-            return View(dbSetting);
+            return View(databaseSetting);
         }
     }
 }

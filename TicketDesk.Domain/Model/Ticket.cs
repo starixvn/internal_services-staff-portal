@@ -193,7 +193,6 @@ namespace TicketDesk.Domain.Model
             var isMoreInfo = TicketStatus == TicketStatus.MoreInfo;
             var isAssignedToMe = !string.IsNullOrEmpty(AssignedTo) && AssignedTo == userId;
             var isResolved = TicketStatus == TicketStatus.Resolved;
-
             var validActivities = TicketActivity.None;
 
             if (TicketId == default(int))

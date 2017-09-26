@@ -93,10 +93,6 @@
                         // sendGridMessage.SendToSink();
                     }
 
-                    // var transport = new Web(cfg.ApiKey);
-                    // await transport.DeliverAsync(sendGridMessage);
-                    // sent = true;
-
                     var sg = new SendGridClient(cfg.ApiKey);
                     var response = await sg.SendEmailAsync(sendGridMessage);
                     sent = true;
@@ -104,8 +100,6 @@
                 catch
                 {
                     sent = false;
-
-                    // TODO: log this somewhere
                 }
             }
 

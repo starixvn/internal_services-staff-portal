@@ -48,10 +48,10 @@ namespace TicketDesk.Domain.Model
                 }
 
                 var jsettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
-                var jData = JsonConvert.DeserializeObject<ApplicationSelectListSetting>(value, jsettings);
-                CategoryList = jData.CategoryList;
-                PriorityList = jData.PriorityList;
-                TicketTypesList = jData.TicketTypesList;
+                var jsonData = JsonConvert.DeserializeObject<ApplicationSelectListSetting>(value, jsettings);
+                CategoryList = jsonData.CategoryList;
+                PriorityList = jsonData.PriorityList;
+                TicketTypesList = jsonData.TicketTypesList;
             }
         }
 

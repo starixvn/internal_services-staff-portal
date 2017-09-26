@@ -61,8 +61,7 @@ namespace TicketDesk.Web.Client
                 var isAzureWebSite = !string.IsNullOrEmpty(siteName);
                 if (!isAzureWebSite)
                 {
-                    InProcessPushNotificationScheduler.Start(context.TicketDeskPushNotificationSettings
-                        .DeliveryIntervalMinutes);
+                    InProcessPushNotificationScheduler.Start(context.TicketDeskPushNotificationSettings.DeliveryIntervalMinutes);
                 }
 
                 if (context.TicketDeskPushNotificationSettings.IsBackgroundQueueEnabled)
@@ -97,8 +96,7 @@ namespace TicketDesk.Web.Client
 
         private static void EnsureBroadcastNotificaitonsConfiguration(TdPushNotificationContext context)
         {
-            var broadcastUserSettings = context.SubscriberPushNotificationSettingsManager
-                .GetSettingsForSubscriberAsync("new ticket broadcast").Result;
+            var broadcastUserSettings = context.SubscriberPushNotificationSettingsManager.GetSettingsForSubscriberAsync("new ticket broadcast").Result;
 
             var broadcastAppSettings = context.TicketDeskPushNotificationSettings.BroadcastSettings;
             if (broadcastUserSettings == null)

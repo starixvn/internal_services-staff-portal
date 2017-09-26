@@ -91,7 +91,7 @@
                     }
 
                 case "getimage":
-                    return GetImage(path, thumbnail);
+                    return GetImage(path);
 
                 case "readfile":
                     break;
@@ -402,8 +402,6 @@
                         Name = directoryName,
                         Readable = 1,
                         Writable = 1,
-
-                        // created date, size vb.
                         Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                         Path = path
                     }
@@ -441,11 +439,7 @@
                         Extension = fileExtension,
                         Readable = 1,
                         Writable = 1,
-
-                        // created date, size vb.
                         Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-
-                        // Path = $"/{fileName}"
                     }
                 }
             };
@@ -467,7 +461,6 @@
             var fileName = Path.GetFileName(Path.Combine(_webRootPath, path));
             var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
 
-            // undone dosya var mý kontrolü...
             var result = new
             {
                 Data = new
@@ -480,11 +473,7 @@
                         Extension = fileExtension,
                         Readable = 1,
                         Writable = 1,
-
-                        // created date, size vb.
                         Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-
-                        // Path = $"{path}"
                     }
                 }
             };
@@ -507,7 +496,7 @@
             return file;
         }
 
-        private ActionResult GetImage(string path, bool thumbnail)
+        private ActionResult GetImage(string path)
         {
             var filepath = Path.Combine(_webRootPath, path);
             var fileName = Path.GetFileName(filepath);

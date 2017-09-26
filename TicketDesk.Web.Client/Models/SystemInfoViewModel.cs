@@ -164,12 +164,12 @@ namespace TicketDesk.Web.Client.Models
 
         public class AzureInfoViewModel
         {
-            public AzureInfoViewModel(string dbEdition, string dbName)
+            public AzureInfoViewModel(string databaseEdition, string databaseName)
             {
                 AzureWebSiteName = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME");
                 IsAzureWebSite = !string.IsNullOrEmpty(AzureWebSiteName);
-                IsSqlAzure = dbEdition != null && dbEdition.IndexOf("azure", StringComparison.InvariantCultureIgnoreCase) >= 0;
-                AzureSqlService = IsSqlAzure ? dbName : null;
+                IsSqlAzure = databaseEdition != null && databaseEdition.IndexOf("azure", StringComparison.InvariantCultureIgnoreCase) >= 0;
+                AzureSqlService = IsSqlAzure ? databaseName : null;
                 AzureSearchService = GetAzureSearchServiceName();
                 AzureStorageService = GetAzureStorageServiceName();
             }
@@ -190,21 +190,17 @@ namespace TicketDesk.Web.Client.Models
             {
                 get
                 {
-                    return
-                        IsAzureWebSite ||
-                        IsSqlAzure ||
-                        !string.IsNullOrEmpty(AzureSearchService) ||
-                        !string.IsNullOrEmpty(AzureStorageService);
+                    return IsAzureWebSite || IsSqlAzure || !string.IsNullOrEmpty(AzureSearchService) || !string.IsNullOrEmpty(AzureStorageService);
                 }
             }
 
             private string GetAzureSearchServiceName()
             {
                 string svc = null;
-                var azSearchInfo = AzureSearchConector.TryGetInfoFromConnectionString() ?? AzureSearchConector.TryGetInfoFromAppSettings();
-                if (azSearchInfo != null)
+                var azureSearchInfo = AzureSearchConector.TryGetInfoFromConnectionString() ?? AzureSearchConector.TryGetInfoFromAppSettings();
+                if (azureSearchInfo != null)
                 {
-                    svc = azSearchInfo.ServiceName;
+                    svc = azureSearchInfo.ServiceName;
                 }
 
                 return svc;
@@ -212,24 +208,20 @@ namespace TicketDesk.Web.Client.Models
 
             private string GetAzureStorageServiceName()
             {
-                string svcName = null;
-                var azStore = !string.IsNullOrEmpty(AzureConnectionHelper.ConfigManagerConnString)
+                string serviceName = null;
+                var azureStore = !string.IsNullOrEmpty(AzureConnectionHelper.ConfigManagerConnString)
                     ? AzureConnectionHelper.ConfigManagerConnString
                     : AzureConnectionHelper.CloudConfigConnString;
 
-                if (!string.IsNullOrEmpty(azStore))
+                if (!string.IsNullOrEmpty(azureStore))
                 {
                     try
                     {
-                        var parts = azStore
-                            .Split(';')
-                            .Select(p => p.Split('='))
-                            .Select(t => new { key = t[0], value = t[1] }).ToList();
-
+                        var parts = azureStore.Split(';').Select(p => p.Split('=')).Select(t => new { key = t[0], value = t[1] }).ToList();
                         var service = parts.FirstOrDefault(p => p.key.Equals("AccountName", StringComparison.InvariantCultureIgnoreCase));
                         if (service != null)
                         {
-                            svcName = service.value;
+                            serviceName = service.value;
                         }
                     }
                     // ReSharper disable once EmptyGeneralCatchClause
@@ -239,7 +231,7 @@ namespace TicketDesk.Web.Client.Models
                     }
                 }
 
-                return svcName;
+                return serviceName;
             }
         }
     }

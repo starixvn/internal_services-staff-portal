@@ -1,29 +1,13 @@
-﻿// TicketDesk - Attribution notice
-// Original Code By:
-//       zvolkov - http://www.zvolkov.com/clog/2012/04/01/an-improved-comma-separated-values-array-model-binder/
-//
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Web.Mvc;
-
-namespace TicketDesk.Web.Client
+﻿namespace TicketDesk.Web.Client
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Reflection;
+    using System.Web.Mvc;
+
     public class CommaSeparatedModelBinder : DefaultModelBinder
     {
         private static readonly MethodInfo ToArrayMethod = typeof(Enumerable).GetMethod("ToArray");
@@ -34,7 +18,11 @@ namespace TicketDesk.Web.Client
                     ?? base.BindModel(controllerContext, bindingContext);
         }
 
-        protected override object GetPropertyValue(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor, IModelBinder propertyBinder)
+        protected override object GetPropertyValue(
+            ControllerContext controllerContext,
+            ModelBindingContext bindingContext,
+            PropertyDescriptor propertyDescriptor,
+            IModelBinder propertyBinder)
         {
             return BindCsv(propertyDescriptor.PropertyType, propertyDescriptor.Name, bindingContext)
                     ?? base.GetPropertyValue(controllerContext, bindingContext, propertyDescriptor, propertyBinder);

@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 namespace TicketDesk.Web.Client
 {
     // TODO: This file is from the sample template, leaving here for now until I figure out what to do with two factor and where to put it
-
     // TODO: What to do with this?
     public class EmailService : IIdentityMessageService
     {

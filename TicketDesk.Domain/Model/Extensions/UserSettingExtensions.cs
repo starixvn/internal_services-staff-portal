@@ -58,7 +58,7 @@ namespace TicketDesk.Domain.Model
             if (filterColumns.Count > 0)
             {
                 var fkeys = new string[filterColumns.Count];
-                var fParams = new ObjectParameter[filterColumns.Count];
+                var filterParams = new ObjectParameter[filterColumns.Count];
                 for (var i = 0; i < filterColumns.Count; i++)
                 {
                     var filterColumn = filterColumns[i];
@@ -78,14 +78,14 @@ namespace TicketDesk.Domain.Model
                     }
 
                     // assigning the type in ctor, then value directly as a param works around issues when the colum val is null.
-                    fParams[i] = new ObjectParameter(filterColumn.ColumnName, filterColumn.ColumnValueType)
+                    filterParams[i] = new ObjectParameter(filterColumn.ColumnName, filterColumn.ColumnValueType)
                     {
                         Value = filterColumn.ColumnValue
                     };
                 }
 
                 var wString = string.Join(" and ", fkeys);
-                baseQuery = baseQuery.Where(wString, fParams);
+                baseQuery = baseQuery.Where(wString, filterParams);
             }
 
             return baseQuery;

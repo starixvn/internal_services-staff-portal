@@ -13,19 +13,11 @@ namespace S22.Imap
         /// A collection containing the content header information as
         /// key-value pairs.
         /// </summary>
-        public NameValueCollection header
-        {
-            get;
-            set;
-        }
+        public NameValueCollection Header { get; set; }
 
         /// <summary>
         /// A string containing the content body of the part.
         /// </summary>
-        public string body
-        {
-            get;
-            set;
-        }
+        public string Body { get; set; }
     }
 }
