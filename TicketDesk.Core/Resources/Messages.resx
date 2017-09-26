@@ -123,4 +123,7 @@
   <data name="InvalidInputData" xml:space="preserve">
     <value>Invalid input.</value>
   </data>
+  <data name="UnknownRequest" xml:space="preserve">
+    <value>Unknown Request!</value>
+  </data>
 </root>

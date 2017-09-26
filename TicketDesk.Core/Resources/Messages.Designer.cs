@@ -77,5 +77,14 @@ namespace Messages {
                 return ResourceManager.GetString("InvalidInputData", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown Request!.
+        /// </summary>
+        public static string UnknownRequest {
+            get {
+                return ResourceManager.GetString("UnknownRequest", resourceCulture);
+            }
+        }
     }
 }

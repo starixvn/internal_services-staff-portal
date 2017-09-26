@@ -100,7 +100,18 @@
                     return Json(Summarize(), JsonRequestBehavior.AllowGet);
             }
 
-            return RedirectToAction("index");
+            var errorResult = new { Errors = new List<dynamic>() };
+            errorResult.Errors.Add(new
+            {
+                Code = "500",
+                Message = Messages.Messages.UnknownRequest,
+                Arguments = new List<string>
+                {
+                    mode
+                }
+            });
+
+            return Json(errorResult, JsonRequestBehavior.AllowGet);
         }
 
         private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
