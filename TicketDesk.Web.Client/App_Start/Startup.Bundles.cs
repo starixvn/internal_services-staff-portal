@@ -51,6 +51,12 @@ namespace TicketDesk.Web.Client
                     .Include("~/Scripts/filemanager/styles/filemanager.css", new CssRewriteUrlTransform())
                     .Include("~/Scripts/filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css", new CssRewriteUrlTransform()));
 
+            ////
+            ////Script bundle
+            ////
+            bundles.Add(new ScriptBundle("~/bundles/user-login")
+                .Include("~/Scripts/ticketdesk/User/login.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/file-manager")
                 .Include(
                     "~/Scripts/filemanager/scripts/jquery-ui/jquery-ui.min.js",

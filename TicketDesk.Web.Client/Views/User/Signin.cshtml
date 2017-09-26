@@ -4,34 +4,21 @@
 {
     @SignIn.Title
 }
-@section Scripts {
-}
+
 <main>
     <div class="container">
         <fieldset>
-            <legend class="col-lg-8 col-lg-offset-2 col-md-9 col-md-offset-1 col-sm-12">@SignIn.Legend</legend>
             <div class="col-lg-7 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-12">
-                @using (Html.BeginForm("SignIn", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                <p>@SignIn.FixedMessageAppear</p>
+                @using (Html.BeginForm("SignIn", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new {@id = "user-login-form", @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
 
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h2 class="panel-title">@SignIn.Header</h2>
+                            <h2 class="panel-title">@SignIn.Legend</h2>
                         </div>
                         <div class="panel-body">
-                            @if (ViewBag.IsDemoMode)
-                            {
-                               
-                                <div class="alert alert-warning">
-                                    <p>Demo Mode defualt user credentials:</p>
-                                    <ul>
-                                        <li>Administrator account: admin@example.com (123456)</li>
-                                        <li>Helpdesk user account: staff@example.com (123456)</li>
-                                        <li>Standard user account: user@example.com (123456)</li>
-                                    </ul>
-                                </div>
-                            }
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
@@ -47,13 +34,27 @@
                                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-9">
+                                    <label class="checkbox-inline">
+                                        @Html.EditorFor(m => m.RememberMe)
+                                        @Html.DisplayNameFor(m => m.RememberMe)
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <div class="panel-footer">
-                            <button type="submit" class="btn btn-success" tabindex="10">@SignIn.SaveOption</button>
+                            <button id="btnLogin" type="submit" class="btn btn-success" tabindex="10">@SignIn.Login</button>
                         </div>
                     </div>
                 }
+                @Html.ActionLink(SignIn.ForgotPassword, "ForgotPassword", "User")
             </div>
         </fieldset>
+
     </div>
 </main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/user-login")
+}

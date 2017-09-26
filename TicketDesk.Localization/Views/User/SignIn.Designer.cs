@@ -70,6 +70,24 @@ namespace TicketDesk.Localization.Views.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only registered and logged in users are allowed to view this site. Please Log in now..
+        /// </summary>
+        public static string FixedMessageAppear {
+            get {
+                return ResourceManager.GetString("FixedMessageAppear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forgot your password?.
+        /// </summary>
+        public static string ForgotPassword {
+            get {
+                return ResourceManager.GetString("ForgotPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter your Sign In Credentials.
         /// </summary>
         public static string Header {
@@ -84,6 +102,15 @@ namespace TicketDesk.Localization.Views.User {
         public static string Legend {
             get {
                 return ResourceManager.GetString("Legend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
             }
         }
         

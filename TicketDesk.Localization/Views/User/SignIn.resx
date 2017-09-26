@@ -120,11 +120,20 @@
   <data name="BackOption" xml:space="preserve">
     <value>Register as a new user</value>
   </data>
+  <data name="FixedMessageAppear" xml:space="preserve">
+    <value>Only registered and logged in users are allowed to view this site. Please Log in now.</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Forgot your password?</value>
+  </data>
   <data name="Header" xml:space="preserve">
     <value>Enter your Sign In Credentials</value>
   </data>
   <data name="Legend" xml:space="preserve">
     <value>Sign In</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
   </data>
   <data name="SaveOption" xml:space="preserve">
     <value>Sign In</value>

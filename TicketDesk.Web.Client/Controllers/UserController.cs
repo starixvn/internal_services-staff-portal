@@ -38,8 +38,6 @@
         public ActionResult SignIn(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            ViewBag.IsDemoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false")
-                .Equals("true", StringComparison.InvariantCultureIgnoreCase);
 
             return View();
         }
@@ -50,9 +48,6 @@
         [Route("sign-in")]
         public ActionResult SignIn(UserSignInViewModel model, string returnUrl)
         {
-            ViewBag.IsDemoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false")
-                .Equals("true", StringComparison.InvariantCultureIgnoreCase);
-
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -119,6 +114,13 @@
         {
             DoSignOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        [Route("forgot-password")]
+        public ActionResult ForgotPassword()
+        {
+
+            return View();
         }
 
         private void CreateAuthInfo(User user)

@@ -61,6 +61,24 @@ namespace TicketDesk.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ERROR: The password field is empty..
+        /// </summary>
+        public static string ErrorEmptyPassword {
+            get {
+                return ResourceManager.GetString("ErrorEmptyPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERROR: The username field is empty..
+        /// </summary>
+        public static string ErrorEmptyUsername {
+            get {
+                return ResourceManager.GetString("ErrorEmptyUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field {0} must be a string with a maximum length of {1}..
         /// </summary>
         public static string FieldMaximumLength {
