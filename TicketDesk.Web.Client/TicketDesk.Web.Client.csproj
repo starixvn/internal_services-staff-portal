@@ -2099,6 +2099,7 @@
     <Content Include="Scripts\ticketdesk\admin-edit-user.js" />
     <Content Include="Scripts\ticketdesk\locale_pt-BR.js" />
     <Content Include="Scripts\ticketdesk\locale_en-US.js" />
+    <Content Include="Scripts\ticketdesk\common.js" />
     <Content Include="Scripts\ticketdesk\search.js" />
     <Content Include="Scripts\ticketdesk\admin-users.js" />
     <Content Include="Scripts\ticketdesk\application-settings.js" />
@@ -2217,7 +2218,6 @@
     <Content Include="Views\Home\NotFound.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\FileManager\Index.cshtml" />
-    <Content Include="Views\User\ForgotPassword.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -15,7 +15,7 @@
                 @Html.ActionLink(_Layout.MyAccount, "Manage", "Account")
             </li>
             <li>
-                @Html.ActionLink(_Layout.LogOff, "SignOut", "User")
+                <a href="#" data-toggle="modal" data-target="#logOut">@_Layout.LogOut</a>
             </li>
         }
         else

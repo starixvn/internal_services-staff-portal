@@ -107,9 +107,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Messages.resx">
+      <CustomToolNamespace>TicketDesk.Core.Resources</CustomToolNamespace>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Messages</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Constants\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

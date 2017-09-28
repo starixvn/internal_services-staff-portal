@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorEmptyPassword" xml:space="preserve">
+  <data name="EmptyPassword" xml:space="preserve">
     <value>ERROR: The password field is empty.</value>
   </data>
-  <data name="ErrorEmptyUsername" xml:space="preserve">
+  <data name="EmptyUsername" xml:space="preserve">
     <value>ERROR: The username field is empty.</value>
   </data>
   <data name="FieldMaximumLength" xml:space="preserve">
@@ -137,5 +137,11 @@
   </data>
   <data name="InvalidEmail" xml:space="preserve">
     <value>The {0} field is not a valid e-mail address.</value>
+  </data>
+  <data name="InvalidUsername" xml:space="preserve">
+    <value>ERROR: Invalid username.</value>
+  </data>
+  <data name="InvalidUsernameOrPassword" xml:space="preserve">
+    <value>Invalid Username or Password. Please provide a registered account. Otherwise, contact Admin for asssitance.</value>
   </data>
 </root>

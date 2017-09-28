@@ -63,18 +63,18 @@ namespace TicketDesk.Localization {
         /// <summary>
         ///   Looks up a localized string similar to ERROR: The password field is empty..
         /// </summary>
-        public static string ErrorEmptyPassword {
+        public static string EmptyPassword {
             get {
-                return ResourceManager.GetString("ErrorEmptyPassword", resourceCulture);
+                return ResourceManager.GetString("EmptyPassword", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to ERROR: The username field is empty..
         /// </summary>
-        public static string ErrorEmptyUsername {
+        public static string EmptyUsername {
             get {
-                return ResourceManager.GetString("ErrorEmptyUsername", resourceCulture);
+                return ResourceManager.GetString("EmptyUsername", resourceCulture);
             }
         }
         
@@ -120,6 +120,24 @@ namespace TicketDesk.Localization {
         public static string InvalidEmail {
             get {
                 return ResourceManager.GetString("InvalidEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERROR: Invalid username..
+        /// </summary>
+        public static string InvalidUsername {
+            get {
+                return ResourceManager.GetString("InvalidUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Username or Password. Please provide a registered account. Otherwise, contact Admin for asssitance..
+        /// </summary>
+        public static string InvalidUsernameOrPassword {
+            get {
+                return ResourceManager.GetString("InvalidUsernameOrPassword", resourceCulture);
             }
         }
     }

@@ -130,7 +130,8 @@ namespace TicketDesk.Web.Client
                     "~/Scripts/cldr/event.js",
                     "~/Scripts/cldr/supplemental.js",
                     "~/Scripts/jquery.globalize/globalize.js",
-                    "~/Scripts/bootstrap.js"));
+                    "~/Scripts/bootstrap.js",
+                    "~/Scripts/ticketdesk/common.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

@@ -123,7 +123,20 @@
   <data name="InvalidInputData" xml:space="preserve">
     <value>Invalid input.</value>
   </data>
+  <data name="LogoutConfirmation" xml:space="preserve">
+    <value>Log Out Confirmation</value>
+  </data>
+  <data name="LogoutModalDescription" xml:space="preserve">
+    <value>You are attempting to log out of SSP.
+Do you really want to log out?</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="UnknownRequest" xml:space="preserve">
     <value>Unknown Request!</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

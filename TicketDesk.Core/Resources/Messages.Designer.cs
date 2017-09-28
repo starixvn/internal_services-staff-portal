@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Messages {
+namespace TicketDesk.Core.Resources {
     using System;
     
     
@@ -79,11 +79,48 @@ namespace Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log Out Confirmation.
+        /// </summary>
+        public static string LogoutConfirmation {
+            get {
+                return ResourceManager.GetString("LogoutConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are attempting to log out of SSP.
+        ///Do you really want to log out?.
+        /// </summary>
+        public static string LogoutModalDescription {
+            get {
+                return ResourceManager.GetString("LogoutModalDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown Request!.
         /// </summary>
         public static string UnknownRequest {
             get {
                 return ResourceManager.GetString("UnknownRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

@@ -115,11 +115,11 @@ namespace TicketDesk.Localization.Views.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Log Off.
+        ///   Looks up a localized string similar to Log Out.
         /// </summary>
-        public static string LogOff {
+        public static string LogOut {
             get {
-                return ResourceManager.GetString("LogOff", resourceCulture);
+                return ResourceManager.GetString("LogOut", resourceCulture);
             }
         }
         

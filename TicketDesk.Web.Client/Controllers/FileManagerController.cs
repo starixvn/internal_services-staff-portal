@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Core.Resources;
     using Criteria.FileManager;
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
@@ -13,6 +14,7 @@
     using System.Web;
     using System.Web.Configuration;
     using System.Web.Mvc;
+
 
     [RoutePrefix("file-manager")]
     [Route("{action=index}")]
@@ -104,7 +106,7 @@
             errorResult.Errors.Add(new
             {
                 Code = "500",
-                Message = Messages.Messages.UnknownRequest,
+                Message = Messages.UnknownRequest,
                 Arguments = new List<string>
                 {
                     mode
@@ -230,7 +232,7 @@
                 errorResult.Errors.Add(new
                 {
                     Code = "500",
-                    Message = Messages.Messages.InvalidFolderName,
+                    Message = Messages.InvalidFolderName,
                     Arguments = new List<string>
                     {
                         name

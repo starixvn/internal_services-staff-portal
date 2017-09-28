@@ -135,8 +135,8 @@
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>
-  <data name="LogOff" xml:space="preserve">
-    <value>Log Off</value>
+  <data name="LogOut" xml:space="preserve">
+    <value>Log Out</value>
   </data>
   <data name="ManageProjects" xml:space="preserve">
     <value>Manage Projects</value>

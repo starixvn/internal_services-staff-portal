@@ -8,12 +8,12 @@
     using Fanex.NAP.Core.Web.Auth;
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
     using TicketDesk.Web.Client.Models;
+    using Localization;
 
     [RoutePrefix("user")]
     [Route("{action}")]
@@ -96,14 +96,14 @@
                 {
                     // wrong password
                     ViewBag.Message = ViewResources.Invalid_Username_or_Password;
-                    ModelState.AddModelError(string.Empty, ViewResources.Invalid_Username_or_Password);
+                    ModelState.AddModelError(string.Empty, Validation.InvalidUsernameOrPassword);
                 }
             }
             else
             {
                 // user doesn't exist
                 ViewBag.Message = ViewResources.Invalid_Username_or_Password;
-                ModelState.AddModelError(string.Empty, ViewResources.Invalid_Username_or_Password);
+                ModelState.AddModelError(string.Empty, Validation.InvalidUsername);
             }
 
             return View(model);
@@ -114,13 +114,6 @@
         {
             DoSignOut();
             return RedirectToAction("Index", "Home");
-        }
-
-        [Route("forgot-password")]
-        public ActionResult ForgotPassword()
-        {
-
-            return View();
         }
 
         private void CreateAuthInfo(User user)
