@@ -62,7 +62,7 @@ namespace TicketDesk.Domain.Migrations
                     Priority = "Low",
                     TagList = "test,moretest",
                     TicketTags = new List<TicketTag> { new TicketTag() { TagName = "test" }, { new TicketTag() { TagName = "moretest" } } },
-                    TicketType = "Problem",
+                    TicketType = new TicketType(),
                     TicketEvents = new[] { TicketEvent.CreateActivityEvent("17f78f38-fa68-445f-90de-38896140db28", TicketActivity.Create, null, null, null) }
                 });
 
@@ -76,17 +76,17 @@ namespace TicketDesk.Domain.Migrations
             {
                 n--;
                 string cc;
-                string tt;
+                TicketType tt;
                 string oo;
                 if (Math.Abs(n) % 2 == 0)
                 {
-                    tt = "Question";
+                    tt = new TicketType();
                     cc = "Hardware";
                     oo = "64165817-9cb5-472f-8bfb-6a35ca54be6a";
                 }
                 else
                 {
-                    tt = "Problem";
+                    tt = new TicketType();
                     cc = "Software";
                     oo = "17f78f38-fa68-445f-90de-38896140db28";
                 }

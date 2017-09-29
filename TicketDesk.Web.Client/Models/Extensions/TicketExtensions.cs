@@ -90,11 +90,11 @@
                 "0");
         }
 
-        public static SelectList GetTicketTypeList(this Ticket ticket)
-        {
-            var context = DependencyResolver.Current.GetService<TdDomainContext>();
-            return context.TicketDeskSettings.GetTicketTypeList(true, ticket.TicketType);
-        }
+        //public static SelectList GetTicketTypeList(this Ticket ticket)
+        //{
+        //    var context = DependencyResolver.Current.GetService<TdDomainContext>();
+            
+        //}
 
         public static SelectList GetProjectList(this Ticket ticket, int? selectedProject)
         {

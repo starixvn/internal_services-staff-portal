@@ -1,20 +1,4 @@
-﻿@*
-    TicketDesk - Attribution notice
-    Contributor(s):
-
-         Stephen Redd (https://github.com/stephenredd)
-         Wootz (https://github.com/Wootz)
-         Ashley Medway (https://github.com/AshleyMedway)
-
-    This file is distributed under the terms of the Microsoft Public
-    License (Ms-PL). See http://opensource.org/licenses/MS-PL
-    for the complete terms of use.
-
-    For any distribution that contains code from this file, this notice of
-    attribution must remain intact, and a copy of the license must be
-    provided to the recipient.
-*@
-@using TicketDesk.Localization.Views.Ticket
+﻿@using TicketDesk.Localization.Views.Ticket
 @using System.Configuration
 @using TicketDesk.Domain.Model
 @model Ticket
@@ -35,7 +19,7 @@
     @Scripts.Render("~/bundles/editor")
 
     <script type="text/javascript">
-
+        var isHtmlString = @(Model.IsHtml ? "true" : "false");
         (function () {
             $.ajaxSetup({ cache: false });
             var uploaderConfig = {
@@ -49,7 +33,7 @@
                 tagAutoCompleteUrl: '@Url.Action("TagList", "AutoComplete")'
             };
             var detailsConfig = {
-                isHtml: @(Model.IsHtml ? "true" : "false")
+                isHtml: isHtmlString
                 };
             window.ticketTags.activate(tagsConfig);
             window.ticketDetails.activate(detailsConfig);
@@ -223,7 +207,7 @@
                         </div>
                     </div>
                 </div>
-                                    }
+            }
         </div>
     </div>
 </main>

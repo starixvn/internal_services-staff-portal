@@ -122,7 +122,7 @@ namespace TicketDesk.Web.Client.Controllers
             string title,
             string details,
             string priority,
-            string ticketType,
+            TicketType ticketType,
             string category,
             string owner,
             string tagList)
