@@ -1,33 +1,20 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using Ganss.XSS;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using TicketDesk.IO;
-using TicketDesk.Localization.Models;
-using TicketDesk.Search.Common;
-using TicketDesk.Web.Client;
-using TicketDesk.Web.Client.Models;
-using TicketDesk.Web.Identity;
-using TicketDesk.Web.Identity.Model;
-
-namespace TicketDesk.Domain.Model
+﻿namespace TicketDesk.Domain.Model
 {
+    using Ganss.XSS;
+    using IO;
+    using Search.Common;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using TicketDesk.Localization.Models;
+    using Web.Client;
+    using Web.Client.Models;
+    using Web.Identity;
+    using Web.Identity.Model;
+
     public static class TicketExtensions
     {
         public static IEnumerable<SearchIndexItem> ToSeachIndexItems(this IEnumerable<Ticket> tickets)
@@ -94,7 +81,13 @@ namespace TicketDesk.Domain.Model
         public static SelectList GetCategoryList(this Ticket ticket)
         {
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
-            return context.TicketDeskSettings.GetCategoryList(true, ticket.Category);
+            var categories = context.TicketCategories;
+
+            return categories.ToSelectList(
+                x => x.CategoryId.ToString(),
+                x => x.Name,
+                "SELECT TICKET CATEGORY",
+                "0");
         }
 
         public static SelectList GetTicketTypeList(this Ticket ticket)
@@ -107,7 +100,7 @@ namespace TicketDesk.Domain.Model
         {
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
             return context.Projects.OrderBy(p => p.ProjectName)
-                .ToSelectList(p => p.ProjectId.ToString(), p => p.ProjectName, selectedProject ?? 0, true);
+                .ToSelectList(p => p.ProjectId.ToString(), p => p.ProjectName, selectedProject ?? 0);
         }
 
         public static SelectList GetOwnersList(this Ticket ticket, bool excludeCurrentUser = false, bool excludeCurrentOwner = false)
