@@ -62,7 +62,7 @@ namespace TicketDesk.Web.Client
                     {
                         ctx.Database.Initialize(!ctx.Database.CompatibleWithModel(true));
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         // no metadata in DB, force run initializer anyway
                         ctx.Database.Initialize(true);

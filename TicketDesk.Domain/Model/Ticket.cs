@@ -1,16 +1,3 @@
-// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
 namespace TicketDesk.Domain.Model
 {
     using System;
@@ -147,6 +134,11 @@ namespace TicketDesk.Domain.Model
 
         public virtual Project Project { get; set; }
 
+        public int CategoryId { get; set; } = 1;
+
+        [ForeignKey(nameof(CategoryId))]
+        public virtual TicketCategory TicketCategory { get; set; } = new TicketCategory();
+
         public virtual ICollection<TicketEvent> TicketEvents { get; set; }
 
         public virtual ICollection<TicketTag> TicketTags { get; set; }
@@ -160,16 +152,10 @@ namespace TicketDesk.Domain.Model
         internal string PreviousAssignedUser { get; set; }
 
         [NotMapped]
-        public bool IsAssigned
-        {
-            get { return !string.IsNullOrEmpty(AssignedTo); }
-        }
+        public bool IsAssigned => !string.IsNullOrEmpty(AssignedTo);
 
         [NotMapped]
-        public bool IsOpen
-        {
-            get { return TicketStatus != TicketStatus.Resolved && TicketStatus != TicketStatus.Closed; }
-        }
+        public bool IsOpen => TicketStatus != TicketStatus.Resolved && TicketStatus != TicketStatus.Closed;
 
         public void EnsureSubscribers()
         {
@@ -183,7 +169,7 @@ namespace TicketDesk.Domain.Model
         {
             if (user != null && TicketSubscribers.All(s => s.SubscriberId != user))
             {
-                TicketSubscribers.Add(new TicketSubscriber() { SubscriberId = user });
+                TicketSubscribers.Add(new TicketSubscriber { SubscriberId = user });
             }
         }
 

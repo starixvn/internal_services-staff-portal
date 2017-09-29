@@ -1,21 +1,12 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-namespace TicketDesk.Web.Client.Controllers
+﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Domain;
     using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using IO;
+    using Localization.Controllers;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Validation;
@@ -23,10 +14,6 @@ namespace TicketDesk.Web.Client.Controllers
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using TicketDesk.Domain;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.IO;
-    using TicketDesk.Localization.Controllers;
 
     /// <summary>
     /// Class TicketController.
@@ -40,7 +27,7 @@ namespace TicketDesk.Web.Client.Controllers
             Context = context;
         }
 
-        private TdDomainContext Context { get; set; }
+        private TdDomainContext Context { get; }
 
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public RedirectToRouteResult Index()

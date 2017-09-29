@@ -41,6 +41,38 @@ namespace TicketDesk.Domain.Migrations
                 DemoDataManager.SetupDemoData(context);
             }
 
+            //context.TicketCategories.AddOrUpdate(
+            //    new TicketCategory
+            //    {
+            //        CategoryId = 1,
+            //        Name = "Facility"
+            //    },
+            //    new TicketCategory
+            //    {
+            //        CategoryId = 2,
+            //        Name = "Hardware"
+            //    },
+            //    new TicketCategory
+            //    {
+            //        CategoryId = 3,
+            //        Name = "Software"
+            //    },
+            //    new TicketCategory
+            //    {
+            //        CategoryId = 4,
+            //        Name = "Network"
+            //    },
+            //    new TicketCategory
+            //    {
+            //        CategoryId = 5,
+            //        Name = "Customer Support"
+            //    },
+            //    new TicketCategory
+            //    {
+            //        CategoryId = 6,
+            //        Name = "Incident"
+            //    });
+
             base.Seed(context);
         }
     }

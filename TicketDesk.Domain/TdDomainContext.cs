@@ -88,6 +88,8 @@ namespace TicketDesk.Domain
 
         public DbSet<TicketEventNotification> TicketEventNotifications { get; set; }
 
+        public DbSet<TicketCategory> TicketCategories { get; set; }
+
         // These DbSets contain json serialized content. Callers cannot use standard LINQ to Entities
         // expressions with these safely. Marking internal to prevent callers having direct access
         // We'll provide a thin layer of abstraction for safely handling external interactions instead.
