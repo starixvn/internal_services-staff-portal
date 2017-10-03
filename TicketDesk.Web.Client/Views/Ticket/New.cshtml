@@ -1,5 +1,6 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
 @using System.Configuration
+@using RazorEngine.Compilation.ImpromptuInterface.InvokeExt
 @using TicketDesk.Domain.Model
 @model Ticket
 
@@ -34,7 +35,7 @@
             };
             var detailsConfig = {
                 isHtml: isHtmlString
-                };
+            };
             window.ticketTags.activate(tagsConfig);
             window.ticketDetails.activate(detailsConfig);
             window.ticketFileUploader.activate(uploaderConfig);
@@ -87,6 +88,14 @@
                             @Html.LabelFor(model => model.TicketType, new { @class = "col-md-2 col-sm-1 control-label" })
                             <div class="col-md-2 col-sm-3">
                                 @Html.DropDownListFor(model => model.TicketType, Model.GetTicketTypeList(), new { @class = "form-control input-sm", tabindex = 2 })
+                                @*@{
+                                    var types = Model.GetTicketTypeList();
+                                }
+                                @foreach (var item in types.Items)
+                                {
+                                    @Html.RadioButtonFor(x => x.TicketTypeId, item)
+                                    @Html.LabelFor(x => x.TicketTypeId, item.WithArgumentName("Name"))
+                                }*@
                                 @Html.ValidationMessageFor(model => model.TicketType, "", new { @class = "text-danger" })
                             </div>
 
@@ -171,10 +180,10 @@
                             }
                             @if (Model.AllowSetAssigned())
                             {
-                                @Html.LabelFor(model => model.AssignedTo, new {@class = "col-md-2 col-sm-2 control-label"})
+                                @Html.LabelFor(model => model.AssignedTo, new { @class = "col-md-2 col-sm-2 control-label" })
                                 <div class="col-md-3 col-sm-4">
-                                    @Html.DropDownListFor(model => model.AssignedTo, Model.GetAssignedToList(), new {@class = "form-control input-sm", tabindex = 9})
-                                    @Html.ValidationMessageFor(model => model.AssignedTo, "", new {@class = "text-danger"})
+                                    @Html.DropDownListFor(model => model.AssignedTo, Model.GetAssignedToList(), new { @class = "form-control input-sm", tabindex = 9 })
+                                    @Html.ValidationMessageFor(model => model.AssignedTo, "", new { @class = "text-danger" })
                                 </div>
                             }
                         </div>
@@ -207,7 +216,7 @@
                         </div>
                     </div>
                 </div>
-            }
+                                    }
         </div>
     </div>
 </main>

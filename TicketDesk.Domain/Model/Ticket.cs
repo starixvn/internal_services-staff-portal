@@ -141,6 +141,7 @@ namespace TicketDesk.Domain.Model
 
         public int TicketTypeId { get; set; } = 1;
 
+        [Display(Name = "Ticket Type")]
         public virtual TicketType TicketType { get; set; }
 
         public virtual ICollection<TicketEvent> TicketEvents { get; set; }
