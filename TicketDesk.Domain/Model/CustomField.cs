@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Domain.Model
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,5 +17,7 @@
         public string Values { get; set; }
 
         public virtual CustomFieldType CustomFieldType { get; set; }
+
+        public virtual ICollection<TicketCategory> TicketCategories { get; set; }
     }
 }
