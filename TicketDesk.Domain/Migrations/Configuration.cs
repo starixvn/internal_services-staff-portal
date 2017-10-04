@@ -14,19 +14,14 @@ namespace TicketDesk.Domain.Migrations
             ContextKey = "TicketDeskCore";
         }
 
-        protected override void Seed(TdDomainContext context)
+        private void AddDefaultData(TdDomainContext context)
         {
-            var demoMode = ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"];
-            if (!context.Projects.Any())
-            {
-                context.Projects.Add(new Project { ProjectName = "Default", ProjectDescription = "Default project" });
-            }
+            AddTicketCategories(context);
+            AddCustomFieldTypes(context);
+        }
 
-            if (!string.IsNullOrEmpty(demoMode) && demoMode.Equals("true", StringComparison.InvariantCultureIgnoreCase))
-            {
-                DemoDataManager.SetupDemoData(context);
-            }
-
+        private void AddTicketCategories(TdDomainContext context)
+        {
             context.TicketCategories.AddOrUpdate(
                 new TicketCategory
                 {
@@ -58,7 +53,10 @@ namespace TicketDesk.Domain.Migrations
                     CategoryId = 6,
                     Name = "Incident"
                 });
+        }
 
+        private void AddCustomFieldTypes(TdDomainContext context)
+        {
             context.CustomFieldTypes.AddOrUpdate(
                 new CustomFieldType
                 {
@@ -85,6 +83,22 @@ namespace TicketDesk.Domain.Migrations
                     Id = 5,
                     Name = "date/time"
                 });
+        }
+
+        protected override void Seed(TdDomainContext context)
+        {
+            var demoMode = ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"];
+            if (!context.Projects.Any())
+            {
+                context.Projects.Add(new Project { ProjectName = "Default", ProjectDescription = "Default project" });
+            }
+
+            if (!string.IsNullOrEmpty(demoMode) && demoMode.Equals("true", StringComparison.InvariantCultureIgnoreCase))
+            {
+                DemoDataManager.SetupDemoData(context);
+            }
+
+            AddDefaultData(context);
 
             base.Seed(context);
         }

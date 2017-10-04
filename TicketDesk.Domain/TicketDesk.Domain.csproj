@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201710040320358_Nexcel_add_CustomFieldTypes.Designer.cs">
       <DependentUpon>201710040320358_Nexcel_add_CustomFieldTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710040351570_Nexcel_add_CustomField.cs" />
+    <Compile Include="Migrations\201710040351570_Nexcel_add_CustomField.Designer.cs">
+      <DependentUpon>201710040351570_Nexcel_add_CustomField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -219,6 +223,7 @@
     <Compile Include="Model\ApplicaitonSettingsModel\ApplicationSelectListSetting.cs" />
     <Compile Include="Model\ApplicaitonSettingsModel\ClientSettings.cs" />
     <Compile Include="Model\ApplicationSettings.cs" />
+    <Compile Include="Model\CustomField.cs" />
     <Compile Include="Model\CustomFieldTypes.cs" />
     <Compile Include="Model\Extensions\ApplicationSettingExtensions.cs" />
     <Compile Include="Model\Extensions\SearchManagerExtensions.cs" />
@@ -322,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710040320358_Nexcel_add_CustomFieldTypes.resx">
       <DependentUpon>201710040320358_Nexcel_add_CustomFieldTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710040351570_Nexcel_add_CustomField.resx">
+      <DependentUpon>201710040351570_Nexcel_add_CustomField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
