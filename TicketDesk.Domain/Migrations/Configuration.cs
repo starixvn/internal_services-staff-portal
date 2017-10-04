@@ -59,6 +59,33 @@ namespace TicketDesk.Domain.Migrations
                     Name = "Incident"
                 });
 
+            context.CustomFieldTypes.AddOrUpdate(
+                new CustomFieldType
+                {
+                    Id = 1,
+                    Name = "string"
+                },
+                new CustomFieldType
+                {
+                    Id = 2,
+                    Name = "int"
+                },
+                new CustomFieldType
+                {
+                    Id = 3,
+                    Name = "bool"
+                },
+                new CustomFieldType
+                {
+                    Id = 4,
+                    Name = "list"
+                },
+                new CustomFieldType
+                {
+                    Id = 5,
+                    Name = "date/time"
+                });
+
             base.Seed(context);
         }
     }
