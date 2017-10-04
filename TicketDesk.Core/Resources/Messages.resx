@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Customer" xml:space="preserve">
-    <value>Customer</value>
-  </data>
-  <data name="Feedback" xml:space="preserve">
-    <value>Feedback</value>
-  </data>
-  <data name="FeedbackBy" xml:space="preserve">
-    <value>Feedback By</value>
-  </data>
   <data name="InvalidFolderName" xml:space="preserve">
     <value>A folder name can't contain any of the following characters: \ / : * ? " &lt; &gt; |</value>
   </data>
@@ -141,9 +132,6 @@ Do you really want to log out?</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
-  </data>
-  <data name="Staff" xml:space="preserve">
-    <value>Staff</value>
   </data>
   <data name="UnknownRequest" xml:space="preserve">
     <value>Unknown Request!</value>
