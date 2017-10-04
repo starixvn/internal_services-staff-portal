@@ -1,0 +1,41 @@
+﻿@model TicketDesk.Web.Client.Models.CustomFieldSettingViewModel
+
+@section title{@ViewBag.Title}
+
+@{
+    ViewBag.Title = "Custom Field Settings";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<a href="@Url.Action("Add","CustomFieldSettings")" class="btn btn-success">Add new</a>
+
+<br />
+<br />
+
+@if (Model.CustomFields.Any())
+{
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Category</th>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Value</th>
+        </tr>
+        @foreach (var item in Model.CustomFields)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.TicketCategories</td>
+                <td>@item.CustomFieldType.Name</td>
+                <td>@item.Name</td>
+                <td>@item.Values</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No Custom Field in Database</p>
+}

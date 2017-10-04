@@ -1,0 +1,25 @@
+﻿namespace TicketDesk.Web.Client.Models.CustomField
+{
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+
+    public class AddCustomFieldViewModel
+    {
+        [Display(Name = "Ticket Category")]
+        public int TicketCategoryId { get; set; }
+
+        public IEnumerable<SelectListItem> TicketCategories { get; set; }
+
+        [Display(Name = "Type")]
+        public int CustomFieldTypeId { get; set; }
+
+        public IEnumerable<SelectListItem> CustomFieldTypes { get; set; }
+
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Display(Name = "Values")]
+        public string Values { get; set; }
+    }
+}

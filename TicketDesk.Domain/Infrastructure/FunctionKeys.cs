@@ -21,5 +21,11 @@
         public const string QuickSearch = "QuickSearch";
 
         public const string FileManagement = "FileManagement";
+
+        #region Settings
+
+        public const string CustomFieldSettings = "CustomFieldSettings";
+
+        #endregion
     }
 }

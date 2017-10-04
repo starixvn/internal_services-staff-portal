@@ -1,0 +1,32 @@
+﻿@model TicketDesk.Web.Client.Models.CustomField.AddCustomFieldViewModel
+
+@section title{@ViewBag.Title}
+
+@{
+    ViewBag.Title = "Add new Custom Field";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Add", "CustomFieldSettings", FormMethod.Post, new { @class = "form-group" }))
+{
+    <div class="input-group">
+        @Html.LabelFor(x => x.TicketCategoryId)
+        @Html.DropDownListFor(x => x.TicketCategoryId, Model.TicketCategories, new { @class = "form-control" })
+    </div>
+
+    <div class="input-group">
+        @Html.LabelFor(x => x.CustomFieldTypeId)
+        @Html.DropDownListFor(x => x.CustomFieldTypeId, Model.CustomFieldTypes, new { @class = "form-control" })
+    </div>
+
+    <div class="input-group">
+        @Html.LabelFor(x => x.Name)
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+    </div>
+
+    <div class="input-group">
+        @Html.LabelFor(x => x.Values)
+        @Html.TextAreaFor(x => x.Values, new { @class = "form-control" })
+    </div>
+}
