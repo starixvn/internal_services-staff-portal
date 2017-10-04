@@ -185,5 +185,20 @@
 
             return ticket.TicketId != default(int);
         }
+
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [Route("feedback")]
+        public async Task<ActionResult> Feedback()
+        {
+            var model = new Ticket
+            {
+                Owner = Context.SecurityProvider.CurrentUserId,
+                IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote"
+            };
+
+            await SetProjectInfoForModelAsync(model);
+
+            return View(model);
+        }
     }
 }

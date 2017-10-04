@@ -2218,6 +2218,7 @@
     <Content Include="Views\Home\NotFound.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\FileManager\Index.cshtml" />
+    <Content Include="Views\Ticket\Feedback.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
