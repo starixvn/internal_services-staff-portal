@@ -1,24 +1,11 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using TicketDesk.Domain.Model;
-
-namespace TicketDesk.Domain.Migrations
+﻿namespace TicketDesk.Domain.Migrations
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+    using Model;
+
     public static class DemoDataManager
     {
         public static void RemoveAllData(TdDomainContext context)
@@ -30,7 +17,7 @@ namespace TicketDesk.Domain.Migrations
             context.TicketEvents.RemoveRange(context.TicketEvents);
             context.Tickets.RemoveRange(context.Tickets);
             context.Projects.RemoveRange(context.Projects.Where(p => p.ProjectName != "Default"));
-            context.TicketDeskSettings = new ApplicationSetting() { };
+            context.TicketDeskSettings = new ApplicationSetting();
 
             context.SaveChanges();
         }
@@ -39,7 +26,7 @@ namespace TicketDesk.Domain.Migrations
         {
             RemoveAllData(context);
             context.SaveChanges();
-            context.Projects.AddOrUpdate(p => p.ProjectName, new Project() { ProjectName = "NullSoft", ProjectDescription = "NullSoft Rocks" });
+            context.Projects.AddOrUpdate(p => p.ProjectName, new Project { ProjectName = "NullSoft", ProjectDescription = "NullSoft Rocks" });
             var project = context.Projects.First();
             context.Tickets.AddOrUpdate(
                 t => t.Title,
@@ -61,8 +48,8 @@ namespace TicketDesk.Domain.Migrations
                     Owner = "17f78f38-fa68-445f-90de-38896140db28",
                     Priority = "Low",
                     TagList = "test,moretest",
-                    TicketTags = new List<TicketTag> { new TicketTag() { TagName = "test" }, { new TicketTag() { TagName = "moretest" } } },
-                    TicketType = new TicketType(),
+                    TicketTags = new List<TicketTag> { new TicketTag { TagName = "test" }, { new TicketTag { TagName = "moretest" } } },
+                    TicketType = "Problem",
                     TicketEvents = new[] { TicketEvent.CreateActivityEvent("17f78f38-fa68-445f-90de-38896140db28", TicketActivity.Create, null, null, null) }
                 });
 
@@ -76,17 +63,17 @@ namespace TicketDesk.Domain.Migrations
             {
                 n--;
                 string cc;
-                TicketType tt;
+                string tt;
                 string oo;
                 if (Math.Abs(n) % 2 == 0)
                 {
-                    tt = new TicketType();
+                    tt = "Question";
                     cc = "Hardware";
                     oo = "64165817-9cb5-472f-8bfb-6a35ca54be6a";
                 }
                 else
                 {
-                    tt = new TicketType();
+                    tt = "Problem";
                     cc = "Software";
                     oo = "17f78f38-fa68-445f-90de-38896140db28";
                 }
@@ -113,7 +100,7 @@ namespace TicketDesk.Domain.Migrations
                         Owner = oo,
                         Priority = "Low",
                         TagList = "test,moretest",
-                        TicketTags = new List<TicketTag> { new TicketTag() { TagName = "test" }, { new TicketTag() { TagName = "moretest" } } },
+                        TicketTags = new List<TicketTag> { new TicketTag { TagName = "test" }, { new TicketTag { TagName = "moretest" } } },
                         TicketType = tt,
                         TicketEvents = new[] { TicketEvent.CreateActivityEvent(oo, TicketActivity.Create, null, null, null) }
                     });

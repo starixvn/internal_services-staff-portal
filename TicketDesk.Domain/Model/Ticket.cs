@@ -32,10 +32,10 @@ namespace TicketDesk.Domain.Model
         [Display(ResourceType = typeof(Strings), Name = "TicketProject", ShortName = "TicketProjectShort")]
         public int ProjectId { get; set; }
 
-        //[Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
-        //[StringLength(50, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
-        //[Display(ResourceType = typeof(Strings), Name = "TicketTicketType", ShortName = "TicketTicketTypeShort")]
-        //public string TicketType { get; set; }
+        [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
+        [StringLength(50, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
+        [Display(ResourceType = typeof(Strings), Name = "TicketTicketType", ShortName = "TicketTicketTypeShort")]
+        public string TicketType { get; set; }
 
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
         [StringLength(50, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
@@ -138,11 +138,6 @@ namespace TicketDesk.Domain.Model
 
         [ForeignKey(nameof(CategoryId))]
         public virtual TicketCategory TicketCategory { get; set; } = new TicketCategory();
-
-        public int TicketTypeId { get; set; } = 1;
-
-        [Display(Name = "Ticket Type")]
-        public virtual TicketType TicketType { get; set; }
 
         public virtual ICollection<TicketEvent> TicketEvents { get; set; }
 

@@ -114,7 +114,7 @@ namespace TicketDesk.Domain
             string title,
             string details,
             string priority,
-            TicketType ticketType,
+            string ticketType,
             string category,
             string owner,
             string tagList,

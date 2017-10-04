@@ -1,6 +1,5 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
 @using System.Configuration
-@using RazorEngine.Compilation.ImpromptuInterface.InvokeExt
 @using TicketDesk.Domain.Model
 @model Ticket
 
@@ -87,7 +86,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.TicketType, new { @class = "col-md-2 col-sm-1 control-label" })
                             <div class="col-md-2 col-sm-3">
-                                @Html.DropDownListFor(model => model.TicketType, Model.GetTicketTypeList(), new { @class = "form-control input-sm", tabindex = 2 })
+                                @*@Html.DropDownListFor(model => model.TicketType, Model.GetTicketTypeList(), new { @class = "form-control input-sm", tabindex = 2 })*@
                                 @*@{
                                     var types = Model.GetTicketTypeList();
                                 }

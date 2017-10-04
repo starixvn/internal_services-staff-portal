@@ -59,18 +59,6 @@ namespace TicketDesk.Domain.Migrations
                     Name = "Incident"
                 });
 
-            context.TicketTypes.AddOrUpdate(
-                new TicketType
-                {
-                    TicketTypeId = 1,
-                    TicketTypeName = "For repair"
-                },
-                new TicketType
-                {
-                    TicketTypeId = 2,
-                    TicketTypeName = "For improvement"
-                });
-
             base.Seed(context);
         }
     }
