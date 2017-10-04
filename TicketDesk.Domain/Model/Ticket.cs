@@ -145,6 +145,8 @@ namespace TicketDesk.Domain.Model
 
         public virtual ICollection<TicketSubscriber> TicketSubscribers { get; set; }
 
+        public virtual ICollection<CustomFieldValue> CustomeFieldValues { get; set; }
+
         [NotMapped]
         internal string PreviousOwner { get; set; }
 

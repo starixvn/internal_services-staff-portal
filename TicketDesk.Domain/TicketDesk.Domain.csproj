@@ -205,6 +205,10 @@
     <Compile Include="Migrations\201710040551110_Nexcel_add_CustomField_TicketCategory.Designer.cs">
       <DependentUpon>201710040551110_Nexcel_add_CustomField_TicketCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710040607401_Nexcel_add_CustomFieldValues.cs" />
+    <Compile Include="Migrations\201710040607401_Nexcel_add_CustomFieldValues.Designer.cs">
+      <DependentUpon>201710040607401_Nexcel_add_CustomFieldValues.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -229,6 +233,7 @@
     <Compile Include="Model\ApplicationSettings.cs" />
     <Compile Include="Model\CustomField.cs" />
     <Compile Include="Model\CustomFieldTypes.cs" />
+    <Compile Include="Model\CustomFieldValue.cs" />
     <Compile Include="Model\Extensions\ApplicationSettingExtensions.cs" />
     <Compile Include="Model\Extensions\SearchManagerExtensions.cs" />
     <Compile Include="Model\Extensions\TicketActivityExtensions.cs" />
@@ -337,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710040551110_Nexcel_add_CustomField_TicketCategory.resx">
       <DependentUpon>201710040551110_Nexcel_add_CustomField_TicketCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710040607401_Nexcel_add_CustomFieldValues.resx">
+      <DependentUpon>201710040607401_Nexcel_add_CustomFieldValues.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

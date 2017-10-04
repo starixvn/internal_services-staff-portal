@@ -19,5 +19,7 @@
         public virtual CustomFieldType CustomFieldType { get; set; }
 
         public virtual ICollection<TicketCategory> TicketCategories { get; set; }
+
+        public virtual ICollection<CustomFieldValue> CustomFieldValues { get; set; }
     }
 }
