@@ -1,0 +1,52 @@
+﻿@using TicketDesk.Domain.Model
+@model Ticket
+
+<div class="panel panel-info">
+    <div class="panel-heading">Specialization</div>
+    <div class="panel-body">
+        <div class="form-group">
+            @Html.LabelFor(model => model.TicketType, new { @class = "col-md-2 col-sm-1 control-label" })
+            <div class="col-md-2 col-sm-3">
+                @*@Html.DropDownListFor(model => model.TicketType, Model.GetTicketTypeList(), new { @class = "form-control input-sm", tabindex = 2 })*@
+                @*@{
+                    var types = Model.GetTicketTypeList();
+                }
+                @foreach (var item in types.Items)
+                {
+                    @Html.RadioButtonFor(x => x.TicketTypeId, item)
+                    @Html.LabelFor(x => x.TicketTypeId, item.WithArgumentName("Name"))
+                }*@
+                @Html.ValidationMessageFor(model => model.TicketType, "", new { @class = "text-danger" })
+            </div>
+
+
+            @if (Model.AllowEditPriorityList())
+            {
+                @Html.LabelFor(model => model.Priority, new { @class = "col-md-1 col-sm-1 control-label" })
+                <div class="col-md-2 col-sm-3">
+                    @Html.DropDownListFor(model => model.Priority, Model.GetPriorityList(), new { @class = "form-control input-sm", tabindex = 4 })
+                    @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                </div>
+            }
+        </div>
+        
+        <div class="form-group">
+            @if (Model.AllowSetOwner())
+            {
+                @Html.LabelFor(model => model.Owner, new { @class = "col-md-2 col-sm-1 control-label" })
+                <div class="col-md-3 col-sm-5">
+                    @Html.DropDownListFor(model => model.Owner, Model.GetOwnersList(), new { @class = "form-control input-sm", tabindex = 8 })
+                    @Html.ValidationMessageFor(model => model.Owner, "", new { @class = "text-danger" })
+                </div>
+            }
+            @if (Model.AllowSetAssigned())
+            {
+                @Html.LabelFor(model => model.AssignedTo, new { @class = "col-md-2 col-sm-2 control-label" })
+                <div class="col-md-3 col-sm-4">
+                    @Html.DropDownListFor(model => model.AssignedTo, Model.GetAssignedToList(), new { @class = "form-control input-sm", tabindex = 9 })
+                    @Html.ValidationMessageFor(model => model.AssignedTo, "", new { @class = "text-danger" })
+                </div>
+            }
+        </div>
+    </div>
+</div>
