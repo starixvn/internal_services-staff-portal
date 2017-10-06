@@ -15,7 +15,7 @@
 
 @if (Model.CustomFields.Any())
 {
-    <table>
+    <table class="table table-bordered">
         <tr>
             <th>Id</th>
             <th>Category</th>
@@ -27,7 +27,13 @@
         {
             <tr>
                 <td>@item.Id</td>
-                <td>@item.TicketCategories</td>
+                <td>
+                    @foreach (var cat in item.TicketCategories)
+                    {
+                        <p>@cat.Name</p>
+                        <br/>
+                    }
+                </td>
                 <td>@item.CustomFieldType.Name</td>
                 <td>@item.Name</td>
                 <td>@item.Values</td>

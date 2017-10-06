@@ -10,6 +10,7 @@
     using Domain.Model;
     using Models;
     using Models.CustomField;
+    using System.Data.Entity;
 
     [RoutePrefix("admin/custom-field-settings")]
     [Route("{action=index}")]
@@ -27,7 +28,7 @@
         {
             var viewModel = new CustomFieldSettingViewModel
             {
-                CustomFields = _domainContext.CustomFields
+                CustomFields = _domainContext.CustomFields.Include(x => x.TicketCategories)
             };
 
             return View(viewModel);
