@@ -2,9 +2,8 @@
 @using TicketDesk.Core.Resources
 
 @model Ticket
-@{
-    ViewBag.Title = "Feedback";
-}
+
+@section title {  Feedback }
 
 @section scripts
 {
@@ -83,7 +82,7 @@
                         @if (Model.IsHtml)//TODO: Refactor into a partial or mvc editorfor view
                         {
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-1 control-label text-right" for="summernote">ahihi_Details</label>
+                                <label class="col-md-2 col-sm-1 control-label text-right" for="summernote">@ViewLang.Feedback</label>
                                 <div class="col-md-8 col-sm-11">
                                     <textarea id="wmd-input-ticketDetails" name="Details" data-val-required="" data-val="true">@Model.Details</textarea>
                                     @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
@@ -93,7 +92,7 @@
                         else
                         {
                             <div class="form-group">
-                                <label class="col-md-2 col-sm-1 control-label text-right" for="wmd-input-ticketDetails">ahihi_Details</label>
+                                <label class="col-md-2 col-sm-1 control-label text-right" for="wmd-input-ticketDetails">@ViewLang.Feedback</label>
                                 <div class="col-md-8 col-sm-11 wmd-panel">
                                     <div class="tabbable tabs-below">
                                         <div class="tab-content">
@@ -138,12 +137,15 @@
                             }
                         </div>
                         <div class="form-group">
-                            <label class="col-md-2 col-sm-1 control-label">ahihi.Files</label>
+                            <label class="col-md-2 col-sm-1 control-label">@ViewLang.AttachFiles</label>
                             <div class="col-md-8 col-sm-11">
                                         <div class="dropzone" style="min-height: 40px;" id="attachmentsDropZone">
                                             <div class="dz-message" data-dz-message><i class="fa fa-download "></i> ahihi_Attachment_Instructions</div>
                                             <div class="dropzone-previews" id="dz-preview"></div>
                                         </div>
+
+                               <p>@ViewLang.MaxNoAttachments</p>
+                                <p>@ViewLang.AllowedFileTypes</p>
                             </div>
                         </div>
 

@@ -54,6 +54,7 @@
         [Route("new")]
         public async Task<ActionResult> New()
         {
+
             var model = new Ticket
             {
                 Owner = Context.SecurityProvider.CurrentUserId,
@@ -187,7 +188,7 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        [Route("feedback")]
+        [Route("feedback/new")]
         public async Task<ActionResult> Feedback()
         {
             var model = new Ticket

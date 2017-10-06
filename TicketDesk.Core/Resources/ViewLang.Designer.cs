@@ -61,6 +61,24 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Allowed file types: .jpeg, .jpg.
+        /// </summary>
+        public static string AllowedFileTypes {
+            get {
+                return ResourceManager.GetString("AllowedFileTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attach Files.
+        /// </summary>
+        public static string AttachFiles {
+            get {
+                return ResourceManager.GetString("AttachFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer.
         /// </summary>
         public static string Customer {
@@ -93,6 +111,15 @@ namespace TicketDesk.Core.Resources {
         public static string FeedbackBy {
             get {
                 return ResourceManager.GetString("FeedbackBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max number of attachments: 3 Files.
+        /// </summary>
+        public static string MaxNoAttachments {
+            get {
+                return ResourceManager.GetString("MaxNoAttachments", resourceCulture);
             }
         }
         
