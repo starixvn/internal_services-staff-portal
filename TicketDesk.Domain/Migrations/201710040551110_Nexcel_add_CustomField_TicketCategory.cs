@@ -2,7 +2,7 @@ namespace TicketDesk.Domain.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class Nexcel_add_CustomField_TicketCategory : DbMigration
     {
         public override void Up()
@@ -10,18 +10,19 @@ namespace TicketDesk.Domain.Migrations
             CreateTable(
                 "dbo.TicketCategoryCustomFields",
                 c => new
-                    {
-                        TicketCategory_CategoryId = c.Int(nullable: false),
-                        CustomField_Id = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.TicketCategory_CategoryId, t.CustomField_Id })
+                {
+                    Id = c.Int(nullable: false, identity: true),
+                    TicketCategory_CategoryId = c.Int(nullable: false),
+                    CustomField_Id = c.Int(nullable: false),
+                })
+                .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.TicketCategories", t => t.TicketCategory_CategoryId, cascadeDelete: true)
                 .ForeignKey("dbo.CustomFields", t => t.CustomField_Id, cascadeDelete: true)
                 .Index(t => t.TicketCategory_CategoryId)
                 .Index(t => t.CustomField_Id);
-            
+
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.TicketCategoryCustomFields", "CustomField_Id", "dbo.CustomFields");

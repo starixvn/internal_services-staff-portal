@@ -14,6 +14,8 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using ViewModels.Ticket;
+    using TicketDesk.Core.Enums;
 
     /// <summary>
     /// Class TicketController.
@@ -191,15 +193,34 @@
         [Route("feedback/new")]
         public async Task<ActionResult> Feedback()
         {
+            var ticketCategoryId = (int)TicketCategoryType.Feedback;
+            var ticketFeedbackViewModel = new TicketFeedbackViewModel();
+
             var model = new Ticket
             {
                 Owner = Context.SecurityProvider.CurrentUserId,
                 IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote"
             };
 
-            await SetProjectInfoForModelAsync(model);
+            model.TicketCategory = new TicketCategory(ticketCategoryId);
 
-            return View(model);
+
+
+            var ticketCategoryCustomFields = Context.TicketCategoryCustomFields.Where(x => x.TicketCategory_CategoryId == ticketCategoryId);
+            foreach (var relation in ticketCategoryCustomFields)
+            {
+                var customField = Context.CustomFields.Find(relation.CustomField_Id);
+
+                model.TicketCategory.CustomFields.Add(customField);
+            }
+
+            // ticketFeedbackViewModel.TicketInfo
+            ticketFeedbackViewModel.Ticket = model;
+
+            await SetProjectInfoForModelAsync(ticketFeedbackViewModel.Ticket);
+
+
+            return View(ticketFeedbackViewModel);
         }
     }
 }

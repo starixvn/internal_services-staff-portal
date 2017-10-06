@@ -10,7 +10,7 @@ namespace TicketDesk.Domain.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "TicketDeskCore";
         }
 
@@ -52,6 +52,11 @@ namespace TicketDesk.Domain.Migrations
                 {
                     CategoryId = 6,
                     Name = "Incident"
+                },
+                new TicketCategory
+                {
+                    CategoryId = 7,
+                    Name = "Feedback"
                 });
         }
 

@@ -1,7 +1,8 @@
 ﻿@using TicketDesk.Domain.Model
 @using TicketDesk.Core.Resources
+@using TicketDesk.Web.Client.ViewModels.Ticket
 
-@model Ticket
+@model TicketFeedbackViewModel
 
 @section title {  Feedback }
 
@@ -19,7 +20,7 @@
     @Scripts.Render("~/bundles/editor")
 
     <script type="text/javascript">
-        var isHtmlString = @(Model.IsHtml ? "true" : "false");
+        var isHtmlString = @(Model.TicketInfo.IsHtml ? "true" : "false");
         (function () {
             $.ajaxSetup({ cache: false });
             var uploaderConfig = {
