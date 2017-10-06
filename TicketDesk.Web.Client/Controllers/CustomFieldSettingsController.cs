@@ -73,7 +73,7 @@
             _domainContext.CustomFields.Add(customField);
             _domainContext.SaveChanges();
 
-            return RedirectToAction("Add");
+            return RedirectToAction("Index");
         }
     }
 }
