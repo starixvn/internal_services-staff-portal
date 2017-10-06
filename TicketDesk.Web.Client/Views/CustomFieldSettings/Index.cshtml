@@ -22,6 +22,7 @@
             <th>Type</th>
             <th>Name</th>
             <th>Value</th>
+            <th>Command</th>
         </tr>
         @foreach (var item in Model.CustomFields)
         {
@@ -31,12 +32,15 @@
                     @foreach (var cat in item.TicketCategories)
                     {
                         <p>@cat.Name</p>
-                        <br/>
+                        <br />
                     }
                 </td>
                 <td>@item.CustomFieldType.Name</td>
                 <td>@item.Name</td>
                 <td>@item.Values</td>
+                <td>
+                    <a href="@Url.Action("Delete", "CustomFieldSettings", new { id = item.Id })">Delete</a>
+                </td>
             </tr>
         }
     </table>

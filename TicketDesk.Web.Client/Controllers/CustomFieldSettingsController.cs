@@ -75,5 +75,22 @@
 
             return RedirectToAction("Index");
         }
+
+        [Route("delete")]
+        [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Host)]
+        public ActionResult Delete(int id)
+        {
+            CustomField customFieldToDelete = new CustomField
+            {
+                Id = id
+            };
+
+            _domainContext.CustomFields.Attach(customFieldToDelete);
+            _domainContext.CustomFields.Remove(customFieldToDelete);
+
+            _domainContext.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }
