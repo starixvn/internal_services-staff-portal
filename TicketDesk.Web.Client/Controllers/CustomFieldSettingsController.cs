@@ -65,12 +65,20 @@
             CustomField customField = new CustomField
             {
                 Name = viewModel.Name,
-                TicketCategories = new List<TicketCategory> { new TicketCategory(viewModel.TicketCategoryId) },
                 CustomFieldType = new CustomFieldType { Id = viewModel.CustomFieldTypeId },
                 Values = viewModel.Values
             };
 
             _domainContext.CustomFields.Add(customField);
+
+            _domainContext.TicketCategories
+                .First(x => x.CategoryId == viewModel.TicketCategoryId).CustomFields
+                .Add(customField);
+
+            _domainContext.CustomFieldTypes
+                .First(x => x.Id == viewModel.CustomFieldTypeId).CustomFields
+                .Add(customField);
+
             _domainContext.SaveChanges();
 
             return RedirectToAction("Index");
