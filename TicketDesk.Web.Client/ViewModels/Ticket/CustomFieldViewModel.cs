@@ -11,10 +11,7 @@ namespace TicketDesk.Web.Client.ViewModels.Ticket
     {
         public IList<string> PosibbleValues { get; set; }
 
-        public IList<string> ConvertValuesToList(string values)
-        {
-            return values.Split('-').ToList();
-        }
+
 
     }
 }

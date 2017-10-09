@@ -1,6 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
-    using Core.Enums;
+    using Core.Enumerations;
     using Domain;
     using Domain.Infrastructure;
     using Domain.Model;
@@ -9,7 +9,6 @@
     using IO;
     using Localization.Controllers;
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Validation;
     using System.Globalization;
@@ -195,7 +194,7 @@
         [Route("feedback/new")]
         public async Task<ActionResult> Feedback()
         {
-            var ticketCategoryId = (int)TicketCategoryType.Feedback;
+            var ticketCategoryId = (int)TicketCategoryEnum.Feedback;
             var ticketFeedbackViewModel = new TicketFeedbackViewModel();
 
             var model = new Ticket
@@ -204,28 +203,54 @@
                 IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote"
             };
 
-            //model.TicketCategory = new TicketCategory(ticketCategoryId);
-
-            //var ticketCategoryCustomFields = Context.TicketCategoryCustomFields.Where(x => x.TicketCategory_CategoryId == ticketCategoryId);
-            //foreach (var relation in ticketCategoryCustomFields)
-            //{
-            //    var customField = Context.CustomFields.Find(relation.CustomField_Id);
-
-            //    model.TicketCategory.CustomFields.Add(customField);
-            //}
-
-            //ticketFeedbackViewModel.TicketInfo
-
             ticketFeedbackViewModel.CustomFields =
                 Context.TicketCategories.First(x => x.CategoryId == ticketCategoryId).CustomFields;
 
-
             ticketFeedbackViewModel.Ticket = model;
+
+            ViewBag.TempId = Guid.NewGuid();
 
             await SetProjectInfoForModelAsync(ticketFeedbackViewModel.Ticket);
 
-
             return View(ticketFeedbackViewModel);
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateOnlyIncomingValues]
+        [ValidateInput(false)]
+        [Route("new")]
+        public async Task<ActionResult> Feedback(Ticket ticket, Guid tempId)
+        {
+            if (ticket.IsHtml)
+            {
+                ticket.Details = ticket.Details.StripHtmlWhenEmpty();
+                if (string.IsNullOrEmpty(ticket.Details))
+                {
+                    ModelState.AddModelError("Details", Strings.RequiredField);
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (await CreateTicketAsync(ticket, tempId))
+                    {
+                        return Context.SecurityProvider.IsReadTicketCenter ? RedirectToAction("Index", new { id = ticket.TicketId }) : RedirectToAction("Index", "Home");
+                    }
+                }
+                // ReSharper disable once EmptyGeneralCatchClause
+                catch (DbEntityValidationException)
+                {
+                    // TODO: catch rule exceptions? or can annotations handle this fully now?
+                }
+            }
+
+            ViewBag.TempId = tempId;
+            await SetProjectInfoForModelAsync(ticket);
+            return View(ticket);
         }
     }
 }

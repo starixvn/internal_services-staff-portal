@@ -1,9 +1,9 @@
 ﻿
-namespace TicketDesk.Core.Enums
+namespace TicketDesk.Core.Enumerations
 {
     using System.ComponentModel;
 
-    public enum TicketCategoryType
+    public enum TicketCategoryEnum
     {
         [Description("Facility")]
         Facility = 1,

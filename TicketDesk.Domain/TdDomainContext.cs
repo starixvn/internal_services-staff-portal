@@ -101,6 +101,8 @@ namespace TicketDesk.Domain
 
         public DbSet<CustomField> CustomFields { get; set; }
 
+        public DbSet<CustomFieldValue> CustomFieldValues { get; set; }
+
         public UserSettingsManager UserSettingsManager
         {
             get

@@ -87,6 +87,11 @@ namespace TicketDesk.Domain.Migrations
                 {
                     Id = 5,
                     Name = "date/time"
+                },
+                new CustomFieldType
+                {
+                    Id = 6,
+                    Name = "textarea"
                 });
         }
 

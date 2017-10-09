@@ -94,7 +94,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\TicketCategoryType.cs" />
+    <Compile Include="Enumerations\CustomFieldTypeEnum.cs" />
+    <Compile Include="Enumerations\TicketCategoryEnum.cs" />
     <Compile Include="Model\CommandResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />

@@ -2,6 +2,7 @@
 namespace TicketDesk.Web.Client.ViewModels.Ticket
 {
     using System.Collections.Generic;
+    using System.Linq;
     using TicketDesk.Domain.Model;
     public class TicketFeedbackViewModel
     {
@@ -9,5 +10,11 @@ namespace TicketDesk.Web.Client.ViewModels.Ticket
 
         public IEnumerable<CustomField> CustomFields { get; set; }
 
+        public IEnumerable<CustomFieldValue> CustomFieldValue { get; set; }
+
+        public IList<string> ConvertValuesToList(string values)
+        {
+            return values.Split(',').ToList();
+        }
     }
 }
