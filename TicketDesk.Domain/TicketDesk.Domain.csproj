@@ -189,13 +189,13 @@
     <Compile Include="Migrations\201707150459325_Td2.5.019.Designer.cs">
       <DependentUpon>201707150459325_Td2.5.019.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710090654347_Nexcel_Custom_Field_Schema.cs" />
-    <Compile Include="Migrations\201710090654347_Nexcel_Custom_Field_Schema.Designer.cs">
-      <DependentUpon>201710090654347_Nexcel_Custom_Field_Schema.cs</DependentUpon>
+    <Compile Include="Migrations\201710090737046_Nexcel_Custom_Field_Schema.cs" />
+    <Compile Include="Migrations\201710090737046_Nexcel_Custom_Field_Schema.Designer.cs">
+      <DependentUpon>201710090737046_Nexcel_Custom_Field_Schema.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710090715363_Nexcel_Add_ForeignKey_Ticket_TicketCategory.cs" />
-    <Compile Include="Migrations\201710090715363_Nexcel_Add_ForeignKey_Ticket_TicketCategory.Designer.cs">
-      <DependentUpon>201710090715363_Nexcel_Add_ForeignKey_Ticket_TicketCategory.cs</DependentUpon>
+    <Compile Include="Migrations\201710090745555_Nexcel_add_foreign_key_Ticket_TicketCategory.cs" />
+    <Compile Include="Migrations\201710090745555_Nexcel_add_foreign_key_Ticket_TicketCategory.Designer.cs">
+      <DependentUpon>201710090745555_Nexcel_add_foreign_key_Ticket_TicketCategory.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
@@ -319,11 +319,11 @@
     <EmbeddedResource Include="Migrations\201707150459325_Td2.5.019.resx">
       <DependentUpon>201707150459325_Td2.5.019.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710090654347_Nexcel_Custom_Field_Schema.resx">
-      <DependentUpon>201710090654347_Nexcel_Custom_Field_Schema.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710090737046_Nexcel_Custom_Field_Schema.resx">
+      <DependentUpon>201710090737046_Nexcel_Custom_Field_Schema.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710090715363_Nexcel_Add_ForeignKey_Ticket_TicketCategory.resx">
-      <DependentUpon>201710090715363_Nexcel_Add_ForeignKey_Ticket_TicketCategory.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710090745555_Nexcel_add_foreign_key_Ticket_TicketCategory.resx">
+      <DependentUpon>201710090745555_Nexcel_add_foreign_key_Ticket_TicketCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
