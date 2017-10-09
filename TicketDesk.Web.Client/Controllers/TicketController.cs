@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Core.Enums;
     using Domain;
     using Domain.Infrastructure;
     using Domain.Model;
@@ -15,7 +16,6 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ViewModels.Ticket;
-    using TicketDesk.Core.Enums;
 
     /// <summary>
     /// Class TicketController.
@@ -202,19 +202,22 @@
                 IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote"
             };
 
-            model.TicketCategory = new TicketCategory(ticketCategoryId);
+            //model.TicketCategory = new TicketCategory(ticketCategoryId);
+
+            //var ticketCategoryCustomFields = Context.TicketCategoryCustomFields.Where(x => x.TicketCategory_CategoryId == ticketCategoryId);
+            //foreach (var relation in ticketCategoryCustomFields)
+            //{
+            //    var customField = Context.CustomFields.Find(relation.CustomField_Id);
+
+            //    model.TicketCategory.CustomFields.Add(customField);
+            //}
+
+            //ticketFeedbackViewModel.TicketInfo
+
+            ticketFeedbackViewModel.CustomFields =
+                Context.TicketCategories.First(x => x.CategoryId == ticketCategoryId).CustomFields;
 
 
-
-            var ticketCategoryCustomFields = Context.TicketCategoryCustomFields.Where(x => x.TicketCategory_CategoryId == ticketCategoryId);
-            foreach (var relation in ticketCategoryCustomFields)
-            {
-                var customField = Context.CustomFields.Find(relation.CustomField_Id);
-
-                model.TicketCategory.CustomFields.Add(customField);
-            }
-
-            // ticketFeedbackViewModel.TicketInfo
             ticketFeedbackViewModel.Ticket = model;
 
             await SetProjectInfoForModelAsync(ticketFeedbackViewModel.Ticket);

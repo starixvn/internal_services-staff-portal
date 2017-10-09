@@ -11,11 +11,9 @@ namespace TicketDesk.Domain.Migrations
                 "dbo.TicketCategoryCustomFields",
                 c => new
                 {
-                    Id = c.Int(nullable: false, identity: true),
                     TicketCategory_CategoryId = c.Int(nullable: false),
                     CustomField_Id = c.Int(nullable: false),
                 })
-                .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.TicketCategories", t => t.TicketCategory_CategoryId, cascadeDelete: true)
                 .ForeignKey("dbo.CustomFields", t => t.CustomField_Id, cascadeDelete: true)
                 .Index(t => t.TicketCategory_CategoryId)

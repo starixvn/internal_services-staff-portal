@@ -20,7 +20,7 @@
     @Scripts.Render("~/bundles/editor")
 
     <script type="text/javascript">
-        var isHtmlString = @(Model.TicketInfo.IsHtml ? "true" : "false");
+        var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");
         (function () {
             $.ajaxSetup({ cache: false });
             var uploaderConfig = {
@@ -67,26 +67,24 @@
                         <div class="form-group">
                             @Html.Label(ViewLang.Subject, new { @class = "col-md-2 col-sm-1 control-label focus" })
                             <div class="col-md-8 col-sm-11">
-                                @Html.TextBoxFor(model => model.Title, new { @class = "form-control input-sm", placeholder = "ahihi", tabindex = 1, autofocus = string.Empty })
-                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+         
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label(ViewLang.CustomerName, new { @class = "col-md-2 col-sm-1 control-label focus" })
                             <div class="col-md-8 col-sm-11">
-                                @Html.TextBoxFor(model => model.Title, new { @class = "form-control input-sm", placeholder = "ahihi", tabindex = 1, autofocus = string.Empty })
-                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+
                             </div>
                         </div>
 
-                        @if (Model.IsHtml)//TODO: Refactor into a partial or mvc editorfor view
+                        @if (Model.Ticket.IsHtml)//TODO: Refactor into a partial or mvc editorfor view
                         {
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-1 control-label text-right" for="summernote">@ViewLang.Feedback</label>
                                 <div class="col-md-8 col-sm-11">
-                                    <textarea id="wmd-input-ticketDetails" name="Details" data-val-required="" data-val="true">@Model.Details</textarea>
-                                    @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                                    <textarea id="wmd-input-ticketDetails" name="Details" data-val-required="" data-val="true">@Model.Ticket.Details</textarea>
+                                    @Html.ValidationMessageFor(model => model.Ticket.Details, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         }
@@ -99,7 +97,7 @@
                                         <div class="tab-content">
                                             <div class="tab-pane fade in active" id="tab1">
                                                 <div id="wmd-button-bar-ticketDetails" class="" style="display: inline-block"></div>
-                                                @Html.TextAreaFor(model => model.Details, new { id = "wmd-input-ticketDetails", @class = "wmd-input form-control", data_val_required = "", data_val = "true", cols = "92", rows = "15", style = "height:200px", tabindex = 7 })
+                                                @Html.TextAreaFor(model => model.Ticket.Details, new { id = "wmd-input-ticketDetails", @class = "wmd-input form-control", data_val_required = "", data_val = "true", cols = "92", rows = "15", style = "height:200px", tabindex = 7 })
 
                                             </div>
                                             <div class="tab-pane fade" id="tab2">
@@ -115,25 +113,25 @@
                                             <li><a href="#tab2" data-toggle="tab"><i class="fa fa-eye"></i>&nbsp;ahihi_PreviewOption</a></li>
                                         </ul>
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.Ticket.Details, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         }
                         <div class="form-group">
-                            @if (Model.AllowSetOwner())
+                            @if (Model.Ticket.AllowSetOwner())
                             {
-                                @Html.LabelFor(model => model.Owner, new { @class = "col-md-2 col-sm-1 control-label" })
+                                @Html.LabelFor(model => model.Ticket.Owner, new { @class = "col-md-2 col-sm-1 control-label" })
                                 <div class="col-md-3 col-sm-5">
-                                    @Html.DropDownListFor(model => model.Owner, Model.GetOwnersList(), new { @class = "form-control input-sm", tabindex = 8 })
-                                    @Html.ValidationMessageFor(model => model.Owner, "", new { @class = "text-danger" })
+                                    @Html.DropDownListFor(model => model.Ticket.Owner, Model.Ticket.GetOwnersList(), new { @class = "form-control input-sm", tabindex = 8 })
+                                    @Html.ValidationMessageFor(model => model.Ticket.Owner, "", new { @class = "text-danger" })
                                 </div>
                             }
-                            @if (Model.AllowSetAssigned())
+                            @if (Model.Ticket.AllowSetAssigned())
                             {
-                                @Html.LabelFor(model => model.AssignedTo, new { @class = "col-md-2 col-sm-2 control-label" })
+                                @Html.LabelFor(model => model.Ticket.AssignedTo, new { @class = "col-md-2 col-sm-2 control-label" })
                                 <div class="col-md-3 col-sm-4">
-                                    @Html.DropDownListFor(model => model.AssignedTo, Model.GetAssignedToList(), new { @class = "form-control input-sm", tabindex = 9 })
-                                    @Html.ValidationMessageFor(model => model.AssignedTo, "", new { @class = "text-danger" })
+                                    @Html.DropDownListFor(model => model.Ticket.AssignedTo, Model.Ticket.GetAssignedToList(), new { @class = "form-control input-sm", tabindex = 9 })
+                                    @Html.ValidationMessageFor(model => model.Ticket.AssignedTo, "", new { @class = "text-danger" })
                                 </div>
                             }
                         </div>
