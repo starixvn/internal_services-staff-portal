@@ -384,6 +384,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\filemanager\connectors\asp\FileManagerController.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\Ticket\CustomFieldViewModel.cs" />
     <Compile Include="ViewModels\Ticket\TicketFeedbackViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
