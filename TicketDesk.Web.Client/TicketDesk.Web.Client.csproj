@@ -338,6 +338,7 @@
     <Compile Include="Infrastructure\Filters\CustomJsonResultAttribute.cs" />
     <Compile Include="Infrastructure\Filters\LocalizationFilter.cs" />
     <Compile Include="Infrastructure\Filters\TdAuthorizeAttribute.cs" />
+    <Compile Include="Infrastructure\Helpers\CustomFieldForHelper.cs" />
     <Compile Include="Infrastructure\Helpers\DescriptionForHelper.cs" />
     <Compile Include="Infrastructure\Helpers\DisplayForHelper.cs" />
     <Compile Include="Infrastructure\Helpers\JsonCamelCaseResult.cs" />
