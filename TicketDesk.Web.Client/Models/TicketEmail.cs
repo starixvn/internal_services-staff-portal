@@ -1,14 +1,10 @@
-﻿using System.Linq;
-using System.Web.Mvc;
-using Postal;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Model;
-
-namespace TicketDesk.Web.Client.Models
+﻿namespace TicketDesk.Web.Client.Models
 {
+    using Postal;
+
     public class TicketEmail : Email
     {
-        public Ticket Ticket { get; set; }
+        public Domain.Model.Ticket Ticket { get; set; }
 
         public string SiteRootUrl { get; set; }
 

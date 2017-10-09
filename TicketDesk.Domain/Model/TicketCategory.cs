@@ -12,13 +12,6 @@
 
         public virtual ICollection<CustomField> CustomFields { get; set; }
 
-        public TicketCategory() : this(default(int))
-        {
-        }
-
-        public TicketCategory(int categoryId)
-        {
-            CategoryId = categoryId == default(int) ? 1 : categoryId;
-        }
+        public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

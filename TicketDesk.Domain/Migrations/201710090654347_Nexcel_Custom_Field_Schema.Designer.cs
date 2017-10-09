@@ -7,13 +7,13 @@ namespace TicketDesk.Domain.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Nexcel_add_CustomField_TicketCategory : IMigrationMetadata
+    public sealed partial class Nexcel_Custom_Field_Schema : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Nexcel_add_CustomField_TicketCategory));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Nexcel_Custom_Field_Schema));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710040551110_Nexcel_add_CustomField_TicketCategory"; }
+            get { return "201710090654347_Nexcel_Custom_Field_Schema"; }
         }
         
         string IMigrationMetadata.Source

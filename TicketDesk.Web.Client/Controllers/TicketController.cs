@@ -9,12 +9,14 @@
     using IO;
     using Localization.Controllers;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Validation;
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Models.Ticket;
     using ViewModels.Ticket;
 
     /// <summary>
@@ -54,16 +56,16 @@
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [Route("new")]
-        public async Task<ActionResult> New()
+        public async Task<ActionResult> New(int categoryId = 1)
         {
+            AddTicketViewModel model = new AddTicketViewModel();
+            model.Ticket = new Ticket();
+            model.CustomFields = Context.TicketCategories.First(x => x.CategoryId == categoryId).CustomFields;
 
-            var model = new Ticket
-            {
-                Owner = Context.SecurityProvider.CurrentUserId,
-                IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote"
-            };
+            model.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
+            model.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
 
-            await SetProjectInfoForModelAsync(model);
+            await SetProjectInfoForModelAsync(model.Ticket);
 
             ViewBag.TempId = Guid.NewGuid();
 

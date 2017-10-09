@@ -134,9 +134,9 @@ namespace TicketDesk.Domain.Model
 
         public virtual Project Project { get; set; }
 
-        public int CategoryId { get; set; } = 1;
+        public int CategoryId { get; set; }
 
-        [ForeignKey(nameof(CategoryId))]
+       // [ForeignKey(nameof(CategoryId))]
         public virtual TicketCategory TicketCategory { get; set; }
 
         public virtual ICollection<TicketEvent> TicketEvents { get; set; }

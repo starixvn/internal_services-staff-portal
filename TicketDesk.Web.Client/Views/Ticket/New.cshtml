@@ -1,6 +1,6 @@
-﻿@using TicketDesk.Localization.Views.Ticket
-@using TicketDesk.Domain.Model
-@model Ticket
+﻿@using TicketDesk.Domain.Model
+@using TicketDesk.Localization.Views.Ticket
+@model TicketDesk.Web.Client.Models.Ticket.AddTicketViewModel
 
 @section title { @New.Title }
 
@@ -18,7 +18,7 @@
     @Scripts.Render("~/bundles/editor")
 
     <script type="text/javascript">
-        var isHtmlString = @(Model.IsHtml ? "true" : "false");
+        var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");
         (function () {
             $.ajaxSetup({ cache: false });
             var uploaderConfig = {
@@ -58,32 +58,32 @@
 
                                 @Html.ValidationSummary(true, New.UnableCreateTicket, new { @class = "alert alert-danger" })
 
-                                @Html.HiddenFor(model => model.TicketId)
-                                @Html.HiddenFor(model => model.IsHtml)
+                                @Html.HiddenFor(model => model.Ticket.TicketId)
+                                @Html.HiddenFor(model => model.Ticket.IsHtml)
                                 <input type="hidden" name="tempId" value="@ViewBag.TempId" />
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Category, new { @class = "col-md-2 col-sm-1 control-label" })
+                                    @Html.LabelFor(model => model.Ticket.Category, new { @class = "col-md-2 col-sm-1 control-label" })
                                     <div class="col-md-8 col-sm-11">
-                                        @Html.DropDownListFor(model => model.Category, Model.GetCategoryList(), new { @class = "form-control input-sm", tabindex = 1 })
-                                        @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                                        @Html.DropDownListFor(model => model.Ticket.Category, Model.Ticket.GetCategoryList(), new { @class = "form-control input-sm", tabindex = 1 })
+                                        @Html.ValidationMessageFor(model => model.Ticket.Category, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Title, new { @class = "col-md-2 col-sm-1 control-label focus" })
+                                    @Html.LabelFor(model => model.Ticket.Title, new { @class = "col-md-2 col-sm-1 control-label focus" })
                                     <div class="col-md-8 col-sm-11">
-                                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control input-sm", placeholder = New.TicketTitle_Placeholder, tabindex = 1, autofocus = string.Empty })
-                                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                        @Html.TextBoxFor(model => model.Ticket.Title, new { @class = "form-control input-sm", placeholder = New.TicketTitle_Placeholder, tabindex = 1, autofocus = string.Empty })
+                                        @Html.ValidationMessageFor(model => model.Ticket.Title, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    @if (Model.AllowEditTags())
+                                    @if (Model.Ticket.AllowEditTags())
                                     {
-                                    @Html.LabelFor(model => model.TagList, new { @class = "col-md-2 col-sm-1 control-label focus" })
+                                    @Html.LabelFor(model => model.Ticket.TagList, new { @class = "col-md-2 col-sm-1 control-label focus" })
                                     <div class="col-md-5 col-sm-5">
-                                        @Html.TextBoxFor(m => m.TagList, new { id = "ticketTags", @class = "form-control input-sm", tabindex = 1 })
+                                        @Html.TextBoxFor(m => m.Ticket.TagList, new { id = "ticketTags", @class = "form-control input-sm", tabindex = 1 })
                                     </div>
                                     }
                                 </div>
@@ -97,13 +97,13 @@
                                     </div>
                                 </div>
                                 
-                                @if (Model.IsHtml)
+                                @if (Model.Ticket.IsHtml)
                                 {
                                     <div class="form-group">
                                         <label class="col-md-2 col-sm-1 control-label text-right" for="summernote">@New.Details</label>
                                         <div class="col-md-8 col-sm-11">
-                                            <textarea id="wmd-input-ticketDetails" name="Details" data-val-required="" data-val="true">@Model.Details</textarea>
-                                            @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                                            <textarea id="wmd-input-ticketDetails" name="Details" data-val-required="" data-val="true">@Model.Ticket.Details</textarea>
+                                            @Html.ValidationMessageFor(model => model.Ticket.Details, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 }
@@ -116,7 +116,7 @@
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade in active" id="tab1">
                                                         <div id="wmd-button-bar-ticketDetails" class="" style="display: inline-block"></div>
-                                                        @Html.TextAreaFor(model => model.Details, new { id = "wmd-input-ticketDetails", @class = "wmd-input form-control", data_val_required = "", data_val = "true", cols = "92", rows = "15", style = "height:200px", tabindex = 7 })
+                                                        @Html.TextAreaFor(model => model.Ticket.Details, new { id = "wmd-input-ticketDetails", @class = "wmd-input form-control", data_val_required = "", data_val = "true", cols = "92", rows = "15", style = "height:200px", tabindex = 7 })
 
                                                     </div>
                                                     <div class="tab-pane fade" id="tab2">
@@ -132,7 +132,7 @@
                                                     <li><a href="#tab2" data-toggle="tab"><i class="fa fa-eye"></i>&nbsp;@New.PreviewOption</a></li>
                                                 </ul>
                                             </div>
-                                            @Html.ValidationMessageFor(model => model.Details, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.Ticket.Details, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 }
@@ -141,7 +141,7 @@
 
                         @Html.Partial("_TicketDescription", Model)
                         
-                        @Html.Partial("_TicketAttachedFiles", Model)
+                        @Html.Partial("_TicketAttachedFiles", Model.Ticket)
 
                         @*TODO: Auto select project base on user profile*@
                         @*@if (ViewBag.IsMultiProject)

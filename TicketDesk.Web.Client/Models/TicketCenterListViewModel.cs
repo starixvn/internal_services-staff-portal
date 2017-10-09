@@ -1,26 +1,13 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using PagedList;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Model;
-using TicketDesk.Web.Identity;
-
-namespace TicketDesk.Web.Client.Models
+﻿namespace TicketDesk.Web.Client.Models
 {
+    using Domain;
+    using Domain.Model;
+    using Identity;
+    using PagedList;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+
     public class TicketCenterListViewModel
     {
         private FilterBarViewModel _filterBar;
@@ -50,7 +37,7 @@ namespace TicketDesk.Web.Client.Models
         /// Gets or (private) sets the list of tickets for the view.
         /// </summary>
         /// <value>The tickets.</value>
-        public IPagedList<Ticket> Tickets { get; private set; }
+        public IPagedList<Domain.Model.Ticket> Tickets { get; private set; }
 
         public UserTicketListSetting CurrentListSetting { get; private set; }
 
@@ -77,7 +64,7 @@ namespace TicketDesk.Web.Client.Models
             return vm;
         }
 
-        public async Task<IPagedList<Ticket>> ListTicketsAsync(int pageIndex, TdDomainContext context, string napUserId)
+        public async Task<IPagedList<Domain.Model.Ticket>> ListTicketsAsync(int pageIndex, TdDomainContext context, string napUserId)
         {
             var filterColumns = CurrentListSetting.FilterColumns.ToList();
 
