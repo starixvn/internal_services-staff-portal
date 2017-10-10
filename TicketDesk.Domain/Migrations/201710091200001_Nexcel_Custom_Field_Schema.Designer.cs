@@ -13,7 +13,7 @@ namespace TicketDesk.Domain.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201710090737046_Nexcel_Custom_Field_Schema"; }
+            get { return "201710091200001_Nexcel_Custom_Field_Schema"; }
         }
         
         string IMigrationMetadata.Source

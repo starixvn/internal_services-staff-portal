@@ -10,8 +10,8 @@
 
         public string Name { get; set; }
 
-        public virtual ICollection<CustomField> CustomFields { get; set; }
+        //public virtual ICollection<CustomField> CustomFields { get; set; }
 
-        public virtual ICollection<Ticket> Tickets { get; set; }
+        //public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

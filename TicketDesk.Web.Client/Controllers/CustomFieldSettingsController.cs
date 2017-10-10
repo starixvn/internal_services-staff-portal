@@ -28,7 +28,7 @@
         {
             var viewModel = new CustomFieldSettingViewModel
             {
-                CustomFields = _domainContext.CustomFields.Include(x => x.TicketCategories)
+                //  CustomFields = _domainContext.CustomFields.Include(x => x.TicketCategories)
             };
 
             return View(viewModel);
@@ -62,24 +62,24 @@
         [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddCustomFieldViewModel viewModel)
         {
-            CustomField customField = new CustomField
-            {
-                Name = viewModel.Name,
-                CustomFieldType = new CustomFieldType { Id = viewModel.CustomFieldTypeId },
-                Values = viewModel.Values
-            };
+            //CustomField customField = new CustomField
+            //{
+            //    Name = viewModel.Name,
+            //    CustomFieldType = new CustomFieldType { Id = viewModel.CustomFieldTypeId },
+            //    Values = viewModel.Values
+            //};
 
-            _domainContext.CustomFields.Add(customField);
+            //_domainContext.CustomFields.Add(customField);
 
-            _domainContext.TicketCategories
-                .First(x => x.CategoryId == viewModel.TicketCategoryId).CustomFields
-                .Add(customField);
+            //_domainContext.TicketCategories
+            //    .First(x => x.CategoryId == viewModel.TicketCategoryId).CustomFields
+            //    .Add(customField);
 
-            _domainContext.CustomFieldTypes
-                .First(x => x.Id == viewModel.CustomFieldTypeId).CustomFields
-                .Add(customField);
+            //_domainContext.CustomFieldTypes
+            //    .First(x => x.Id == viewModel.CustomFieldTypeId).CustomFields
+            //    .Add(customField);
 
-            _domainContext.SaveChanges();
+            //_domainContext.SaveChanges();
 
             return RedirectToAction("Index");
         }

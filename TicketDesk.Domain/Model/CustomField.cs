@@ -11,15 +11,14 @@
 
         public string Name { get; set; }
 
-        [ForeignKey(nameof(CustomFieldType))]
         public int CustomFieldTypeId { get; set; }
 
         public string Values { get; set; }
 
-        public virtual CustomFieldType CustomFieldType { get; set; }
+        //public virtual CustomFieldType CustomFieldType { get; set; }
 
-        public virtual ICollection<TicketCategory> TicketCategories { get; set; }
+        //public virtual ICollection<TicketCategory> TicketCategories { get; set; }
 
-        public virtual ICollection<CustomFieldValue> CustomFieldValues { get; set; }
+        //public virtual ICollection<CustomFieldValue> CustomFieldValues { get; set; }
     }
 }

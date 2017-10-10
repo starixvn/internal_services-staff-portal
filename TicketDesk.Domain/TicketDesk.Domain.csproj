@@ -189,13 +189,9 @@
     <Compile Include="Migrations\201707150459325_Td2.5.019.Designer.cs">
       <DependentUpon>201707150459325_Td2.5.019.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710090737046_Nexcel_Custom_Field_Schema.cs" />
-    <Compile Include="Migrations\201710090737046_Nexcel_Custom_Field_Schema.Designer.cs">
-      <DependentUpon>201710090737046_Nexcel_Custom_Field_Schema.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710090745555_Nexcel_add_foreign_key_Ticket_TicketCategory.cs" />
-    <Compile Include="Migrations\201710090745555_Nexcel_add_foreign_key_Ticket_TicketCategory.Designer.cs">
-      <DependentUpon>201710090745555_Nexcel_add_foreign_key_Ticket_TicketCategory.cs</DependentUpon>
+    <Compile Include="Migrations\201710091200001_Nexcel_Custom_Field_Schema.cs" />
+    <Compile Include="Migrations\201710091200001_Nexcel_Custom_Field_Schema.Designer.cs">
+      <DependentUpon>201710091200001_Nexcel_Custom_Field_Schema.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
@@ -231,6 +227,7 @@
     <Compile Include="Model\Extensions\UserTicketListSettingsCollectionExtensions.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\TicketCategory.cs" />
+    <Compile Include="Model\TicketCategoryCustomField.cs" />
     <Compile Include="Model\TicketEventNotification.cs" />
     <Compile Include="Model\TicketSubscriber.cs" />
     <Compile Include="TicketActionManager.cs" />
@@ -319,11 +316,8 @@
     <EmbeddedResource Include="Migrations\201707150459325_Td2.5.019.resx">
       <DependentUpon>201707150459325_Td2.5.019.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710090737046_Nexcel_Custom_Field_Schema.resx">
-      <DependentUpon>201710090737046_Nexcel_Custom_Field_Schema.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710090745555_Nexcel_add_foreign_key_Ticket_TicketCategory.resx">
-      <DependentUpon>201710090745555_Nexcel_add_foreign_key_Ticket_TicketCategory.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710091200001_Nexcel_Custom_Field_Schema.resx">
+      <DependentUpon>201710091200001_Nexcel_Custom_Field_Schema.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

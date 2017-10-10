@@ -18,8 +18,8 @@
 
         public int CustomFieldId { get; set; }
 
-        public virtual Ticket Ticket { get; set; }
+        //public virtual Ticket Ticket { get; set; }
 
-        public virtual CustomField CustomField { get; set; }
+        //public virtual CustomField CustomField { get; set; }
     }
 }

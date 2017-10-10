@@ -10,6 +10,6 @@
 
         public string Name { get; set; }
 
-        public virtual ICollection<CustomField> CustomFields { get; set; }
+        //public virtual ICollection<CustomField> CustomFields { get; set; }
     }
 }

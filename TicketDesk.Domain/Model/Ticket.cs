@@ -136,16 +136,16 @@ namespace TicketDesk.Domain.Model
 
         public int CategoryId { get; set; }
 
-        [ForeignKey(nameof(CategoryId))]
-        public virtual TicketCategory TicketCategory { get; set; }
+        //[ForeignKey(nameof(CategoryId))]
+        //public virtual TicketCategory TicketCategory { get; set; }
+
+        //public virtual ICollection<CustomFieldValue> CustomFieldValues { get; set; }
 
         public virtual ICollection<TicketEvent> TicketEvents { get; set; }
 
         public virtual ICollection<TicketTag> TicketTags { get; set; }
 
         public virtual ICollection<TicketSubscriber> TicketSubscribers { get; set; }
-
-        public virtual ICollection<CustomFieldValue> CustomFieldValues { get; set; }
 
         [NotMapped]
         internal string PreviousOwner { get; set; }

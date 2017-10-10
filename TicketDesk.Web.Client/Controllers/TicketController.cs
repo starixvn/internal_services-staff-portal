@@ -59,7 +59,7 @@
         {
             AddTicketViewModel model = new AddTicketViewModel();
             model.Ticket = new Ticket();
-            model.CustomFields = Context.TicketCategories.First(x => x.CategoryId == categoryId).CustomFields;
+            //  model.CustomFields = Context.TicketCategories.First(x => x.CategoryId == categoryId).CustomFields;
 
             model.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
             model.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
@@ -203,8 +203,7 @@
                 IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote"
             };
 
-            ticketFeedbackViewModel.CustomFields =
-                Context.TicketCategories.First(x => x.CategoryId == ticketCategoryId).CustomFields;
+            //  ticketFeedbackViewModel.CustomFields =  Context.TicketCategories.First(x => x.CategoryId == ticketCategoryId).CustomFields;
 
             ticketFeedbackViewModel.Ticket = model;
 
