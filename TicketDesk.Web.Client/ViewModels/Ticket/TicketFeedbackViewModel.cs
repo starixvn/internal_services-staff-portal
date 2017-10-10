@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Web.Client.ViewModels.Ticket
 {
     using Models.Ticket;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using TicketDesk.Domain.Model;
@@ -9,6 +10,6 @@
     {
         public Ticket Ticket { get; set; }
 
-        public IEnumerable<TicketCustomField> CustomFields { get; set; }
+        public IEnumerable<CustomField> CustomFields { get; set; }
     }
 }

@@ -90,15 +90,11 @@
                 "0");
         }
 
-        //public static SelectList GetTicketTypeList(this Ticket ticket)
-        //{
-        //    var context = DependencyResolver.Current.GetService<TdDomainContext>();
-        //    var types = context.TicketTypes;
-
-        //    return types.ToSelectList(
-        //        x => x.TicketTypeId.ToString(),
-        //        x => x.TicketTypeName);
-        //}
+        public static SelectList GetTicketTypeList(this Ticket ticket)
+        {
+            var context = DependencyResolver.Current.GetService<TdDomainContext>();
+            return context.TicketDeskSettings.GetTicketTypeList(true, ticket.TicketType);
+        }
 
         public static SelectList GetProjectList(this Ticket ticket, int? selectedProject)
         {

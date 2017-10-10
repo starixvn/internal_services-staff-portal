@@ -65,7 +65,7 @@
 
             var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == categoryId)
                 .Select(x => x.CustomFieldId);
-            
+
             model.CustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
 
             foreach (CustomField customField in model.CustomFields)
@@ -207,8 +207,8 @@
         [Route("feedback/new")]
         public async Task<ActionResult> Feedback()
         {
-            var ticketCategoryId = (int)TicketCategoryTypes.Feedback;
-            var ticketFeedbackViewModel = new TicketFeedbackViewModel();
+            //var ticketCategoryId = (int)TicketCategoryTypes.Feedback;
+            //var ticketFeedbackViewModel = new TicketFeedbackViewModel();
 
             var model = new Ticket
             {
@@ -216,34 +216,51 @@
                 IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote"
             };
 
-            SqlParameter categoryParam = new SqlParameter("@CategoryId", ticketCategoryId);
-            var customFields = await Context.Database.SqlQuery<TicketCustomField>("CustomFields_Get @CategoryId", categoryParam).ToListAsync();
-            foreach (var item in customFields)
-            {
-                if (item.CustomFieldTypeId == (int)CustomFieldTypes.List)
-                {
-                    item.PossibleValues = item.ConvertValuesToList(item.CustomFieldPossibleValue);
-                }
-            }
+            //SqlParameter categoryParam = new SqlParameter("@CategoryId", ticketCategoryId);
+            //var customFields = await Context.Database.SqlQuery<TicketCustomField>("CustomFields_Get @CategoryId", categoryParam).ToListAsync();
+            //foreach (var item in customFields)
+            //{
+            //    if (item.CustomFieldTypeId == (int)CustomFieldTypes.List)
+            //    {
+            //        item.PossibleValues = item.ConvertValuesToList(item.CustomFieldPossibleValue);
+            //    }
+            //}
 
-            ticketFeedbackViewModel.Ticket = model;
-            ticketFeedbackViewModel.CustomFields = customFields;
+            //ticketFeedbackViewModel.Ticket = model;
+            //ticketFeedbackViewModel.CustomFields = customFields;
+            //ticketFeedbackViewModel.TempId = Guid.NewGuid();
+
+            await SetProjectInfoForModelAsync(model);
 
             ViewBag.TempId = Guid.NewGuid();
 
-            await SetProjectInfoForModelAsync(ticketFeedbackViewModel.Ticket);
+            var categoryId = (int)TicketCategoryTypes.Feedback;
+            var ticketFeedbackViewModel = new TicketFeedbackViewModel();
+            ticketFeedbackViewModel.Ticket = model;
+
+            var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == categoryId)
+                .Select(x => x.CustomFieldId);
+
+            ticketFeedbackViewModel.CustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
+
+            foreach (CustomField customField in ticketFeedbackViewModel.CustomFields)
+            {
+                customField.CustomFieldValues =
+                    Context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
+            }
 
             return View(ticketFeedbackViewModel);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
         [ValidateInput(false)]
-        [Route("new")]
-        public async Task<ActionResult> Feedback(Ticket ticket, Guid tempId)
+        [Route("feedback/new")]
+        public async Task<ActionResult> Feedback(TicketFeedbackViewModel model, Guid tempId)
         {
+            var ticket = model.Ticket;
+
             if (ticket.IsHtml)
             {
                 ticket.Details = ticket.Details.StripHtmlWhenEmpty();
@@ -263,8 +280,9 @@
                     }
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
-                catch (DbEntityValidationException)
+                catch (DbEntityValidationException e)
                 {
+                    throw e;
                     // TODO: catch rule exceptions? or can annotations handle this fully now?
                 }
             }
@@ -273,5 +291,27 @@
             await SetProjectInfoForModelAsync(ticket);
             return View(ticket);
         }
+
+        //private async Task<bool> CreateTicketFeedbackAsync(TicketFeedbackViewModel model)
+        //{
+        //    Context.Tickets.Add(model.Ticket);
+
+        //    await Context.SaveChangesAsync();
+
+        //    foreach (var field in model.CustomFields)
+        //    {
+        //        var customFieldValue = new CustomFieldValue();
+        //        customFieldValue.Value = field.Value;
+        //        customFieldValue.CustomFieldId = field.CustomFieldId;
+        //        customFieldValue.TicketId = model.Ticket.TicketId;
+        //        Context.CustomFieldValues.Add(customFieldValue);
+        //    }
+
+        //    await Context.SaveChangesAsync();
+
+        //    model.Ticket.CommitPendingAttachments(model.TempId);
+
+        //    return model.Ticket.TicketId != default(int);
+        //}
     }
 }

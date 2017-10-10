@@ -2231,6 +2231,7 @@
     <Content Include="Views\CustomFieldSettings\Add.cshtml" />
     <Content Include="Views\Ticket\_TicketDescription.cshtml" />
     <Content Include="Views\Ticket\_TicketAttachedFiles.cshtml" />
+    <Content Include="Views\Ticket\_FeedbackCustomField.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

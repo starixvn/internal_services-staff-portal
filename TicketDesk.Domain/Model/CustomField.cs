@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
 
     public class CustomField
     {
@@ -25,5 +26,13 @@
 
         [NotMapped]
         public ICollection<CustomFieldValue> CustomFieldValues { get; set; }
+
+        [NotMapped]
+        public IList<string> PossibleValues { get; set; }
+
+        public IList<string> ConvertValuesToList(string values)
+        {
+            return values.Split('\n').ToList();
+        }
     }
 }

@@ -1,10 +1,12 @@
-﻿@using TicketDesk.Core.Enumerations
-@using TicketDesk.Core.Resources
+﻿@using TicketDesk.Localization.Views.Ticket
+@using System.Configuration
+@using TicketDesk.Domain.Model
 @using TicketDesk.Web.Client.ViewModels.Ticket
-
+@using TicketDesk.Web.Client.Infrastructure.Helpers
+@using TicketDesk.Core.Enumerations
 @model TicketFeedbackViewModel
 
-@section title {  Feedback }
+@section title { @New.Title }
 
 @section scripts
 {
@@ -18,10 +20,9 @@
     @Scripts.Render("~/bundles/summernote")
     @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())
     @Scripts.Render("~/bundles/editor")
-    @Scripts.Render("~/bundles/ticket-feedback")
 
     <script type="text/javascript">
-        var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");
+
         (function () {
             $.ajaxSetup({ cache: false });
             var uploaderConfig = {
@@ -35,8 +36,8 @@
                 tagAutoCompleteUrl: '@Url.Action("TagList", "AutoComplete")'
             };
             var detailsConfig = {
-                isHtml: isHtmlString
-            };
+                isHtml: @(Model.Ticket.IsHtml ? "true" : "false")
+                };
             window.ticketTags.activate(tagsConfig);
             window.ticketDetails.activate(detailsConfig);
             window.ticketFileUploader.activate(uploaderConfig);
@@ -46,105 +47,181 @@
 <main>
     <div class="container">
         <div class="col-lg-10 col-lg-offset-1 col-md-12">
-            @using (Html.BeginForm("Feedback", "Ticket", null, FormMethod.Post, new { @id = "feedback-form", @class = "form-horizontal" }))
+            @using (Html.BeginForm("Feedback", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal" }))
             {
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <h2 class="panel-title">@ViewLang.Feedback</h2>
+                        <h2 class="panel-title">@New.Header</h2>
                     </div>
                     <div class="panel-body ">
 
                         @Html.AntiForgeryToken()
 
-                        @Html.ValidationSummary()
+                        @Html.ValidationSummary(true, New.UnableCreateTicket, new { @class = "alert alert-danger" })
+
+                        @Html.HiddenFor(model => model.Ticket.TicketId)
+                        @Html.HiddenFor(model => model.Ticket.IsHtml)
+                        <input type="hidden" name="tempId" value="@ViewBag.TempId" />
+
+                        @if (ViewBag.IsMultiProject)
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Ticket.ProjectId, new { @class = "col-md-2 col-sm-1 control-label" })
+                                <div class="col-md-8 col-sm-11">
+                                    @Html.DropDownListFor(model => model.Ticket.ProjectId, Model.Ticket.GetProjectList((int?)ViewBag.SelectedProjectId), new { @class = "form-control input-sm", tabindex = 1 })
+                                    @Html.ValidationMessageFor(model => model.Ticket.ProjectId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            @Html.HiddenFor(model => model.Ticket.ProjectId)
+                        }
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Ticket.Title, new { @class = "col-md-2 col-sm-1 control-label focus" })
+                            <div class="col-md-8 col-sm-11">
+                                @Html.TextBoxFor(model => model.Ticket.Title, new { @class = "form-control input-sm", placeholder = New.TicketTitle_Placeholder, tabindex = 1, autofocus = string.Empty })
+                                @Html.ValidationMessageFor(model => model.Ticket.Title, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Ticket.TicketType, new { @class = "col-md-2 col-sm-1 control-label" })
+                            <div class="col-md-2 col-sm-3">
+                                @Html.DropDownListFor(model => model.Ticket.TicketType, Model.Ticket.GetTicketTypeList(), new { @class = "form-control input-sm", tabindex = 2 })
+                                @Html.ValidationMessageFor(model => model.Ticket.TicketType, "", new { @class = "text-danger" })
+                            </div>
+
+                            @Html.LabelFor(model => model.Ticket.Category, new { @class = "col-md-1 col-sm-1 control-label" })
+                            <div class="col-md-2 col-sm-3">
+                                @Html.DropDownListFor(model => model.Ticket.Category, Model.Ticket.GetCategoryList(), new { @class = "form-control input-sm", tabindex = 3 })
+                                @Html.ValidationMessageFor(model => model.Ticket.Category, "", new { @class = "text-danger" })
+                            </div>
+                            @if (Model.Ticket.AllowEditPriorityList())
+                            {
+                                @Html.LabelFor(model => model.Ticket.Priority, new { @class = "col-md-1 col-sm-1 control-label" })
+                                <div class="col-md-2 col-sm-3">
+                                    @Html.DropDownListFor(model => model.Ticket.Priority, Model.Ticket.GetPriorityList(), new { @class = "form-control input-sm", tabindex = 4 })
+                                    @Html.ValidationMessageFor(model => model.Ticket.Priority, "", new { @class = "text-danger" })
+                                </div>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-2 col-md-offset-2 col-sm-3 col-sm-offset-1">
+                                <label class="checkbox-inline" for="affectsCustomer">
+                                    <input class="" type="checkbox" name="affectsCustomer" id="affectsCustomer" value="true" tabindex="5" />
+                                    @New.AffectsCustomer
+                                </label>
+                            </div>
+                            @if (Model.Ticket.AllowEditTags())
+                            {
+
+                                @Html.LabelFor(model => model.Ticket.TagList, new { @class = "col-md-1 col-sm-1 control-label" })
+                                <div class="col-md-5 col-sm-5">
+                                    @Html.TextBoxFor(m => m.Ticket.TagList, new { id = "ticketTags", @class = "form-control input-sm", tabindex = 6 })
+                                </div>
+                            }
+                        </div>
+                        @if (Model.Ticket.IsHtml)//TODO: Refactor into a partial or mvc editorfor view
+                        {
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-1 control-label text-right" for="summernote">@New.Details</label>
+                                <div class="col-md-8 col-sm-11">
+                                    <textarea id="wmd-input-ticketDetails" name="Details" data-val-required="" data-val="true">@Model.Ticket.Details</textarea>
+                                    @Html.ValidationMessageFor(model => model.Ticket.Details, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label class="col-md-2 col-sm-1 control-label text-right" for="wmd-input-ticketDetails">@New.Details</label>
+                                <div class="col-md-8 col-sm-11 wmd-panel">
+                                    <div class=" tabbable tabs-below">
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade in active" id="tab1">
+                                                <div id="wmd-button-bar-ticketDetails" class="" style="display: inline-block"></div>
+                                                @Html.TextAreaFor(model => model.Ticket.Details, new { id = "wmd-input-ticketDetails", @class = "wmd-input form-control", data_val_required = "", data_val = "true", cols = "92", rows = "15", style = "height:200px", tabindex = 7 })
+                                            </div>
+                                            <div class="tab-pane fade" id="tab2">
+                                                <div class="row" style="min-height: 35px;"></div>
+
+                                                <div id="wmd-preview-ticketDetails" class="wmd-panel wmd-preview form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="nav nav-tabs navbar-right">
+                                            <li class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-edit"></i>&nbsp;@New.EditOption</a></li>
+                                            <li><a href="#tab2" data-toggle="tab"><i class="fa fa-eye"></i>&nbsp;@New.PreviewOption</a></li>
+                                        </ul>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Ticket.Details, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        }
+                        <div class="form-group">
+                            @if (Model.Ticket.AllowSetOwner())
+                            {
+                                @Html.LabelFor(model => model.Ticket.Owner, new { @class = "col-md-2 col-sm-1 control-label" })
+                                <div class="col-md-3 col-sm-5">
+                                    @Html.DropDownListFor(model => model.Ticket.Owner, Model.Ticket.GetOwnersList(), new { @class = "form-control input-sm", tabindex = 8 })
+                                    @Html.ValidationMessageFor(model => model.Ticket.Owner, "", new { @class = "text-danger" })
+                                </div>
+                            }
+                            @if (Model.Ticket.AllowSetAssigned())
+                            {
+                                @Html.LabelFor(model => model.Ticket.AssignedTo, new { @class = "col-md-2 col-sm-2 control-label" })
+                                <div class="col-md-3 col-sm-4">
+                                    @Html.DropDownListFor(model => model.Ticket.AssignedTo, Model.Ticket.GetAssignedToList(), new { @class = "form-control input-sm", tabindex = 9 })
+                                    @Html.ValidationMessageFor(model => model.Ticket.AssignedTo, "", new { @class = "text-danger" })
+                                </div>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-1 control-label">@New.Files</label>
+                            <div class="col-md-8 col-sm-11">
+                                @{
+                                    var demoMode = ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false";
+                                    if (demoMode.Equals("true", StringComparison.InvariantCultureIgnoreCase))
+                                    {
+                                        <div class="alert alert-warning">
+                                            @Html.Raw(New.Attachment_Demo_Alert)
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="dropzone" style="min-height: 40px;" id="attachmentsDropZone">
+                                            <div class="dz-message" data-dz-message><i class="fa fa-download "></i> @New.Attachment_Instructions</div>
+                                            <div class="dropzone-previews" id="dz-preview"></div>
+                                        </div>
+                                    }}
+                            </div>
+                        </div>
+
+                        @foreach (var customField in Model.CustomFields)
+                        {
+                        <div class="form-group">
+                            @Html.CustomFieldLabelFor(customField, new { @class = "col-md-2 col-sm-1 control-label" })
+                            <div class="col-md-8 col-sm-11">
+                                @Html.CustomFieldFor(customField, new { @class = "form-control input-sm" })
+                            </div>
+                        </div>
+                        }
 
                         @foreach (var field in Model.CustomFields)
                         {
-                            if (field.CustomFieldTypeId == (int)CustomFieldTypes.List)
-                            {
-                                <div class="form-group">
-                                    @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label" })
-                                    <div class="col-md-8 col-sm-11">
-                                        @foreach (var value in field.PossibleValues)
-                                        {
-                                            <p>@Html.RadioButton(field.FormName, value, new { @class = "custom-field" }) @value</p>
-                                        }
-                                    </div>
-                                </div>
-                            }
-
-                            if (field.CustomFieldTypeId == (int)CustomFieldTypes.String)
-                            {
-                                <div class="form-group">
-                                    @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label focus" })
-                                    <div class="col-md-8 col-sm-11">
-                                        @Html.TextBox(field.FormName, "", new { @class = "form-control input-sm custom-field", tabindex = 1, autofocus = string.Empty })
-                                    </div>
-                                </div>
-                            }
-
-                            if (field.CustomFieldTypeId == (int)CustomFieldTypes.TextArea)
-                            {
-                                if (Model.Ticket.IsHtml)
-                                {
-                                    <div class="form-group">
-                                        <label class="col-md-2 col-sm-1 control-label text-right" for="summernote">@field.CustomFieldName</label>
-                                        <div class="col-md-8 col-sm-11">
-                                            <textarea id="wmd-input-@field.FormName" name="Details" data-val-required="" data-val="true" class="custom-field"></textarea>
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="form-group">
-                                        <label class="col-md-2 col-sm-1 control-label text-right" for="wmd-input-xxx">@field.CustomFieldName</label>
-                                        <div class="col-md-8 col-sm-11 wmd-panel">
-                                            <div class="tabbable tabs-below">
-                                                <div class="tab-content">
-                                                    <div class="tab-pane fade in active" id="tab1">
-                                                        <div id="wmd-button-bar-xxx" class="" style="display: inline-block"></div>
-                                                        @Html.TextArea(field.FormName, new { id = "wmd-input-" + field.CustomFieldName, @class = "wmd-input form-control custom-field", data_val_required = "", data_val = "true", cols = "92", rows = "15", style = "height:200px", tabindex = 7 })
-                                                    </div>
-                                                    <div class="tab-pane fade" id="tab2">
-                                                        <div class="row" style="min-height: 35px;"></div>
-
-                                                        <div id="wmd-preview-xxx" class="wmd-panel wmd-preview form-control">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <ul class="nav nav-tabs navbar-right">
-                                                    <li class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-edit"></i>&nbsp;ahihi_EditOption</a></li>
-                                                    <li><a href="#tab2" data-toggle="tab"><i class="fa fa-eye"></i>&nbsp;ahihi_PreviewOption</a></li>
-                                                </ul>
-                                            </div>
-                                            @Html.ValidationMessageFor(model => model.Ticket.Details, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                }
-                            }
+                            Html.RenderPartial("_FeedbackCustomField", field);
                         }
 
-                        <div class="form-group">
-                            <label class="col-md-2 col-sm-1 control-label">@ViewLang.AttachFiles</label>
-                            <div class="col-md-8 col-sm-11">
-                                <div class="dropzone" style="min-height: 40px;" id="attachmentsDropZone">
-                                    <div class="dz-message" data-dz-message><i class="fa fa-download "></i> ahihi_Attachment_Instructions</div>
-                                    <div class="dropzone-previews" id="dz-preview"></div>
-                                </div>
-
-                                <p>@ViewLang.MaxNoAttachments</p>
-                                <p>@ViewLang.AllowedFileTypes</p>
-                            </div>
-                        </div>
                     </div>
                     <div class="panel-footer">
                         <div class="">
-                            <button type="submit" class="btn btn-success" tabindex="10">ahihi_SaveOption</button>&nbsp;&nbsp;
-                            @Html.ActionLink("ahihi_Back", "Index")
+                            <button type="submit" class="btn btn-success" tabindex="10">@New.SaveOption</button>&nbsp;&nbsp;
+                            @Html.ActionLink(New.BackOption, "Index")
                         </div>
                     </div>
                 </div>
-            }
+                                    }
         </div>
     </div>
 </main>

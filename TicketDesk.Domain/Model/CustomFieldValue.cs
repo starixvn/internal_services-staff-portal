@@ -17,9 +17,5 @@
         public int TicketId { get; set; }
 
         public int CustomFieldId { get; set; }
-
-        //public virtual Ticket Ticket { get; set; }
-
-        //public virtual CustomField CustomField { get; set; }
     }
 }
