@@ -17,10 +17,13 @@
 
         public string FormName { get; set; }
 
-        //public virtual CustomFieldType CustomFieldType { get; set; }
+        [NotMapped]
+        public CustomFieldType CustomFieldType { get; set; }
 
-        //public virtual ICollection<TicketCategory> TicketCategories { get; set; }
+        [NotMapped]
+        public ICollection<TicketCategory> TicketCategories { get; set; }
 
-        //public virtual ICollection<CustomFieldValue> CustomFieldValues { get; set; }
+        [NotMapped]
+        public ICollection<CustomFieldValue> CustomFieldValues { get; set; }
     }
 }
