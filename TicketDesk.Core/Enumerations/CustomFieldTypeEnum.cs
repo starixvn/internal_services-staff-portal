@@ -2,7 +2,7 @@
 {
     using System.ComponentModel;
 
-    public enum CustomFieldTypeEnum
+    public enum CustomFieldTypes
     {
         [Description("String")]
         String = 1,

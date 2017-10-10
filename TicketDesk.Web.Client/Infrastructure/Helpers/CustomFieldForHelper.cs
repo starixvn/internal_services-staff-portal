@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Web.Client.Infrastructure.Helpers
 {
     using System.Linq.Expressions;
+    using System.Text;
     using System.Web.Mvc;
     using Antlr.Runtime.Misc;
     using Domain.Model;
@@ -19,6 +20,10 @@
             this HtmlHelper html,
             CustomField value)
         {
+            StringBuilder sb = new StringBuilder();
+
+
+
             return new MvcHtmlString("<p>TEST</p>");
         }
     }

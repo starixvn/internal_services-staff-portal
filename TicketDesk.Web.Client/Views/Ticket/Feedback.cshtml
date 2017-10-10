@@ -60,7 +60,7 @@
 
                         @foreach (var field in Model.CustomFields)
                         {
-                            if (field.CustomFieldTypeId == (int)CustomFieldTypeEnum.List)
+                            if (field.CustomFieldTypeId == (int)CustomFieldTypes.List)
                             {
                                 <div class="form-group">
                                     @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label" })
@@ -73,7 +73,7 @@
                                 </div>
                             }
 
-                            if (field.CustomFieldTypeId == (int)CustomFieldTypeEnum.String)
+                            if (field.CustomFieldTypeId == (int)CustomFieldTypes.String)
                             {
                                 <div class="form-group">
                                     @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label focus" })
@@ -83,7 +83,7 @@
                                 </div>
                             }
 
-                            if (field.CustomFieldTypeId == (int)CustomFieldTypeEnum.TextArea)
+                            if (field.CustomFieldTypeId == (int)CustomFieldTypes.TextArea)
                             {
                                 if (Model.Ticket.IsHtml)
                                 {

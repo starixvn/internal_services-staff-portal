@@ -207,7 +207,7 @@
         [Route("feedback/new")]
         public async Task<ActionResult> Feedback()
         {
-            var ticketCategoryId = (int)TicketCategoryEnum.Feedback;
+            var ticketCategoryId = (int)TicketCategoryTypes.Feedback;
             var ticketFeedbackViewModel = new TicketFeedbackViewModel();
 
             var model = new Ticket
@@ -220,7 +220,7 @@
             var customFields = await Context.Database.SqlQuery<TicketCustomField>("CustomFields_Get @CategoryId", categoryParam).ToListAsync();
             foreach (var item in customFields)
             {
-                if (item.CustomFieldTypeId == (int)CustomFieldTypeEnum.List)
+                if (item.CustomFieldTypeId == (int)CustomFieldTypes.List)
                 {
                     item.PossibleValues = item.ConvertValuesToList(item.CustomFieldPossibleValue);
                 }
