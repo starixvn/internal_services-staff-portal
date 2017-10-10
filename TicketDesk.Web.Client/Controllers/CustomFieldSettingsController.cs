@@ -1,16 +1,15 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Domain;
     using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using System.Web.Mvc;
-    using Domain.Model;
     using Models;
     using Models.CustomField;
-    using System.Data.Entity;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
 
     [RoutePrefix("admin/custom-field-settings")]
     [Route("{action=index}")]
@@ -73,24 +72,24 @@
         [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddCustomFieldViewModel viewModel)
         {
-            //CustomField customField = new CustomField
-            //{
-            //    Name = viewModel.Name,
-            //    CustomFieldType = new CustomFieldType { Id = viewModel.CustomFieldTypeId },
-            //    Values = viewModel.Values
-            //};
+            CustomField customField = new CustomField
+            {
+                Name = viewModel.Name,
+                CustomFieldTypeId = viewModel.CustomFieldTypeId,
+                Values = viewModel.Values
+            };
 
-            //_domainContext.CustomFields.Add(customField);
+            _domainContext.CustomFields.Add(customField);
 
-            //_domainContext.TicketCategories
-            //    .First(x => x.CategoryId == viewModel.TicketCategoryId).CustomFields
-            //    .Add(customField);
+            _domainContext.SaveChanges();
 
-            //_domainContext.CustomFieldTypes
-            //    .First(x => x.Id == viewModel.CustomFieldTypeId).CustomFields
-            //    .Add(customField);
+            _domainContext.TicketCategoryCustomField.Add(new TicketCategoryCustomField
+            {
+                CategoryId = viewModel.TicketCategoryId,
+                CustomFieldId = customField.Id
+            });
 
-            //_domainContext.SaveChanges();
+            _domainContext.SaveChanges();
 
             return RedirectToAction("Index");
         }
