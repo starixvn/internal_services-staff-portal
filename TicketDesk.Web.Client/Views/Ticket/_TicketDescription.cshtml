@@ -55,7 +55,10 @@
             foreach (CustomField customField in Model.CustomFields)
             {
                 <div class="form-group">
-                    @Html.CustomFieldFor(customField)
+                    @Html.CustomFieldLabelFor(customField, new { @class = "col-md-2 col-sm-1 control-label" })
+                    <div class="col-md-8 col-sm-11">
+                        @Html.CustomFieldFor(customField, new { @class = "form-control input-sm" })
+                    </div>
                 </div>
             }
         }

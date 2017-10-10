@@ -1,9 +1,12 @@
 ﻿namespace TicketDesk.Web.Client.Infrastructure.Helpers
 {
+    using System.Collections.Generic;
     using System.Linq.Expressions;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Web.Mvc;
     using Antlr.Runtime.Misc;
+    using Core.Enumerations;
     using Domain.Model;
 
     public static class CustomFieldForHelper
@@ -18,13 +21,90 @@
 
         public static MvcHtmlString CustomFieldFor(
             this HtmlHelper html,
-            CustomField value)
+            CustomField value,
+            object htmlAttributes = null)
         {
-            StringBuilder sb = new StringBuilder();
+            var str = BuildHtmlString(value, htmlAttributes);
 
+            return new MvcHtmlString(str);
+        }
 
+        public static MvcHtmlString CustomFieldLabelFor(
+                this HtmlHelper html,
+                CustomField value,
+                object htmlAttributes = null)
+        {
+            TagBuilder label = new TagBuilder("label");
+            label.Attributes.Add("for", "customfield_" + value.Id);
+            label.SetInnerText(value.Name);
 
-            return new MvcHtmlString("<p>TEST</p>");
+            if (htmlAttributes != null)
+            {
+                var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+                label.MergeAttributes(attributes);
+            }
+
+            return new MvcHtmlString(label.ToString());
+        }
+
+        private static string BuildHtmlString(
+            CustomField customField,
+            object htmlAttributes = null)
+        {
+            TagBuilder input = null;
+            switch (customField.CustomFieldTypeId)
+            {
+                case (int)CustomFieldTypes.Bool:
+                    input = new TagBuilder("input");
+                    input.Attributes.Add("type", "checkbox");
+                    input.Attributes.Add("id", "customfield_" + customField.Id);
+                    input.Attributes.Add("name", customField.Id.ToString());
+                    break;
+                case (int)CustomFieldTypes.DateTime:
+                    input = new TagBuilder("input");
+                    input.Attributes.Add("type", "datetime-local");
+                    input.Attributes.Add("id", "customfield_" + customField.Id);
+                    input.Attributes.Add("name", customField.Id.ToString());
+                    break;
+                case (int)CustomFieldTypes.Int:
+                    input = new TagBuilder("input");
+                    input.Attributes.Add("type", "number");
+                    input.Attributes.Add("id", "customfield_" + customField.Id);
+                    input.Attributes.Add("name", customField.Id.ToString());
+                    break;
+                case (int)CustomFieldTypes.List:
+                    var values = Regex.Split(customField.Values, "\r\n");
+                    input = new TagBuilder("select");
+                    input.Attributes.Add("id", "customfield_" + customField.Id);
+                    input.Attributes.Add("name", customField.Id.ToString());
+                    foreach (string s in values)
+                    {
+                        TagBuilder option = new TagBuilder("option");
+                        option.Attributes.Add("value", s);
+                        option.SetInnerText(s);
+                        input.InnerHtml += option.ToString();
+                    }
+                    break;
+                case (int)CustomFieldTypes.String:
+                    input = new TagBuilder("input");
+                    input.Attributes.Add("type", "text");
+                    input.Attributes.Add("id", "customfield_" + customField.Id);
+                    input.Attributes.Add("name", customField.Id.ToString());
+                    break;
+                case (int)CustomFieldTypes.TextArea:
+                    input = new TagBuilder("textarea");
+                    input.Attributes.Add("id", "customfield_" + customField.Id);
+                    input.Attributes.Add("name", customField.Id.ToString());
+                    break;
+            }
+
+            if (htmlAttributes != null)
+            {
+                var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+                input?.MergeAttributes(attributes);
+            }
+
+            return input?.ToString();
         }
     }
 }
