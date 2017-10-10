@@ -50,12 +50,12 @@
             }
         </div>
 
-        @if (Model.Ticket.CustomFieldValues != null)
+        @if (Model.CustomFields != null)
         {
-            foreach (CustomFieldValue cfValue in Model.Ticket.CustomFieldValues)
+            foreach (CustomField customField in Model.CustomFields)
             {
                 <div class="form-group">
-                    @Html.CustomFieldFor(cfValue)
+                    @Html.CustomFieldFor(customField)
                 </div>
             }
         }

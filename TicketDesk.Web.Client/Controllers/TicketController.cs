@@ -58,9 +58,21 @@
         [Route("new")]
         public async Task<ActionResult> New(int categoryId = 1)
         {
-            AddTicketViewModel model = new AddTicketViewModel();
-            model.Ticket = new Ticket();
-            //  model.CustomFields = Context.TicketCategories.First(x => x.CategoryId == categoryId).CustomFields;
+            AddTicketViewModel model = new AddTicketViewModel
+            {
+                Ticket = new Ticket()
+            };
+
+            var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == categoryId)
+                .Select(x => x.CustomFieldId);
+            
+            model.CustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
+
+            foreach (CustomField customField in model.CustomFields)
+            {
+                customField.CustomFieldValues =
+                    Context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
+            }
 
             model.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
             model.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";

@@ -17,7 +17,7 @@
 
         public static MvcHtmlString CustomFieldFor(
             this HtmlHelper html,
-            CustomFieldValue value)
+            CustomField value)
         {
             return new MvcHtmlString("<p>TEST</p>");
         }

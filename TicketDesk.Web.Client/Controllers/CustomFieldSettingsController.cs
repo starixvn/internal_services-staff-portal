@@ -32,10 +32,11 @@
 
             foreach (CustomField customField in viewModel.CustomFields)
             {
-                var test = _domainContext.TicketCategoryCustomField.Where(x => x.CustomFieldId == customField.Id)
+                var categoryIds = _domainContext.TicketCategoryCustomField.Where(x => x.CustomFieldId == customField.Id)
                     .Select(x => x.CategoryId);
 
-                customField.TicketCategories = _domainContext.TicketCategories.Where(x => test.Contains(x.CategoryId)).ToList();
+                customField.TicketCategories = _domainContext.TicketCategories
+                    .Where(x => categoryIds.Contains(x.CategoryId)).ToList();
 
                 customField.CustomFieldType =
                     _domainContext.CustomFieldTypes.First(x => x.Id == customField.CustomFieldTypeId);
