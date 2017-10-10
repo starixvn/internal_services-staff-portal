@@ -15,6 +15,8 @@
 
         public string Values { get; set; }
 
+        public string FormName { get; set; }
+
         //public virtual CustomFieldType CustomFieldType { get; set; }
 
         //public virtual ICollection<TicketCategory> TicketCategories { get; set; }

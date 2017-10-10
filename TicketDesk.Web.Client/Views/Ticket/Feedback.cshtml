@@ -18,6 +18,7 @@
     @Scripts.Render("~/bundles/summernote")
     @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())
     @Scripts.Render("~/bundles/editor")
+    @Scripts.Render("~/bundles/ticket-feedback")
 
     <script type="text/javascript">
         var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");
@@ -45,7 +46,7 @@
 <main>
     <div class="container">
         <div class="col-lg-10 col-lg-offset-1 col-md-12">
-            @using (Html.BeginForm("Feedback", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal" }))
+            @using (Html.BeginForm("Feedback", "Ticket", null, FormMethod.Post, new { @id = "feedback-form", @class = "form-horizontal" }))
             {
                 <div class="panel panel-info">
                     <div class="panel-heading">
@@ -61,51 +62,48 @@
                         {
                             if (field.CustomFieldTypeId == (int)CustomFieldTypeEnum.List)
                             {
-                                var possibleValues = Model.ConvertValuesToList(field.Values);
                                 <div class="form-group">
-                                    @Html.Label(field.Name, new { @class = "col-md-2 col-sm-1 control-label" })
+                                    @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label" })
                                     <div class="col-md-8 col-sm-11">
-                                        @foreach (var value in possibleValues)
+                                        @foreach (var value in field.PossibleValues)
                                         {
-                                            <p>@Html.RadioButton(field.Name, value) @value</p>
+                                            <p>@Html.RadioButton(field.FormName, value, new { @class = "custom-field" }) @value</p>
                                         }
                                     </div>
                                 </div>
                             }
 
-
                             if (field.CustomFieldTypeId == (int)CustomFieldTypeEnum.String)
                             {
                                 <div class="form-group">
-                                    @Html.Label(field.Name, new { @class = "col-md-2 col-sm-1 control-label focus" })
+                                    @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label focus" })
                                     <div class="col-md-8 col-sm-11">
-                                        @Html.TextBox(field.Name, "", new { @class = "form-control input-sm", tabindex = 1, autofocus = string.Empty })
+                                        @Html.TextBox(field.FormName, "", new { @class = "form-control input-sm custom-field", tabindex = 1, autofocus = string.Empty })
                                     </div>
                                 </div>
                             }
-
 
                             if (field.CustomFieldTypeId == (int)CustomFieldTypeEnum.TextArea)
                             {
                                 if (Model.Ticket.IsHtml)
                                 {
                                     <div class="form-group">
-                                        <label class="col-md-2 col-sm-1 control-label text-right" for="summernote">@field.Name</label>
+                                        <label class="col-md-2 col-sm-1 control-label text-right" for="summernote">@field.CustomFieldName</label>
                                         <div class="col-md-8 col-sm-11">
-                                            <textarea id="wmd-input-@field.Name" name="Details" data-val-required="" data-val="true"></textarea>
+                                            <textarea id="wmd-input-@field.FormName" name="Details" data-val-required="" data-val="true" class="custom-field"></textarea>
                                         </div>
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="form-group">
-                                        <label class="col-md-2 col-sm-1 control-label text-right" for="wmd-input-xxx">@field.Name</label>
+                                        <label class="col-md-2 col-sm-1 control-label text-right" for="wmd-input-xxx">@field.CustomFieldName</label>
                                         <div class="col-md-8 col-sm-11 wmd-panel">
                                             <div class="tabbable tabs-below">
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade in active" id="tab1">
                                                         <div id="wmd-button-bar-xxx" class="" style="display: inline-block"></div>
-                                                        @Html.TextArea(field.Name, new { id = "wmd-input-" + field.Name, @class = "wmd-input form-control", data_val_required = "", data_val = "true", cols = "92", rows = "15", style = "height:200px", tabindex = 7 })
+                                                        @Html.TextArea(field.FormName, new { id = "wmd-input-" + field.CustomFieldName, @class = "wmd-input form-control custom-field", data_val_required = "", data_val = "true", cols = "92", rows = "15", style = "height:200px", tabindex = 7 })
                                                     </div>
                                                     <div class="tab-pane fade" id="tab2">
                                                         <div class="row" style="min-height: 35px;"></div>
@@ -146,7 +144,7 @@
                         </div>
                     </div>
                 </div>
-           }
+            }
         </div>
     </div>
 </main>

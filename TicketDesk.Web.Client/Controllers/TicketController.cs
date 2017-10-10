@@ -17,6 +17,7 @@
     using System.Web.Mvc;
     using Models.Ticket;
     using ViewModels.Ticket;
+    using System.Data.SqlClient;
 
     /// <summary>
     /// Class TicketController.
@@ -203,9 +204,18 @@
                 IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote"
             };
 
-            //  ticketFeedbackViewModel.CustomFields =  Context.TicketCategories.First(x => x.CategoryId == ticketCategoryId).CustomFields;
+            SqlParameter categoryParam = new SqlParameter("@CategoryId", ticketCategoryId);
+            var customFields = await Context.Database.SqlQuery<TicketCustomField>("CustomFields_Get @CategoryId", categoryParam).ToListAsync();
+            foreach (var item in customFields)
+            {
+                if (item.CustomFieldTypeId == (int)CustomFieldTypeEnum.List)
+                {
+                    item.PossibleValues = item.ConvertValuesToList(item.CustomFieldPossibleValue);
+                }
+            }
 
             ticketFeedbackViewModel.Ticket = model;
+            ticketFeedbackViewModel.CustomFields = customFields;
 
             ViewBag.TempId = Guid.NewGuid();
 

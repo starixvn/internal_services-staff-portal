@@ -77,6 +77,9 @@ namespace TicketDesk.Web.Client
             bundles.Add(new ScriptBundle("~/bundles/editticket")
                 .Include("~/Scripts/ticketdesk/edit-ticket.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/ticket-feedback")
+                .Include("~/Scripts/ticketdesk/TicketFeedback/edit-ticket.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/application-settings").Include(
                     "~/Scripts/ticketdesk/application-settings.js"));
 
