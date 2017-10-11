@@ -2,8 +2,8 @@
 @using System.Configuration
 @using TicketDesk.Domain.Model
 @using TicketDesk.Web.Client.ViewModels.Ticket
-@using TicketDesk.Web.Client.Infrastructure.Helpers
 @using TicketDesk.Core.Enumerations
+
 @model TicketFeedbackViewModel
 
 @section title { @New.Title }
@@ -62,7 +62,7 @@
                         @Html.HiddenFor(model => model.Ticket.CategoryId)
                         @Html.HiddenFor(model => model.Ticket.TicketId)
                         @Html.HiddenFor(model => model.Ticket.IsHtml)
-                        @Html.HiddenFor(model => model.TempId)
+                        @Html.HiddenFor(model => model.tempId)
 
                         @if (ViewBag.IsMultiProject)
                         {
@@ -195,7 +195,8 @@
                                             <div class="dz-message" data-dz-message><i class="fa fa-download "></i> @New.Attachment_Instructions</div>
                                             <div class="dropzone-previews" id="dz-preview"></div>
                                         </div>
-                                    }}
+                                    }
+                                }
                             </div>
                         </div>
 

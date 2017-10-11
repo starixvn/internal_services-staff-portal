@@ -81,13 +81,7 @@
         public static SelectList GetCategoryList(this Ticket ticket)
         {
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
-            var categories = context.TicketCategories;
-
-            return categories.ToSelectList(
-                x => x.CategoryId.ToString(),
-                x => x.Name,
-                "SELECT TICKET CATEGORY",
-                "0");
+            return context.TicketDeskSettings.GetCategoryList(true, ticket.Category);
         }
 
         public static SelectList GetTicketTypeList(this Ticket ticket)

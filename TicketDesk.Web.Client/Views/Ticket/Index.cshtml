@@ -37,7 +37,6 @@
     @Scripts.Render("~/bundles/summernote")
     @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())
 
-
     <script type="text/javascript">
 
         $(document).ready(function() {
@@ -71,15 +70,17 @@
 }
 
 <main role="main">
-    <div id="ticketDetailPanel" class="panel panel-info">
-        @Html.Action("TicketDetails", new { ticketId = Model.TicketId })
-    </div>
+    @*<div id="ticketDetailPanel" class="panel panel-info">
+            @Html.Action("TicketDetails", new { ticketId = Model.TicketId })
+        </div>*@
+
+
 
     <div class="panel panel-success">
         <div class="panel-heading" style="">
             <div class="btn-toolbar" role="toolbar">
                 <div id="activityButtonsPanel">
-                    @Html.Action("ActivityButtons", "TicketActivity", new {ticketId = Model.TicketId})
+                    @Html.Action("ActivityButtons", "TicketActivity", new { ticketId = Model.TicketId })
                 </div>
             </div>
         </div>
