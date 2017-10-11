@@ -1,9 +1,8 @@
 ﻿namespace TicketDesk.Web.Client.Models.Ticket
 {
     using System.Collections.Generic;
-    using System.Linq;
 
-    public class TicketCustomField
+    public class TicketFeedbackCustomField
     {
         public int CategoryId { get; set; }
 
@@ -19,15 +18,8 @@
 
         public string CustomFieldType { get; set; }
 
-        public string FormName { get; set; }
-
         public string Value { get; set; }
 
         public IList<string> PossibleValues { get; set; }
-
-        public IList<string> ConvertValuesToList(string values)
-        {
-            return values.Split(',').ToList();
-        }
     }
 }

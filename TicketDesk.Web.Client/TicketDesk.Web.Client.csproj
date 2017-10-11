@@ -381,7 +381,7 @@
     <Compile Include="Models\TicketEmail.cs" />
     <Compile Include="Models\Ticket\NewTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewFacilityTicketViewModel.cs" />
-    <Compile Include="Models\Ticket\TicketCustomField.cs" />
+    <Compile Include="Models\Ticket\TicketFeedbackCustomField.cs" />
     <Compile Include="Models\UserSignInViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\filemanager\connectors\asp\FileManagerController.cs" />

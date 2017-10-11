@@ -59,9 +59,10 @@
 
                         @Html.ValidationSummary(true, New.UnableCreateTicket, new { @class = "alert alert-danger" })
 
+                        @Html.HiddenFor(model => model.Ticket.CategoryId)
                         @Html.HiddenFor(model => model.Ticket.TicketId)
                         @Html.HiddenFor(model => model.Ticket.IsHtml)
-                        <input type="hidden" name="tempId" value="@ViewBag.TempId" />
+                        @Html.HiddenFor(model => model.TempId)
 
                         @if (ViewBag.IsMultiProject)
                         {
@@ -127,7 +128,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 col-sm-1 control-label text-right" for="summernote">@New.Details</label>
                                 <div class="col-md-8 col-sm-11">
-                                    <textarea id="wmd-input-ticketDetails" name="Details" data-val-required="" data-val="true">@Model.Ticket.Details</textarea>
+                                    <textarea id="wmd-input-ticketDetails" name="@Html.NameFor(model => model.Ticket.Details)" data-val-required="" data-val="true">@Model.Ticket.Details</textarea>
                                     @Html.ValidationMessageFor(model => model.Ticket.Details, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -198,21 +199,48 @@
                             </div>
                         </div>
 
-                        @foreach (var customField in Model.CustomFields)
+                        @for (int i = 0; i < Model.CustomFields.Count(); i++)
                         {
-                        <div class="form-group">
-                            @Html.CustomFieldLabelFor(customField, new { @class = "col-md-2 col-sm-1 control-label" })
-                            <div class="col-md-8 col-sm-11">
-                                @Html.CustomFieldFor(customField, new { @class = "form-control input-sm" })
-                            </div>
-                        </div>
-                        }
+                            var field = Model.CustomFields[i];
+                            if (field.CustomFieldTypeId == (int)CustomFieldTypes.List)
+                            {
+                                <div class="form-group">
+                                    @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label" })
+                                    <div class="col-md-8 col-sm-11">
+                                        @{
+                                            var possibleValues = Model.ConvertValuesToList(field.CustomFieldPossibleValue);
+                                        }
+                                        @foreach (var value in possibleValues)
+                                        {
+                                            <p>@Html.RadioButtonFor(m => m.CustomFields[i].Value, value, new { @class = "custom-field-radio" }) @value</p>
+                                        }
+                                    </div>
+                                </div>
+                                            }
+                                            else if (field.CustomFieldTypeId == (int)CustomFieldTypes.String)
+                                            {
+                                                <div class="form-group">
+                                                    @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label focus" })
+                                                    <div class="col-md-8 col-sm-11">
+                                                        <input type="text" name="@Html.NameFor(m=>m.CustomFields[i].Value)" value="@field.Value" class="form-control input-sm" tabindex="1" autofocus="">
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (field.CustomFieldTypeId == (int)CustomFieldTypes.TextArea)
+                                            {
 
-                        @foreach (var field in Model.CustomFields)
-                        {
-                            Html.RenderPartial("_FeedbackCustomField", field);
-                        }
+                                                <div class="form-group">
+                                                    @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label focus" })
+                                                    <div class="col-md-8 col-sm-11">
+                                                        <textarea name="@Html.NameFor(m=>m.CustomFields[i].Value)" value="@field.Value" class="form-control input-sm"></textarea>
+                                                    </div>
+                                                </div>
 
+                                            }
+
+                                            @Html.HiddenFor(m => m.CustomFields[i].CustomFieldId)
+
+                                            }
                     </div>
                     <div class="panel-footer">
                         <div class="">
@@ -221,7 +249,7 @@
                         </div>
                     </div>
                 </div>
-                                    }
+                                            }
         </div>
     </div>
 </main>

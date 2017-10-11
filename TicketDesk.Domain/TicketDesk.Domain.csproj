@@ -193,10 +193,6 @@
     <Compile Include="Migrations\201710091200001_Nexcel_Custom_Field_Schema.Designer.cs">
       <DependentUpon>201710091200001_Nexcel_Custom_Field_Schema.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710100347062_Nexcel_add_column_FormName_CustomField.cs" />
-    <Compile Include="Migrations\201710100347062_Nexcel_add_column_FormName_CustomField.Designer.cs">
-      <DependentUpon>201710100347062_Nexcel_add_column_FormName_CustomField.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -322,9 +318,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710091200001_Nexcel_Custom_Field_Schema.resx">
       <DependentUpon>201710091200001_Nexcel_Custom_Field_Schema.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710100347062_Nexcel_add_column_FormName_CustomField.resx">
-      <DependentUpon>201710100347062_Nexcel_add_column_FormName_CustomField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

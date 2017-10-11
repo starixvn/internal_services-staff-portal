@@ -46,7 +46,7 @@
     }
 
     function initialize() {
-        registerEventSubmit();
+        //registerEventSubmit();
         registerEventChangeRadioButton();
     }
 
