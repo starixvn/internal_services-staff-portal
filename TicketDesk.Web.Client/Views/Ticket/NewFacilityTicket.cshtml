@@ -188,16 +188,10 @@
                                 
                                 @foreach (var item in Model.Items)
                                 {
-                                    <div class="form-group">
+                                    <div class="form-group panel panel-info">
                                         @Html.EditorForCustomFieldItem(item)
                                     </div>
                                 }
-                                <div class="form-group">
-                                    @Html.CustomFieldLabelFor(Model.RequestType, new { @class = "col-md-2 col-sm-1 control-label" })
-                                    <div class="col-md-8 col-sm-11">
-                                        @Html.CustomFieldFor(Model.RequestType, new { @class = "form-control input-sm" })
-                                    </div>
-                                </div>
                             </div>
                         </div>
 

@@ -32,9 +32,9 @@
         }
 
         public static MvcHtmlString CustomFieldLabelFor(
-                this HtmlHelper html,
-                CustomField value,
-                object htmlAttributes = null)
+            this HtmlHelper html,
+            CustomField value,
+            object htmlAttributes = null)
         {
             TagBuilder label = new TagBuilder("label");
             label.Attributes.Add("for", "customfield_" + value.Id);
@@ -111,28 +111,24 @@
             return input?.ToString();
         }
 
-        public static MvcHtmlString EditorForCustomFieldItem(this HtmlHelper html, Item item, object htmlAttributes = null)
+        public static MvcHtmlString EditorForCustomFieldItem(this HtmlHelper html, Item item)
         {
-            TagBuilder tag = new TagBuilder("div");
+            var guid = Guid.NewGuid().ToString();
 
             // Index tag
             TagBuilder indexTag = new TagBuilder("input");
             indexTag.Attributes.Add("type", "hidden");
-            indexTag.Attributes.Add("name", "item.Index");
-            indexTag.Attributes.Add("value", Guid.NewGuid().ToString());
+            indexTag.Attributes.Add("name", "Items.Index");
+            indexTag.Attributes.Add("value", guid);
 
-            var itemNameTag = CustomFieldFor(html, item.ItemName);
-            var reasonTag = CustomFieldFor(html, item.Reason);
-
-            if (htmlAttributes != null)
-            {
-                var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
-                tag.MergeAttributes(attributes);
-            }
-
-            tag.InnerHtml = indexTag + itemNameTag.ToString() + reasonTag;
-
-            return new MvcHtmlString(tag.ToString());
+            var itemNameLabel = CustomFieldLabelFor(html, item.ItemName, new { For = "Items.[" + guid + "].ItemName" });
+            var itemNameTag = CustomFieldFor(html, item.ItemName,
+                new { Name = "Items.[" + guid + "].ItemName", Id = "Items.[" + guid + "].ItemName" });
+            var reasonLabel = CustomFieldLabelFor(html, item.Reason, new { For = "Items.[" + guid + "].Reason" });
+            var reasonTag = CustomFieldFor(html, item.Reason,
+                new { Name = "Items.[" + guid + "].Reason", Id = "Items.[" + guid + "].Reason" });
+            
+            return new MvcHtmlString(indexTag + itemNameLabel.ToString() + itemNameTag + reasonLabel + reasonTag);
         }
     }
 }
