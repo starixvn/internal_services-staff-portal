@@ -81,7 +81,42 @@
 
             ViewBag.TempId = Guid.NewGuid();
 
+            if (categoryId == 1)
+            {
+                return View("NewFacilityTicket", model);
+            }
+
             return View(model);
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [Route("new-facility")]
+        public async Task<ActionResult> NewFacilityTicket()
+        {
+            AddTicketViewModel model = new AddTicketViewModel
+            {
+                Ticket = new Ticket()
+            };
+
+            var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == (int)TicketCategoryTypes.Facility)
+                .Select(x => x.CustomFieldId);
+
+            model.CustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
+
+            foreach (CustomField customField in model.CustomFields)
+            {
+                customField.CustomFieldValues =
+                    Context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
+            }
+
+            model.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
+            model.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
+
+            await SetProjectInfoForModelAsync(model.Ticket);
+
+            ViewBag.TempId = Guid.NewGuid();
+
+            return View("NewFacilityTicket", model);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]

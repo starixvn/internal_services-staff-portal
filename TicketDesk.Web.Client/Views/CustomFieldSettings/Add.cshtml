@@ -10,9 +10,14 @@
 
 @using (Html.BeginForm("Add", "CustomFieldSettings", FormMethod.Post, new { @class = "form-group" }))
 {
-    <div class="input-group">
+    @*<div class="input-group">
         @Html.LabelFor(x => x.TicketCategoryId)
         @Html.DropDownListFor(x => x.TicketCategoryId, Model.TicketCategories, new { @class = "form-control" })
+    </div>*@
+
+    <div class="input-group">
+        @Html.LabelFor(x => x.TicketCategoryIds)
+        @Html.ListBoxFor(x => x.TicketCategoryIds, Model.TicketCategories, new { @class = "form-control" })
     </div>
 
     <div class="input-group">

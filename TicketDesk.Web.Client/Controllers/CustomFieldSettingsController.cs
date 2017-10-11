@@ -84,11 +84,16 @@
 
             _domainContext.SaveChanges();
 
-            _domainContext.TicketCategoryCustomField.Add(new TicketCategoryCustomField
+            foreach (var id in viewModel.TicketCategoryIds)
             {
-                CategoryId = viewModel.TicketCategoryId,
-                CustomFieldId = customField.Id
-            });
+                var ticketCategoryCustomField = new TicketCategoryCustomField
+                {
+                    CategoryId = id,
+                    CustomFieldId = customField.Id
+                };
+
+                _domainContext.TicketCategoryCustomField.Add(ticketCategoryCustomField);
+            }
 
             _domainContext.SaveChanges();
 

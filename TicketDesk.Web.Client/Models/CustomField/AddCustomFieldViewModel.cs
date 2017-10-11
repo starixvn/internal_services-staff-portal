@@ -6,8 +6,8 @@
 
     public class AddCustomFieldViewModel
     {
-        [Display(Name = "Ticket Category")]
-        public int TicketCategoryId { get; set; }
+        [Display(Name = "Apply to categories")]
+        public ICollection<int> TicketCategoryIds { get; set; }
 
         public IEnumerable<SelectListItem> TicketCategories { get; set; }
 
