@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Infrastructure.Helpers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using System.Text;
@@ -8,6 +9,7 @@
     using Antlr.Runtime.Misc;
     using Core.Enumerations;
     using Domain.Model;
+    using Models.Ticket;
 
     public static class CustomFieldForHelper
     {
@@ -107,6 +109,30 @@
             }
 
             return input?.ToString();
+        }
+
+        public static MvcHtmlString EditorForCustomFieldItem(this HtmlHelper html, Item item, object htmlAttributes = null)
+        {
+            TagBuilder tag = new TagBuilder("div");
+
+            // Index tag
+            TagBuilder indexTag = new TagBuilder("input");
+            indexTag.Attributes.Add("type", "hidden");
+            indexTag.Attributes.Add("name", "item.Index");
+            indexTag.Attributes.Add("value", Guid.NewGuid().ToString());
+
+            var itemNameTag = CustomFieldFor(html, item.ItemName);
+            var reasonTag = CustomFieldFor(html, item.Reason);
+
+            if (htmlAttributes != null)
+            {
+                var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+                tag.MergeAttributes(attributes);
+            }
+
+            tag.InnerHtml = indexTag + itemNameTag.ToString() + reasonTag;
+
+            return new MvcHtmlString(tag.ToString());
         }
     }
 }

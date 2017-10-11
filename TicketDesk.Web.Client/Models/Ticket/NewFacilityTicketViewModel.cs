@@ -14,6 +14,8 @@
 
     public class Item
     {
+        public string Index { get; set; }
+
         public CustomField ItemName { get; set; }
 
         public CustomField Reason { get; set; }

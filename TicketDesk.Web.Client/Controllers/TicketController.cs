@@ -79,11 +79,6 @@
 
             ViewBag.TempId = Guid.NewGuid();
 
-            if (categoryId == 1)
-            {
-                return View("NewFacilityTicket", model);
-            }
-
             return View(model);
         }
 
