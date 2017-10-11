@@ -11,13 +11,13 @@
 
     public static class CustomFieldForHelper
     {
-        public static MvcHtmlString CustomFieldFor<TModel, TValue>(
-            this HtmlHelper<TModel> html,
-            Expression<Func<TModel, TValue>> propertyExpression)
-        {
-            var htmlFieldName = ExpressionHelper.GetExpressionText(propertyExpression);
-            return new MvcHtmlString("<p>TEST</p>");
-        }
+        //public static MvcHtmlString CustomFieldFor<TModel, TValue>(
+        //    this HtmlHelper<TModel> html,
+        //    Expression<Func<TModel, TValue>> propertyExpression)
+        //{
+        //    var htmlFieldName = ExpressionHelper.GetExpressionText(propertyExpression);
+        //    return new MvcHtmlString("<p>TEST</p>");
+        //}
 
         public static MvcHtmlString CustomFieldFor(
             this HtmlHelper html,
@@ -90,11 +90,13 @@
                     input.Attributes.Add("type", "text");
                     input.Attributes.Add("id", "customfield_" + customField.Id);
                     input.Attributes.Add("name", customField.Id.ToString());
+                    input.Attributes.Add("placeholder", customField.Values);
                     break;
                 case (int)CustomFieldTypes.TextArea:
                     input = new TagBuilder("textarea");
                     input.Attributes.Add("id", "customfield_" + customField.Id);
                     input.Attributes.Add("name", customField.Id.ToString());
+                    input.Attributes.Add("placeholder", customField.Values);
                     break;
             }
 

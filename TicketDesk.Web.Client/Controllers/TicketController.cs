@@ -8,20 +8,17 @@
     using Fanex.NAP.Core.Web.Attribute;
     using IO;
     using Localization.Controllers;
+    using Models.Ticket;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Validation;
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Models.Ticket;
     using ViewModels.Ticket;
-    using System.Data.SqlClient;
 
-    /// <summary>
-    /// Class TicketController.
-    /// </summary>
     [RoutePrefix("ticket")]
     [Route("{action=index}")]
     public class TicketController : BaseController
@@ -58,7 +55,7 @@
         [Route("new")]
         public async Task<ActionResult> New(int categoryId = 1)
         {
-            AddTicketViewModel model = new AddTicketViewModel
+            NewTicketViewModel model = new NewTicketViewModel
             {
                 Ticket = new Ticket()
             };
@@ -93,21 +90,31 @@
         [Route("new-facility")]
         public async Task<ActionResult> NewFacilityTicket()
         {
-            AddTicketViewModel model = new AddTicketViewModel
+            NewFacilityTicketViewModel model = new NewFacilityTicketViewModel
             {
                 Ticket = new Ticket()
             };
 
             var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == (int)TicketCategoryTypes.Facility)
                 .Select(x => x.CustomFieldId);
-
-            model.CustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
-
-            foreach (CustomField customField in model.CustomFields)
+            
+            var avalableCustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
+            
+            foreach (CustomField customField in avalableCustomFields)
             {
                 customField.CustomFieldValues =
                     Context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
             }
+
+            model.RequestType = avalableCustomFields.First(x => x.Name == "Request Type");
+
+            model.Items = new List<Item>();
+            Item item = new Item
+            {
+                ItemName = avalableCustomFields.First(x => x.Name == "Item"),
+                Reason = avalableCustomFields.First(x => x.Name == "Reason for Repair/Improvement Request")
+            };
+            model.Items.Add(item);
 
             model.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
             model.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
