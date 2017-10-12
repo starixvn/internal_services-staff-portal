@@ -185,40 +185,40 @@
                         <div class="panel panel-info">
                             <div class="panel-heading">Specialization</div>
                             <div class="panel-body">
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Ticket.TicketType, new { @class = "col-md-2 col-sm-1 control-label" })
-                                    <div class="col-md-2 col-sm-3">
-                                        @Html.ValidationMessageFor(model => model.Ticket.TicketType, "", new { @class = "text-danger" })
-                                    </div>
-
-                                    @if (Model.Ticket.AllowEditPriorityList())
-                                    {
-                                        @Html.LabelFor(model => model.Ticket.Priority, new { @class = "col-md-1 col-sm-1 control-label" })
+                                @*<div class="form-group">
+                                        @Html.LabelFor(model => model.Ticket.TicketType, new { @class = "col-md-2 col-sm-1 control-label" })
                                         <div class="col-md-2 col-sm-3">
-                                            @Html.DropDownListFor(model => model.Ticket.Priority, Model.Ticket.GetPriorityList(), new { @class = "form-control input-sm", tabindex = 4 })
-                                            @Html.ValidationMessageFor(model => model.Ticket.Priority, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.Ticket.TicketType, "", new { @class = "text-danger" })
                                         </div>
-                                    }
-                                </div>
 
-                                <div class="form-group">
-                                    @if (Model.Ticket.AllowSetOwner())
-                                    {
-                                        @Html.LabelFor(model => model.Ticket.Owner, new { @class = "col-md-2 col-sm-1 control-label" })
-                                        <div class="col-md-3 col-sm-5">
-                                            @Html.DropDownListFor(model => model.Ticket.Owner, Model.Ticket.GetOwnersList(), new { @class = "form-control input-sm", tabindex = 8 })
-                                            @Html.ValidationMessageFor(model => model.Ticket.Owner, "", new { @class = "text-danger" })
-                                        </div>
-                                    }
-                                    @if (Model.Ticket.AllowSetAssigned())
-                                    {
-                                        @Html.LabelFor(model => model.Ticket.AssignedTo, new { @class = "col-md-2 col-sm-2 control-label" })
-                                        <div class="col-md-3 col-sm-4">
-                                            @Html.DropDownListFor(model => model.Ticket.AssignedTo, Model.Ticket.GetAssignedToList(), new { @class = "form-control input-sm", tabindex = 9 })
-                                            @Html.ValidationMessageFor(model => model.Ticket.AssignedTo, "", new { @class = "text-danger" })
-                                        </div>
-                                    }
-                                </div>
+                                        @if (Model.Ticket.AllowEditPriorityList())
+                                        {
+                                            @Html.LabelFor(model => model.Ticket.Priority, new { @class = "col-md-1 col-sm-1 control-label" })
+                                            <div class="col-md-2 col-sm-3">
+                                                @Html.DropDownListFor(model => model.Ticket.Priority, Model.Ticket.GetPriorityList(), new { @class = "form-control input-sm", tabindex = 4 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Priority, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                    </div>*@
+
+                                @*<div class="form-group">
+                                        @if (Model.Ticket.AllowSetOwner())
+                                        {
+                                            @Html.LabelFor(model => model.Ticket.Owner, new { @class = "col-md-2 col-sm-1 control-label" })
+                                            <div class="col-md-3 col-sm-5">
+                                                @Html.DropDownListFor(model => model.Ticket.Owner, Model.Ticket.GetOwnersList(), new { @class = "form-control input-sm", tabindex = 8 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.Owner, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        @if (Model.Ticket.AllowSetAssigned())
+                                        {
+                                            @Html.LabelFor(model => model.Ticket.AssignedTo, new { @class = "col-md-2 col-sm-2 control-label" })
+                                            <div class="col-md-3 col-sm-4">
+                                                @Html.DropDownListFor(model => model.Ticket.AssignedTo, Model.Ticket.GetAssignedToList(), new { @class = "form-control input-sm", tabindex = 9 })
+                                                @Html.ValidationMessageFor(model => model.Ticket.AssignedTo, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                    </div>*@
 
                                 <div class="form-group">
                                     @Html.CustomFieldLabelFor(Model.RequestType, new { @class = "col-md-2 col-sm-1 control-label" })
@@ -227,14 +227,25 @@
                                     </div>
                                 </div>
 
-                                <div id="item-section">
-                                    @for (int i = 0; i < Model.Items.Count; i++)
-                                    {
-                                        <div class="form-group panel panel-info ">
-                                            @Html.EditorForCustomFieldItem(Model.Items.ElementAt(i))
-                                            <button class="btn btn-danger remove-button">Remove</button>
-                                        </div>
-                                    }
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">Items</div>
+                                    <div id="item-section" class="panel-body form-group">
+                                        @for (int i = 0; i < Model.Items.Count; i++)
+                                        {
+                                            var guid = Guid.NewGuid().ToString();
+
+                                            <div>
+                                                @Html.CustomFieldIndex("Items", guid)
+                                                @Html.CustomFieldLabelWithGuidIndexFor(Model.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "col-md-2 col-sm-1 control-label" })
+                                                @Html.CustomFieldWithGuidIndexFor(Model.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "form-control input-sm" })
+
+                                                @Html.CustomFieldLabelWithGuidIndexFor(Model.Items.ElementAt(i).Reason, guid, "Items", new { @class = "col-md-2 col-sm-1 control-label" })
+                                                @Html.CustomFieldWithGuidIndexFor(Model.Items.ElementAt(i).Reason, guid, "Items", new { @class = "form-control input-sm" })
+
+                                                <button class="btn btn-danger remove-button">Remove</button>
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
 
                                 <button class="btn btn-default add-more-button" data-class="item-section">Add more</button>

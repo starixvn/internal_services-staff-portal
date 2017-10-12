@@ -1,32 +1,64 @@
 ﻿namespace TicketDesk.Web.Client.Infrastructure.Helpers
 {
+    using Core.Enumerations;
+    using Domain.Model;
     using System;
-    using System.Collections.Generic;
-    using System.Linq.Expressions;
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Web.Mvc;
-    using Antlr.Runtime.Misc;
-    using Core.Enumerations;
-    using Domain.Model;
-    using Models.Ticket;
 
     public static class CustomFieldForHelper
     {
-        //public static MvcHtmlString CustomFieldFor<TModel, TValue>(
-        //    this HtmlHelper<TModel> html,
-        //    Expression<Func<TModel, TValue>> propertyExpression)
-        //{
-        //    var htmlFieldName = ExpressionHelper.GetExpressionText(propertyExpression);
-        //    return new MvcHtmlString("<p>TEST</p>");
-        //}
-
         public static MvcHtmlString CustomFieldFor(
             this HtmlHelper html,
             CustomField value,
             object htmlAttributes = null)
         {
-            var str = BuildHtmlString(value, htmlAttributes);
+            var str = BuildHtmlString(value, null, null, htmlAttributes);
+
+            return new MvcHtmlString(str);
+        }
+
+        public static MvcHtmlString CustomFieldIndex(this HtmlHelper html, string parentName, string guid)
+        {
+            // Index tag
+            TagBuilder indexTag = new TagBuilder("input");
+            indexTag.Attributes.Add("type", "hidden");
+            indexTag.Attributes.Add("name", parentName + ".Index");
+            indexTag.Attributes.Add("value", guid);
+
+            return new MvcHtmlString(indexTag.ToString());
+        }
+
+        public static MvcHtmlString CustomFieldLabelWithGuidIndexFor(
+            this HtmlHelper html,
+            CustomField customField,
+            string guid,
+            string parentName,
+            object htmlAttributes = null)
+        {
+            TagBuilder label = new TagBuilder("label");
+            label.Attributes.Add("for", parentName + ".[" + guid + "].customfield_" + customField.Id);
+            label.SetInnerText(customField.Name);
+
+            if (htmlAttributes != null)
+            {
+                var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+                label.MergeAttributes(attributes);
+            }
+
+            return new MvcHtmlString(label.ToString());
+        }
+
+        public static MvcHtmlString CustomFieldWithGuidIndexFor(
+            this HtmlHelper html,
+            CustomField value,
+            string guid,
+            string parentName,
+            object htmlAttributes = null)
+        {
+            
+            var str = BuildHtmlString(value, Guid.NewGuid().ToString(), parentName, htmlAttributes);
 
             return new MvcHtmlString(str);
         }
@@ -51,9 +83,11 @@
 
         private static string BuildHtmlString(
             CustomField customField,
+            string guid = null,
+            string parentName = null,
             object htmlAttributes = null)
         {
-            TagBuilder input = null;
+            TagBuilder input;
             switch (customField.CustomFieldTypeId)
             {
                 case (int)CustomFieldTypes.Bool:
@@ -79,20 +113,15 @@
                     input = new TagBuilder("select");
                     input.Attributes.Add("id", "customfield_" + customField.Id);
                     input.Attributes.Add("name", customField.Id.ToString());
+                    StringBuilder stringBuilder = new StringBuilder();
                     foreach (string s in values)
                     {
                         TagBuilder option = new TagBuilder("option");
                         option.Attributes.Add("value", s);
                         option.SetInnerText(s);
-                        input.InnerHtml += option.ToString();
+                        stringBuilder.Append(option);
                     }
-                    break;
-                case (int)CustomFieldTypes.String:
-                    input = new TagBuilder("input");
-                    input.Attributes.Add("type", "text");
-                    input.Attributes.Add("id", "customfield_" + customField.Id);
-                    input.Attributes.Add("name", customField.Id.ToString());
-                    input.Attributes.Add("placeholder", customField.Values);
+                    input.InnerHtml = stringBuilder.ToString();
                     break;
                 case (int)CustomFieldTypes.TextArea:
                     input = new TagBuilder("textarea");
@@ -100,35 +129,29 @@
                     input.Attributes.Add("name", customField.Id.ToString());
                     input.Attributes.Add("placeholder", customField.Values);
                     break;
+                //// case (int)CustomFieldTypes.String:
+                default:
+                    input = new TagBuilder("input");
+                    input.Attributes.Add("type", "text");
+                    input.Attributes.Add("id", "customfield_" + customField.Id);
+                    input.Attributes.Add("name", customField.Id.ToString());
+                    input.Attributes.Add("placeholder", customField.Values);
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(guid) && !string.IsNullOrEmpty(parentName))
+            {
+                input.Attributes["id"] = parentName + ".[" + guid + "].customfield_" + customField.Id;
+                input.Attributes["name"] = parentName + ".[" + guid + "].customfield_" + customField.Id;
             }
 
             if (htmlAttributes != null)
             {
                 var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
-                input?.MergeAttributes(attributes);
+                input.MergeAttributes(attributes);
             }
 
-            return input?.ToString();
-        }
-
-        public static MvcHtmlString EditorForCustomFieldItem(this HtmlHelper html, Item item)
-        {
-            var guid = Guid.NewGuid().ToString();
-
-            // Index tag
-            TagBuilder indexTag = new TagBuilder("input");
-            indexTag.Attributes.Add("type", "hidden");
-            indexTag.Attributes.Add("name", "Items.Index");
-            indexTag.Attributes.Add("value", guid);
-
-            var itemNameLabel = CustomFieldLabelFor(html, item.ItemName, new { For = "Items.[" + guid + "].ItemName" });
-            var itemNameTag = CustomFieldFor(html, item.ItemName,
-                new { Name = "Items.[" + guid + "].ItemName", Id = "Items.[" + guid + "].ItemName" });
-            var reasonLabel = CustomFieldLabelFor(html, item.Reason, new { For = "Items.[" + guid + "].Reason" });
-            var reasonTag = CustomFieldFor(html, item.Reason,
-                new { Name = "Items.[" + guid + "].Reason", Id = "Items.[" + guid + "].Reason" });
-            
-            return new MvcHtmlString(indexTag + itemNameLabel.ToString() + itemNameTag + reasonLabel + reasonTag);
+            return input.ToString();
         }
     }
 }
