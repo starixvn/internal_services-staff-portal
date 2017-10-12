@@ -2,7 +2,7 @@
 @using System.Configuration
 @using TicketDesk.Domain.Model
 @using TicketDesk.Web.Client.ViewModels.Ticket
-@using TicketDesk.Core.Enumerations
+@using TicketDesk.Web.Client.Infrastructure.Helpers
 
 @model TicketFeedbackViewModel
 
@@ -64,8 +64,6 @@
                         @Html.HiddenFor(model => model.Ticket.IsHtml)
                         @Html.HiddenFor(model => model.tempId)
 
-
-
                         @if (ViewBag.IsMultiProject)
                         {
                             <div class="form-group">
@@ -80,7 +78,6 @@
                         {
                             @Html.HiddenFor(model => model.Ticket.ProjectId)
                         }
-
 
                         @Html.HiddenFor(model => model.Ticket.Title)
                         @Html.HiddenFor(model => model.Ticket.TicketType)
@@ -107,49 +104,8 @@
                             }
                         </div>
 
+                        @Html.PartialWithPrefix(m => m.CustomFields, "_FeedbackCustomField")
 
-                        @for (int i = 0; i < Model.CustomFields.Count(); i++)
-                        {
-                            var field = Model.CustomFields[i];
-                            if (field.CustomFieldTypeId == (int)CustomFieldTypes.List)
-                            {
-                                <div class="form-group">
-                                    @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label" })
-                                    <div class="col-md-8 col-sm-11">
-                                        @{
-                                            var possibleValues = Model.ConvertValuesToList(field.CustomFieldPossibleValue);
-                                        }
-                                        @foreach (var value in possibleValues)
-                                        {
-                                            <p>@Html.RadioButtonFor(m => m.CustomFields[i].Value, value, new { @class = "custom-field-radio" }) @value</p>
-                                        }
-                                    </div>
-                                </div>
-                                            }
-                                            else if (field.CustomFieldTypeId == (int)CustomFieldTypes.String)
-                                            {
-                                                <div class="form-group">
-                                                    @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label focus" })
-                                                    <div class="col-md-8 col-sm-11">
-                                                        <input type="text" name="@Html.NameFor(m=>m.CustomFields[i].Value)" value="@field.Value" class="form-control input-sm" tabindex="1" autofocus="">
-                                                    </div>
-                                                </div>
-                                            }
-                                            else if (field.CustomFieldTypeId == (int)CustomFieldTypes.TextArea)
-                                            {
-
-                                                <div class="form-group">
-                                                    @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label focus" })
-                                                    <div class="col-md-8 col-sm-11">
-                                                        <textarea name="@Html.NameFor(m=>m.CustomFields[i].Value)" value="@field.Value" class="form-control input-sm"></textarea>
-                                                    </div>
-                                                </div>
-
-                                            }
-
-                                            @Html.HiddenFor(m => m.CustomFields[i].CustomFieldId)
-
-                                            }
                         <div class="form-group">
                             <label class="col-md-2 col-sm-1 control-label">@New.Files</label>
                             <div class="col-md-8 col-sm-11">
@@ -179,7 +135,7 @@
                         </div>
                     </div>
                 </div>
-                                            }
+                                    }
         </div>
     </div>
 </main>

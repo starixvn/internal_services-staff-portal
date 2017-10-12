@@ -16,24 +16,39 @@
 
 @using TicketDesk.Domain
 @using TicketDesk.Domain.Model
+@using TicketDesk.Core.Enumerations;
 @model  Ticket
 @{
     var activity = (TicketActivity)ViewBag.Activity;
     var ajaxOptions = new AjaxOptions { UpdateTargetId = "activityPanel", OnBegin = "editTicket.beginActivity", OnSuccess = "editTicket.completeActivity", OnFailure = "editTicket.failActivity" };
+
+    var isEditTicketInfoActivity = (activity == TicketActivity.EditTicketInfo);
+    var categoryEnum = (TicketCategoryTypes)Model.CategoryId;
+    var actionName = isEditTicketInfoActivity ? "EditTicket" + categoryEnum.ToString() : activity.ToString();
 }
-@using (Ajax.BeginForm(activity.ToString(), "TicketActivity", new { ticketId = Model.TicketId }, ajaxOptions, new { @class = "form-horizontal" }))
+@using (Ajax.BeginForm(actionName, "TicketActivity", new { ticketId = Model.TicketId, Model }, ajaxOptions, new { @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" id="tempId" value="@ViewBag.TempId" />
     <div id="activityBody">
-        
-        @Html.Partial(string.Format("_{0}", activity), Model)
+        @if (isEditTicketInfoActivity)
+        {
+            if (categoryEnum == TicketCategoryTypes.Feedback)
+            {
+                @Html.Action("GetTicketFeedbackInfo", "TicketActivity", new { ticketId = Model.TicketId, categoryId = Model.CategoryId })
+            }
+        }
+        else
+        {
+            @Html.Partial(string.Format("_{0}", activity), Model)
+        }
+
         @Html.Partial("_ActivityComment", new TicketEvent() { IsHtml = ViewBag.IsEditorDefaultHtml })
     </div>
+
     <div class="panel-footer">
         <div>
             <button type="submit" class="btn btn-success" tabindex="25">@activity.GetDisplayName()</button>&nbsp;&nbsp;<a href="#" onclick="return editTicket.cancelActivity(event);">@Strings.Form_CancelOption</a>
         </div>
     </div>
 }
-

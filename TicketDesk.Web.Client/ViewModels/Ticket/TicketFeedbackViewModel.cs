@@ -12,10 +12,5 @@
         public IList<TicketFeedbackCustomField> CustomFields { get; set; }
 
         public Guid tempId { get; set; }
-
-        public IList<string> ConvertValuesToList(string values)
-        {
-            return values.Split(new string[] { "\r\n" }, StringSplitOptions.None);
-        }
     }
 }

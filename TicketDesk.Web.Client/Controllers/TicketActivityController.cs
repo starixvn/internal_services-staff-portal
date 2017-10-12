@@ -16,9 +16,11 @@ namespace TicketDesk.Web.Client.Controllers
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Models.Ticket;
     using System;
     using System.Configuration;
     using System.Data.Entity;
+    using System.Data.SqlClient;
     using System.Globalization;
     using System.Linq;
     using System.Security;
@@ -47,6 +49,7 @@ namespace TicketDesk.Web.Client.Controllers
         public async Task<ActionResult> LoadActivity(TicketActivity activity, int ticketId, Guid? tempId)
         {
             var ticket = await Context.Tickets.FindAsync(ticketId);
+
             Context.TicketActions.IsTicketActivityValid(ticket, activity);
             ViewBag.CommentRequired = activity.IsCommentRequired();
             ViewBag.Activity = activity;
@@ -323,6 +326,54 @@ namespace TicketDesk.Web.Client.Controllers
             ViewBag.Activity = activity;
             ViewBag.IsEditorDefaultHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
             return PartialView("_ActivityForm", ticket);
+        }
+
+        [Route("get-ticketfeedback-info")]
+        public ActionResult GetTicketFeedbackInfo(int ticketId, int categoryId)
+        {
+            SqlParameter categoryParam = new SqlParameter("@CategoryId", categoryId);
+            var customFields = Context.Database.SqlQuery<TicketFeedbackCustomField>("TicketFeedbackCustomFields_Get @CategoryId", categoryParam).ToList();
+
+            foreach (var field in customFields)
+            {
+                field.Value = Context.CustomFieldValues.Where(x => (x.TicketId == ticketId) && (x.CustomFieldId == field.CustomFieldId)).FirstOrDefault().Value;
+            }
+
+            ViewData.TemplateInfo.HtmlFieldPrefix = "CustomFields";
+            return PartialView("~/Views/Ticket/_FeedbackCustomField.cshtml", customFields);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("edit-ticket-feedback")]
+        public async Task<ActionResult> EditTicketFeedback(
+    int ticketId,
+    int projectId,
+    [ModelBinder(typeof(SummernoteModelBinder))] string comment,
+    string title,
+    string details,
+    string priority,
+    string ticketType,
+    string category,
+    string owner,
+    string tagList)
+        {
+            details = details.StripHtmlWhenEmpty();
+            var projectName = await Context.Projects.Where(p => p.ProjectId == projectId).Select(s => s.ProjectName).FirstOrDefaultAsync();
+            var activityFn = Context.TicketActions.EditTicketInfo(
+                comment,
+                projectId,
+                projectName,
+                title,
+                details,
+                priority,
+                ticketType,
+                category,
+                owner,
+                tagList,
+                Context.TicketDeskSettings);
+
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.EditTicketInfo);
         }
     }
 }

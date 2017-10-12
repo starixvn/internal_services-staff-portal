@@ -1,5 +1,4 @@
-﻿
-namespace TicketDesk.Core.Enumerations
+﻿namespace TicketDesk.Core.Enumerations
 {
     using System.ComponentModel;
 
@@ -25,6 +24,7 @@ namespace TicketDesk.Core.Enumerations
 
         [Description("Feedback")]
         Feedback = 7
+
     }
 
 }

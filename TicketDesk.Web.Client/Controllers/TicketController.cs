@@ -343,8 +343,6 @@
         {
             Context.Tickets.Add(model.Ticket);
 
-            await Context.SaveChangesAsync();
-
             foreach (var field in model.CustomFields)
             {
                 var customFieldValue = new CustomFieldValue();

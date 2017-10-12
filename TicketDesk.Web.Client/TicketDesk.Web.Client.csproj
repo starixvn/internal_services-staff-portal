@@ -344,6 +344,7 @@
     <Compile Include="Infrastructure\Helpers\JsonCamelCaseResult.cs" />
     <Compile Include="Infrastructure\Helpers\MimeTypeMap.cs" />
     <Compile Include="Infrastructure\Helpers\PromptForHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\RazorViewHelper.cs" />
     <Compile Include="Infrastructure\Helpers\SortableColumnHeaderHelper.cs" />
     <Compile Include="Infrastructure\Identity\FakeAuthenticationManager.cs" />
     <Compile Include="Infrastructure\Identity\TicketDeskContextSecurityProvider.cs" />
@@ -2234,6 +2235,8 @@
     <Content Include="Views\Ticket\_TicketAttachedFiles.cshtml" />
     <Content Include="Views\Ticket\NewFacilityTicket.cshtml" />
     <Content Include="Views\Ticket\_TicketFeedbackDetails.cshtml" />
+    <Content Include="Views\TicketActivity\Feedback\_EditTicketInfo.cshtml" />
+    <Content Include="Views\Ticket\_FeedbackCustomField.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
