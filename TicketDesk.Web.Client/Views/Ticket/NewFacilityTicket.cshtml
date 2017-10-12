@@ -41,6 +41,47 @@
             window.ticketFileUploader.activate(uploaderConfig);
         })();
     </script>
+
+    <script>
+        function GenerateGuid() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+            }
+
+            return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4() + "-" + s4() + s4() + s4();
+        }
+
+        function AssignAddMoreButton() {
+            $(".add-more-button").click(function (event) {
+                event.preventDefault();
+                var id = "#" + $(this).data("class");
+                var clone = $(id).children().last().clone();
+                var guid = clone.children().first().val();
+                var regex = new RegExp(guid, "g");
+                var newHtml = clone.html(function (i, oldHtml) {
+                    return oldHtml.replace(regex, GenerateGuid());
+                });
+                $(id).append(newHtml);
+
+                $(".remove-button").show();
+                $(".remove-button:first").hide();
+            });
+        }
+
+        function AssignRemoveButton() {
+            $(".remove-button:first").hide();
+            $("body").on("click",".remove-button", function() {
+                $(this).parent().remove();
+            });
+        }
+
+        $(document).ready(function() {
+            AssignAddMoreButton();
+            AssignRemoveButton();
+        });
+    </script>
 }
 <main>
     <div class="container">
@@ -149,7 +190,7 @@
                                     <div class="col-md-2 col-sm-3">
                                         @Html.ValidationMessageFor(model => model.Ticket.TicketType, "", new { @class = "text-danger" })
                                     </div>
-                                    
+
                                     @if (Model.Ticket.AllowEditPriorityList())
                                     {
                                         @Html.LabelFor(model => model.Ticket.Priority, new { @class = "col-md-1 col-sm-1 control-label" })
@@ -178,20 +219,25 @@
                                         </div>
                                     }
                                 </div>
-                                
+
                                 <div class="form-group">
                                     @Html.CustomFieldLabelFor(Model.RequestType, new { @class = "col-md-2 col-sm-1 control-label" })
                                     <div class="col-md-8 col-sm-11">
                                         @Html.CustomFieldFor(Model.RequestType, new { @class = "form-control input-sm" })
                                     </div>
                                 </div>
-                                
-                                @foreach (var item in Model.Items)
-                                {
-                                    <div class="form-group panel panel-info">
-                                        @Html.EditorForCustomFieldItem(item)
-                                    </div>
-                                }
+
+                                <div id="item-section">
+                                    @for (int i = 0; i < Model.Items.Count; i++)
+                                    {
+                                        <div class="form-group panel panel-info ">
+                                            @Html.EditorForCustomFieldItem(Model.Items.ElementAt(i))
+                                            <button class="btn btn-danger remove-button">Remove</button>
+                                        </div>
+                                    }
+                                </div>
+
+                                <button class="btn btn-default add-more-button" data-class="item-section">Add more</button>
                             </div>
                         </div>
 
@@ -229,7 +275,7 @@
                         </div>
                     </div>
                 </div>
-            }
+                                            }
         </div>
     </div>
 </main>

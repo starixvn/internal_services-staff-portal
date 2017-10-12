@@ -112,12 +112,12 @@
             };
             model.Items.Add(item);
 
-            item = new Item
-            {
-                ItemName = avalableCustomFields.First(x => x.Name == "Item"),
-                Reason = avalableCustomFields.First(x => x.Name == "Reason for Repair/Improvement Request")
-            };
-            model.Items.Add(item);
+            //item = new Item
+            //{
+            //    ItemName = avalableCustomFields.First(x => x.Name == "Item"),
+            //    Reason = avalableCustomFields.First(x => x.Name == "Reason for Repair/Improvement Request")
+            //};
+            //model.Items.Add(item);
 
             model.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
             model.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
