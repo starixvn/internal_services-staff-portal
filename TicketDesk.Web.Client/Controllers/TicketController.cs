@@ -283,15 +283,6 @@
         {
             var ticket = model.Ticket;
 
-            if (ticket.IsHtml)
-            {
-                ticket.Details = ticket.Details.StripHtmlWhenEmpty();
-                if (string.IsNullOrEmpty(ticket.Details))
-                {
-                    ModelState.AddModelError("Details", Strings.RequiredField);
-                }
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -318,7 +309,11 @@
         {
             var categoryId = (int)TicketCategoryTypes.Feedback;
             var ticket = Context.Tickets.Find(ticketId);
-            var viewModel = new TicketFeedbackViewModel();
+            var viewModel = new TicketFeedbackViewModel
+            {
+                Ticket = ticket,
+                CustomFields = new List<TicketFeedbackCustomField>()
+            };
 
             var ticketCategory = Context.TicketCategories.Where(x => x.CategoryId == categoryId).First();
             var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == categoryId)
@@ -333,11 +328,10 @@
                     CategoryId = categoryId,
                     CustomFieldId = customField.Id,
                     CustomFieldName = customField.Name,
-                    Value = Context.CustomFieldValues.Where(x => (x.CustomFieldId == customField.Id) && (x.TicketId == ticketId)).First().Value
+                    Value = Context.CustomFieldValues.Where(x => (x.CustomFieldId == customField.Id) && (x.TicketId == ticketId)).FirstOrDefault().Value
                 });
             }
 
-            viewModel.Ticket = ticket;
             viewModel.Ticket.CategoryName = ticketCategory.Name;
 
             ViewBag.DisplayProjects = Context.Projects.Any();

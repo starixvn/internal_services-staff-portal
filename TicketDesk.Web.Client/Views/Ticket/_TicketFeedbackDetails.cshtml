@@ -12,13 +12,11 @@
                 @Model.Ticket.TicketStatus.GetDisplayName()
             </div>
             <div class="col-xs-2 col-sm-1 col-xs-height col-full-height text-center panel-title" style="border-right: 1px solid #dcdcdc;">
-                @Model.Ticket.TicketId
+                #@Model.Ticket.TicketId
             </div>
             <div class="col-xs-7 col-sm-9 col-xs-height col-full-height panel-title">
                 @Model.Ticket.CategoryName
             </div>
-
-
         </div>
     </div>
 
@@ -36,8 +34,6 @@
                                 @Model.Ticket.Project.ProjectName
                             </div>
                         }
-
-
                     </div>
                     <div>
                         <div>
@@ -54,7 +50,7 @@
             </div>
             <div class="" style="margin: 0; padding: 0;">
                 <div class="" id="detailsText" style="height: 200px; overflow: auto; margin: 0; padding: 5px;">
-                   ahihiiihiih
+                    @Model.CustomFields.FirstOrDefault(x => x.CustomFieldName.Equals("Feedback")).Value
                 </div>
                 <div id="detailTextExpander" class="expanderButton" style="height: 20px; display: none;">
                     <i id="expandersymbol" class="fa fa-chevron-down text-center"></i>
@@ -65,6 +61,21 @@
             <div class="container-fluid" style="padding: 0;">
                 <aside class="small">
                     <div style="padding: 5px;">
+                        @{
+                            var customFields = Model.CustomFields.Where(x => !x.CustomFieldName.Equals("Feedback"));
+
+                            foreach (var field in customFields)
+                            {
+                                <div class="row">
+                                    @Html.Label(field.CustomFieldName, new { @class = "col-sm-5 col-lg-4 text-right" })
+                                    <div class="col-sm-7 col-lg-8">
+                                        @field.Value
+                                    </div>
+                                </div>
+                            }
+
+                        }
+
                         <div class="row">
                             @Html.LabelFor(m => m.Ticket.TicketStatus, new { @class = "col-sm-5 col-lg-4 text-right" })
                             <div class="col-sm-7 col-lg-8">
