@@ -37,7 +37,7 @@
                         <div class="form-group">
                             @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label focus" })
                             <div class="col-md-8 col-sm-11">
-                                <textarea name="@Html.NameFor(m=>m[i].Value)" value="@field.Value" class="form-control input-sm"></textarea>
+                                <textarea name="@Html.NameFor(m=>m[i].Value)" value="@field.Value" class="form-control input-sm">@field.Value</textarea>
                             </div>
                         </div>
 

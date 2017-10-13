@@ -18,6 +18,7 @@ namespace TicketDesk.Web.Client.Controllers
     using Fanex.NAP.Core.Web.Attribute;
     using Models.Ticket;
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Data.Entity;
     using System.Data.SqlClient;
@@ -301,25 +302,25 @@ namespace TicketDesk.Web.Client.Controllers
         {
             var ticket = await Context.Tickets.FindAsync(ticketId);
             TryValidateModel(ticket);
-            if (ModelState.IsValid)
+            // if (ModelState.IsValid)
+            // {
+            try
             {
-                try
-                {
-                    ticket.PerformAction(activityFn);
-                }
-                catch (SecurityException ex)
-                {
-                    ModelState.AddModelError("Security", ex);
-                }
-
-                // save changes catches lastupdatedby and date automatically
-                var result = await Context.SaveChangesAsync();
-                if (result > 0)
-                {
-                    // standard success case
-                    return new EmptyResult();
-                }
+                ticket.PerformAction(activityFn);
             }
+            catch (SecurityException ex)
+            {
+                ModelState.AddModelError("Security", ex);
+            }
+
+            // save changes catches lastupdatedby and date automatically
+            var result = await Context.SaveChangesAsync();
+            if (result > 0)
+            {
+                // standard success case
+                return new EmptyResult();
+            }
+            // }
 
             // fail case, return the view and let the client/view sort out the errors
             ViewBag.CommentRequired = activity.IsCommentRequired();
@@ -346,32 +347,34 @@ namespace TicketDesk.Web.Client.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("edit-ticket-feedback")]
-        public async Task<ActionResult> EditTicketFeedback(
-    int ticketId,
-    int projectId,
-    [ModelBinder(typeof(SummernoteModelBinder))] string comment,
-    string title,
-    string details,
-    string priority,
-    string ticketType,
-    string category,
-    string owner,
-    string tagList)
+        public async Task<ActionResult> EditTicketFeedback(int ticketId,
+            [ModelBinder(typeof(SummernoteModelBinder))] string comment,
+            Ticket ticket,
+            IList<TicketFeedbackCustomField> customFields)
         {
-            details = details.StripHtmlWhenEmpty();
-            var projectName = await Context.Projects.Where(p => p.ProjectId == projectId).Select(s => s.ProjectName).FirstOrDefaultAsync();
+            ticket.Details = ticket.Details.StripHtmlWhenEmpty();
+            var projectName = await Context.Projects.Where(p => p.ProjectId == ticket.ProjectId).Select(s => s.ProjectName).FirstOrDefaultAsync();
             var activityFn = Context.TicketActions.EditTicketInfo(
                 comment,
-                projectId,
+                ticket.ProjectId,
                 projectName,
-                title,
-                details,
-                priority,
-                ticketType,
-                category,
-                owner,
-                tagList,
+                ticket.Title,
+                ticket.Details,
+                ticket.Priority,
+                ticket.TicketType,
+                ticket.Category,
+                ticket.Owner,
+                ticket.TagList,
                 Context.TicketDeskSettings);
+
+            foreach (var field in customFields)
+            {
+                var customFieldValue = Context.CustomFieldValues.Where(x => (x.TicketId == ticketId) && (x.CustomFieldId == field.CustomFieldId)).FirstOrDefault();
+                if (customFieldValue != null)
+                {
+                    customFieldValue.Value = field.Value;
+                }
+            }
 
             return await PerformTicketAction(ticketId, activityFn, TicketActivity.EditTicketInfo);
         }

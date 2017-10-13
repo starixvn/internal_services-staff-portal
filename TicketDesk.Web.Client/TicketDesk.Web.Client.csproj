@@ -2235,7 +2235,6 @@
     <Content Include="Views\Ticket\_TicketAttachedFiles.cshtml" />
     <Content Include="Views\Ticket\NewFacilityTicket.cshtml" />
     <Content Include="Views\Ticket\_TicketFeedbackDetails.cshtml" />
-    <Content Include="Views\TicketActivity\Feedback\_EditTicketInfo.cshtml" />
     <Content Include="Views\Ticket\_FeedbackCustomField.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>

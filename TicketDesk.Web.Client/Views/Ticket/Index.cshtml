@@ -26,7 +26,7 @@
 
         $(document).ready(function() {
             $.ajaxSetup({ cache: false });
-            var tdConfig = {
+                    var tdConfig = {
                 loadActivityUrl: '@Url.Action("LoadActivity", "TicketActivity", new {ticketId = Model.TicketId})',
                 activityButtonsUrl: '@Url.Action("ActivityButtons", "TicketActivity", new {ticketId = Model.TicketId})',
                 eventPanelUrl: '@Url.Action("TicketEvents", "Ticket", new {ticketId = Model.TicketId})',
@@ -35,22 +35,22 @@
                 changeTicketSubscription: '@Url.Action("ChangeTicketSubscription", "Ticket", new {ticketId = Model.TicketId})',
                 isSubscribed: @(Model.TicketSubscribers.Any(s => s.SubscriberId == User.Identity.GetUserId()) ? "true" : "false"),
                 uploaderConfig: {
-                    dropzoneUploadUrl: '@Url.Action("Upload", "File")',
+                        dropzoneUploadUrl: '@Url.Action("Upload", "File")',
                     getAttachmentsUrl: '@Url.Action("GetAttachmentsInfo", "File")',
                     defaultThumbnailUrl: '@Url.Content("~/content/images/general-file.png")',
                     deleteFileUrl: '@Url.Action("Delete", "File")',
                     ticketId: @Model.TicketId
                     },
                 tagsConfig: {
-                    tagAutoCompleteUrl: '@Url.Action("TagList", "AutoComplete")',
+                        tagAutoCompleteUrl: '@Url.Action("TagList", "AutoComplete")',
                 },
                 detailsConfig: {
-                    isHtml: @(Model.IsHtml ? "true" : "false")
+                        isHtml: @(Model.IsHtml ? "true" : "false")
                     },
                 isEditorDefaultHtml: @(ViewBag.IsEditorDefaultHtml? "true" : "false")
                 };
-            window.editTicket.activate(tdConfig);
-        });
+                window.editTicket.activate(tdConfig);
+            });
     </script>
 }
 
@@ -58,19 +58,16 @@
     @*<div id="ticketDetailPanel" class="panel panel-info">
             @Html.Action("TicketDetails", new { ticketId = Model.TicketId })
         </div>*@
-    @if (Model.CategoryId == (int)TicketCategoryTypes.Feedback)
-    {
-        <div class="panel panel-info">
+    <div id="ticketDetailPanel" class="panel panel-info">
+        @if (Model.CategoryId == (int)TicketCategoryTypes.Feedback)
+        {
             @Html.Action("TicketFeedbackDetails", new { ticketId = Model.TicketId })
-        </div>
-    }
-    else
-    {
-        <div id="ticketDetailPanel" class="panel panel-info">
+        }
+        else
+        {
             @Html.Action("TicketDetails", new { ticketId = Model.TicketId })
-        </div>
-    }
-
+        }
+    </div>
     <div class="panel panel-success">
         <div class="panel-heading" style="">
             <div class="btn-toolbar" role="toolbar">

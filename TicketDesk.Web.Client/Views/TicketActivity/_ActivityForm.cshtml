@@ -26,13 +26,21 @@
     var categoryEnum = (TicketCategoryTypes)Model.CategoryId;
     var actionName = isEditTicketInfoActivity ? "EditTicket" + categoryEnum.ToString() : activity.ToString();
 }
-@using (Ajax.BeginForm(actionName, "TicketActivity", new { ticketId = Model.TicketId, Model }, ajaxOptions, new { @class = "form-horizontal" }))
+@using (Ajax.BeginForm(actionName, "TicketActivity", new { ticketId = Model.TicketId }, ajaxOptions, new { @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()
     <input type="hidden" id="tempId" value="@ViewBag.TempId" />
     <div id="activityBody">
         @if (isEditTicketInfoActivity)
         {
+            @Html.HiddenFor(m => m.ProjectId)
+            @Html.HiddenFor(m => m.Title)
+            @Html.HiddenFor(m => m.Details)
+            @Html.HiddenFor(m => m.Priority)
+            @Html.HiddenFor(m => m.TicketType)
+            @Html.HiddenFor(m => m.Category)
+            @Html.HiddenFor(m => m.Owner)
+            @Html.HiddenFor(m => m.TagList)
             if (categoryEnum == TicketCategoryTypes.Feedback)
             {
                 @Html.Action("GetTicketFeedbackInfo", "TicketActivity", new { ticketId = Model.TicketId, categoryId = Model.CategoryId })
