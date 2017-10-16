@@ -134,6 +134,52 @@
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
         [ValidateInput(false)]
+        [Route("new-facility")]
+        public async Task<ActionResult> NewFacilityTicket(NewFacilityTicketViewModel viewModel, Guid tempId)
+        {
+            if (viewModel.Ticket.IsHtml)
+            {
+                viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
+                if (string.IsNullOrEmpty(viewModel.Ticket.Details))
+                {
+                    ModelState.AddModelError("Details", Strings.RequiredField);
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // TODO: Replace with actual project ID represent for shop id here
+                    viewModel.Ticket.Project = Context.Projects.Find(1);
+
+                    if (await CreateTicketAsync(viewModel.Ticket, tempId))
+                    {
+                        if (Context.SecurityProvider.IsReadTicketCenter)
+                        {
+                            return RedirectToAction("Index", new { id = viewModel.Ticket.TicketId });
+                        }
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                // ReSharper disable once EmptyGeneralCatchClause
+                catch (DbEntityValidationException ex)
+                {
+                    // TODO: catch rule exceptions? or can annotations handle this fully now?
+                }
+            }
+
+            ViewBag.TempId = tempId;
+            await SetProjectInfoForModelAsync(viewModel.Ticket);
+            return View(viewModel);
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateOnlyIncomingValues]
+        [ValidateInput(false)]
         [Route("new")]
         public async Task<ActionResult> New(Ticket ticket, Guid tempId)
         {

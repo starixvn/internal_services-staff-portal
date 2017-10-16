@@ -68,6 +68,11 @@
             CustomField value,
             object htmlAttributes = null)
         {
+            if (value == null)
+            {
+                return null;
+            }
+
             TagBuilder label = new TagBuilder("label");
             label.Attributes.Add("for", "customfield_" + value.Id);
             label.SetInnerText(value.Name);
@@ -87,6 +92,11 @@
             string parentName = null,
             object htmlAttributes = null)
         {
+            if (customField == null)
+            {
+                return null;
+            }
+
             TagBuilder input;
             switch (customField.CustomFieldTypeId)
             {

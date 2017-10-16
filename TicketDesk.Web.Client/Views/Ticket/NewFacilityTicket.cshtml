@@ -86,7 +86,7 @@
 <main>
     <div class="container">
         <div class="col-lg-10 col-lg-offset-1 col-md-12">
-            @using (Html.BeginForm("New", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal" }))
+            @using (Html.BeginForm("NewFacilityTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal" }))
             {
                 <div class="panel panel-info">
                     <div class="panel-heading">
@@ -230,20 +230,26 @@
                                 <div class="panel panel-info">
                                     <div class="panel-heading">Items</div>
                                     <div id="item-section" class="panel-body form-group">
-                                        @for (int i = 0; i < Model.Items.Count; i++)
+                                        @if (Model.Items != null)
                                         {
-                                            var guid = Guid.NewGuid().ToString();
+                                            for (int i = 0; i < Model.Items.Count; i++)
+                                            {
+                                                var guid = Guid.NewGuid().ToString();
 
-                                            <div>
-                                                @Html.CustomFieldIndex("Items", guid)
-                                                @Html.CustomFieldLabelWithGuidIndexFor(Model.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "col-md-2 col-sm-1 control-label" })
-                                                @Html.CustomFieldWithGuidIndexFor(Model.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "form-control input-sm" })
+                                                <div class="panel panel-default panel-body">
+                                                    @Html.CustomFieldIndex("Items", guid)
 
-                                                @Html.CustomFieldLabelWithGuidIndexFor(Model.Items.ElementAt(i).Reason, guid, "Items", new { @class = "col-md-2 col-sm-1 control-label" })
-                                                @Html.CustomFieldWithGuidIndexFor(Model.Items.ElementAt(i).Reason, guid, "Items", new { @class = "form-control input-sm" })
+                                                    @Html.CustomFieldLabelWithGuidIndexFor(Model.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "col-md-2 col-sm-1 control-label" })
+                                                    <div class="col-md-8 col-sm-10">
+                                                        @Html.CustomFieldWithGuidIndexFor(Model.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "form-control input-sm" })
+                                                    </div>
 
-                                                <button class="btn btn-danger remove-button">Remove</button>
-                                            </div>
+                                                    <button class="btn btn-danger remove-button col-sm-2">Remove</button>
+
+                                                    @Html.CustomFieldLabelWithGuidIndexFor(Model.Items.ElementAt(i).Reason, guid, "Items", new { @class = "col-xs-12" })
+                                                    @Html.CustomFieldWithGuidIndexFor(Model.Items.ElementAt(i).Reason, guid, "Items", new { @class = "form-control input-sm" })
+                                                </div>
+                                            }
                                         }
                                     </div>
                                 </div>
