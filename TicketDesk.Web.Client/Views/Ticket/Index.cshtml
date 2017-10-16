@@ -30,7 +30,7 @@
                 loadActivityUrl: '@Url.Action("LoadActivity", "TicketActivity", new {ticketId = Model.TicketId})',
                 activityButtonsUrl: '@Url.Action("ActivityButtons", "TicketActivity", new {ticketId = Model.TicketId})',
                 eventPanelUrl: '@Url.Action("TicketEvents", "Ticket", new {ticketId = Model.TicketId})',
-                loadDetailsUrl: '@Url.Action("TicketDetails", "Ticket", new {ticketId = Model.TicketId})',
+                loadDetailsUrl: '@Url.Action("TicketDetails", "Ticket", new {ticketId = Model.TicketId, categoryId = Model.CategoryId})'.replace(/\&amp;/g, '&' ),
                 attachmentsPanelUrl: '@Url.Action("TicketFiles", "Ticket", new {ticketId = Model.TicketId})',
                 changeTicketSubscription: '@Url.Action("ChangeTicketSubscription", "Ticket", new {ticketId = Model.TicketId})',
                 isSubscribed: @(Model.TicketSubscribers.Any(s => s.SubscriberId == User.Identity.GetUserId()) ? "true" : "false"),

@@ -4,44 +4,46 @@
 
 @model IList<TicketFeedbackCustomField>
 
-@for (int i = 0; i < Model.Count(); i++)
-{
-    var field = Model[i];
-    if (field.CustomFieldTypeId == (int)CustomFieldTypes.List)
+@{
+    for (int i = 0; i < Model.Count(); i++)
     {
-        <div class="form-group">
-            @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label" })
-            <div class="col-md-8 col-sm-11">
-                @{
-                    var possibleValues = HelperService.ConvertValuesToList(field.CustomFieldPossibleValue);
-                }
-                @foreach (var value in possibleValues)
+        var field = Model[i];
+        if (field.CustomFieldTypeId == (int)CustomFieldTypes.List)
+        {
+            <div class="form-group">
+                @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label" })
+                <div class="col-md-8 col-sm-11">
+                    @{
+                        var possibleValues = HelperService.ConvertValuesToList(field.CustomFieldPossibleValue);
+                    }
+                    @foreach (var value in possibleValues)
                     {
-                    <p>@Html.RadioButtonFor(m => m[i].Value, value, new { @class = "custom-field-radio" }) @value</p>
-                }
+                        <p>@Html.RadioButtonFor(m => m[i].Value, value, new { @class = "custom-field-radio" }) @value</p>
+                    }
+                </div>
             </div>
-        </div>
-                    }
-                    else if (field.CustomFieldTypeId == (int)CustomFieldTypes.String)
-                    {
-                        <div class="form-group">
-                            @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label focus" })
-                            <div class="col-md-8 col-sm-11">
-                                <input type="text" name="@Html.NameFor(m=>m[i].Value)" value="@field.Value" class="form-control input-sm" tabindex="1" autofocus="">
+                        }
+                        else if (field.CustomFieldTypeId == (int)CustomFieldTypes.String)
+                        {
+                            <div class="form-group">
+                                @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label focus" })
+                                <div class="col-md-8 col-sm-11">
+                                    <input type="text" name="@Html.NameFor(m=>m[i].Value)" value="@field.Value" class="form-control input-sm" tabindex="1" autofocus="">
+                                </div>
                             </div>
-                        </div>
-                    }
-                    else if (field.CustomFieldTypeId == (int)CustomFieldTypes.TextArea)
-                    {
+                        }
+                        else if (field.CustomFieldTypeId == (int)CustomFieldTypes.TextArea)
+                        {
 
-                        <div class="form-group">
-                            @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label focus" })
-                            <div class="col-md-8 col-sm-11">
-                                <textarea name="@Html.NameFor(m=>m[i].Value)" value="@field.Value" class="form-control input-sm">@field.Value</textarea>
+                            <div class="form-group">
+                                @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label focus" })
+                                <div class="col-md-8 col-sm-11">
+                                    <textarea name="@Html.NameFor(m=>m[i].Value)" value="@field.Value" class="form-control input-sm" tabindex="1">@field.Value</textarea>
+                                </div>
                             </div>
-                        </div>
 
-                    }
+                        }
 
-                    @Html.HiddenFor(m => m[i].CustomFieldId)
-                    }
+                        @Html.HiddenFor(m => m[i].CustomFieldId)
+                        }
+}

@@ -188,17 +188,16 @@
 
         [Route("ticket-details")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult TicketDetails(int ticketId)
+        public ActionResult TicketDetails(int ticketId, int categoryId)
         {
-            var ticket = Context.Tickets.Find(ticketId);
-
-            if (ticket.CategoryId == (int)TicketCategoryTypes.Feedback)
+            if (categoryId == (int)TicketCategoryTypes.Feedback)
             {
                 return TicketFeedbackDetails(ticketId);
             }
 
             // WARNING! This is also used as a child action and cannot be made async in MVC 5
             ViewBag.DisplayProjects = Context.Projects.Any();
+            var ticket = Context.Tickets.Find(ticketId);
             return PartialView("_TicketDetails", ticket);
         }
 
@@ -347,7 +346,7 @@
         private async Task<bool> CreateTicketFeedbackAsync(TicketFeedbackViewModel model)
         {
             Context.Tickets.Add(model.Ticket);
-            await Context.SaveChangesAsync();
+            Context.SaveChanges();
 
             foreach (var field in model.CustomFields)
             {
