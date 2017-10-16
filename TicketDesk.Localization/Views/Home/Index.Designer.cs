@@ -74,7 +74,7 @@ namespace TicketDesk.Localization.Views.Home {
         ///            &lt;li&gt;Entity Framework 6x code-first&lt;/li&gt;
         ///            &lt;li&gt;MVC 5x - Razor View Engine&lt;/li&gt;
         ///            &lt;li&gt;Bootstrap 3&lt;/li&gt;
-        ///    [rest of string was truncated]&quot;;.
+        ///            &lt;li&gt; [rest of string was truncated]&quot;;.
         /// </summary>
         public static string ChangeList {
             get {
@@ -109,7 +109,7 @@ namespace TicketDesk.Localization.Views.Home {
         ///                    &lt;p&gt;Please keep the following in mind while evaluating the beta:&lt;/p&gt;
         ///                    &lt;ul class=&quot;text-muted&quot;&gt;
         ///                        &lt;li&gt;
-        ///                 [rest of string was truncated]&quot;;.
+        ///                         [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Instructions {
             get {

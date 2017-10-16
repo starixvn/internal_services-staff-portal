@@ -69,7 +69,8 @@ namespace TicketDesk.Localization.Views.Home {
         ///            TicketDesk is designed to be a fully functional yet simplistic web based issue tracking system
         ///            with a focus on promoting frictionless communication between the help desk and
         ///            end-users. TicketDesk is designed primarily for internal use within a single organization.
-        ///      [rest of string was truncated]&quot;;.
+        ///        &lt;/p&gt;
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Description {
             get {
