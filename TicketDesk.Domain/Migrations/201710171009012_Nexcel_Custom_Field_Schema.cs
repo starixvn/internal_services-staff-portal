@@ -32,7 +32,7 @@ namespace TicketDesk.Domain.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        GroupId = c.Int(),
+                        GroupId = c.String(),
                         Value = c.String(),
                         TicketId = c.Int(nullable: false),
                         CustomFieldId = c.Int(nullable: false),

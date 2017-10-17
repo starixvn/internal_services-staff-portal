@@ -10,7 +10,7 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public int? GroupId { get; set; }
+        public string GroupId { get; set; }
 
         public string Value { get; set; }
 

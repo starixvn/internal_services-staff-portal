@@ -192,9 +192,9 @@
     <Compile Include="Migrations\201707150459325_Td2.5.019.Designer.cs">
       <DependentUpon>201707150459325_Td2.5.019.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710091200001_Nexcel_Custom_Field_Schema.cs" />
-    <Compile Include="Migrations\201710091200001_Nexcel_Custom_Field_Schema.Designer.cs">
-      <DependentUpon>201710091200001_Nexcel_Custom_Field_Schema.cs</DependentUpon>
+    <Compile Include="Migrations\201710171009012_Nexcel_Custom_Field_Schema.cs" />
+    <Compile Include="Migrations\201710171009012_Nexcel_Custom_Field_Schema.Designer.cs">
+      <DependentUpon>201710171009012_Nexcel_Custom_Field_Schema.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
@@ -317,8 +317,8 @@
     <EmbeddedResource Include="Migrations\201707150459325_Td2.5.019.resx">
       <DependentUpon>201707150459325_Td2.5.019.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710091200001_Nexcel_Custom_Field_Schema.resx">
-      <DependentUpon>201710091200001_Nexcel_Custom_Field_Schema.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710171009012_Nexcel_Custom_Field_Schema.resx">
+      <DependentUpon>201710171009012_Nexcel_Custom_Field_Schema.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

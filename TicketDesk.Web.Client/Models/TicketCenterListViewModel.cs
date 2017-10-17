@@ -28,10 +28,7 @@
         /// Gets or (private) sets the filter bar model.
         /// </summary>
         /// <value>The filter bar.</value>
-        public FilterBarViewModel FilterBar
-        {
-            get { return _filterBar ?? (_filterBar = new FilterBarViewModel(CurrentListSetting)); }
-        }
+        public FilterBarViewModel FilterBar => _filterBar ?? (_filterBar = new FilterBarViewModel(CurrentListSetting));
 
         /// <summary>
         /// Gets or (private) sets the list of tickets for the view.
@@ -43,16 +40,13 @@
 
         public IOrderedEnumerable<UserTicketListSetting> UserListSettings { get; private set; }
 
-        public TicketDeskUserManager UserManager
-        {
-            get { return DependencyResolver.Current.GetService<TicketDeskUserManager>(); }
-        }
+        public TicketDeskUserManager UserManager => DependencyResolver.Current.GetService<TicketDeskUserManager>();
 
         public static async Task<TicketCenterListViewModel> GetViewModelAsync(int currentPage, string listName, TdDomainContext context, string userId)
         {
             var userSettings = await context.UserSettingsManager.GetSettingsForUserAsync(userId);
 
-            var vm = new TicketCenterListViewModel()
+            var vm = new TicketCenterListViewModel
             {
                 UserListSettings = userSettings.ListSettings.OrderBy(lp => lp.ListMenuDisplayOrder),
                 CurrentPage = currentPage,
@@ -60,6 +54,13 @@
             };
 
             vm.Tickets = await vm.ListTicketsAsync(currentPage, context, userId);
+
+            var categories = context.TicketCategories.ToList();
+            foreach (var ticket in vm.Tickets)
+            {
+                ticket.CategoryName =
+                    categories.Where(x => x.CategoryId == ticket.CategoryId).Select(x => x.Name).FirstOrDefault();
+            }
 
             return vm;
         }
@@ -83,7 +84,7 @@
 
             query = filterColumns.ApplyToQuery(query);
             query = sortColumns.ApplyToQuery(query);
-
+            
             return await query.ToPagedListAsync(pageIndex, pageSize);
         }
     }

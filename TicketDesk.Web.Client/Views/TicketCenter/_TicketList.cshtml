@@ -1,18 +1,4 @@
-﻿@*
-    TicketDesk - Attribution notice
-    Contributor(s):
-
-         Stephen Redd (https://github.com/stephenredd)
-
-    This file is distributed under the terms of the Microsoft Public
-    License (Ms-PL). See http://opensource.org/licenses/MS-PL
-    for the complete terms of use.
-
-    For any distribution that contains code from this file, this notice of
-    attribution must remain intact, and a copy of the license must be
-    provided to the recipient.
-*@
-@using TicketDesk.Localization.Views.TicketCenter
+﻿@using TicketDesk.Localization.Views.TicketCenter
 
 @using PagedList.Mvc
 @using TicketDesk.Domain.Model
@@ -20,7 +6,7 @@
 @{
     var tickets = Model.Tickets;
     var ajaxSortOptions = new AjaxOptions { UpdateTargetId = "ticketList", OnBegin = "ticketCenter.sorts.beginChangeSort", OnSuccess = "ticketCenter.completeChangeList", OnFailure = "ticketCenter.completeChangeList" };
-    var ajaxPagerOptions = new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "ticketList", OnBegin = "ticketCenter.paging.beginChangePage", OnSuccess = "ticketCenter.completeChangeList", OnFailure = "ticketCenter.completeChangeList" };
+    var ajaxPagerOptions = new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "ticketList", OnBegin = "ticketCenter.paging.beginChangePage", OnSuccess = "ticketCenter.completeChangeList", OnFailure = "ticketCenter.completeChangeList" };
 }
 <div id="ticketList" class="panel panel-default">
     <div class="panel-heading row-no-padding">
@@ -65,49 +51,49 @@
                 </thead>
                 <tbody class="ticketItems">
 
-                    @foreach (var item in tickets)
+                    @foreach (var ticket in tickets)
                     {
                         <tr class="clickable">
                             <td colspan="2" style="white-space: normal;">
-                                <a href="@Url.Action("Index", "Ticket", new {area = "", id = item.TicketId})", style="margin-right: 1ex;">
-                                    #@item.TicketId
+                                <a href="@Url.Action("Index", "Ticket", new {area = "", id = ticket.TicketId})", style="margin-right: 1ex;">
+                                    #@ticket.TicketId
                                 </a>
-                                @Html.DisplayFor(modelItem => item.Title)
+                                @Html.DisplayFor(modelItem => ticket.Title)
                                 @if (Model.DisplayProjects)
                                 {
                                     <div>
                                         <span class="small text-muted">
                                             <i class="fa fa-book"></i>
-                                            @item.Project.ProjectName
+                                            @ticket.Project.ProjectName
                                         </span>
                                     </div>
                                 }
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.TicketStatus)
+                                @Html.DisplayFor(modelItem => ticket.TicketStatus)
                             </td>
                             <td class="hidden-xs">
-                                @Html.DisplayFor(modelItem => item.GetOwnerInfo().DisplayName)
+                                @Html.DisplayFor(modelItem => ticket.GetOwnerInfo().DisplayName)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.GetAssignedToInfo().DisplayName)
+                                @Html.DisplayFor(modelItem => ticket.GetAssignedToInfo().DisplayName)
                             </td>
                             <td class="hidden-sm hidden-xs">
-                                @Html.DisplayFor(modelItem => item.TicketType)
+                                @Html.DisplayFor(modelItem => ticket.TicketType)
                             </td>
                             <td class="hidden-sm hidden-xs">
-                                @Html.DisplayFor(modelItem => item.Category)
+                                @Html.DisplayFor(modelItem => ticket.CategoryName)
                             </td>
                             <td class="hidden-sm hidden-xs">
-                                @Html.DisplayFor(modelItem => item.Priority)
+                                @Html.DisplayFor(modelItem => ticket.Priority)
                             </td>
                             <td class="hidden-sm hidden-xs">
-                                @item.CreatedDate.ToString("d")<br />
-                                @item.CreatedDate.ToString("t")
+                                @ticket.CreatedDate.ToString("d")<br />
+                                @ticket.CreatedDate.ToString("t")
                             </td>
                             <td>
-                                @item.LastUpdateDate.ToString("d")<br />
-                                @item.LastUpdateDate.ToString("t")
+                                @ticket.LastUpdateDate.ToString("d")<br />
+                                @ticket.LastUpdateDate.ToString("t")
                             </td>
 
                         </tr>

@@ -152,9 +152,19 @@
                 {
                     // TODO: Replace with actual project ID represent for shop id here
                     viewModel.Ticket.Project = Context.Projects.Find(1);
+                    viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
 
                     if (await CreateTicketAsync(viewModel.Ticket, tempId))
                     {
+                        //// add item to database
+                        //foreach (Item item in viewModel.Items)
+                        //{
+                        //    Context.CustomFieldValues.Add(new CustomFieldValue
+                        //    {
+                        //        GroupId = item.Index.ToString()
+                        //    });
+                        //}
+
                         if (Context.SecurityProvider.IsReadTicketCenter)
                         {
                             return RedirectToAction("Index", new { id = viewModel.Ticket.TicketId });
@@ -442,7 +452,11 @@
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult FacilityTicketDetails(Ticket ticket)
         {
-            return PartialView("_FacilityTicketDetails", ticket);
+            NewFacilityTicketViewModel viewModel = new NewFacilityTicketViewModel
+            {
+                Ticket = ticket
+            };
+            return PartialView("_FacilityTicketDetails", viewModel);
         }
 
         private async Task<bool> CreateTicketFeedbackAsync(TicketFeedbackViewModel model)
