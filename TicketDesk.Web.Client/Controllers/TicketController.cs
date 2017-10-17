@@ -234,17 +234,31 @@
 
         [Route("ticket-details")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult TicketDetails(int ticketId, int categoryId)
+        public ActionResult TicketDetails(int ticketId, int? categoryId)
         {
-            if (categoryId == (int)TicketCategoryTypes.Feedback)
-            {
-                return TicketFeedbackDetails(ticketId);
-            }
+            ////if (categoryId == (int)TicketCategoryTypes.Feedback)
+            ////{
+            ////    return TicketFeedbackDetails(ticketId);
+            ////}
 
             // WARNING! This is also used as a child action and cannot be made async in MVC 5
             ViewBag.DisplayProjects = Context.Projects.Any();
             var ticket = Context.Tickets.Find(ticketId);
-            return PartialView("_TicketDetails", ticket);
+
+            if (ticket == null)
+            {
+                return PartialView("_TicketDetails", null);
+            }
+
+            switch (ticket.CategoryId)
+            {
+                case (int)TicketCategoryTypes.Feedback:
+                    return TicketFeedbackDetails(ticket);
+                case (int)TicketCategoryTypes.Facility:
+                    return FacilityTicketDetails(ticket);
+                default:
+                    return PartialView("_TicketDetails", ticket);
+            }
         }
 
         [Route("change-ticket-subscription")]
@@ -387,6 +401,48 @@
             ViewBag.DisplayProjects = Context.Projects.Any();
 
             return PartialView("_TicketFeedbackDetails", viewModel);
+        }
+
+        [Route("ticket-feedback-details")]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        public ActionResult TicketFeedbackDetails(Ticket ticket)
+        {
+            var categoryId = ticket.CategoryId;
+            var viewModel = new TicketFeedbackViewModel
+            {
+                Ticket = ticket,
+                CustomFields = new List<TicketFeedbackCustomField>()
+            };
+
+            var ticketCategory = Context.TicketCategories.First(x => x.CategoryId == categoryId);
+            var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == categoryId)
+                .Select(x => x.CustomFieldId);
+
+            var avalableCustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
+
+            foreach (var customField in avalableCustomFields)
+            {
+                viewModel.CustomFields.Add(new TicketFeedbackCustomField
+                {
+                    CategoryId = categoryId,
+                    CustomFieldId = customField.Id,
+                    CustomFieldName = customField.Name,
+                    Value = Context.CustomFieldValues.FirstOrDefault(x => (x.CustomFieldId == customField.Id) && (x.TicketId == ticket.TicketId))?.Value
+                });
+            }
+
+            viewModel.Ticket.CategoryName = ticketCategory.Name;
+
+            ViewBag.DisplayProjects = Context.Projects.Any();
+
+            return PartialView("_TicketFeedbackDetails", viewModel);
+        }
+
+        [Route("facility-ticket-details")]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        public ActionResult FacilityTicketDetails(Ticket ticket)
+        {
+            return PartialView("_FacilityTicketDetails", ticket);
         }
 
         private async Task<bool> CreateTicketFeedbackAsync(TicketFeedbackViewModel model)
