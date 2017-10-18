@@ -102,14 +102,30 @@
                     Context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
             }
 
-            model.RequestType = avalableCustomFields.First(x => x.Name == "Request Type");
+            model.RequestType = new CustomFieldValue
+            {
+                CustomField = avalableCustomFields.First(x => x.Name == "Request Type")
+            };
 
             model.Items = new List<Item>();
+            //Item item = new Item
+            //{
+            //    ItemName = avalableCustomFields.First(x => x.Name == "Item"),
+            //    Reason = avalableCustomFields.First(x => x.Name == "Reason for Repair/Improvement Request")
+            //};
+
             Item item = new Item
             {
-                ItemName = avalableCustomFields.First(x => x.Name == "Item"),
-                Reason = avalableCustomFields.First(x => x.Name == "Reason for Repair/Improvement Request")
+                ItemName = new CustomFieldValue
+                {
+                    CustomField = avalableCustomFields.First(x => x.Name == "Item")
+                },
+                Reason = new CustomFieldValue
+                {
+                    CustomField = avalableCustomFields.First(x => x.Name == "Reason for Repair/Improvement Request")
+                }
             };
+
             model.Items.Add(item);
 
             //item = new Item
@@ -156,14 +172,15 @@
 
                     if (await CreateTicketAsync(viewModel.Ticket, tempId))
                     {
-                        //// add item to database
-                        //foreach (Item item in viewModel.Items)
-                        //{
-                        //    Context.CustomFieldValues.Add(new CustomFieldValue
-                        //    {
-                        //        GroupId = item.Index.ToString()
-                        //    });
-                        //}
+                        // add item to database
+                        foreach (Item item in viewModel.Items)
+                        {
+                            Context.CustomFieldValues.Add(new CustomFieldValue
+                            {
+                                GroupId = item.Index,
+                                CustomFieldId = item.ItemName.Id
+                            });
+                        }
 
                         if (Context.SecurityProvider.IsReadTicketCenter)
                         {

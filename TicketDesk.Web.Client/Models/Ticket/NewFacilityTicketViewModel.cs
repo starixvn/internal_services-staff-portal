@@ -7,7 +7,9 @@
     {
         public Ticket Ticket { get; set; }
 
-        public CustomField RequestType { get; set; }
+        //public CustomField RequestType { get; set; }
+
+        public CustomFieldValue RequestType { get; set; }
 
         public ICollection<Item> Items { get; set; }
     }
@@ -16,8 +18,8 @@
     {
         public string Index { get; set; }
 
-        public CustomField ItemName { get; set; }
+        public CustomFieldValue ItemName { get; set; }
 
-        public CustomField Reason { get; set; }
+        public CustomFieldValue Reason { get; set; }
     }
 }
