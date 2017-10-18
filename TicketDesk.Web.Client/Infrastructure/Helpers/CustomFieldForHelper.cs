@@ -108,19 +108,6 @@
             return new MvcHtmlString(label.ToString());
         }
 
-        //public static MvcHtmlString CustomFieldWithGuidIndexFor(
-        //    this HtmlHelper html,
-        //    CustomField value,
-        //    string guid,
-        //    string parentName,
-        //    object htmlAttributes = null)
-        //{
-            
-        //    var str = BuildHtmlString(value, guid, parentName, null, htmlAttributes);
-
-        //    return new MvcHtmlString(str);
-        //}
-
         public static MvcHtmlString CustomFieldLabelFor(
             this HtmlHelper html,
             CustomField value,
@@ -220,19 +207,24 @@
                 {
                     ["id"] = parentName + "[" + guid + "]." + fieldName + ".CustomFieldId",
                     ["name"] = parentName + "[" + guid + "]." + fieldName + ".CustomFieldId",
-                    ["value"] = customFieldValue.CustomField.Id.ToString()
-                }
+                    ["value"] = customFieldValue.CustomField.Id.ToString(),
+                    ["type"]= "hidden"
+        }
             };
 
             if (!string.IsNullOrEmpty(guid) && !string.IsNullOrEmpty(parentName))
             {
                 input.Attributes["id"] = parentName + "[" + guid + "]." + fieldName + ".Value";
                 input.Attributes["name"] = parentName + "[" + guid + "]." + fieldName + ".Value";
-
-                return customFieldIdTagBuilder + input.ToString();
+            }
+            else
+            {
+                customFieldIdTagBuilder.Attributes["id"] = fieldName + ".CustomFieldId";
+                customFieldIdTagBuilder.Attributes["name"] = fieldName + ".CustomFieldId";
+                customFieldIdTagBuilder.Attributes["value"] = customFieldValue.CustomField.Id.ToString();
             }
 
-            return input.ToString();
+            return customFieldIdTagBuilder + input.ToString();
         }
     }
 }

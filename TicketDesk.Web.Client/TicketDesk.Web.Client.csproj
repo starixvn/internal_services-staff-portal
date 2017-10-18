@@ -784,7 +784,6 @@
     <Content Include="Scripts\filemanager\scripts\clipboard.js\package.json" />
     <Content Include="Scripts\filemanager\scripts\clipboard.js\readme.md" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\.gitattributes" />
-    <Content Include="Scripts\filemanager\scripts\CodeMirror\.gitignore" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\.npmignore" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\.travis.yml" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\AUTHORS" />

@@ -172,15 +172,16 @@
 
                     if (await CreateTicketAsync(viewModel.Ticket, tempId))
                     {
+                        Context.CustomFieldValues.Add(new CustomFieldValue
+                        {
+                            CustomFieldId = viewModel.RequestType.CustomFieldId,
+                            Value = viewModel.RequestType.Value,
+                            TicketId = viewModel.Ticket.TicketId
+                        });
+
                         // add item to database
                         foreach (Item item in viewModel.Items)
                         {
-                            Context.CustomFieldValues.Add(new CustomFieldValue
-                            {
-                                CustomFieldId = viewModel.RequestType.CustomFieldId,
-                                Value = viewModel.RequestType.Value,
-                                TicketId = viewModel.Ticket.TicketId
-                            });
                             Context.CustomFieldValues.Add(new CustomFieldValue
                             {
                                 GroupId = item.Index,
@@ -196,6 +197,9 @@
                                 TicketId = viewModel.Ticket.TicketId
                             });
                         }
+
+                        //Save changes to ticket's custom field
+                        await Context.SaveChangesAsync();
 
                         if (Context.SecurityProvider.IsReadTicketCenter)
                         {
