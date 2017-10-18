@@ -177,8 +177,23 @@
                         {
                             Context.CustomFieldValues.Add(new CustomFieldValue
                             {
+                                CustomFieldId = viewModel.RequestType.CustomFieldId,
+                                Value = viewModel.RequestType.Value,
+                                TicketId = viewModel.Ticket.TicketId
+                            });
+                            Context.CustomFieldValues.Add(new CustomFieldValue
+                            {
                                 GroupId = item.Index,
-                                CustomFieldId = item.ItemName.Id
+                                CustomFieldId = item.ItemName.Id,
+                                Value = item.ItemName.Value,
+                                TicketId = viewModel.Ticket.TicketId
+                            });
+                            Context.CustomFieldValues.Add(new CustomFieldValue
+                            {
+                                GroupId = item.Index,
+                                CustomFieldId = item.Reason.Id,
+                                Value = item.Reason.Value,
+                                TicketId = viewModel.Ticket.TicketId
                             });
                         }
 

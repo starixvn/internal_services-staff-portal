@@ -207,17 +207,29 @@
                     input.Attributes.Add("placeholder", customFieldValue.CustomField.Values);
                     break;
             }
+            
+            if (htmlAttributes != null)
+            {
+                var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+                input.MergeAttributes(attributes);
+            }
+
+            TagBuilder customFieldIdTagBuilder = new TagBuilder("input")
+            {
+                Attributes =
+                {
+                    ["id"] = parentName + "[" + guid + "]." + fieldName + ".CustomFieldId",
+                    ["name"] = parentName + "[" + guid + "]." + fieldName + ".CustomFieldId",
+                    ["value"] = customFieldValue.CustomField.Id.ToString()
+                }
+            };
 
             if (!string.IsNullOrEmpty(guid) && !string.IsNullOrEmpty(parentName))
             {
                 input.Attributes["id"] = parentName + "[" + guid + "]." + fieldName + ".Value";
                 input.Attributes["name"] = parentName + "[" + guid + "]." + fieldName + ".Value";
-            }
 
-            if (htmlAttributes != null)
-            {
-                var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
-                input.MergeAttributes(attributes);
+                return customFieldIdTagBuilder + input.ToString();
             }
 
             return input.ToString();

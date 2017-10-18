@@ -480,6 +480,7 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\filesystem-precompiled-release.pubxml" />
+    <None Include="Properties\PublishProfiles\SSP.pubxml" />
     <None Include="Properties\PublishProfiles\TicketDesk.pubxml" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -707,29 +708,6 @@
     <Content Include="Scripts\filemanager\images\vgrabber.gif" />
     <Content Include="Scripts\filemanager\package.json" />
     <Content Include="Scripts\filemanager\ReadMe.md" />
-    <Content Include="Scripts\filemanager\.git\config" />
-    <Content Include="Scripts\filemanager\.git\description" />
-    <Content Include="Scripts\filemanager\.git\HEAD" />
-    <Content Include="Scripts\filemanager\.git\hooks\applypatch-msg.sample" />
-    <Content Include="Scripts\filemanager\.git\hooks\commit-msg.sample" />
-    <Content Include="Scripts\filemanager\.git\hooks\post-update.sample" />
-    <Content Include="Scripts\filemanager\.git\hooks\pre-applypatch.sample" />
-    <Content Include="Scripts\filemanager\.git\hooks\pre-commit.sample" />
-    <Content Include="Scripts\filemanager\.git\hooks\pre-push.sample" />
-    <Content Include="Scripts\filemanager\.git\hooks\pre-rebase.sample" />
-    <Content Include="Scripts\filemanager\.git\hooks\pre-receive.sample" />
-    <Content Include="Scripts\filemanager\.git\hooks\prepare-commit-msg.sample" />
-    <Content Include="Scripts\filemanager\.git\hooks\update.sample" />
-    <Content Include="Scripts\filemanager\.git\index" />
-    <Content Include="Scripts\filemanager\.git\info\exclude" />
-    <Content Include="Scripts\filemanager\.git\logs\HEAD" />
-    <Content Include="Scripts\filemanager\.git\logs\refs\heads\master" />
-    <Content Include="Scripts\filemanager\.git\logs\refs\remotes\origin\HEAD" />
-    <Content Include="Scripts\filemanager\.git\objects\pack\pack-ec639f7200977c2c8043a1d793858d5023934b21.idx" />
-    <Content Include="Scripts\filemanager\.git\objects\pack\pack-ec639f7200977c2c8043a1d793858d5023934b21.pack" />
-    <Content Include="Scripts\filemanager\.git\packed-refs" />
-    <Content Include="Scripts\filemanager\.git\refs\heads\master" />
-    <Content Include="Scripts\filemanager\.git\refs\remotes\origin\HEAD" />
     <Content Include="Scripts\filemanager\config\filemanager.config.default.json" />
     <Content Include="Scripts\filemanager\connectors\ashx\filemanager.ashx" />
     <Content Include="Scripts\filemanager\connectors\java\build.gradle" />
@@ -743,12 +721,6 @@
     <Content Include="Scripts\filemanager\connectors\jsp\build.gradle" />
     <Content Include="Scripts\filemanager\connectors\jsp\config.properties" />
     <Content Include="Scripts\filemanager\connectors\jsp\filemanager.jsp" />
-    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\bin\org\json\JSONArray.class" />
-    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\bin\org\json\JSONException.class" />
-    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\bin\org\json\JSONObject%24Null.class" />
-    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\bin\org\json\JSONObject.class" />
-    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\bin\org\json\JSONString.class" />
-    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\bin\org\json\JSONTokener.class" />
     <Content Include="Scripts\filemanager\connectors\jsp\readme.md" />
     <Content Include="Scripts\filemanager\connectors\jsp\settings.gradle" />
     <Content Include="Scripts\filemanager\connectors\php\.gitignore" />
@@ -816,11 +788,6 @@
     <Content Include="Scripts\filemanager\scripts\CodeMirror\.npmignore" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\.travis.yml" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\AUTHORS" />
-    <Content Include="Scripts\filemanager\scripts\CodeMirror\bin\authors.sh" />
-    <Content Include="Scripts\filemanager\scripts\CodeMirror\bin\compress" />
-    <Content Include="Scripts\filemanager\scripts\CodeMirror\bin\lint" />
-    <Content Include="Scripts\filemanager\scripts\CodeMirror\bin\release" />
-    <Content Include="Scripts\filemanager\scripts\CodeMirror\bin\source-highlight" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\CHANGELOG.md" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\CONTRIBUTING.md" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\LICENSE" />
@@ -1027,7 +994,6 @@
     <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\tern\tern.js" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\tern\worker.js" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\wrap\hardwrap.js" />
-    <Content Include="Scripts\filemanager\scripts\CodeMirror\bin\upload-release.js" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\activeline.html" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\anywordhint.html" />
     <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\bidi.html" />
@@ -2274,8 +2240,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scripts\filemanager\.git\objects\info\" />
-    <Folder Include="Scripts\filemanager\.git\refs\tags\" />
     <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
