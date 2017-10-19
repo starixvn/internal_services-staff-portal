@@ -12,9 +12,9 @@
             Manager = manager;
         }
 
-        private TicketDeskUserManager Manager { get; set; }
+        private TicketDeskUserManager Manager { get; }
 
-        public void ClearCache()
+        public static void ClearCache()
         {
             MemoryCache.Default.Remove("user-info-cache");
         }

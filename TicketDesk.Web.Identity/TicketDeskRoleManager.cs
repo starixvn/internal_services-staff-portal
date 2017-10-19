@@ -152,7 +152,7 @@ namespace TicketDesk.Web.Identity
         /// </summary>
         public void EnsureDefaultRolesExist()
         {
-            // var roles = TdIdentityContext.DefaultRoles;
+            //// var roles = TdIdentityContext.DefaultRoles;
             foreach (var defaultRole in DefaultRoles)
             {
                 if (!this.RoleExists(defaultRole.Name))

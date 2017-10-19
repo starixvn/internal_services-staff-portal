@@ -53,10 +53,10 @@ namespace TicketDesk.Web.Identity.Migrations
         public static void InitializeStockRoles(TdIdentityContext context)
         {
             // create the standard roles and default admin account
-            // var userStore = new UserStore<TicketDeskUser>(context);
+            //// var userStore = new UserStore<TicketDeskUser>(context);
             var roleStore = new RoleStore<TicketDeskRole>(context);
 
-            // var userManager = new TicketDeskUserManager(userStore);
+            //// var userManager = new TicketDeskUserManager(userStore);
             var roleManager = new TicketDeskRoleManager(roleStore);
             roleManager.EnsureDefaultRolesExist();
         }

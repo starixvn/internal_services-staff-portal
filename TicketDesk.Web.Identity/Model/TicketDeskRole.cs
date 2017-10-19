@@ -1,24 +1,24 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System.ComponentModel.DataAnnotations;
-using TicketDesk.Localization;
-using TicketDesk.Localization.Identity;
-
-namespace TicketDesk.Web.Identity.Model
+﻿namespace TicketDesk.Web.Identity.Model
 {
+    using Localization;
+    using Localization.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using System.ComponentModel.DataAnnotations;
+
     public class TicketDeskRole : IdentityRole
     {
-        private string displayName;
-        private string description;
+        private string _displayName;
+        private string _description;
 
-        public TicketDeskRole() : base()
+        public TicketDeskRole()
         {
         }
 
         public TicketDeskRole(string roleName, string displayName, string description)
             : base(roleName)
         {
-            this.displayName = displayName;
-            this.description = description;
+            _displayName = displayName;
+            _description = description;
         }
 
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
@@ -28,19 +28,14 @@ namespace TicketDesk.Web.Identity.Model
         {
             get
             {
-                if (TicketDeskRoleManager.DefaultRolesDisplayName.ContainsKey(this.Name))
-                {
-                    return TicketDeskRoleManager.DefaultRolesDisplayName[this.Name];
-                }
-                else
-                {
-                    return this.displayName;
-                }
+                return TicketDeskRoleManager.DefaultRolesDisplayName.ContainsKey(Name)
+                    ? TicketDeskRoleManager.DefaultRolesDisplayName[Name]
+                    : _displayName;
             }
 
             set
             {
-                this.displayName = value;
+                _displayName = value;
             }
         }
 
@@ -50,19 +45,14 @@ namespace TicketDesk.Web.Identity.Model
         {
             get
             {
-                if (TicketDeskRoleManager.DefaultRolesDescription.ContainsKey(this.Name))
-                {
-                    return TicketDeskRoleManager.DefaultRolesDescription[this.Name];
-                }
-                else
-                {
-                    return this.displayName;
-                }
-            }
+                return TicketDeskRoleManager.DefaultRolesDescription.ContainsKey(Name)
+                    ? TicketDeskRoleManager.DefaultRolesDescription[Name]
+                    : _displayName;
 
+            }
             set
             {
-                this.description = value;
+                _description = value;
             }
         }
     }

@@ -17,7 +17,7 @@ namespace TicketDesk.Web.Identity
     using Domain.Infrastructure;
     using Microsoft.AspNet.Identity;
     using System;
-    using TicketDesk.Web.Identity.Model;
+    using Model;
 
     public class TicketDeskUserManager : UserManager<TicketDeskUser>
     {
