@@ -59,6 +59,11 @@
             indexTag.Attributes.Add("name", parentName + ".Index");
             indexTag.Attributes.Add("value", guid);
 
+            TagBuilder itemIndexTag = new TagBuilder("input");
+            itemIndexTag.Attributes.Add("type", "hidden");
+            itemIndexTag.Attributes.Add("name", parentName + "[" + guid + "].Index");
+            itemIndexTag.Attributes.Add("value", guid);
+
             return new MvcHtmlString(indexTag.ToString());
         }
 
