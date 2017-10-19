@@ -66,13 +66,10 @@ namespace TicketDesk.Domain
                     object[] attributes = memberInfo.GetCustomAttributes(typeof(DisplayAttribute), false);
 
                     // if there are attributes
-                    if (attributes.Length > 0)
+                    // if the display attribute is equal to the display name, return the enum
+                    if (attributes.Length > 0 && ((DisplayAttribute)attributes[0]).GetName() == displayName)
                     {
-                        // if the display attribute is equal to the display name, return the enum
-                        if (((DisplayAttribute)attributes[0]).GetName() == displayName)
-                        {
-                            return (T)Enum.Parse(typeof(T), memberInfo.Name);
-                        }
+                        return (T)Enum.Parse(typeof(T), memberInfo.Name);
                     }
                 }
             }

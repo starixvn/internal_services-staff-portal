@@ -50,7 +50,7 @@
         };
 
         // Default culture
-        private static string _defaultCulture
+        private static string DefaultCulture
         {
             get
             {
@@ -70,23 +70,20 @@
         /// <summary>
         /// Return implemented cultures
         /// </summary>
-        public static IEnumerable<KeyValuePair<string, string>> Cultures
-        {
-            get { return _cultures.AsEnumerable<KeyValuePair<string, string>>(); }
-        }
+        public static IEnumerable<KeyValuePair<string, string>> Cultures => _cultures.AsEnumerable();
 
         /// <summary>
         /// Returns true if the language is a right-to-left language. Otherwise, false.
         /// </summary>
         public static bool IsRighToLeft()
         {
-            return System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+            return Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
         }
 
         /// <summary>
         /// Returns a valid culture name based on "name" parameter. If "name" is not valid, it returns the default culture
         /// </summary>
-        /// <param name="name" />Culture's name (e.g. en-US)</param>
+        /// <param name="name" >Culture's name (e.g. en-US)</param>
         public static string GetImplementedCulture(string name)
         {
             return GetImplementedCulture(name, GetDefaultCulture());
@@ -95,8 +92,8 @@
         /// <summary>
         /// Returns a valid culture name based on "name" parameter. If "name" is not valid, it returns the "defaultCulture" parameter.
         /// </summary>
-        /// <param name="name" />Culture's name (e.g. en-US)</param>
-        /// <param name="defaultCulture" />Default culture (e.g. en-US)</param>
+        /// <param name="name" >Culture's name (e.g. en-US)</param>
+        /// <param name="defaultCulture" >Default culture (e.g. en-US)</param>
         public static string GetImplementedCulture(string name, string defaultCulture)
         {
             // make sure it's not null
@@ -141,7 +138,7 @@
         /// <returns></returns>
         public static string GetDefaultCulture()
         {
-            return _defaultCulture; // return Default culture
+            return DefaultCulture; // return Default culture
         }
 
         public static string GetCurrentCulture()
@@ -179,7 +176,7 @@
 
         public static void SetDefaultCulture()
         {
-            SetCurrentCulture(_defaultCulture, true);
+            SetCurrentCulture(DefaultCulture);
         }
     }
 }

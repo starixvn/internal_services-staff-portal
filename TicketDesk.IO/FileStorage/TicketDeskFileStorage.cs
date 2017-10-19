@@ -1,25 +1,12 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using AzureBlobFileSystem;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TicketDesk.IO
+﻿namespace TicketDesk.IO
 {
+    using AzureBlobFileSystem;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public static class TicketDeskFileStore
     {
         private static IStorageProvider _currentProvider;
@@ -49,7 +36,7 @@ namespace TicketDesk.IO
         public static bool MoveFile(string fileName, string oldContainerId, string newContainerId, bool wasPending, bool isPending)
         {
             var oldPath = GetFilePath(fileName, oldContainerId, wasPending);
-            var oldFolder = GetFileFolderPath(oldContainerId, wasPending);
+            ////var oldFolder = GetFileFolderPath(oldContainerId, wasPending);
             var newPath = GetFilePath(fileName, newContainerId, isPending);
             if (Current.FileExists(oldPath))
             {
@@ -65,7 +52,7 @@ namespace TicketDesk.IO
                 var extension = Path.GetExtension(fileName);
                 while (Current.FileExists(newPath))
                 {
-                    var tempFileName = string.Format("{0}({1}){2}", fileNameOnly, count++, extension);
+                    var tempFileName = $"{fileNameOnly}({count++}){extension}";
                     newPath = GetFilePath(tempFileName, newContainerId, isPending);
                 }
 
@@ -104,7 +91,7 @@ namespace TicketDesk.IO
             var path = GetFilePath(fileName, containerId, isPending);
             using (var writer = new StreamWriter(Current.CreateFile(path).OpenWrite()))
             {
-                await inputStream.CopyToAsync(writer.BaseStream);
+                await inputStream.CopyToAsync(writer.BaseStream).ConfigureAwait(false);
             }
 
             return true;
@@ -131,7 +118,7 @@ namespace TicketDesk.IO
         {
             if (isPending)
             {
-                fileName = string.Format("{0}.{1}", fileName, containerId);
+                fileName = $"{fileName}.{containerId}";
             }
 
             var path = GetFileFolderPath(containerId, isPending);

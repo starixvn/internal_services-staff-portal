@@ -1,28 +1,15 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System.Collections.Generic;
-using System.Linq;
-using TicketDesk.Localization.Domain;
-
-namespace TicketDesk.Domain.Model
+﻿namespace TicketDesk.Domain.Model
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using TicketDesk.Localization.Domain;
+
     /// <summary>
     /// Represents a user's settings for a particular list view
     /// </summary>
     public class UserTicketListSetting
     {
-        private string listDisplayName;
+        private string _listDisplayName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserTicketListSetting"/> class.
@@ -50,8 +37,10 @@ namespace TicketDesk.Domain.Model
             ListName = listName;
             ListDisplayName = listDisplayName;
             ListMenuDisplayOrder = listMenuDisplayOrder;
-            SortColumns = new List<UserTicketListSortColumn>();
-            SortColumns.Add(new UserTicketListSortColumn("LastUpdateDate", ColumnSortDirection.Descending));
+            SortColumns = new List<UserTicketListSortColumn>
+            {
+                new UserTicketListSortColumn("LastUpdateDate", ColumnSortDirection.Descending)
+            };
             FilterColumns = new List<UserTicketListFilterColumn>();
             if (!includeClosedTickets)
             {
@@ -99,21 +88,11 @@ namespace TicketDesk.Domain.Model
         /// <value>The display name of the list view.</value>
         public string ListDisplayName
         {
-            get
-            {
-                if (DefaultListName.ContainsKey(this.ListName))
-                {
-                    return DefaultListName[this.ListName];
-                }
-                else
-                {
-                    return this.listDisplayName;
-                }
-            }
+            get { return DefaultListName.ContainsKey(ListName) ? DefaultListName[ListName] : _listDisplayName; }
 
             set
             {
-                this.listDisplayName = value;
+                _listDisplayName = value;
             }
         }
 
@@ -147,35 +126,29 @@ namespace TicketDesk.Domain.Model
         /// <value>The disabled filter column names.</value>
         public IEnumerable<string> DisabledFilterColumnNames { get; set; }
 
-        internal static IDictionary<string, string> DefaultListName
+        internal static IDictionary<string, string> DefaultListName => new Dictionary<string, string>
         {
-            get
             {
-                return new Dictionary<string, string>
-                {
-                    {
-                        "unassigned",
-                        Strings.DefaultListNameUnassigned
-                    },
-                    {
-                        "assignedToMe",
-                        Strings.DefaultListNameAssignedToMe
-                    },
-                    {
-                        "mytickets",
-                        Strings.DefaultListNameMyTickets
-                     },
-                    {
-                        "opentickets",
-                        Strings.DefaultListNameOpenTickets
-                     },
-                    {
-                        "historytickets",
-                        Strings.DefaultListNameHistoryTickets
-                     }
-                };
+                "unassigned",
+                Strings.DefaultListNameUnassigned
+            },
+            {
+                "assignedToMe",
+                Strings.DefaultListNameAssignedToMe
+            },
+            {
+                "mytickets",
+                Strings.DefaultListNameMyTickets
+            },
+            {
+                "opentickets",
+                Strings.DefaultListNameOpenTickets
+            },
+            {
+                "historytickets",
+                Strings.DefaultListNameHistoryTickets
             }
-        }
+        };
 
         /// <summary>
         /// Modifies the filter settings.
@@ -223,7 +196,7 @@ namespace TicketDesk.Domain.Model
                     "unassigned",
                     DefaultListName["unassigned"],
                     disOrder++,
-                    20, 
+                    20,
                     unassignedSortColumns,
                     unassignedFilterColumns,
                     disableAssignedColumn));

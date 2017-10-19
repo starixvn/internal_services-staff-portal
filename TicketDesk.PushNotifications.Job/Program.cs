@@ -1,11 +1,11 @@
-﻿using Microsoft.Azure.WebJobs;
-using System;
-using System.Configuration;
-using TicketDesk.IO;
-
-namespace TicketDesk.PushNotifications.Job
+﻿namespace TicketDesk.PushNotifications.Job
 {
-    internal class Program
+    using IO;
+    using Microsoft.Azure.WebJobs;
+    using System;
+    using System.Configuration;
+
+    internal static class Program
     {
         // Please set the following connection strings in app.config for this WebJob to run:
         // AzureWebJobsDashboard and AzureWebJobsStorage
@@ -13,8 +13,9 @@ namespace TicketDesk.PushNotifications.Job
         {
             var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false")
                 .Equals("true", StringComparison.InvariantCultureIgnoreCase);
-            var isEnabled = false;
-            var interval = 2;
+            bool isEnabled;
+            int interval;
+
             using (var context = new TdPushNotificationContext())
             {
                 isEnabled = !demoMode && context.TicketDeskPushNotificationSettings.IsEnabled;

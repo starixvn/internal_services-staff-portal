@@ -88,7 +88,7 @@ namespace TicketDesk.Domain.Model
 
             set
             {
-                // when marking as read, new flag is implicitly chaged to false;
+                //// when marking as read, new flag is implicitly chaged to false;
                 if (value)
                 {
                     IsNew = false;

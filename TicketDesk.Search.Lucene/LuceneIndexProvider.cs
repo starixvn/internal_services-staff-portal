@@ -47,7 +47,7 @@ namespace TicketDesk.Search.Lucene
             TdIndexWriter.Optimize();
             TdIndexWriter.Commit();
             ShutDownWriter();
-            return await Task.FromResult(true);
+            return await Task.FromResult(true).ConfigureAwait(false);
         }
 
         public Task<bool> AddItemsToIndexAsync(IEnumerable<SearchIndexItem> items)

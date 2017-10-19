@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace TicketDesk.PushNotifications.Job
 {
-    public class Functions
+    public static class Functions
     {
         private static readonly Timer Timer = new Timer(OnTimerElapsed);
 

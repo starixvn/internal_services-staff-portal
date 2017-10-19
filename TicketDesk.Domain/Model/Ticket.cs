@@ -252,15 +252,8 @@ namespace TicketDesk.Domain.Model
                     validActivities |= TicketActivity.ForceClose;
                 }
 
-                if (isAssignedToMe)
-                {
-                    validActivities |= TicketActivity.Pass | TicketActivity.GiveUp;
-                }
-                else
-                {
-                    // !isAssignedToMe
-                    validActivities |= TicketActivity.TakeOver;
-                }
+                validActivities |=
+                    isAssignedToMe ? TicketActivity.Pass | TicketActivity.GiveUp : TicketActivity.TakeOver;
             }
 
             return validActivities;

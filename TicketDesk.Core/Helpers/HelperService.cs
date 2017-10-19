@@ -7,7 +7,7 @@
     {
         public static IList<string> ConvertValuesToList(string values)
         {
-            return values.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            return values.Split(new[] { "\r\n" }, StringSplitOptions.None);
         }
     }
 }
