@@ -194,10 +194,7 @@ namespace TicketDesk.Domain.Model
             if (IsOpen)
             {
                 validActivities |= TicketActivity.ModifyAttachments;
-            }
 
-            if (IsOpen)
-            {
                 if (isOwnedByMe || isAssignedToMe)
                 {
                     validActivities |= TicketActivity.EditTicketInfo;
