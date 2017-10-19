@@ -26,7 +26,7 @@ namespace TicketDesk.Web.Client.Controllers
             Context = context;
         }
 
-        private TdDomainContext Context { get; set; }
+        private TdDomainContext Context { get; }
 
         [Route("tag-list")]
         [HttpGet]

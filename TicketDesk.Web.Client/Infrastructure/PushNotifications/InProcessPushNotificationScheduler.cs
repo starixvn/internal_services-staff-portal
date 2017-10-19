@@ -1,24 +1,11 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System;
-using System.Threading;
-using System.Web.Hosting;
-using TicketDesk.PushNotifications;
-
-namespace TicketDesk.Web.Client.Infrastructure
+﻿namespace TicketDesk.Web.Client.Infrastructure
 {
-    public class InProcessPushNotificationScheduler
+    using PushNotifications;
+    using System;
+    using System.Threading;
+    using System.Web.Hosting;
+
+    public static class InProcessPushNotificationScheduler
     {
         private static readonly Timer Timer = new Timer(OnTimerElapsed);
 
@@ -35,7 +22,7 @@ namespace TicketDesk.Web.Client.Infrastructure
                     var i = 1;
                     while (i > 0)
                     {
-                        i = await PushNotificationDeliveryManager.SendNextReadyNotificationAsync(ct);
+                        i = await PushNotificationDeliveryManager.SendNextReadyNotificationAsync(ct).ConfigureAwait(false);
                     }
                 });
         }

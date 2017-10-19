@@ -1,27 +1,14 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-namespace TicketDesk.Web.Client.Controllers
+﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Domain;
     using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Search.Common;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Domain;
-    using Domain.Model;
-    using Search.Common;
 
     [RoutePrefix("admin/search-manager")]
     [Route("{action=index}")]
@@ -32,7 +19,7 @@ namespace TicketDesk.Web.Client.Controllers
             Context = context;
         }
 
-        private TdDomainContext Context { get; set; }
+        private TdDomainContext Context { get; }
 
         [Route("")]
         [NapAuth(FunctionKey = FunctionKeys.SearchManagement, Policy = Constant.Policy.Read)]
@@ -45,12 +32,12 @@ namespace TicketDesk.Web.Client.Controllers
         [NapAuth(FunctionKey = FunctionKeys.SearchManagement, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> RemoveIndex()
         {
-            await TdSearchContext.Current.IndexManager.RemoveIndexAsync();
+            await TdSearchContext.Current.IndexManager.RemoveIndexAsync().ConfigureAwait(false);
 
             // initialize search
-            await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync();
+            await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
             IEnumerable<SearchIndexItem> searchItems = new List<SearchIndexItem>();
-            await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems);
+            await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
 
             ViewBag.IndexRemoved = true;
             return View("Index");
@@ -60,9 +47,9 @@ namespace TicketDesk.Web.Client.Controllers
         [NapAuth(FunctionKey = FunctionKeys.SearchManagement, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> PopulateIndex()
         {
-            await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync();
+            await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
             var searchItems = Context.Tickets.Include("TicketEvents").ToSeachIndexItems();
-            await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems);
+            await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
             ViewBag.IndexPopulated = true;
             return View("Index");
         }

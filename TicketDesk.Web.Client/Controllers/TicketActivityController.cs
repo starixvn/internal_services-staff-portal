@@ -73,7 +73,7 @@
         public async Task<ActionResult> AddComment(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment)
         {
             var activityFn = Context.TicketActions.AddComment(comment);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.AddComment);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.AddComment).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -82,7 +82,7 @@
         public async Task<ActionResult> Assign(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment, string assignedTo, string priority)
         {
             var activityFn = Context.TicketActions.Assign(comment, assignedTo, priority);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.Assign);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.Assign).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -91,7 +91,7 @@
         public async Task<ActionResult> CancelMoreInfo(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment)
         {
             var activityFn = Context.TicketActions.CancelMoreInfo(comment);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.CancelMoreInfo);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.CancelMoreInfo).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -100,7 +100,7 @@
         public async Task<ActionResult> Close(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment)
         {
             var activityFn = Context.TicketActions.Close(comment);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.Close);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.Close).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -119,7 +119,7 @@
             string tagList)
         {
             details = details.StripHtmlWhenEmpty();
-            var projectName = await Context.Projects.Where(p => p.ProjectId == projectId).Select(s => s.ProjectName).FirstOrDefaultAsync();
+            var projectName = await Context.Projects.Where(p => p.ProjectId == projectId).Select(s => s.ProjectName).FirstOrDefaultAsync().ConfigureAwait(false);
             var activityFn = Context.TicketActions.EditTicketInfo(
                 comment,
                 projectId,
@@ -133,7 +133,7 @@
                 tagList,
                 Context.TicketDeskSettings);
 
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.EditTicketInfo);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.EditTicketInfo).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -142,7 +142,7 @@
         public async Task<ActionResult> ForceClose(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment)
         {
             var activityFn = Context.TicketActions.ForceClose(comment);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.ForceClose);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.ForceClose).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -151,7 +151,7 @@
         public async Task<ActionResult> GiveUp(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment)
         {
             var activityFn = Context.TicketActions.GiveUp(comment);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.GiveUp);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.GiveUp).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -187,7 +187,7 @@
                    foreach (var file in files)
                    {
                        TicketDeskFileStore.DeleteAttachment(file, ticketId.ToString(CultureInfo.InvariantCulture), false);
-                       sb.AppendLine(string.Format("<dd>    {0}</dd>", file));
+                       sb.AppendLine($"<dd>    {file}</dd>");
                    }
 
                    sb.AppendLine("</dl>");
@@ -203,7 +203,7 @@
 
                    foreach (var file in filesAdded)
                    {
-                       sb.AppendLine(string.Format("<dd>    {0}</dd>", file));
+                       sb.AppendLine($"<dd>    {file}</dd>");
                    }
 
                    sb.AppendLine("</dl>");
@@ -216,7 +216,7 @@
                domainActivityFn(ticket);
            };
 
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.ModifyAttachments);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.ModifyAttachments).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -225,7 +225,7 @@
         public async Task<ActionResult> Pass(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment, string assignedTo, string priority)
         {
             var activityFn = Context.TicketActions.Pass(comment, assignedTo, priority);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.Pass);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.Pass).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -234,7 +234,7 @@
         public async Task<ActionResult> ReAssign(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment, string assignedTo, string priority)
         {
             var activityFn = Context.TicketActions.ReAssign(comment, assignedTo, priority);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.ReAssign);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.ReAssign).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -243,7 +243,7 @@
         public async Task<ActionResult> RequestMoreInfo(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment)
         {
             var activityFn = Context.TicketActions.RequestMoreInfo(comment);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.RequestMoreInfo);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.RequestMoreInfo).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -252,7 +252,7 @@
         public async Task<ActionResult> ReOpen(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment, bool assignToMe = false)
         {
             var activityFn = Context.TicketActions.ReOpen(comment, assignToMe);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.ReOpen);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.ReOpen).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -261,7 +261,7 @@
         public async Task<ActionResult> Resolve(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment)
         {
             var activityFn = Context.TicketActions.Resolve(comment);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.ReOpen);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.ReOpen).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -270,7 +270,7 @@
         public async Task<ActionResult> SupplyMoreInfo(int ticketId, [ModelBinder(typeof(SummernoteModelBinder))] string comment, bool reactivate = false)
         {
             var activityFn = Context.TicketActions.SupplyMoreInfo(comment, reactivate);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.SupplyMoreInfo);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.SupplyMoreInfo).ConfigureAwait(false);
         }
 
         [HttpPost]
@@ -321,7 +321,7 @@
 
             foreach (var field in customFields)
             {
-                field.Value = Context.CustomFieldValues.Where(x => (x.TicketId == ticketId) && (x.CustomFieldId == field.CustomFieldId)).FirstOrDefault().Value;
+                field.Value = Context.CustomFieldValues.FirstOrDefault(x => (x.TicketId == ticketId) && (x.CustomFieldId == field.CustomFieldId))?.Value;
             }
 
             ViewData.TemplateInfo.HtmlFieldPrefix = "CustomFields";
@@ -337,7 +337,7 @@
             IList<TicketFeedbackCustomField> customFields)
         {
             ticket.Details = ticket.Details.StripHtmlWhenEmpty();
-            var projectName = await Context.Projects.Where(p => p.ProjectId == ticket.ProjectId).Select(s => s.ProjectName).FirstOrDefaultAsync();
+            var projectName = await Context.Projects.Where(p => p.ProjectId == ticket.ProjectId).Select(s => s.ProjectName).FirstOrDefaultAsync().ConfigureAwait(false);
             var activityFn = Context.TicketActions.EditTicketInfo(
                 comment,
                 ticket.ProjectId,
@@ -353,14 +353,14 @@
 
             foreach (var field in customFields)
             {
-                var customFieldValue = Context.CustomFieldValues.Where(x => (x.TicketId == ticketId) && (x.CustomFieldId == field.CustomFieldId)).FirstOrDefault();
+                var customFieldValue = Context.CustomFieldValues.FirstOrDefault(x => (x.TicketId == ticketId) && (x.CustomFieldId == field.CustomFieldId));
                 if (customFieldValue != null)
                 {
                     customFieldValue.Value = field.Value;
                 }
             }
 
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.EditTicketInfo);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.EditTicketInfo).ConfigureAwait(false);
         }
     }
 }

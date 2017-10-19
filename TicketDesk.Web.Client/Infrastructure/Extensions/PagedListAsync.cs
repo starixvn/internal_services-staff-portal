@@ -1,11 +1,11 @@
 ﻿namespace TicketDesk.Web.Client
 {
+    using Localization.Infrastructure;
     using PagedList;
     using System;
     using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
-    using Localization.Infrastructure;
 
     public class PagedListAsync<T> : BasePagedList<T>
     {
@@ -16,7 +16,7 @@
         public static async Task<IPagedList<T>> Create(IQueryable<T> superset, int pageNumber, int pageSize)
         {
             var list = new PagedListAsync<T>();
-            await list.InitAsync(superset, pageNumber, pageSize);
+            await list.InitAsync(superset, pageNumber, pageSize).ConfigureAwait(false);
             return list;
         }
 
@@ -24,15 +24,15 @@
         {
             if (pageNumber < 1)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", pageNumber, Strings.PageNumberBelow);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), pageNumber, Strings.PageNumberBelow);
             }
 
             if (pageSize < 1)
             {
-                throw new ArgumentOutOfRangeException("pageSize", pageSize, Strings.PageSizeLess);
+                throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, Strings.PageSizeLess);
             }
 
-            TotalItemCount = superset == null ? 0 : await superset.CountAsync();
+            TotalItemCount = superset == null ? 0 : await superset.CountAsync().ConfigureAwait(false);
             PageSize = pageSize;
             PageNumber = pageNumber;
             PageCount = TotalItemCount > 0 ? (int)Math.Ceiling(TotalItemCount / (double)PageSize) : 0;
@@ -49,8 +49,8 @@
             }
 
             Subset.AddRange(pageNumber == 1
-                ? await superset.Skip(0).Take(pageSize).ToListAsync()
-                : await superset.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync());
+                ? await superset.Skip(0).Take(pageSize).ToListAsync().ConfigureAwait(false)
+                : await superset.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync().ConfigureAwait(false));
         }
     }
 }

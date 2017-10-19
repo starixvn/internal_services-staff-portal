@@ -21,7 +21,7 @@
             Context = context;
         }
 
-        private TdDomainContext Context { get; set; }
+        private TdDomainContext Context { get; }
 
         [Route("projects")]
         [NapAuth(FunctionKey = FunctionKeys.ProjectSettings, Policy = Constant.Policy.Read)]
@@ -29,7 +29,7 @@
         {
             var model = Context.Projects.Select(p => new ProjectListViewModelItem { Project = p, NumberOfTickets = p.Tickets.Count });
             ViewBag.IsHost = NapContextHelper.HasRight(FunctionKeys.ProjectSettings, Constant.Policy.Host);
-            await model.LoadAsync();
+            await model.LoadAsync().ConfigureAwait(false);
 
             return View(model);
         }
@@ -49,7 +49,7 @@
             if (ModelState.IsValid)
             {
                 Context.Projects.Add(project);
-                if (await Context.SaveChangesAsync() > 0)
+                if (await Context.SaveChangesAsync().ConfigureAwait(false) > 0)
                 {
                     return RedirectToAction("Index");
                 }
@@ -65,15 +65,15 @@
         public async Task<ActionResult> Delete(int projectId, int reassignTo)
         {
             // does project to delete exist?
-            var project = await Context.Projects.FindAsync(projectId);
+            var project = await Context.Projects.FindAsync(projectId).ConfigureAwait(false);
             if (project == null)
             {
                 return RedirectToAction("Index");
             }
 
             // is there more than one project, and does target project exist?
-            var numProjects = await Context.Projects.CountAsync();
-            var reassignProject = await Context.Projects.FindAsync(reassignTo);
+            var numProjects = await Context.Projects.CountAsync().ConfigureAwait(false);
+            var reassignProject = await Context.Projects.FindAsync(reassignTo).ConfigureAwait(false);
             if (numProjects < 2 || reassignProject == null)
             {
                 return RedirectToAction("Edit", new { projectId });
@@ -88,7 +88,7 @@
 
             Context.Projects.Remove(project);
 
-            var result = await Context.SaveChangesAsync();
+            var result = await Context.SaveChangesAsync().ConfigureAwait(false);
             if (result > 0)
             {
                 RedirectToAction("Index");
@@ -102,13 +102,13 @@
         [NapAuth(FunctionKey = FunctionKeys.ProjectSettings, Policy = Constant.Policy.Host)]
         public async Task<ActionResult> Edit(int projectId)
         {
-            var project = await Context.Projects.FindAsync(projectId);
+            var project = await Context.Projects.FindAsync(projectId).ConfigureAwait(false);
             if (project == null)
             {
                 return RedirectToAction("Index");
             }
 
-            await AddViewDataForEdit(projectId);
+            await AddViewDataForEdit(projectId).ConfigureAwait(false);
             return View(project);
         }
 
@@ -117,23 +117,23 @@
         [NapAuth(FunctionKey = FunctionKeys.ProjectSettings, Policy = Constant.Policy.Host)]
         public async Task<ActionResult> Edit(Project project, int projectId)
         {
-            var existing = await Context.Projects.FindAsync(projectId);
+            var existing = await Context.Projects.FindAsync(projectId).ConfigureAwait(false);
             if (ModelState.IsValid && TryUpdateModel(existing))
             {
-                var result = await Context.SaveChangesAsync();
+                var result = await Context.SaveChangesAsync().ConfigureAwait(false);
                 if (result > 0)
                 {
                     return RedirectToAction("Index");
                 }
             }
 
-            await AddViewDataForEdit(projectId);
+            await AddViewDataForEdit(projectId).ConfigureAwait(false);
             return View(project);
         }
 
         private async Task AddViewDataForEdit(int projectId)
         {
-            ViewBag.EnableDelete = await Context.Projects.CountAsync() > 1;
+            ViewBag.EnableDelete = await Context.Projects.CountAsync().ConfigureAwait(false) > 1;
             ViewBag.ProjectReassignList = Context.Projects
                 .Where(p => p.ProjectId != projectId)
                 .ToSelectList(p => p.ProjectId.ToString(), p => p.ProjectName);

@@ -59,17 +59,17 @@ namespace TicketDesk.Web.Client.Models
                 DatabaseName = IsFileDatabase ? builder.AttachDBFilename : builder.InitialCatalog;
             }
 
-            public string DbEdition { get; private set; }
+            public string DbEdition { get; }
 
-            public bool IsLocalDb { get; private set; }
+            public bool IsLocalDb { get; }
 
-            public bool IsFileDatabase { get; private set; }
+            public bool IsFileDatabase { get; }
 
-            public string ServerName { get; private set; }
+            public string ServerName { get; }
 
-            public string SqlInstance { get; private set; }
+            public string SqlInstance { get; }
 
-            public string DatabaseName { get; private set; }
+            public string DatabaseName { get; }
 
             private string GetSqlEdition(string connectionString)
             {
@@ -137,7 +137,7 @@ namespace TicketDesk.Web.Client.Models
                 }
             }
 
-            public bool DatabaseExists { get; private set; }
+            public bool DatabaseExists { get; }
 
             public bool IsDatabaseReady
             {
@@ -154,7 +154,7 @@ namespace TicketDesk.Web.Client.Models
                 get { return DatabaseConfig.IsEmptyDatabase(); }
             }
 
-            public bool IsCompatibleWithEfModel { get; private set; }
+            public bool IsCompatibleWithEfModel { get; }
 
             public bool HasLegacySecurityObjects
             {
@@ -174,17 +174,17 @@ namespace TicketDesk.Web.Client.Models
                 AzureStorageService = GetAzureStorageServiceName();
             }
 
-            public string AzureWebSiteName { get; private set; }
+            public string AzureWebSiteName { get; }
 
-            public bool IsAzureWebSite { get; private set; }
+            public bool IsAzureWebSite { get; }
 
-            public string AzureSqlService { get; private set; }
+            public string AzureSqlService { get; }
 
-            public bool IsSqlAzure { get; private set; }
+            public bool IsSqlAzure { get; }
 
-            public string AzureSearchService { get; private set; }
+            public string AzureSearchService { get; }
 
-            public string AzureStorageService { get; private set; }
+            public string AzureStorageService { get; }
 
             public bool HasAzureServices
             {

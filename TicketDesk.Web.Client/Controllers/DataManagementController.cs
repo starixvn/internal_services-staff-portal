@@ -40,11 +40,11 @@ namespace TicketDesk.Web.Client.Controllers
             SignInManager = signInManager;
         }
 
-        private TdIdentityContext IdentityContext { get; set; }
+        private TdIdentityContext IdentityContext { get; }
 
-        private TdPushNotificationContext PushNotificationContext { get; set; }
+        private TdPushNotificationContext PushNotificationContext { get; }
 
-        private TicketDeskSignInManager SignInManager { get; set; }
+        private TicketDeskSignInManager SignInManager { get; }
 
         [Route("demo")]
         [NapAuth(FunctionKey = FunctionKeys.DataManagement, Policy = Constant.Policy.Read)]

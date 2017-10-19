@@ -26,8 +26,8 @@
         public async Task<ActionResult> ResetUserLists()
         {
             var uId = Context.SecurityProvider.CurrentUserId;
-            await Context.UserSettingsManager.ResetAllListSettingsForUserAsync(uId);
-            await Context.SaveChangesAsync();
+            await Context.UserSettingsManager.ResetAllListSettingsForUserAsync(uId).ConfigureAwait(false);
+            await Context.SaveChangesAsync().ConfigureAwait(false);
             return RedirectToAction("Index");
         }
 
@@ -36,10 +36,14 @@
         public async Task<ActionResult> Index(int? page, string listName)
         {
             // Role
-            listName = listName ?? (Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket, Constant.Policy.Read) ? "unassigned" : "mytickets");
+            listName = listName ?? (Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket,
+                           Constant.Policy.Read)
+                           ? "unassigned"
+                           : "mytickets");
             var pageNumber = page ?? 1;
 
-            var viewModel = await TicketCenterListViewModel.GetViewModelAsync(pageNumber, listName, Context, Context.SecurityProvider.CurrentUserId);
+            var viewModel = await TicketCenterListViewModel.GetViewModelAsync(pageNumber, listName, Context,
+                Context.SecurityProvider.CurrentUserId).ConfigureAwait(false);
 
             return View(viewModel);
         }
@@ -47,7 +51,7 @@
         [Route("pageList/{listName=mytickets}/{page:int?}")]
         public async Task<ActionResult> PageList(int? page, string listName)
         {
-            return await GetTicketListPartial(page, listName);
+            return await GetTicketListPartial(page, listName).ConfigureAwait(false);
         }
 
         [Route("filterList/{listName=opentickets}/{page:int?}")]
@@ -59,15 +63,15 @@
             string assignedTo)
         {
             var uId = Context.SecurityProvider.CurrentUserId;
-            var userSetting = await Context.UserSettingsManager.GetSettingsForUserAsync(uId);
+            var userSetting = await Context.UserSettingsManager.GetSettingsForUserAsync(uId).ConfigureAwait(false);
 
             var currentListSetting = userSetting.GetUserListSettingByName(listName);
 
             currentListSetting.ModifyFilterSettings(pageSize, ticketStatus, owner, assignedTo);
 
-            await Context.SaveChangesAsync();
+            await Context.SaveChangesAsync().ConfigureAwait(false);
 
-            return await GetTicketListPartial(null, listName);
+            return await GetTicketListPartial(null, listName).ConfigureAwait(false);
         }
 
         [Route("sortList/{listName=opentickets}/{page:int?}")]
@@ -78,7 +82,7 @@
             bool isMultiSort = false)
         {
             var uId = Context.SecurityProvider.CurrentUserId;
-            var userSetting = await Context.UserSettingsManager.GetSettingsForUserAsync(uId);
+            var userSetting = await Context.UserSettingsManager.GetSettingsForUserAsync(uId).ConfigureAwait(false);
             var currentListSetting = userSetting.GetUserListSettingByName(listName);
 
             var sortCol = currentListSetting.SortColumns.SingleOrDefault(sc => sc.ColumnName == columnName);
@@ -97,7 +101,8 @@
                 else
                 {
                     // column not in sort, add to sort
-                    currentListSetting.SortColumns.Add(new UserTicketListSortColumn(columnName, ColumnSortDirection.Ascending));
+                    currentListSetting.SortColumns.Add(new UserTicketListSortColumn(columnName,
+                        ColumnSortDirection.Ascending));
                 }
             }
             else
@@ -105,26 +110,31 @@
                 // column already in sort, just flip direction
                 if (sortCol != null)
                 {
-                    sortCol.SortDirection = (sortCol.SortDirection == ColumnSortDirection.Ascending) ? ColumnSortDirection.Descending : ColumnSortDirection.Ascending;
+                    sortCol.SortDirection = (sortCol.SortDirection == ColumnSortDirection.Ascending)
+                        ? ColumnSortDirection.Descending
+                        : ColumnSortDirection.Ascending;
                 }
                 else
                 {
                     // column not in sort, replace sort with new simple sort for column
                     currentListSetting.SortColumns.Clear();
-                    currentListSetting.SortColumns.Add(new UserTicketListSortColumn(columnName, ColumnSortDirection.Ascending));
+                    currentListSetting.SortColumns.Add(new UserTicketListSortColumn(columnName,
+                        ColumnSortDirection.Ascending));
                 }
             }
 
-            await Context.SaveChangesAsync();
+            await Context.SaveChangesAsync().ConfigureAwait(false);
 
-            return await GetTicketListPartial(page, listName);
+            return await GetTicketListPartial(page, listName).ConfigureAwait(false);
         }
 
         private async Task<PartialViewResult> GetTicketListPartial(int? page, string listName)
         {
             var pageNumber = page ?? 1;
 
-            var viewModel = await TicketCenterListViewModel.GetViewModelAsync(pageNumber, listName, Context, Context.SecurityProvider.CurrentUserId);
+            var viewModel = await TicketCenterListViewModel
+                .GetViewModelAsync(pageNumber, listName, Context, Context.SecurityProvider.CurrentUserId)
+                .ConfigureAwait(false);
             return PartialView("_TicketList", viewModel);
         }
     }

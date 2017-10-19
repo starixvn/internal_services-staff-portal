@@ -41,9 +41,9 @@ namespace TicketDesk.Web.Client.Controllers
             DomainContext = domainContext;
         }
 
-        private TdPushNotificationContext NoteContext { get; set; }
+        private TdPushNotificationContext NoteContext { get; }
 
-        private TdDomainContext DomainContext { get; set; }
+        private TdDomainContext DomainContext { get; }
 
         [NapAuth(FunctionKey = FunctionKeys.PushNotificationSettings, Policy = Constant.Policy.Read)]
         public ActionResult Index()
@@ -140,7 +140,7 @@ namespace TicketDesk.Web.Client.Controllers
                 var method =
                     GetType()
                         .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
-                        .First(m => m.Name == "TryUpdateModel" && m.IsGenericMethod && m.GetParameters().Count() == 1)
+                        .First(m => m.Name == "TryUpdateModel" && m.IsGenericMethod && m.GetParameters().Length == 1)
                         .MakeGenericMethod(provider.Configuration.GetType());
 
                 // TryUpdateModel call
@@ -148,7 +148,7 @@ namespace TicketDesk.Web.Client.Controllers
                 {
                     settings.ProviderConfigurationData = JObject.FromObject(provider.Configuration);
                     settings.IsEnabled = isEnabled;
-                    await NoteContext.SaveChangesAsync();
+                    await NoteContext.SaveChangesAsync().ConfigureAwait(false);
                     return RedirectToAction("Index");
                 }
             }
@@ -174,7 +174,7 @@ namespace TicketDesk.Web.Client.Controllers
             return settings;
         }
 
-        private IPushNotificationDeliveryProvider GetProvider(string providerTypeName)
+        private static IPushNotificationDeliveryProvider GetProvider(string providerTypeName)
         {
             return PushNotificationDeliveryManager.DeliveryProviders.FirstOrDefault(p => p.GetType().AssemblyQualifiedName == providerTypeName) ??
                    PushNotificationDeliveryManager.CreateDefaultDeliveryProviderInstance(Type.GetType(providerTypeName));

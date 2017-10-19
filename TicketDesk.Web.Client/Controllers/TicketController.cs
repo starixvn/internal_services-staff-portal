@@ -328,19 +328,19 @@
         {
             if (ticket.ProjectId == default(int))
             {
-                var projects = await Context.Projects.Select(s => s.ProjectId).ToListAsync();
+                var projects = await Context.Projects.Select(s => s.ProjectId).ToListAsync().ConfigureAwait(false);
                 var isMulti = projects.Count > 1;
                 ViewBag.IsMultiProject = isMulti;
 
                 // set to first project if only one project exists, otherwise use user's selected project
-                ticket.ProjectId = isMulti ? await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context) : projects.FirstOrDefault();
+                ticket.ProjectId = isMulti ? await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context).ConfigureAwait(false) : projects.FirstOrDefault();
             }
         }
 
         private async Task<bool> CreateTicketAsync(Ticket ticket, Guid tempId)
         {
             Context.Tickets.Add(ticket);
-            await Context.SaveChangesAsync();
+            await Context.SaveChangesAsync().ConfigureAwait(false);
             ticket.CommitPendingAttachments(tempId);
 
             return ticket.TicketId != default(int);

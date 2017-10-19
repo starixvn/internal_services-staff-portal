@@ -8,7 +8,7 @@
     {
         public static async Task<IPagedList<T>> ToPagedListAsync<T>(this IQueryable<T> superset, int pageNumber, int pageSize)
         {
-            return await PagedListAsync<T>.Create(superset, pageNumber, pageSize);
+            return await PagedListAsync<T>.Create(superset, pageNumber, pageSize).ConfigureAwait(false);
         }
     }
 }

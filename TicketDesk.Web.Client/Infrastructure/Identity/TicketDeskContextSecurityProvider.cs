@@ -32,7 +32,7 @@ namespace TicketDesk.Web.Client
             CurrentUserId = UserManager.CurrentUserId;
         }
 
-        private TicketDeskUserManager UserManager { get; set; }
+        private TicketDeskUserManager UserManager { get; }
 
         public override IContextHelper NapContextHelper { get; set; }
 

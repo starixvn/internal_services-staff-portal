@@ -34,9 +34,9 @@ namespace TicketDesk.Web.Client.Controllers
             IsAzureSearchDetected = TdSearchContext.Current.IndexManager.GetType() == typeof(AzureIndexProvider);
         }
 
-        private TdDomainContext Context { get; set; }
+        private TdDomainContext Context { get; }
 
-        private bool IsAzureSearchDetected { get; set; }
+        private bool IsAzureSearchDetected { get; }
 
         [NapAuth(FunctionKey = FunctionKeys.ApplicationSettings, Policy = Constant.Policy.Read)]
         public ActionResult Index()

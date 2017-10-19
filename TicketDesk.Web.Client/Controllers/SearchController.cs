@@ -34,7 +34,7 @@ namespace TicketDesk.Web.Client.Controllers
             Context = context;
         }
 
-        private TdDomainContext Context { get; set; }
+        private TdDomainContext Context { get; }
 
         [ValidateInput(false)]
         [Route("")]
@@ -43,10 +43,10 @@ namespace TicketDesk.Web.Client.Controllers
         [NapAuth(FunctionKey = FunctionKeys.QuickSearch, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> Index(string term)
         {
-            var projectId = await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context);
+            var projectId = await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context).ConfigureAwait(false);
             if (!string.IsNullOrEmpty(term))
             {
-                var model = await TdSearchContext.Current.SearchAsync(Context.Tickets.Include(t => t.Project), term, projectId);
+                var model = await TdSearchContext.Current.SearchAsync(Context.Tickets.Include(t => t.Project), term, projectId).ConfigureAwait(false);
 
                 if (Context.Projects.Count() > 1)
                 {

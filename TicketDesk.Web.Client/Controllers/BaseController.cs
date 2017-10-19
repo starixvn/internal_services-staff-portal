@@ -14,7 +14,7 @@
             NapContextHelper = context.SecurityProvider.NapContextHelper;
         }
 
-        protected IContextHelper NapContextHelper { get; private set; }
+        protected IContextHelper NapContextHelper { get; }
 
         protected ICurrentSession CurrentSession
         {
