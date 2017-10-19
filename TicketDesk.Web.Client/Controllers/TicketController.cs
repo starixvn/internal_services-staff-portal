@@ -108,11 +108,6 @@
             };
 
             model.Items = new List<Item>();
-            //Item item = new Item
-            //{
-            //    ItemName = avalableCustomFields.First(x => x.Name == "Item"),
-            //    Reason = avalableCustomFields.First(x => x.Name == "Reason for Repair/Improvement Request")
-            //};
 
             Item item = new Item
             {
@@ -127,13 +122,6 @@
             };
 
             model.Items.Add(item);
-
-            //item = new Item
-            //{
-            //    ItemName = avalableCustomFields.First(x => x.Name == "Item"),
-            //    Reason = avalableCustomFields.First(x => x.Name == "Reason for Repair/Improvement Request")
-            //};
-            //model.Items.Add(item);
 
             model.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
             model.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
@@ -162,63 +150,61 @@
                 }
             }
 
-            if (ModelState.IsValid)
+            // TODO: Replace with actual project ID represent for shop id here
+            viewModel.Ticket.Project = Context.Projects.Find(1);
+            viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
+
+            if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, tempId).ConfigureAwait(false))
             {
-                try
-                {
-                    // TODO: Replace with actual project ID represent for shop id here
-                    viewModel.Ticket.Project = Context.Projects.Find(1);
-                    viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
+                await AddTicketCustomField(viewModel);
 
-                    if (await CreateTicketAsync(viewModel.Ticket, tempId))
-                    {
-                        Context.CustomFieldValues.Add(new CustomFieldValue
-                        {
-                            CustomFieldId = viewModel.RequestType.CustomFieldId,
-                            Value = viewModel.RequestType.Value,
-                            TicketId = viewModel.Ticket.TicketId
-                        });
-
-                        // add item to database
-                        foreach (Item item in viewModel.Items)
-                        {
-                            Context.CustomFieldValues.Add(new CustomFieldValue
-                            {
-                                GroupId = item.Index,
-                                CustomFieldId = item.ItemName.CustomFieldId,
-                                Value = item.ItemName.Value,
-                                TicketId = viewModel.Ticket.TicketId
-                            });
-                            Context.CustomFieldValues.Add(new CustomFieldValue
-                            {
-                                GroupId = item.Index,
-                                CustomFieldId = item.Reason.CustomFieldId,
-                                Value = item.Reason.Value,
-                                TicketId = viewModel.Ticket.TicketId
-                            });
-                        }
-
-                        //Save changes to ticket's custom field
-                        await Context.SaveChangesAsync();
-
-                        if (Context.SecurityProvider.IsReadTicketCenter)
-                        {
-                            return RedirectToAction("Index", new { id = viewModel.Ticket.TicketId });
-                        }
-
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch (DbEntityValidationException ex)
-                {
-                    // TODO: catch rule exceptions? or can annotations handle this fully now?
-                }
+                return Context.SecurityProvider.IsReadTicketCenter
+                    ? RedirectToAction("Index", new { id = viewModel.Ticket.TicketId })
+                    : RedirectToAction("Index", "Home");
             }
 
             ViewBag.TempId = tempId;
             await SetProjectInfoForModelAsync(viewModel.Ticket);
             return View(viewModel);
+        }
+
+        private async Task AddTicketCustomField(NewFacilityTicketViewModel viewModel)
+        {
+            AddCustomFieldValue(
+                null,
+                viewModel.RequestType.CustomFieldId,
+                viewModel.RequestType.Value,
+                viewModel.Ticket.TicketId);
+
+            // add item to database
+            foreach (Item item in viewModel.Items)
+            {
+                AddCustomFieldValue(
+                    item.Index,
+                    item.ItemName.CustomFieldId,
+                    item.ItemName.Value,
+                    viewModel.Ticket.TicketId);
+
+                AddCustomFieldValue(
+                    item.Index,
+                    item.Reason.CustomFieldId,
+                    item.Reason.Value,
+                    viewModel.Ticket.TicketId);
+            }
+
+            //Save changes to ticket's custom field
+            await Context.SaveChangesAsync();
+        }
+
+        private void AddCustomFieldValue(string groupId, int customFieldId, string value, int ticketId)
+        {
+            Context.CustomFieldValues.Add(new CustomFieldValue
+            {
+                GroupId = groupId,
+                CustomFieldId = customFieldId,
+                Value = value,
+                TicketId = ticketId
+            });
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]

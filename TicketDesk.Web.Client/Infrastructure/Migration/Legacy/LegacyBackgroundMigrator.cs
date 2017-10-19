@@ -8,7 +8,7 @@
     public static class LegacyBackgroundMigrator
     {
         private static StringBuilder _messages;
-        public static CancellationTokenSource Canceler;
+        private static CancellationTokenSource _canceler;
 
         private static LegacyMigrator Migrator { get; set; }
 
@@ -36,11 +36,11 @@
                     || MigrationTask.Status != TaskStatus.WaitingForChildrenToComplete
                     || MigrationTask.Status != TaskStatus.WaitingToRun))
             {
-                Canceler = new CancellationTokenSource();
-                var token = Canceler.Token;
+                _canceler = new CancellationTokenSource();
+                var token = _canceler.Token;
                 Reset();
                 Migrator = migrator;
-                Migrator.Canceler = Canceler;
+                Migrator.Canceler = _canceler;
                 try
                 {
                     MigrationTask = Task.Factory.StartNew(
@@ -64,10 +64,7 @@
         /// </summary>
         public static void CancelMigration()
         {
-            if (Canceler != null)
-            {
-                Canceler.Cancel();
-            }
+            _canceler?.Cancel();
         }
 
         /// <summary>
