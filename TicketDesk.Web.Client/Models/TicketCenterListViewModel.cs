@@ -40,11 +40,11 @@
 
         public IOrderedEnumerable<UserTicketListSetting> UserListSettings { get; private set; }
 
-        public TicketDeskUserManager UserManager => DependencyResolver.Current.GetService<TicketDeskUserManager>();
+        public static TicketDeskUserManager UserManager => DependencyResolver.Current.GetService<TicketDeskUserManager>();
 
         public static async Task<TicketCenterListViewModel> GetViewModelAsync(int currentPage, string listName, TdDomainContext context, string userId)
         {
-            var userSettings = await context.UserSettingsManager.GetSettingsForUserAsync(userId);
+            var userSettings = await context.UserSettingsManager.GetSettingsForUserAsync(userId).ConfigureAwait(false);
 
             var vm = new TicketCenterListViewModel
             {
@@ -53,7 +53,7 @@
                 CurrentListSetting = userSettings.GetUserListSettingByName(listName)
             };
 
-            vm.Tickets = await vm.ListTicketsAsync(currentPage, context, userId);
+            vm.Tickets = await vm.ListTicketsAsync(currentPage, context, userId).ConfigureAwait(false);
 
             var categories = context.TicketCategories.ToList();
             foreach (var ticket in vm.Tickets)
@@ -70,7 +70,7 @@
             var filterColumns = CurrentListSetting.FilterColumns.ToList();
 
             // if filtering by project, add filter for selected project
-            var projectId = await context.UserSettingsManager.GetUserSelectedProjectIdAsync(context);
+            var projectId = await context.UserSettingsManager.GetUserSelectedProjectIdAsync(context).ConfigureAwait(false);
             if (projectId != default(int))
             {
                 filterColumns.Add(new UserTicketListFilterColumn("ProjectId", true, projectId));
@@ -85,7 +85,7 @@
             query = filterColumns.ApplyToQuery(query);
             query = sortColumns.ApplyToQuery(query);
             
-            return await query.ToPagedListAsync(pageIndex, pageSize);
+            return await query.ToPagedListAsync(pageIndex, pageSize).ConfigureAwait(false);
         }
     }
 }

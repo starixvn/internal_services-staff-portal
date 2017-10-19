@@ -26,7 +26,7 @@ namespace TicketDesk.Domain.Model
             string searchText,
             int projectId)
         {
-            var results = await manager.IndexSearcher.SearchAsync(searchText, projectId);
+            var results = await manager.IndexSearcher.SearchAsync(searchText, projectId).ConfigureAwait(false);
             var inFilter = results.Select(r => r.Id).ToList();
 
             return from t in

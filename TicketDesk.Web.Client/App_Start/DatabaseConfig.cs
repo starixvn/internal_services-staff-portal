@@ -1,30 +1,17 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System;
-using System.Configuration;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Hosting;
-using System.Web.Mvc;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Migrations;
-using TicketDesk.Domain.Model;
-using TicketDesk.Search.Common;
-using Configuration = TicketDesk.Domain.Migrations.Configuration;
-
-namespace TicketDesk.Web.Client
+﻿namespace TicketDesk.Web.Client
 {
+    using Configuration = Domain.Migrations.Configuration;
+    using Domain;
+    using Domain.Migrations;
+    using Domain.Model;
+    using Search.Common;
+    using System;
+    using System.Configuration;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Web.Hosting;
+    using System.Web.Mvc;
+
     public static class DatabaseConfig
     {
         public static bool IsDatabaseReady
@@ -62,7 +49,7 @@ namespace TicketDesk.Web.Client
                     {
                         ctx.Database.Initialize(!ctx.Database.CompatibleWithModel(true));
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         // no metadata in DB, force run initializer anyway
                         ctx.Database.Initialize(true);
@@ -77,9 +64,9 @@ namespace TicketDesk.Web.Client
                         {
                             using (var dctx = new TdDomainContext(null))
                             {
-                                await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync();
+                                await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
                                 var searchItems = dctx.Tickets.Include("TicketEvents").ToSeachIndexItems();
-                                await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems);
+                                await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
                             }
                         });
                     }
@@ -126,7 +113,7 @@ namespace TicketDesk.Web.Client
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             var numTables = context.Database.SqlQuery<int>(
@@ -140,7 +127,7 @@ namespace TicketDesk.Web.Client
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             var hasLegacy = false;
@@ -162,7 +149,7 @@ namespace TicketDesk.Web.Client
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             }
 
             var isLegacy = false;
@@ -182,7 +169,6 @@ namespace TicketDesk.Web.Client
                     }
                 }
             }
-            // ReSharper disable once EmptyGeneralCatchClause
             catch
             {
                 // eat any exception, we'll assume that if the db exists, but we can't read the settings, then it is an just empty new db

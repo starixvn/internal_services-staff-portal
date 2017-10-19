@@ -1,23 +1,10 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-namespace TicketDesk.Domain
+﻿namespace TicketDesk.Domain
 {
     using Fanex.NAP.Core.Business;
     using Infrastructure;
+    using Model;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using TicketDesk.Domain.Model;
 
     public class UserSettingsManager
     {
@@ -26,11 +13,11 @@ namespace TicketDesk.Domain
             Context = context;
         }
 
-        private TdDomainContext Context { get; set; }
+        private TdDomainContext Context { get; }
 
         public async Task ResetAllListSettingsForUserAsync(string userId)
         {
-            var settings = await GetSettingsForUserAsync(userId);
+            var settings = await GetSettingsForUserAsync(userId).ConfigureAwait(false);
 
             settings.ListSettings = new UserTicketListSettingsCollection
             {
@@ -42,7 +29,7 @@ namespace TicketDesk.Domain
         {
             // Role
             var isShowListAssignedTicket = Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket, Constant.Policy.Read);
-            var settings = await Context.UserSettings.FindAsync(userId);
+            var settings = await Context.UserSettings.FindAsync(userId).ConfigureAwait(false);
 
             // ensure settings exist
             if (settings == null)
@@ -50,8 +37,8 @@ namespace TicketDesk.Domain
                 settings = UserSetting.GetDefaultSettingsForUser(userId, isShowListAssignedTicket);
                 using (var tempCtx = new TdDomainContext())
                 {
-                    await tempCtx.UserSettingsManager.AddOrUpdateSettingsForUser(settings);
-                    await tempCtx.SaveChangesAsync();
+                    await tempCtx.UserSettingsManager.AddOrUpdateSettingsForUser(settings).ConfigureAwait(false);
+                    await tempCtx.SaveChangesAsync().ConfigureAwait(false);
                 }
             }
 
@@ -64,8 +51,8 @@ namespace TicketDesk.Domain
                 };
                 using (var tempCtx = new TdDomainContext())
                 {
-                    await tempCtx.UserSettingsManager.AddOrUpdateSettingsForUser(settings);
-                    await tempCtx.SaveChangesAsync();
+                    await tempCtx.UserSettingsManager.AddOrUpdateSettingsForUser(settings).ConfigureAwait(false);
+                    await tempCtx.SaveChangesAsync().ConfigureAwait(false);
                 }
             }
 
@@ -74,14 +61,9 @@ namespace TicketDesk.Domain
 
         public async Task AddOrUpdateSettingsForUser(UserSetting settings)
         {
-            var existing = await Context.UserSettings.FindAsync(settings.UserId);
-            if (existing != null)
-            {
-                // replace existing with new settings
-                // ReSharper disable once RedundantAssignment
-                existing = settings;
-            }
-            else
+            var existing = await Context.UserSettings.FindAsync(settings.UserId).ConfigureAwait(false);
+
+            if (existing == null)
             {
                 Context.UserSettings.Add(settings);
             }
@@ -89,13 +71,13 @@ namespace TicketDesk.Domain
 
         public async Task<ICollection<UserTicketListSetting>> GetUserListSettingsAsync(string userId)
         {
-            var settings = await GetSettingsForUserAsync(userId);
+            var settings = await GetSettingsForUserAsync(userId).ConfigureAwait(false);
             return settings.ListSettings;
         }
 
         public async Task<UserTicketListSetting> GetUserListSettingByNameAsync(string listName, string userId)
         {
-            var settings = await GetSettingsForUserAsync(userId);
+            var settings = await GetSettingsForUserAsync(userId).ConfigureAwait(false);
             return settings.GetUserListSettingByName(listName);
         }
     }

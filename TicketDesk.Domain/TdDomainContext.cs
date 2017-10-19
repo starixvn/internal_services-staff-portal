@@ -1,29 +1,16 @@
-// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
-using System.Linq;
-using System.Threading.Tasks;
-using TicketDesk.Domain.Model;
-using TicketDesk.Localization.Domain;
-
 namespace TicketDesk.Domain
 {
+    using Model;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Core.Objects;
+    using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Validation;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using TicketDesk.Localization.Domain;
+
     public sealed class TdDomainContext : DbContext
     {
         private UserSettingsManager _userSettingsManager;
@@ -72,9 +59,9 @@ namespace TicketDesk.Domain
 
         public static event EventHandler<IEnumerable<TicketEventNotification>> NotificationsCreated;
 
-        public TdDomainSecurityProviderBase SecurityProvider { get; private set; }
+        public TdDomainSecurityProviderBase SecurityProvider { get; }
 
-        public TicketActionManager TicketActions { get; private set; }
+        public TicketActionManager TicketActions { get; }
 
         public DbSet<Project> Projects { get; set; }
 
@@ -105,13 +92,7 @@ namespace TicketDesk.Domain
 
         public DbSet<TicketCategoryCustomField> TicketCategoryCustomField { get; set; }
 
-        public UserSettingsManager UserSettingsManager
-        {
-            get
-            {
-                return _userSettingsManager ?? (_userSettingsManager = new UserSettingsManager(this));
-            }
-        }
+        public UserSettingsManager UserSettingsManager => _userSettingsManager ?? (_userSettingsManager = new UserSettingsManager(this));
 
         /// <summary>
         /// Gets or sets the application settings specific to ticketdesk.
@@ -223,7 +204,7 @@ namespace TicketDesk.Domain
             // skip the custom validation if a security provider wasn't supplied
             if (SecurityProvider != null && entityEntry.Entity is Ticket && entityEntry.State == EntityState.Added)
             {
-                var ticket = entityEntry.Entity as Ticket;
+                var ticket = (Ticket)entityEntry.Entity;
                 if (!TicketActions.IsTicketActivityValid(ticket, TicketActivity.Create))
                 {
                     result.ValidationErrors.Add(new DbValidationError("authorization", Strings.ExceptionSecurityUserCannotCreateNewTicket));
@@ -236,7 +217,7 @@ namespace TicketDesk.Domain
         public override async Task<int> SaveChangesAsync()
         {
             var pendingEntityChanges = OnSaving();
-            var result = await base.SaveChangesAsync();
+            var result = await base.SaveChangesAsync().ConfigureAwait(false);
             if (result > 0)
             {
                 RaiseEntityChangeEvents(pendingEntityChanges);

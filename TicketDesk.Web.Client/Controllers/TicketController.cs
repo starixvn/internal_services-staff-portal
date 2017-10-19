@@ -41,7 +41,7 @@
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> Index(int id)
         {
-            var model = await Context.Tickets.Include(t => t.TicketSubscribers).FirstOrDefaultAsync(t => t.TicketId == id);
+            var model = await Context.Tickets.Include(t => t.TicketSubscribers).FirstOrDefaultAsync(t => t.TicketId == id).ConfigureAwait(false);
             if (model == null)
             {
                 return RedirectToAction("Index", "TicketCenter");
@@ -75,7 +75,7 @@
             model.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
             model.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
 
-            await SetProjectInfoForModelAsync(model.Ticket);
+            await SetProjectInfoForModelAsync(model.Ticket).ConfigureAwait(false);
 
             ViewBag.TempId = Guid.NewGuid();
 
@@ -126,7 +126,7 @@
             model.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
             model.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
 
-            await SetProjectInfoForModelAsync(model.Ticket);
+            await SetProjectInfoForModelAsync(model.Ticket).ConfigureAwait(false);
 
             ViewBag.TempId = Guid.NewGuid();
 
@@ -156,7 +156,7 @@
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, tempId).ConfigureAwait(false))
             {
-                await AddTicketCustomField(viewModel);
+                await AddTicketCustomField(viewModel).ConfigureAwait(false);
 
                 return Context.SecurityProvider.IsReadTicketCenter
                     ? RedirectToAction("Index", new { id = viewModel.Ticket.TicketId })
@@ -164,7 +164,7 @@
             }
 
             ViewBag.TempId = tempId;
-            await SetProjectInfoForModelAsync(viewModel.Ticket);
+            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
             return View(viewModel);
         }
 
@@ -193,7 +193,7 @@
             }
 
             //Save changes to ticket's custom field
-            await Context.SaveChangesAsync();
+            await Context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         private void AddCustomFieldValue(string groupId, int customFieldId, string value, int ticketId)
@@ -228,7 +228,7 @@
             {
                 try
                 {
-                    if (await CreateTicketAsync(ticket, tempId))
+                    if (await CreateTicketAsync(ticket, tempId).ConfigureAwait(false))
                     {
                         return Context.SecurityProvider.IsReadTicketCenter ? RedirectToAction("Index", new { id = ticket.TicketId }) : RedirectToAction("Index", "Home");
                     }
@@ -241,7 +241,7 @@
             }
 
             ViewBag.TempId = tempId;
-            await SetProjectInfoForModelAsync(ticket);
+            await SetProjectInfoForModelAsync(ticket).ConfigureAwait(false);
             return View(ticket);
         }
 
@@ -261,7 +261,7 @@
         {
             // WARNING! This is also used as a child action and cannot be made async in MVC 5
             var ticket = Context.Tickets.Find(ticketId);
-            return PartialView("_TicketEvents", ticket.TicketEvents);
+            return PartialView("_TicketEvents", ticket?.TicketEvents);
         }
 
         [Route("ticket-details")]
@@ -300,8 +300,10 @@
         {
             var userId = Context.SecurityProvider.CurrentUserId;
             var ticket = await Context.Tickets.Include(t => t.TicketSubscribers)
-                .Include(t => t.TicketEvents.Select(e => e.TicketEventNotifications)).FirstOrDefaultAsync(t => t.TicketId == ticketId);
-            var subscriber = ticket.TicketSubscribers.FirstOrDefault(s => s.SubscriberId == Context.SecurityProvider.CurrentUserId);
+                .Include(t => t.TicketEvents.Select(e => e.TicketEventNotifications))
+                .FirstOrDefaultAsync(t => t.TicketId == ticketId).ConfigureAwait(false);
+            var subscriber =
+                ticket.TicketSubscribers.FirstOrDefault(s => s.SubscriberId == Context.SecurityProvider.CurrentUserId);
             var isSubscribed = false;
             if (subscriber == null)
             {
@@ -317,7 +319,7 @@
                 ticket.TicketSubscribers.Remove(subscriber);
             }
 
-            await Context.SaveChangesAsync();
+            await Context.SaveChangesAsync().ConfigureAwait(false);
             return new JsonCamelCaseResult { Data = new { IsSubscribed = isSubscribed } };
         }
 
@@ -356,15 +358,17 @@
                 CategoryId = categoryId
             };
 
-            await SetProjectInfoForModelAsync(model);
+            await SetProjectInfoForModelAsync(model).ConfigureAwait(false);
 
             SqlParameter categoryParam = new SqlParameter("@CategoryId", categoryId);
-            var customFields = await Context.Database.SqlQuery<TicketFeedbackCustomField>("TicketFeedbackCustomFields_Get @CategoryId", categoryParam).ToListAsync();
+            var customFields = await Context.Database.SqlQuery<TicketFeedbackCustomField>("TicketFeedbackCustomFields_Get @CategoryId", categoryParam).ToListAsync().ConfigureAwait(false);
 
-            var ticketFeedbackViewModel = new TicketFeedbackViewModel();
-            ticketFeedbackViewModel.Ticket = model;
-            ticketFeedbackViewModel.CustomFields = customFields;
-            ticketFeedbackViewModel.tempId = Guid.NewGuid();
+            var ticketFeedbackViewModel = new TicketFeedbackViewModel
+            {
+                Ticket = model,
+                CustomFields = customFields,
+                tempId = Guid.NewGuid()
+            };
 
             return View(ticketFeedbackViewModel);
         }
@@ -383,19 +387,19 @@
             {
                 try
                 {
-                    if (await CreateTicketFeedbackAsync(model))
+                    if (await CreateTicketFeedbackAsync(model).ConfigureAwait(false))
                     {
                         return Context.SecurityProvider.IsReadTicketCenter ? RedirectToAction("Index", new { id = ticket.TicketId }) : RedirectToAction("Index", "Home");
                     }
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
-                catch (DbEntityValidationException e)
+                catch (DbEntityValidationException)
                 {
                     // TODO: catch rule exceptions? or can annotations handle this fully now?
                 }
             }
 
-            await SetProjectInfoForModelAsync(ticket);
+            await SetProjectInfoForModelAsync(ticket).ConfigureAwait(false);
             return View(ticket);
         }
 
@@ -411,7 +415,7 @@
                 CustomFields = new List<TicketFeedbackCustomField>()
             };
 
-            var ticketCategory = Context.TicketCategories.Where(x => x.CategoryId == categoryId).First();
+            var ticketCategory = Context.TicketCategories.First(x => x.CategoryId == categoryId);
             var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == categoryId)
             .Select(x => x.CustomFieldId);
 
@@ -424,7 +428,7 @@
                     CategoryId = categoryId,
                     CustomFieldId = customField.Id,
                     CustomFieldName = customField.Name,
-                    Value = Context.CustomFieldValues.Where(x => (x.CustomFieldId == customField.Id) && (x.TicketId == ticketId)).FirstOrDefault().Value
+                    Value = Context.CustomFieldValues.FirstOrDefault(x => (x.CustomFieldId == customField.Id) && (x.TicketId == ticketId))?.Value
                 });
             }
 
@@ -488,14 +492,17 @@
 
             foreach (var field in model.CustomFields)
             {
-                var customFieldValue = new CustomFieldValue();
-                customFieldValue.Value = field.Value;
-                customFieldValue.CustomFieldId = field.CustomFieldId;
-                customFieldValue.TicketId = model.Ticket.TicketId;
+                var customFieldValue = new CustomFieldValue
+                {
+                    Value = field.Value,
+                    CustomFieldId = field.CustomFieldId,
+                    TicketId = model.Ticket.TicketId
+                };
+
                 Context.CustomFieldValues.Add(customFieldValue);
             }
 
-            await Context.SaveChangesAsync();
+            await Context.SaveChangesAsync().ConfigureAwait(false);
 
             model.Ticket.CommitPendingAttachments(model.tempId);
 

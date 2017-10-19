@@ -44,7 +44,7 @@ namespace TicketDesk.Web.Client.Controllers
                 var file = Request.Files[fileName];
                 Debug.Assert(file != null, "file != null");
 
-                await TicketDeskFileStore.SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true);
+                await TicketDeskFileStore.SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true).ConfigureAwait(false);
             }
 
             // dropzone expects a message property back

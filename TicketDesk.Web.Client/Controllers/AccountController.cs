@@ -34,19 +34,13 @@ namespace TicketDesk.Web.Client.Controllers
             Error
         }
 
-        private TicketDeskUserManager UserManager { get; set; }
+        private TicketDeskUserManager UserManager { get; }
 
-        private TicketDeskSignInManager SignInManager { get; set; }
+        private TicketDeskSignInManager SignInManager { get; }
 
-        private TdPushNotificationContext NotificationContext { get; set; }
+        private TdPushNotificationContext NotificationContext { get; }
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         [Route("manage")]
         public ActionResult Manage(AccountMessageId? message)
@@ -81,13 +75,13 @@ namespace TicketDesk.Web.Client.Controllers
             }
             else
             {
-                var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+                var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword).ConfigureAwait(false);
                 if (result.Succeeded)
                 {
-                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId()).ConfigureAwait(false);
                     if (user != null)
                     {
-                        await SignInAsync(user, isPersistent: false);
+                        await SignInAsync(user, false).ConfigureAwait(false);
                     }
 
                     return RedirectToAction("Manage", new { Message = AccountMessageId.ChangePasswordSuccess });
@@ -115,7 +109,7 @@ namespace TicketDesk.Web.Client.Controllers
                 return View(model);
             }
 
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId()).ConfigureAwait(false);
             var oldEmail = user.Email;
 
             var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false")
@@ -129,14 +123,14 @@ namespace TicketDesk.Web.Client.Controllers
                 user.UserName = model.Email;
                 user.Email = model.Email;
                 user.DisplayName = model.DisplayName;
-                var result = await UserManager.UpdateAsync(user);
+                var result = await UserManager.UpdateAsync(user).ConfigureAwait(false);
 
                 if (result.Succeeded)
                 {
-                    await ResetMailEmailDestination(user, oldEmail);
+                    await ResetMailEmailDestination(user, oldEmail).ConfigureAwait(false);
 
                     AuthenticationManager.SignOut();
-                    await SignInManager.SignInAsync(user, false, false);
+                    await SignInManager.SignInAsync(user, false, false).ConfigureAwait(false);
 
                     return RedirectToAction("Manage", new { Message = AccountMessageId.ProfileSaveSuccess });
                 }
@@ -147,23 +141,28 @@ namespace TicketDesk.Web.Client.Controllers
 
         private async Task ResetMailEmailDestination(TicketDeskUser user, string oldEmail)
         {
-            var noteSettings = await NotificationContext.SubscriberPushNotificationSettingsManager.GetSettingsForSubscriberAsync(user.Id);
+            var noteSettings = await NotificationContext.SubscriberPushNotificationSettingsManager.GetSettingsForSubscriberAsync(user.Id).ConfigureAwait(false);
             var dest = noteSettings.PushNotificationDestinations.FirstOrDefault(d => d.DestinationType == "email" && d.DestinationAddress == oldEmail);
             if (dest == null)
             {
-                dest = new PushNotificationDestination() { SubscriberId = user.Id, DestinationType = "email" };
+                dest = new PushNotificationDestination { SubscriberId = user.Id, DestinationType = "email" };
                 noteSettings.PushNotificationDestinations.Add(dest);
             }
 
             dest.DestinationAddress = user.Email;
             dest.SubscriberName = user.DisplayName;
-            await NotificationContext.SaveChangesAsync();
+            await NotificationContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         private async Task SignInAsync(TicketDeskUser user, bool isPersistent)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
-            AuthenticationManager.SignIn(new AuthenticationProperties { IsPersistent = isPersistent }, await user.GenerateUserIdentityAsync(UserManager));
+            AuthenticationManager.SignIn(
+                new AuthenticationProperties
+                {
+                    IsPersistent = isPersistent
+                }, 
+                await user.GenerateUserIdentityAsync(UserManager).ConfigureAwait(false));
         }
 
         private void AddErrors(IdentityResult result)
