@@ -185,14 +185,14 @@
                             Context.CustomFieldValues.Add(new CustomFieldValue
                             {
                                 GroupId = item.Index,
-                                CustomFieldId = item.ItemName.Id,
+                                CustomFieldId = item.ItemName.CustomFieldId,
                                 Value = item.ItemName.Value,
                                 TicketId = viewModel.Ticket.TicketId
                             });
                             Context.CustomFieldValues.Add(new CustomFieldValue
                             {
                                 GroupId = item.Index,
-                                CustomFieldId = item.Reason.Id,
+                                CustomFieldId = item.Reason.CustomFieldId,
                                 Value = item.Reason.Value,
                                 TicketId = viewModel.Ticket.TicketId
                             });

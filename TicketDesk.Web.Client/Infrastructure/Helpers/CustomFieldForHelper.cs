@@ -64,7 +64,7 @@
             itemIndexTag.Attributes.Add("name", parentName + "[" + guid + "].Index");
             itemIndexTag.Attributes.Add("value", guid);
 
-            return new MvcHtmlString(indexTag.ToString());
+            return new MvcHtmlString(indexTag.ToString() + itemIndexTag);
         }
 
         public static MvcHtmlString CustomFieldLabelWithGuidIndexFor(
