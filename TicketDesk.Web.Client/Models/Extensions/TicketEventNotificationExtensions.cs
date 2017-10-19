@@ -48,7 +48,7 @@ namespace TicketDesk.Domain.Model
             this IEnumerable<TicketEventNotification> eventNotifications,
             bool multiProject)
         {
-            return eventNotifications.Select(note => new NewTicketPushNotificationInfo()
+            return eventNotifications.Select(note => new NewTicketPushNotificationInfo
             {
                 TicketId = note.TicketId,
                 MessageContent = GetEmailForNote(note, multiProject, true)
@@ -60,7 +60,7 @@ namespace TicketDesk.Domain.Model
             bool subscriberExclude,
             bool multiProject)
         {
-            return eventNotifications.Select(note => new TicketPushNotificationEventInfo()
+            return eventNotifications.Select(note => new TicketPushNotificationEventInfo
             {
                 TicketId = note.TicketId,
                 SubscriberId = note.SubscriberId,

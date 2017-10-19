@@ -34,13 +34,13 @@ namespace TicketDesk.PushNotifications.Migrations
                 s.SubscriberId == "64165817-9cb5-472f-8bfb-6a35ca54be6a"
                 || s.PushNotificationDestinations.Any(d => d.DestinationAddress == "admin@example.com" && d.DestinationType == "email")))
             {
-                context.SubscriberPushNotificationSettings.Add(new SubscriberNotificationSetting()
+                context.SubscriberPushNotificationSettings.Add(new SubscriberNotificationSetting
                 {
                     SubscriberId = "64165817-9cb5-472f-8bfb-6a35ca54be6a",
                     IsEnabled = true,
                     PushNotificationDestinations = new[]
                     {
-                        new PushNotificationDestination()
+                        new PushNotificationDestination
                         {
                             SubscriberName = "Admin User",
                             DestinationAddress = "admin@example.com",
@@ -54,13 +54,13 @@ namespace TicketDesk.PushNotifications.Migrations
                 s.SubscriberId == "72bdddfb-805a-4883-94b9-aa494f5f52dc"
                 || s.PushNotificationDestinations.Any(d => d.DestinationAddress == "staff@example.com" && d.DestinationType == "email")))
             {
-                context.SubscriberPushNotificationSettings.Add(new SubscriberNotificationSetting()
+                context.SubscriberPushNotificationSettings.Add(new SubscriberNotificationSetting
                 {
                     SubscriberId = "72bdddfb-805a-4883-94b9-aa494f5f52dc",
                     IsEnabled = true,
                     PushNotificationDestinations = new[]
                     {
-                        new PushNotificationDestination()
+                        new PushNotificationDestination
                         {
                             SubscriberName = "HelpDesk User",
                             DestinationAddress = "staff@example.com",
@@ -74,13 +74,13 @@ namespace TicketDesk.PushNotifications.Migrations
                 s.SubscriberId == "17f78f38-fa68-445f-90de-38896140db28"
                 || s.PushNotificationDestinations.Any(d => d.DestinationAddress == "user@example.com" && d.DestinationType == "email")))
             {
-                context.SubscriberPushNotificationSettings.Add(new SubscriberNotificationSetting()
+                context.SubscriberPushNotificationSettings.Add(new SubscriberNotificationSetting
                 {
                     SubscriberId = "17f78f38-fa68-445f-90de-38896140db28",
                     IsEnabled = true,
                     PushNotificationDestinations = new[]
                     {
-                        new PushNotificationDestination()
+                        new PushNotificationDestination
                         {
                             SubscriberName = "Regular User",
                             DestinationAddress = "user@example.com",

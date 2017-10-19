@@ -151,7 +151,7 @@ namespace TicketDesk.Domain.Model
         {
             get
             {
-                return new Dictionary<string, string>()
+                return new Dictionary<string, string>
                 {
                     {
                         "unassigned",

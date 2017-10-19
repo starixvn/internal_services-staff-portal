@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Migrations\201410100421345_InitialCreate.cs" />
     <Compile Include="Migrations\201410100421345_InitialCreate.Designer.cs">
       <DependentUpon>201410100421345_InitialCreate.cs</DependentUpon>

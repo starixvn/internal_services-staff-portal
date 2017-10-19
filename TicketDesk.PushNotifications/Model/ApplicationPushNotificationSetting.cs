@@ -166,7 +166,7 @@ namespace TicketDesk.PushNotifications.Model
 
             public static PushNotificationDeliveryProviderSetting FromProvider(IPushNotificationDeliveryProvider provider)
             {
-                return new PushNotificationDeliveryProviderSetting()
+                return new PushNotificationDeliveryProviderSetting
                 {
                     IsEnabled = false,
                     ProviderAssemblyQualifiedName = provider.GetType().AssemblyQualifiedName,

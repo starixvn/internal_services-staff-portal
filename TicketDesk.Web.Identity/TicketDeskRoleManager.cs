@@ -64,7 +64,7 @@ namespace TicketDesk.Web.Identity
         {
             get
             {
-                return new Dictionary<string, string>()
+                return new Dictionary<string, string>
                 {
                     {
                         "TdAdministrators",
@@ -90,7 +90,7 @@ namespace TicketDesk.Web.Identity
         {
             get
             {
-                return new Dictionary<string, string>()
+                return new Dictionary<string, string>
                 {
                     {
                         "TdAdministrators",

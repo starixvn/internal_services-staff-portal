@@ -52,15 +52,15 @@
                     {
                         From = new EmailAddress(cfg.FromAddress, cfg.FromDisplayName),
                         Subject = smsg.Subject,
-                        Contents = new List<Content>()
+                        Contents = new List<Content>
                         {
                             new Content("text/html", hView.ContentStream.ReadToString())
                         },
-                        Personalizations = new List<Personalization>()
+                        Personalizations = new List<Personalization>
                         {
                             new Personalization
                             {
-                                Tos = new List<EmailAddress>()
+                                Tos = new List<EmailAddress>
                                 {
                                     new EmailAddress(notificationItem.Destination.DestinationAddress, notificationItem.Destination.SubscriberName)
                                 }
@@ -68,7 +68,7 @@
                         },
                     };
 
-                    sendGridMessage.TrackingSettings = new TrackingSettings()
+                    sendGridMessage.TrackingSettings = new TrackingSettings
                     {
                         ClickTracking = new ClickTracking()
                     };

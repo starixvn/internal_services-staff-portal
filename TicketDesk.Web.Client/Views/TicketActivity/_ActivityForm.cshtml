@@ -51,7 +51,7 @@
             @Html.Partial(string.Format("_{0}", activity), Model)
         }
 
-        @Html.Partial("_ActivityComment", new TicketEvent() { IsHtml = ViewBag.IsEditorDefaultHtml })
+        @Html.Partial("_ActivityComment", new TicketEvent { IsHtml = ViewBag.IsEditorDefaultHtml })
     </div>
 
     <div class="panel-footer">

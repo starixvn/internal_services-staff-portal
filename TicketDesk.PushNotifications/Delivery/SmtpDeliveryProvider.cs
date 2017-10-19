@@ -44,7 +44,7 @@ namespace TicketDesk.PushNotifications.Delivery
                 try
                 {
                     var smsg = message as SerializableMailMessage;
-                    SmtpClient client = new SmtpClient()
+                    SmtpClient client = new SmtpClient
                     {
                         Host = cfg.SmtpServer,
                         Port = cfg.SmtpPort ?? 25,

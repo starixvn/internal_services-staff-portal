@@ -14,7 +14,7 @@
         {
             var now = DateTimeOffset.Now;
             return userSettings.PushNotificationDestinations.Select(dest =>
-                new PushNotificationItem()
+                new PushNotificationItem
                 {
                     ContentSourceId = TicketId,
                     ContentSourceType = "new ticket",

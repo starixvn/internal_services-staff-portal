@@ -39,7 +39,7 @@
             string decoded = string.Empty;
             foreach (Match m in matches)
             {
-                decoded = decoded + DecodeWord(m.ToString());
+                decoded = $"{decoded}{DecodeWord(m.ToString())}";
             }
 
             return decoded;
@@ -64,16 +64,16 @@
                 return word;
             }
 
-            Encoding encoding = Util.GetEncoding(m.Groups[1].Value);
+            Encoding encoding = GetEncoding(m.Groups[1].Value);
             string type = m.Groups[2].Value.ToUpper();
             string text = m.Groups[3].Value;
             switch (type)
             {
                 case "Q":
-                    return Util.QDecode(text, encoding);
+                    return QDecode(text, encoding);
 
                 case "B":
-                    return encoding.GetString(Util.Base64Decode(text));
+                    return encoding.GetString(Base64Decode(text));
 
                 default:
                     throw new FormatException("Encoding not recognized " + "in encoded word: " + word);

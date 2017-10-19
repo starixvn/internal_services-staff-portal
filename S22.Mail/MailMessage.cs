@@ -21,7 +21,7 @@ namespace S22.Imap
         /// their corresponding MIME priority values as defined in
         /// RFC2156.
         /// </summary>
-        private static Dictionary<MailPriority, string> PriorityMap = new Dictionary<MailPriority, string>()
+        private static Dictionary<MailPriority, string> PriorityMap = new Dictionary<MailPriority, string>
         {
             { MailPriority.Low, "non-urgent" },
             { MailPriority.Normal, "normal" },
@@ -33,7 +33,7 @@ namespace S22.Imap
         /// their corresponding MIME importance values as defined in
         /// RFC2156.
         /// </summary>
-        private static Dictionary<MailPriority, string> ImportanceMap = new Dictionary<MailPriority, string>()
+        private static Dictionary<MailPriority, string> ImportanceMap = new Dictionary<MailPriority, string>
         {
             { MailPriority.Low, "low" },
             { MailPriority.Normal, "normal" },
@@ -89,7 +89,7 @@ namespace S22.Imap
                 "Content-Type", "Content-Transfer-Encoding", "Priority",
                 "Reply-To", "X-Priority", "Importance", "Sender", "Message-Id"
             };
-            NameValueCollection header = new NameValueCollection()
+            NameValueCollection header = new NameValueCollection
             {
                 { "MIME-Version", "1.0" },
                 { "Date", DateTime.Now.ToString("R") },
@@ -132,7 +132,7 @@ namespace S22.Imap
                 }
 
                 header.Add("Content-Type", contentType);
-                if (m.Body != null && !m.Body.IsASCII())
+                if (!m.Body.IsASCII())
                 {
                     header.Add("Content-Transfer-Encoding", "base64");
                 }
@@ -184,7 +184,7 @@ namespace S22.Imap
                 }
             }
 
-            return builder.ToString() + "?=";
+            return builder + "?=";
         }
 
         /// <summary>

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
-using System.Net.Mail;
-using System.Text;
-using System.Text.RegularExpressions;
-
-namespace S22.Imap
+﻿namespace S22.Imap
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.IO;
+    using System.Net.Mail;
+    using System.Text;
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// A helper class for reading mail message data and building a MailMessage
     /// instance out of it.
@@ -472,10 +472,10 @@ namespace S22.Imap
             {
                 return new MIMEPart[]
                 {
-                    new MIMEPart()
+                    new MIMEPart
                     {
                         Body = body,
-                        Header = new NameValueCollection()
+                        Header = new NameValueCollection
                         {
                             { "Content-Type", header["Content-Type"] },
                             { "Content-Id", header["Content-Id"] },

@@ -35,7 +35,7 @@ namespace TicketDesk.PushNotifications.Model
         {
             var now = DateTimeOffset.Now;
             return userSettings.PushNotificationDestinations.Select(dest =>
-                new TicketPushNotificationItem()
+                new TicketPushNotificationItem
                 {
                     PushNotificationItem = new PushNotificationItem
                     {

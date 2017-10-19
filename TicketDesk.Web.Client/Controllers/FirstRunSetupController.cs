@@ -214,7 +214,7 @@ namespace TicketDesk.Web.Client.Controllers
                             IsEnabled = true,
                             PushNotificationDestinations = new[]
                             {
-                                new PushNotificationDestination()
+                                new PushNotificationDestination
                                 {
                                     DestinationType = "email",
                                     DestinationAddress = newUser.Email,
