@@ -60,7 +60,6 @@
                         @Html.ValidationSummary(true, New.UnableCreateTicket, new { @class = "alert alert-danger" })
 
                         @Html.HiddenFor(model => model.Ticket.CategoryId)
-                        @Html.HiddenFor(model => model.Ticket.TicketId)
                         @Html.HiddenFor(model => model.Ticket.IsHtml)
                         @Html.HiddenFor(model => model.tempId)
 
@@ -135,7 +134,7 @@
                         </div>
                     </div>
                 </div>
-                                    }
+            }
         </div>
     </div>
 </main>
