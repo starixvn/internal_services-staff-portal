@@ -13,7 +13,7 @@ namespace TicketDesk.Web.Client
             var val = GetValueFromValueProvider(bindingContext, false);
             if (val != null)
             {
-                comment = val.AttemptedValue as string;
+                comment = val.AttemptedValue;
                 comment = comment.StripHtmlWhenEmpty();
             }
 

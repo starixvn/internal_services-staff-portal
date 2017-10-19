@@ -5,10 +5,10 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Web.Mvc;
-    using TicketDesk.Localization;
-    using TicketDesk.Localization.Models;
-    using TicketDesk.Web.Identity;
-    using TicketDesk.Web.Identity.Model;
+    using Localization;
+    using Localization.Models;
+    using Identity;
+    using Identity.Model;
 
     public class UserAccountInfoViewModel
     {

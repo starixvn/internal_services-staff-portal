@@ -20,10 +20,10 @@ namespace TicketDesk.Web.Client.Controllers
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using TicketDesk.Domain;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.Localization.Controllers;
-    using TicketDesk.Search.Common;
+    using Domain;
+    using Domain.Model;
+    using Localization.Controllers;
+    using Search.Common;
 
     [RoutePrefix("search")]
     [Route("{action=index}")]

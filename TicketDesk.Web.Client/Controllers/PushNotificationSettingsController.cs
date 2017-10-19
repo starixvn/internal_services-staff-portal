@@ -23,11 +23,11 @@ namespace TicketDesk.Web.Client.Controllers
     using System.Reflection;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using TicketDesk.Domain;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.PushNotifications;
-    using TicketDesk.PushNotifications.Delivery;
-    using TicketDesk.PushNotifications.Model;
+    using Domain;
+    using Domain.Model;
+    using PushNotifications;
+    using PushNotifications.Delivery;
+    using PushNotifications.Model;
 
     [RoutePrefix("admin/push-notification-settings")]
     [Route("{action=index}")]

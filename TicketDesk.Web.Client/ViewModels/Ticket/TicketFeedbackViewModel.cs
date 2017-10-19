@@ -3,7 +3,7 @@
     using Models.Ticket;
     using System;
     using System.Collections.Generic;
-    using TicketDesk.Domain.Model;
+    using Domain.Model;
 
     public class TicketFeedbackViewModel
     {

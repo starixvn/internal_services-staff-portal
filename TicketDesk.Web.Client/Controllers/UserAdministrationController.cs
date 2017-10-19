@@ -9,10 +9,10 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using TicketDesk.Localization.Controllers;
-    using TicketDesk.Web.Client.Models;
-    using TicketDesk.Web.Identity;
-    using TicketDesk.Web.Identity.Model;
+    using Localization.Controllers;
+    using Models;
+    using Identity;
+    using Identity.Model;
 
     [RoutePrefix("admin")]
     [Route("{action=index}")]
@@ -25,30 +25,30 @@
             RoleManager = roleManager;
         }
 
-        private TicketDeskUserManager UserManager { get; set; }
+        private TicketDeskUserManager UserManager { get; }
 
-        private TicketDeskRoleManager RoleManager { get; set; }
+        private TicketDeskRoleManager RoleManager { get; }
 
         [Route("users/{page:int?}")]
         public async Task<ActionResult> Index(int? page)
         {
-            ViewBag.AllRolesList = await RoleManager.Roles.ToListAsync();
-            var users = await GetUsersForListAsync(page ?? 1);
+            ViewBag.AllRolesList = await RoleManager.Roles.ToListAsync().ConfigureAwait(false);
+            var users = await GetUsersForListAsync(page ?? 1).ConfigureAwait(false);
             return View(users);
         }
 
         [Route("users/page/{page:int?}")]
         public async Task<ActionResult> PageList(int? page = 1)
         {
-            ViewBag.AllRolesList = await RoleManager.Roles.ToListAsync();
-            var users = await GetUsersForListAsync(page ?? 1);
+            ViewBag.AllRolesList = await RoleManager.Roles.ToListAsync().ConfigureAwait(false);
+            var users = await GetUsersForListAsync(page ?? 1).ConfigureAwait(false);
             return PartialView("_UserList", users);
         }
 
         [Route("user/{id?}")]
         public async Task<ActionResult> Edit(string id)
         {
-            var user = await UserManager.FindByIdAsync(id);
+            var user = await UserManager.FindByIdAsync(id).ConfigureAwait(false);
             if (user == null)
             {
                 return RedirectToAction("Index");
@@ -72,7 +72,7 @@
                 return View(model);
             }
 
-            var user = await UserManager.FindByIdAsync(model.User.Id);
+            var user = await UserManager.FindByIdAsync(model.User.Id).ConfigureAwait(false);
             var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false")
                 .Equals("true", StringComparison.InvariantCultureIgnoreCase);
 
@@ -83,40 +83,36 @@
             else
             {
                 // deal with locks first
-                if (await SetLockout(model, user))
+                if (await SetLockout(model, user).ConfigureAwait(false) &&
+                    await UpdateUserInfo(user, model).ConfigureAwait(false))
                 {
                     // do user info updates
-                    if (await UpdateUserInfo(user, model))
+                    // if any roles other than pending are selected, make sure we remove the pending role from the model first
+                    if (pendingRole != null && model.Roles.Any(r => r != pendingRole.Id))
                     {
-                        // if any roles other than pending are selected, make sure we remove the pending role from the model first
-                        if (pendingRole != null && model.Roles.Any(r => r != pendingRole.Id))
-                        {
-                            var roles = model.Roles.ToList();
-                            roles.Remove(pendingRole.Id);
-                            model.Roles = roles;
-                        }
+                        var roles = model.Roles.ToList();
+                        roles.Remove(pendingRole.Id);
+                        model.Roles = roles;
+                    }
 
-                        // get role changes
-                        var roleIdsToRemove = user.Roles.Select(ur => ur.RoleId).Except(model.Roles).ToList();
+                    // get role changes
+                    var roleIdsToRemove = user.Roles.Select(ur => ur.RoleId).Except(model.Roles).ToList();
 
-                        if (User.Identity.GetUserId() == user.Id)
-                        {
-                            // stop current user from removing their own admin role
-                            roleIdsToRemove = roleIdsToRemove.Except(RoleManager.Roles.Where(r => r.Name == "tdAdministrators").Select(r => r.Id)).ToList();
-                        }
+                    if (User.Identity.GetUserId() == user.Id)
+                    {
+                        // stop current user from removing their own admin role
+                        roleIdsToRemove = roleIdsToRemove
+                            .Except(RoleManager.Roles.Where(r => r.Name == "tdAdministrators").Select(r => r.Id))
+                            .ToList();
+                    }
 
-                        var roleIdsToAdd = model.Roles.Except(user.Roles.Select(ur => ur.RoleId)).ToList();
+                    var roleIdsToAdd = model.Roles.Except(user.Roles.Select(ur => ur.RoleId)).ToList();
 
-                        // do role removes
-                        if (await RemoveRoles(roleIdsToRemove, user))
-                        {
-                            // do role adds
-                            if (await AddRoles(roleIdsToAdd, user))
-                            {
-                                // everything worked, return to index (if anything failed, will return to the edit user view)
-                                return RedirectToAction("Index");
-                            }
-                        }
+                    // do role removes
+                    if (await RemoveRoles(roleIdsToRemove, user).ConfigureAwait(false) &&
+                        await AddRoles(roleIdsToAdd, user).ConfigureAwait(false))
+                    {
+                        return RedirectToAction("Index");
                     }
                 }
             }
@@ -125,7 +121,7 @@
             // we will re-get the user so we are sure the screen will accurately show
             // the current data. Model errors will have been added by the respective
             // update operations that failed
-            user = await UserManager.FindByIdAsync(model.User.Id);
+            user = await UserManager.FindByIdAsync(model.User.Id).ConfigureAwait(false);
             model = new UserAccountInfoViewModel(user, user.Roles.Select(r => r.RoleId));
             return View(model);
         }
@@ -142,7 +138,7 @@
                                (u.LockoutEndDateUtc ?? DateTime.MinValue) < DateTime.MaxValue,
                     IsDisabled = (u.LockoutEndDateUtc ?? DateTime.MinValue) == DateTime.MaxValue
                 })
-                .ToPagedListAsync(page, 25);
+                .ToPagedListAsync(page, 25).ConfigureAwait(false);
             return users;
         }
 
@@ -151,7 +147,7 @@
             user.UserName = model.User.Email;
             user.Email = model.User.Email;
             user.DisplayName = model.User.DisplayName;
-            var result = await UserManager.UpdateAsync(user);
+            var result = await UserManager.UpdateAsync(user).ConfigureAwait(false);
             if (!result.Succeeded)
             {
                 AddErrors(result);
@@ -165,7 +161,7 @@
             var roleNamesToAdd = RoleManager.Roles.Where(r => roleIdsToAdd.Any(ri => ri == r.Id)).Select(r => r.Name);
             if (roleNamesToAdd.Any())
             {
-                var result = await UserManager.AddToRolesAsync(user.Id, await roleNamesToAdd.ToArrayAsync());
+                var result = await UserManager.AddToRolesAsync(user.Id, await roleNamesToAdd.ToArrayAsync().ConfigureAwait(false)).ConfigureAwait(false);
                 if (!result.Succeeded)
                 {
                     AddErrors(result);
@@ -182,7 +178,7 @@
             var roleNamesToRemove = RoleManager.Roles.Where(r => roleIdsToRemove.Any(ri => ri == r.Id)).Select(r => r.Name);
             if (roleNamesToRemove.Any())
             {
-                var result = await UserManager.RemoveFromRolesAsync(user.Id, await roleNamesToRemove.ToArrayAsync());
+                var result = await UserManager.RemoveFromRolesAsync(user.Id, await roleNamesToRemove.ToArrayAsync().ConfigureAwait(false)).ConfigureAwait(false);
                 if (!result.Succeeded)
                 {
                     AddErrors(result);
@@ -211,7 +207,7 @@
                     newLockoutDate = DateTimeOffset.Now.Add(UserManager.DefaultAccountLockoutTimeSpan);
                 }
 
-                var result = await UserManager.SetLockoutEndDateAsync(model.User.Id, newLockoutDate);
+                var result = await UserManager.SetLockoutEndDateAsync(model.User.Id, newLockoutDate).ConfigureAwait(false);
                 if (!result.Succeeded)
                 {
                     AddErrors(result);

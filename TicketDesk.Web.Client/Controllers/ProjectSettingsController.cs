@@ -7,10 +7,10 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using TicketDesk.Domain;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.Localization.Controllers;
-    using TicketDesk.Web.Client.Models;
+    using Domain;
+    using Domain.Model;
+    using Localization.Controllers;
+    using Models;
 
     [RoutePrefix("admin")]
     [Route("{action=index}")]

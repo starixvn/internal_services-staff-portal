@@ -216,7 +216,7 @@ namespace RfmNetCore.Controllers
             {
                 var item = new
                 {
-                    Id = MakeWebPath(Path.Combine(path, directory.Name), false, true),
+                    Id = MakeWebPath(Path.Combine(path, directory.Name), addSeperatorToLast: true),
                     Type = "folder",
                     Attributes = new
                     {
@@ -293,11 +293,11 @@ namespace RfmNetCore.Controllers
                 Data =
                     new
                     {
-                        Id = MakeWebPath(Path.Combine(path, directory.Name), false, true),
+                        Id = MakeWebPath(Path.Combine(path, directory.Name), addSeperatorToLast: true),
                         Type = "folder",
                         Attributes = new
                         {
-                            Name = directory.Name,
+                            directory.Name,
                             Path = MakeWebPath(Path.Combine(_webPath, path, directory.Name), true, true),
                             Readable = 1,
                             Writable = 1,

@@ -7,8 +7,6 @@
     {
         public Ticket Ticket { get; set; }
 
-        //public CustomField RequestType { get; set; }
-
         public CustomFieldValue RequestType { get; set; }
 
         public ICollection<Item> Items { get; set; }

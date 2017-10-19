@@ -18,8 +18,8 @@ namespace TicketDesk.Web.Client
     using Microsoft.Ajax.Utilities;
     using System;
     using System.Web.Mvc;
-    using TicketDesk.Domain;
-    using TicketDesk.Web.Identity;
+    using Domain;
+    using Identity;
 
     public sealed class TicketDeskContextSecurityProvider : TdDomainSecurityProviderBase
     {

@@ -19,10 +19,10 @@ namespace TicketDesk.Web.Client.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-    using TicketDesk.Domain;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.Search.Azure;
-    using TicketDesk.Search.Common;
+    using Domain;
+    using Domain.Model;
+    using Search.Azure;
+    using Search.Common;
 
     [RoutePrefix("admin/application-settings")]
     [Route("{action=index}")]

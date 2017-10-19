@@ -4,7 +4,7 @@
     using Microsoft.ApplicationInsights.Extensibility;
     using System;
     using System.Diagnostics;
-    using TicketDesk.Web.Client.App_Start;
+    using App_Start;
 
     public class Global : System.Web.HttpApplication
     {
@@ -33,7 +33,7 @@
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            AuthConfig.RegisterAuth(this.Context);
+            AuthConfig.RegisterAuth(Context);
         }
 
         protected void Application_Error(object sender, EventArgs e)

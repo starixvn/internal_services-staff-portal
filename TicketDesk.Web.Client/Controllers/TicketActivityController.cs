@@ -1,21 +1,12 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-namespace TicketDesk.Web.Client.Controllers
+﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Domain;
     using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using IO;
+    using Localization.Controllers;
     using Models.Ticket;
     using System;
     using System.Collections.Generic;
@@ -28,10 +19,6 @@ namespace TicketDesk.Web.Client.Controllers
     using System.Text;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using TicketDesk.Domain;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.IO;
-    using TicketDesk.Localization.Controllers;
 
     [RoutePrefix("ticket-activity")]
     [Route("{action}")]
@@ -44,12 +31,12 @@ namespace TicketDesk.Web.Client.Controllers
             Context = context;
         }
 
-        private TdDomainContext Context { get; set; }
+        private TdDomainContext Context { get; }
 
         [Route("load-activity")]
         public async Task<ActionResult> LoadActivity(TicketActivity activity, int ticketId, Guid? tempId)
         {
-            var ticket = await Context.Tickets.FindAsync(ticketId);
+            var ticket = await Context.Tickets.FindAsync(ticketId).ConfigureAwait(false);
 
             Context.TicketActions.IsTicketActivityValid(ticket, activity);
             ViewBag.CommentRequired = activity.IsCommentRequired();
@@ -58,15 +45,15 @@ namespace TicketDesk.Web.Client.Controllers
             ViewBag.IsEditorDefaultHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
             if (activity == TicketActivity.EditTicketInfo)
             {
-                await SetProjectInfoForModelAsync(ticket);
+                await SetProjectInfoForModelAsync().ConfigureAwait(false);
             }
 
             return PartialView("_ActivityForm", ticket);
         }
 
-        private async Task SetProjectInfoForModelAsync(Ticket ticket)
+        private async Task SetProjectInfoForModelAsync()
         {
-            var projectCount = await Context.Projects.CountAsync();
+            var projectCount = await Context.Projects.CountAsync().ConfigureAwait(false);
             var isMulti = projectCount > 1;
             ViewBag.IsMultiProject = isMulti;
         }
@@ -295,15 +282,13 @@ namespace TicketDesk.Web.Client.Controllers
             string priority)
         {
             var activityFn = Context.TicketActions.TakeOver(comment, priority);
-            return await PerformTicketAction(ticketId, activityFn, TicketActivity.TakeOver);
+            return await PerformTicketAction(ticketId, activityFn, TicketActivity.TakeOver).ConfigureAwait(false);
         }
 
         private async Task<ActionResult> PerformTicketAction(int ticketId, Action<Ticket> activityFn, TicketActivity activity)
         {
-            var ticket = await Context.Tickets.FindAsync(ticketId);
+            var ticket = await Context.Tickets.FindAsync(ticketId).ConfigureAwait(false);
             TryValidateModel(ticket);
-            // if (ModelState.IsValid)
-            // {
             try
             {
                 ticket.PerformAction(activityFn);
@@ -314,13 +299,12 @@ namespace TicketDesk.Web.Client.Controllers
             }
 
             // save changes catches lastupdatedby and date automatically
-            var result = await Context.SaveChangesAsync();
+            var result = await Context.SaveChangesAsync().ConfigureAwait(false);
             if (result > 0)
             {
                 // standard success case
                 return new EmptyResult();
             }
-            // }
 
             // fail case, return the view and let the client/view sort out the errors
             ViewBag.CommentRequired = activity.IsCommentRequired();

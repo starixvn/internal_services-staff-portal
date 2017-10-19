@@ -5,8 +5,8 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Mvc.Ajax;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.Localization.Infrastructure;
+    using Domain.Model;
+    using Localization.Infrastructure;
 
     public static class SortableColumnHeaderHelper
     {

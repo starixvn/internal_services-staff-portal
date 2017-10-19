@@ -23,7 +23,7 @@
         private readonly string _webRootPath;
         private readonly string _webPath;
         private readonly List<string> _allowedExtensions;
-        private readonly IFileManagerService fileManagerService;
+        private readonly IFileManagerService _fileManagerService;
 
         public FileManagerController(IFileManagerService fileManagerService)
         {
@@ -40,7 +40,7 @@
                 Directory.CreateDirectory(_webRootPath);
             }
 
-            this.fileManagerService = fileManagerService;
+            _fileManagerService = fileManagerService;
         }
 
         [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
@@ -177,11 +177,11 @@
             {
                 var item = new
                 {
-                    Id = MakeWebPath(Path.Combine(path, directory.Name), false, true),
+                    Id = MakeWebPath(Path.Combine(path, directory.Name), addSeperatorToLast: true),
                     Type = "folder",
                     Attributes = new
                     {
-                        Name = directory.Name,
+                        directory.Name,
                         Path = MakeWebPath(Path.Combine(_webPath, path, directory.Name), true, true),
                         Readable = 1,
                         Writable = 1,
@@ -202,7 +202,7 @@
                     Type = "file",
                     Attributes = new
                     {
-                        Name = file.Name,
+                        file.Name,
                         Path = MakeWebPath(Path.Combine(_webPath, path, file.Name), true),
                         Readable = 1,
                         Writable = 1,
@@ -224,8 +224,8 @@
 
         private dynamic AddFolder(string path, string name)
         {
-            var invalidCharaters = new string[] { "\\", "/", ":", "*", "?", "\"", "<", ">", "|" };
-            if (invalidCharaters.Any(s => name.Contains(s)))
+            var invalidCharaters = new[] { "\\", "/", ":", "*", "?", "\"", "<", ">", "|" };
+            if (invalidCharaters.Any(name.Contains))
             {
                 var errorResult = new { Errors = new List<dynamic>() };
 
@@ -270,11 +270,11 @@
                 Data =
                     new
                     {
-                        Id = MakeWebPath(Path.Combine(path, directory.Name), false, true),
+                        Id = MakeWebPath(Path.Combine(path, directory.Name), addSeperatorToLast: true),
                         Type = "folder",
                         Attributes = new
                         {
-                            Name = directory.Name,
+                            directory.Name,
                             Path = MakeWebPath(Path.Combine(_webPath, path, directory.Name), true, true),
                             Readable = 1,
                             Writable = 1,
@@ -291,7 +291,7 @@
                 Directory = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path))
             };
 
-            fileManagerService.AddFolder(criteria);
+            _fileManagerService.AddFolder(criteria);
 
             return result;
         }
@@ -358,7 +358,7 @@
                     Directory = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path))
                 };
 
-                fileManagerService.UploadFile(criteria);
+                _fileManagerService.UploadFile(criteria);
             }
 
             return result;
@@ -421,7 +421,7 @@
                 Directory = webPath.Substring(0, webPath.LastIndexOf("/"))
             };
 
-            fileManagerService.DeleteFolder(criteria);
+            _fileManagerService.DeleteFolder(criteria);
 
             return result;
         }
@@ -457,7 +457,7 @@
                 Directory = webPath.Substring(0, webPath.LastIndexOf("/"))
             };
 
-            fileManagerService.DeleteFile(criteria);
+            _fileManagerService.DeleteFile(criteria);
 
             return result;
         }

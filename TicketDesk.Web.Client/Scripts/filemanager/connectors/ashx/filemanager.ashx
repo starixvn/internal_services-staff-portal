@@ -415,7 +415,7 @@ public class filemanager : IHttpHandler
 				fi = new FileInfo(context.Server.MapPath(context.Request["path"]));
                 context.Response.AddHeader("Content-Disposition", "attachment; filename=" + context.Server.UrlPathEncode(fi.Name));
                 context.Response.AddHeader("Content-Length", fi.Length.ToString());
-                context.Response.ContentType = System.Web.MimeMapping.GetMimeMapping(fi.Name);
+                context.Response.ContentType = MimeMapping.GetMimeMapping(fi.Name);
                 context.Response.TransmitFile(fi.FullName);
 				break;
 			case "replace":
@@ -431,14 +431,14 @@ public class filemanager : IHttpHandler
 			case "download": //call in window.open
 				fi = new FileInfo(context.Server.MapPath(context.Request["path"]));
 				
-				System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;
+				HttpResponse response = HttpContext.Current.Response;
 				response.Clear();
 				response.ClearContent();
 				response.ClearHeaders();
 				
-				response.AppendHeader("Content-Type", System.Web.MimeMapping.GetMimeMapping(fi.Name)+"; charset=UTF-8");
+				response.AppendHeader("Content-Type", MimeMapping.GetMimeMapping(fi.Name)+"; charset=UTF-8");
 				response.Charset = "UTF-8";
-				response.ContentEncoding = System.Text.Encoding.UTF8;
+				response.ContentEncoding = Encoding.UTF8;
 				response.AppendHeader("Content-Disposition","attachment; filename="+fi.Name+"; size="+fi.Length.ToString());
 				context.Response.AddHeader("Content-Length", fi.Length.ToString());
 				response.CacheControl = "Public";

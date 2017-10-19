@@ -1,8 +1,8 @@
 ﻿namespace TicketDesk.Web.Client.Models
 {
     using System.ComponentModel.DataAnnotations;
-    using TicketDesk.Localization;
-    using TicketDesk.Localization.Models;
+    using Localization;
+    using Localization.Models;
 
     public class AccountProfileViewModel
     {

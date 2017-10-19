@@ -3,9 +3,9 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using TicketDesk.Domain;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.Localization.Controllers;
+    using Domain;
+    using Domain.Model;
+    using Localization.Controllers;
 
     [RoutePrefix("navigation")]
     public class NavigationController : BaseController

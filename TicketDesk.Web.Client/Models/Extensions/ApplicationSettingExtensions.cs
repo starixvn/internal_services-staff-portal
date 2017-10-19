@@ -1,23 +1,10 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System.Linq;
-using System.Web.Mvc;
-using TicketDesk.Web.Client;
-using TicketDesk.Web.Identity;
-
-namespace TicketDesk.Domain.Model
+﻿namespace TicketDesk.Domain.Model
 {
+    using System.Linq;
+    using System.Web.Mvc;
+    using Web.Client;
+    using Web.Identity;
+
     public static class ApplicationSettingExtensions
     {
         public static SelectList GetPriorityList(this ApplicationSetting settings, bool includeEmpty, string selectedPriority)
@@ -41,8 +28,7 @@ namespace TicketDesk.Domain.Model
             return roleManager.Roles.ToMultiSelectList(
                 r => r.Name,
                 r => r.DisplayName,
-                settings.SecuritySettings.DefaultNewUserRoles.ToArray(),
-                false);
+                settings.SecuritySettings.DefaultNewUserRoles.ToArray());
         }
 
         public static string GetPriorities(this ApplicationSetting settings)

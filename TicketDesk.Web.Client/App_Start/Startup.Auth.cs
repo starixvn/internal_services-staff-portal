@@ -7,9 +7,9 @@
     using Owin;
     using SimpleInjector;
     using System;
-    using TicketDesk.Web.Identity;
-    using TicketDesk.Web.Identity.Migrations;
-    using TicketDesk.Web.Identity.Model;
+    using Identity;
+    using Identity.Migrations;
+    using Identity.Model;
 
     public partial class Startup
     {

@@ -19,12 +19,12 @@ namespace TicketDesk.Web.Client.Controllers
     using Microsoft.AspNet.Identity;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using TicketDesk.Domain;
-    using TicketDesk.Domain.Migrations;
-    using TicketDesk.PushNotifications;
-    using TicketDesk.PushNotifications.Migrations;
-    using TicketDesk.Web.Identity;
-    using TicketDesk.Web.Identity.Migrations;
+    using Domain;
+    using Domain.Migrations;
+    using PushNotifications;
+    using PushNotifications.Migrations;
+    using Identity;
+    using Identity.Migrations;
 
     [RoutePrefix("admin/data-management")]
     [Route("{action=index}")]

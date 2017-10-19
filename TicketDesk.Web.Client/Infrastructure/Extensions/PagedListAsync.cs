@@ -5,7 +5,7 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
-    using TicketDesk.Localization.Infrastructure;
+    using Localization.Infrastructure;
 
     public class PagedListAsync<T> : BasePagedList<T>
     {

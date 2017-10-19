@@ -20,16 +20,16 @@ namespace TicketDesk.Web.Client.Controllers
     using System.Web;
     using System.Web.Hosting;
     using System.Web.Mvc;
-    using TicketDesk.Domain;
-    using TicketDesk.Domain.Legacy;
-    using TicketDesk.Domain.Migrations;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.PushNotifications;
-    using TicketDesk.PushNotifications.Model;
-    using TicketDesk.Search.Common;
-    using TicketDesk.Web.Client.Models;
-    using TicketDesk.Web.Identity;
-    using TicketDesk.Web.Identity.Model;
+    using Domain;
+    using Domain.Legacy;
+    using Domain.Migrations;
+    using Domain.Model;
+    using PushNotifications;
+    using PushNotifications.Model;
+    using Search.Common;
+    using Models;
+    using Identity;
+    using Identity.Model;
 
     [RoutePrefix("first-run-setup")]
     [Route("{action=index}")]
@@ -45,11 +45,11 @@ namespace TicketDesk.Web.Client.Controllers
             Model = new SystemInfoViewModel();
         }
 
-        private TicketDeskUserManager UserManager { get; set; }
+        private TicketDeskUserManager UserManager { get; }
 
-        private TicketDeskSignInManager SignInManager { get; set; }
+        private TicketDeskSignInManager SignInManager { get; }
 
-        private SystemInfoViewModel Model { get; set; }
+        private SystemInfoViewModel Model { get; }
 
         // GET: FirstRunSetup
         [Route("", Name = "first-run-setup")]
@@ -147,16 +147,16 @@ namespace TicketDesk.Web.Client.Controllers
             return View();
         }
 
-        private void UpdateSearchIndex()
+        private static void UpdateSearchIndex()
         {
             // TODO: duplicated in DatabaseConfig.cs, should refactor extension method or something... just not sure what the most appropriate place is
             HostingEnvironment.QueueBackgroundWorkItem(async (ct) =>
             {
                 using (var ctx = new TdDomainContext(null))
                 {
-                    await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync();
+                    await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
                     var searchItems = ctx.Tickets.Include("TicketEvents").ToSeachIndexItems();
-                    await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems);
+                    await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
                 }
             });
         }
@@ -183,20 +183,20 @@ namespace TicketDesk.Web.Client.Controllers
             if (existingUser == null)
             {
                 newUser = new TicketDeskUser { UserName = email, Email = email, DisplayName = displayName };
-                await UserManager.CreateAsync(newUser, password);
-                await UserManager.AddToRoleAsync(newUser.Id, "TdAdministrators");
+                await UserManager.CreateAsync(newUser, password).ConfigureAwait(false);
+                await UserManager.AddToRoleAsync(newUser.Id, "TdAdministrators").ConfigureAwait(false);
             }
             else
             {
                 // should only happen if user entered one of the demo user names when setting up the DB
                 // reset the password to the one the user entered here, and set the admin role if needed
-                var token = await UserManager.GeneratePasswordResetTokenAsync(existingUser.Id);
-                await UserManager.ResetPasswordAsync(existingUser.Id, token, password);
+                var token = await UserManager.GeneratePasswordResetTokenAsync(existingUser.Id).ConfigureAwait(false);
+                await UserManager.ResetPasswordAsync(existingUser.Id, token, password).ConfigureAwait(false);
                 existingUser.DisplayName = displayName;
-                await UserManager.UpdateAsync(existingUser);
+                await UserManager.UpdateAsync(existingUser).ConfigureAwait(false);
                 if (!UserManager.IsTdAdministrator(existingUser.Id))
                 {
-                    await UserManager.AddToRoleAsync(existingUser.Id, "TdAdministrators");
+                    await UserManager.AddToRoleAsync(existingUser.Id, "TdAdministrators").ConfigureAwait(false);
                 }
             }
 

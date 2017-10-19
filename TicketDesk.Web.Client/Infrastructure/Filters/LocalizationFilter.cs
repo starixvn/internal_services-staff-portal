@@ -9,7 +9,7 @@ namespace TicketDesk.Web.Client.Infrastructure.Filters
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var cookie = HttpContext.Current.Request.Cookies["_culture"];
-            var name = cookie != null ? cookie.Value : null;
+            var name = cookie?.Value;
 
             if (string.IsNullOrEmpty(name))
             {

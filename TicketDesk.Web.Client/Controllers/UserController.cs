@@ -12,7 +12,7 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
-    using TicketDesk.Web.Client.Models;
+    using Models;
     using Localization;
 
     [RoutePrefix("user")]

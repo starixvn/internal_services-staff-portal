@@ -3,7 +3,7 @@
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security.DataProtection;
     using Owin;
-    using TicketDesk.Web.Identity.Model;
+    using Model;
 
     public static class TicketDeskUserManagerExtensions
     {

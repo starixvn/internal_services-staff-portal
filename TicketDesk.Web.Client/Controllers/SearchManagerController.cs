@@ -19,9 +19,9 @@ namespace TicketDesk.Web.Client.Controllers
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using TicketDesk.Domain;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.Search.Common;
+    using Domain;
+    using Domain.Model;
+    using Search.Common;
 
     [RoutePrefix("admin/search-manager")]
     [Route("{action=index}")]

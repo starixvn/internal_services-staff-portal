@@ -82,7 +82,7 @@
                         <div class="form-group">
                             <label class="control-label">@Edit.ReassignTickets</label>
                             <div class="">
-                                @Html.DropDownList("ReassignTo", (System.Web.Mvc.SelectList)ViewBag.ProjectReassignList, new { @class = "form-control", data_val = "true", data_val_required = Edit.ProjectRequired, })
+                                @Html.DropDownList("ReassignTo", (SelectList)ViewBag.ProjectReassignList, new { @class = "form-control", data_val = "true", data_val_required = Edit.ProjectRequired, })
                                 @Html.ValidationMessage("ReassignTo", "", new { @class = "text-danger" })
                                 <span class="help-block">@Edit.ReassignTickets_Help</span>
                             </div>
