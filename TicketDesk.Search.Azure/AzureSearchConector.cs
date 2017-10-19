@@ -1,38 +1,20 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using RedDog.Search;
-using RedDog.Search.Http;
-using System.Configuration;
-using System.Linq;
-
-namespace TicketDesk.Search.Azure
+﻿namespace TicketDesk.Search.Azure
 {
-    public abstract class AzureSearchConector
+    using System;
+    using RedDog.Search;
+    using RedDog.Search.Http;
+    using System.Configuration;
+    using System.Linq;
+
+    public abstract class AzureSearchConector : IDisposable
     {
         private ApiConnection _connection;
         private IndexManagementClient _managementClient;
         private IndexQueryClient _queryClient;
 
-        internal IndexManagementClient ManagementClient
-        {
-            get { return _managementClient ?? (_managementClient = new IndexManagementClient(Connection)); }
-        }
+        internal IndexManagementClient ManagementClient => _managementClient ?? (_managementClient = new IndexManagementClient(Connection));
 
-        internal IndexQueryClient QueryClient
-        {
-            get { return _queryClient ?? (_queryClient = new IndexQueryClient(Connection)); }
-        }
+        internal IndexQueryClient QueryClient => _queryClient ?? (_queryClient = new IndexQueryClient(Connection));
 
         internal ApiConnection Connection
         {
@@ -104,6 +86,22 @@ namespace TicketDesk.Search.Azure
             public string ServiceName { get; set; }
 
             internal string QueryKey { get; set; }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _connection?.Dispose();
+                _managementClient?.Dispose();
+                _queryClient?.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -1,17 +1,4 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using Lucene.Net.Analysis;
+﻿using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Index;
 using Lucene.Net.Store;
@@ -46,7 +33,7 @@ namespace TicketDesk.Search.Lucene
             }
         }
 
-        protected string IndexLocation { get; private set; }
+        protected string IndexLocation { get; }
 
         public IndexWriter TdIndexWriter
         {
@@ -117,28 +104,26 @@ namespace TicketDesk.Search.Lucene
         public void ShutDownWriter()
         {
             _tdIndexWriter.Optimize();
-            _tdIndexWriter.Dispose();
-            _tdIndexDirectory.Dispose();
             _tdIndexWriter = null;
             _tdIndexDirectory = null;
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _tdIndexDirectory?.Dispose();
+                _tdIndexAnalyzer?.Dispose();
+                _tdIndexWriter?.Dispose();
+                TdIndexAnalyzer?.Dispose();
+                TdIndexDirectory?.Dispose();
+            }
+        }
+
         public void Dispose()
         {
-            if (_tdIndexWriter != null)
-            {
-                _tdIndexWriter.Dispose();
-            }
-
-            if (TdIndexAnalyzer != null)
-            {
-                TdIndexAnalyzer.Dispose();
-            }
-
-            if (TdIndexDirectory != null)
-            {
-                TdIndexDirectory.Dispose();
-            }
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
