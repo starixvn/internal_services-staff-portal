@@ -1,6 +1,7 @@
 ﻿namespace S22.Imap
 {
     using System;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -65,7 +66,7 @@
             }
 
             Encoding encoding = GetEncoding(m.Groups[1].Value);
-            string type = m.Groups[2].Value.ToUpper();
+            string type = m.Groups[2].Value.ToUpper(CultureInfo.InvariantCulture);
             string text = m.Groups[3].Value;
             switch (type)
             {

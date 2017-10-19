@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
+    using System.Globalization;
     using System.IO;
     using System.Net.Mail;
     using System.Text;
@@ -85,6 +86,7 @@
             StringReader reader = new StringReader(text);
             StringBuilder header = new StringBuilder();
             string line;
+
             while (!string.IsNullOrEmpty(line = reader.ReadLine()))
             {
                 header.AppendLine(line);
@@ -111,7 +113,9 @@
         {
             StringReader reader = new StringReader(header);
             NameValueCollection coll = new NameValueCollection();
-            string line, fieldname = null, fieldvalue = null;
+            string line;
+            string fieldname = null;
+
             while ((line = reader.ReadLine()) != null)
             {
                 if (line == string.Empty)
@@ -124,7 +128,7 @@
                 {
                     if (fieldname != null)
                     {
-                        coll[fieldname] = coll[fieldname] + line.TrimEnd();
+                        coll[fieldname] = $"{coll[fieldname]}{line.TrimEnd()}";
                     }
 
                     continue;
@@ -138,7 +142,7 @@
                 }
 
                 fieldname = line.Substring(0, delimiter).Trim();
-                fieldvalue = line.Substring(delimiter + 1).Trim();
+                var fieldvalue = line.Substring(delimiter + 1).Trim();
                 coll.Add(fieldname, fieldvalue);
             }
 
@@ -369,7 +373,7 @@
             {
                 message.Body = encoding.GetString(bytes);
                 message.BodyEncoding = encoding;
-                message.IsBodyHtml = part.Subtype.ToLower() == "html";
+                message.IsBodyHtml = part.Subtype.ToLower(CultureInfo.InvariantCulture) == "html";
                 return;
             }
 
@@ -407,7 +411,7 @@
 
             try
             {
-                attachment.ContentType = new System.Net.Mime.ContentType(part.Type.ToString().ToLower() + "/" + part.Subtype.ToLower());
+                attachment.ContentType = new System.Net.Mime.ContentType(part.Type.ToString().ToLower(CultureInfo.InvariantCulture) + "/" + part.Subtype.ToLower(CultureInfo.InvariantCulture));
             }
             catch
             {
@@ -431,7 +435,7 @@
             System.Net.Mime.ContentType contentType;
             try
             {
-                contentType = new System.Net.Mime.ContentType(part.Type.ToString().ToLower() + "/" + part.Subtype.ToLower());
+                contentType = new System.Net.Mime.ContentType(part.Type.ToString().ToLower(CultureInfo.InvariantCulture) + "/" + part.Subtype.ToLower(CultureInfo.InvariantCulture));
             }
             catch
             {
@@ -464,13 +468,10 @@
             NameValueCollection header)
         {
             NameValueCollection contentType = ParseMIMEField(header["Content-Type"]);
-            if (contentType["Boundary"] != null)
-            {
-                return ParseMIMEParts(new StringReader(body), contentType["Boundary"]);
-            }
-            else
-            {
-                return new MIMEPart[]
+
+            return contentType["Boundary"] != null
+                ? ParseMIMEParts(new StringReader(body), contentType["Boundary"])
+                : new[]
                 {
                     new MIMEPart
                     {
@@ -484,7 +485,6 @@
                         }
                     }
                 };
-            }
         }
 
         /// <summary>
@@ -499,7 +499,9 @@
         private static MIMEPart[] ParseMIMEParts(StringReader reader, string boundary)
         {
             List<MIMEPart> list = new List<MIMEPart>();
-            string start = "--" + boundary, end = "--" + boundary + "--", line;
+            string start = "--" + boundary;
+            string end = "--" + boundary + "--";
+            string line;
 
             // Skip everything up to the first boundary
             while ((line = reader.ReadLine()) != null)

@@ -17,7 +17,7 @@ namespace S22.Mail
             Parameters = new StringDictionary();
             foreach (string k in contentType.Parameters.Keys)
             {
-                if (contentType.Parameters.ContainsKey(k) == false)
+                if (!contentType.Parameters.ContainsKey(k))
                 {
                     Parameters.Add(k, contentType.Parameters[k]);
                 }
@@ -32,7 +32,7 @@ namespace S22.Mail
 
         public string Name { get; set; }
 
-        public StringDictionary Parameters { get; private set; }
+        public StringDictionary Parameters { get; }
 
         public static implicit operator ContentType(SerializableContentType contentType)
         {
@@ -41,12 +41,14 @@ namespace S22.Mail
                 return null;
             }
 
-            ContentType ct = new ContentType();
+            ContentType ct = new ContentType
+            {
+                Boundary = contentType.Boundary,
+                CharSet = contentType.CharSet,
+                MediaType = contentType.MediaType,
+                Name = contentType.Name
+            };
 
-            ct.Boundary = contentType.Boundary;
-            ct.CharSet = contentType.CharSet;
-            ct.MediaType = contentType.MediaType;
-            ct.Name = contentType.Name;
             foreach (string k in contentType.Parameters.Keys)
             {
                 ct.Parameters.Add(k, contentType.Parameters[k]);

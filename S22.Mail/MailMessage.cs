@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Text.RegularExpressions;
-
-namespace S22.Imap
+﻿namespace S22.Imap
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.IO;
+    using System.Linq;
+    using System.Net.Mail;
+    using System.Text;
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// Adds extension methods to the MailMessage class of the .Net Framework.
     /// These are only used internally and are not visible outside of the
@@ -21,7 +21,7 @@ namespace S22.Imap
         /// their corresponding MIME priority values as defined in
         /// RFC2156.
         /// </summary>
-        private static Dictionary<MailPriority, string> PriorityMap = new Dictionary<MailPriority, string>
+        private static readonly Dictionary<MailPriority, string> PriorityMap = new Dictionary<MailPriority, string>
         {
             { MailPriority.Low, "non-urgent" },
             { MailPriority.Normal, "normal" },
@@ -33,7 +33,7 @@ namespace S22.Imap
         /// their corresponding MIME importance values as defined in
         /// RFC2156.
         /// </summary>
-        private static Dictionary<MailPriority, string> ImportanceMap = new Dictionary<MailPriority, string>
+        private static readonly Dictionary<MailPriority, string> ImportanceMap = new Dictionary<MailPriority, string>
         {
             { MailPriority.Low, "low" },
             { MailPriority.Normal, "normal" },
@@ -83,12 +83,12 @@ namespace S22.Imap
         /// </returns>
         private static NameValueCollection BuildHeader(MailMessage m)
         {
-            string[] ignore = new string[]
-            {
+            string[] ignore = {
                 "MIME-Version", "Date", "Subject", "From", "To", "Cc", "Bcc",
                 "Content-Type", "Content-Transfer-Encoding", "Priority",
                 "Reply-To", "X-Priority", "Importance", "Sender", "Message-Id"
             };
+
             NameValueCollection header = new NameValueCollection
             {
                 { "MIME-Version", "1.0" },
@@ -172,7 +172,7 @@ namespace S22.Imap
             {
                 if (c < 32 || c == '=' || c == '_' || c == '?' || c > 126)
                 {
-                    builder.Append(string.Format("={0:X2}", (int)c));
+                    builder.Append($"={(int)c:X2}");
                 }
                 else if (c == ' ')
                 {
@@ -295,7 +295,7 @@ namespace S22.Imap
                 }
 
                 builder.AppendLine("Content-Type: " + contentType);
-                if (m.Body != null && !m.Body.IsASCII())
+                if (!m.Body.IsASCII())
                 {
                     builder.AppendLine("Content-Transfer-Encoding: base64");
                     base64 = true;
