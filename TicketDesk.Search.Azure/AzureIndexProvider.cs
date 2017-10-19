@@ -1,27 +1,14 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using RedDog.Search.Model;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using TicketDesk.Search.Common;
-
-namespace TicketDesk.Search.Azure
+﻿namespace TicketDesk.Search.Azure
 {
+    using Common;
+    using RedDog.Search.Model;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class AzureIndexProvider : AzureSearchConector, ISearchIndexProvider
     {
         private const string IndexName = "ticketdesk-searchindex";
@@ -36,13 +23,13 @@ namespace TicketDesk.Search.Azure
             {
                 var svcInfo = TryGetInfoFromConnectionString() ?? TryGetInfoFromAppSettings();
 
-                return svcInfo != null && !string.IsNullOrEmpty(svcInfo.ServiceName) && !string.IsNullOrEmpty(svcInfo.QueryKey);
+                return !string.IsNullOrEmpty(svcInfo?.ServiceName) && !string.IsNullOrEmpty(svcInfo.QueryKey);
             }
         }
 
         public async Task<bool> RunIndexMaintenanceAsync()
         {
-            return await CreateIndexAsync();
+            return await CreateIndexAsync().ConfigureAwait(false);
         }
 
         public async Task<bool> AddItemsToIndexAsync(IEnumerable<SearchIndexItem> items)
@@ -51,14 +38,12 @@ namespace TicketDesk.Search.Azure
             foreach (var item in items)
             {
                 // TODO: can we do this in parallel with Azure search?
-                if (!await SendItemToIndexAsync(item.ToIndexOperation()))
+                if (!await SendItemToIndexAsync(item.ToIndexOperation()).ConfigureAwait(false) && ret)
                 {
                     // TODO: beef this up so we return a list of failures for the caller to handle
                     // if any item fails, return false - but go ahead and process the rest of the batch
-                    if (ret)
-                    {
-                        ret = false;
-                    }
+
+                    ret = false;
                 }
             }
 
@@ -68,9 +53,9 @@ namespace TicketDesk.Search.Azure
         public async Task<bool> RemoveIndexAsync()
         {
             var ret = true;
-            if (await IndexExistsAsync())
+            if (await IndexExistsAsync().ConfigureAwait(false))
             {
-                var result = await ManagementClient.DeleteIndexAsync(IndexName);
+                var result = await ManagementClient.DeleteIndexAsync(IndexName).ConfigureAwait(false);
                 if (!result.IsSuccess)
                 {
                     Trace.Write("Error: " + result.Error.Message);
@@ -84,7 +69,7 @@ namespace TicketDesk.Search.Azure
 
         internal async Task<bool> SendItemToIndexAsync(IndexOperation itemOperation)
         {
-            var result = await ManagementClient.PopulateAsync(IndexName, itemOperation);
+            var result = await ManagementClient.PopulateAsync(IndexName, itemOperation).ConfigureAwait(false);
             if (!result.IsSuccess)
             {
                 Trace.Write("Error: " + result.Error.Message);
@@ -100,11 +85,11 @@ namespace TicketDesk.Search.Azure
         internal async Task<bool> CreateIndexAsync()
         {
             var ret = true;
-            var exists = await IndexExistsAsync();
+            var exists = await IndexExistsAsync().ConfigureAwait(false);
             if (!exists)
             {
                 var index = GetIndexDefinition();
-                var result = await ManagementClient.CreateIndexAsync(index);
+                var result = await ManagementClient.CreateIndexAsync(index).ConfigureAwait(false);
                 if (!result.IsSuccess)
                 {
                     Trace.WriteLine("Error: " + result.Error.Message);
@@ -119,7 +104,7 @@ namespace TicketDesk.Search.Azure
         internal async Task<bool> IndexExistsAsync()
         {
             var ret = false;
-            var result = await ManagementClient.GetIndexesAsync();
+            var result = await ManagementClient.GetIndexesAsync().ConfigureAwait(false);
             if (result.IsSuccess)
             {
                 ret = result.Body.Any(i => i.Name.Equals(IndexName));
@@ -132,7 +117,7 @@ namespace TicketDesk.Search.Azure
             return ret;
         }
 
-        private Index GetIndexDefinition()
+        private static Index GetIndexDefinition()
         {
             var index = new Index(IndexName)
                 .WithStringField("id", opt => opt.IsKey().IsRetrievable().IsSearchable().IsSortable().IsFilterable())
