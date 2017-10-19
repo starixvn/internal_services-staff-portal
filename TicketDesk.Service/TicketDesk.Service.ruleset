@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="SonarQube - Nexus / Services &amp; Staffs Portal Sonar way" ToolsVersion="14.0">
+  <Include Path="..\sonarqube\sspcsharp.ruleset" Action="Default" />
+</RuleSet>
