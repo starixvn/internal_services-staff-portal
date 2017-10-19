@@ -62,12 +62,12 @@ namespace TicketDesk.PushNotifications.Delivery
                     client.Send(smsg);
                     sent = true;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     sent = false;
 
-                    // TODO: log this somewhere
-                    throw new Exception(string.Empty, ex);
+                    ////// TODO: log this somewhere
+                    ////throw new Exception(string.Empty, ex);
                 }
             }
 

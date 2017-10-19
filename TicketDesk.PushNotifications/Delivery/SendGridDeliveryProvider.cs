@@ -1,5 +1,8 @@
 ﻿namespace TicketDesk.PushNotifications.Delivery
 {
+    using Localization;
+    using Localization.PushNotifications;
+    using Model;
     using Newtonsoft.Json.Linq;
     using S22.Mail;
     using SendGrid;
@@ -10,9 +13,6 @@
     using System.Net.Mail;
     using System.Threading;
     using System.Threading.Tasks;
-    using TicketDesk.Localization;
-    using TicketDesk.Localization.PushNotifications;
-    using TicketDesk.PushNotifications.Model;
 
     public static class StreamExtensions
     {
@@ -47,7 +47,7 @@
                 try
                 {
                     var hView = smsg.AlternateViews.First(v => v.ContentType.MediaType == "text/html");
-                    var tView = smsg.AlternateViews.First(v => v.ContentType.MediaType == "text/plain");
+                    //// var tView = smsg.AlternateViews.First(v => v.ContentType.MediaType == "text/plain");
                     var sendGridMessage = new SendGridMessage
                     {
                         From = new EmailAddress(cfg.FromAddress, cfg.FromDisplayName),
@@ -62,16 +62,17 @@
                             {
                                 Tos = new List<EmailAddress>
                                 {
-                                    new EmailAddress(notificationItem.Destination.DestinationAddress, notificationItem.Destination.SubscriberName)
+                                    new EmailAddress(notificationItem.Destination.DestinationAddress,
+                                        notificationItem.Destination.SubscriberName)
                                 }
                             }
                         },
+                        TrackingSettings = new TrackingSettings
+                        {
+                            ClickTracking = new ClickTracking()
+                        },
                     };
 
-                    sendGridMessage.TrackingSettings = new TrackingSettings
-                    {
-                        ClickTracking = new ClickTracking()
-                    };
 
                     if (cfg.EnableClickTracking ?? false)
                     {
@@ -80,7 +81,7 @@
 
                     if (cfg.EnableGravatar ?? false)
                     {
-                        // sendGridMessage.MailSettings.EnableGravatar();
+                        //// sendGridMessage.MailSettings.EnableGravatar();
                     }
 
                     if (cfg.EnableOpenTracking ?? false)
@@ -90,11 +91,11 @@
 
                     if (cfg.SendToSink ?? false)
                     {
-                        // sendGridMessage.SendToSink();
+                        //// sendGridMessage.SendToSink();
                     }
 
                     var sg = new SendGridClient(cfg.ApiKey);
-                    var response = await sg.SendEmailAsync(sendGridMessage);
+                    await sg.SendEmailAsync(sendGridMessage, ct).ConfigureAwait(false);
                     sent = true;
                 }
                 catch

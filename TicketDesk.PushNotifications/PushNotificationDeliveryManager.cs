@@ -1,29 +1,16 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Management.Instrumentation;
-using System.Threading;
-using System.Threading.Tasks;
-using TicketDesk.PushNotifications.Delivery;
-using TicketDesk.PushNotifications.Model;
-
-namespace TicketDesk.PushNotifications
+﻿namespace TicketDesk.PushNotifications
 {
+    using Delivery;
+    using Model;
+    using Newtonsoft.Json.Linq;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Management.Instrumentation;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public static class PushNotificationDeliveryManager
     {
         private static ICollection<IPushNotificationDeliveryProvider> _deliveryProviders;
@@ -95,19 +82,19 @@ namespace TicketDesk.PushNotifications
                 var readyNote = await context.PushNotificationItems
                     .FirstOrDefaultAsync(n =>
                         (n.ContentSourceId == contentSourceId
-                            && n.ContentSourceType == contentSourceType
-                            && n.SubscriberId == subscriberId
-                            && n.DestinationId == destinationId)
+                         && n.ContentSourceType == contentSourceType
+                         && n.SubscriberId == subscriberId
+                         && n.DestinationId == destinationId)
                         && (n.DeliveryStatus == PushNotificationItemStatus.Scheduled
-                            || n.DeliveryStatus == PushNotificationItemStatus.Retrying));
+                            || n.DeliveryStatus == PushNotificationItemStatus.Retrying)).ConfigureAwait(false);
 
                 if (readyNote == null)
                 {
                     return;
                 }
 
-                await SendNotificationMessageAsync(context, readyNote, CancellationToken.None);
-                await context.SaveChangesAsync();
+                await SendNotificationMessageAsync(context, readyNote, CancellationToken.None).ConfigureAwait(false);
+                await context.SaveChangesAsync().ConfigureAwait(false);
             }
         }
 
@@ -120,15 +107,15 @@ namespace TicketDesk.PushNotifications
                     await context.PushNotificationItems.Include(n => n.Destination).OrderBy(n => n.ScheduledSendDate).FirstOrDefaultAsync(
                         n => (n.DeliveryStatus == PushNotificationItemStatus.Scheduled || n.DeliveryStatus == PushNotificationItemStatus.Retrying)
                              && n.ScheduledSendDate <= DateTimeOffset.Now,
-                        ct);
+                        ct).ConfigureAwait(false);
 
                 if (readyNote == null)
                 {
                     return 0;
                 }
 
-                await SendNotificationMessageAsync(context, readyNote, ct);
-                return await context.SaveChangesAsync(ct);
+                await SendNotificationMessageAsync(context, readyNote, ct).ConfigureAwait(false);
+                return await context.SaveChangesAsync(ct).ConfigureAwait(false);
             }
         }
 
@@ -147,7 +134,7 @@ namespace TicketDesk.PushNotifications
             }
             else
             {
-                await provider.SendReadyMessageAsync(readyNote, retryMax, retryIntv, ct);
+                await provider.SendReadyMessageAsync(readyNote, retryMax, retryIntv, ct).ConfigureAwait(false);
             }
         }
     }
