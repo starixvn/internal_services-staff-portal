@@ -82,7 +82,7 @@
                     return Json(Delete(path), JsonRequestBehavior.AllowGet);
 
                 case "download":
-                    if (Request.Headers["accept"].ToString().Contains("json"))
+                    if (Request.Headers["accept"].Contains("json"))
                     {
                         return Json(Download(path), JsonRequestBehavior.AllowGet);
                     }
@@ -368,20 +368,13 @@
         {
             var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, path));
 
-            if (fileAttributes == FileAttributes.Directory)
-            {
-                return DeleteDirectory(path);
-            }
-            else
-            {
-                return DeleteFile(path);
-            }
+            return fileAttributes == FileAttributes.Directory ? DeleteDirectory(path) : DeleteFile(path);
         }
 
         private dynamic DeleteDirectory(string path)
         {
             var webPath = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path));
-            var directoryName = Path.GetDirectoryName(path).Split('\\').Last();
+            var directoryName = Path.GetDirectoryName(path)?.Split('\\').Last();
             var rootpath = Path.Combine(_webRootPath, path);
             var rootDirectory = new DirectoryInfo(rootpath);
 

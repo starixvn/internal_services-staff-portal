@@ -1,38 +1,25 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using Fanex.NAP.Core.Service.Impl;
-using Fanex.NAP.Core.Service.Interface;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
-using Owin;
-using SimpleInjector;
-using SimpleInjector.Advanced;
-using SimpleInjector.Integration.Web;
-using SimpleInjector.Integration.Web.Mvc;
-using System;
-using System.Reflection;
-using System.Web;
-using System.Web.Mvc;
-using TicketDesk.Domain;
-using TicketDesk.Service;
-using TicketDesk.Web.Identity;
-using TicketDesk.Web.Identity.Model;
-
-namespace TicketDesk.Web.Client
+﻿namespace TicketDesk.Web.Client
 {
+    using Domain;
+    using Fanex.NAP.Core.Service.Impl;
+    using Fanex.NAP.Core.Service.Interface;
+    using Identity;
+    using Identity.Model;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin;
+    using Owin;
+    using Service;
+    using SimpleInjector;
+    using SimpleInjector.Advanced;
+    using SimpleInjector.Integration.Web;
+    using SimpleInjector.Integration.Web.Mvc;
+    using System;
+    using System.Reflection;
+    using System.Web;
+    using System.Web.Mvc;
+
     public partial class Startup
     {
         public Container RegisterStructureMap(IAppBuilder app)

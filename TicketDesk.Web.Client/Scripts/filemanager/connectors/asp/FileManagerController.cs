@@ -98,7 +98,7 @@ namespace RfmNetCore.Controllers
                     return Json(Delete(path), JsonRequestBehavior.AllowGet);
 
                 case "download":
-                    if (Request.Headers["accept"].ToString().Contains("json"))
+                    if (Request.Headers["accept"].Contains("json"))
                     {
                         return Json(Download(path), JsonRequestBehavior.AllowGet);
                     }
@@ -459,14 +459,7 @@ namespace RfmNetCore.Controllers
             var oldPath = Path.Combine(_webRootPath, old);
             var fileAttributes = System.IO.File.GetAttributes(oldPath);
 
-            if (fileAttributes == FileAttributes.Directory)
-            {
-                return RenameDirectory(old, @new);
-            }
-            else
-            {
-                return RenameFile(old, @new);
-            }
+            return fileAttributes == FileAttributes.Directory ? RenameDirectory(old, @new) : RenameFile(old, @new);
         }
 
         private dynamic MoveDirectory(string old, string @new)
@@ -568,14 +561,7 @@ namespace RfmNetCore.Controllers
         {
             var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, old));
 
-            if (fileAttributes == FileAttributes.Directory)
-            {
-                return MoveDirectory(old, @new);
-            }
-            else
-            {
-                return MoveFile(old, @new);
-            }
+            return fileAttributes == FileAttributes.Directory ? MoveDirectory(old, @new) : MoveFile(old, @new);
         }
 
         private dynamic CopyDirectory(string source, string target)
@@ -675,14 +661,7 @@ namespace RfmNetCore.Controllers
         {
             var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, source));
 
-            if (fileAttributes == FileAttributes.Directory)
-            {
-                return CopyDirectory(source, target);
-            }
-            else
-            {
-                return CopyFile(source, target);
-            }
+            return fileAttributes == FileAttributes.Directory ? CopyDirectory(source, target) : CopyFile(source, target);
         }
 
         private dynamic EditFile(string path)

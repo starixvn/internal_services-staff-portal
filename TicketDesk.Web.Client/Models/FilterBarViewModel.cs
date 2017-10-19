@@ -1,13 +1,13 @@
 ﻿namespace TicketDesk.Web.Client.Models
 {
+    using Domain.Model;
+    using Identity;
+    using Localization.Models;
     using Microsoft.AspNet.Identity;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.Localization.Models;
-    using TicketDesk.Web.Identity;
 
     public class FilterBarViewModel
     {
@@ -18,31 +18,25 @@
             UserManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
         }
 
-        private UserTicketListSetting CurrentListSetting { get; set; }
+        private UserTicketListSetting CurrentListSetting { get; }
 
-        private TicketDeskRoleManager RoleManager { get; set; }
+        private TicketDeskRoleManager RoleManager { get; }
 
-        private TicketDeskUserManager UserManager { get; set; }
+        private TicketDeskUserManager UserManager { get; }
 
         // TODO: Refactor all selectlists here to use the select list extensions B
-        public SelectList ItemsPerPageSelectList
-        {
-            get
+        public SelectList ItemsPerPageSelectList => new SelectList(
+            new[]
             {
-                return new SelectList(
-                    new[]
-                    {
-                        new { Text = "10", Value = "10" },
-                        new { Text = "20", Value = "20" },
-                        new { Text = "30", Value = "30" },
-                        new { Text = "50", Value = "50" },
-                        new { Text = "100", Value = "100" }
-                    },
-                    "Value",
-                    "Text",
-                    CurrentListSetting.ItemsPerPage);
-            }
-        }
+                new { Text = "10", Value = "10" },
+                new { Text = "20", Value = "20" },
+                new { Text = "30", Value = "30" },
+                new { Text = "50", Value = "50" },
+                new { Text = "100", Value = "100" }
+            },
+            "Value",
+            "Text",
+            CurrentListSetting.ItemsPerPage);
 
         public SelectList TicketStatusSelectList
         {
@@ -52,14 +46,13 @@
                 var filterColumn = CurrentListSetting.FilterColumns.SingleOrDefault(fc => fc.ColumnName == "TicketStatus");
                 if (filterColumn != null)
                 {
-                    if (!filterColumn.ColumnValue.ToString().Equals("Closed", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        selectedStatus = filterColumn.ColumnValue.ToString();
-                    }
-                    else
-                    {
-                        selectedStatus = (filterColumn.UseEqualityComparison.HasValue && filterColumn.UseEqualityComparison.Value) ? "Closed" : "Open";
-                    }
+                    selectedStatus =
+                        !filterColumn.ColumnValue.ToString()
+                            .Equals("Closed", StringComparison.InvariantCultureIgnoreCase)
+                            ? filterColumn.ColumnValue.ToString()
+                            : ((filterColumn.UseEqualityComparison.HasValue && filterColumn.UseEqualityComparison.Value)
+                                ? "Closed"
+                                : "Open");
                 }
 
                 return new SelectList(
@@ -83,7 +76,7 @@
             get
             {
                 var isOwnerFilterDisabled = CurrentListSetting.DisabledFilterColumnNames.Contains("Owner");
-                var classValue = string.Format("postback{0} form-control", isOwnerFilterDisabled ? " disabled" : string.Empty);
+                var classValue = $"postback{(isOwnerFilterDisabled ? " disabled" : string.Empty)} form-control";
                 var ownerHtmlAttributes = new Dictionary<string, object> { { "Class", classValue } };
                 if (isOwnerFilterDisabled)
                 {
@@ -137,7 +130,7 @@
             get
             {
                 var isAssignedToFilterDisabled = CurrentListSetting.DisabledFilterColumnNames.Contains("AssignedTo");
-                var classValue = string.Format("postback{0} form-control", isAssignedToFilterDisabled ? " disabled" : string.Empty);
+                var classValue = $"postback{(isAssignedToFilterDisabled ? " disabled" : string.Empty)} form-control";
                 var assignedHtmlAttributes = new Dictionary<string, object> { { "Class", classValue } };
                 if (isAssignedToFilterDisabled)
                 {
@@ -153,7 +146,7 @@
             get
             {
                 var isTicketStatusFilterDisabled = CurrentListSetting.DisabledFilterColumnNames.Contains("TicketStatus");
-                var classValue = string.Format("postback{0} form-control", isTicketStatusFilterDisabled ? " disabled" : string.Empty);
+                var classValue = $"postback{(isTicketStatusFilterDisabled ? " disabled" : string.Empty)} form-control";
                 var statusHtmlAttributes = new Dictionary<string, object> { { "Class", classValue } };
                 if (isTicketStatusFilterDisabled)
                 {

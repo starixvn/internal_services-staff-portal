@@ -6,8 +6,8 @@
     using System.Data.Entity;
     using System.Data.SqlClient;
     using System.Linq;
-    using TicketDesk.Web.Identity;
-    using TicketDesk.Web.Identity.Model;
+    using Web.Identity;
+    using Web.Identity.Model;
 
     /// <summary>
     /// Handles security migration functions for upgrades from TD 2.x databases.
@@ -29,7 +29,7 @@
             var users = context.Database.SqlQuery<LegacyUser>(
                 "select UserId, Email, Password, PasswordFormat, Comment from aspnet_Membership where ApplicationId = '"
                 + appId + "' and IsApproved = 1 and IsLockedOut = 0").ToList();
-            const string RoleQuery =
+            const string roleQuery =
                 "SELECT r.RoleName FROM aspnet_UsersInRoles u inner join aspnet_Roles r on u.RoleId = r.RoleId WHERE u.UserId = @userId and r.ApplicationId = @appId";
 
             foreach (var user in users)
@@ -47,7 +47,7 @@
 
                 if (result.Succeeded)
                 {
-                    var rolesForUser = context.Database.SqlQuery<string>(RoleQuery, new SqlParameter("userId", user.UserId), new SqlParameter("appId", appId));
+                    var rolesForUser = context.Database.SqlQuery<string>(roleQuery, new SqlParameter("userId", user.UserId), new SqlParameter("appId", appId));
                     var newRoles = new List<string>();
                     foreach (var role in rolesForUser)
                     {
@@ -80,7 +80,7 @@
 
         public static void RemoveLegacyMembershipObjects(TdIdentityContext context)
         {
-            const string Script = @"
+            const string script = @"
                 drop table aspnet_PersonalizationAllUsers
                 drop table aspnet_PersonalizationPerUser
                 drop table aspnet_Profile
@@ -188,12 +188,11 @@
                 drop role aspnet_WebEvent_FullAccess
             ";
 
-            context.Database.ExecuteSqlCommand(TransactionalBehavior.EnsureTransaction, Script);
+            context.Database.ExecuteSqlCommand(TransactionalBehavior.EnsureTransaction, script);
         }
 
         private class LegacyUser
         {
-            // ReSharper disable UnusedAutoPropertyAccessor.Local
             internal Guid UserId { get; set; }
 
             internal string Email { get; set; }
@@ -203,7 +202,6 @@
             internal string Comment { get; set; }
 
             internal int PasswordFormat { get; set; }
-            // ReSharper restore UnusedAutoPropertyAccessor.Local
         }
     }
 }
