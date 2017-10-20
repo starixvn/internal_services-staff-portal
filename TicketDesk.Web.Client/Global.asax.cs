@@ -8,7 +8,7 @@
 
     public class Global : System.Web.HttpApplication
     {
-        protected void Application_Start(object sender, EventArgs e)
+        protected static void Application_Start(object sender, EventArgs e)
         {
             DisableApplicationInsightsOnDebug();
             DbSettingProviderManager.Current.Start();
@@ -25,10 +25,12 @@
 
         protected void Session_Start(object sender, EventArgs e)
         {
+            // Method intentionally left empty.
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
+            // Method intentionally left empty.
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
@@ -38,15 +40,17 @@
 
         protected void Application_Error(object sender, EventArgs e)
         {
+            // Method intentionally left empty.
         }
 
-        protected void Session_End(object sender, EventArgs e)
+        protected static void Session_End(object sender, EventArgs e)
         {
             AuthConfig.SignOut();
         }
 
         protected void Application_End(object sender, EventArgs e)
         {
+            // Method intentionally left empty.
         }
     }
 }

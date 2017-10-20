@@ -21,7 +21,7 @@
 
     public partial class Startup
     {
-        public Container RegisterStructureMap(IAppBuilder app)
+        public static Container RegisterStructureMap(IAppBuilder app)
         {
             var container = GetInitializedContainer(app);
 
@@ -30,7 +30,7 @@
             return container;
         }
 
-        public Container GetInitializedContainer(IAppBuilder app)
+        public static Container GetInitializedContainer(IAppBuilder app)
         {
             var container = new Container();
             container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();

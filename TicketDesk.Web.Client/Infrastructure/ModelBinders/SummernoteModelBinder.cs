@@ -1,7 +1,7 @@
-﻿using System.Web.Mvc;
-
-namespace TicketDesk.Web.Client
+﻿namespace TicketDesk.Web.Client
 {
+    using System.Web.Mvc;
+
     /// <summary>
     /// Cleans up after summernote's tendency to put a bunch of empty paragraph, break, and non-breaking spaces into an otherwise empty text field
     /// </summary>
@@ -20,7 +20,7 @@ namespace TicketDesk.Web.Client
             return comment;
         }
 
-        public ValueProviderResult GetValueFromValueProvider(
+        public static ValueProviderResult GetValueFromValueProvider(
             ModelBindingContext bindingContext,
             bool performRequestValidation)
         {

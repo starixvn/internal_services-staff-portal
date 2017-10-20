@@ -1,29 +1,16 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System.Linq;
-using System.Web.Hosting;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Model;
-using TicketDesk.Search.Azure;
-using TicketDesk.Search.Common;
-using TicketDesk.Search.Lucene;
-
-namespace TicketDesk.Web.Client
+﻿namespace TicketDesk.Web.Client
 {
+    using Domain;
+    using Domain.Model;
+    using Search.Azure;
+    using Search.Common;
+    using Search.Lucene;
+    using System.Linq;
+    using System.Web.Hosting;
+
     public partial class Startup
     {
-        public void ConfigureSearch()
+        public static void ConfigureSearch()
         {
             TdSearchContext.Configure(GetSearchConfiguration);
 
@@ -66,7 +53,7 @@ namespace TicketDesk.Web.Client
         /// This is supplied to the search system as a func and invoked when needed.
         /// </remarks>
         /// <returns>SearchContextConfiguration.</returns>
-        private TdSearchContextConfiguration GetSearchConfiguration()
+        private static TdSearchContextConfiguration GetSearchConfiguration()
         {
             // TODO: when we move to a plug-in model, this should be refactored to use an applicaiton setting.
             // Application settings will determine the order of preference for providers

@@ -1,26 +1,12 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//      Wootz (https://github.com/Wootz)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System.Web.Optimization;
-
-namespace TicketDesk.Web.Client
+﻿namespace TicketDesk.Web.Client
 {
+    using System.Web.Optimization;
+    
     // TODO: This may not be OWIN compliant in OWIN hosts other than Microsoft.Owin.Host.SystemWeb
     public partial class Startup
     {
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
-        public void RegisterBundles(BundleCollection bundles)
+        public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/content/styles").Include(
                     "~/Content/bootstrap.css",

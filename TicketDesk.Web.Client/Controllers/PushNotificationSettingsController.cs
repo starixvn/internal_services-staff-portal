@@ -1,33 +1,20 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-namespace TicketDesk.Web.Client.Controllers
+﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Domain;
     using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Newtonsoft.Json.Linq;
+    using PushNotifications;
+    using PushNotifications.Delivery;
+    using PushNotifications.Model;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Domain;
-    using Domain.Model;
-    using PushNotifications;
-    using PushNotifications.Delivery;
-    using PushNotifications.Model;
 
     [RoutePrefix("admin/push-notification-settings")]
     [Route("{action=index}")]

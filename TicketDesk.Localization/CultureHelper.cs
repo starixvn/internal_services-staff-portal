@@ -164,12 +164,14 @@
 
         public static void SetCurrentCulture(string name, bool onlyImplementedCulture = true)
         {
+            string cultureName = name;
+
             if (onlyImplementedCulture)
             {
-                name = GetImplementedCulture(name);
+                cultureName = GetImplementedCulture(name);
             }
 
-            var newCulture = new System.Globalization.CultureInfo(name);
+            var newCulture = new System.Globalization.CultureInfo(cultureName);
             Thread.CurrentThread.CurrentCulture = newCulture;
             Thread.CurrentThread.CurrentUICulture = newCulture;
         }

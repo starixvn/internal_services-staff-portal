@@ -21,11 +21,13 @@
         /// <param name="userManager">The user manager.</param>
         /// <param name="roleManager">The role manager.</param>
         /// <returns><c>true</c> if users migrated, <c>false</c> otherwise.</returns>
-        public static bool MigrateSecurity(TdIdentityContext context, TicketDeskUserManager userManager, TicketDeskRoleManager roleManager)
+        public static bool MigrateSecurity(TdIdentityContext context, TicketDeskUserManager userManager,
+            TicketDeskRoleManager roleManager)
         {
             roleManager.EnsureDefaultRolesExist();
             var appId = context.Database.SqlQuery<Guid>(
-                    "select ApplicationId from aspnet_Applications where ApplicationName = 'TicketDesk'").First().ToString();
+                    "select ApplicationId from aspnet_Applications where ApplicationName = 'TicketDesk'").First()
+                .ToString();
             var users = context.Database.SqlQuery<LegacyUser>(
                 "select UserId, Email, Password, PasswordFormat, Comment from aspnet_Membership where ApplicationId = '"
                 + appId + "' and IsApproved = 1 and IsLockedOut = 0").ToList();
@@ -41,13 +43,14 @@
                     DisplayName = user.Comment,
                 };
 
-                var result = user.PasswordFormat == 0 ?
-                    userManager.Create(newUser, user.Password) :
-                    userManager.Create(newUser);
+                var result = user.PasswordFormat == 0
+                    ? userManager.Create(newUser, user.Password)
+                    : userManager.Create(newUser);
 
                 if (result.Succeeded)
                 {
-                    var rolesForUser = context.Database.SqlQuery<string>(roleQuery, new SqlParameter("userId", user.UserId), new SqlParameter("appId", appId));
+                    var rolesForUser = context.Database.SqlQuery<string>(roleQuery,
+                        new SqlParameter("userId", user.UserId), new SqlParameter("appId", appId));
                     var newRoles = new List<string>();
                     foreach (var role in rolesForUser)
                     {
@@ -191,17 +194,19 @@
             context.Database.ExecuteSqlCommand(TransactionalBehavior.EnsureTransaction, script);
         }
 
+#pragma warning disable S3459 // Unassigned members should be removed
         private class LegacyUser
         {
-            internal Guid UserId { get; set; }
+            public Guid UserId { get; }
+            
+            internal string Email { get; }
 
-            internal string Email { get; set; }
+            internal string Password { get; }
 
-            internal string Password { get; set; }
+            internal string Comment { get; }
 
-            internal string Comment { get; set; }
-
-            internal int PasswordFormat { get; set; }
+            internal int PasswordFormat { get; }
         }
+#pragma warning restore S3459 // Unassigned members should be removed
     }
 }

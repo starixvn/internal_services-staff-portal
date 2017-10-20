@@ -1,24 +1,11 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using Microsoft.Owin.Security;
-using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
-
-namespace TicketDesk.Web.Client
+﻿namespace TicketDesk.Web.Client
 {
+    using Microsoft.Owin.Security;
+    using System;
+    using System.Collections.Generic;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+
     public class FakeAuthenticationManager : IAuthenticationManager
     {
         // see this: https://simpleinjector.codeplex.com/discussions/564822
@@ -63,18 +50,22 @@ namespace TicketDesk.Web.Client
 
         public void SignIn(params ClaimsIdentity[] identities)
         {
+            // Method intentionally left empty.
         }
 
         public void SignIn(AuthenticationProperties properties, params ClaimsIdentity[] identities)
         {
+            // Method intentionally left empty.
         }
 
         public void SignOut(params string[] authenticationTypes)
         {
+            // Method intentionally left empty.
         }
 
         public void SignOut(AuthenticationProperties properties, params string[] authenticationTypes)
         {
+            // Method intentionally left empty.
         }
     }
 }

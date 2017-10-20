@@ -1,28 +1,15 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System;
-using System.Configuration;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using TicketDesk.IO;
-
-namespace TicketDesk.Web.Client.Controllers
+﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using IO;
+    using System;
+    using System.Configuration;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
+
     [RoutePrefix("file")]
     [TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
     public class FileController : Controller
@@ -100,13 +87,13 @@ namespace TicketDesk.Web.Client.Controllers
             };
         }
 
-        private bool IsFilePending(string containerId)
+        private static bool IsFilePending(string containerId)
         {
             Guid tId;
             return Guid.TryParse(containerId, out tId);
         }
 
-        private ActionResult FetchFile(string fileName, string container, bool isPending)
+        private static ActionResult FetchFile(string fileName, string container, bool isPending)
         {
             var fstream = TicketDeskFileStore.GetFile(fileName, container, isPending);
 

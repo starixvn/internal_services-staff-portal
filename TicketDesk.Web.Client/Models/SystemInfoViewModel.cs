@@ -1,46 +1,24 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
-using TicketDesk.Domain;
-using TicketDesk.IO;
-using TicketDesk.Search.Azure;
-
-namespace TicketDesk.Web.Client.Models
+﻿namespace TicketDesk.Web.Client.Models
 {
+    using Domain;
+    using IO;
+    using Search.Azure;
+    using System;
+    using System.Configuration;
+    using System.Data.SqlClient;
+    using System.Linq;
+
     public class SystemInfoViewModel
     {
         private DatabaseInfoViewModel _databaseInfo;
         private DatabaseStatusViewModel _databaseStatus;
         private AzureInfoViewModel _azureInfo;
 
-        public DatabaseInfoViewModel DatabaseInfo
-        {
-            get { return _databaseInfo ?? (_databaseInfo = new DatabaseInfoViewModel()); }
-        }
+        public DatabaseInfoViewModel DatabaseInfo => _databaseInfo ?? (_databaseInfo = new DatabaseInfoViewModel());
 
-        public DatabaseStatusViewModel DatabaseStatus
-        {
-            get { return _databaseStatus ?? (_databaseStatus = new DatabaseStatusViewModel()); }
-        }
+        public DatabaseStatusViewModel DatabaseStatus => _databaseStatus ?? (_databaseStatus = new DatabaseStatusViewModel());
 
-        public AzureInfoViewModel AzureInfo
-        {
-            get { return _azureInfo ?? (_azureInfo = new AzureInfoViewModel(DatabaseInfo.DbEdition, DatabaseInfo.DatabaseName)); }
-        }
+        public AzureInfoViewModel AzureInfo => _azureInfo ?? (_azureInfo = new AzureInfoViewModel(DatabaseInfo.DbEdition, DatabaseInfo.DatabaseName));
 
         public class DatabaseInfoViewModel
         {
@@ -71,7 +49,7 @@ namespace TicketDesk.Web.Client.Models
 
             public string DatabaseName { get; }
 
-            private string GetSqlEdition(string connectionString)
+            private static string GetSqlEdition(string connectionString)
             {
                 string edition = null;
                 try
@@ -93,7 +71,7 @@ namespace TicketDesk.Web.Client.Models
                 return edition;
             }
 
-            private bool GetIsLocalDb(string connectionString)
+            private static bool GetIsLocalDb(string connectionString)
             {
                 bool isLocalDb = false;
                 try
@@ -116,12 +94,14 @@ namespace TicketDesk.Web.Client.Models
                 return isLocalDb;
             }
 
-            private SqlConnection GetMasterCatalogConnection(string connectionString)
+            private static SqlConnection GetMasterCatalogConnection(string connectionString)
             {
-                var builder = new SqlConnectionStringBuilder(connectionString);
-                builder.AttachDBFilename = string.Empty;
-                builder.InitialCatalog = "Master";
-                builder.ConnectTimeout = 5;
+                var builder = new SqlConnectionStringBuilder(connectionString)
+                {
+                    AttachDBFilename = string.Empty,
+                    InitialCatalog = "Master",
+                    ConnectTimeout = 5
+                };
                 return new SqlConnection(builder.ToString());
             }
         }
@@ -139,27 +119,15 @@ namespace TicketDesk.Web.Client.Models
 
             public bool DatabaseExists { get; }
 
-            public bool IsDatabaseReady
-            {
-                get { return DatabaseConfig.IsDatabaseReady; }
-            }
+            public static bool IsDatabaseReady => DatabaseConfig.IsDatabaseReady;
 
-            public bool IsLegacyDatabase
-            {
-                get { return DatabaseConfig.IsLegacyDatabase(); }
-            }
+            public static bool IsLegacyDatabase => DatabaseConfig.IsLegacyDatabase();
 
-            public bool IsEmptyDatabase
-            {
-                get { return DatabaseConfig.IsEmptyDatabase(); }
-            }
+            public static bool IsEmptyDatabase => DatabaseConfig.IsEmptyDatabase();
 
             public bool IsCompatibleWithEfModel { get; }
 
-            public bool HasLegacySecurityObjects
-            {
-                get { return DatabaseConfig.HasLegacySecurity(); }
-            }
+            public static bool HasLegacySecurityObjects => DatabaseConfig.HasLegacySecurity();
         }
 
         public class AzureInfoViewModel
@@ -186,15 +154,9 @@ namespace TicketDesk.Web.Client.Models
 
             public string AzureStorageService { get; }
 
-            public bool HasAzureServices
-            {
-                get
-                {
-                    return IsAzureWebSite || IsSqlAzure || !string.IsNullOrEmpty(AzureSearchService) || !string.IsNullOrEmpty(AzureStorageService);
-                }
-            }
+            public bool HasAzureServices => IsAzureWebSite || IsSqlAzure || !string.IsNullOrEmpty(AzureSearchService) || !string.IsNullOrEmpty(AzureStorageService);
 
-            private string GetAzureSearchServiceName()
+            private static string GetAzureSearchServiceName()
             {
                 string svc = null;
                 var azureSearchInfo = AzureSearchConector.TryGetInfoFromConnectionString() ?? AzureSearchConector.TryGetInfoFromAppSettings();
@@ -206,7 +168,7 @@ namespace TicketDesk.Web.Client.Models
                 return svc;
             }
 
-            private string GetAzureStorageServiceName()
+            private static string GetAzureStorageServiceName()
             {
                 string serviceName = null;
                 var azureStore = !string.IsNullOrEmpty(AzureConnectionHelper.ConfigManagerConnString)

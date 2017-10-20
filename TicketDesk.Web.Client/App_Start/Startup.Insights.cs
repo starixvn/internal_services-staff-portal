@@ -5,7 +5,7 @@
 
     public partial class Startup
     {
-        public void ConfigureApplicationInsights()
+        public static void ConfigureApplicationInsights()
         {
             var ikey = ConfigurationManager.AppSettings["ticketdesk:InsightsInstrumentationKey"];
             if (ikey == null)

@@ -3,28 +3,18 @@
 // Project-level suppressions either have no target or are given 
 // a specific target and scoped to a namespace, type, member, etc.
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "Sonar Code Smell",
-    "S103:Lines should not be too long",
-    Justification = "<Pending>",
-    Scope = "member",
-    Target = "~M:TicketDesk.Domain.Legacy.Migrations.InitialCreate.Down")]
-
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "Sonar Code Smell",
-    "S103:Lines should not be too long",
-    Justification = "<Pending>",
-    Scope = "member",
-    Target = "~M:TicketDesk.Domain.Migrations.InitialCreate.Up")]
-
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "Sonar Code Smell",
-    "S107:Methods should not have too many parameters",
-    Justification = "<Pending>",
-    Scope = "member",
-    Target = "~M:RfmNetCore.Controllers.FileManagerController.Index(System.String,System.String,System.String,System.Collections.Generic.IEnumerable{System.Web.HttpPostedFileBase},System.String,System.String,System.String,System.String,System.String,System.Boolean)~System.Web.Mvc.ActionResult")]
-
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
-    "Sonar Code Smell",
-    "S103:Lines should not be too long",
-    Justification = "<Pending>")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell","S103:Lines should not be too long",Justification = "<Pending>",Scope = "member",Target = "~M:TicketDesk.Domain.Legacy.Migrations.InitialCreate.Down")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell","S103:Lines should not be too long",Justification = "<Pending>",Scope = "member",Target = "~M:TicketDesk.Domain.Migrations.InitialCreate.Up")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell","S107:Methods should not have too many parameters",Justification = "<Pending>",Scope = "member",Target = "~M:RfmNetCore.Controllers.FileManagerController.Index(System.String,System.String,System.String,System.Collections.Generic.IEnumerable{System.Web.HttpPostedFileBase},System.String,System.String,System.String,System.String,System.String,System.Boolean)~System.Web.Mvc.ActionResult")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell","S103:Lines should not be too long",Justification = "<Pending>")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell","S3995:URI return values should not be strings",Justification = "<Pending>",Scope = "member",Target = "~M:TicketDesk.Web.Client.Controllers.PushNotificationSettingsController.GetCurrentRootUrl~System.String")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell","S3995:URI return values should not be strings",Justification = "<Pending>",Scope = "member",Target = "~M:TicketDesk.Web.Client.Controllers.PushNotificationSettingsController.GetRootUrlSetting~System.String")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell","S3995:URI return values should not be strings",Justification = "<Pending>",Scope = "member",Target = "~M:TicketDesk.Domain.Model.ClientSettingExtensions.GetDefaultSiteRootUrl(TicketDesk.Domain.Model.ClientSetting)~System.String")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell","S3996:URI properties should not be strings",Justification = "<Pending>",Scope = "member",Target = "~P:TicketDesk.Web.Client.Models.Extensions.MenuItem.Url")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell","S3996:URI properties should not be strings",Justification = "<Pending>",Scope = "member",Target = "~P:TicketDesk.Web.Client.Models.TicketEmail.SiteRootUrl")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell","S3996:URI properties should not be strings",Justification = "<Pending>",Scope = "member",Target = "~P:TicketDesk.Domain.Model.TicketEventNotificationExtensions.RootUrl")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S3994:URI Parameters should not be strings", Justification = "<Pending>", Scope = "member", Target = "~M:TicketDesk.Web.Client.Controllers.PushNotificationSettingsController.Index(TicketDesk.PushNotifications.Model.ApplicationPushNotificationSetting,System.String)~System.Web.Mvc.ActionResult")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S3994:URI Parameters should not be strings", Justification = "<Pending>", Scope = "member", Target = "~M:TicketDesk.Web.Client.Controllers.UserController.SignIn(System.String)~System.Web.Mvc.ActionResult")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S3994:URI Parameters should not be strings", Justification = "<Pending>", Scope = "member", Target = "~M:TicketDesk.Web.Client.Controllers.UserController.SignIn(TicketDesk.Web.Client.Models.UserSignInViewModel,System.String)~System.Web.Mvc.ActionResult")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S3994:URI Parameters should not be strings", Justification = "<Pending>", Scope = "member", Target = "~M:TicketDesk.Web.Client.Controllers.UserController.RedirectToLocal(System.String)~System.Web.Mvc.ActionResult")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S3459:Unassigned members should be removed", Justification = "<Pending>", Scope = "member", Target = "~P:TicketDesk.Domain.Legacy.LegacySecurityMigrator.LegacyUser")]
