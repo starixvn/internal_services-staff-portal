@@ -23,8 +23,37 @@ namespace RfmNetCore.Controllers
             _webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _webPath);
             _allowedExtensions = new List<string>
             {
-                "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf",
-                "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md"
+                "jpg",
+                "jpe",
+                "jpeg",
+                "gif",
+                "png",
+                "svg",
+                "txt",
+                "pdf",
+                "odp",
+                "ods",
+                "odt",
+                "rtf",
+                "doc",
+                "docx",
+                "xls",
+                "xlsx",
+                "ppt",
+                "pptx",
+                "csv",
+                "ogv",
+                "avi",
+                "mkv",
+                "mp4",
+                "webm",
+                "m4v",
+                "ogg",
+                "mp3",
+                "wav",
+                "zip",
+                "rar",
+                "md"
             };
 
             if (!Directory.Exists(_webRootPath))
@@ -32,6 +61,7 @@ namespace RfmNetCore.Controllers
                 Directory.CreateDirectory(_webRootPath);
             }
         }
+
 
         public ActionResult Index(
             string mode,
@@ -128,7 +158,8 @@ namespace RfmNetCore.Controllers
 
             if (!dir.Exists)
             {
-                throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " + sourceDirName);
+                throw new DirectoryNotFoundException("Source directory does not exist or could not be found: " +
+                                                     sourceDirName);
             }
 
             var dirs = dir.GetDirectories();
@@ -155,7 +186,8 @@ namespace RfmNetCore.Controllers
             }
         }
 
-        private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
+        private static string MakeWebPath(string path, bool addSeperatorToBegin = false,
+            bool addSeperatorToLast = false)
         {
             path = path.Replace("\\", "/");
 
@@ -220,7 +252,7 @@ namespace RfmNetCore.Controllers
                     Type = "folder",
                     Attributes = new
                     {
-                        Name = directory.Name,
+                        directory.Name,
                         Path = MakeWebPath(Path.Combine(_webPath, path, directory.Name), true, true),
                         Readable = 1,
                         Writable = 1,
@@ -241,7 +273,7 @@ namespace RfmNetCore.Controllers
                     Type = "file",
                     Attributes = new
                     {
-                        Name = file.Name,
+                        file.Name,
                         Path = MakeWebPath(Path.Combine(_webPath, path, file.Name), true),
                         Readable = 1,
                         Writable = 1,
@@ -291,20 +323,20 @@ namespace RfmNetCore.Controllers
             var result = new
             {
                 Data =
-                    new
+                new
+                {
+                    Id = MakeWebPath(Path.Combine(path, directory.Name), addSeperatorToLast: true),
+                    Type = "folder",
+                    Attributes = new
                     {
-                        Id = MakeWebPath(Path.Combine(path, directory.Name), addSeperatorToLast: true),
-                        Type = "folder",
-                        Attributes = new
-                        {
-                            directory.Name,
-                            Path = MakeWebPath(Path.Combine(_webPath, path, directory.Name), true, true),
-                            Readable = 1,
-                            Writable = 1,
-                            Created = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                            Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture)
-                        }
+                        directory.Name,
+                        Path = MakeWebPath(Path.Combine(_webPath, path, directory.Name), true, true),
+                        Readable = 1,
+                        Writable = 1,
+                        Created = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                        Modified = DateTime.Now.ToString(CultureInfo.InvariantCulture)
                     }
+                }
             };
 
             return result;
@@ -378,9 +410,9 @@ namespace RfmNetCore.Controllers
                     Code = "500",
                     Message = "DIRECTORY_ALREADY_EXISTS",
                     Arguments = new List<string>
-                        {
-                            @new
-                        }
+                    {
+                        @new
+                    }
                 });
 
                 return errorResult;
@@ -424,9 +456,9 @@ namespace RfmNetCore.Controllers
                     Code = "500",
                     Message = "FILE_ALREADY_EXISTS",
                     Arguments = new List<string>
-                        {
-                            @new
-                        }
+                    {
+                        @new
+                    }
                 });
 
                 return errorResult;
@@ -479,9 +511,9 @@ namespace RfmNetCore.Controllers
                     Code = "500",
                     Message = "DIRECTORY_ALREADY_EXISTS",
                     Arguments = new List<string>
-                        {
-                            directoryName
-                        }
+                    {
+                        directoryName
+                    }
                 });
 
                 return errorResult;
@@ -527,9 +559,9 @@ namespace RfmNetCore.Controllers
                     Code = "500",
                     Message = "FILE_ALREADY_EXISTS",
                     Arguments = new List<string>
-                        {
-                            fileName
-                        }
+                    {
+                        fileName
+                    }
                 });
 
                 return errorResult;
@@ -581,9 +613,9 @@ namespace RfmNetCore.Controllers
                     Code = "500",
                     Message = "DIRECTORY_ALREADY_EXISTS",
                     Arguments = new List<string>
-                        {
-                            directoryName
-                        }
+                    {
+                        directoryName
+                    }
                 });
 
                 return errorResult;
@@ -613,7 +645,7 @@ namespace RfmNetCore.Controllers
         private dynamic CopyFile(string source, string target)
         {
             var fileName = Path.GetFileName(source);
-            var newFilePath = Path.Combine(@target, fileName);
+            var newFilePath = Path.Combine(target, fileName);
             var oldPath = Path.Combine(_webRootPath, source);
             var newPath = Path.Combine(_webRootPath, target, fileName);
             var fileExist = System.IO.File.Exists(newPath);
@@ -627,9 +659,9 @@ namespace RfmNetCore.Controllers
                     Code = "500",
                     Message = "FILE_ALREADY_EXISTS",
                     Arguments = new List<string>
-                        {
-                            fileName
-                        }
+                    {
+                        fileName
+                    }
                 });
 
                 return errorResult;
@@ -661,7 +693,9 @@ namespace RfmNetCore.Controllers
         {
             var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, source));
 
-            return fileAttributes == FileAttributes.Directory ? CopyDirectory(source, target) : CopyFile(source, target);
+            return fileAttributes == FileAttributes.Directory
+                ? CopyDirectory(source, target)
+                : CopyFile(source, target);
         }
 
         private dynamic EditFile(string path)

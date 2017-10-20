@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Domain.Legacy
 {
     using System;
+    using System.Linq;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
@@ -28,34 +29,63 @@
 
         public static void BeginMigration(LegacyMigrator migrator)
         {
-            if (MigrationTask == null
-                || (
-                    MigrationTask.Status != TaskStatus.Running
-                    || MigrationTask.Status != TaskStatus.Created
-                    || MigrationTask.Status != TaskStatus.WaitingForActivation
-                    || MigrationTask.Status != TaskStatus.WaitingForChildrenToComplete
-                    || MigrationTask.Status != TaskStatus.WaitingToRun))
+            TaskStatus[] enumsToSkip =
+            {
+                TaskStatus.Running,
+                TaskStatus.Created,
+                TaskStatus.WaitingForActivation,
+                TaskStatus.WaitingForChildrenToComplete,
+                TaskStatus.WaitingToRun
+            };
+
+            if (MigrationTask == null || !enumsToSkip.Contains(MigrationTask.Status))
             {
                 _canceler = new CancellationTokenSource();
                 var token = _canceler.Token;
+
                 Reset();
+
                 Migrator = migrator;
                 Migrator.Canceler = _canceler;
-                try
-                {
-                    MigrationTask = Task.Factory.StartNew(
-                        () =>
-                        {
-                            Migrator.StatusChanged += Migrator_StatusChanged;
-                            Migrator.Migrate();
-                            token.ThrowIfCancellationRequested();
-                        },
-                        token);
-                }
-                catch (OperationCanceledException)
-                {
-                    // we'll eat the exceptions if thrown due to cancellation
-                }
+
+                StartMigrationTask(token);
+            }
+
+            ////if (MigrationTask == null
+            ////    || (MigrationTask.Status != TaskStatus.Running
+            ////        || MigrationTask.Status != TaskStatus.Created
+            ////        || MigrationTask.Status != TaskStatus.WaitingForActivation
+            ////        || MigrationTask.Status != TaskStatus.WaitingForChildrenToComplete
+            ////        || MigrationTask.Status != TaskStatus.WaitingToRun))
+            ////{
+            ////    _canceler = new CancellationTokenSource();
+            ////    var token = _canceler.Token;
+
+            ////    Reset();
+
+            ////    Migrator = migrator;
+            ////    Migrator.Canceler = _canceler;
+
+            ////    StartMigrationTask(token);
+            ////}
+        }
+
+        private static void StartMigrationTask(CancellationToken token)
+        {
+            try
+            {
+                MigrationTask = Task.Factory.StartNew(
+                    () =>
+                    {
+                        Migrator.StatusChanged += Migrator_StatusChanged;
+                        Migrator.Migrate();
+                        token.ThrowIfCancellationRequested();
+                    },
+                    token);
+            }
+            catch (OperationCanceledException)
+            {
+                // we'll eat the exceptions if thrown due to cancellation
             }
         }
 

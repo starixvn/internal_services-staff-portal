@@ -16,7 +16,6 @@
     using SimpleInjector.Integration.Web;
     using SimpleInjector.Integration.Web.Mvc;
     using System;
-    using System.Reflection;
     using System.Web;
     using System.Web.Mvc;
 
@@ -87,7 +86,8 @@
             container.Register<IFileManagerService>(() => new FileManagerService(), hybridLifestyle);
 
             container.RegisterInitializer<TicketDeskUserManager>(manager => manager.ConfigureDataProtection(app));
-            container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
+            ////container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
+            container.RegisterMvcControllers(typeof(Startup).Assembly);
 
             return container;
         }

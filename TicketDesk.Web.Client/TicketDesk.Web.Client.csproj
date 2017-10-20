@@ -324,6 +324,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\Startup.Insights.cs" />
     <Compile Include="App_Start\Startup.PushNotifications.cs" />
@@ -365,7 +368,7 @@
     <Compile Include="Infrastructure\Extensions\PagedListExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\SummerNoteStringExtensions.cs" />
     <Compile Include="Infrastructure\Filters\CustomJsonResultAttribute.cs" />
-    <Compile Include="Infrastructure\Filters\LocalizationFilter.cs" />
+    <Compile Include="Infrastructure\Filters\LocalizationFilterAttribute.cs" />
     <Compile Include="Infrastructure\Filters\TdAuthorizeAttribute.cs" />
     <Compile Include="Infrastructure\Helpers\CustomFieldForHelper.cs" />
     <Compile Include="Infrastructure\Helpers\DescriptionForHelper.cs" />

@@ -7,7 +7,7 @@
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new LocalizationFilter());
+            filters.Add(new LocalizationFilterAttribute());
             filters.Add(new CustomJsonResultAttribute());
             filters.Add(new HandleErrorAttribute());
         }

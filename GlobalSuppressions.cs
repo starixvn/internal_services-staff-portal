@@ -16,3 +16,15 @@
     Justification = "<Pending>",
     Scope = "member",
     Target = "~M:TicketDesk.Domain.Migrations.InitialCreate.Up")]
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "Sonar Code Smell",
+    "S107:Methods should not have too many parameters",
+    Justification = "<Pending>",
+    Scope = "member",
+    Target = "~M:RfmNetCore.Controllers.FileManagerController.Index(System.String,System.String,System.String,System.Collections.Generic.IEnumerable{System.Web.HttpPostedFileBase},System.String,System.String,System.String,System.String,System.String,System.Boolean)~System.Web.Mvc.ActionResult")]
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage(
+    "Sonar Code Smell",
+    "S103:Lines should not be too long",
+    Justification = "<Pending>")]

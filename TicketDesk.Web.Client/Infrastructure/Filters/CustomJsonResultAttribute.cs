@@ -5,6 +5,7 @@
     using System;
     using System.Web.Mvc;
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CustomJsonResultAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuted(ActionExecutedContext filterContext)

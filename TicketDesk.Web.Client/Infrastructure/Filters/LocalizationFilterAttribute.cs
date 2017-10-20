@@ -1,10 +1,12 @@
-﻿using System.Web;
-using System.Web.Mvc;
-using TicketDesk.Localization;
-
-namespace TicketDesk.Web.Client.Infrastructure.Filters
+﻿namespace TicketDesk.Web.Client.Infrastructure.Filters
 {
-    public class LocalizationFilter : ActionFilterAttribute
+    using Localization;
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class LocalizationFilterAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

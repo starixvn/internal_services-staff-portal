@@ -64,7 +64,7 @@
                     RaiseStatusChangedOnMainThread(new[] { ex.GetType().Name, ex.Message, ex.StackTrace });
                 }
 
-                throw ax;
+                throw;
             }
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@
                     RaiseStatusChangedOnMainThread(new[] { ex.InnerException.GetType().Name, ex.InnerException.Message, ex.InnerException.StackTrace });
                 }
 
-                throw ex;
+                throw;
             }
             finally
             {

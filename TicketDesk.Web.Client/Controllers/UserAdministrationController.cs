@@ -195,28 +195,32 @@
             var currentlyLocked = UserManager.IsLockedOut(model.User.Id);
             var currentlyDisabled = currentlyLocked && (user.LockoutEndDateUtc ?? DateTime.MinValue).ToUniversalTime() == DateTime.MaxValue.ToUniversalTime();
 
-            if (currentlyDisabled != model.IsDisabled || currentlyLocked != model.IsLocked)
+            DateTimeOffset newLockoutDate = DateTimeOffset.MinValue;
+
+            if (currentlyDisabled == model.IsDisabled && currentlyLocked == model.IsLocked)
             {
-                DateTimeOffset newLockoutDate = DateTimeOffset.MinValue;
-                if (model.IsDisabled)
-                {
-                    newLockoutDate = DateTimeOffset.MaxValue;
-                }
-                else if (model.IsLocked)
+                return true;
+            }
+
+            if (model.IsDisabled)
+            {
+                newLockoutDate = DateTimeOffset.MaxValue;
+            }
+            else
+            {
+                if (model.IsLocked)
                 {
                     newLockoutDate = DateTimeOffset.Now.Add(UserManager.DefaultAccountLockoutTimeSpan);
                 }
-
-                var result = await UserManager.SetLockoutEndDateAsync(model.User.Id, newLockoutDate).ConfigureAwait(false);
-                if (!result.Succeeded)
-                {
-                    AddErrors(result);
-                }
-
-                return result.Succeeded;
             }
 
-            return true;
+            var result = await UserManager.SetLockoutEndDateAsync(model.User.Id, newLockoutDate).ConfigureAwait(false);
+            if (!result.Succeeded)
+            {
+                AddErrors(result);
+            }
+
+            return result.Succeeded;
         }
 
         private void AddErrors(IdentityResult result)

@@ -44,8 +44,7 @@ namespace S22.Mail
 
             DeliveryNotificationOptions = m.DeliveryNotificationOptions;
             From = m.From;
-            Headers = new NameValueCollection();
-            Headers.Add(m.Headers);
+            Headers = new NameValueCollection { m.Headers };
             HeadersEncoding = m.HeadersEncoding;
             IsBodyHtml = m.IsBodyHtml;
             Priority = m.Priority;
@@ -66,23 +65,23 @@ namespace S22.Mail
             }
         }
 
-        public SerializableAlternateViewCollection AlternateViews { get; private set; }
+        public SerializableAlternateViewCollection AlternateViews { get; }
 
-        public SerializableAttachmentCollection Attachments { get; private set; }
+        public SerializableAttachmentCollection Attachments { get; }
 
-        public SerializableMailAddressCollection Bcc { get; private set; }
+        public SerializableMailAddressCollection Bcc { get; }
 
         public string Body { get; set; }
 
         public Encoding BodyEncoding { get; set; }
 
-        public SerializableMailAddressCollection CC { get; private set; }
+        public SerializableMailAddressCollection CC { get; }
 
         public DeliveryNotificationOptions DeliveryNotificationOptions { get; set; }
 
         public SerializableMailAddress From { get; set; }
 
-        public NameValueCollection Headers { get; private set; }
+        public NameValueCollection Headers { get; }
 
         public Encoding HeadersEncoding { get; set; }
 
@@ -92,7 +91,7 @@ namespace S22.Mail
 
         public SerializableMailAddress ReplyTo { get; set; }
 
-        public SerializableMailAddressCollection ReplyToList { get; private set; }
+        public SerializableMailAddressCollection ReplyToList { get; }
 
         public SerializableMailAddress Sender { get; set; }
 
@@ -100,7 +99,7 @@ namespace S22.Mail
 
         public Encoding SubjectEncoding { get; set; }
 
-        public SerializableMailAddressCollection To { get; private set; }
+        public SerializableMailAddressCollection To { get; }
 
         public static implicit operator MailMessage(SerializableMailMessage message)
         {
