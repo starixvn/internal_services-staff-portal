@@ -75,25 +75,11 @@ namespace RfmNetCore.Controllers
             string content,
             bool thumbnail = false)
         {
-            if (!string.IsNullOrWhiteSpace(path) && path.StartsWith("/"))
-            {
-                path = path.Substring(1);
-            }
 
-            if (!string.IsNullOrWhiteSpace(@new) && @new.StartsWith("/"))
-            {
-                @new = @new == "/" ? string.Empty : @new.Substring(1);
-            }
-
-            if (!string.IsNullOrWhiteSpace(source) && source.StartsWith("/"))
-            {
-                source = source.Substring(1);
-            }
-
-            if (!string.IsNullOrWhiteSpace(target) && target.StartsWith("/"))
-            {
-                target = target.Substring(1);
-            }
+            path = RemovePrefixSlash(path);
+            source = RemovePrefixSlash(source);
+            target = RemovePrefixSlash(target);
+            @new = RemovePrefixSlash(@new);
 
             switch (mode)
             {
@@ -149,6 +135,16 @@ namespace RfmNetCore.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        private static string RemovePrefixSlash(string s)
+        {
+            if (!string.IsNullOrWhiteSpace(s) && s.StartsWith("/"))
+            {
+                return s.Substring(1);
+            }
+
+            return s;
         }
 
         private static void DirectoryCopy(string sourceDirName, string destDirName)
