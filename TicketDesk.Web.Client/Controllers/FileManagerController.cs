@@ -59,10 +59,13 @@
             IEnumerable<HttpPostedFileBase> files,
             bool thumbnail = false)
         {
+            string validPath = path;
             if (!string.IsNullOrWhiteSpace(path) && path.StartsWith("/"))
             {
-                path = path.Substring(1);
+                validPath = path.Substring(1);
             }
+            
+            var errorResult = new { Errors = new List<dynamic>() };
 
             switch (mode)
             {
@@ -70,67 +73,69 @@
                     return Json(Initiate(), JsonRequestBehavior.AllowGet);
 
                 case "getfolder":
-                    return Json(GetFolder(path), JsonRequestBehavior.AllowGet);
+                    return Json(GetFolder(validPath), JsonRequestBehavior.AllowGet);
 
                 case "addfolder":
-                    return Json(AddFolder(path, name), JsonRequestBehavior.AllowGet);
+                    return Json(AddFolder(validPath, name), JsonRequestBehavior.AllowGet);
 
                 case "upload":
-                    return Json(Upload(path, files), JsonRequestBehavior.AllowGet);
+                    return Json(Upload(validPath, files), JsonRequestBehavior.AllowGet);
 
                 case "delete":
-                    return Json(Delete(path), JsonRequestBehavior.AllowGet);
+                    return Json(Delete(validPath), JsonRequestBehavior.AllowGet);
 
                 case "download":
                     if (Request.Headers["accept"].Contains("json"))
                     {
-                        return Json(Download(path), JsonRequestBehavior.AllowGet);
+                        return Json(Download(validPath), JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
-                        var file = DownloadFile(path);
+                        var file = DownloadFile(validPath);
                         return File(file.FileBytes, "application/x-msdownload", file.FileName);
                     }
-
                 case "getimage":
-                    return GetImage(path);
+                    return GetImage(validPath);
 
                 case "readfile":
                     break;
 
                 case "summarize":
                     return Json(Summarize(), JsonRequestBehavior.AllowGet);
-            }
-
-            var errorResult = new { Errors = new List<dynamic>() };
-            errorResult.Errors.Add(new
-            {
-                Code = "500",
-                Message = Messages.UnknownRequest,
-                Arguments = new List<string>
+                default:
                 {
-                    mode
+                    errorResult.Errors.Add(new
+                    {
+                        Code = "500",
+                        Message = Messages.UnknownRequest,
+                        Arguments = new List<string>
+                        {
+                            mode
+                        }
+                    });
+
+                    break;
                 }
-            });
+            }
 
             return Json(errorResult, JsonRequestBehavior.AllowGet);
         }
 
         private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
         {
-            path = path.Replace("\\", "/");
+            var validPath = path.Replace("\\", "/");
 
             if (addSeperatorToBegin)
             {
-                path = "/" + path;
+                validPath = "/" + validPath;
             }
 
             if (addSeperatorToLast)
             {
-                path = path + "/";
+                validPath = validPath + "/";
             }
 
-            return path;
+            return validPath;
         }
 
         private dynamic Initiate()
@@ -164,36 +169,26 @@
 
         private dynamic GetFolder(string path)
         {
-            if (path == null)
+            string validPath = path;
+            if(string.IsNullOrEmpty(validPath))
             {
-                path = string.Empty;
+                validPath = string.Empty;
             }
 
-            var rootpath = Path.Combine(_webRootPath, path);
+            var rootpath = Path.Combine(_webRootPath, validPath);
             var rootDirectory = new DirectoryInfo(rootpath);
             var data = new List<dynamic>();
 
-            foreach (var directory in rootDirectory.GetDirectories())
-            {
-                var item = new
-                {
-                    Id = MakeWebPath(Path.Combine(path, directory.Name), addSeperatorToLast: true),
-                    Type = "folder",
-                    Attributes = new
-                    {
-                        directory.Name,
-                        Path = MakeWebPath(Path.Combine(_webPath, path, directory.Name), true, true),
-                        Readable = 1,
-                        Writable = 1,
-                        Created = directory.CreationTime.ToString(CultureInfo.InvariantCulture),
-                        Modified = directory.LastWriteTime.ToString(CultureInfo.InvariantCulture),
-                        Timestamp = (int)(DateTime.Now - directory.LastWriteTime).Ticks
-                    }
-                };
+            AddDirectoriesToFolder(validPath, rootDirectory, data);
+            AddFilesToFolder(validPath, rootDirectory, data);
 
-                data.Add(item);
-            }
+            var result = new { Data = data };
 
+            return result;
+        }
+
+        private void AddFilesToFolder(string path, DirectoryInfo rootDirectory, List<dynamic> data)
+        {
             foreach (var file in rootDirectory.GetFiles())
             {
                 var item = new
@@ -216,10 +211,30 @@
 
                 data.Add(item);
             }
+        }
 
-            var result = new { Data = data };
+        private void AddDirectoriesToFolder(string path, DirectoryInfo rootDirectory, List<dynamic> data)
+        {
+            foreach (var directory in rootDirectory.GetDirectories())
+            {
+                var item = new
+                {
+                    Id = MakeWebPath(Path.Combine(path, directory.Name), addSeperatorToLast: true),
+                    Type = "folder",
+                    Attributes = new
+                    {
+                        directory.Name,
+                        Path = MakeWebPath(Path.Combine(_webPath, path, directory.Name), true, true),
+                        Readable = 1,
+                        Writable = 1,
+                        Created = directory.CreationTime.ToString(CultureInfo.InvariantCulture),
+                        Modified = directory.LastWriteTime.ToString(CultureInfo.InvariantCulture),
+                        Timestamp = (int)(DateTime.Now - directory.LastWriteTime).Ticks
+                    }
+                };
 
-            return result;
+                data.Add(item);
+            }
         }
 
         private dynamic AddFolder(string path, string name)
@@ -288,7 +303,7 @@
             {
                 UserId = CurrentSession.UserId,
                 FolderName = directory.Name,
-                Directory = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path))
+                Directory = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/", StringComparison.Ordinal)) : path))
             };
 
             _fileManagerService.AddFolder(criteria);
@@ -355,7 +370,7 @@
                     FileName = file.FileName,
                     FileSize = file.ContentLength,
                     ContentType = file.ContentType,
-                    Directory = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path))
+                    Directory = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/", StringComparison.Ordinal)) : path))
                 };
 
                 _fileManagerService.UploadFile(criteria);
@@ -373,7 +388,7 @@
 
         private dynamic DeleteDirectory(string path)
         {
-            var webPath = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path));
+            var webPath = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/", StringComparison.Ordinal)) : path));
             var directoryName = Path.GetDirectoryName(path)?.Split('\\').Last();
             var rootpath = Path.Combine(_webRootPath, path);
             var rootDirectory = new DirectoryInfo(rootpath);
@@ -418,7 +433,7 @@
             {
                 UserId = CurrentSession.UserId,
                 FolderName = directoryName,
-                Directory = webPath.Substring(0, webPath.LastIndexOf("/"))
+                Directory = webPath.Substring(0, webPath.LastIndexOf("/", StringComparison.Ordinal))
             };
 
             _fileManagerService.DeleteFolder(criteria);
@@ -428,7 +443,7 @@
 
         private dynamic DeleteFile(string path)
         {
-            var webPath = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/")) : path));
+            var webPath = MakeWebPath(Path.Combine(_webPath, path.EndsWith("/") ? path.Substring(0, path.LastIndexOf("/", StringComparison.Ordinal)) : path));
             var fileName = Path.GetFileName(Path.Combine(_webRootPath, path));
             var fileExtension = Path.GetExtension(fileName).Replace(".", string.Empty);
             System.IO.File.Delete(Path.Combine(_webRootPath, path));
@@ -454,7 +469,7 @@
             {
                 UserId = CurrentSession.UserId,
                 FileName = fileName,
-                Directory = webPath.Substring(0, webPath.LastIndexOf("/"))
+                Directory = webPath.Substring(0, webPath.LastIndexOf("/", StringComparison.Ordinal))
             };
 
             _fileManagerService.DeleteFile(criteria);
