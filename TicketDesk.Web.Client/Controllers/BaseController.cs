@@ -30,9 +30,6 @@
             set { NapContextHelper.CurrentContext = value; }
         }
 
-        protected IUserService UserService
-        {
-            get { return NapContextHelper.UserService; }
-        }
+        protected IUserService UserService => NapContextHelper.UserService;
     }
 }

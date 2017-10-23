@@ -19,18 +19,18 @@
     [Route("{action}")]
     public class UserController : BaseController
     {
-        private readonly IGroupService groupService;
-        private readonly ISiteService siteService;
-        private readonly IMenuItemService menuItemService;
+        private readonly IGroupService _groupService;
+        private readonly ISiteService _siteService;
+        private readonly IMenuItemService _menuItemService;
 
         public UserController(
             IGroupService groupService,
             ISiteService siteService,
             IMenuItemService menuItemService)
         {
-            this.groupService = groupService;
-            this.siteService = siteService;
-            this.menuItemService = menuItemService;
+            _groupService = groupService;
+            _siteService = siteService;
+            _menuItemService = menuItemService;
         }
 
         [AllowAnonymous]
@@ -61,36 +61,17 @@
 
                 if (password == user.Password)
                 {
-                    var siteLevelList = siteService.GetSiteLevelByUser(user.Id, NapContextHelper.Environment);
-                    var group = user.Group == null ? null : groupService.GetById(user.Group.Id);
+                    var siteLevelList = _siteService.GetSiteLevelByUser(user.Id, NapContextHelper.Environment);
+                    var group = user.Group == null ? null : _groupService.GetById(user.Group.Id);
 
-                    if (siteLevelList.Any(x => x.Site.Id == NapContextHelper.SiteId))
+                    if (siteLevelList.Any(x => x.Site.Id == NapContextHelper.SiteId && x.IsActive) && (group == null || group.IsActive))
                     {
-                        if ((group == null || group.IsActive) && siteLevelList.Any(x => x.Site.Id == NapContextHelper.SiteId && x.IsActive))
-                        {
-                            // check-in user
-                            DoCheckin(user);
-
-                            if (NapContextHelper.SiteId != 0)
-                            {
-                                CreateUserMenu(user.Id);
-                            }
-
-                            CreateAuthInfo(user);
-
-                            return RedirectToLocal(returnUrl);
-                        }
-                        else
-                        {
-                            ViewBag.Message = ViewResources.Your_account_was_suspended;
-                            ModelState.AddModelError(string.Empty, ViewResources.Your_account_was_suspended);
-                        }
+                        CheckInUser(user);
+                        return RedirectToLocal(returnUrl);
                     }
-                    else
-                    {
-                        ViewBag.Message = ViewResources.You_have_no_authorization;
-                        ModelState.AddModelError(string.Empty, ViewResources.You_have_no_authorization);
-                    }
+
+                    ViewBag.Message = ViewResources.You_have_no_authorization;
+                    ModelState.AddModelError(string.Empty, ViewResources.You_have_no_authorization);
                 }
                 else
                 {
@@ -109,6 +90,19 @@
             return View(model);
         }
 
+        private void CheckInUser(User user)
+        {
+            // check-in user
+            DoCheckin(user);
+
+            if (NapContextHelper.SiteId != 0)
+            {
+                CreateUserMenu(user.Id);
+            }
+
+            CreateAuthInfo(user);
+        }
+
         [Route("sign-out")]
         public ActionResult SignOut()
         {
@@ -120,10 +114,11 @@
         {
             var currentDomain = CurrentContext.CurrentDomain;
 
-            var authInfo = new AuthInfo();
-
-            authInfo.UserId = user.Id;
-            authInfo.OnUserId = CurrentSession.OnUserId;
+            var authInfo = new AuthInfo
+            {
+                UserId = user.Id,
+                OnUserId = CurrentSession.OnUserId
+            };
 
             var authTicket = new FormsAuthenticationTicket(
                  1,
@@ -157,7 +152,7 @@
 
         private void CreateUserMenu(int userId)
         {
-            CurrentSession.MenuItemList = (IList<MenuItem>)menuItemService.GetByUserAndSiteIncludeGroup(
+            CurrentSession.MenuItemList = (IList<MenuItem>)_menuItemService.GetByUserAndSiteIncludeGroup(
                     userId,
                     NapContextHelper.SiteId,
                     NapContextHelper.Environment,
@@ -206,8 +201,12 @@
             Response.Cookies.Clear();
 
             HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-            authCookie.Expires = DateTime.Now.AddDays(-1);
-            Response.Cookies.Add(authCookie);
+
+            if (authCookie != null)
+            {
+                authCookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(authCookie);
+            }
 
             CurrentSession.ClearAll();
             Session.Clear();

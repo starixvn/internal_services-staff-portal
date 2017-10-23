@@ -78,6 +78,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
     <Compile Include="Delivery\Base\EmailDeliveryProviderBase.cs" />
     <Compile Include="Delivery\SendGridDeliveryProvider.cs" />
     <Compile Include="Delivery\SendGridDeliveryProviderConfiguration.cs" />

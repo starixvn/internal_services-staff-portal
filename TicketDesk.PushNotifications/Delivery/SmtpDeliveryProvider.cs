@@ -1,29 +1,16 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using Newtonsoft.Json.Linq;
-using S22.Mail;
-using System;
-using System.Net;
-using System.Net.Mail;
-using System.Threading;
-using System.Threading.Tasks;
-using TicketDesk.Localization;
-using TicketDesk.Localization.PushNotifications;
-using TicketDesk.PushNotifications.Model;
-
-namespace TicketDesk.PushNotifications.Delivery
+﻿namespace TicketDesk.PushNotifications.Delivery
 {
+    using Localization;
+    using Localization.PushNotifications;
+    using Model;
+    using Newtonsoft.Json.Linq;
+    using S22.Mail;
+    using System;
+    using System.Net;
+    using System.Net.Mail;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     [LocalizedDescription("SMTPProvider", NameResourceType = typeof(Strings))]
     public sealed class SmtpDeliveryProvider : EmailDeliveryProviderBase
     {
