@@ -392,7 +392,18 @@ namespace RfmNetCore.Controllers
         private dynamic RenameDirectory(string old, string @new)
         {
             var oldPath = Path.Combine(_webRootPath, old);
-            var oldDirectoryName = Path.GetDirectoryName(old).Split('\\').Last();
+            
+            ////var oldDirectoryName = Path.GetDirectoryName(old);
+
+            ////if (string.IsNullOrEmpty(oldDirectoryName))
+            ////{
+            ////    return null;
+            ////}
+
+            ////oldDirectoryName = oldDirectoryName.Split('\\').Last();
+
+            var oldDirectoryName = GetPath(old);
+
             var newDirectoryPath = old.Replace(oldDirectoryName, @new);
             var newPath = Path.Combine(_webRootPath, newDirectoryPath);
             var directoryExist = Directory.Exists(newPath);
@@ -492,7 +503,17 @@ namespace RfmNetCore.Controllers
 
         private dynamic MoveDirectory(string old, string @new)
         {
-            var directoryName = Path.GetDirectoryName(old).Split('\\').Last();
+            ////var directoryName = Path.GetDirectoryName(old);
+
+            ////if (string.IsNullOrEmpty(directoryName))
+            ////{
+            ////    return null;
+            ////}
+
+            ////directoryName = directoryName.Split('\\').Last();
+
+            var directoryName = GetPath(old);
+            
             var newDirectoryPath = Path.Combine(@new, directoryName);
             var oldPath = Path.Combine(_webRootPath, old);
             var newPath = Path.Combine(_webRootPath, @new, directoryName);
@@ -539,6 +560,11 @@ namespace RfmNetCore.Controllers
         private dynamic MoveFile(string old, string @new)
         {
             var fileName = Path.GetFileName(old);
+            if (string.IsNullOrEmpty(fileName))
+            {
+                fileName = "";
+            }
+
             var newFilePath = Path.Combine(@new, fileName);
             var oldPath = Path.Combine(_webRootPath, old);
             var newPath = @new == "/"
@@ -594,7 +620,17 @@ namespace RfmNetCore.Controllers
 
         private dynamic CopyDirectory(string source, string target)
         {
-            var directoryName = Path.GetDirectoryName(source).Split('\\').Last();
+            ////var directoryName = Path.GetDirectoryName(source);
+
+            ////if (string.IsNullOrEmpty(directoryName))
+            ////{
+            ////    return null;
+            ////}
+
+            ////directoryName = directoryName.Split('\\').Last();
+
+            var directoryName = GetPath(source);
+
             var newDirectoryPath = Path.Combine(target, directoryName);
             var oldPath = Path.Combine(_webRootPath, source);
             var newPath = Path.Combine(_webRootPath, target, directoryName);
@@ -641,6 +677,11 @@ namespace RfmNetCore.Controllers
         private dynamic CopyFile(string source, string target)
         {
             var fileName = Path.GetFileName(source);
+            if (string.IsNullOrEmpty(fileName))
+            {
+                fileName = "";
+            }
+
             var newFilePath = Path.Combine(target, fileName);
             var oldPath = Path.Combine(_webRootPath, source);
             var newPath = Path.Combine(_webRootPath, target, fileName);
@@ -697,7 +738,15 @@ namespace RfmNetCore.Controllers
         private dynamic EditFile(string path)
         {
             var fileName = Path.GetFileName(path);
-            var fileExtension = Path.GetExtension(path).Replace(".", string.Empty);
+            var fileExtension = Path.GetExtension(path);
+
+            if (string.IsNullOrEmpty(fileExtension))
+            {
+                return null;
+            }
+
+            fileExtension = fileExtension.Replace(".", string.Empty);
+
             var filePath = Path.Combine(_webRootPath, path);
 
             var content = System.IO.File.ReadAllText(filePath, Encoding.UTF8);
@@ -756,7 +805,17 @@ namespace RfmNetCore.Controllers
             var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, path));
             if (fileAttributes == FileAttributes.Directory)
             {
-                var directoryName = Path.GetDirectoryName(path).Split('\\').Last();
+                ////var directoryName = Path.GetDirectoryName(path);
+
+                ////if (string.IsNullOrEmpty(directoryName))
+                ////{
+                ////    return null;
+                ////}
+
+                ////directoryName = directoryName.Split('\\').Last();
+
+                var directoryName = GetPath(path);
+
                 Directory.Delete(Path.Combine(_webRootPath, path), true);
                 var result = new
                 {
@@ -875,6 +934,20 @@ namespace RfmNetCore.Controllers
                     }
                 }
             };
+
+            return result;
+        }
+
+        private string GetPath(string relativePath)
+        {
+            var result = Path.GetDirectoryName(relativePath);
+
+            if (string.IsNullOrEmpty(result))
+            {
+                return null;
+            }
+
+            result = result.Split('\\').Last();
 
             return result;
         }
