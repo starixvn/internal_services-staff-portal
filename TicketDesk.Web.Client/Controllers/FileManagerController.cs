@@ -59,11 +59,7 @@
             IEnumerable<HttpPostedFileBase> files,
             bool thumbnail = false)
         {
-            string validPath = path;
-            if (!string.IsNullOrWhiteSpace(path) && path.StartsWith("/"))
-            {
-                validPath = path.Substring(1);
-            }
+            string validPath = RemovePrefixSlash(path);
             
             var errorResult = new { Errors = new List<dynamic>() };
 
@@ -119,6 +115,16 @@
             }
 
             return Json(errorResult, JsonRequestBehavior.AllowGet);
+        }
+
+        private static string RemovePrefixSlash(string s)
+        {
+            if (!string.IsNullOrWhiteSpace(s) && s.StartsWith("/"))
+            {
+                return s.Substring(1);
+            }
+
+            return s;
         }
 
         private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)

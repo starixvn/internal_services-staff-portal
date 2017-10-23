@@ -75,12 +75,6 @@ namespace RfmNetCore.Controllers
             string content,
             bool thumbnail = false)
         {
-
-            ////path = RemovePrefixSlash(path);
-            ////source = RemovePrefixSlash(source);
-            ////target = RemovePrefixSlash(target);
-            ////@new = RemovePrefixSlash(@new);
-
             var pathWithoutSlash = RemovePrefixSlash(path);
             var sourceWithoutSlash = RemovePrefixSlash(source);
             var targetWithoutSlash = RemovePrefixSlash(target);
@@ -131,12 +125,10 @@ namespace RfmNetCore.Controllers
 
                 case "getimage":
                     return GetImage(pathWithoutSlash);
-
-                case "readfile":
-                    break;
-
                 case "summarize":
                     return Json(Summarize(), JsonRequestBehavior.AllowGet);
+                case "readfile":
+                    break;
             }
 
             return RedirectToAction("Index");
@@ -187,22 +179,24 @@ namespace RfmNetCore.Controllers
             }
         }
 
-        private static string MakeWebPath(string path, bool addSeperatorToBegin = false,
+        private static string MakeWebPath(
+            string path,
+            bool addSeperatorToBegin = false,
             bool addSeperatorToLast = false)
         {
-            path = path.Replace("\\", "/");
+            var result = path.Replace("\\", "/");
 
             if (addSeperatorToBegin)
             {
-                path = "/" + path;
+                result = "/" + result;
             }
 
             if (addSeperatorToLast)
             {
-                path = path + "/";
+                result = result + "/";
             }
 
-            return path;
+            return result;
         }
 
         private dynamic Initiate()
@@ -236,12 +230,9 @@ namespace RfmNetCore.Controllers
 
         private dynamic GetFolder(string path)
         {
-            if (path == null)
-            {
-                path = string.Empty;
-            }
+            var folderPath = string.IsNullOrEmpty(path) ? string.Empty : path;
 
-            var rootpath = Path.Combine(_webRootPath, path);
+            var rootpath = Path.Combine(_webRootPath, folderPath);
             var rootDirectory = new DirectoryInfo(rootpath);
             var data = new List<dynamic>();
 
@@ -249,12 +240,12 @@ namespace RfmNetCore.Controllers
             {
                 var item = new
                 {
-                    Id = MakeWebPath(Path.Combine(path, directory.Name), addSeperatorToLast: true),
+                    Id = MakeWebPath(Path.Combine(folderPath, directory.Name), addSeperatorToLast: true),
                     Type = "folder",
                     Attributes = new
                     {
                         directory.Name,
-                        Path = MakeWebPath(Path.Combine(_webPath, path, directory.Name), true, true),
+                        Path = MakeWebPath(Path.Combine(_webPath, folderPath, directory.Name), true, true),
                         Readable = 1,
                         Writable = 1,
                         Created = directory.CreationTime.ToString(CultureInfo.InvariantCulture),
@@ -270,12 +261,12 @@ namespace RfmNetCore.Controllers
             {
                 var item = new
                 {
-                    Id = MakeWebPath(Path.Combine(path, file.Name)),
+                    Id = MakeWebPath(Path.Combine(folderPath, file.Name)),
                     Type = "file",
                     Attributes = new
                     {
                         file.Name,
-                        Path = MakeWebPath(Path.Combine(_webPath, path, file.Name), true),
+                        Path = MakeWebPath(Path.Combine(_webPath, folderPath, file.Name), true),
                         Readable = 1,
                         Writable = 1,
                         Created = file.CreationTime.ToString(CultureInfo.InvariantCulture),
@@ -397,7 +388,7 @@ namespace RfmNetCore.Controllers
         private dynamic RenameDirectory(string old, string @new)
         {
             var oldPath = Path.Combine(_webRootPath, old);
-            
+
             ////var oldDirectoryName = Path.GetDirectoryName(old);
 
             ////if (string.IsNullOrEmpty(oldDirectoryName))
@@ -518,7 +509,7 @@ namespace RfmNetCore.Controllers
             ////directoryName = directoryName.Split('\\').Last();
 
             var directoryName = GetPath(old);
-            
+
             var newDirectoryPath = Path.Combine(@new, directoryName);
             var oldPath = Path.Combine(_webRootPath, old);
             var newPath = Path.Combine(_webRootPath, @new, directoryName);
@@ -943,7 +934,7 @@ namespace RfmNetCore.Controllers
             return result;
         }
 
-        private string GetPath(string relativePath)
+        private static string GetPath(string relativePath)
         {
             var result = Path.GetDirectoryName(relativePath);
 

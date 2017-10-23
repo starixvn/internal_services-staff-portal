@@ -66,7 +66,10 @@
         public async Task<ActionResult> Edit(UserAccountInfoViewModel model)
         {
             var pendingRole = RoleManager.Roles.FirstOrDefault(r => r.Name == "TdPendingUsers");
-            ViewBag.TdPendingUsersRoleId = pendingRole == null ? string.Empty : pendingRole.Id;
+            ViewBag.TdPendingUsersRoleId = pendingRole == null 
+                ? string.Empty 
+                : pendingRole.Id;
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -86,31 +89,14 @@
                 if (await SetLockout(model, user).ConfigureAwait(false) &&
                     await UpdateUserInfo(user, model).ConfigureAwait(false))
                 {
-                    // do user info updates
-                    // if any roles other than pending are selected, make sure we remove the pending role from the model first
-                    if (pendingRole != null && model.Roles.Any(r => r != pendingRole.Id))
-                    {
-                        var roles = model.Roles.ToList();
-                        roles.Remove(pendingRole.Id);
-                        model.Roles = roles;
-                    }
+                    RemovePendingRoles(model, pendingRole);
 
-                    // get role changes
-                    var roleIdsToRemove = user.Roles.Select(ur => ur.RoleId).Except(model.Roles).ToList();
-
-                    if (User.Identity.GetUserId() == user.Id)
-                    {
-                        // stop current user from removing their own admin role
-                        roleIdsToRemove = roleIdsToRemove
-                            .Except(RoleManager.Roles.Where(r => r.Name == "tdAdministrators").Select(r => r.Id))
-                            .ToList();
-                    }
+                    List<string> roleIdsToRemove = GetChangedRoles(model, user);
 
                     var roleIdsToAdd = model.Roles.Except(user.Roles.Select(ur => ur.RoleId)).ToList();
+                    bool isRemoveSuccess = await RemoveRoles(user, roleIdsToRemove, roleIdsToAdd).ConfigureAwait(false);
 
-                    // do role removes
-                    if (await RemoveRoles(roleIdsToRemove, user).ConfigureAwait(false) &&
-                        await AddRoles(roleIdsToAdd, user).ConfigureAwait(false))
+                    if (isRemoveSuccess)
                     {
                         return RedirectToAction("Index");
                     }
@@ -122,8 +108,43 @@
             // the current data. Model errors will have been added by the respective
             // update operations that failed
             user = await UserManager.FindByIdAsync(model.User.Id).ConfigureAwait(false);
-            model = new UserAccountInfoViewModel(user, user.Roles.Select(r => r.RoleId));
-            return View(model);
+            UserAccountInfoViewModel viewModel = new UserAccountInfoViewModel(user, user.Roles.Select(r => r.RoleId));
+            return View(viewModel);
+        }
+
+        private async Task<bool> RemoveRoles(TicketDeskUser user, List<string> roleIdsToRemove, List<string> roleIdsToAdd)
+        {
+            // do role removes
+            return await RemoveRoles(roleIdsToRemove, user).ConfigureAwait(false) &&
+                                  await AddRoles(roleIdsToAdd, user).ConfigureAwait(false);
+        }
+
+        private List<string> GetChangedRoles(UserAccountInfoViewModel model, TicketDeskUser user)
+        {
+            // get role changes
+            var roleIdsToRemove = user.Roles.Select(ur => ur.RoleId).Except(model.Roles).ToList();
+
+            if (User.Identity.GetUserId() == user.Id)
+            {
+                // stop current user from removing their own admin role
+                roleIdsToRemove = roleIdsToRemove
+                    .Except(RoleManager.Roles.Where(r => r.Name == "tdAdministrators").Select(r => r.Id))
+                    .ToList();
+            }
+
+            return roleIdsToRemove;
+        }
+
+        private static void RemovePendingRoles(UserAccountInfoViewModel model, TicketDeskRole pendingRole)
+        {
+            // do user info updates
+            // if any roles other than pending are selected, make sure we remove the pending role from the model first
+            if (pendingRole != null && model.Roles.Any(r => r != pendingRole.Id))
+            {
+                var roles = model.Roles.ToList();
+                roles.Remove(pendingRole.Id);
+                model.Roles = roles;
+            }
         }
 
         private async Task<IPagedList<UserAccountInfoViewModel>> GetUsersForListAsync(int page)
