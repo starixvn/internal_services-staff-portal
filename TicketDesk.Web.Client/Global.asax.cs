@@ -8,7 +8,7 @@
 
     public class Global : System.Web.HttpApplication
     {
-        protected static void Application_Start(object sender, EventArgs e)
+        protected void Application_Start(object sender, EventArgs e)
         {
             DisableApplicationInsightsOnDebug();
             DbSettingProviderManager.Current.Start();
@@ -18,7 +18,7 @@
         /// Disables the application insights locally.
         /// </summary>
         [Conditional("DEBUG")]
-        private static void DisableApplicationInsightsOnDebug()
+        private void DisableApplicationInsightsOnDebug()
         {
             TelemetryConfiguration.Active.DisableTelemetry = true;
         }
@@ -43,7 +43,7 @@
             // Method intentionally left empty.
         }
 
-        protected static void Session_End(object sender, EventArgs e)
+        protected void Session_End(object sender, EventArgs e)
         {
             AuthConfig.SignOut();
         }
