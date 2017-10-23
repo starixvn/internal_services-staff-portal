@@ -5,10 +5,11 @@
 
     [Serializable]
     #pragma warning disable 1591
-    public class SerializableLinkedResourceCollection : Collection<SerializableLinkedResource>, IDisposable
+    public sealed class SerializableLinkedResourceCollection : Collection<SerializableLinkedResource>, IDisposable
     {
         public void Dispose()
         {
+            // Method intentionally left empty.
         }
     }
     #pragma warning restore 1591

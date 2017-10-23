@@ -5,10 +5,11 @@ namespace S22.Mail
     using System.Collections.ObjectModel;
 
     [Serializable]
-    public class SerializableAlternateViewCollection : Collection<SerializableAlternateView>, IDisposable
+    public sealed class SerializableAlternateViewCollection : Collection<SerializableAlternateView>, IDisposable
     {
         public void Dispose()
         {
+            // Method intentionally left empty.
         }
     }
 }

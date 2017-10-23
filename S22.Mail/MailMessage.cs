@@ -96,32 +96,31 @@
                 { "Priority", PriorityMap[m.Priority] },
                 { "Importance", ImportanceMap[m.Priority] }
             };
+
             if (m.From == null)
             {
                 throw new InvalidOperationException("The From property must not be null");
             }
 
-            header.Add("From", m.From.To822Address());
-            if (m.Subject != null)
+            AddHeaders(m, header);
+            AddMultiparts(m, header);
+
+            // Add any custom headers added by user
+            foreach (string key in m.Headers)
             {
-                header.Add("Subject", m.Subject.IsASCII() ? m.Subject : QEncode(m.Subject));
+                if (ignore.Contains(key, StringComparer.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                header.Add(key, m.Headers.GetValues(key)?[0]);
             }
 
-            foreach (MailAddress a in m.To)
-            {
-                header.Add("To", a.To822Address());
-            }
+            return header;
+        }
 
-            foreach (MailAddress a in m.CC)
-            {
-                header.Add("Cc", a.To822Address());
-            }
-
-            foreach (MailAddress a in m.Bcc)
-            {
-                header.Add("Bcc", a.To822Address());
-            }
-
+        private static void AddMultiparts(MailMessage m, NameValueCollection header)
+        {
             bool multipart = m.AlternateViews.Count > 0 || m.Attachments.Count > 0;
             if (!multipart)
             {
@@ -142,19 +141,30 @@
                 string contentType = (m.Attachments.Count == 0 ? "multipart/alternative" : "multipart/mixed") + "; boundary=" + GenerateContentBoundary();
                 header.Add("Content-Type", contentType);
             }
+        }
 
-            // Add any custom headers added by user
-            foreach (string key in m.Headers)
+        private static void AddHeaders(MailMessage m, NameValueCollection header)
+        {
+            header.Add("From", m.From.To822Address());
+            if (m.Subject != null)
             {
-                if (ignore.Contains(key, StringComparer.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                header.Add(key, m.Headers.GetValues(key)[0]);
+                header.Add("Subject", m.Subject.IsASCII() ? m.Subject : QEncode(m.Subject));
             }
 
-            return header;
+            foreach (MailAddress a in m.To)
+            {
+                header.Add("To", a.To822Address());
+            }
+
+            foreach (MailAddress a in m.CC)
+            {
+                header.Add("Cc", a.To822Address());
+            }
+
+            foreach (MailAddress a in m.Bcc)
+            {
+                header.Add("Bcc", a.To822Address());
+            }
         }
 
         /// <summary>
