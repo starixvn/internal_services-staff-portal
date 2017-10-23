@@ -76,7 +76,8 @@
             if (LegacyBackgroundMigrator.MigrationTask != null)
             {
                 ViewBag.Refresh = "True";
-                ViewBag.Messages = LegacyBackgroundMigrator.MessageStack.ToString().Replace(System.Environment.NewLine, "<br />");
+                ViewBag.Messages = LegacyBackgroundMigrator.MessageStack.ToString()
+                    .Replace(System.Environment.NewLine, "<br />");
                 var upgradeSuccess = false;
                 switch (LegacyBackgroundMigrator.MigrationTask.Status)
                 {
@@ -237,7 +238,8 @@
         [ChildActionOnly]
         public ActionResult NewDatabase()
         {
-            if (Model.DatabaseStatus.IsDatabaseReady || Model.DatabaseStatus.IsLegacyDatabase)
+            if (SystemInfoViewModel.DatabaseStatusViewModel.IsDatabaseReady ||
+                SystemInfoViewModel.DatabaseStatusViewModel.IsLegacyDatabase)
             {
                 return new EmptyResult();
             }
@@ -254,7 +256,8 @@
         [ChildActionOnly]
         public ActionResult LegacyDatabase()
         {
-            if (Model.DatabaseStatus.IsDatabaseReady || !Model.DatabaseStatus.IsLegacyDatabase)
+            if (SystemInfoViewModel.DatabaseStatusViewModel.IsDatabaseReady ||
+                !SystemInfoViewModel.DatabaseStatusViewModel.IsLegacyDatabase)
             {
                 return new EmptyResult();
             }
@@ -265,7 +268,8 @@
         [ChildActionOnly]
         public ActionResult LegacySecurity()
         {
-            if (!Model.DatabaseStatus.IsDatabaseReady || !Model.DatabaseStatus.HasLegacySecurityObjects)
+            if (!SystemInfoViewModel.DatabaseStatusViewModel.IsDatabaseReady ||
+                !SystemInfoViewModel.DatabaseStatusViewModel.HasLegacySecurityObjects)
             {
                 return new EmptyResult();
             }
@@ -278,7 +282,9 @@
         {
             HttpContext.GetOwinContext().Authentication.SignOut();
 
-            if (!Model.DatabaseStatus.IsDatabaseReady || !Model.DatabaseStatus.IsCompatibleWithEfModel || Model.DatabaseStatus.HasLegacySecurityObjects)
+            if (!SystemInfoViewModel.DatabaseStatusViewModel.IsDatabaseReady ||
+                !Model.DatabaseStatus.IsCompatibleWithEfModel ||
+                SystemInfoViewModel.DatabaseStatusViewModel.HasLegacySecurityObjects)
             {
                 return new EmptyResult();
             }
