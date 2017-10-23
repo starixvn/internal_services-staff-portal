@@ -76,10 +76,15 @@ namespace RfmNetCore.Controllers
             bool thumbnail = false)
         {
 
-            path = RemovePrefixSlash(path);
-            source = RemovePrefixSlash(source);
-            target = RemovePrefixSlash(target);
-            @new = RemovePrefixSlash(@new);
+            ////path = RemovePrefixSlash(path);
+            ////source = RemovePrefixSlash(source);
+            ////target = RemovePrefixSlash(target);
+            ////@new = RemovePrefixSlash(@new);
+
+            var pathWithoutSlash = RemovePrefixSlash(path);
+            var sourceWithoutSlash = RemovePrefixSlash(source);
+            var targetWithoutSlash = RemovePrefixSlash(target);
+            var newsWithoutSlash = RemovePrefixSlash(@new);
 
             switch (mode)
             {
@@ -87,45 +92,45 @@ namespace RfmNetCore.Controllers
                     return Json(Initiate(), JsonRequestBehavior.AllowGet);
 
                 case "getfolder":
-                    return Json(GetFolder(path), JsonRequestBehavior.AllowGet);
+                    return Json(GetFolder(pathWithoutSlash), JsonRequestBehavior.AllowGet);
 
                 case "addfolder":
-                    return Json(AddFolder(path, name), JsonRequestBehavior.AllowGet);
+                    return Json(AddFolder(pathWithoutSlash, name), JsonRequestBehavior.AllowGet);
 
                 case "upload":
-                    return Json(Upload(path, files), JsonRequestBehavior.AllowGet);
+                    return Json(Upload(pathWithoutSlash, files), JsonRequestBehavior.AllowGet);
 
                 case "rename":
-                    return Json(Rename(old, @new), JsonRequestBehavior.AllowGet);
+                    return Json(Rename(old, newsWithoutSlash), JsonRequestBehavior.AllowGet);
 
                 case "move":
-                    return Json(Move(old, @new), JsonRequestBehavior.AllowGet);
+                    return Json(Move(old, newsWithoutSlash), JsonRequestBehavior.AllowGet);
 
                 case "copy":
-                    return Json(Copy(source, target), JsonRequestBehavior.AllowGet);
+                    return Json(Copy(sourceWithoutSlash, targetWithoutSlash), JsonRequestBehavior.AllowGet);
 
                 case "editfile":
-                    return Json(EditFile(path), JsonRequestBehavior.AllowGet);
+                    return Json(EditFile(pathWithoutSlash), JsonRequestBehavior.AllowGet);
 
                 case "savefile":
-                    return Json(SaveFile(path, content), JsonRequestBehavior.AllowGet);
+                    return Json(SaveFile(pathWithoutSlash, content), JsonRequestBehavior.AllowGet);
 
                 case "delete":
-                    return Json(Delete(path), JsonRequestBehavior.AllowGet);
+                    return Json(Delete(pathWithoutSlash), JsonRequestBehavior.AllowGet);
 
                 case "download":
                     if (Request.Headers["accept"].Contains("json"))
                     {
-                        return Json(Download(path), JsonRequestBehavior.AllowGet);
+                        return Json(Download(pathWithoutSlash), JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
-                        var file = DownloadFile(path);
+                        var file = DownloadFile(pathWithoutSlash);
                         return File(file.FileBytes, "application/x-msdownload", file.FileName);
                     }
 
                 case "getimage":
-                    return GetImage(path);
+                    return GetImage(pathWithoutSlash);
 
                 case "readfile":
                     break;

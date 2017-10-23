@@ -28,6 +28,7 @@ namespace TicketDesk.Domain.Model
         /// <returns>ObjectQuery{Ticket}.</returns>
         public static ObjectQuery<Ticket> ApplyToQuery(this ICollection<UserTicketListSortColumn> sorts, ObjectQuery<Ticket> baseQuery)
         {
+            var resultQuery = baseQuery;
             var sortColumns = sorts.ToList();
             if (sortColumns.Count > 0)
             {
@@ -40,10 +41,10 @@ namespace TicketDesk.Domain.Model
                 }
 
                 var kString = string.Join(",", skeys);
-                baseQuery = baseQuery.OrderBy(kString);
+                resultQuery = resultQuery.OrderBy(kString);
             }
 
-            return baseQuery;
+            return resultQuery;
         }
 
         /// <summary>
@@ -54,6 +55,7 @@ namespace TicketDesk.Domain.Model
         /// <returns>ObjectQuery{Ticket}.</returns>
         public static ObjectQuery<Ticket> ApplyToQuery(this ICollection<UserTicketListFilterColumn> filters, ObjectQuery<Ticket> baseQuery)
         {
+            var resultQuery = baseQuery;
             var filterColumns = filters.ToList();
             if (filterColumns.Count > 0)
             {
@@ -85,10 +87,10 @@ namespace TicketDesk.Domain.Model
                 }
 
                 var wString = string.Join(" and ", fkeys);
-                baseQuery = baseQuery.Where(wString, filterParams);
+                resultQuery = resultQuery.Where(wString, filterParams);
             }
 
-            return baseQuery;
+            return resultQuery;
         }
     }
 }

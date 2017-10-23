@@ -193,8 +193,7 @@
 
             context.Database.ExecuteSqlCommand(TransactionalBehavior.EnsureTransaction, script);
         }
-
-#pragma warning disable S3459 // Unassigned members should be removed
+        
         private class LegacyUser
         {
             public Guid UserId { get; }
@@ -207,6 +206,5 @@
 
             internal int PasswordFormat { get; }
         }
-#pragma warning restore S3459 // Unassigned members should be removed
     }
 }
