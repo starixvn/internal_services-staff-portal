@@ -24,17 +24,13 @@
     public class FirstRunSetupController : Controller
     {
         public FirstRunSetupController(
-            TicketDeskUserManager userManager,
-            TicketDeskSignInManager signInManager)
+            TicketDeskUserManager userManager)
         {
             UserManager = userManager;
-            SignInManager = signInManager;
             Model = new SystemInfoViewModel();
         }
 
         private TicketDeskUserManager UserManager { get; }
-
-        private TicketDeskSignInManager SignInManager { get; }
 
         private SystemInfoViewModel Model { get; }
 
@@ -110,29 +106,33 @@
                         upgradeSuccess = true;
                         LegacyBackgroundMigrator.Reset();
                         break;
-
                     default:
                         ViewBag.Status = LegacyBackgroundMigrator.MigrationTask.Status.ToString();
                         ViewBag.Alert = "alert-warning";
                         break;
                 }
 
-                if (upgradeSuccess)
-                {
-                    var filter = GlobalFilters.Filters.FirstOrDefault(f => f.Instance is DbSetupFilterAttribute);
-                    if (filter != null)
-                    {
-                        GlobalFilters.Filters.Remove(filter.Instance);
-                    }
-
-                    Database.SetInitializer(new TdIdentityDbInitializer());
-                    Database.SetInitializer(new TdPushNotificationDbInitializer());
-                    Startup.ConfigurePushNotifications();
-                    UpdateSearchIndex();
-                }
+                SetupApplication(upgradeSuccess);
             }
 
             return View();
+        }
+
+        private static void SetupApplication(bool upgradeSuccess)
+        {
+            if (upgradeSuccess)
+            {
+                var filter = GlobalFilters.Filters.FirstOrDefault(f => f.Instance is DbSetupFilterAttribute);
+                if (filter != null)
+                {
+                    GlobalFilters.Filters.Remove(filter.Instance);
+                }
+
+                Database.SetInitializer(new TdIdentityDbInitializer());
+                Database.SetInitializer(new TdPushNotificationDbInitializer());
+                Startup.ConfigurePushNotifications();
+                UpdateSearchIndex();
+            }
         }
 
         private static void UpdateSearchIndex()
