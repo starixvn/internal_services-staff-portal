@@ -71,6 +71,14 @@
             return (IPushNotificationDeliveryProvider)ci.Invoke(new object[] { null });
         }
 
+        private static bool CheckPushNotificationItem(PushNotificationItem left, PushNotificationItem right)
+        {
+            return left.ContentSourceId == right.ContentSourceId
+                   && left.ContentSourceType == right.ContentSourceType
+                   && left.SubscriberId == right.SubscriberId
+                   && left.DestinationId == right.DestinationId;
+        }
+
         public static async Task SendNotificationAsync(
             int contentSourceId,
             string contentSourceType,
@@ -79,12 +87,16 @@
         {
             using (var context = new TdPushNotificationContext())
             {
+                PushNotificationItem createdItem = new PushNotificationItem
+                {
+                    ContentSourceId = contentSourceId,
+                    ContentSourceType = contentSourceType,
+                    SubscriberId = subscriberId,
+                    DestinationId = destinationId
+                };
+
                 var readyNote = await context.PushNotificationItems
-                    .FirstOrDefaultAsync(n =>
-                        (n.ContentSourceId == contentSourceId
-                         && n.ContentSourceType == contentSourceType
-                         && n.SubscriberId == subscriberId
-                         && n.DestinationId == destinationId)
+                    .FirstOrDefaultAsync(n => CheckPushNotificationItem(n, createdItem)
                         && (n.DeliveryStatus == PushNotificationItemStatus.Scheduled
                             || n.DeliveryStatus == PushNotificationItemStatus.Retrying)).ConfigureAwait(false);
 

@@ -1,12 +1,12 @@
 ﻿namespace TicketDesk.Web.Client
 {
+    using Domain.Model;
+    using Localization.Infrastructure;
     using System.Linq;
     using System.Text;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Mvc.Ajax;
-    using Domain.Model;
-    using Localization.Infrastructure;
 
     public static class SortableColumnHeaderHelper
     {
@@ -32,10 +32,10 @@
             {
                 var uh = new UrlHelper(helper.ViewContext.RequestContext);
                 var imgSrc = uh.Content((column.SortDirection == ColumnSortDirection.Ascending) ? arrowTop : arrowDown);
-                imgContent = string.Format("<img src='{0}' alt='{1}' />", imgSrc, column.SortDirection.ToString());
+                imgContent = $"<img src='{imgSrc}' alt='{column.SortDirection.ToString()}' />";
 
                 var idx = sortColumns.IndexOf(column) + 1;
-                indexContent = string.Format("<sup>[{0}]</sup>", idx);
+                indexContent = $"<sup>[{idx}]</sup>";
             }
 
             var sb = new StringBuilder();

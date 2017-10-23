@@ -85,11 +85,13 @@
         {
             StringReader reader = new StringReader(text);
             StringBuilder header = new StringBuilder();
-            string line;
 
-            while (!string.IsNullOrEmpty(line = reader.ReadLine()))
+            string line = reader.ReadLine();
+
+            while (!string.IsNullOrEmpty(line))
             {
                 header.AppendLine(line);
+                line = reader.ReadLine();
             }
 
             MailMessage m = FromHeader(header.ToString());
@@ -274,58 +276,39 @@
         /// <param name="header">A collection of mail and MIME headers</param>
         private static void SetAddressFields(MailMessage m, NameValueCollection header)
         {
-            MailAddress[] addr;
-            if (header["To"] != null)
+            ParseAddresses(m, header, "To", m.To);
+
+            ParseAddresses(m, header, "Cc", m.CC);
+            ParseAddresses(m, header, "Bcc", m.Bcc);
+
+            m.From = ParseAddresses(m, header, "From");
+            m.Sender = ParseAddresses(m, header, "Sender");
+
+            ParseAddresses(m, header, "Reply-to", m.ReplyToList);
+        }
+
+        public static MailAddress ParseAddresses(MailMessage m, NameValueCollection header, string headerKey)
+        {
+            if (header[headerKey] != null)
             {
-                addr = ParseAddressList(header["To"]);
-                foreach (MailAddress a in addr)
+                MailAddress[] addresses = ParseAddressList(header[headerKey]);
+                if (addresses.Length > 0)
                 {
-                    m.To.Add(a);
+                    return addresses[0];
                 }
             }
 
-            if (header["Cc"] != null)
-            {
-                addr = ParseAddressList(header["Cc"]);
-                foreach (MailAddress a in addr)
-                {
-                    m.CC.Add(a);
-                }
-            }
+            return null;
+        }
 
-            if (header["Bcc"] != null)
+        public static void ParseAddresses(MailMessage m, NameValueCollection header, string headerKey, MailAddressCollection collection)
+        {
+            if (header[headerKey] != null)
             {
-                addr = ParseAddressList(header["Bcc"]);
-                foreach (MailAddress a in addr)
+                MailAddress[] addresses = ParseAddressList(header[headerKey]);
+                foreach (var address in addresses)
                 {
-                    m.Bcc.Add(a);
-                }
-            }
-
-            if (header["From"] != null)
-            {
-                addr = ParseAddressList(header["From"]);
-                if (addr.Length > 0)
-                {
-                    m.From = addr[0];
-                }
-            }
-
-            if (header["Sender"] != null)
-            {
-                addr = ParseAddressList(header["Sender"]);
-                if (addr.Length > 0)
-                {
-                    m.Sender = addr[0];
-                }
-            }
-
-            if (header["Reply-to"] != null)
-            {
-                addr = ParseAddressList(header["Reply-to"]);
-                foreach (MailAddress a in addr)
-                {
-                    m.ReplyToList.Add(a);
+                    collection.Add(address);
                 }
             }
         }
@@ -535,7 +518,9 @@
 
                 // Read the part body
                 var body = new StringBuilder();
-                while ((line = reader.ReadLine()) != null)
+
+                line = reader.ReadLine();
+                while (line != null)
                 {
                     if (line.StartsWith(start))
                     {
@@ -543,6 +528,8 @@
                     }
 
                     body.AppendLine(line);
+
+                    line = reader.ReadLine();
                 }
 
                 p.Body = body.ToString();
