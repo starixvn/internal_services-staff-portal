@@ -118,14 +118,14 @@
             string owner,
             string tagList)
         {
-            details = details.StripHtmlWhenEmpty();
+            string detailsWithoutHtmlWhenEmpty = details.StripHtmlWhenEmpty();
             var projectName = await Context.Projects.Where(p => p.ProjectId == projectId).Select(s => s.ProjectName).FirstOrDefaultAsync().ConfigureAwait(false);
             var activityFn = Context.TicketActions.EditTicketInfo(
                 comment,
                 projectId,
                 projectName,
                 title,
-                details,
+                detailsWithoutHtmlWhenEmpty,
                 priority,
                 ticketType,
                 category,
@@ -209,10 +209,8 @@
                    sb.AppendLine("</dl>");
                }
 
-               comment = sb.ToString();
-
                // perform the simple business domain functions
-               var domainActivityFn = Context.TicketActions.ModifyAttachments(comment);
+               var domainActivityFn = Context.TicketActions.ModifyAttachments(sb.ToString());
                domainActivityFn(ticket);
            };
 
@@ -291,7 +289,7 @@
             TryValidateModel(ticket);
             try
             {
-                ticket.PerformAction(activityFn);
+                ticket?.PerformAction(activityFn);
             }
             catch (SecurityException ex)
             {

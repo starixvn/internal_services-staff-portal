@@ -36,13 +36,13 @@
         public async Task<ActionResult> Index(int? page, string listName)
         {
             // Role
-            listName = listName ?? (Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket,
-                           Constant.Policy.Read)
-                           ? "unassigned"
-                           : "mytickets");
+            var names = listName ?? (Context.SecurityProvider.NapContextHelper.HasRight(FunctionKeys.ListAssignedTicket,
+                            Constant.Policy.Read)
+                            ? "unassigned"
+                            : "mytickets");
             var pageNumber = page ?? 1;
 
-            var viewModel = await TicketCenterListViewModel.GetViewModelAsync(pageNumber, listName, Context,
+            var viewModel = await TicketCenterListViewModel.GetViewModelAsync(pageNumber, names, Context,
                 Context.SecurityProvider.CurrentUserId).ConfigureAwait(false);
 
             return View(viewModel);

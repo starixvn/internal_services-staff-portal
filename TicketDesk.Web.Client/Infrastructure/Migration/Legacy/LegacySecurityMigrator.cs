@@ -47,35 +47,41 @@
                     ? userManager.Create(newUser, user.Password)
                     : userManager.Create(newUser);
 
-                if (result.Succeeded)
+                if (!result.Succeeded)
                 {
-                    var rolesForUser = context.Database.SqlQuery<string>(roleQuery,
-                        new SqlParameter("userId", user.UserId), new SqlParameter("appId", appId));
-                    var newRoles = new List<string>();
-                    foreach (var role in rolesForUser)
-                    {
-                        switch (role.ToLowerInvariant())
-                        {
-                            case "administrators":
-                                newRoles.Add("TdAdministrators");
-                                break;
-
-                            case "helpdesk":
-                                newRoles.Add("TdHelpDeskUsers");
-                                break;
-
-                            case "ticketsubmitters":
-                                newRoles.Add("TdInternalUsers");
-                                break;
-
-                            default:
-                                newRoles.Add("TdPendingUsers");
-                                break;
-                        }
-                    }
-
-                    userManager.AddToRoles(newUser.Id, newRoles.ToArray());
+                    continue;
                 }
+
+                var rolesForUser = context.Database.SqlQuery<string>(
+                    roleQuery,
+                    new SqlParameter("userId", user.UserId),
+                    new SqlParameter("appId", appId));
+
+                var newRoles = new List<string>();
+
+                foreach (var role in rolesForUser)
+                {
+                    switch (role.ToLowerInvariant())
+                    {
+                        case "administrators":
+                            newRoles.Add("TdAdministrators");
+                            break;
+
+                        case "helpdesk":
+                            newRoles.Add("TdHelpDeskUsers");
+                            break;
+
+                        case "ticketsubmitters":
+                            newRoles.Add("TdInternalUsers");
+                            break;
+
+                        default:
+                            newRoles.Add("TdPendingUsers");
+                            break;
+                    }
+                }
+
+                userManager.AddToRoles(newUser.Id, newRoles.ToArray());
             }
 
             return true;

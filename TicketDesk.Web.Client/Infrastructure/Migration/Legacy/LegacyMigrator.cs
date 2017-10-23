@@ -133,25 +133,27 @@
                     i += pageSize;
                     foreach (var file in res)
                     {
-                        if (file.TicketId.HasValue)
+                        if (!file.TicketId.HasValue)
                         {
-                            var container = file.TicketId.Value.ToString(CultureInfo.InvariantCulture);
-                            if (!TicketDeskFileStore.FileExists(file.FileName, container, false))
-                            {
-                                var contentQuery = ctx.Database.SqlQuery<byte[]>(contentQueryText, file.FileId);
-                                var stream = new MemoryStream(contentQuery.First());
+                            continue;
+                        }
 
-                                TicketDeskFileStore.SaveAttachmentAsync(stream, file.FileName, container, false).Wait();
-                                RaiseStatusChangedOnMainThread(new[] {
-                                    $"    Image {file.FileName} for ticket #{file.TicketId} imported."
-                                });
-                            }
-                            else
-                            {
-                                RaiseStatusChangedOnMainThread(new[] {
-                                    $"    Image {file.FileName} for ticket #{file.TicketId} already exists, skipping."
-                                });
-                            }
+                        var container = file.TicketId.Value.ToString(CultureInfo.InvariantCulture);
+                        if (!TicketDeskFileStore.FileExists(file.FileName, container, false))
+                        {
+                            var contentQuery = ctx.Database.SqlQuery<byte[]>(contentQueryText, file.FileId);
+                            var stream = new MemoryStream(contentQuery.First());
+
+                            TicketDeskFileStore.SaveAttachmentAsync(stream, file.FileName, container, false).Wait();
+                            RaiseStatusChangedOnMainThread(new[] {
+                                $"    Image {file.FileName} for ticket #{file.TicketId} imported."
+                            });
+                        }
+                        else
+                        {
+                            RaiseStatusChangedOnMainThread(new[] {
+                                $"    Image {file.FileName} for ticket #{file.TicketId} already exists, skipping."
+                            });
                         }
                     }
                 }

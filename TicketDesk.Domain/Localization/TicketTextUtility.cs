@@ -35,7 +35,7 @@ namespace TicketDesk.Domain.Localization
             var pval = Strings.ResourceManager.GetString("TicketActivityPriority");
             if (string.IsNullOrEmpty(val) || string.IsNullOrEmpty(pval))
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(val);
             }
 
             if (!string.IsNullOrEmpty(userName))

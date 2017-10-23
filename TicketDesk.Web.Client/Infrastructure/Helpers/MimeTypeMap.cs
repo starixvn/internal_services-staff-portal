@@ -594,17 +594,14 @@ namespace TicketDesk.Web.Client
         {
             if (extension == null)
             {
-                throw new ArgumentNullException("extension");
+                throw new ArgumentNullException(nameof(extension));
             }
 
-            if (!extension.StartsWith("."))
-            {
-                extension = "." + extension;
-            }
+            var validExtension = !extension.StartsWith(".") ? "." + extension : extension;
 
             string mime;
 
-            return Mappings.TryGetValue(extension, out mime) ? mime : "application/octet-stream";
+            return Mappings.TryGetValue(validExtension, out mime) ? mime : "application/octet-stream";
         }
     }
 }

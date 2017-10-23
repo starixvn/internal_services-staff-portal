@@ -1,7 +1,7 @@
-﻿using System.Text.RegularExpressions;
-
-namespace TicketDesk.Web.Client
+﻿namespace TicketDesk.Web.Client
 {
+    using System.Text.RegularExpressions;
+
     public static class SummerNoteStringExtensions
     {
         public static string StripHtmlWhenEmpty(this string content)
@@ -12,7 +12,7 @@ namespace TicketDesk.Web.Client
                 var hasText = ctext.Replace("\n", " ").Replace("&nbsp;", " ").Trim().Length > 0;
                 if (!hasText)
                 {
-                    content = null;
+                    return null;
                 }
             }
 

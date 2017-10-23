@@ -31,3 +31,9 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S3215:\"interface\" instances should not be cast to concrete types", Justification = "<Pending>", Scope = "member", Target = "~M:TicketDesk.PushNotifications.Delivery.SmtpDeliveryProvider.SendNotificationAsync(TicketDesk.PushNotifications.Model.PushNotificationItem,System.Object,System.Threading.CancellationToken)~System.Threading.Tasks.Task{System.Boolean}")]
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S107:Methods should not have too many parameters", Justification = "<Pending>", Scope = "member", Target = "~M:TicketDesk.Web.Client.SortableColumnHeaderHelper.SortableColumnHeader(System.Web.Mvc.AjaxHelper,System.Web.Mvc.HtmlHelper,TicketDesk.Domain.Model.UserTicketListSetting,System.Int32,System.String,System.String,System.String,System.String,System.Web.Mvc.Ajax.AjaxOptions)~System.Web.IHtmlString")]
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S1694:An abstract class should have both abstract and concrete methods", Justification = "<Pending>", Scope = "type", Target = "~T:TicketDesk.Search.Azure.AzureSearchConector")]
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S107:Methods should not have too many parameters", Justification = "<Pending>", Scope = "member", Target = "~M:TicketDesk.Web.Client.Controllers.TicketActivityController.EditTicketInfo(System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)~System.Threading.Tasks.Task{System.Web.Mvc.ActionResult}")]
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S1694:An abstract class should have both abstract and concrete methods", Justification = "<Pending>", Scope = "type", Target = "~T:TicketDesk.Search.Lucene.LuceneSearchConnector")]

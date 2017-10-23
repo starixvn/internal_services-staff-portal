@@ -34,32 +34,29 @@
             {
                 var actualValue = bindingContext.ValueProvider.GetValue(name);
 
-                if (actualValue != null)
+                if (actualValue == null)
                 {
-                    var valueType = type.GetElementType() ?? type.GetGenericArguments().FirstOrDefault();
+                    return null;
+                }
 
-                    if (valueType != null && valueType.GetInterface(typeof(IConvertible).Name) != null)
+                var valueType = type.GetElementType() ?? type.GetGenericArguments().FirstOrDefault();
+
+                if (valueType == null || valueType.GetInterface(typeof(IConvertible).Name) == null)
+                {
+                    return null;
+                }
+
+                var list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(valueType));
+
+                foreach (var splitValue in actualValue.AttemptedValue.Split(','))
+                {
+                    if (!string.IsNullOrWhiteSpace(splitValue))
                     {
-                        var list = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(valueType));
-
-                        foreach (var splitValue in actualValue.AttemptedValue.Split(new[] { ',' }))
-                        {
-                            if (!string.IsNullOrWhiteSpace(splitValue))
-                            {
-                                list.Add(Convert.ChangeType(splitValue, valueType));
-                            }
-                        }
-
-                        if (type.IsArray)
-                        {
-                            return ToArrayMethod.MakeGenericMethod(valueType).Invoke(this, new[] { list });
-                        }
-                        else
-                        {
-                            return list;
-                        }
+                        list.Add(Convert.ChangeType(splitValue, valueType));
                     }
                 }
+
+                return type.IsArray ? ToArrayMethod.MakeGenericMethod(valueType).Invoke(this, new[] { list }) : list;
             }
 
             return null;

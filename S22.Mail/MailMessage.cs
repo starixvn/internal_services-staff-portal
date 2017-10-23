@@ -178,9 +178,12 @@
         {
             StringBuilder builder = new StringBuilder("=?UTF-8?Q?");
             char[] chars = Encoding.Unicode.GetChars(Encoding.Unicode.GetBytes(s));
+
+            char[] charsToCheck = { '=', '_', '?' };
+
             foreach (char c in chars)
             {
-                if (c < 32 || c == '=' || c == '_' || c == '?' || c > 126)
+                if (c < 32 || charsToCheck.Contains(c) || c > 126)
                 {
                     builder.Append($"={(int)c:X2}");
                 }

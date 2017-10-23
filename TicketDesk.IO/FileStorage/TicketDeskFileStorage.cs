@@ -116,13 +116,10 @@
 
         private static string GetFilePath(string fileName, string containerId, bool isPending)
         {
-            if (isPending)
-            {
-                fileName = $"{fileName}.{containerId}";
-            }
+            var validFileName = isPending ? $"{fileName}.{containerId}" : fileName;
 
             var path = GetFileFolderPath(containerId, isPending);
-            return Current.Combine(path, fileName);
+            return Current.Combine(path, validFileName);
         }
 
         private static string TrimIdFromName(string fileName, string containerId)

@@ -55,7 +55,7 @@
                 TicketActivity.ForceClose;
         }
 
-        internal TicketActivity GetHostTicketActivityPermission()
+        internal static TicketActivity GetHostTicketActivityPermission()
         {
             return GetReadTicketActivityPermission() |
                 TicketActivity.RequestMoreInfo |
@@ -69,7 +69,7 @@
                 TicketActivity.Resolve;
         }
 
-        internal TicketActivity GetNewTicketPermission()
+        internal static TicketActivity GetNewTicketPermission()
         {
             return TicketActivity.EditTicketInfo | TicketActivity.Create;
         }

@@ -191,6 +191,53 @@ namespace TicketDesk.Domain.Model
                 validActivities |= TicketActivity.Create | TicketActivity.CreateOnBehalfOf;
             }
 
+            validActivities = GetIsOpen(isOwnedByMe, isMoreInfo, isAssignedToMe, validActivities);
+
+            if (isResolved && isOwnedByMe)
+            {
+                validActivities |= TicketActivity.Close;
+            }
+
+            validActivities = GetIsOpenOrIsResolved(isOwnedByMe, isAssignedToMe, isResolved, validActivities);
+
+            return validActivities;
+        }
+
+        private TicketActivity GetIsOpenOrIsResolved(bool isOwnedByMe, bool isAssignedToMe, bool isResolved, TicketActivity ticketActivities)
+        {
+            var validActivities = ticketActivities;
+
+            if (IsOpen || isResolved)
+            {
+                if (IsAssigned)
+                {
+                    if (!isAssignedToMe)
+                    {
+                        validActivities |= TicketActivity.ReAssign;
+                    }
+                }
+                else
+                {
+                    // !assigned
+                    validActivities |= TicketActivity.Assign;
+                }
+
+                if ((isAssignedToMe || isOwnedByMe) && !(isResolved && isOwnedByMe))
+                {
+                    validActivities |= TicketActivity.ForceClose;
+                }
+
+                validActivities |=
+                    isAssignedToMe ? TicketActivity.Pass | TicketActivity.GiveUp : TicketActivity.TakeOver;
+            }
+
+            return validActivities;
+        }
+
+        private TicketActivity GetIsOpen(bool isOwnedByMe, bool isMoreInfo, bool isAssignedToMe, TicketActivity ticketActivities)
+        {
+            var validActivities = ticketActivities;
+
             if (IsOpen)
             {
                 validActivities |= TicketActivity.ModifyAttachments;
@@ -222,35 +269,6 @@ namespace TicketDesk.Domain.Model
             {
                 // not open (resolved or closed)
                 validActivities |= TicketActivity.ReOpen;
-            }
-
-            if (isResolved && isOwnedByMe)
-            {
-                validActivities |= TicketActivity.Close;
-            }
-
-            if (IsOpen || isResolved)
-            {
-                if (IsAssigned)
-                {
-                    if (!isAssignedToMe)
-                    {
-                        validActivities |= TicketActivity.ReAssign;
-                    }
-                }
-                else
-                {
-                    // !assigned
-                    validActivities |= TicketActivity.Assign;
-                }
-
-                if ((isAssignedToMe || isOwnedByMe) && !(isResolved && isOwnedByMe))
-                {
-                    validActivities |= TicketActivity.ForceClose;
-                }
-
-                validActivities |=
-                    isAssignedToMe ? TicketActivity.Pass | TicketActivity.GiveUp : TicketActivity.TakeOver;
             }
 
             return validActivities;
