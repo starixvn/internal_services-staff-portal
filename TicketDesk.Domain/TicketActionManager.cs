@@ -1,24 +1,11 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System;
-using System.Security;
-using System.Text;
-using TicketDesk.Domain.Model;
-using TicketDesk.Localization.Domain;
-
-namespace TicketDesk.Domain
+﻿namespace TicketDesk.Domain
 {
+    using Model;
+    using System;
+    using System.Security;
+    using System.Text;
+    using TicketDesk.Localization.Domain;
+
     public class TicketActionManager
     {
         internal TicketActionManager(TdDomainSecurityProviderBase securityProvider)
@@ -26,7 +13,7 @@ namespace TicketDesk.Domain
             SecurityProvider = securityProvider;
         }
 
-        private TdDomainSecurityProviderBase SecurityProvider { get; set; }
+        private TdDomainSecurityProviderBase SecurityProvider { get; }
 
         // TODO: we should enforce required comments on the back-end
         public static TicketActionManager GetInstance(TdDomainSecurityProviderBase securityProvider)
@@ -65,12 +52,12 @@ namespace TicketDesk.Domain
 
         public Action<Ticket> AddComment(string comment)
         {
-            const TicketActivity Activity = TicketActivity.AddComment;
+            const TicketActivity activity = TicketActivity.AddComment;
             return ticket =>
             {
-                if (CheckSecurity(ticket, Activity))
+                if (CheckSecurity(ticket, activity))
                 {
-                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, Activity, comment);
+                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
         }
@@ -82,27 +69,27 @@ namespace TicketDesk.Domain
 
         public Action<Ticket> CancelMoreInfo(string comment)
         {
-            const TicketActivity Activity = TicketActivity.CancelMoreInfo;
+            const TicketActivity activity = TicketActivity.CancelMoreInfo;
             return ticket =>
             {
-                if (CheckSecurity(ticket, Activity))
+                if (CheckSecurity(ticket, activity))
                 {
                     ticket.TicketStatus = TicketStatus.Active;
 
-                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, Activity, comment);
+                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
         }
 
         public Action<Ticket> Close(string comment)
         {
-            const TicketActivity Activity = TicketActivity.Close;
+            const TicketActivity activity = TicketActivity.Close;
             return ticket =>
             {
-                if (CheckSecurity(ticket, Activity))
+                if (CheckSecurity(ticket, activity))
                 {
                     ticket.TicketStatus = TicketStatus.Closed;
-                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, Activity, comment);
+                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
         }
@@ -120,10 +107,10 @@ namespace TicketDesk.Domain
             string tagList,
             ApplicationSetting settings)
         {
-            const TicketActivity Activity = TicketActivity.EditTicketInfo;
+            const TicketActivity activity = TicketActivity.EditTicketInfo;
             return ticket =>
             {
-                if (CheckSecurity(ticket, Activity))
+                if (CheckSecurity(ticket, activity))
                 {
                     var sb = new StringBuilder(comment);
                     sb.AppendLine();
@@ -135,7 +122,7 @@ namespace TicketDesk.Domain
                     // TODO: resource these strings!
                     if (ticket.Title != title)
                     {
-                        sb.AppendLine(string.Format("<dd>    {0}</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Title)));
+                        sb.AppendLine($"<dd>    {PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Title)}</dd>");
                         ticket.Title = title;
                     }
 
@@ -151,13 +138,15 @@ namespace TicketDesk.Domain
 
                     if (ticket.Details != details)
                     {
-                        sb.AppendLine(string.Format("<dd>    {0}</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Details)));
+                        sb.AppendLine(
+                            $"<dd>    {PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.Details)}</dd>");
                         ticket.Details = details;
                     }
 
                     if ((SecurityProvider.IsHostTicketCenter || settings.Permissions.AllowInternalUsersToEditTags) && ticket.TagList != tagList)
                     {
-                        sb.AppendLine(string.Format("<dd>    {0}</dd>", PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.TagList)));
+                        sb.AppendLine(
+                            $"<dd>    {PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.TagList)}</dd>");
                         ticket.TagList = tagList;
                     }
 
@@ -203,33 +192,33 @@ namespace TicketDesk.Domain
 
                     sb.AppendLine("</dl>");
                     comment = sb.ToString();
-                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, Activity, comment);
+                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
         }
 
         public Action<Ticket> ForceClose(string comment)
         {
-            const TicketActivity Activity = TicketActivity.ForceClose;
+            const TicketActivity activity = TicketActivity.ForceClose;
             return ticket =>
             {
-                if (CheckSecurity(ticket, Activity))
+                if (CheckSecurity(ticket, activity))
                 {
                     ticket.TicketStatus = TicketStatus.Closed;
-                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, Activity, comment);
+                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
         }
 
         public Action<Ticket> GiveUp(string comment)
         {
-            const TicketActivity Activity = TicketActivity.GiveUp;
+            const TicketActivity activity = TicketActivity.GiveUp;
             return ticket =>
             {
-                if (CheckSecurity(ticket, Activity))
+                if (CheckSecurity(ticket, activity))
                 {
                     ticket.AssignedTo = null;
-                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, Activity, comment);
+                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
         }
@@ -237,12 +226,12 @@ namespace TicketDesk.Domain
         public Action<Ticket> ModifyAttachments(string comment)
         {
             // The vast majority of attachements management occur outside the business domain, so all we do here is log the activity event
-            const TicketActivity Activity = TicketActivity.ModifyAttachments;
+            const TicketActivity activity = TicketActivity.ModifyAttachments;
             return ticket =>
             {
-                if (CheckSecurity(ticket, Activity))
+                if (CheckSecurity(ticket, activity))
                 {
-                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, Activity, comment);
+                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
         }
@@ -259,68 +248,68 @@ namespace TicketDesk.Domain
 
         public Action<Ticket> RequestMoreInfo(string comment)
         {
-            const TicketActivity Activity = TicketActivity.RequestMoreInfo;
+            const TicketActivity activity = TicketActivity.RequestMoreInfo;
             return ticket =>
             {
-                if (CheckSecurity(ticket, Activity))
+                if (CheckSecurity(ticket, activity))
                 {
                     ticket.TicketStatus = TicketStatus.MoreInfo;
 
-                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, Activity, comment);
+                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
         }
 
         public Action<Ticket> ReOpen(string comment, bool assignToMe)
         {
-            const TicketActivity Activity = TicketActivity.ReOpen;
+            const TicketActivity activity = TicketActivity.ReOpen;
             return ticket =>
             {
-                if (CheckSecurity(ticket, Activity))
+                if (CheckSecurity(ticket, activity))
                 {
                     ticket.AssignedTo = assignToMe ? SecurityProvider.CurrentUserId : null;
                     ticket.TicketStatus = TicketStatus.Active;
-                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, Activity, comment);
+                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
         }
 
         public Action<Ticket> Resolve(string comment)
         {
-            const TicketActivity Activity = TicketActivity.Resolve;
+            const TicketActivity activity = TicketActivity.Resolve;
             return ticket =>
             {
-                if (CheckSecurity(ticket, Activity))
+                if (CheckSecurity(ticket, activity))
                 {
                     ticket.TicketStatus = TicketStatus.Resolved;
-                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, Activity, comment);
+                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
         }
 
         public Action<Ticket> SupplyMoreInfo(string comment, bool reactivate)
         {
-            const TicketActivity Activity = TicketActivity.SupplyMoreInfo;
+            const TicketActivity activity = TicketActivity.SupplyMoreInfo;
             return ticket =>
             {
-                if (CheckSecurity(ticket, Activity))
+                if (CheckSecurity(ticket, activity))
                 {
                     if (reactivate)
                     {
                         ticket.TicketStatus = TicketStatus.Active;
                     }
 
-                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, Activity, comment);
+                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
         }
 
         public Action<Ticket> TakeOver(string comment, string priority)
         {
-            const TicketActivity Activity = TicketActivity.TakeOver;
+            const TicketActivity activity = TicketActivity.TakeOver;
             return ticket =>
             {
-                if (CheckSecurity(ticket, Activity))
+                if (CheckSecurity(ticket, activity))
                 {
                     ticket.AssignedTo = SecurityProvider.CurrentUserId;
                     if (!string.IsNullOrEmpty(priority))
@@ -335,7 +324,7 @@ namespace TicketDesk.Domain
                         }
                     }
 
-                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, Activity, comment, priority, null);
+                    ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment, priority, null);
                 }
             };
         }

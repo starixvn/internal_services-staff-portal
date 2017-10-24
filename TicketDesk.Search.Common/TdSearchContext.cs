@@ -1,21 +1,8 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System;
-using System.Configuration;
-
-namespace TicketDesk.Search.Common
+﻿namespace TicketDesk.Search.Common
 {
+    using System;
+    using System.Configuration;
+
     public class TdSearchContext
     {
         private static TdSearchContext _current;
@@ -33,17 +20,15 @@ namespace TicketDesk.Search.Common
             GetConfigurationFunc = getConfigurationFunc;
         }
 
-        public static TdSearchContext Current
+        public static TdSearchContext Current()
         {
-            get
+            if (GetConfigurationFunc == null)
             {
-                if (GetConfigurationFunc == null)
-                {
-                    throw new ConfigurationErrorsException("Attempt to access search system before TicketDeskSearchContext has been configured");
-                }
-
-                return _current ?? (_current = new TdSearchContext(GetConfigurationFunc()));
+                throw new ConfigurationErrorsException(
+                    "Attempt to access search system before TicketDeskSearchContext has been configured");
             }
+
+            return _current ?? (_current = new TdSearchContext(GetConfigurationFunc()));
         }
 
         public ISearchLocatorProvider IndexSearcher { get; set; }

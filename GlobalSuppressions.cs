@@ -37,3 +37,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S107:Methods should not have too many parameters", Justification = "<Pending>", Scope = "member", Target = "~M:TicketDesk.Web.Client.Controllers.TicketActivityController.EditTicketInfo(System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)~System.Threading.Tasks.Task{System.Web.Mvc.ActionResult}")]
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S1694:An abstract class should have both abstract and concrete methods", Justification = "<Pending>", Scope = "type", Target = "~T:TicketDesk.Search.Lucene.LuceneSearchConnector")]
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S2342:Enumeration types should comply with a naming convention", Justification = "The author of ticket desk use this type in so many place, making it super dificult to change", Scope = "type", Target = "~T:TicketDesk.Domain.Model.TicketActivity")]

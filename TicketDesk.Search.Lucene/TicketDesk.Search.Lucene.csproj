@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
     <Compile Include="LuceneIndexProvider.cs" />
     <Compile Include="LuceneSearchConnector.cs" />
     <Compile Include="LuceneSearchLocatorProvider.cs" />
