@@ -54,7 +54,7 @@ namespace TicketDesk.Web.Client
 
             if (context.TicketDeskPushNotificationSettings.IsEnabled)
             {
-                EnsureBroadcastNotificaitonsConfiguration(context);
+                ////EnsureBroadcastNotificaitonsConfiguration(context);
 
                 // TODO: poor man's detection of appropriate scheduler
                 var siteName = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME");
