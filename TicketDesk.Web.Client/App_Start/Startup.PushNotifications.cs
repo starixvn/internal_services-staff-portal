@@ -122,8 +122,9 @@ namespace TicketDesk.Web.Client
             }
             else
             {
-                var userManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
                 var roleManager = DependencyResolver.Current.GetService<TicketDeskRoleManager>();
+                var userManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
+                
                 var usersForNotification = roleManager.GetTdHelpDeskUsers(userManager)
                     .Union(roleManager.GetTdTdAdministrators(userManager))
                     .Distinct(new UniqueNameEmailDisplayUserEqualityComparer()).ToArray();
