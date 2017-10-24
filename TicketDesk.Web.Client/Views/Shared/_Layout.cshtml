@@ -34,21 +34,35 @@
     <link href="~/src/libs/normalize.css" rel="stylesheet" />
     <link href="~/src/Fonts/iconFont/style.css" rel="stylesheet" />
     <link href="~/src/css/page.css" rel="stylesheet" />
-    
+
     @RenderSection("css", false)
     @RenderSection("customHeader", required: false)
 </head>
 <body>
 
-    @Html.Action("Menu", "Home")
+    @*@Html.Action("Menu", "Home")*@
 
-    <div class="body-content">
+    @*<div class="body-content">
         @RenderBody()
         <footer>
             <p class="text-muted">
                 <a href="#">Service & Staff Portal</a> | &copy; 2017 - @DateTime.Now.Year | Nexcel Solutions Ahihi
             </p>
         </footer>
+    </div>*@
+
+    <div class="page-container">
+        <div class="sticky-header">
+            <div class="logo"><img src="~/src/contents/images/logo.png" class="img-logo" /></div>
+            
+            @Html.Action("Menu", "Home")
+
+        </div>
+        <div class="content">
+            <div class="submenu-section">
+            </div>
+            @RenderBody()
+        </div>
     </div>
 
 
