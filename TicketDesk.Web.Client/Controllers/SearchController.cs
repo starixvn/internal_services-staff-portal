@@ -46,7 +46,7 @@ namespace TicketDesk.Web.Client.Controllers
             var projectId = await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context).ConfigureAwait(false);
             if (!string.IsNullOrEmpty(term))
             {
-                var model = await TdSearchContext.Current.SearchAsync(Context.Tickets.Include(t => t.Project), term, projectId).ConfigureAwait(false);
+                var model = await TdSearchContext.Current().SearchAsync(Context.Tickets.Include(t => t.Project), term, projectId).ConfigureAwait(false);
 
                 if (Context.Projects.Count() > 1)
                 {

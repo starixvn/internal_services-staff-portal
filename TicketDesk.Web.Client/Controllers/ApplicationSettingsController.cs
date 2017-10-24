@@ -31,7 +31,7 @@ namespace TicketDesk.Web.Client.Controllers
         public ApplicationSettingsController(TdDomainContext context)
         {
             Context = context;
-            IsAzureSearchDetected = TdSearchContext.Current.IndexManager.GetType() == typeof(AzureIndexProvider);
+            IsAzureSearchDetected = TdSearchContext.Current().IndexManager.GetType() == typeof(AzureIndexProvider);
         }
 
         private TdDomainContext Context { get; }

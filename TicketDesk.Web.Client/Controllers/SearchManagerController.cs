@@ -32,12 +32,12 @@
         [NapAuth(FunctionKey = FunctionKeys.SearchManagement, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> RemoveIndex()
         {
-            await TdSearchContext.Current.IndexManager.RemoveIndexAsync().ConfigureAwait(false);
+            await TdSearchContext.Current().IndexManager.RemoveIndexAsync().ConfigureAwait(false);
 
             // initialize search
-            await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
+            await TdSearchContext.Current().IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
             IEnumerable<SearchIndexItem> searchItems = new List<SearchIndexItem>();
-            await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
+            await TdSearchContext.Current().IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
 
             ViewBag.IndexRemoved = true;
             return View("Index");
@@ -47,9 +47,9 @@
         [NapAuth(FunctionKey = FunctionKeys.SearchManagement, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> PopulateIndex()
         {
-            await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
+            await TdSearchContext.Current().IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
             var searchItems = Context.Tickets.Include("TicketEvents").ToSeachIndexItems();
-            await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
+            await TdSearchContext.Current().IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
             ViewBag.IndexPopulated = true;
             return View("Index");
         }

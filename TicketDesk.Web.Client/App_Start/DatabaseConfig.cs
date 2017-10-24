@@ -60,13 +60,13 @@
                         DemoDataManager.SetupDemoData(ctx);
 
                         // TODO: duplicated in FirstRunSetup controller, should refactor extension method or something... just not sure what the most appropriate place is
-                        HostingEnvironment.QueueBackgroundWorkItem(async (ct) =>
+                        HostingEnvironment.QueueBackgroundWorkItem(async ct =>
                         {
                             using (var dctx = new TdDomainContext(null))
                             {
-                                await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
+                                await TdSearchContext.Current().IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
                                 var searchItems = dctx.Tickets.Include("TicketEvents").ToSeachIndexItems();
-                                await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
+                                await TdSearchContext.Current().IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
                             }
                         });
                     }

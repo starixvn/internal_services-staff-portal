@@ -14,7 +14,7 @@
         {
             TdSearchContext.Configure(GetSearchConfiguration);
 
-            TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync();
+            TdSearchContext.Current().IndexManager.RunIndexMaintenanceAsync();
 
             // register for static ticket changed event handler
             TdDomainContext.TicketsChanged += (sender, ticketChanges) =>
@@ -34,7 +34,7 @@
                         HostingEnvironment.QueueBackgroundWorkItem(
                             async ct =>
                                 await
-                                    TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems)
+                                    TdSearchContext.Current().IndexManager.AddItemsToIndexAsync(searchItems)
                                         .ConfigureAwait(false));
                     }
                 }

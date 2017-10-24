@@ -142,9 +142,9 @@
             {
                 using (var ctx = new TdDomainContext(null))
                 {
-                    await TdSearchContext.Current.IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
+                    await TdSearchContext.Current().IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
                     var searchItems = ctx.Tickets.Include("TicketEvents").ToSeachIndexItems();
-                    await TdSearchContext.Current.IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
+                    await TdSearchContext.Current().IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
                 }
             });
         }
