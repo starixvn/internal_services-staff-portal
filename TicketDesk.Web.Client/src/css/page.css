@@ -24,7 +24,7 @@ body {
   position: relative;
   -webkit-box-shadow: 0px 0px 5px #ccc;
   box-shadow: 0px 0px 5px #ccc;
-  background-image: url("../contents/images/bg01.png"); }
+  /*background-image: url("../contents/images/bg01.png")*/ }
 
 .sticky-header {
   background: #fff;
