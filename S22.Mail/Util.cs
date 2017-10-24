@@ -97,21 +97,25 @@
             {
                 using (MemoryStream m = new MemoryStream())
                 {
-                    for (int i = 0; i < value.Length; i++)
+                    int increase;
+                    for (var i = 0; i < value.Length; i = i + increase)
                     {
-                        if (value[i] == '=')
+                        switch (value[i])
                         {
-                            string hex = value.Substring(i + 1, 2);
-                            m.WriteByte(Convert.ToByte(hex, 16));
-                            i = i + 2;
-                        }
-                        else if (value[i] == '_')
-                        {
-                            m.WriteByte(Convert.ToByte(' '));
-                        }
-                        else
-                        {
-                            m.WriteByte(Convert.ToByte(value[i]));
+                            case '=':
+                                string hex = value.Substring(i + 1, 2);
+                                m.WriteByte(Convert.ToByte(hex, 16));
+                                ////i = i + 2;
+                                increase = 3;
+                                break;
+                            case '_':
+                                m.WriteByte(Convert.ToByte(' '));
+                                increase = 1;
+                                break;
+                            default:
+                                m.WriteByte(Convert.ToByte(value[i]));
+                                increase = 1;
+                                break;
                         }
                     }
 
@@ -141,17 +145,20 @@
             {
                 using (MemoryStream m = new MemoryStream())
                 {
-                    for (int i = 0; i < value.Length; i++)
+                    int increase;
+                    for (int i = 0; i < value.Length; i = i + increase)
                     {
                         if (value[i] == '=')
                         {
                             string hex = value.Substring(i + 1, 2);
                             m.WriteByte(Convert.ToByte(hex, 16));
-                            i = i + 2;
+                            ////i = i + 2;
+                            increase = 3;
                         }
                         else
                         {
                             m.WriteByte(Convert.ToByte(value[i]));
+                            increase = 1;
                         }
                     }
 
