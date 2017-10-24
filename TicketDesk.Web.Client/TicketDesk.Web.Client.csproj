@@ -483,6 +483,10 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\filesystem-precompiled-release.pubxml" />
     <None Include="Properties\PublishProfiles\SSP.pubxml" />
@@ -2118,6 +2122,31 @@
     <Content Include="Scripts\ticketdesk\application-settings.js" />
     <Content Include="Scripts\ticketdesk\TicketFeedback\edit-ticket.js" />
     <Content Include="Scripts\ticketdesk\User\login.js" />
+    <Content Include="src\contents\images\bg01.png" />
+    <Content Include="src\contents\images\logo.png" />
+    <Content Include="src\css\page.css">
+      <DependentUpon>page.scss</DependentUpon>
+    </Content>
+    <Content Include="src\css\page.min.css">
+      <DependentUpon>page.css</DependentUpon>
+    </Content>
+    <Content Include="src\Fonts\iconFont\demo-files\demo.css" />
+    <Content Include="src\Fonts\iconFont\demo-files\demo.js" />
+    <Content Include="src\Fonts\iconFont\demo.html" />
+    <Content Include="src\Fonts\iconFont\fonts\icomoon.svg" />
+    <Content Include="src\Fonts\iconFont\Read Me.txt" />
+    <Content Include="src\Fonts\iconFont\style.css" />
+    <Content Include="src\js\page.js" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.css" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.min.css" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.css" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.min.css" />
+    <Content Include="src\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap.js" />
+    <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap.min.js" />
+    <Content Include="src\libs\bootstrap-3.3.7\js\npm.js" />
+    <Content Include="src\libs\normalize.css" />
+    <Content Include="src\libs\Touch\touche.js" />
     <Content Include="Views\SearchManager\Index.cshtml" />
     <Content Include="Views\DataManagement\Demo.cshtml" />
     <Compile Include="App_Start\Startup.Database.cs" />
@@ -2239,6 +2268,19 @@
     <Content Include="Scripts\jquery.validate.globalize.min.js.map" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
     <Content Include="TicketDesk.Web.Client.ruleset" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.css.map" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.min.css.map" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.css.map" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.min.css.map" />
+    <Content Include="src\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="src\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="src\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="src\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="src\css\page.scss" />
+    <Content Include="src\Fonts\iconFont\fonts\icomoon.eot" />
+    <Content Include="src\Fonts\iconFont\fonts\icomoon.ttf" />
+    <Content Include="src\Fonts\iconFont\fonts\icomoon.woff" />
+    <Content Include="src\Fonts\iconFont\selection.json" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
