@@ -3,6 +3,7 @@ namespace S22.Mail
 {
     using System;
     using System.Collections.Specialized;
+    using System.Linq;
     using System.Net.Mail;
     using System.Text;
 
@@ -48,7 +49,9 @@ namespace S22.Mail
             HeadersEncoding = m.HeadersEncoding;
             IsBodyHtml = m.IsBodyHtml;
             Priority = m.Priority;
-            ReplyTo = m.ReplyTo;
+            ////ReplyTo = m.ReplyTo;
+            ReplyTo = m.ReplyToList.FirstOrDefault();
+
             ReplyToList = new SerializableMailAddressCollection();
             foreach (MailAddress a in m.ReplyToList)
             {
@@ -134,7 +137,8 @@ namespace S22.Mail
             m.HeadersEncoding = message.HeadersEncoding;
             m.IsBodyHtml = message.IsBodyHtml;
             m.Priority = message.Priority;
-            m.ReplyTo = message.ReplyTo;
+            ////m.ReplyTo = message.ReplyTo;
+            m.ReplyToList.Add(message.ReplyTo);
 
             foreach (SerializableMailAddress a in message.ReplyToList)
             {
