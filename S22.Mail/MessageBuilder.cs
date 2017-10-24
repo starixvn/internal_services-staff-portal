@@ -502,9 +502,12 @@
 
                 // Read the part header
                 var header = new StringBuilder();
-                while (!string.IsNullOrEmpty(line = reader.ReadLine()))
+
+                line = reader.ReadLine();
+                while (!string.IsNullOrEmpty(line))
                 {
                     header.AppendLine(line);
+                    line = reader.ReadLine();
                 }
 
                 p.Header = ParseMailHeader(header.ToString());
