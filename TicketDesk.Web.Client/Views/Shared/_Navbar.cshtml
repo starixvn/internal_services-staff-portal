@@ -1,28 +1,53 @@
 ﻿@using TicketDesk.Web.Client.Models.Extensions
 
 @model TicketDesk.Web.Client.Models.NavbarViewModel
-
-<ul class="main-menu">
-
-    @foreach (MenuItem menu in Model.MenuItems)
-    {
-        var menuLink = "#";
-        if (!string.IsNullOrEmpty(menu.Url))
-        {
-            menuLink = menu.Url;
-        }
-        <li><a href="@menuLink" class="menu-item"><i class="@menu.Description"></i><span class="text">@menu.Name</span></a></li>
-    }
     
-    @Html.Partial("_UserMenu", Model)
+<div class="sticky-header">
+    <div class="logo"><img src="~/src/contents/images/logo.png" class="img-logo" /></div>
+            
+    <ul class="main-menu">
 
-    @*<li><a href="#" class="menu-item"><i class="icon-home"></i><span class="text">My dashboard</span></a></li>
+        @foreach (MenuItem menu in Model.MenuItems)
+        {
+            var menuLink = "#";
+            if (!string.IsNullOrEmpty(menu.Url))
+            {
+                menuLink = menu.Url;
+            }
+
+            var menuClass = Html.IsActiveRoute(menuLink);
+
+            <li class="@menuClass"><a href="@menuLink" class="menu-item"><i class="@menu.Description"></i><span class="text">@menu.Name</span></a></li>
+        }
+    
+        @Html.Partial("_UserMenu", Model)
+
+        @*<li><a href="#" class="menu-item"><i class="icon-home"></i><span class="text">My dashboard</span></a></li>
         <li><a href="#" class="menu-item my-ticket"><i class="icon-myticket"></i><span class="text">My ticket</span></a></li>
         <li><a href="#" class="menu-item"><i class="icon-ticketlist"></i><span class="text">Ticket list</span></a></li>
         <li><a href="#" class="menu-item"><i class="icon-upload"></i><span class="text">ID uploader</span></a></li>
         <li><a href="#" class="menu-item"><i class="icon-references"></i><span class="text">References</span></a></li>
         <li><a href="#" class="menu-item"><i class="icon-logout"></i><span class="text">Logout</span></a></li>*@
-</ul>
+    </ul>
+
+</div>
+
+<div class="submenu-section">
+    @foreach (MenuItem menu in Model.MenuItems)
+    {
+        if (menu.Children.Any())
+        {
+            <ul class="submenu">
+                @foreach (var childItem in menu.Children)
+                {
+                    <li><a href='@childItem.Url' class=''><i class='@childItem.Description'></i><span class='text'>@childItem.Name</span></a></li>
+                }
+            </ul>
+        }
+    }
+</div>
+
+
 
 @*<nav id="mainNav" class="navbar navbar-default " role="navigation">
         <div class="navbar-header">

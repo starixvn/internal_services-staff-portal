@@ -43,24 +43,17 @@
     @*@Html.Action("Menu", "Home")*@
 
     @*<div class="body-content">
-        @RenderBody()
-        <footer>
-            <p class="text-muted">
-                <a href="#">Service & Staff Portal</a> | &copy; 2017 - @DateTime.Now.Year | Nexcel Solutions Ahihi
-            </p>
-        </footer>
-    </div>*@
+            @RenderBody()
+            <footer>
+                <p class="text-muted">
+                    <a href="#">Service & Staff Portal</a> | &copy; 2017 - @DateTime.Now.Year | Nexcel Solutions Ahihi
+                </p>
+            </footer>
+        </div>*@
 
     <div class="page-container">
-        <div class="sticky-header">
-            <div class="logo"><img src="~/src/contents/images/logo.png" class="img-logo" /></div>
-            
-            @Html.Action("Menu", "Home")
 
-        </div>
-
-        <div class="submenu-section">
-        </div>
+        @Html.Action("Menu", "Home")
 
         <div class="content">
             @RenderBody()
