@@ -39,7 +39,8 @@ body {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: 0 25px; }
+  padding: 0 25px;
+  z-index: 9999; }
 
 .logo {
   display: -webkit-box;
@@ -58,6 +59,8 @@ body {
   -ms-flex-direction: row;
   flex-direction: row;
   list-style: none; }
+  .main-menu li:nth-child(2) .menu-item {
+    padding-top: 14px; }
   .main-menu .menu-item {
     border-left: 1px solid #d3d7db;
     display: -webkit-box;

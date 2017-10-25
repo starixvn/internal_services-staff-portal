@@ -55,6 +55,7 @@ body {
     -ms-flex-pack: justify;
     justify-content: space-between;
     padding: 0 25px;
+    z-index: 9999;
 }
 
 .logo {
@@ -75,7 +76,9 @@ body {
     -ms-flex-direction: row;
     flex-direction: row;
     list-style: none;
-
+    li:nth-child(2) .menu-item {
+        padding-top: 14px;
+    }
     .menu-item {
         border-left: 1px solid $border-color;
         display: -webkit-box;
