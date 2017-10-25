@@ -1,5 +1,4 @@
-﻿@using TicketDesk.Localization.Views.Shared
-@using TicketDesk.Web.Client.Models.Extensions
+﻿@using TicketDesk.Web.Client.Models.Extensions
 
 @model TicketDesk.Web.Client.Models.NavbarViewModel
 
@@ -7,7 +6,12 @@
 
     @foreach (MenuItem menu in Model.MenuItems)
     {
-        <li><a href="@menu.Url" class="menu-item"><i class="@menu.Description"></i><span class="text">@menu.Name</span></a></li>
+        var menuLink = "#";
+        if (!string.IsNullOrEmpty(menu.Url))
+        {
+            menuLink = menu.Url;
+        }
+        <li><a href="@menuLink" class="menu-item"><i class="@menu.Description"></i><span class="text">@menu.Name</span></a></li>
     }
     
     @Html.Partial("_UserMenu", Model)
