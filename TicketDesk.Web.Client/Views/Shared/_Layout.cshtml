@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Core.Resources
+@using TicketDesk.Web.Client.Models.Extensions
 <!DOCTYPE html>
 <html>
 <head>
@@ -115,6 +116,15 @@
     <script src="~/src/libs/Touch/touche.js"></script>
     <script src="~/Scripts/ticketdesk/common.js"></script>
     <script src="~/src/js/page.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            if ($(".submenu.active").length > 0) {
+                // Submenu displayed
+                $(".content").addClass("menu-opened");
+            }
+        });
+    </script>
 
     @RenderSection("scripts", required: false)
 </body>

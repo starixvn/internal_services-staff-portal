@@ -2282,7 +2282,6 @@
     <Content Include="src\Fonts\iconFont\fonts\icomoon.ttf" />
     <Content Include="src\Fonts\iconFont\fonts\icomoon.woff" />
     <Content Include="src\Fonts\iconFont\selection.json" />
-    <Content Include="Views\Shared\_SubMenu.cshtml" />
     <Content Include="Views\References\Index.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
