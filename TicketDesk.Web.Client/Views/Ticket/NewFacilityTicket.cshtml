@@ -100,9 +100,26 @@
             <tr class="title">
                 <td colspan="4">Item List</td>
             </tr>
-            @*<tr id="item-section">
-                
-            </tr>*@
+
+        </tbody>
+
+        <tbody id="item-section">
+            @if (Model.Items != null)
+            {
+                for (int i = 0; i < Model.Items.Count; i++)
+                {
+                    var guid = Guid.NewGuid().ToString();
+
+                    <tr>
+                        @Html.CustomFieldIndex("Items", guid)
+                        <td class="key">@Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items")</td>
+                        <td class="value">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items")</td>
+                        <td><button class="btn btn-danger remove-button col-sm-2">Remove</button></td>
+                        <td class="key">@Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items")</td>
+                        <td class="value">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items")</td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
 
@@ -210,7 +227,7 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-info">
+                    @*<div class="panel panel-info">
                         <div class="panel-heading">Items</div>
                         <div id="item-section" class="panel-body form-group">
                             @if (Model.Items != null)
@@ -235,7 +252,7 @@
                                 }
                             }
                         </div>
-                    </div>
+                    </div>*@
 
                     <button class="btn btn-default add-more-button" data-class="item-section">Add more</button>
                 </div>
