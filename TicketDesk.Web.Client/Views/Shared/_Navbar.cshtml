@@ -35,9 +35,16 @@
 <div class="submenu-section">
     @foreach (MenuItem menu in Model.MenuItems)
     {
+        var menuLink = "#";
+        if (!string.IsNullOrEmpty(menu.Url))
+        {
+            menuLink = menu.Url;
+        }
+        var activeParentMenuClass = Html.IsActiveRoute(menuLink);
+
         if (menu.Children.Any())
         {
-            <ul class="submenu">
+            <ul class="submenu @activeParentMenuClass">
                 @foreach (var childItem in menu.Children)
                 {
                     <li><a href='@childItem.Url' class=''><i class='@childItem.Description'></i><span class='text'>@childItem.Name</span></a></li>
