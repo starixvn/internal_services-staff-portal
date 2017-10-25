@@ -73,7 +73,7 @@
         function AssignRemoveButton() {
             $(".remove-button:first").hide();
             $("body").on("click",".remove-button", function() {
-                $(this).parent().remove();
+                $(this).parent().parent().remove();
             });
         }
 
