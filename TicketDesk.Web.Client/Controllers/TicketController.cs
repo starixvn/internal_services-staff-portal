@@ -34,7 +34,7 @@
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public RedirectToRouteResult Index()
         {
-            return RedirectToAction("Index", "TicketCenter");
+            return RedirectToAction("NewFacilityTicket", "Ticket");
         }
 
         [Route("{id:int}")]
@@ -347,7 +347,7 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        [Route("feedback/new")]
+        [Route("new-feedback")]
         public async Task<ActionResult> Feedback()
         {
             var categoryId = (int)TicketCategoryTypes.Feedback;
@@ -378,7 +378,7 @@
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
         [ValidateInput(false)]
-        [Route("feedback/new")]
+        [Route("new-feedback")]
         public async Task<ActionResult> Feedback(TicketFeedbackViewModel model)
         {
             var ticket = model.Ticket;
