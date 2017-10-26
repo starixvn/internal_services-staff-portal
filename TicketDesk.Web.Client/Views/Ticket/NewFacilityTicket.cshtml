@@ -1,4 +1,5 @@
-﻿@using TicketDesk.Localization.Views.Ticket
+﻿@using CsQuery.ExtensionMethods.Internal
+@using TicketDesk.Localization.Views.Ticket
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 @model TicketDesk.Web.Client.Models.Ticket.NewFacilityTicketViewModel
 
@@ -92,17 +93,16 @@
         <div class="title">REPAIRS AND SERVICES REQUISITION FORM</div>
         <div>
             @Html.CustomFieldLabelFor(Model.RequestType.CustomField, new { @class = "key" })
-            @*@Html.CustomFieldFor(x => x.RequestType)*@
             <div class="value span-3 border">
                 <div class="radio-group">
-                    <p>
-                        <input type="radio" id="rd-repair" name="radio-group" checked>
-                        <label for="rd-repair">For Repair</label>
-                    </p>
-                    <p>
-                        <input type="radio" id="rd-improvement" name="radio-group">
-                        <label for="rd-improvement">For Improvement</label>
-                    </p>
+                    @foreach (string requestType in Model.RequestTypes)
+                    {
+                        var rdId = "rd-" + requestType.Replace(' ', '_');
+                        <p>
+                            @Html.RadioButtonFor(x => x.RequestType.Value, requestType, new { id = rdId })
+                            <label for="@rdId">@requestType</label>
+                        </p>
+                    }
                 </div>
             </div>
         </div>
@@ -138,7 +138,7 @@
             <div class="key border">Attach files*:</div>
             <div class="value span-3 border"><input type="file" /></div>
             <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">20 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg,jpg,pdf</span></div>
-        </div>        
+        </div>
     </div>
     <input type="submit" class="btn btn-send" value="Send" />
     @*<div class="panel panel-info">

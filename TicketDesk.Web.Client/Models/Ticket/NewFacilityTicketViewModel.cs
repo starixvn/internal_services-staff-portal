@@ -1,15 +1,31 @@
 ﻿namespace TicketDesk.Web.Client.Models.Ticket
 {
     using System.Collections.Generic;
+    using System.Text.RegularExpressions;
     using Domain.Model;
 
     public class NewFacilityTicketViewModel
     {
+        private string[] _requestTypes;
         public Ticket Ticket { get; set; }
 
         public CustomFieldValue RequestType { get; set; }
 
         public ICollection<Item> Items { get; set; }
+
+        public string[] RequestTypes
+        {
+            get
+            {
+                if (_requestTypes != null)
+                {
+                    return _requestTypes;
+                }
+
+                _requestTypes = Regex.Split(RequestType.CustomField.Values, "\r\n");
+                return _requestTypes;
+            }
+        }
     }
 
     public class Item
