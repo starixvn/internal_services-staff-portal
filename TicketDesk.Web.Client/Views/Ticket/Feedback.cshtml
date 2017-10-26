@@ -1,10 +1,9 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
 @using System.Configuration
 @using TicketDesk.Domain.Model
-@using TicketDesk.Web.Client.ViewModels.Ticket
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 
-@model TicketFeedbackViewModel
+@model TicketDesk.Web.Client.Models.Ticket.TicketFeedbackViewModel
 
 @section title { @New.Title }
 
@@ -47,6 +46,17 @@
 
     @using (Html.BeginForm("Feedback", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal" }))
     {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Ticket.CategoryId)
+        @Html.HiddenFor(model => model.Ticket.IsHtml)
+        @Html.HiddenFor(model => model.tempId)
+        @Html.HiddenFor(model => model.Ticket.Title)
+        @Html.HiddenFor(model => model.Ticket.TicketType)
+        @Html.HiddenFor(model => model.Ticket.Category)
+        @Html.HiddenFor(model => model.Ticket.Priority)
+        @Html.HiddenFor(model => model.Ticket.Details)
+        @Html.HiddenFor(model => model.Ticket.ProjectId)
+
         <div class="form-content feedback-form">
             <div class="title">FEEDBACK FORM</div>
             <div class="key border">Feedback by</div>

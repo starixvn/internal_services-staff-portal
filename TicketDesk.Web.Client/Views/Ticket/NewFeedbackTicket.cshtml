@@ -1,0 +1,164 @@
+﻿@using TicketDesk.Localization.Views.Ticket
+@using System.Configuration
+@using TicketDesk.Domain.Model
+@using TicketDesk.Web.Client.Infrastructure.Helpers
+
+@model TicketDesk.Web.Client.Models.Ticket.NewFeedbackTicketViewModel
+
+@section title { @New.Title }
+
+@section scripts
+{
+    @Styles.Render("~/content/editor")
+    @Styles.Render("~/content/select2")
+    @Styles.Render("~/content/summernote")
+
+    @Scripts.Render("~/bundles/select2")
+    @Scripts.Render("~/bundles/select2_locale_" + CultureHelper.GetCurrentCulture())
+    @Scripts.Render("~/bundles/markdown")
+    @Scripts.Render("~/bundles/summernote")
+    @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())
+    @Scripts.Render("~/bundles/editor")
+
+    <script type="text/javascript">
+
+        (function () {
+            $.ajaxSetup({ cache: false });
+            var uploaderConfig = {
+                dropzoneUploadUrl: '@Url.Action("Upload", "File")',
+                getAttachmentsUrl: '@Url.Action("GetAttachmentsInfo", "File")',
+                deleteFileUrl: '@Url.Action("Delete", "File")',
+                defaultThumbnailUrl: '@Url.Content("~/content/images/general-file.png")',
+                ticketId: null
+            };
+            var tagsConfig = {
+                tagAutoCompleteUrl: '@Url.Action("TagList", "AutoComplete")'
+            };
+            var detailsConfig = {
+                isHtml: @(Model.Ticket.IsHtml ? "true" : "false")
+                };
+            window.ticketTags.activate(tagsConfig);
+            window.ticketDetails.activate(detailsConfig);
+            window.ticketFileUploader.activate(uploaderConfig);
+        })();
+    </script>
+}
+
+@using (Html.BeginForm("Feedback", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Ticket.IsHtml)
+    @Html.HiddenFor(model => model.Ticket.Title)
+    @Html.HiddenFor(model => model.Ticket.TicketType)
+    @Html.HiddenFor(model => model.Ticket.Category)
+    @Html.HiddenFor(model => model.Ticket.Priority)
+    @Html.HiddenFor(model => model.Ticket.Details)
+
+    <div class="form-content feedback-form">
+        <div class="title">FEEDBACK FORM</div>
+        <div class="key border">Feedback by</div>
+        <div class="value span-3 border">
+            <div class="radio-group">
+                @foreach (string feedbackByValue in Model.FeedbackByValues)
+                {
+                    var rdId = "rd-" + feedbackByValue.Replace(' ', '_');
+
+                    <p>
+                        @Html.RadioButtonFor(x => x.FeedbackBy.Value, feedbackByValue, new { id = rdId })
+                        <label for="@rdId">@feedbackByValue</label>
+                    </p>
+                }
+            </div>
+        </div>
+        <div class="item-list item">
+            @Html.CustomFieldLabelFor(x => x.Subject, new { @class = "key fullwidth border" })
+            <div class="fullwidth">
+                @Html.CustomFieldFor(x => x.Subject)
+            </div>
+        </div>
+        <div class="item-list item">
+            @Html.CustomFieldLabelFor(x => x.CustomerName, new { @class = "key fullwidth border" })
+            <div class="fullwidth">
+                @Html.CustomFieldFor(x => x.CustomerName)
+            </div>
+        </div>
+        <div class="item-list item">
+            @Html.CustomFieldLabelFor(x => x.Feedback, new { @class = "key fullwidth border" })
+            @Html.CustomFieldFor(x => x.Feedback, new { @class = "fullwidth" })
+        </div>
+        <div class="attach-file">
+            <div class="key border">Attach files*:</div>
+            <div class="value span-3 border"><input type="file" /></div>
+            <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">20 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg,jpg,pdf</span></div>
+        </div>
+    </div>
+    <input type="submit" class="btn btn-send" value="Send" />
+    @*<div class="panel panel-info">
+            <div class="panel-heading">
+                <h2 class="panel-title">@New.Header</h2>
+            </div>
+            <div class="panel-body ">
+
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, New.UnableCreateTicket, new { @class = "alert alert-danger" })
+
+                @Html.HiddenFor(model => model.Ticket.CategoryId)
+                @Html.HiddenFor(model => model.Ticket.IsHtml)
+                @Html.HiddenFor(model => model.tempId)
+
+                @if (ViewBag.IsMultiProject)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Ticket.ProjectId, new { @class = "col-md-2 col-sm-1 control-label" })
+                        <div class="col-md-8 col-sm-11">
+                            @Html.DropDownListFor(model => model.Ticket.ProjectId, Model.Ticket.GetProjectList((int?)ViewBag.SelectedProjectId), new { @class = "form-control input-sm", tabindex = 1 })
+                            @Html.ValidationMessageFor(model => model.Ticket.ProjectId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @Html.HiddenFor(model => model.Ticket.ProjectId)
+                }
+
+                @Html.HiddenFor(model => model.Ticket.Title)
+                @Html.HiddenFor(model => model.Ticket.TicketType)
+                @Html.HiddenFor(model => model.Ticket.Category)
+                @Html.HiddenFor(model => model.Ticket.Priority)
+                @Html.HiddenFor(model => model.Ticket.Details)
+
+
+
+                @Html.PartialWithPrefix(m => m.CustomFields, "_FeedbackCustomField")
+
+                <div class="form-group">
+                    <label class="col-md-2 col-sm-1 control-label">@New.Files</label>
+                    <div class="col-md-8 col-sm-11">
+                        @{
+                            var demoMode = ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false";
+                            if (demoMode.Equals("true", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                <div class="alert alert-warning">
+                                    @Html.Raw(New.Attachment_Demo_Alert)
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="dropzone" style="min-height: 40px;" id="attachmentsDropZone">
+                                    <div class="dz-message" data-dz-message><i class="fa fa-download "></i> @New.Attachment_Instructions</div>
+                                    <div class="dropzone-previews" id="dz-preview"></div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="">
+                    <button type="submit" class="btn btn-success" tabindex="10">@New.SaveOption</button>&nbsp;&nbsp;
+                    @Html.ActionLink(New.BackOption, "Index")
+                </div>
+            </div>
+        </div>*@
+}

@@ -1,6 +1,5 @@
-﻿namespace TicketDesk.Web.Client.ViewModels.Ticket
+﻿namespace TicketDesk.Web.Client.Models.Ticket
 {
-    using Models.Ticket;
     using System;
     using System.Collections.Generic;
     using Domain.Model;

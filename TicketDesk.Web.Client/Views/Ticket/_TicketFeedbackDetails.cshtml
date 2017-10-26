@@ -1,9 +1,8 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
 @using TicketDesk.Domain
 @using TicketDesk.Domain.Model
-@using TicketDesk.Web.Client.ViewModels.Ticket
 
-@model TicketFeedbackViewModel
+@model TicketDesk.Web.Client.Models.Ticket.TicketFeedbackViewModel
 
 <div class="panel-heading" style="padding: 3px 5px;">
     <div class="row">
@@ -121,15 +120,15 @@
                         </div>
 
                         @*<div class="row">
-                            <label class="col-sm-5 col-lg-4 text-right">@Index.Subscribers</label>
-                            <div class="col-sm-7 col-lg-8">
+                                <label class="col-sm-5 col-lg-4 text-right">@Index.Subscribers</label>
+                                <div class="col-sm-7 col-lg-8">
 
-                                @foreach (var sub in Model.TicketSubscribers)
-                                {
-                                    <div>@sub.GetSubscriberDisplayInfo().DisplayName</div>
-                                }
-                            </div>
-                        </div>*@
+                                    @foreach (var sub in Model.TicketSubscribers)
+                                    {
+                                        <div>@sub.GetSubscriberDisplayInfo().DisplayName</div>
+                                    }
+                                </div>
+                            </div>*@
                     </div>
 
                 </aside>

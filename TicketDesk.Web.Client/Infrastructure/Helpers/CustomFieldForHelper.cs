@@ -103,19 +103,17 @@
             return new MvcHtmlString(label.ToString());
         }
 
-        public static MvcHtmlString CustomFieldLabelFor(
-            this HtmlHelper html,
-            CustomField value,
+        public static MvcHtmlString CustomFieldLabelFor<TModel, TValue>(
+            this HtmlHelper<TModel> html,
+            Expression<Func<TModel, TValue>> propertyExpression,
             object htmlAttributes = null)
         {
-            if (value == null)
-            {
-                return null;
-            }
+            var customFieldValue = propertyExpression.Compile()(html.ViewData.Model) as CustomFieldValue;
+            var htmlFieldName = ExpressionHelper.GetExpressionText(propertyExpression);
 
             TagBuilder label = new TagBuilder("label");
-            label.Attributes.Add("for", "customfield_" + value.Id);
-            label.SetInnerText(value.Name);
+            label.Attributes.Add("for", htmlFieldName + ".Value");
+            label.SetInnerText(customFieldValue?.CustomField.Name);
 
             if (htmlAttributes != null)
             {
@@ -180,20 +178,20 @@
                 case (int)CustomFieldTypes.Bool:
                     input = new TagBuilder("input");
                     input.Attributes.Add("type", "checkbox");
-                    input.Attributes.Add("id", "customfield_" + customFieldValue.CustomField.Id);
-                    input.Attributes.Add("name", customFieldValue.CustomField.Id.ToString());
+                    input.Attributes.Add("id", fieldName + ".Value");
+                    input.Attributes.Add("name", fieldName + ".Value");
                     break;
                 case (int)CustomFieldTypes.DateTime:
                     input = new TagBuilder("input");
                     input.Attributes.Add("type", "datetime-local");
-                    input.Attributes.Add("id", "customfield_" + customFieldValue.CustomField.Id);
-                    input.Attributes.Add("name", customFieldValue.CustomField.Id.ToString());
+                    input.Attributes.Add("id", fieldName + ".Value");
+                    input.Attributes.Add("name", fieldName + ".Value");
                     break;
                 case (int)CustomFieldTypes.Int:
                     input = new TagBuilder("input");
                     input.Attributes.Add("type", "number");
-                    input.Attributes.Add("id", "customfield_" + customFieldValue.CustomField.Id);
-                    input.Attributes.Add("name", customFieldValue.CustomField.Id.ToString());
+                    input.Attributes.Add("id", fieldName + ".Value");
+                    input.Attributes.Add("name", fieldName + ".Value");
                     break;
                 case (int)CustomFieldTypes.List:
                     var values = Regex.Split(customFieldValue.CustomField.Values, "\r\n");
@@ -212,16 +210,16 @@
                     break;
                 case (int)CustomFieldTypes.TextArea:
                     input = new TagBuilder("textarea");
-                    input.Attributes.Add("id", "customfield_" + customFieldValue.CustomField.Id);
-                    input.Attributes.Add("name", customFieldValue.CustomField.Id.ToString());
+                    input.Attributes.Add("id", fieldName + ".Value");
+                    input.Attributes.Add("name", fieldName + ".Value");
                     input.Attributes.Add("placeholder", customFieldValue.CustomField.Values);
                     break;
                 //// case (int)CustomFieldTypes.String:
                 default:
                     input = new TagBuilder("input");
                     input.Attributes.Add("type", "text");
-                    input.Attributes.Add("id", "customfield_" + customFieldValue.CustomField.Id);
-                    input.Attributes.Add("name", customFieldValue.CustomField.Id.ToString());
+                    input.Attributes.Add("id", fieldName + ".Value");
+                    input.Attributes.Add("name", fieldName + ".Value");
                     input.Attributes.Add("placeholder", customFieldValue.CustomField.Values);
                     break;
             }

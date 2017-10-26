@@ -7,6 +7,7 @@
     public class NewFacilityTicketViewModel
     {
         private string[] _requestTypes;
+
         public Ticket Ticket { get; set; }
 
         public CustomFieldValue RequestType { get; set; }
