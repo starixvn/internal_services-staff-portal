@@ -305,6 +305,9 @@ body {
     grid-template-columns: repeat(4, 1fr);
     align-items: center;
     color: $text-color;
+    label {
+        margin-bottom : 0;
+    }
     .border{
         border: 1px solid $border-color;
         border-bottom: none;
@@ -318,7 +321,6 @@ body {
     }
     .title, .key, .value, .fullwidth, textarea {
         padding: 0 12px;
-        line-height: 40px;
     }
     .title {
         color: #fff;
@@ -336,6 +338,7 @@ body {
     }
     .value, .key {        
         height: 40px;
+        line-height: 40px;
     }
     .value.span-3 {
         grid-column: span 3;
@@ -369,13 +372,19 @@ body {
      .fullwidth, textarea {
         grid-column: span 4;
     }
-    .fullwidth {
-        height: 40px;
-    }
 }
-
+.facility-form .fullwidth {
+    padding: 11px 12px 13px;
+}
 .feedback-form .item {
-    grid-template-rows: inital;
+    grid-template-rows: 40px auto;
+    input[type="text"] {
+        height: 40px;
+        width: 100%;
+    }
+    textarea {
+        min-height: 100px;
+    }
 }
 
 .btn {

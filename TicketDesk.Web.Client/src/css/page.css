@@ -224,6 +224,8 @@ body {
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
   color: #333; }
+  .form-content label {
+    margin-bottom: 0; }
   .form-content .border {
     border: 1px solid #d3d7db;
     border-bottom: none;
@@ -233,8 +235,7 @@ body {
   .form-content input[type="file"] {
     margin-top: 8px; }
   .form-content .title, .form-content .key, .form-content .value, .form-content .fullwidth, .form-content textarea {
-    padding: 0 12px;
-    line-height: 40px; }
+    padding: 0 12px; }
   .form-content .title {
     color: #fff;
     grid-column: span 4;
@@ -248,7 +249,8 @@ body {
     font-weight: 800;
     margin-bottom: 0; }
   .form-content .value, .form-content .key {
-    height: 40px; }
+    height: 40px;
+    line-height: 40px; }
   .form-content .value.span-3 {
     grid-column: span 3; }
   .form-content .span-2 {
@@ -272,11 +274,17 @@ body {
         background: inherit; }
   .form-content .fullwidth, .form-content textarea {
     grid-column: span 4; }
-  .form-content .fullwidth {
-    height: 40px; }
+
+.facility-form .fullwidth {
+  padding: 11px 12px 13px; }
 
 .feedback-form .item {
-  grid-template-rows: inital; }
+  grid-template-rows: 40px auto; }
+  .feedback-form .item input[type="text"] {
+    height: 40px;
+    width: 100%; }
+  .feedback-form .item textarea {
+    min-height: 100px; }
 
 .btn {
   color: #fff;
