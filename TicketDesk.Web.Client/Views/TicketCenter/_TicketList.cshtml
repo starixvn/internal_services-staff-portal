@@ -55,7 +55,7 @@
                     {
                         <tr class="clickable">
                             <td colspan="2" style="white-space: normal;">
-                                <a href="@Url.Action("Index", "Ticket", new {area = "", id = ticket.TicketId})", style="margin-right: 1ex;">
+                                <a href="@Url.Action("Index", "TicketCenter", new {area = "", id = ticket.TicketId})", style="margin-right: 1ex;">
                                     #@ticket.TicketId
                                 </a>
                                 @Html.DisplayFor(modelItem => ticket.Title)

@@ -37,20 +37,20 @@
             return RedirectToAction("NewFacilityTicket", "Ticket");
         }
 
-        [Route("{id:int}")]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public async Task<ActionResult> Index(int id)
-        {
-            var model = await Context.Tickets.Include(t => t.TicketSubscribers).FirstOrDefaultAsync(t => t.TicketId == id).ConfigureAwait(false);
-            if (model == null)
-            {
-                return RedirectToAction("Index", "TicketCenter");
-            }
+        ////[Route("{id:int}")]
+        ////[NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        ////public async Task<ActionResult> Index(int id)
+        ////{
+        ////    var model = await Context.Tickets.Include(t => t.TicketSubscribers).FirstOrDefaultAsync(t => t.TicketId == id).ConfigureAwait(false);
+        ////    if (model == null)
+        ////    {
+        ////        return RedirectToAction("Index", "TicketCenter");
+        ////    }
 
-            ViewBag.IsEditorDefaultHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
+        ////    ViewBag.IsEditorDefaultHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
 
-            return View(model);
-        }
+        ////    return View(model);
+        ////}
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [Route("new")]
@@ -91,7 +91,8 @@
                 Ticket = new Ticket()
             };
 
-            var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == (int)TicketCategoryTypes.Facility)
+            var customFieldIds = Context.TicketCategoryCustomField
+                .Where(x => x.CategoryId == (int)TicketCategoryTypes.Facility)
                 .Select(x => x.CustomFieldId);
 
             var avalableCustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
@@ -159,7 +160,7 @@
                 await AddTicketCustomField(viewModel).ConfigureAwait(false);
 
                 return Context.SecurityProvider.IsReadTicketCenter
-                    ? RedirectToAction("Index", new { id = viewModel.Ticket.TicketId })
+                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
                     : RedirectToAction("Index", "Home");
             }
 
@@ -230,7 +231,9 @@
                 {
                     if (await CreateTicketAsync(ticket, tempId).ConfigureAwait(false))
                     {
-                        return Context.SecurityProvider.IsReadTicketCenter ? RedirectToAction("Index", new { id = ticket.TicketId }) : RedirectToAction("Index", "Home");
+                        return Context.SecurityProvider.IsReadTicketCenter
+                            ? RedirectToAction("Index", "TicketCenter", new { id = ticket.TicketId })
+                            : RedirectToAction("Index", "Home");
                     }
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
@@ -250,7 +253,8 @@
         public ActionResult TicketFiles(int ticketId)
         {
             // WARNING! This is also used as a child action and cannot be made async in MVC 5
-            var attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(CultureInfo.InvariantCulture), false);
+            var attachments =
+                TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(CultureInfo.InvariantCulture), false);
             ViewBag.TicketId = ticketId;
             return PartialView("_TicketFiles", attachments);
         }
@@ -333,7 +337,9 @@
                 ViewBag.IsMultiProject = isMulti;
 
                 // set to first project if only one project exists, otherwise use user's selected project
-                ticket.ProjectId = isMulti ? await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context).ConfigureAwait(false) : projects.FirstOrDefault();
+                ticket.ProjectId = isMulti
+                    ? await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context).ConfigureAwait(false)
+                    : projects.FirstOrDefault();
             }
         }
 
@@ -361,7 +367,9 @@
             await SetProjectInfoForModelAsync(model).ConfigureAwait(false);
 
             SqlParameter categoryParam = new SqlParameter("@CategoryId", categoryId);
-            var customFields = await Context.Database.SqlQuery<TicketFeedbackCustomField>("TicketFeedbackCustomFields_Get @CategoryId", categoryParam).ToListAsync().ConfigureAwait(false);
+            var customFields = await Context.Database
+                .SqlQuery<TicketFeedbackCustomField>("TicketFeedbackCustomFields_Get @CategoryId", categoryParam)
+                .ToListAsync().ConfigureAwait(false);
 
             var ticketFeedbackViewModel = new TicketFeedbackViewModel
             {
@@ -389,7 +397,9 @@
                 {
                     if (await CreateTicketFeedbackAsync(model).ConfigureAwait(false))
                     {
-                        return Context.SecurityProvider.IsReadTicketCenter ? RedirectToAction("Index", new { id = ticket.TicketId }) : RedirectToAction("Index", "Home");
+                        return Context.SecurityProvider.IsReadTicketCenter
+                            ? RedirectToAction("Index", "TicketCenter", new { id = ticket.TicketId })
+                            : RedirectToAction("Index", "Home");
                     }
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
@@ -417,7 +427,7 @@
 
             var ticketCategory = Context.TicketCategories.First(x => x.CategoryId == categoryId);
             var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == categoryId)
-            .Select(x => x.CustomFieldId);
+                .Select(x => x.CustomFieldId);
 
             var avalableCustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
 
@@ -428,7 +438,8 @@
                     CategoryId = categoryId,
                     CustomFieldId = customField.Id,
                     CustomFieldName = customField.Name,
-                    Value = Context.CustomFieldValues.FirstOrDefault(x => (x.CustomFieldId == customField.Id) && (x.TicketId == ticketId))?.Value
+                    Value = Context.CustomFieldValues
+                        .FirstOrDefault(x => (x.CustomFieldId == customField.Id) && (x.TicketId == ticketId))?.Value
                 });
             }
 
@@ -463,7 +474,8 @@
                     CategoryId = categoryId,
                     CustomFieldId = customField.Id,
                     CustomFieldName = customField.Name,
-                    Value = Context.CustomFieldValues.FirstOrDefault(x => (x.CustomFieldId == customField.Id) && (x.TicketId == ticket.TicketId))?.Value
+                    Value = Context.CustomFieldValues.FirstOrDefault(x =>
+                        (x.CustomFieldId == customField.Id) && (x.TicketId == ticket.TicketId))?.Value
                 });
             }
 

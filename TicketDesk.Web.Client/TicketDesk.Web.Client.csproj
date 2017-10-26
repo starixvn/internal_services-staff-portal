@@ -2283,6 +2283,7 @@
     <Content Include="src\Fonts\iconFont\fonts\icomoon.woff" />
     <Content Include="src\Fonts\iconFont\selection.json" />
     <Content Include="Views\References\Index.cshtml" />
+    <Content Include="Views\TicketCenter\SingleTicket.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

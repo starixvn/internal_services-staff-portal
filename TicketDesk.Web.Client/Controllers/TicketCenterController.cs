@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using System.Data.Entity;
     using Domain;
     using Domain.Infrastructure;
     using Domain.Model;
@@ -46,6 +47,21 @@
                 Context.SecurityProvider.CurrentUserId).ConfigureAwait(false);
 
             return View(viewModel);
+        }
+
+        [Route("{id:int}")]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        public async Task<ActionResult> Index(int id)
+        {
+            var model = await Context.Tickets.Include(t => t.TicketSubscribers).FirstOrDefaultAsync(t => t.TicketId == id).ConfigureAwait(false);
+            if (model == null)
+            {
+                return RedirectToAction("Index", "TicketCenter");
+            }
+
+            ViewBag.IsEditorDefaultHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
+
+            return View("SingleTicket", model);
         }
 
         [Route("pageList/{listName=mytickets}/{page:int?}")]
