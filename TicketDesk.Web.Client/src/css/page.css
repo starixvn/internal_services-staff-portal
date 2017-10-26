@@ -284,7 +284,8 @@ body {
     height: 40px;
     width: 100%; }
   .feedback-form .item textarea {
-    min-height: 100px; }
+    min-height: 100px;
+    width: 100%; }
 
 .btn {
   color: #fff;
