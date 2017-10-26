@@ -92,12 +92,24 @@
         <div class="title">REPAIRS AND SERVICES REQUISITION FORM</div>
         <div>
             @Html.CustomFieldLabelFor(Model.RequestType.CustomField, new { @class = "key" })
-            @Html.CustomFieldFor(x => x.RequestType)
+            @*@Html.CustomFieldFor(x => x.RequestType)*@
+            <div class="value span-3 border">
+                <div class="radio-group">
+                    <p>
+                        <input type="radio" id="rd-repair" name="radio-group" checked>
+                        <label for="rd-repair">For Repair</label>
+                    </p>
+                    <p>
+                        <input type="radio" id="rd-improvement" name="radio-group">
+                        <label for="rd-improvement">For Improvement</label>
+                    </p>
+                </div>
+            </div>
         </div>
         <div class="item-list" id="item-list">
-            <div class="title item-head">
+            <div class="title item-head border">
                 <span>Item list</span>
-                <input type="button" value="Add Item" class="btn btn-add" data-class="item-list" />
+                <button class="btn btn-add"><span class="icon-add"></span>Add Item</button>
             </div>
 
             @if (Model.Items != null)
@@ -109,12 +121,12 @@
                     <div class="select-item">
                         @Html.CustomFieldIndex("Items", guid)
 
-                        @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key" })
+                        @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border" })
                         @Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items")
 
                         <button class="btn btn-danger remove-button col-sm-2">Remove</button>
 
-                        @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth" })
+                        @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth border" })
                         @Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items")
                     </div>
                 }
@@ -123,14 +135,12 @@
         </div>
 
         <div class="attach-file">
-            <div class="key">Attach files*:</div>
-            <div class="value span-3"><input type="file" /></div>
-            <div class="fullwidth bold"><span class="highlight">*</span>Max number of attachments: <span class="highlight">20 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg,jpg,pdf</span></div>
-        </div>
-        
-        <input type="submit" class="btn btn-success" value="SEND"/>
+            <div class="key border">Attach files*:</div>
+            <div class="value span-3 border"><input type="file" /></div>
+            <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">20 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg,jpg,pdf</span></div>
+        </div>        
     </div>
-
+    <input type="submit" class="btn btn-send" value="Send" />
     @*<div class="panel panel-info">
             <div class="panel-heading">
                 <h2 class="panel-title">@New.Header</h2>
