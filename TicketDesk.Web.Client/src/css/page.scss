@@ -385,7 +385,7 @@ body {
         margin-right: 8px;
         font-size: 12px;
     }
-    &:hover {
+    &:hover, &:focus {
         color: #fff;
     }
     &.btn-add {

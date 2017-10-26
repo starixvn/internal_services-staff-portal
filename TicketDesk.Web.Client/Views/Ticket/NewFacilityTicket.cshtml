@@ -64,14 +64,14 @@
                 });
                 $(id).append(newHtml);
 
-                $(".remove-button").show();
-                $(".remove-button:first").hide();
+                $(".btn-delete").show();
+                $(".btn-delete:first").hide();
             });
         }
 
         function AssignRemoveButton() {
-            $(".remove-button:first").hide();
-            $("body").on("click",".remove-button", function() {
+            $(".btn-delete:first").hide();
+            $("body").on("click",".btn-delete", function() {
                 $(this).parent().remove();
             });
         }
@@ -121,8 +121,9 @@
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border" })
                         @Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "border" })
-                        <div class="border span-2"></div>
-                        <button class="btn btn-danger remove-button col-sm-2">Remove</button>
+                        <div class="border span-2">
+                            <button class="btn btn-delete"><span class="icon-delete"></span>Delete Item</button>
+                        </div>
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth border" })
                         @Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "border" })

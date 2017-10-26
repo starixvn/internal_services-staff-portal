@@ -285,7 +285,7 @@ body {
   .btn [class^="icon-"] {
     margin-right: 8px;
     font-size: 12px; }
-  .btn:hover {
+  .btn:hover, .btn:focus {
     color: #fff; }
   .btn.btn-add {
     float: right;
