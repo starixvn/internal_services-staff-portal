@@ -71,7 +71,7 @@
         function AssignRemoveButton() {
             $(".remove-button:first").hide();
             $("body").on("click",".remove-button", function() {
-                $(this).parent().parent().remove();
+                $(this).parent().remove();
             });
         }
 
@@ -93,7 +93,7 @@
             @Html.CustomFieldLabelFor(Model.RequestType.CustomField, new { @class = "key" })
             @Html.CustomFieldFor(x => x.RequestType)
         </div>
-        <div class="item-list">
+        <div class="item-list" id="item-list">
             <div class="title item-head">
                 <span>Item list</span>
                 <input type="button" value="Add Item" class="btn btn-add" data-class="item-list" />
@@ -118,20 +118,6 @@
                     </div>
                 }
             }
-
-
-
-            <div class="select-item delete-item">
-                <div class="key">Select item:</div>
-                <select>
-                    <option>Cashier's Booth</option>
-                </select>
-                <select>
-                    <option>Sticker</option>
-                </select>
-                <div class="fullwidth">Reason for repair/improvement request</div>
-                <textarea placeholder="This is favorite items"></textarea>
-            </div>
 
         </div>
 
