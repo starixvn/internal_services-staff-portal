@@ -86,6 +86,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
+    <input type="hidden" name="tempId" value="@ViewBag.TempId" />
 
     <div class="form-content">
         <div class="title">REPAIRS AND SERVICES REQUISITION FORM</div>
@@ -126,6 +127,8 @@
             <div class="value span-3"><input type="file" /></div>
             <div class="fullwidth bold"><span class="highlight">*</span>Max number of attachments: <span class="highlight">20 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg,jpg,pdf</span></div>
         </div>
+        
+        <input type="submit" class="btn btn-success" value="SEND"/>
     </div>
 
     @*<div class="panel panel-info">
