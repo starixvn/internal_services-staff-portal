@@ -262,18 +262,21 @@ body {
     background: #f5e598;
     color: #2e4592;
     text-transform: uppercase; }
-  .form-content .select-item {
+  .form-content .item {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 40px 40px 100px; }
-    .form-content .select-item.even {
+    .form-content .item.even {
       background: #f7f7f7; }
-      .form-content .select-item.even *:not(.btn-delete) {
+      .form-content .item.even *:not(.btn-delete) {
         background: inherit; }
   .form-content .fullwidth, .form-content textarea {
     grid-column: span 4; }
   .form-content .fullwidth {
     height: 40px; }
+
+.feedback-form .item {
+  grid-template-rows: inital; }
 
 .btn {
   color: #fff;

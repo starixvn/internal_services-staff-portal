@@ -72,7 +72,7 @@
         function AssignRemoveButton() {
             $(".btn-delete:first").hide();
             $("body").on("click",".btn-delete", function() {
-                $(this).parent().remove();
+                $(this).parent().parent().remove();
             });
         }
 
@@ -116,7 +116,7 @@
                 {
                     var guid = Guid.NewGuid().ToString();
 
-                    <div class="select-item">
+                    <div class="item">
                         @Html.CustomFieldIndex("Items", guid)
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border" })

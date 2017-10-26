@@ -355,7 +355,7 @@ body {
         color: $title-form-bg;
         text-transform: uppercase;
     }
-    .select-item {
+    .item {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: 40px 40px 100px;    
@@ -372,6 +372,10 @@ body {
     .fullwidth {
         height: 40px;
     }
+}
+
+.feedback-form .item {
+    grid-template-rows: inital;
 }
 
 .btn {

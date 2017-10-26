@@ -47,9 +47,40 @@
 
     @using (Html.BeginForm("Feedback", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal" }))
     {
-        <div class="form-content">
+        <div class="form-content feedback-form">
             <div class="title">FEEDBACK FORM</div>
+            <div class="key border">Feedback by</div>
+            <div class="value span-3 border">
+                <div class="radio-group">
+                    <p>
+                        <input type="radio" id="rd-repair" name="radio-group" checked>
+                        <label for="rd-repair">Customer</label>
+                    </p>
+                    <p>
+                        <input type="radio" id="rd-improvement" name="radio-group">
+                        <label for="rd-improvement">Staff</label>
+                    </p>
+                </div>
+            </div>
+            <div class="item-list item">
+                <div class="key fullwidth border">Subject</div>
+                <input type="text" class="fullwidth" />
+            </div>
+            <div class="item-list item">
+                <div class="key fullwidth">Customer name</div>
+                <input type="text" class="fullwidth" />
+            </div>
+            <div class="item-list item">
+                <div class="key fullwidth">Feedback</div>
+                <textarea class="fullwidth"></textarea>
+            </div>
+            <div class="attach-file">
+                <div class="key border">Attach files*:</div>
+                <div class="value span-3 border"><input type="file" /></div>
+                <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">20 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg,jpg,pdf</span></div>
+            </div>
         </div>
+        <input type="submit" class="btn btn-send" value="Send" />
         @*<div class="panel panel-info">
             <div class="panel-heading">
                 <h2 class="panel-title">@New.Header</h2>
