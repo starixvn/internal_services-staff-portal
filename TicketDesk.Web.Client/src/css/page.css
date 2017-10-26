@@ -245,11 +245,14 @@ body {
   .form-content .key {
     text-transform: uppercase;
     color: #2e4592;
-    font-weight: 800; }
+    font-weight: 800;
+    margin-bottom: 0; }
   .form-content .value, .form-content .key {
     height: 40px; }
   .form-content .value.span-3 {
     grid-column: span 3; }
+  .form-content .span-2 {
+    grid-column: span 2; }
   .form-content .item-list, .form-content .attach-file {
     grid-column: span 4; }
   .form-content .attach-file {

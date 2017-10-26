@@ -332,12 +332,16 @@ body {
         text-transform: uppercase;
         color: $title-form-bg;
         font-weight: 800;
+        margin-bottom: 0;
     }
     .value, .key {        
         height: 40px;
     }
     .value.span-3 {
         grid-column: span 3;
+    }
+    .span-2 {
+        grid-column: span 2;
     }
     .item-list, .attach-file {
         grid-column: span 4;
