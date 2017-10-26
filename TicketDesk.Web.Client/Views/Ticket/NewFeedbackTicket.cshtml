@@ -1,6 +1,4 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
-@using System.Configuration
-@using TicketDesk.Domain.Model
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 
 @model TicketDesk.Web.Client.Models.Ticket.NewFeedbackTicketViewModel
@@ -77,13 +75,13 @@
             </div>
         </div>
         <div class="item-list item">
-            @Html.CustomFieldLabelFor(x => x.CustomerName, new { @class = "key fullwidth border" })
+            @Html.CustomFieldLabelFor(x => x.CustomerName, new { @class = "key fullwidth" })
             <div class="fullwidth">
                 @Html.CustomFieldFor(x => x.CustomerName)
             </div>
         </div>
         <div class="item-list item">
-            @Html.CustomFieldLabelFor(x => x.Feedback, new { @class = "key fullwidth border" })
+            @Html.CustomFieldLabelFor(x => x.Feedback, new { @class = "key fullwidth" })
             @Html.CustomFieldFor(x => x.Feedback, new { @class = "fullwidth" })
         </div>
         <div class="attach-file">
