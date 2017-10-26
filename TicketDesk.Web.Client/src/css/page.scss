@@ -372,6 +372,13 @@ body {
      .fullwidth, textarea {
         grid-column: span 4;
     }
+
+    input[type="text"], textarea {        
+        font-size: 16px;
+    }
+    textarea {
+        padding: 6px 12px;
+    }
 }
 .facility-form .fullwidth {
     padding: 11px 12px 13px;
@@ -386,6 +393,7 @@ body {
         input[type="text"] {
             height: 40px;
             width: 100%;
+            padding: 0 12px;
         }
         textarea {
             min-height: 100px;
@@ -399,6 +407,8 @@ body {
     }
 }
 
+
+/**************************************************** Button ******************************************************/
 .btn {
     color: #fff;
     background: $title-form-bg;
@@ -439,6 +449,8 @@ body {
     }
 }
 
+
+/**************************************************** Radio button ******************************************************/
 .radio-group {
     display: flex;
     flex-direction: row;

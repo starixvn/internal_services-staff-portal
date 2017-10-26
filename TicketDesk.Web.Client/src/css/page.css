@@ -274,6 +274,10 @@ body {
         background: inherit; }
   .form-content .fullwidth, .form-content textarea {
     grid-column: span 4; }
+  .form-content input[type="text"], .form-content textarea {
+    font-size: 16px; }
+  .form-content textarea {
+    padding: 6px 12px; }
 
 .facility-form .fullwidth {
   padding: 11px 12px 13px; }
@@ -285,7 +289,8 @@ body {
     border-left: none; }
   .feedback-form .item input[type="text"] {
     height: 40px;
-    width: 100%; }
+    width: 100%;
+    padding: 0 12px; }
   .feedback-form .item textarea {
     min-height: 100px;
     width: 100%;
@@ -295,6 +300,7 @@ body {
   height: 40px;
   line-height: 40px; }
 
+/**************************************************** Button ******************************************************/
 .btn {
   color: #fff;
   background: #2e4592;
@@ -327,6 +333,7 @@ body {
     padding: 12px;
     font-size: 16px; }
 
+/**************************************************** Radio button ******************************************************/
 .radio-group {
   display: flex;
   flex-direction: row; }
