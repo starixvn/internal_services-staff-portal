@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?r1gbbu');
-  src:  url('fonts/icomoon.eot?r1gbbu#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?r1gbbu') format('truetype'),
-    url('fonts/icomoon.woff?r1gbbu') format('woff'),
-    url('fonts/icomoon.svg?r1gbbu#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?hant0m');
+  src:  url('fonts/icomoon.eot?hant0m#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?hant0m') format('truetype'),
+    url('fonts/icomoon.woff?hant0m') format('woff'),
+    url('fonts/icomoon.svg?hant0m#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,33 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-add:before {
+  content: "\e90b";
+}
+.icon-customersuport:before {
+  content: "\e90c";
+}
+.icon-delete:before {
+  content: "\e90d";
+}
+.icon-facility:before {
+  content: "\e90e";
+}
+.icon-feedback:before {
+  content: "\e90f";
+}
+.icon-hardware:before {
+  content: "\e910";
+}
+.icon-incident:before {
+  content: "\e911";
+}
+.icon-network:before {
+  content: "\e912";
+}
+.icon-software:before {
+  content: "\e913";
+}
 .icon-bet:before {
   content: "\e906";
 }
