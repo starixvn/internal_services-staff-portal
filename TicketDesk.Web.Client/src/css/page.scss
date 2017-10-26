@@ -10,6 +10,7 @@ $border-color: #d3d7db;
 $text-color: #333;
 $primary-color: #bf141a;
 $menu-color: #03285a;
+$title-form-bg: #2e4592;
 
 ul {
     padding: 0;
@@ -134,13 +135,12 @@ body {
 }
 
 .content {
-    width: 100%;
-    padding-top: 96px;
     height: 100%;
     overflow: auto;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    padding: 121px 25px 25px 25px;
 
     &.menu-open {
         .submenu-section {
@@ -160,6 +160,58 @@ body {
     padding: 25px;
 }
 
+.submenu-section {
+    height: 100%;
+    padding-top: 96px;
+    float: left;
+}
+.submenu-section .submenu{
+    width: 226px;
+    background: #fff;
+    border-right: 1px solid $border-color;
+    -webkit-transition: width .2s;
+    transition: width .2s;
+    height: 100%;
+    //overflow: hidden;
+    display: none;
+    &.active {
+        display: block;
+    }
+}
+
+.submenu {
+    a {
+        text-decoration: none;
+        padding: 17px 0 16px 25px;
+        display: block;
+
+        &:hover {
+            background: $primary-color;
+            -webkit-transition: background-color 0.3s linear;
+            transition: background-color 0.3s linear;
+
+            .text, [class^="icon-"] {
+                color: #fff;
+            }
+        }
+    }
+
+    .text {
+        color: $menu-color;
+        text-transform: uppercase;
+        font-weight: 800;
+        position: relative;
+        top: -3px;
+        left: 12px;
+    }
+
+    [class^="icon-"] {
+        font-size: 24px;
+        color: $primary-color;
+    }
+}
+
+/******************************************* Table ******************************************/
 .tbl-content {
     width: 100%;
     background: #fff;
@@ -227,43 +279,99 @@ body {
     border: 1px solid $border-color;
 }
 
-.submenu-section {
-    width: 0;
-    background: #fff;
-    border-right: 1px solid $border-color;
-    -webkit-transition: width .2s;
-    transition: width .2s;
-    overflow: hidden;
-}
-
 .submenu {
     a {
         text-decoration: none;
         padding: 17px 0 16px 25px;
         display: block;
-
-        &:hover {
-            background: $primary-color;
-            -webkit-transition: background-color 0.3s linear;
-            transition: background-color 0.3s linear;
-
-            .text, [class^="icon-"] {
-                color: #fff;
-            }
-        }
     }
+}
 
-    .text {
-        color: $menu-color;
-        text-transform: uppercase;
+/****************************************************************************************************************/
+
+.bold {
+    font-weight: 800;
+}
+
+/**************************************************** Form ******************************************************/
+.form-horizontal {
+    width: 100%;
+}
+
+.form-content {
+    background: #fff;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    color: $text-color;
+    *:not(span){
+        border: 1px solid $border-color;
+        border-bottom: none;
+        border-right: 0;
+    }
+    input[type="file"], select {
+        border-top: none;
+    }
+    input[type="file"]{        
+        margin-top: 8px;
+    }
+    .title, .key, .value, .fullwidth, textarea {
+        padding: 0 8px;
+        line-height: 40px;
+    }
+    .title {
+        color: #fff;
+        grid-column: span 4;
+        background: $title-form-bg;
+        height: 48px;
+        line-height: 48px;
         font-weight: 800;
-        position: relative;
-        top: -3px;
-        left: 12px;
     }
+    .key {
+        text-transform: uppercase;
+        color: $title-form-bg;
+        font-weight: 800;
+        border-top: none;
+    }
+    .value, .key {        
+        height: 40px;
+    }
+    .value.span-3 {
+        grid-column: span 3;
+    }
+    .item-list, .attach-file {
+        grid-column: span 4;
+    }
+    .attach-file {
+        display: grid;
+        grid-template-columns: inherit;
+    }
+    .item-head {
+        background: #f5e598;
+        color: $title-form-bg;
+        text-transform: uppercase;
+    }
+    .select-item {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 40px 40px 100px;       
+    }
+     .fullwidth, textarea {
+        grid-column: span 4;
+    }
+    .fullwidth {
+        height: 40px;
+    }
+}
 
-    [class^="icon-"] {
-        font-size: 24px;
-        color: $primary-color;
+.btn {
+    color: #fff;
+    background: $title-form-bg;
+    margin-top: 8px;
+    &:hover {
+        color: #fff;
+    }
+    &.btn-add {
+        float: right;
     }
 }

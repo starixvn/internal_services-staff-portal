@@ -102,13 +102,12 @@ body {
     font-size: 32px; }
 
 .content {
-  width: 100%;
-  padding-top: 96px;
   height: 100%;
   overflow: auto;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+  padding: 121px 25px 25px 25px; }
   .content.menu-open .submenu-section {
     display: block;
     width: 226px; }
@@ -120,6 +119,46 @@ body {
   border: none;
   padding: 25px; }
 
+.submenu-section {
+  height: 100%;
+  padding-top: 96px;
+  float: left; }
+
+.submenu-section .submenu {
+  width: 226px;
+  background: #fff;
+  border-right: 1px solid #d3d7db;
+  -webkit-transition: width .2s;
+  transition: width .2s;
+  height: 100%;
+  display: none; }
+  .submenu-section .submenu.active {
+    display: block; }
+
+.submenu a {
+  text-decoration: none;
+  padding: 17px 0 16px 25px;
+  display: block; }
+  .submenu a:hover {
+    background: #bf141a;
+    -webkit-transition: background-color 0.3s linear;
+    transition: background-color 0.3s linear; }
+    .submenu a:hover .text, .submenu a:hover [class^="icon-"] {
+      color: #fff; }
+
+.submenu .text {
+  color: #03285a;
+  text-transform: uppercase;
+  font-weight: 800;
+  position: relative;
+  top: -3px;
+  left: 12px; }
+
+.submenu [class^="icon-"] {
+  font-size: 24px;
+  color: #bf141a; }
+
+/******************************************* Table ******************************************/
 .tbl-content {
   width: 100%;
   background: #fff;
@@ -165,34 +204,76 @@ body {
 .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
   border: 1px solid #d3d7db; }
 
-.submenu-section {
-  width: 0;
-  background: #fff;
-  border-right: 1px solid #d3d7db;
-  -webkit-transition: width .2s;
-  transition: width .2s;
-  overflow: hidden; }
-
 .submenu a {
   text-decoration: none;
   padding: 17px 0 16px 25px;
   display: block; }
-  .submenu a:hover {
-    background: #bf141a;
-    -webkit-transition: background-color 0.3s linear;
-    transition: background-color 0.3s linear; }
-    .submenu a:hover .text, .submenu a:hover [class^="icon-"] {
-      color: #fff; }
 
-.submenu .text {
-  color: #03285a;
-  text-transform: uppercase;
-  font-weight: 800;
-  position: relative;
-  top: -3px;
-  left: 12px; }
+/****************************************************************************************************************/
+.bold {
+  font-weight: 800; }
 
-.submenu [class^="icon-"] {
-  font-size: 24px;
-  color: #bf141a; }
+/**************************************************** Form ******************************************************/
+.form-horizontal {
+  width: 100%; }
+
+.form-content {
+  background: #fff;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  color: #333; }
+  .form-content *:not(span) {
+    border: 1px solid #d3d7db;
+    border-bottom: none;
+    border-right: 0; }
+  .form-content input[type="file"], .form-content select {
+    border-top: none; }
+  .form-content input[type="file"] {
+    margin-top: 8px; }
+  .form-content .title, .form-content .key, .form-content .value, .form-content .fullwidth, .form-content textarea {
+    padding: 0 8px;
+    line-height: 40px; }
+  .form-content .title {
+    color: #fff;
+    grid-column: span 4;
+    background: #2e4592;
+    height: 48px;
+    line-height: 48px;
+    font-weight: 800; }
+  .form-content .key {
+    text-transform: uppercase;
+    color: #2e4592;
+    font-weight: 800;
+    border-top: none; }
+  .form-content .value, .form-content .key {
+    height: 40px; }
+  .form-content .value.span-3 {
+    grid-column: span 3; }
+  .form-content .item-list, .form-content .attach-file {
+    grid-column: span 4; }
+  .form-content .attach-file {
+    display: grid;
+    grid-template-columns: inherit; }
+  .form-content .item-head {
+    background: #f5e598;
+    color: #2e4592;
+    text-transform: uppercase; }
+  .form-content .select-item {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 40px 40px 100px; }
+  .form-content .fullwidth, .form-content textarea {
+    grid-column: span 4; }
+  .form-content .fullwidth {
+    height: 40px; }
+
+.btn {
+  color: #fff;
+  background: #2e4592;
+  margin-top: 8px; }
+  .btn:hover {
+    color: #fff; }
+  .btn.btn-add {
+    float: right; }
 

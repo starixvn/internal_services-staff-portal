@@ -86,44 +86,48 @@
 
 @using (Html.BeginForm("NewFacilityTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    <table class="table table-bordered tbl-content">
-        <tbody>
-            <tr class="title">
-                <td colspan="4">Ticket title</td>
-            </tr>
-            <tr>
-                <td class="key">@Html.CustomFieldLabelFor(Model.RequestType.CustomField)</td>
-                <td class="value">
-                    @Html.CustomFieldFor(x => x.RequestType)
-                </td>
-            </tr>
-            <tr class="title">
-                <td colspan="4">Item List</td>
-            </tr>
+    <div class="form-content">
+        <div class="title">REPAIRS AND SERVICES REQUISITION FORM</div>
+        <span class="key">Request type</span>
+        <div class="value span-3">
 
-        </tbody>
+        </div>
+        <div class="item-list">
+            <div class="title item-head">
+                <span>Item list</span>
+                <input type="button" value="Add Item" class="btn btn-add" />
+            </div>
+            <div class="select-item">
+                <div class="key">Select item:</div>
+                <select>
+                    <option>Cashier's Booth</option>
+                </select>
+                <select>
+                    <option>Sticker</option>
+                </select>
+                <div class="fullwidth">Reason for repair/improvement request</div>
+                <textarea placeholder="This is favorite items"></textarea>
+            </div>
+            <div class="select-item delete-item">
+                <div class="key">Select item:</div>
+                <select>
+                    <option>Cashier's Booth</option>
+                </select>
+                <select>
+                    <option>Sticker</option>
+                </select>
+                <div class="fullwidth">Reason for repair/improvement request</div>
+                <textarea placeholder="This is favorite items"></textarea>
+            </div>
+        </div>
+        <div class="attach-file">
+            <div class="key">Attach files*:</div>
+            <div class="value span-3"><input type="file" /></div>
+            <div class="fullwidth bold"><span class="highlight">*</span>Max number of attachments: <span class="highlight">20 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg,jpg,pdf</span></div>
+        </div>
+    </div>
 
-        <tbody id="item-section">
-            @if (Model.Items != null)
-            {
-                for (int i = 0; i < Model.Items.Count; i++)
-                {
-                    var guid = Guid.NewGuid().ToString();
-
-                    <tr>
-                        @Html.CustomFieldIndex("Items", guid)
-                        <td class="key">@Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items")</td>
-                        <td class="value">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items")</td>
-                        <td><button class="btn btn-danger remove-button col-sm-2">Remove</button></td>
-                        <td class="key">@Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items")</td>
-                        <td class="value">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items")</td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
-
-    <div class="panel panel-info">
+    @*<div class="panel panel-info">
         <div class="panel-heading">
             <h2 class="panel-title">@New.Header</h2>
         </div>
@@ -227,7 +231,7 @@
                         </div>
                     </div>
 
-                    @*<div class="panel panel-info">
+                    <div class="panel panel-info">
                         <div class="panel-heading">Items</div>
                         <div id="item-section" class="panel-body form-group">
                             @if (Model.Items != null)
@@ -252,7 +256,7 @@
                                 }
                             }
                         </div>
-                    </div>*@
+                    </div>
 
                     <button class="btn btn-default add-more-button" data-class="item-section">Add more</button>
                 </div>
@@ -291,5 +295,5 @@
                 @Html.ActionLink(New.BackOption, "Index")
             </div>
         </div>
-    </div>
+    </div>*@
                                 }
