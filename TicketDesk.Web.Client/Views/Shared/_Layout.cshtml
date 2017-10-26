@@ -117,15 +117,6 @@
     <script src="~/Scripts/ticketdesk/common.js"></script>
     <script src="~/src/js/page.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            if ($(".submenu.active").length > 0) {
-                // Submenu displayed
-                $(".content").addClass("menu-opened");
-            }
-        });
-    </script>
-
     @RenderSection("scripts", required: false)
 </body>
 </html>
