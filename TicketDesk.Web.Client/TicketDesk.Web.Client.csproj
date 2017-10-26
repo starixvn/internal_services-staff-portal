@@ -2284,6 +2284,11 @@
     <Content Include="src\Fonts\iconFont\selection.json" />
     <Content Include="Views\References\Index.cshtml" />
     <Content Include="Views\TicketCenter\SingleTicket.cshtml" />
+    <Content Include="Views\References\BetOfTheDay.cshtml" />
+    <Content Include="Views\References\FeaturedEvent.cshtml" />
+    <Content Include="Views\References\Newsletter.cshtml" />
+    <Content Include="Views\References\TradingLimit.cshtml" />
+    <Content Include="Views\References\TvSchedules.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
