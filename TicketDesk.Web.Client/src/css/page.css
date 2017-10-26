@@ -279,13 +279,21 @@ body {
   padding: 11px 12px 13px; }
 
 .feedback-form .item {
+  border-left: 1px solid #d3d7db;
   grid-template-rows: 40px auto; }
+  .feedback-form .item .key.border {
+    border-left: none; }
   .feedback-form .item input[type="text"] {
     height: 40px;
     width: 100%; }
   .feedback-form .item textarea {
     min-height: 100px;
-    width: 100%; }
+    width: 100%;
+    margin-bottom: 6px; }
+
+.feedback-form .attach-file .fullwidth {
+  height: 40px;
+  line-height: 40px; }
 
 .btn {
   color: #fff;

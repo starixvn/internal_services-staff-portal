@@ -376,15 +376,26 @@ body {
 .facility-form .fullwidth {
     padding: 11px 12px 13px;
 }
-.feedback-form .item {
-    grid-template-rows: 40px auto;
-    input[type="text"] {
-        height: 40px;
-        width: 100%;
+.feedback-form {
+    .item {
+        border-left: 1px solid $border-color;
+        grid-template-rows: 40px auto;
+        .key.border {
+            border-left: none;
+        }
+        input[type="text"] {
+            height: 40px;
+            width: 100%;
+        }
+        textarea {
+            min-height: 100px;
+            width: 100%;
+            margin-bottom: 6px;
+        }
     }
-    textarea {
-        min-height: 100px;
-        width: 100%;
+    .attach-file .fullwidth {
+        height: 40px;
+        line-height: 40px;
     }
 }
 
