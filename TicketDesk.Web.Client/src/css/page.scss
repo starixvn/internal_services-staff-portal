@@ -161,13 +161,13 @@ body {
 }
 
 .submenu-section {
+    background: #fafafb;
     height: 100%;
     padding-top: 96px;
     float: left;
 }
 .submenu-section .submenu{
     width: 226px;
-    background: #fff;
     border-right: 1px solid $border-color;
     -webkit-transition: width .2s;
     transition: width .2s;
