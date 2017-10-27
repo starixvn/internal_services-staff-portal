@@ -2153,6 +2153,9 @@
     <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap.js" />
     <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap.min.js" />
     <Content Include="src\libs\bootstrap-3.3.7\js\npm.js" />
+    <Content Include="src\libs\jquery-validate\1.17.0\jquery.validate.min.js" />
+    <Content Include="src\libs\jquery-validation-unobtrusive\3.2.6\jquery.validate.unobtrusive.min.js" />
+    <Content Include="src\libs\jquery\1.12.4\jquery-1.12.4.min.js" />
     <Content Include="src\libs\normalize.css" />
     <Content Include="src\libs\Touch\touche.js" />
     <Content Include="Views\SearchManager\Index.cshtml" />

@@ -84,7 +84,8 @@
             {
                 // user doesn't exist
                 ViewBag.Message = ViewResources.Invalid_Username_or_Password;
-                ModelState.AddModelError(string.Empty, Validation.InvalidUsername);
+                ModelState.AddModelError(string.Empty, Validation.InvalidUsernameOrPassword);
+                ////ModelState.AddModelError(string.Empty, Validation.InvalidUsername);
             }
 
             return View(model);
