@@ -1,7 +1,7 @@
 ﻿namespace TicketDesk.Web.Client
 {
     using System.Web.Optimization;
-    
+
     // TODO: This may not be OWIN compliant in OWIN hosts other than Microsoft.Owin.Host.SystemWeb
     public partial class Startup
     {
@@ -40,9 +40,14 @@
             ////
             ////Script bundle
             ////
-            
+
             ////bundles.Add(new ScriptBundle("~/bundles/user-login")
             ////    .Include("~/Scripts/ticketdesk/User/login.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/validate")
+                .Include(
+                    "~/src/libs/jquery-validate/1.17.0/jquery.validate.min.js",
+                    "~/src/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/file-manager")
                 .Include(
