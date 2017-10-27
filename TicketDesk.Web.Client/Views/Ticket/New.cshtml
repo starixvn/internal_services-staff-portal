@@ -16,6 +16,7 @@
     @Scripts.Render("~/bundles/summernote")
     @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())
     @Scripts.Render("~/bundles/editor")
+    @Scripts.Render("~/bundles/validate")
 
     <script type="text/javascript">
         var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");

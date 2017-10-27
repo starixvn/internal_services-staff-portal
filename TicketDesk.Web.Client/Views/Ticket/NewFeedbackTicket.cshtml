@@ -17,11 +17,14 @@
     @Scripts.Render("~/bundles/summernote")
     @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())
     @Scripts.Render("~/bundles/editor")
+    @Scripts.Render("~/bundles/validate")
 
     <script type="text/javascript">
+        $(document).ready(function() {
+            var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");
 
-        (function () {
             $.ajaxSetup({ cache: false });
+
             var uploaderConfig = {
                 dropzoneUploadUrl: '@Url.Action("Upload", "File")',
                 getAttachmentsUrl: '@Url.Action("GetAttachmentsInfo", "File")',
@@ -29,16 +32,19 @@
                 defaultThumbnailUrl: '@Url.Content("~/content/images/general-file.png")',
                 ticketId: null
             };
+
             var tagsConfig = {
                 tagAutoCompleteUrl: '@Url.Action("TagList", "AutoComplete")'
             };
+
             var detailsConfig = {
-                isHtml: @(Model.Ticket.IsHtml ? "true" : "false")
-                };
+                isHtml: isHtmlString
+            };
+
             window.ticketTags.activate(tagsConfig);
             window.ticketDetails.activate(detailsConfig);
             window.ticketFileUploader.activate(uploaderConfig);
-        })();
+        });
     </script>
 }
 

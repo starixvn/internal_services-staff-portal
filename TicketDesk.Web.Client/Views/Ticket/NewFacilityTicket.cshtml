@@ -16,11 +16,14 @@
     @Scripts.Render("~/bundles/summernote")
     @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())
     @Scripts.Render("~/bundles/editor")
+    @Scripts.Render("~/bundles/validate")
 
     <script type="text/javascript">
-        var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");
-        (function () {
+        $(document).ready(function() {
+            var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");
+
             $.ajaxSetup({ cache: false });
+
             var uploaderConfig = {
                 dropzoneUploadUrl: '@Url.Action("Upload", "File")',
                 getAttachmentsUrl: '@Url.Action("GetAttachmentsInfo", "File")',
@@ -28,16 +31,19 @@
                 defaultThumbnailUrl: '@Url.Content("~/content/images/general-file.png")',
                 ticketId: null
             };
+
             var tagsConfig = {
                 tagAutoCompleteUrl: '@Url.Action("TagList", "AutoComplete")'
             };
+
             var detailsConfig = {
                 isHtml: isHtmlString
             };
+
             window.ticketTags.activate(tagsConfig);
             window.ticketDetails.activate(detailsConfig);
             window.ticketFileUploader.activate(uploaderConfig);
-        })();
+        });
     </script>
 
     <script>
@@ -135,7 +141,10 @@
 
         <div class="attach-file">
             <div class="key border">Attach files*:</div>
-            <div class="value span-3 border"><input type="file" /></div>
+            <div class="value span-3 border">
+                @*<input type="file"/>*@
+                @Html.Partial("_TicketAttachedFiles", Model.Ticket)
+            </div>
             <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">20 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg,jpg,pdf</span></div>
         </div>
     </div>

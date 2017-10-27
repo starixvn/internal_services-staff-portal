@@ -1,32 +1,31 @@
-﻿
-@using System.Configuration
+﻿@using System.Configuration
 @using TicketDesk.Domain.Model
 @using TicketDesk.Localization.Views.Ticket
 @model Ticket
 
-<div class="panel panel-info">
+@*<div class="panel panel-info">
     <div class="panel-heading">Attached Files</div>
     <div class="panel-body">
         <div class="form-group">
             <label class="col-md-2 col-sm-1 control-label">@New.Files</label>
-            <div class="col-md-8 col-sm-11">
-                @{
-                    var demoMode = ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false";
-                    if (demoMode.Equals("true", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        <div class="alert alert-warning">
-                            @Html.Raw(New.Attachment_Demo_Alert)
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="dropzone" style="min-height: 40px;" id="attachmentsDropZone">
-                            <div class="dz-message" data-dz-message><i class="fa fa-download "></i> @New.Attachment_Instructions</div>
-                            <div class="dropzone-previews" id="dz-preview"></div>
-                        </div>
-                    }}
-            </div>
+            <div class="col-md-8 col-sm-11">*@
+@{
+    var demoMode = ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false";
+    if (demoMode.Equals("true", StringComparison.InvariantCultureIgnoreCase))
+    {
+        <div class="alert alert-warning">
+            @Html.Raw(New.Attachment_Demo_Alert)
         </div>
-
+    }
+    else
+    {
+        <div class="dropzone" style="min-height: 40px;" id="attachmentsDropZone">
+            <div class="dz-message" data-dz-message><i class="fa fa-download "></i> @New.Attachment_Instructions</div>
+            <div class="dropzone-previews" id="dz-preview"></div>
+        </div>
+    }}
+@*</div>
     </div>
-</div>
+
+        </div>
+    </div>*@
