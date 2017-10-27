@@ -2126,6 +2126,12 @@
     <Content Include="Scripts\ticketdesk\User\login.js" />
     <Content Include="src\contents\images\bg01.png" />
     <Content Include="src\contents\images\logo.png" />
+    <Content Include="src\css\login.css">
+      <DependentUpon>login.scss</DependentUpon>
+    </Content>
+    <Content Include="src\css\login.min.css">
+      <DependentUpon>login.css</DependentUpon>
+    </Content>
     <Content Include="src\css\page.css">
       <DependentUpon>page.scss</DependentUpon>
     </Content>
@@ -2290,6 +2296,7 @@
     <Content Include="Views\References\TradingLimit.cshtml" />
     <Content Include="Views\References\TvSchedules.cshtml" />
     <Content Include="Views\Ticket\NewFeedbackTicket.cshtml" />
+    <Content Include="src\css\login.scss" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

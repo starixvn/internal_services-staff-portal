@@ -5,46 +5,46 @@
     @SignIn.Title
 }
 
-<main>
-    <div class="container">
-        <fieldset>
-            <div class="col-lg-7 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-12">
-                <p>@SignIn.FixedMessageAppear</p>
-                @using (Html.BeginForm("SignIn", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new {@id = "user-login-form", @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h2 class="panel-title">@SignIn.Legend</h2>
-                        </div>
-                        <div class="panel-body">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                                <div class="col-md-10">
-                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                                <div class="col-md-10">
-                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-footer">
-                            <button id="btnLogin" type="submit" class="btn btn-success" tabindex="10">@SignIn.Login</button>
-                        </div>
-                    </div>
-                }
+    @*<p>@SignIn.FixedMessageAppear</p>*@
+    @using (Html.BeginForm("SignIn", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new {@id = "user-login-form", @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @*<div class="login-form">
+            <div class="logo"><img src="~/src/contents/images/logo.png"/></div>
+            @Html.ValidationSummary(true, "")
+            <div class="field">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email)
+                @Html.ValidationMessageFor(m => m.Email, "")
             </div>
-        </fieldset>
+            <div  class="field">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password, "")
+            </div>
+            <input type="submit" id="btnLogin" class="btn btn-primary" value=@SignIn.Login />
+        </div>*@
 
-    </div>
-</main>
+        <div class="login-form">
+            <div class="logo"><img src="~/src/contents/images/logo_login.png" /></div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="field">
+                @Html.LabelFor(m => m.Email)
+                <div>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="field">
+                @Html.LabelFor(m => m.Password)
+                <div>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <button id="btnLogin" type="submit" class="btn btn-primary" tabindex="10">@SignIn.Login</button>
+        </div>
+    }
 
 @section Scripts {
     @Scripts.Render("~/bundles/user-login")
