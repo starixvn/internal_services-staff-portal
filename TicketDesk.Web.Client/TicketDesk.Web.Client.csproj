@@ -421,7 +421,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\filemanager\connectors\asp\FileManagerController.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Models\Ticket\TicketFeedbackViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\LOCAL\NAPCommonSpNames.xml" />

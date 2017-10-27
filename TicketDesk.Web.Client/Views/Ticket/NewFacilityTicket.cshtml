@@ -93,7 +93,7 @@
         @Html.CustomFieldLabelFor(x => x.RequestType, new { @class = "key" })
         <div class="value span-3 border">
             <div class="radio-group">
-                @Html.HiddenFor(x => x.RequestType.CustomFieldId, new { @Value = Model.RequestType.CustomField.Id })
+                @Html.HiddenFor(x => x.RequestType.CustomFieldId, new { Value = Model.RequestType.CustomField.Id })
                 @foreach (string requestType in Model.RequestTypes)
                 {
                     var rdId = "rd-" + requestType.Replace(' ', '_');
