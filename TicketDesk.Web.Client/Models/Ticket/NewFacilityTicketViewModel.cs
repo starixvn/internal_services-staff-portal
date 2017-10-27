@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
+    using System.Web;
     using Domain.Model;
 
     public class NewFacilityTicketViewModel
@@ -27,6 +28,8 @@
                 return _requestTypes;
             }
         }
+
+        //public HttpPostedFile 
     }
 
     public class Item

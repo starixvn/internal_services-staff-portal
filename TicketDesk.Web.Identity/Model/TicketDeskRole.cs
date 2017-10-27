@@ -47,7 +47,7 @@
             {
                 return TicketDeskRoleManager.DefaultRolesDescription.ContainsKey(Name)
                     ? TicketDeskRoleManager.DefaultRolesDescription[Name]
-                    : _displayName;
+                    : _description;
 
             }
             set
