@@ -439,6 +439,14 @@ body {
             top: 2px;
         }
     }
+    &.btn-primary {
+        background: $title-form-bg;
+    }
+    &.btn-second {
+        background: #e6e6ea;
+        color: $text-color;
+    }
+
 
     &.btn-send {
         box-shadow: 0 0 6px rgba(102, 102, 102, 0.3);
@@ -509,4 +517,38 @@ body {
     opacity: 1;
     -webkit-transform: scale(1);
     transform: scale(1);
+}
+
+
+#logOut {
+    margin-top: 250px;
+}
+
+.modal-dialog {
+    color: $text-color;
+    .modal-content {
+        padding: 0 24px;
+    }
+    .modal-header, .modal-body, .modal-footer {
+        padding: 15px 0;
+    }
+    .modal-header {
+        color: $menu-color;
+        .modal-title {
+            font-size: 16px;
+        }
+    }
+    .modal-footer {
+        border-top: none;
+        button {
+            width: 80px;
+            border-radius: 3px;
+        }
+    }
+    .close {
+        color: $menu-color;
+        font-size: 32px;
+        font-weight: normal;
+        opacity: 1;
+    }
 }

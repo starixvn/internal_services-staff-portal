@@ -83,7 +83,9 @@
         </div>
         <div class="item-list item">
             @Html.CustomFieldLabelFor(x => x.Feedback, new { @class = "key fullwidth" })
-            @Html.CustomFieldFor(x => x.Feedback, new { @class = "fullwidth" })
+            <div class="fullwidth">
+                @Html.CustomFieldFor(x => x.Feedback)
+            </div>
         </div>
         <div class="attach-file">
             <div class="key border">Attach files*:</div>

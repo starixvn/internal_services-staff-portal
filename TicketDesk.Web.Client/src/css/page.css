@@ -326,6 +326,11 @@ body {
       font-size: 18px;
       position: relative;
       top: 2px; }
+  .btn.btn-primary {
+    background: #2e4592; }
+  .btn.btn-second {
+    background: #e6e6ea;
+    color: #333; }
   .btn.btn-send {
     box-shadow: 0 0 6px rgba(102, 102, 102, 0.3);
     width: 100%;
@@ -389,4 +394,28 @@ body {
   opacity: 1;
   -webkit-transform: scale(1);
   transform: scale(1); }
+
+#logOut {
+  margin-top: 250px; }
+
+.modal-dialog {
+  color: #333; }
+  .modal-dialog .modal-content {
+    padding: 0 24px; }
+  .modal-dialog .modal-header, .modal-dialog .modal-body, .modal-dialog .modal-footer {
+    padding: 15px 0; }
+  .modal-dialog .modal-header {
+    color: #03285a; }
+    .modal-dialog .modal-header .modal-title {
+      font-size: 16px; }
+  .modal-dialog .modal-footer {
+    border-top: none; }
+    .modal-dialog .modal-footer button {
+      width: 80px;
+      border-radius: 3px; }
+  .modal-dialog .close {
+    color: #03285a;
+    font-size: 32px;
+    font-weight: normal;
+    opacity: 1; }
 
