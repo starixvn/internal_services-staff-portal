@@ -13,7 +13,6 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Validation;
-    using System.Data.SqlClient;
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
@@ -537,44 +536,69 @@
         ////    return PartialView("_TicketFeedbackDetails", viewModel);
         ////}
 
+
+        public List<CustomFieldValue> GetCustomFieldValuesForTicket(Ticket ticket)
+        {
+            var customFieldValues = Context.CustomFieldValues.Where(x => x.TicketId == ticket.TicketId).ToList();
+
+            var customFieldIds = customFieldValues.Select(x => x.CustomFieldId);
+
+            var customFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
+
+            foreach (CustomFieldValue customFieldValue in customFieldValues)
+            {
+                customFieldValue.CustomField = customFields.First(x => x.Id == customFieldValue.CustomFieldId);
+            }
+
+            return customFieldValues;
+        }
+
         [Route("ticket-feedback-details")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketFeedbackDetails(Ticket ticket)
         {
-            var categoryId = (int)TicketCategoryTypes.Feedback;
+            ////var categoryId = (int)TicketCategoryTypes.Feedback;
 
             // TODO: Set project id as shop id
             ticket.Project = Context.Projects.First(x => x.ProjectId == 1);
 
-            var viewModel = new TicketFeedbackViewModel
-            {
-                Ticket = ticket,
-                CustomFields = new List<TicketFeedbackCustomField>()
-            };
+            var customFieldValues = GetCustomFieldValuesForTicket(ticket);
 
-            var ticketCategory = Context.TicketCategories.First(x => x.CategoryId == categoryId);
-            var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == categoryId)
-                .Select(x => x.CustomFieldId);
+            var viewModel = new NewFeedbackTicketViewModel();
+            viewModel.FeedbackBy = customFieldValues.First(x => x.CustomField.Name == "Feedback by");
+            viewModel.Subject = customFieldValues.First(x => x.CustomField.Name == "Subject");
+            viewModel.CustomerName = customFieldValues.First(x => x.CustomField.Name == "Customer Name");
+            viewModel.Feedback = customFieldValues.First(x => x.CustomField.Name == "Feedback");
 
-            var avalableCustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
+            ////var viewModel = new TicketFeedbackViewModel
+            ////{
+            ////    Ticket = ticket,
+            ////    CustomFields = new List<TicketFeedbackCustomField>()
+            ////};
 
-            foreach (var customField in avalableCustomFields)
-            {
-                viewModel.CustomFields.Add(new TicketFeedbackCustomField
-                {
-                    CategoryId = categoryId,
-                    CustomFieldId = customField.Id,
-                    CustomFieldName = customField.Name,
-                    Value = Context.CustomFieldValues.FirstOrDefault(x =>
-                        (x.CustomFieldId == customField.Id) && (x.TicketId == ticket.TicketId))?.Value
-                });
-            }
+            ////var ticketCategory = Context.TicketCategories.First(x => x.CategoryId == categoryId);
+            ////var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == categoryId)
+            ////    .Select(x => x.CustomFieldId);
 
-            viewModel.Ticket.CategoryName = ticketCategory.Name;
+            ////var avalableCustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
 
-            ViewBag.DisplayProjects = Context.Projects.Any();
+            ////foreach (var customField in avalableCustomFields)
+            ////{
+            ////    viewModel.CustomFields.Add(new TicketFeedbackCustomField
+            ////    {
+            ////        CategoryId = categoryId,
+            ////        CustomFieldId = customField.Id,
+            ////        CustomFieldName = customField.Name,
+            ////        Value = Context.CustomFieldValues.FirstOrDefault(x =>
+            ////            (x.CustomFieldId == customField.Id) && (x.TicketId == ticket.TicketId))?.Value
+            ////    });
+            ////}
 
-            return PartialView("_TicketFeedbackDetails", viewModel);
+            ////viewModel.Ticket.CategoryName = ticketCategory.Name;
+
+            ////ViewBag.DisplayProjects = Context.Projects.Any();
+
+            return PartialView("_FeedbackTicketDetails", viewModel);
         }
 
         [Route("facility-ticket-details")]

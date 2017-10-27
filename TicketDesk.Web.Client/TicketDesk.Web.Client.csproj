@@ -2297,6 +2297,7 @@
     <Content Include="Views\References\TvSchedules.cshtml" />
     <Content Include="Views\Ticket\NewFeedbackTicket.cshtml" />
     <Content Include="src\css\login.scss" />
+    <Content Include="Views\Ticket\_FeedbackTicketDetails.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
