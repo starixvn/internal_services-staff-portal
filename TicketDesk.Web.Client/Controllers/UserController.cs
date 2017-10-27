@@ -6,14 +6,14 @@
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Auth;
+    using Localization;
+    using Models;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
-    using Models;
-    using Localization;
 
     [RoutePrefix("user")]
     [Route("{action}")]
