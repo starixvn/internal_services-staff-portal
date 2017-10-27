@@ -5,46 +5,30 @@
     @SignIn.Title
 }
 
-    @*<p>@SignIn.FixedMessageAppear</p>*@
-    @using (Html.BeginForm("SignIn", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new {@id = "user-login-form", @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        @*<div class="login-form">
-            <div class="logo"><img src="~/src/contents/images/logo.png"/></div>
-            @Html.ValidationSummary(true, "")
-            <div class="field">
-                @Html.LabelFor(m => m.Email)
-                @Html.TextBoxFor(m => m.Email)
-                @Html.ValidationMessageFor(m => m.Email, "")
-            </div>
-            <div  class="field">
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password, "")
-            </div>
-            <input type="submit" id="btnLogin" class="btn btn-primary" value=@SignIn.Login />
-        </div>*@
+@using (Html.BeginForm("SignIn", "User", new { ViewBag.ReturnUrl }, FormMethod.Post, new { id = "user-login-form", @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
 
-        <div class="login-form">
-            <div class="logo"><img src="~/src/contents/images/logo_login.png" /></div>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="field">
-                @Html.LabelFor(m => m.Email)
-                <div>
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                </div>
+    <div class="login-form">
+        <div class="logo"><img src="~/src/contents/images/logo_login.png" /></div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="field">
+            @Html.LabelFor(m => m.Email)
+            <div>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             </div>
-            <div class="field">
-                @Html.LabelFor(m => m.Password)
-                <div>
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <button id="btnLogin" type="submit" class="btn btn-primary" tabindex="10">@SignIn.Login</button>
         </div>
-    }
+        <div class="field">
+            @Html.LabelFor(m => m.Password)
+            <div>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <button id="btnLogin" type="submit" class="btn btn-primary" tabindex="10">@SignIn.Login</button>
+    </div>
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/user-login")

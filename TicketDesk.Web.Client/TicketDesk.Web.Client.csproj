@@ -2125,6 +2125,7 @@
     <Content Include="Scripts\ticketdesk\User\login.js" />
     <Content Include="src\contents\images\bg01.png" />
     <Content Include="src\contents\images\logo.png" />
+    <Content Include="src\contents\images\logo_login.png" />
     <Content Include="src\css\login.css">
       <DependentUpon>login.scss</DependentUpon>
     </Content>
