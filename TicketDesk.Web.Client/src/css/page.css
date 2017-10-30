@@ -92,9 +92,9 @@ body {
       margin-top: 12px; }
     .main-menu .menu-item:hover:after {
       width: 100%; }
-  @media all and (min-width: 1366px) {
-    .main-menu .menu-item {
-      width: 200px; } }
+    @media all and (min-width: 1366px) {
+      .main-menu .menu-item {
+        width: 200px; } }
   .main-menu li:first-child .menu-item {
     border-left: none; }
   .main-menu [class^="icon-"] {
@@ -134,6 +134,9 @@ body {
   display: none; }
   .submenu-section .submenu.active {
     display: block; }
+  @media all and (min-width: 1366px) {
+    .submenu-section .submenu {
+      width: 270px; } }
 
 .submenu a {
   text-decoration: none;

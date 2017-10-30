@@ -117,10 +117,7 @@ body {
         &:hover:after {
             width: 100%;
         }
-    }
-
-    @media all and (min-width: 1366px) {
-        .menu-item {
+        @media all and (min-width: 1366px) { 
             width: 200px;
         }
     }
@@ -179,6 +176,10 @@ body {
     display: none;
     &.active {
         display: block;
+    }
+
+    @media all and (min-width: 1366px) {
+        width: 270px;
     }
 }
 
