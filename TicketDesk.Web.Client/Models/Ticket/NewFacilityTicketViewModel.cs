@@ -1,9 +1,9 @@
 ﻿namespace TicketDesk.Web.Client.Models.Ticket
 {
+    using Domain.Model;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
     using System.Web;
-    using Domain.Model;
 
     public class NewFacilityTicketViewModel
     {
@@ -29,7 +29,7 @@
             }
         }
 
-        //public HttpPostedFile 
+        public HttpPostedFileBase[] Files { get; set; }
     }
 
     public class Item

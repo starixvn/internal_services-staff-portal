@@ -11,14 +11,14 @@
     @*@Styles.Render("~/content/summernote")*@
 
     @*@Scripts.Render("~/bundles/select2")
-    @Scripts.Render("~/bundles/select2_locale_" + CultureHelper.GetCurrentCulture())*@
+        @Scripts.Render("~/bundles/select2_locale_" + CultureHelper.GetCurrentCulture())*@
     @*@Scripts.Render("~/bundles/markdown")
-    @Scripts.Render("~/bundles/summernote")
-    @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())*@
+        @Scripts.Render("~/bundles/summernote")
+        @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())*@
     @Scripts.Render("~/bundles/editor")
 
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             //var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");
 
             $.ajaxSetup({ cache: false });
@@ -75,19 +75,19 @@
 
         function AssignRemoveButton() {
             $(".btn-delete:first").hide();
-            $("body").on("click",".btn-delete", function() {
+            $("body").on("click", ".btn-delete", function () {
                 $(this).parent().parent().remove();
             });
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             AssignAddMoreButton();
             AssignRemoveButton();
         });
     </script>
 }
 
-@using (Html.BeginForm("NewFacilityTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm("NewFacilityTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
@@ -141,8 +141,9 @@
         <div class="attach-file">
             <div class="key border">Attach files*:</div>
             <div class="value span-3 border">
-                <input type="file" multiple=""/>
-                
+                @Html.TextBoxFor(x => x.Files, new { type = "file", multiple = "multiple" })
+                @*<input type="file" multiple=""/>*@
+
                 @* Drop zone for file uploading *@
                 @*@Html.Partial("_TicketAttachedFiles", Model.Ticket)*@
             </div>

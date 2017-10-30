@@ -153,6 +153,12 @@
             viewModel.Ticket.Project = Context.Projects.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
 
+            // Upload files
+            foreach (var file in viewModel.Files)
+            {
+                await TicketDeskFileStore.SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true).ConfigureAwait(false);
+            }
+
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, tempId).ConfigureAwait(false))
             {
                 await AddTicketCustomField(viewModel).ConfigureAwait(false);
