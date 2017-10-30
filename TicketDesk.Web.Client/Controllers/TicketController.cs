@@ -35,21 +35,6 @@
             return RedirectToAction("NewFacilityTicket", "Ticket");
         }
 
-        ////[Route("{id:int}")]
-        ////[NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        ////public async Task<ActionResult> Index(int id)
-        ////{
-        ////    var model = await Context.Tickets.Include(t => t.TicketSubscribers).FirstOrDefaultAsync(t => t.TicketId == id).ConfigureAwait(false);
-        ////    if (model == null)
-        ////    {
-        ////        return RedirectToAction("Index", "TicketCenter");
-        ////    }
-
-        ////    ViewBag.IsEditorDefaultHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
-
-        ////    return View(model);
-        ////}
-
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [Route("new")]
         public async Task<ActionResult> New(int categoryId = 1)
@@ -375,7 +360,7 @@
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [Route("new-feedback")]
-        public ActionResult Feedback()
+        public ActionResult NewFeedbackTicket()
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Feedback);
 
@@ -390,63 +375,7 @@
             ViewBag.TempId = Guid.NewGuid();
 
             return View("NewFeedbackTicket", viewModel);
-
-            ////var categoryId = (int)TicketCategoryTypes.Feedback;
-            ////var model = new Ticket
-            ////{
-            ////    Owner = Context.SecurityProvider.CurrentUserId,
-            ////    IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote",
-            ////    CategoryId = categoryId
-            ////};
-
-            ////await SetProjectInfoForModelAsync(model).ConfigureAwait(false);
-
-            ////SqlParameter categoryParam = new SqlParameter("@CategoryId", categoryId);
-            ////var customFields = await Context.Database
-            ////    .SqlQuery<TicketFeedbackCustomField>("TicketFeedbackCustomFields_Get @CategoryId", categoryParam)
-            ////    .ToListAsync().ConfigureAwait(false);
-
-            ////var ticketFeedbackViewModel = new TicketFeedbackViewModel
-            ////{
-            ////    Ticket = model,
-            ////    CustomFields = customFields,
-            ////    tempId = Guid.NewGuid()
-            ////};
-
-            ////return View(ticketFeedbackViewModel);
         }
-
-        ////[NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        ////[HttpPost]
-        ////[ValidateAntiForgeryToken]
-        ////[ValidateOnlyIncomingValues]
-        ////[ValidateInput(false)]
-        ////[Route("new-feedback")]
-        ////public async Task<ActionResult> Feedback(TicketFeedbackViewModel model)
-        ////{
-        ////    var ticket = model.Ticket;
-
-        ////    if (ModelState.IsValid)
-        ////    {
-        ////        try
-        ////        {
-        ////            if (await CreateTicketFeedbackAsync(model).ConfigureAwait(false))
-        ////            {
-        ////                return Context.SecurityProvider.IsReadTicketCenter
-        ////                    ? RedirectToAction("Index", "TicketCenter", new { id = ticket.TicketId })
-        ////                    : RedirectToAction("Index", "Home");
-        ////            }
-        ////        }
-        ////        // ReSharper disable once EmptyGeneralCatchClause
-        ////        catch (DbEntityValidationException)
-        ////        {
-        ////            // TODO: catch rule exceptions? or can annotations handle this fully now?
-        ////        }
-        ////    }
-
-        ////    await SetProjectInfoForModelAsync(ticket).ConfigureAwait(false);
-        ////    return View(ticket);
-        ////}
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [HttpPost]
@@ -454,7 +383,7 @@
         [ValidateOnlyIncomingValues]
         [ValidateInput(false)]
         [Route("new-feedback")]
-        public async Task<ActionResult> Feedback(NewFeedbackTicketViewModel viewModel, Guid tempId)
+        public async Task<ActionResult> NewFeedbackTicket(NewFeedbackTicketViewModel viewModel, Guid tempId)
         {
             if (viewModel.Ticket.IsHtml)
             {
@@ -513,45 +442,7 @@
             await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
             return View("NewFeedbackTicket", viewModel);
         }
-
-        ////[Route("ticket-feedback-details")]
-        ////[NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        ////public ActionResult TicketFeedbackDetails(int ticketId)
-        ////{
-        ////    var categoryId = (int)TicketCategoryTypes.Feedback;
-        ////    var ticket = Context.Tickets.Find(ticketId);
-        ////    var viewModel = new TicketFeedbackViewModel
-        ////    {
-        ////        Ticket = ticket,
-        ////        CustomFields = new List<TicketFeedbackCustomField>()
-        ////    };
-
-        ////    var ticketCategory = Context.TicketCategories.First(x => x.CategoryId == categoryId);
-        ////    var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == categoryId)
-        ////        .Select(x => x.CustomFieldId);
-
-        ////    var avalableCustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
-
-        ////    foreach (var customField in avalableCustomFields)
-        ////    {
-        ////        viewModel.CustomFields.Add(new TicketFeedbackCustomField
-        ////        {
-        ////            CategoryId = categoryId,
-        ////            CustomFieldId = customField.Id,
-        ////            CustomFieldName = customField.Name,
-        ////            Value = Context.CustomFieldValues
-        ////                .FirstOrDefault(x => (x.CustomFieldId == customField.Id) && (x.TicketId == ticketId))?.Value
-        ////        });
-        ////    }
-
-        ////    viewModel.Ticket.CategoryName = ticketCategory.Name;
-
-        ////    ViewBag.DisplayProjects = Context.Projects.Any();
-
-        ////    return PartialView("_TicketFeedbackDetails", viewModel);
-        ////}
-
-
+        
         public List<CustomFieldValue> GetCustomFieldValuesForTicket(Ticket ticket)
         {
             var customFieldValues = Context.CustomFieldValues.Where(x => x.TicketId == ticket.TicketId).ToList();
@@ -572,8 +463,6 @@
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketFeedbackDetails(Ticket ticket)
         {
-            ////var categoryId = (int)TicketCategoryTypes.Feedback;
-
             // TODO: Set project id as shop id
             ticket.Project = Context.Projects.First(x => x.ProjectId == 1);
 
@@ -584,35 +473,7 @@
             viewModel.Subject = customFieldValues.First(x => x.CustomField.Name == "Subject");
             viewModel.CustomerName = customFieldValues.First(x => x.CustomField.Name == "Customer Name");
             viewModel.Feedback = customFieldValues.First(x => x.CustomField.Name == "Feedback");
-
-            ////var viewModel = new TicketFeedbackViewModel
-            ////{
-            ////    Ticket = ticket,
-            ////    CustomFields = new List<TicketFeedbackCustomField>()
-            ////};
-
-            ////var ticketCategory = Context.TicketCategories.First(x => x.CategoryId == categoryId);
-            ////var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == categoryId)
-            ////    .Select(x => x.CustomFieldId);
-
-            ////var avalableCustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
-
-            ////foreach (var customField in avalableCustomFields)
-            ////{
-            ////    viewModel.CustomFields.Add(new TicketFeedbackCustomField
-            ////    {
-            ////        CategoryId = categoryId,
-            ////        CustomFieldId = customField.Id,
-            ////        CustomFieldName = customField.Name,
-            ////        Value = Context.CustomFieldValues.FirstOrDefault(x =>
-            ////            (x.CustomFieldId == customField.Id) && (x.TicketId == ticket.TicketId))?.Value
-            ////    });
-            ////}
-
-            ////viewModel.Ticket.CategoryName = ticketCategory.Name;
-
-            ////ViewBag.DisplayProjects = Context.Projects.Any();
-
+            
             return PartialView("_FeedbackTicketDetails", viewModel);
         }
 
@@ -626,29 +487,5 @@
             };
             return PartialView("_FacilityTicketDetails", viewModel);
         }
-
-        ////private async Task<bool> CreateTicketFeedbackAsync(TicketFeedbackViewModel model)
-        ////{
-        ////    Context.Tickets.Add(model.Ticket);
-        ////    Context.SaveChanges();
-
-        ////    foreach (var field in model.CustomFields)
-        ////    {
-        ////        var customFieldValue = new CustomFieldValue
-        ////        {
-        ////            Value = field.Value,
-        ////            CustomFieldId = field.CustomFieldId,
-        ////            TicketId = model.Ticket.TicketId
-        ////        };
-
-        ////        Context.CustomFieldValues.Add(customFieldValue);
-        ////    }
-
-        ////    await Context.SaveChangesAsync().ConfigureAwait(false);
-
-        ////    model.Ticket.CommitPendingAttachments(model.tempId);
-
-        ////    return model.Ticket.TicketId != default(int);
-        ////}
     }
 }
