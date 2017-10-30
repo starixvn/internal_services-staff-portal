@@ -3,7 +3,7 @@
     using Domain.Model;
     using System.Text.RegularExpressions;
 
-    public class NewFeedbackTicketViewModel
+    public class NewFeedbackTicketViewModel : TicketWithFilesBaseViewModel
     {
         private string[] _feedbackByValues;
 

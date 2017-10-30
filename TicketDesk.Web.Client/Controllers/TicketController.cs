@@ -386,6 +386,9 @@
             viewModel.CustomerName.CustomField = availableCustomField.First(x => x.Name == "Customer Name");
             viewModel.Feedback.CustomField = availableCustomField.First(x => x.Name == "Feedback");
 
+            // For container id
+            ViewBag.TempId = Guid.NewGuid();
+
             return View("NewFeedbackTicket", viewModel);
 
             ////var categoryId = (int)TicketCategoryTypes.Feedback;
@@ -451,7 +454,7 @@
         [ValidateOnlyIncomingValues]
         [ValidateInput(false)]
         [Route("new-feedback")]
-        public async Task<ActionResult> Feedback(NewFeedbackTicketViewModel viewModel)
+        public async Task<ActionResult> Feedback(NewFeedbackTicketViewModel viewModel, Guid tempId)
         {
             if (viewModel.Ticket.IsHtml)
             {
@@ -465,6 +468,12 @@
             // TODO: Replace with actual project ID represent for shop id here
             viewModel.Ticket.Project = Context.Projects.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Feedback;
+
+            // Upload files
+            foreach (var file in viewModel.Files)
+            {
+                await TicketDeskFileStore.SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true).ConfigureAwait(false);
+            }
 
             // TODO: Remove guid in CreateTicketAsync
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, Guid.NewGuid()).ConfigureAwait(false))

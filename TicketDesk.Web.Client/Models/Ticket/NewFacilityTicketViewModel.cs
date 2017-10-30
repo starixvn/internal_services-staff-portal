@@ -3,9 +3,8 @@
     using Domain.Model;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
-    using System.Web;
 
-    public class NewFacilityTicketViewModel
+    public class NewFacilityTicketViewModel : TicketWithFilesBaseViewModel
     {
         private string[] _requestTypes;
 
@@ -28,8 +27,6 @@
                 return _requestTypes;
             }
         }
-
-        public HttpPostedFileBase[] Files { get; set; }
     }
 
     public class Item
