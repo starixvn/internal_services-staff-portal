@@ -119,6 +119,12 @@ body {
         }
     }
 
+    @media all and (min-width: 1366px) {
+        .menu-item {
+            width: 200px;
+        }
+    }
+
     li:first-child .menu-item {
         border-left: none;
     }
