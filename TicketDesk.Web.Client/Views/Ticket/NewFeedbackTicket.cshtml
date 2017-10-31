@@ -7,7 +7,7 @@
 
 @section scripts
 {
-    @Styles.Render("~/content/editor")
+    @*@Styles.Render("~/content/editor")*@
     @*@Styles.Render("~/content/select2")*@
     @*@Styles.Render("~/content/summernote")*@
 
@@ -16,7 +16,7 @@
     @*@Scripts.Render("~/bundles/markdown")
     @Scripts.Render("~/bundles/summernote")
     @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())*@
-    @Scripts.Render("~/bundles/editor")
+    @*@Scripts.Render("~/bundles/editor")*@
 
     @*<script type="text/javascript">
         $(document).ready(function() {
@@ -45,6 +45,8 @@
             window.ticketFileUploader.activate(uploaderConfig);
         });
     </script>*@
+    
+    <script src="~/src/js/filevalidation.js"></script>
 }
 
 @using (Html.BeginForm("NewFeedbackTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
@@ -96,6 +98,7 @@
             <div class="key border">Attach files*:</div>
             <div class="value span-3 border">
                 @Html.TextBoxFor(x => x.Files, new { type = "file", multiple = "multiple" })
+                @Html.ValidationMessageFor(m => m.Files)
                 @*@Html.Partial("_TicketAttachedFiles", Model.Ticket)*@
             </div>
             <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">20 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg,jpg,pdf</span></div>
