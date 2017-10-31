@@ -280,8 +280,9 @@
         [ValidateOnlyIncomingValues]
         [ValidateInput(false)]
         [Route("new-feedback")]
-        public async Task<ActionResult> NewFeedbackTicket(NewFeedbackTicketViewModel viewModel, Guid tempId)
+        public async Task<ActionResult> NewFeedbackTicket(NewFeedbackTicketViewModel viewModel)
         {
+            Guid tempId = Guid.NewGuid();
             if (viewModel.Ticket.IsHtml)
             {
                 viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
@@ -302,7 +303,7 @@
             }
 
             // TODO: Remove guid in CreateTicketAsync
-            if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, Guid.NewGuid()).ConfigureAwait(false))
+            if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, tempId).ConfigureAwait(false))
             {
                 AddCustomFieldValue(
                     null,
