@@ -7,7 +7,7 @@
     using System.Web;
     using System.Web.Mvc;
 
-    [AttributeUsage(AttributeTargets.Field|AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class FileSizeAttribute : ValidationAttribute, IClientValidatable
     {
         private const string ErrorMessageWithFormat = "Total size of files must not exceed {0} MB(s)";
@@ -20,9 +20,9 @@
         {
             IEnumerable<HttpPostedFileBase> files = value as IEnumerable<HttpPostedFileBase>;
 
-            if (files != null)
+            if (files != null && files.Any())
             {
-                var totalBytes = files.Sum(file => file.ContentLength);
+                var totalBytes = files.Where(file => file != null).Sum(file => file.ContentLength);
 
                 if (totalBytes > MaxBytes)
                 {

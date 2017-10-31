@@ -238,7 +238,12 @@
             // Upload files
             foreach (var file in viewModel.Files)
             {
-                await TicketDeskFileStore.SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true).ConfigureAwait(false);
+                if (file != null)
+                {
+                    await TicketDeskFileStore
+                        .SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true)
+                        .ConfigureAwait(false);
+                }
             }
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, tempId).ConfigureAwait(false))
@@ -299,7 +304,12 @@
             // Upload files
             foreach (var file in viewModel.Files)
             {
-                await TicketDeskFileStore.SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true).ConfigureAwait(false);
+                if (file != null)
+                {
+                    await TicketDeskFileStore
+                        .SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true)
+                        .ConfigureAwait(false);
+                }
             }
 
             // TODO: Remove guid in CreateTicketAsync
