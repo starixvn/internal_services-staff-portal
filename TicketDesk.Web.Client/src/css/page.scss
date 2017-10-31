@@ -462,11 +462,13 @@ body {
 }
 
 .attach-file {
+    .key, .value.span-3 {
+        height: auto;
+    }
     .field-validation-error {
-        display: none;
+        color: #ff0000;
     }
     .input-validation-error, .input-validation-error:focus {
-        border: none;
         outline: none;
     }
 }
