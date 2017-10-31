@@ -14,9 +14,9 @@
         private readonly string _defaultErrorMessage = "Only the following file types are allowed: {0}";
         private IEnumerable<string> ValidTypes { get; }
 
-        public FileTypeAttribute(string validTypes)
+        public FileTypeAttribute(string[] validTypes)
         {
-            ValidTypes = validTypes.Split(',').Select(s => s.Trim().ToLower(CultureInfo.InvariantCulture));
+            ValidTypes = validTypes.Select(x => x.ToLower(CultureInfo.InvariantCulture));
             ErrorMessage = string.Format(_defaultErrorMessage, string.Join(" or ", ValidTypes));
         }
 
