@@ -6,7 +6,7 @@
 
 @section scripts
 {
-    @Styles.Render("~/content/editor")
+    @*@Styles.Render("~/content/editor")*@
     @*@Styles.Render("~/content/select2")*@
     @*@Styles.Render("~/content/summernote")*@
 
@@ -15,35 +15,62 @@
     @*@Scripts.Render("~/bundles/markdown")
         @Scripts.Render("~/bundles/summernote")
         @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())*@
-    @Scripts.Render("~/bundles/editor")
+    @*@Scripts.Render("~/bundles/editor")*@
 
     @*<script type="text/javascript">
-        $(document).ready(function () {
-            var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");
+            $(document).ready(function () {
+                var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");
 
-            $.ajaxSetup({ cache: false });
+                $.ajaxSetup({ cache: false });
 
-            var uploaderConfig = {
-                dropzoneUploadUrl: '@Url.Action("Upload", "File")',
-                getAttachmentsUrl: '@Url.Action("GetAttachmentsInfo", "File")',
-                deleteFileUrl: '@Url.Action("Delete", "File")',
-                defaultThumbnailUrl: '@Url.Content("~/content/images/general-file.png")',
-                ticketId: null
-            };
+                var uploaderConfig = {
+                    dropzoneUploadUrl: '@Url.Action("Upload", "File")',
+                    getAttachmentsUrl: '@Url.Action("GetAttachmentsInfo", "File")',
+                    deleteFileUrl: '@Url.Action("Delete", "File")',
+                    defaultThumbnailUrl: '@Url.Content("~/content/images/general-file.png")',
+                    ticketId: null
+                };
 
-            var tagsConfig = {
-                tagAutoCompleteUrl: '@Url.Action("TagList", "AutoComplete")'
-            };
+                var tagsConfig = {
+                    tagAutoCompleteUrl: '@Url.Action("TagList", "AutoComplete")'
+                };
 
-            var detailsConfig = {
-                isHtml: isHtmlString
-            };
+                var detailsConfig = {
+                    isHtml: isHtmlString
+                };
 
-            window.ticketTags.activate(tagsConfig);
-            window.ticketDetails.activate(detailsConfig);
-            window.ticketFileUploader.activate(uploaderConfig);
-        });
-    </script>*@
+                window.ticketTags.activate(tagsConfig);
+                window.ticketDetails.activate(detailsConfig);
+                window.ticketFileUploader.activate(uploaderConfig);
+            });
+        </script>*@
+
+    <script>
+        function getFileExtension(fileName) {
+            if (/[.]/.exec(fileName)) {
+                return /[^.]+$/.exec(fileName)[0].toLowerCase();
+            }
+            return null;
+        }
+
+        $.validator.unobtrusive.adapters.add('filetype',
+            ['validtypes'],
+            function (options) {
+                options.rules['filetype'] = { validtypes: options.params.validtypes.split(',') };
+                options.messages['filetype'] = options.message;
+            });
+
+        $.validator.addMethod("filetype",
+            function (value, element, param) {
+                for (var i = 0; i < element.files.length; i++) {
+                    var extension = getFileExtension(element.files[0].name);
+                    if ($.inArray(extension, param.validtypes) === -1) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+    </script>
 
     <script>
         function GenerateGuid() {
@@ -87,7 +114,7 @@
     </script>
 }
 
-@using (Html.BeginForm("NewFacilityTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("NewFacilityTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
@@ -142,12 +169,13 @@
             <div class="key border">Attach files*:</div>
             <div class="value span-3 border">
                 @Html.TextBoxFor(x => x.Files, new { type = "file", multiple = "multiple" })
+                @Html.ValidationMessageFor(m => m.Files)
                 @*<input type="file" multiple=""/>*@
 
                 @* Drop zone for file uploading *@
                 @*@Html.Partial("_TicketAttachedFiles", Model.Ticket)*@
             </div>
-            <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">20 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg,jpg,pdf</span></div>
+            <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">20 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg, jpg, png, pdf</span></div>
         </div>
     </div>
     <input type="submit" class="btn btn-send" value="Send" />
