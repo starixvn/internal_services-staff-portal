@@ -7,6 +7,7 @@
     public class TicketWithFilesBaseViewModel
     {
         [FileType("jpg,jpeg,png,pdf")]
+        [NumberOfFile(Max = 32)]
         public IEnumerable<HttpPostedFileBase> Files { get; set; }
     }
 }

@@ -63,10 +63,25 @@
         $.validator.addMethod("filetype",
             function (value, element, param) {
                 for (var i = 0; i < element.files.length; i++) {
-                    var extension = getFileExtension(element.files[0].name);
+                    var extension = getFileExtension(element.files[i].name);
                     if ($.inArray(extension, param.validtypes) === -1) {
                         return false;
                     }
+                }
+                return true;
+            });
+
+        $.validator.unobtrusive.adapters.add('numberoffile',
+            ['max'],
+            function(options) {
+                options.rules['numberoffile'] = { max: options.params.max };
+                options.messages['numberoffile'] = options.message;
+            });
+
+        $.validator.addMethod("numberoffile",
+            function (value, element, params) {
+                if (element.files.length > params.max) {
+                    return false;
                 }
                 return true;
             });
