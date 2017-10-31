@@ -341,6 +341,13 @@ body {
     padding: 12px;
     font-size: 16px; }
 
+.attach-file .field-validation-error {
+  display: none; }
+
+.attach-file .input-validation-error, .attach-file .input-validation-error:focus {
+  border: none;
+  outline: none; }
+
 /**************************************************** Radio button ******************************************************/
 .radio-group {
   display: flex;

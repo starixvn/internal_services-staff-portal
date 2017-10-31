@@ -461,6 +461,16 @@ body {
     }
 }
 
+.attach-file {
+    .field-validation-error {
+        display: none;
+    }
+    .input-validation-error, .input-validation-error:focus {
+        border: none;
+        outline: none;
+    }
+}
+
 
 /**************************************************** Radio button ******************************************************/
 .radio-group {
