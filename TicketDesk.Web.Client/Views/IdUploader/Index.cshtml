@@ -1,0 +1,50 @@
+﻿@model TicketDesk.Web.Client.Models.IdUploaderViewModel
+
+@section title { ID Uploader }
+
+@section scripts
+{
+    <script src="~/src/js/filevalidation.js"></script>
+}
+
+@using (Html.BeginForm("NewCustomer", "IdUploader", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-content feedback-form">
+        <div class="title">ID UPLOADER FORM</div>
+        <div class="item-list item">
+            @Html.LabelFor(x => x.CustomerUserName, new { @class = "key fullwidth border" })
+            <div class="fullwidth">
+                @Html.TextBoxFor(x => x.CustomerUserName)
+            </div>
+        </div>
+        <div class="item-list item">
+            @Html.LabelFor(x => x.CustomerName, new { @class = "key fullwidth" })
+            <div class="fullwidth">
+                @Html.TextBoxFor(x => x.CustomerName)
+            </div>
+        </div>
+        <div class="item-list item">
+            @Html.LabelFor(x => x.IdNumber, new { @class = "key fullwidth" })
+            <div class="fullwidth">
+                @Html.TextBoxFor(x => x.IdNumber)
+            </div>
+        </div>
+        <div class="item-list item">
+            @Html.LabelFor(x => x.Remark, new { @class = "key fullwidth" })
+            <div class="fullwidth">
+                @Html.TextAreaFor(x => x.Remark)
+            </div>
+        </div>
+        <div class="attach-file">
+            <div class="key border">Attach files*:</div>
+            <div class="value span-3 border">
+                @Html.TextBoxFor(x => x.Files, new { type = "file", multiple = "multiple" })
+                @Html.ValidationMessageFor(m => m.Files)
+            </div>
+            <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">3 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg,jpg,png</span></div>
+        </div>
+    </div>
+    <input type="submit" class="btn btn-send" value="Send" />
+}

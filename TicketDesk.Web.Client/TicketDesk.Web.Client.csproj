@@ -346,6 +346,7 @@
     <Compile Include="Controllers\CustomFieldSettingsController.cs" />
     <Compile Include="Controllers\EmailTestController.cs" />
     <Compile Include="Controllers\FileManagerController.cs" />
+    <Compile Include="Controllers\IdUploaderController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Controllers\ProjectSettingsController.cs" />
     <Compile Include="Controllers\PushNotificationSettingsController.cs" />
@@ -415,6 +416,7 @@
     <Compile Include="Models\Extensions\TicketSubscriberExtensions.cs" />
     <Compile Include="Models\FilterBarViewModel.cs" />
     <Compile Include="Infrastructure\Migration\Legacy\LegacySecurityMigrator.cs" />
+    <Compile Include="Models\IdUploaderViewModel.cs" />
     <Compile Include="Models\NavbarViewModel.cs" />
     <Compile Include="Models\ProjectListViewModel.cs" />
     <Compile Include="Models\SystemInfoViewModel.cs" />
@@ -2310,6 +2312,7 @@
     <Content Include="Views\Ticket\NewFeedbackTicket.cshtml" />
     <Content Include="src\css\login.scss" />
     <Content Include="Views\Ticket\_FeedbackTicketDetails.cshtml" />
+    <Content Include="Views\IdUploader\Index.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
