@@ -366,7 +366,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Attribute\FileExtensionsValidation.cs" />
+    <Compile Include="Infrastructure\Attribute\FileSizeAttribute.cs" />
+    <Compile Include="Infrastructure\Attribute\FileTypeAttribute.cs" />
     <Compile Include="Infrastructure\Attribute\NumberOfFileAttribute.cs" />
     <Compile Include="Infrastructure\DbSetupFilter.cs" />
     <Compile Include="Infrastructure\Extensions\EnumerableExtensions.cs" />
@@ -2151,6 +2152,7 @@
     <Content Include="src\Fonts\iconFont\fonts\icomoon.svg" />
     <Content Include="src\Fonts\iconFont\Read Me.txt" />
     <Content Include="src\Fonts\iconFont\style.css" />
+    <Content Include="src\js\filevalidation.js" />
     <Content Include="src\js\page.js" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.min.css" />
