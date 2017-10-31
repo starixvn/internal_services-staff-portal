@@ -10,9 +10,11 @@
     [AttributeUsage(AttributeTargets.Field|AttributeTargets.Property)]
     public class FileSizeAttribute : ValidationAttribute, IClientValidatable
     {
-        private const string ErrorMessageWithFormat = "Total size of files must not exceed {0}";
+        private const string ErrorMessageWithFormat = "Total size of files must not exceed {0} MB(s)";
 
         public int MaxBytes { get; set; }
+
+        private int MaxMegaByte => MaxBytes / 1048576;
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -24,7 +26,7 @@
 
                 if (totalBytes > MaxBytes)
                 {
-                    return new ValidationResult(string.Format(ErrorMessageWithFormat, MaxBytes));
+                    return new ValidationResult(string.Format(ErrorMessageWithFormat, MaxMegaByte));
                 }
             }
 
@@ -36,8 +38,9 @@
             var rule = new ModelClientValidationRule
             {
                 ValidationType = "filesize",
-                ErrorMessage = FormatErrorMessage(metadata.DisplayName)
+                ErrorMessage = string.Format(ErrorMessageWithFormat, MaxMegaByte)
             };
+
             rule.ValidationParameters["maxbytes"] = MaxBytes;
             yield return rule;
         }
