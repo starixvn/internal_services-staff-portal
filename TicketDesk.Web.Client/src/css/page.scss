@@ -120,7 +120,7 @@ body {
         &:hover:after {
             width: 100%;
         }
-        @media all and (min-width: 1366px) { 
+        @media all and (min-width: 1440px) { 
             width: 200px;
         }
         @media all and (max-width: 1024px) {
@@ -203,7 +203,7 @@ body {
         padding: 17px 0 16px 25px;
         display: block;
 
-        &:hover {
+        &:hover, &.active {
             background: $primary-color;
             -webkit-transition: background-color 0.3s linear;
             transition: background-color 0.3s linear;
@@ -319,8 +319,9 @@ body {
 .form-content {
     background: #fff;
     box-shadow: 0 0 6px rgba(102, 102, 102, 0.3);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-flow: row wrap;
+    // grid-template-columns: repeat(4, 1fr);
     align-items: center;
     color: $text-color;
     label {
@@ -334,6 +335,9 @@ body {
     input[type="file"], select {
         border-top: none;
     }
+    select {
+        flex: 1;
+    }
     input[type="file"]{        
         margin-top: 8px;
     }
@@ -342,7 +346,8 @@ body {
     }
     .title {
         color: #fff;
-        grid-column: span 4;
+        //grid-column: span 4;
+        flex: 1 100%;
         background: $title-form-bg;
         height: 48px;
         line-height: 48px;
@@ -357,29 +362,39 @@ body {
     .value, .key {        
         height: 40px;
         line-height: 40px;
+        flex: 1;
     }
     .value.span-3 {
-        grid-column: span 3;
+        //grid-column: span 3;
+        flex: 3;
     }
     .span-2 {
-        grid-column: span 2;
+        //grid-column: span 2;
+        flex: 2;
     }
     .item-list, .attach-file {
-        grid-column: span 4;
+        //grid-column: span 4;
+        flex: 1 100%;
+        flex-flow: row wrap;
+        display: flex;
     }
     .attach-file {
-        display: grid;
-        grid-template-columns: inherit;
+        //display: grid;
+        //grid-template-columns: inherit;
     }
     .item-head {
         background: #f5e598;
         color: $title-form-bg;
         text-transform: uppercase;
+        height: 40px;
+        line-height: 40px;
     }
     .item {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: 40px 40px 100px;    
+        display: flex;
+        //grid-template-columns: repeat(4, 1fr);
+        //grid-template-rows: 40px 40px 100px; 
+        flex-flow: row wrap;  
+        flex: 1 100%; 
         &.even {
             background: #f7f7f7;
             *:not(.btn-delete) {
@@ -388,23 +403,25 @@ body {
         }   
     }
      .fullwidth, textarea {
-        grid-column: span 4;
+        //grid-column: span 4;
+        flex: 1 100%;
     }
 
     input[type="text"], textarea {        
         font-size: 16px;
     }
     textarea {
-        padding: 6px 12px;
+        padding: 6px 12px;        
+        min-height: 120px;
     }
 }
 .facility-form .fullwidth {
-    padding: 11px 12px 13px;
+    padding: 9px 12px;
 }
 .feedback-form {
     .item {
         border-left: 1px solid $border-color;
-        grid-template-rows: 40px auto;
+        //grid-template-rows: 40px auto;
         .key.border {
             border-left: none;
         }
@@ -443,7 +460,7 @@ body {
     }
     &.btn-add {
         float: right;
-        margin-top: 8px;       
+        margin-top: 3px;       
     }
     &.btn-delete {
         background: #ffc5c7;

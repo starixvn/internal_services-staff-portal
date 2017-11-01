@@ -94,7 +94,7 @@ body {
       margin-top: 10px; }
     .main-menu .menu-item:hover:after {
       width: 100%; }
-    @media all and (min-width: 1366px) {
+    @media all and (min-width: 1440px) {
       .main-menu .menu-item {
         width: 200px; } }
     @media all and (max-width: 1024px) {
@@ -156,11 +156,11 @@ body {
   text-decoration: none;
   padding: 17px 0 16px 25px;
   display: block; }
-  .submenu a:hover {
+  .submenu a:hover, .submenu a.active {
     background: #bf141a;
     -webkit-transition: background-color 0.3s linear;
     transition: background-color 0.3s linear; }
-    .submenu a:hover .text, .submenu a:hover [class^="icon-"] {
+    .submenu a:hover .text, .submenu a:hover [class^="icon-"], .submenu a.active .text, .submenu a.active [class^="icon-"] {
       color: #fff; }
 
 .submenu .text {
@@ -237,8 +237,8 @@ body {
 .form-content {
   background: #fff;
   box-shadow: 0 0 6px rgba(102, 102, 102, 0.3);
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-flow: row wrap;
   align-items: center;
   color: #333; }
   .form-content label {
@@ -249,13 +249,15 @@ body {
     border-right: 0; }
   .form-content input[type="file"], .form-content select {
     border-top: none; }
+  .form-content select {
+    flex: 1; }
   .form-content input[type="file"] {
     margin-top: 8px; }
   .form-content .title, .form-content .key, .form-content .value, .form-content .fullwidth, .form-content textarea {
     padding: 0 12px; }
   .form-content .title {
     color: #fff;
-    grid-column: span 4;
+    flex: 1 100%;
     background: #2e4592;
     height: 48px;
     line-height: 48px;
@@ -267,41 +269,43 @@ body {
     margin-bottom: 0; }
   .form-content .value, .form-content .key {
     height: 40px;
-    line-height: 40px; }
+    line-height: 40px;
+    flex: 1; }
   .form-content .value.span-3 {
-    grid-column: span 3; }
+    flex: 3; }
   .form-content .span-2 {
-    grid-column: span 2; }
+    flex: 2; }
   .form-content .item-list, .form-content .attach-file {
-    grid-column: span 4; }
-  .form-content .attach-file {
-    display: grid;
-    grid-template-columns: inherit; }
+    flex: 1 100%;
+    flex-flow: row wrap;
+    display: flex; }
   .form-content .item-head {
     background: #f5e598;
     color: #2e4592;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    height: 40px;
+    line-height: 40px; }
   .form-content .item {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 40px 40px 100px; }
+    display: flex;
+    flex-flow: row wrap;
+    flex: 1 100%; }
     .form-content .item.even {
       background: #f7f7f7; }
       .form-content .item.even *:not(.btn-delete) {
         background: inherit; }
   .form-content .fullwidth, .form-content textarea {
-    grid-column: span 4; }
+    flex: 1 100%; }
   .form-content input[type="text"], .form-content textarea {
     font-size: 16px; }
   .form-content textarea {
-    padding: 6px 12px; }
+    padding: 6px 12px;
+    min-height: 120px; }
 
 .facility-form .fullwidth {
-  padding: 11px 12px 13px; }
+  padding: 9px 12px; }
 
 .feedback-form .item {
-  border-left: 1px solid #d3d7db;
-  grid-template-rows: 40px auto; }
+  border-left: 1px solid #d3d7db; }
   .feedback-form .item .key.border {
     border-left: none; }
   .feedback-form .item input[type="text"] {
@@ -332,7 +336,7 @@ body {
     color: #fff; }
   .btn.btn-add {
     float: right;
-    margin-top: 8px; }
+    margin-top: 3px; }
   .btn.btn-delete {
     background: #ffc5c7;
     color: #333;
