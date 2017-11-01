@@ -2313,6 +2313,7 @@
     <Content Include="src\css\login.scss" />
     <Content Include="Views\Ticket\_FeedbackTicketDetails.cshtml" />
     <Content Include="Views\IdUploader\Index.cshtml" />
+    <Content Include="Views\Shared\_SubmenuNavigation.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
