@@ -22,7 +22,7 @@
         [Display(Name = "Remark")]
         public string Remark { get; set; }
 
-        [FileType(new[] { "jpg,jpeg,png" })]
+        [FileType(new[] { "jpg", "jpeg", "png" })]
         [NumberOfFile(Max = 3)]
         public IEnumerable<HttpPostedFileBase> Files { get; set; }
     }

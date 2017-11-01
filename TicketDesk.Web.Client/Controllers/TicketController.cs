@@ -234,20 +234,20 @@
             // TODO: Replace with actual project ID represent for shop id here
             viewModel.Ticket.Project = Context.Projects.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
-
-            // Upload files
-            foreach (var file in viewModel.Files)
-            {
-                if (file != null)
-                {
-                    await TicketDeskFileStore
-                        .SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true)
-                        .ConfigureAwait(false);
-                }
-            }
-
+            
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, tempId).ConfigureAwait(false))
             {
+                // Upload files
+                foreach (var file in viewModel.Files)
+                {
+                    if (file != null)
+                    {
+                        await TicketDeskFileStore
+                            .SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true)
+                            .ConfigureAwait(false);
+                    }
+                }
+
                 await AddTicketCustomField(viewModel).ConfigureAwait(false);
 
                 return Context.SecurityProvider.IsReadTicketCenter

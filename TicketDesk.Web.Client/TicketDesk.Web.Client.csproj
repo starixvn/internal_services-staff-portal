@@ -2175,10 +2175,14 @@
     <Content Include="Properties\webjobs-list.json" />
     <Content Include="Scripts\jquery.clickable-0.1.9.min.js.map">
       <DependentUpon>jquery.clickable-0.1.9.min.js</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\jquery.clickable-0.1.9.js" />
+    <Content Include="Scripts\jquery.clickable-0.1.9.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\jquery.clickable-0.1.9.min.js">
       <DependentUpon>jquery.clickable-0.1.9.js</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\pagedown\Markdown.Editor.js" />
     <Content Include="Scripts\ticketdesk\ticket-details.js" />
