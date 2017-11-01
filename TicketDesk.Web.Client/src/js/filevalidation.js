@@ -86,3 +86,11 @@ $.validator.addMethod("filesize",
         // since returning false would prevent submitting the form 
         return true;
     });
+
+$(document).ready(function() {
+    $("input[type=file]").on("change",
+        function () {
+            console.log("changed");
+            $(this).closest("form").valid();
+        });
+})

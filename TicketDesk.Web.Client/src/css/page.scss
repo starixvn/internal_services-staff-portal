@@ -12,6 +12,14 @@ $primary-color: #bf141a;
 $menu-color: #03285a;
 $title-form-bg: #2e4592;
 
+.input-validation-error{
+    border-color: red;
+}
+
+.field-validation-error {
+        color: #ff0000;
+    }
+
 ul {
     padding: 0;
     margin: 0;

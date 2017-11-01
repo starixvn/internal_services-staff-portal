@@ -3,6 +3,12 @@
   /*font-display: auto;*/
   src: local("Open Sans"), url("https://fonts.googleapis.com/css?family=Open+Sans:400,700,800"); }
 
+.input-validation-error {
+  border-color: red; }
+
+.field-validation-error {
+  color: #ff0000; }
+
 ul {
   padding: 0;
   margin: 0; }

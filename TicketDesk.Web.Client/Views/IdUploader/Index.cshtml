@@ -17,18 +17,21 @@
             @Html.LabelFor(x => x.CustomerUserName, new { @class = "key fullwidth border" })
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.CustomerUserName)
+                @Html.ValidationMessageFor(x => x.CustomerUserName)
             </div>
         </div>
         <div class="item-list item">
             @Html.LabelFor(x => x.CustomerName, new { @class = "key fullwidth" })
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.CustomerName)
+                @Html.ValidationMessageFor(x => x.CustomerName)
             </div>
         </div>
         <div class="item-list item">
             @Html.LabelFor(x => x.IdNumber, new { @class = "key fullwidth" })
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.IdNumber)
+                @Html.ValidationMessageFor(x => x.IdNumber)
             </div>
         </div>
         <div class="item-list item">
