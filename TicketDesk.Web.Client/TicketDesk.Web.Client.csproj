@@ -62,6 +62,10 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="AzureBlobFileSystem, Version=0.0.7.0, Culture=neutral, PublicKeyToken=447fb21b5496a35a, processorArchitecture=MSIL">
+      <HintPath>..\packages\BlobFileSystem.Azure.0.0.7\lib\net45\AzureBlobFileSystem.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Couchbase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.1.0.404.97\lib\net40\Couchbase.dll</HintPath>
       <Private>True</Private>
