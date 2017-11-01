@@ -237,16 +237,7 @@
             
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, tempId).ConfigureAwait(false))
             {
-                // Upload files
-                foreach (var file in viewModel.Files)
-                {
-                    if (file != null)
-                    {
-                        await TicketDeskFileStore
-                            .SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true)
-                            .ConfigureAwait(false);
-                    }
-                }
+                await TicketDeskFileStore.UploadFiles(viewModel.Files, viewModel.Ticket.TicketId).ConfigureAwait(false);
 
                 await AddTicketCustomField(viewModel).ConfigureAwait(false);
 
@@ -300,21 +291,12 @@
             // TODO: Replace with actual project ID represent for shop id here
             viewModel.Ticket.Project = Context.Projects.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Feedback;
-
-            // Upload files
-            foreach (var file in viewModel.Files)
-            {
-                if (file != null)
-                {
-                    await TicketDeskFileStore
-                        .SaveAttachmentAsync(file.InputStream, file.FileName, tempId.ToString(), true)
-                        .ConfigureAwait(false);
-                }
-            }
-
+            
             // TODO: Remove guid in CreateTicketAsync
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, tempId).ConfigureAwait(false))
             {
+                await TicketDeskFileStore.UploadFiles(viewModel.Files, viewModel.Ticket.TicketId).ConfigureAwait(false);
+
                 AddCustomFieldValue(
                     null,
                     viewModel.FeedbackBy.CustomFieldId,

@@ -6,6 +6,7 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Web;
 
     public static class TicketDeskFileStore
     {
@@ -112,6 +113,18 @@
         public static bool FileExists(string fileName, string containerId, bool isPending)
         {
             return Current.FileExists(GetFilePath(fileName, containerId, isPending));
+        }
+
+        public static async Task UploadFiles(IEnumerable<HttpPostedFileBase> files, int ticketId)
+        {
+            foreach (var file in files)
+            {
+                if (file != null)
+                {
+                    await SaveAttachmentAsync(file.InputStream, file.FileName, ticketId.ToString(), false)
+                        .ConfigureAwait(false);
+                }
+            }
         }
 
         private static string GetFilePath(string fileName, string containerId, bool isPending)

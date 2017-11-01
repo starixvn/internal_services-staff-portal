@@ -8,6 +8,7 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Web;
     using System.Web.Mvc;
 
     [RoutePrefix("file")]
@@ -93,12 +94,23 @@
             return Guid.TryParse(containerId, out tId);
         }
 
-        private static ActionResult FetchFile(string fileName, string container, bool isPending)
+        private static ActionResult FetchFile(
+            string fileName,
+            string container,
+            bool isPending,
+            bool isDownload = false)
         {
             var fstream = TicketDeskFileStore.GetFile(fileName, container, isPending);
 
-            // always send it back as octet-stream so client browser actually downloads it, instead of displaying it on-screen
-            return new FileStreamResult(fstream, "application/octet-stream");
+            if (isDownload)
+            {
+                // always send it back as octet-stream so client browser actually downloads it, instead of displaying it on-screen
+                return new FileStreamResult(fstream, "application/octet-stream");
+            }
+
+            // display in browser
+            string contentType = MimeMapping.GetMimeMapping(fileName);
+            return new FileStreamResult(fstream, contentType);
         }
     }
 }
