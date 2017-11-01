@@ -21,13 +21,6 @@
         }
     
         @Html.Partial("_UserMenu", Model)
-
-        @*<li><a href="#" class="menu-item"><i class="icon-home"></i><span class="text">My dashboard</span></a></li>
-        <li><a href="#" class="menu-item my-ticket"><i class="icon-myticket"></i><span class="text">My ticket</span></a></li>
-        <li><a href="#" class="menu-item"><i class="icon-ticketlist"></i><span class="text">Ticket list</span></a></li>
-        <li><a href="#" class="menu-item"><i class="icon-upload"></i><span class="text">ID uploader</span></a></li>
-        <li><a href="#" class="menu-item"><i class="icon-references"></i><span class="text">References</span></a></li>
-        <li><a href="#" class="menu-item"><i class="icon-logout"></i><span class="text">Logout</span></a></li>*@
     </ul>
 
 </div>
@@ -47,7 +40,8 @@
             <ul class="submenu @activeParentMenuClass">
                 @foreach (var childItem in menu.Children)
                 {
-                    <li><a href='@childItem.Url' class=''><i class='@childItem.Description'></i><span class='text'>@childItem.Name</span></a></li>
+                    var activeActionClass = Html.IsExactMatch(childItem.Url);
+                    <li><a href='@childItem.Url' class='@activeActionClass'><i class='@childItem.Description'></i><span class='text'>@childItem.Name</span></a></li>
                 }
             </ul>
         }

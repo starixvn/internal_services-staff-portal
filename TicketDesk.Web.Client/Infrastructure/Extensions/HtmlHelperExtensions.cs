@@ -44,5 +44,17 @@ namespace TicketDesk.Web.Client
 
             return string.Empty;
         }
+
+        public static string IsExactMatch(this HtmlHelper html, string route)
+        {
+            var currentRoute = HttpContext.Current.Request.Url.AbsolutePath;
+
+            if (currentRoute == route && route != "/")
+            {
+                return "active";
+            }
+
+            return string.Empty;
+        }
     }
 }
