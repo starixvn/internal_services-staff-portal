@@ -1,9 +1,9 @@
-﻿using Microsoft.Azure.WebJobs;
-using System;
-using System.Threading;
-
-namespace TicketDesk.PushNotifications.Job
+﻿namespace TicketDesk.PushNotifications.Job
 {
+    using Microsoft.Azure.WebJobs;
+    using System;
+    using System.Threading;
+
     public static class Functions
     {
         private static readonly Timer Timer = new Timer(OnTimerElapsed);
