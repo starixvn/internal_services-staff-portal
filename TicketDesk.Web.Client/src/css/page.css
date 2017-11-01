@@ -61,6 +61,8 @@ body {
   list-style: none; }
   .main-menu li:nth-child(2) .menu-item {
     padding-top: 14px; }
+  .main-menu li.active {
+    border-bottom: 6px solid #bf141a; }
   .main-menu .menu-item {
     border-left: 1px solid #d3d7db;
     display: -webkit-box;
@@ -89,20 +91,32 @@ body {
       background: #bf141a;
       -webkit-transition: width .3s;
       transition: width .3s;
-      margin-top: 12px; }
+      margin-top: 10px; }
     .main-menu .menu-item:hover:after {
       width: 100%; }
     @media all and (min-width: 1366px) {
       .main-menu .menu-item {
         width: 200px; } }
+    @media all and (max-width: 1024px) {
+      .main-menu .menu-item {
+        width: 120px; } }
+  @media all and (max-width: 1024px) {
+    .main-menu .text {
+      font-size: 13px; } }
   .main-menu li:first-child .menu-item {
     border-left: none; }
   .main-menu [class^="icon-"] {
     font-size: 28px;
     margin-bottom: 12px;
     color: #bf141a; }
+    @media all and (max-width: 1024px) {
+      .main-menu [class^="icon-"] {
+        font-size: 20px; } }
   .main-menu .icon-myticket {
     font-size: 32px; }
+    @media all and (max-width: 1024px) {
+      .main-menu .icon-myticket {
+        font-size: 24px; } }
 
 .content {
   overflow: auto;
