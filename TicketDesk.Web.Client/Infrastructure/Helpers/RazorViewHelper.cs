@@ -1,9 +1,11 @@
 ﻿namespace TicketDesk.Web.Client.Infrastructure.Helpers
 {
+    using Attribute;
+    using Enumerations;
     using System;
+    using System.Reflection;
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
-    using Attribute;
 
     public static class RazorViewHelper
     {
@@ -25,9 +27,43 @@
 
         public static string GetFileTypeAttribute(Type t)
         {
-            FileTypeAttribute myAttribute = (FileTypeAttribute)Attribute.GetCustomAttribute(t, typeof(FileTypeAttribute));
+            PropertyInfo propertyInfo = t.GetProperty("Files");
+            if (propertyInfo != null)
+            {
+                FileTypeAttribute myAttribute = (FileTypeAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(FileTypeAttribute));
 
-            return string.Join(",", myAttribute.ValidTypes);
+                return string.Join(", ", myAttribute.ValidTypes);
+            }
+
+            return string.Empty;
+        }
+
+        public static int GetNumberOfFileAttribute(Type t)
+        {
+            PropertyInfo propertyInfo = t.GetProperty("Files");
+            if (propertyInfo != null)
+            {
+                NumberOfFileAttribute myAttribute = (NumberOfFileAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(NumberOfFileAttribute));
+
+                return myAttribute.Max;
+            }
+
+            return -1;
+        }
+
+        public static int GetFileSizeAttribute(Type t, SizeUnit unit)
+        {
+            PropertyInfo propertyInfo = t.GetProperty("Files");
+            if (propertyInfo != null)
+            {
+                FileSizeAttribute myAttribute = (FileSizeAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(FileSizeAttribute));
+
+                return unit == SizeUnit.Megabyte 
+                    ? myAttribute.MaxBytes / 1048576 
+                    : myAttribute.MaxBytes;
+            }
+
+            return -1;
         }
     }
 }

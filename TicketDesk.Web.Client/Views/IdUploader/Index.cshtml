@@ -1,4 +1,5 @@
-﻿@using TicketDesk.Web.Client.Infrastructure.Helpers
+﻿@using TicketDesk.Web.Client.Infrastructure.Enumerations
+@using TicketDesk.Web.Client.Infrastructure.Helpers
 @model TicketDesk.Web.Client.Models.IdUploaderViewModel
 
 @section title { ID Uploader }
@@ -44,14 +45,17 @@
         <div class="attach-file">
             <div class="key border">Attach files*:</div>
             <div class="value span-3 border">
-                @Html.TextBoxFor(x => x.Files, new { type = "file", multiple = "multiple", accept = ".jpg,.jpeg,.png" })
-                @*@{
-                    var accept = RazorViewHelper.GetFileTypeAttribute(Model.Files.GetType());
-                }*@
+                @{
+                    var accept = RazorViewHelper.GetFileTypeAttribute(Model.GetType());
+                    var numberOfFile = RazorViewHelper.GetNumberOfFileAttribute(Model.GetType());
+                    var totalSize = RazorViewHelper.GetFileSizeAttribute(Model.GetType(), SizeUnit.Megabyte);
+                }
+                @Html.TextBoxFor(x => x.Files, new { type = "file", multiple = "multiple", accept })
                 @Html.ValidationMessageFor(m => m.Files)
             </div>
-            <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">3 Files</span> | Max total size of attachments: <span class="highlight">32 MB</span> | Allowed file types: <span class="highlight">jpeg,jpg,png</span></div>
+            <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">@numberOfFile Files</span> | Max total size of attachments: <span class="highlight">@totalSize MB</span> | Allowed file types: <span class="highlight">@accept</span>
+            </div>
         </div>
     </div>
-    <input type="submit" class="btn btn-send" value="Send" />
+    <input type="submit" class="btn btn-send" value="Send"/>
 }

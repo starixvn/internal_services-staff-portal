@@ -1,6 +1,5 @@
 ﻿namespace TicketDesk.Web.Client.Models
 {
-    using System;
     using Infrastructure.Attribute;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
