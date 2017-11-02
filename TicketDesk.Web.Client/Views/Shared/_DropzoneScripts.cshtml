@@ -1,28 +1,61 @@
 ﻿<script type="text/javascript">
+    
+    function SetErrorText(text) {
+        $(".dropzone-error-text").text(text);
+    }
+
+    function ResumeQube(dropzone) {
+        var files = dropzone.getRejectedFiles();
+        var copiedFiles = files.slice(0);
+        for (var i = 0; i < copiedFiles.length; i++) {
+            dropzone.removeFile(files[i]);
+            dropzone.addFile(copiedFiles[i]);
+        }
+    }
 
     Dropzone.autoDiscover = false;
 
-    var ticketDeskDropzone = new Dropzone(document.body,
-        {
-            url: '@Url.Action("Upload", "File", new { tempId = ViewBag.TempId })',
-            uploadMultiple: true,
-            maxFilesize: 4,
-            maxFiles: 3,
-            createImageThumbnails: false,
-            acceptedFiles: ".jpg, .jpeg, .png, .pdf",
-            addRemoveLinks: true,
-            previewsContainer: "#previews",
-            clickable: "#add-file-btn",
-            init: function () {
-                this.on("removedfile",
-                    function (file) {
-                        console.log(file);
-                        var deleteUrl = '@Url.Action("Delete", "File", new {id = ViewBag.TempId})' + "&fileName=" + file.name;
-                        $.ajax({
-                            url: deleteUrl,
-                            method: "POST"
-                        });
+    var ticketDeskDropzone = new Dropzone("#add-file-btn", {
+        url: '@Url.Action("Upload", "File", new { tempId = ViewBag.TempId })',
+        uploadMultiple: true,
+        maxFilesize: 4,
+        maxFiles: 3,
+        createImageThumbnails: false,
+        acceptedFiles: ".jpg, .jpeg, .png, .pdf",
+        addRemoveLinks: true,
+        previewsContainer: ".dropzone-previews",
+        clickable: "#add-file-btn",
+        init: function () {
+            this.on("removedfile",
+                function (file) {
+                    var deleteUrl = '@Url.Action("Delete", "File", new {id = ViewBag.TempId})' + "&fileName=" + file.name;
+                    $.ajax({
+                        url: deleteUrl,
+                        method: "POST"
                     });
-            }
-        });
+                    SetErrorText("");
+                    //var files = this.getRejectedFiles();
+                    //var copiedFiles = files.slice(0);
+                    //for (var i = 0; i < files.length; i++) {
+                    //    this.removeFile(files[i]);
+                    //    this.addFile(files[i]);
+                    //}
+                    ResumeQube(this);
+                });
+            this.on("addedfile",
+                function(file) {
+                    $(".dropzone-previews").addClass("dropzone");
+                    SetErrorText("");
+                });
+            this.on("reset",
+                function() {
+                    $(".dropzone-previews").removeClass("dropzone");
+                    SetErrorText("");
+                });
+            this.on("maxfilesexceeded",
+                function(file) {
+                    SetErrorText("Total of file exceeded limit");
+                });
+        }
+    });
 </script>

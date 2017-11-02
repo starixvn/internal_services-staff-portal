@@ -132,12 +132,10 @@
                 }
                 
                 <button type="button" id="add-file-btn">Add files</button>
-
-                @*<div id="ticketDeskDropzone" class="dropzone">
-                    <button class="dz-message" type="button">Add files</button>
-                </div>*@
                 
-                <div class="dropzone dropzone-previews" id="previews"></div>
+                <p class="dropzone-error-text"></p>
+                
+                <div class="dropzone-previews"></div>
 
                 @*@Html.TextBoxFor(x => x.Files, new { type = "file", multiple = "multiple", accept })
                     @Html.ValidationMessageFor(m => m.Files)*@
