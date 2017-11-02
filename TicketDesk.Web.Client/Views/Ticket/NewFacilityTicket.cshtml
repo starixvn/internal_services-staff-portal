@@ -5,6 +5,14 @@
 
 @section title { @New.Title }
 
+@section css
+{
+    @*<link href="~/src/libs/dropzone/dropzone.min.css" rel="stylesheet"/>
+        <link href="~/src/libs/dropzone/basic.min.css" rel="stylesheet"/>*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/basic.css" />
+}
+
 @section scripts
 {
     @*@Styles.Render("~/content/editor")*@
@@ -18,8 +26,11 @@
         @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())*@
     @*@Scripts.Render("~/bundles/editor")*@
 
-    @*<script type="text/javascript">
-            $(document).ready(function () {
+    @*<script src="~/src/libs/dropzone/dropzone.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.js"></script>
+
+    <script type="text/javascript">
+        @*$(document).ready(function () {
                 var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");
 
                 $.ajaxSetup({ cache: false });
@@ -43,10 +54,31 @@
                 window.ticketTags.activate(tagsConfig);
                 window.ticketDetails.activate(detailsConfig);
                 window.ticketFileUploader.activate(uploaderConfig);
-            });
-        </script>*@
+            });*@
+        $(document).ready(function () {
+            @*Dropzone.options.ticketDeskDropzone = {
+                url: '@Url.Action("Upload", "File")',
+                uploadMultiple: true,
+                maxFilesize: 4,
+                maxFiles: 3,
+                createImageThumbnails: false,
+                acceptedFiles: ".jpg, .jpeg, .png, .pdf",
+                addRemoveLinks: true
+            }*@
 
-    <script src="~/src/js/filevalidation.js"></script>
+            $("#drop-zone").dropzone({
+                url: '@Url.Action("Upload", "File", new { tempId = ViewBag.TempId })',
+                uploadMultiple: true,
+                maxFilesize: 4,
+                maxFiles: 3,
+                createImageThumbnails: false,
+                acceptedFiles: ".jpg, .jpeg, .png, .pdf",
+                addRemoveLinks: true
+            });
+        });
+    </script>
+
+    @*<script src="~/src/js/filevalidation.js"></script>*@
 
     <script>
         function GenerateGuid() {
@@ -149,9 +181,13 @@
                     var numberOfFile = RazorViewHelper.GetNumberOfFileAttribute(Model.GetType());
                     var totalSize = RazorViewHelper.GetFileSizeAttribute(Model.GetType(), SizeUnit.Megabyte);
                 }
-                @Html.TextBoxFor(x => x.Files, new { type = "file", multiple = "multiple", accept })
-                @Html.ValidationMessageFor(m => m.Files)
-                @*<input type="file" multiple=""/>*@
+
+                <div id="drop-zone">Click to add files</div>
+
+                @*@Html.TextBoxFor(x => x.Files, new { type = "file", multiple = "multiple", accept })
+                    @Html.ValidationMessageFor(m => m.Files)*@
+                @*<div id="file-list"></div>*@
+                @*<input type="file" name="file" multiple=""/>*@
 
                 @* Drop zone for file uploading *@
                 @*@Html.Partial("_TicketAttachedFiles", Model.Ticket)*@
@@ -329,4 +365,4 @@
                 </div>
             </div>
         </div>*@
-}
+                    }

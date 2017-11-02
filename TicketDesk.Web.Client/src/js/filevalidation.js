@@ -1,6 +1,8 @@
-﻿function getFileExtension(fileName) {
+﻿var files = [];
+
+function getFileExtension(fileName) {
     if (/[.]/.exec(fileName)) {
-        return /[^.]+$/.exec(fileName)[0].toLowerCase();
+        return "." + /[^.]+$/.exec(fileName)[0].toLowerCase();
     }
     return null;
 }
@@ -87,11 +89,84 @@ $.validator.addMethod("filesize",
         return true;
     });
 
-$(document).ready(function() {
+function pushFilesToArray(x) {
+    for (var i = 0; i < x.files.length; i++) {
+        var file = x.files[i];
+        if ($.inArray(file, files) === -1) {
+            //file not existed in array
+            files.push(file);
+        }
+    }
+}
+
+function displaySelectedFiles() {
+    $("#file-list").html("");
+
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if ('name' in file) {
+            var fileElement = $("<div>");
+            //fileElement.data("fileData", file);
+            fileElement.text(file.name);
+
+            var deleteButton = $("<button>", { "class": "delete-file" });
+            deleteButton.text("Delete");
+            deleteButton.data("fileData", file);
+
+            deleteButton.on("click",
+                function() {
+                    var indexToRemove = files.indexOf($(this).data("fileData"));
+                    $(this).parent().remove();
+                    files.splice(indexToRemove, 1);
+                });
+
+            fileElement.append(deleteButton);
+
+            $("#file-list").append(fileElement);
+        }
+    }
+}
+
+function handleFileSelect(x) {
+    pushFilesToArray(x);
+    displaySelectedFiles();
+}
+
+$(document).ready(function () {
+    $("#file-list").on("click",
+        ".delete-file",
+        function() {
+
+        });
+
     $("input[type=file]").on("change",
-        function () {
-            console.log("changed");
-            //$(this).closest("form").valid();
+        function (x) {
             $(this).valid();
+            handleFileSelect(x.target);
+        });
+
+    $("input[type=file]").closest("form").on("submit",
+        function (e) {
+            e.preventDefault();
+            var formData = new FormData($(this));
+
+            // Append files
+            for (var i = 0; i < files.length; i++) {
+                formData.append("file", files[i]);
+            }
+
+            $.ajax({
+                url: $(this).action,
+                data: formData,
+                type: "POST",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    console.log("Success");
+                },
+                error: function (data) {
+                    console.log("Error");
+                }
+            });
         });
 })
