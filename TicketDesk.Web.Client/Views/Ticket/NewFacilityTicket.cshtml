@@ -7,10 +7,7 @@
 
 @section css
 {
-    @*<link href="~/src/libs/dropzone/dropzone.min.css" rel="stylesheet"/>
-        <link href="~/src/libs/dropzone/basic.min.css" rel="stylesheet"/>*@
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/basic.css" />
+    <link href="~/src/libs/dropzone/dropzone.min.css" rel="stylesheet"/>
 }
 
 @section scripts
@@ -26,57 +23,9 @@
         @Scripts.Render("~/bundles/summernote_locale_" + CultureHelper.GetCurrentCulture())*@
     @*@Scripts.Render("~/bundles/editor")*@
 
-    @*<script src="~/src/libs/dropzone/dropzone.min.js"></script>*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.js"></script>
-
-    <script type="text/javascript">
-        @*$(document).ready(function () {
-                var isHtmlString = @(Model.Ticket.IsHtml ? "true" : "false");
-
-                $.ajaxSetup({ cache: false });
-
-                var uploaderConfig = {
-                    dropzoneUploadUrl: '@Url.Action("Upload", "File")',
-                    getAttachmentsUrl: '@Url.Action("GetAttachmentsInfo", "File")',
-                    deleteFileUrl: '@Url.Action("Delete", "File")',
-                    defaultThumbnailUrl: '@Url.Content("~/content/images/general-file.png")',
-                    ticketId: null
-                };
-
-                var tagsConfig = {
-                    tagAutoCompleteUrl: '@Url.Action("TagList", "AutoComplete")'
-                };
-
-                var detailsConfig = {
-                    isHtml: isHtmlString
-                };
-
-                window.ticketTags.activate(tagsConfig);
-                window.ticketDetails.activate(detailsConfig);
-                window.ticketFileUploader.activate(uploaderConfig);
-            });*@
-        $(document).ready(function () {
-            @*Dropzone.options.ticketDeskDropzone = {
-                url: '@Url.Action("Upload", "File")',
-                uploadMultiple: true,
-                maxFilesize: 4,
-                maxFiles: 3,
-                createImageThumbnails: false,
-                acceptedFiles: ".jpg, .jpeg, .png, .pdf",
-                addRemoveLinks: true
-            }*@
-
-            $("#drop-zone").dropzone({
-                url: '@Url.Action("Upload", "File", new { tempId = ViewBag.TempId })',
-                uploadMultiple: true,
-                maxFilesize: 4,
-                maxFiles: 3,
-                createImageThumbnails: false,
-                acceptedFiles: ".jpg, .jpeg, .png, .pdf",
-                addRemoveLinks: true
-            });
-        });
-    </script>
+    <script src="~/src/libs/dropzone/dropzone.min.js"></script>
+    
+    @Html.Partial("_DropzoneScripts")
 
     @*<script src="~/src/js/filevalidation.js"></script>*@
 
@@ -181,8 +130,14 @@
                     var numberOfFile = RazorViewHelper.GetNumberOfFileAttribute(Model.GetType());
                     var totalSize = RazorViewHelper.GetFileSizeAttribute(Model.GetType(), SizeUnit.Megabyte);
                 }
+                
+                <button type="button" id="add-file-btn">Add files</button>
 
-                <div id="drop-zone">Click to add files</div>
+                @*<div id="ticketDeskDropzone" class="dropzone">
+                    <button class="dz-message" type="button">Add files</button>
+                </div>*@
+                
+                <div class="dropzone dropzone-previews" id="previews"></div>
 
                 @*@Html.TextBoxFor(x => x.Files, new { type = "file", multiple = "multiple", accept })
                     @Html.ValidationMessageFor(m => m.Files)*@

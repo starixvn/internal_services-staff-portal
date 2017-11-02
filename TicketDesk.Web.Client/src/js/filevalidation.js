@@ -132,41 +132,62 @@ function handleFileSelect(x) {
     displaySelectedFiles();
 }
 
-$(document).ready(function () {
-    $("#file-list").on("click",
-        ".delete-file",
-        function() {
-
-        });
-
-    $("input[type=file]").on("change",
-        function (x) {
-            $(this).valid();
-            handleFileSelect(x.target);
-        });
-
-    $("input[type=file]").closest("form").on("submit",
-        function (e) {
-            e.preventDefault();
-            var formData = new FormData($(this));
-
-            // Append files
-            for (var i = 0; i < files.length; i++) {
-                formData.append("file", files[i]);
-            }
-
-            $.ajax({
-                url: $(this).action,
-                data: formData,
-                type: "POST",
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    console.log("Success");
-                },
-                error: function (data) {
-                    console.log("Error");
-                }
+Dropzone.options.ticketDeskDropzone = {
+    url: '@Url.Action("Upload", "File", new { tempId = ViewBag.TempId })',
+    uploadMultiple: true,
+    maxFilesize: 4,
+    maxFiles: 3,
+    createImageThumbnails: false,
+    acceptedFiles: ".jpg, .jpeg, .png, .pdf",
+    addRemoveLinks: true,
+    init: function () {
+        this.on("removedfile",
+            function (file) {
+                console.log(file);
+                var deleteUrl = '@Url.Action("Delete", "File", new {id = ViewBag.TempId})' + "&fileName=" + file.name;
+                $.ajax({
+                    url: deleteUrl,
+                    method: "POST"
+                });
             });
-        });
-})
+    }
+}
+
+//$(document).ready(function () {
+//    $("#file-list").on("click",
+//        ".delete-file",
+//        function() {
+
+//        });
+
+//    $("input[type=file]").on("change",
+//        function (x) {
+//            $(this).valid();
+//            handleFileSelect(x.target);
+//        });
+
+//    $("input[type=file]").closest("form").on("submit",
+//        function (e) {
+//            e.preventDefault();
+//            var formData = new FormData($(this));
+
+//            // Append files
+//            for (var i = 0; i < files.length; i++) {
+//                formData.append("file", files[i]);
+//            }
+
+//            $.ajax({
+//                url: $(this).action,
+//                data: formData,
+//                type: "POST",
+//                processData: false,
+//                contentType: false,
+//                success: function (data) {
+//                    console.log("Success");
+//                },
+//                error: function (data) {
+//                    console.log("Error");
+//                }
+//            });
+//        });
+//})

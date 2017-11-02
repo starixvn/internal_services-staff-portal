@@ -1,0 +1,28 @@
+﻿<script type="text/javascript">
+
+    Dropzone.autoDiscover = false;
+
+    var ticketDeskDropzone = new Dropzone(document.body,
+        {
+            url: '@Url.Action("Upload", "File", new { tempId = ViewBag.TempId })',
+            uploadMultiple: true,
+            maxFilesize: 4,
+            maxFiles: 3,
+            createImageThumbnails: false,
+            acceptedFiles: ".jpg, .jpeg, .png, .pdf",
+            addRemoveLinks: true,
+            previewsContainer: "#previews",
+            clickable: "#add-file-btn",
+            init: function () {
+                this.on("removedfile",
+                    function (file) {
+                        console.log(file);
+                        var deleteUrl = '@Url.Action("Delete", "File", new {id = ViewBag.TempId})' + "&fileName=" + file.name;
+                        $.ajax({
+                            url: deleteUrl,
+                            method: "POST"
+                        });
+                    });
+            }
+        });
+</script>

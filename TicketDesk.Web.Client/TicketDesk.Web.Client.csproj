@@ -2196,9 +2196,6 @@
     <Content Include="src\libs\dropzone\basic.min.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="src\libs\dropzone\dropzone-amd-module.min.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="src\libs\dropzone\dropzone.min.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2359,12 +2356,14 @@
     <Content Include="Views\Ticket\_FeedbackTicketDetails.cshtml" />
     <Content Include="Views\IdUploader\Index.cshtml" />
     <Content Include="Views\Shared\_SubmenuNavigation.cshtml" />
+    <Content Include="Views\Shared\_DropzoneScripts.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\libs\dropzone\debug\" />
     <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
