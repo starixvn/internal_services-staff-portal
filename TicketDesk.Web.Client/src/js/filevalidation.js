@@ -91,6 +91,7 @@ $(document).ready(function() {
     $("input[type=file]").on("change",
         function () {
             console.log("changed");
-            $(this).closest("form").valid();
+            //$(this).closest("form").valid();
+            $(this).valid();
         });
 })

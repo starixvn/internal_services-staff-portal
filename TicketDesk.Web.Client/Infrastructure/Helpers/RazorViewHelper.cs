@@ -3,6 +3,7 @@
     using System;
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
+    using Attribute;
 
     public static class RazorViewHelper
     {
@@ -20,6 +21,13 @@
             };
 
             return helper.Partial(partialViewName, model, viewData);
+        }
+
+        public static string GetFileTypeAttribute(Type t)
+        {
+            FileTypeAttribute myAttribute = (FileTypeAttribute)Attribute.GetCustomAttribute(t, typeof(FileTypeAttribute));
+
+            return string.Join(",", myAttribute.ValidTypes);
         }
     }
 }

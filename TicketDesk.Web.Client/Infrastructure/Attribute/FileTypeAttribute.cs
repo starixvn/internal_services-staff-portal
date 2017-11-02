@@ -12,7 +12,7 @@
     public class FileTypeAttribute : ValidationAttribute, IClientValidatable
     {
         private readonly string _defaultErrorMessage = "Only the following file types are allowed: {0}";
-        private IEnumerable<string> ValidTypes { get; }
+        public IEnumerable<string> ValidTypes { get; }
 
         public FileTypeAttribute(string[] validTypes)
         {
