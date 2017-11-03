@@ -237,8 +237,6 @@
             
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, tempId).ConfigureAwait(false))
             {
-                await TicketDeskFileStore.UploadFiles(viewModel.Files, viewModel.Ticket.TicketId).ConfigureAwait(false);
-
                 await AddTicketCustomField(viewModel).ConfigureAwait(false);
 
                 return Context.SecurityProvider.IsReadTicketCenter
