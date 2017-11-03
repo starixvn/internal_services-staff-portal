@@ -1,12 +1,16 @@
-﻿@using TicketDesk.Web.Client.Infrastructure.Enumerations
-@using TicketDesk.Web.Client.Infrastructure.Helpers
-@model TicketDesk.Web.Client.Models.IdUploaderViewModel
+﻿@model TicketDesk.Web.Client.Models.IdUploaderViewModel
 
 @section title { ID Uploader }
 
+@section css
+{
+    <link href="~/src/libs/dropzone/dropzone.min.css" rel="stylesheet" />
+}
+
 @section scripts
 {
-    <script src="~/src/js/filevalidation.js"></script>
+    <script src="~/src/libs/dropzone/dropzone.min.js"></script>
+    @Html.Partial("_DropzoneScripts", Model)
 }
 
 @using (Html.BeginForm("NewCustomer", "IdUploader", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
@@ -45,16 +49,13 @@
         <div class="attach-file">
             <div class="key border">Attach files*:</div>
             <div class="value span-3 border">
-                @{
-                    var accept = RazorViewHelper.GetFileTypeAttribute(Model.GetType());
-                    var numberOfFile = RazorViewHelper.GetNumberOfFileAttribute(Model.GetType());
-                    var totalSize = RazorViewHelper.GetFileSizeAttribute(Model.GetType(), SizeUnit.Megabyte);
-                }
-                @Html.TextBoxFor(x => x.Files, new { type = "file", multiple = "multiple", accept })
-                @Html.ValidationMessageFor(m => m.Files)
+                <button type="button" id="add-file-btn">Add files</button>
+
+                <p class="dropzone-error-text"></p>
+
+                <div class="dropzone-previews"></div>
             </div>
-            <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">@numberOfFile Files</span> | Max total size of attachments: <span class="highlight">@totalSize MB</span> | Allowed file types: <span class="highlight">@accept</span>
-            </div>
+            <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">@Model.MaxNumberOfFile Files</span> | Max total size of attachments: <span class="highlight">@(Model.MaxBytes / 1048576) MB</span> | Allowed file types: <span class="highlight">@string.Join(", ", Model.AcceptedExtensions)</span></div>
         </div>
     </div>
     <input type="submit" class="btn btn-send" value="Send"/>

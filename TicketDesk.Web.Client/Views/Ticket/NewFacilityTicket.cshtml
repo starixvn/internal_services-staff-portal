@@ -61,7 +61,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
-    <input type="hidden" name="tempId" value="@ViewBag.TempId" />
+    @Html.HiddenFor(model => model.TempId)
 
     <div class="form-content facility-form">
         <div class="title">REPAIRS AND SERVICES REQUISITION FORM</div>

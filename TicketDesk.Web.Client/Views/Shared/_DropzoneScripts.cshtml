@@ -53,7 +53,7 @@
 
     var ticketDeskDropzone = new Dropzone("#add-file-btn",
         {
-            url: '@Url.Action("Upload", "File", new { tempId = ViewBag.TempId })',
+            url: '@Url.Action("Upload", "File", new { tempId = Model.TempId })',
             uploadMultiple: true,
             parallelUploads: 1,
             maxFiles: @Model.MaxNumberOfFile,
@@ -65,7 +65,7 @@
             init: function() {
                 this.on("removedfile",
                     function(file) {
-                        var deleteUrl = '@Url.Action("Delete", "File", new {id = ViewBag.TempId})' +
+                        var deleteUrl = '@Url.Action("Delete", "File", new {id = Model.TempId})' +
                             "&fileName=" +
                             file.name;
                         $.ajax({

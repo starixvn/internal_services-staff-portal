@@ -1,5 +1,4 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
-@using TicketDesk.Web.Client.Infrastructure.Enumerations
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 
 @model TicketDesk.Web.Client.Models.Ticket.NewFeedbackTicketViewModel
@@ -26,7 +25,7 @@
     @Html.HiddenFor(model => model.Ticket.Category)
     @Html.HiddenFor(model => model.Ticket.Priority)
     @Html.HiddenFor(model => model.Ticket.Details)
-    <input type="hidden" name="tempId" value="@ViewBag.TempId" />
+    @Html.HiddenFor(model => model.TempId)
 
     <div class="form-content feedback-form">
         <div class="title">FEEDBACK FORM</div>

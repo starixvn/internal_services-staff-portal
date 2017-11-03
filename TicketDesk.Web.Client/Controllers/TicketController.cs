@@ -209,8 +209,6 @@
 
             await SetProjectInfoForModelAsync(model.Ticket).ConfigureAwait(false);
 
-            ViewBag.TempId = Guid.NewGuid();
-
             return View("NewFacilityTicket", model);
         }
 
@@ -220,7 +218,7 @@
         [ValidateOnlyIncomingValues]
         [ValidateInput(false)]
         [Route("new-facility")]
-        public async Task<ActionResult> NewFacilityTicket(NewFacilityTicketViewModel viewModel, Guid tempId)
+        public async Task<ActionResult> NewFacilityTicket(NewFacilityTicketViewModel viewModel)
         {
             if (viewModel.Ticket.IsHtml)
             {
@@ -235,7 +233,7 @@
             viewModel.Ticket.Project = Context.Projects.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
             
-            if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, tempId).ConfigureAwait(false))
+            if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
             {
                 await AddTicketCustomField(viewModel).ConfigureAwait(false);
 
@@ -243,8 +241,7 @@
                     ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
                     : RedirectToAction("Index", "Home");
             }
-
-            ViewBag.TempId = tempId;
+            
             await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
             return View(viewModel);
         }
@@ -262,9 +259,6 @@
             viewModel.CustomerName.CustomField = availableCustomField.First(x => x.Name == "Customer Name");
             viewModel.Feedback.CustomField = availableCustomField.First(x => x.Name == "Feedback");
 
-            // For container id
-            ViewBag.TempId = Guid.NewGuid();
-
             return View("NewFeedbackTicket", viewModel);
         }
 
@@ -274,7 +268,7 @@
         [ValidateOnlyIncomingValues]
         [ValidateInput(false)]
         [Route("new-feedback")]
-        public async Task<ActionResult> NewFeedbackTicket(NewFeedbackTicketViewModel viewModel, Guid tempId)
+        public async Task<ActionResult> NewFeedbackTicket(NewFeedbackTicketViewModel viewModel)
         {
             if (viewModel.Ticket.IsHtml)
             {
@@ -290,7 +284,7 @@
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Feedback;
             
             // TODO: Remove guid in CreateTicketAsync
-            if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, tempId).ConfigureAwait(false))
+            if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
             {
                 AddCustomFieldValue(
                     null,
