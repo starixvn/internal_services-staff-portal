@@ -484,7 +484,7 @@ body {
 
 .hovicon {
   background: #fff;
-  border: 1px solid #bf141a;
+  border: 2px solid #bf141a;
   -webkit-transition: -webkit-transform ease-out 0.1s, background 0.2s;
   -moz-transition: -moz-transform ease-out 0.1s, background 0.2s;
   transition: transform ease-out 0.1s, background 0.2s; }
@@ -518,8 +518,8 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  width: 100%; }
+  max-width: 1040px;
+  margin: 50px auto auto; }
   .extend-menu .text {
     display: block;
     text-transform: uppercase;
@@ -536,7 +536,7 @@ body {
       color: #fff; }
   .extend-menu li {
     text-align: center;
-    padding: 40px 0;
+    padding: 50px 0;
     width: 260px;
     white-space: nowrap; }
 
