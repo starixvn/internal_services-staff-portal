@@ -5,15 +5,22 @@
     }
 
     function ResumeQube(dropzone) {
+        // Prevent removedfile event get called multiple time
+        isRequeueing = true;
+
         var files = dropzone.getRejectedFiles();
         var copiedFiles = files.slice(0);
         for (var i = 0; i < copiedFiles.length; i++) {
             dropzone.removeFile(files[i]);
             dropzone.addFile(copiedFiles[i]);
         }
+
+        isRequeueing = false;
     }
 
     Dropzone.autoDiscover = false;
+
+    var isRequeueing = false;
 
     var ticketDeskDropzone = new Dropzone("#add-file-btn", {
         url: '@Url.Action("Upload", "File", new { tempId = ViewBag.TempId })',
@@ -40,7 +47,9 @@
                     //    this.removeFile(files[i]);
                     //    this.addFile(files[i]);
                     //}
-                    ResumeQube(this);
+                    if (isRequeueing === false) {
+                        ResumeQube(this);
+                    }
                 });
             this.on("addedfile",
                 function(file) {
