@@ -23,7 +23,6 @@
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> NewCustomer(IdUploaderViewModel viewModel)
         {
-
             return View("Index", viewModel);
         }
     }

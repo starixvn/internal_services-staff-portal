@@ -92,6 +92,8 @@ namespace TicketDesk.Domain
 
         public DbSet<TicketCategoryCustomField> TicketCategoryCustomField { get; set; }
 
+        public DbSet<UploadedUserId> UploadedUserIds { get; set; }
+
         public UserSettingsManager UserSettingsManager => _userSettingsManager ?? (_userSettingsManager = new UserSettingsManager(this));
 
         /// <summary>
