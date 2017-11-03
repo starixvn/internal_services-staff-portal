@@ -9,7 +9,12 @@
         // GET: IdUploader
         public ActionResult Index()
         {
-            IdUploaderViewModel viewModel = new IdUploaderViewModel();
+            IdUploaderViewModel viewModel = new IdUploaderViewModel
+            {
+                MaxNumberOfFile = 3,
+                AcceptedExtensions = new[] { ".jpg", ".jpeg", ".png" }
+            };
+
             return View(viewModel);
         }
 
