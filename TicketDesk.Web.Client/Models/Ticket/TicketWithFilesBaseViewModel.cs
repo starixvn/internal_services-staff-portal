@@ -11,7 +11,7 @@
 
         public TicketWithFilesBaseViewModel()
         {
-            TempId = new Guid();
+            TempId = Guid.NewGuid();
             MaxBytes = 33554432;
             AcceptedExtensions = new[] { ".jpg", ".jpeg", ".png", ".pdf" };
             MaxNumberOfFile = 20;

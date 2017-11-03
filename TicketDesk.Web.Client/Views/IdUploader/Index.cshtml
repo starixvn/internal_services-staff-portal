@@ -11,11 +11,49 @@
 {
     <script src="~/src/libs/dropzone/dropzone.min.js"></script>
     @Html.Partial("_DropzoneScripts", Model)
+
+    <script>
+        $(document).ready(function() {
+            $(".id-uploader-form").on("submit",
+                function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        method: $(this).attr('method'),
+                        data: $(this).serialize(),
+                        success: function() {
+                            $("#notification-modal").modal();
+                        }
+                    });
+                });
+        });
+    </script>
 }
 
-@using (Html.BeginForm("NewCustomer", "IdUploader", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+<!-- Modal -->
+<div id="notification-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload Success</h4>
+            </div>
+            <div class="modal-body">
+                <p>Information saved successfully</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@using (Html.BeginForm("NewCustomer", "IdUploader", null, FormMethod.Post, new { @class = "form-horizontal id-uploader-form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.TempId)
 
     <div class="form-content feedback-form">
         <div class="title">ID UPLOADER FORM</div>

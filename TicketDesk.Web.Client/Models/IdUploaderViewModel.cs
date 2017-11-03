@@ -7,7 +7,7 @@
     {
         [Required(ErrorMessage = "Customer Username is required!")]
         [StringLength(maximumLength: 50, ErrorMessage = "Customer Username should not less than 2 and more than 50 characters", MinimumLength = 2)]
-        [RegularExpression("[^$-,:-?{-~! \"^`@#/\\\\\\[\\]]", ErrorMessage = "Customer Username should not contains special characters")]
+        [RegularExpression("[^$-,:-?{-~! \"^`@#/\\\\\\[\\]]+", ErrorMessage = "Customer Username should not contains special characters")]
         [Display(Name = "Customer's Username")]
         public string CustomerUserName { get; set; }
 
