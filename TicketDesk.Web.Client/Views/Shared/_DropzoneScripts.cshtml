@@ -1,4 +1,6 @@
-﻿<script type="text/javascript">
+﻿@model TicketDesk.Web.Client.Models.Ticket.TicketWithFilesBaseViewModel
+
+<script type="text/javascript">
     
     function SetErrorText(text) {
         $(".dropzone-error-text").text(text);
@@ -18,53 +20,77 @@
         isRequeueing = false;
     }
 
+    function GetTotalSize() {
+        var totalBytes = 0;
+        for (var i = 0; i < ticketDeskDropzone.files.length; i++) {
+            if (ticketDeskDropzone.files[i] != undefined && ticketDeskDropzone.files[i].size != undefined) {
+                var filesize = parseInt(ticketDeskDropzone.files[i].size);
+                totalBytes = totalBytes + filesize;
+            }
+        }
+        return totalBytes;
+    }
+
+    function IsTotalBytesViolated() {
+        var allowedBytes = @Model.MaxBytes;
+        var totalBytes = GetTotalSize();
+
+        return totalBytes > allowedBytes;
+    }
+
+    function CheckTotalBytes() {
+        if (IsTotalBytesViolated()) {
+            var totalMb = @Model.MaxBytes / 1048576;
+            SetErrorText("Total size exceed maximum allowed of " + totalMb + " MB");
+        } else {
+            SetErrorText("");
+        }
+    }
+
     Dropzone.autoDiscover = false;
 
     var isRequeueing = false;
 
-    var ticketDeskDropzone = new Dropzone("#add-file-btn", {
-        url: '@Url.Action("Upload", "File", new { tempId = ViewBag.TempId })',
-        uploadMultiple: true,
-        maxFilesize: 4,
-        maxFiles: 3,
-        createImageThumbnails: false,
-        acceptedFiles: ".jpg, .jpeg, .png, .pdf",
-        addRemoveLinks: true,
-        previewsContainer: ".dropzone-previews",
-        clickable: "#add-file-btn",
-        init: function () {
-            this.on("removedfile",
-                function (file) {
-                    var deleteUrl = '@Url.Action("Delete", "File", new {id = ViewBag.TempId})' + "&fileName=" + file.name;
-                    $.ajax({
-                        url: deleteUrl,
-                        method: "POST"
+    var ticketDeskDropzone = new Dropzone("#add-file-btn",
+        {
+            url: '@Url.Action("Upload", "File", new { tempId = ViewBag.TempId })',
+            uploadMultiple: true,
+            parallelUploads: 1,
+            maxFiles: @Model.MaxNumberOfFile,
+            createImageThumbnails: false,
+            acceptedFiles: "@string.Join(", ",Model.AcceptedExtensions)",
+            addRemoveLinks: true,
+            previewsContainer: ".dropzone-previews",
+            clickable: "#add-file-btn",
+            init: function() {
+                this.on("removedfile",
+                    function(file) {
+                        var deleteUrl = '@Url.Action("Delete", "File", new {id = ViewBag.TempId})' +
+                            "&fileName=" +
+                            file.name;
+                        $.ajax({
+                            url: deleteUrl,
+                            method: "POST"
+                        });
+                        SetErrorText("");
+                        if (isRequeueing === false) {
+                            ResumeQube(this);
+                        }
                     });
-                    SetErrorText("");
-                    //var files = this.getRejectedFiles();
-                    //var copiedFiles = files.slice(0);
-                    //for (var i = 0; i < files.length; i++) {
-                    //    this.removeFile(files[i]);
-                    //    this.addFile(files[i]);
-                    //}
-                    if (isRequeueing === false) {
-                        ResumeQube(this);
-                    }
-                });
-            this.on("addedfile",
-                function(file) {
-                    $(".dropzone-previews").addClass("dropzone");
-                    SetErrorText("");
-                });
-            this.on("reset",
-                function() {
-                    $(".dropzone-previews").removeClass("dropzone");
-                    SetErrorText("");
-                });
-            this.on("maxfilesexceeded",
-                function(file) {
-                    SetErrorText("Total of file exceeded limit");
-                });
-        }
-    });
+                this.on("addedfile",
+                    function(file) {
+                        $(".dropzone-previews").addClass("dropzone");
+                        CheckTotalBytes();
+                    });
+                this.on("reset",
+                    function() {
+                        $(".dropzone-previews").removeClass("dropzone");
+                        SetErrorText("");
+                    });
+                this.on("maxfilesexceeded",
+                    function(file) {
+                        SetErrorText("Total of file exceeded limit");
+                    });
+            }
+        });
 </script>
