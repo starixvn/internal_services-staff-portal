@@ -4,14 +4,13 @@
 
     public class TicketWithFilesBaseViewModel
     {
-        public Guid TempId { get; }
+        public Guid TempId { get; set; }
         public int MaxBytes { get; set; }
         public string[] AcceptedExtensions { get; set; }
         public int MaxNumberOfFile { get; set; }
 
         public TicketWithFilesBaseViewModel()
         {
-            TempId = Guid.NewGuid();
             MaxBytes = 33554432;
             AcceptedExtensions = new[] { ".jpg", ".jpeg", ".png", ".pdf" };
             MaxNumberOfFile = 20;

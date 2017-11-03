@@ -1,15 +1,13 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Domain;
+    using Domain.Model;
+    using Models;
     using System;
     using System.IO;
     using System.Linq;
     using System.Net;
-    using System.Text.RegularExpressions;
-    using Models;
-    using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Domain;
-    using Domain.Model;
 
     public class IdUploaderController : BaseController
     {
@@ -25,6 +23,7 @@
         {
             IdUploaderViewModel viewModel = new IdUploaderViewModel
             {
+                TempId = Guid.NewGuid(),
                 MaxNumberOfFile = 3,
                 AcceptedExtensions = new[] { ".jpg", ".jpeg", ".png" }
             };
@@ -35,7 +34,7 @@
         //[NapAuth(FunctionKey = FunctionKeys., Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> NewCustomer(IdUploaderViewModel viewModel)
+        public ActionResult NewCustomer(IdUploaderViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -59,18 +58,29 @@
 
         private void MoveFiles(string folderName, Guid tempId)
         {
-            CreateFolder(folderName);
+            // Create or open folder with the record id
+            var commitedFolder = CreateFolder(folderName);
 
+            // Get pending folder path
             var pendingFolder = Server.MapPath("~/App_Data/filestore/ticketdesk-attachments/pending");
 
             string fileEnding = tempId.ToString();
+            
+            // Get all file belongs to that record
+            var files = Directory.EnumerateFiles(pendingFolder)
+                .Where(x => x.EndsWith(fileEnding));
 
-            var files = Directory.GetFiles(pendingFolder).Where(x => x.EndsWith(fileEnding));
+            // Get names of the files
+            var names = files.Select(x => x.Replace(pendingFolder, string.Empty).TrimStart('\\')).ToList();
 
-            foreach (string file in files)
+            // Move the file from pending folder to commited folder
+            foreach (string file in names)
             {
-                string fileToMove = Regex.Split(file, "." + fileEnding)[0];
-                Directory.Move(file, Path.Combine(folderName, fileToMove));
+                string fileToMove = file.Replace(fileEnding, string.Empty).TrimEnd('.');
+
+                Directory.Move(
+                    Path.Combine(pendingFolder, file), 
+                    Path.Combine(commitedFolder.FullName, fileToMove));
             }
         }
 
@@ -79,7 +89,5 @@
             var folder = Server.MapPath("~/App_Data/filestore/id-uploaded/" + folderName);
             return Directory.CreateDirectory(folder);
         }
-
-
     }
 }

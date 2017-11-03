@@ -168,6 +168,7 @@
         {
             NewFacilityTicketViewModel model = new NewFacilityTicketViewModel
             {
+                TempId = Guid.NewGuid(),
                 Ticket = new Ticket()
             };
 
@@ -254,6 +255,7 @@
 
             NewFeedbackTicketViewModel viewModel = new NewFeedbackTicketViewModel();
 
+            viewModel.TempId = Guid.NewGuid();
             viewModel.FeedbackBy.CustomField = availableCustomField.First(x => x.Name == "Feedback by");
             viewModel.Subject.CustomField = availableCustomField.First(x => x.Name == "Subject");
             viewModel.CustomerName.CustomField = availableCustomField.First(x => x.Name == "Customer Name");
