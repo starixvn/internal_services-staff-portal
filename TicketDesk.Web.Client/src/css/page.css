@@ -573,3 +573,6 @@ body {
     transform: scale(1.2);
     opacity: 0; } }
 
+.dropzone .dz-preview .dz-image {
+  display: none; }
+
