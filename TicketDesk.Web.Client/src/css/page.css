@@ -501,7 +501,7 @@ body {
   -ms-transform: scale(0.9);
   transform: scale(0.9); }
 
-.hovicon:hover, .hovicon:active {
+.hovicon:hover, .hovicon.cbutton--click {
   background: rgba(255, 255, 255, 0.05);
   /*-webkit-transform: scale(0.93);
 	-moz-transform: scale(0.93);
@@ -509,7 +509,7 @@ body {
 	transform: scale(0.93);*/
   color: #fff; }
 
-.hovicon:hover:after, .hovicon:active:after {
+.hovicon:hover:after, .hovicon.cbutton--click:after {
   -webkit-animation: sonarEffect 1.3s ease-out 75ms;
   -moz-animation: sonarEffect 1.3s ease-out 75ms;
   animation: sonarEffect 1.3s ease-out 75ms; }
@@ -518,7 +518,8 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center; }
+  justify-content: center;
+  width: 100%; }
   .extend-menu .text {
     display: block;
     text-transform: uppercase;
