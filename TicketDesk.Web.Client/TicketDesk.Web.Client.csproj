@@ -2165,6 +2165,12 @@
     <Content Include="src\contents\images\bg01.png" />
     <Content Include="src\contents\images\logo.png" />
     <Content Include="src\contents\images\logo_login.png" />
+    <Content Include="src\css\custom-dropzone.css">
+      <DependentUpon>custom-dropzone.scss</DependentUpon>
+    </Content>
+    <Content Include="src\css\custom-dropzone.min.css">
+      <DependentUpon>custom-dropzone.css</DependentUpon>
+    </Content>
     <Content Include="src\css\login.css">
       <DependentUpon>login.scss</DependentUpon>
     </Content>
@@ -2357,6 +2363,7 @@
     <Content Include="Views\IdUploader\Index.cshtml" />
     <Content Include="Views\Shared\_SubmenuNavigation.cshtml" />
     <Content Include="Views\Shared\_DropzoneScripts.cshtml" />
+    <Content Include="src\css\custom-dropzone.scss" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

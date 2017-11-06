@@ -289,6 +289,14 @@ body {
     flex: 1 100%;
     flex-flow: row wrap;
     display: flex; }
+  .form-content .attach-file {
+    /*.key {
+            display: table;
+            .text {
+                display: table-cell;
+                vertical-align: middle;                
+            }
+        }*/ }
   .form-content .item-head {
     background: #f5e598;
     color: #2e4592;
@@ -572,7 +580,4 @@ body {
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 0 10px 10px #bf141a, 0 0 0 10px rgba(255, 255, 255, 0.5);
     transform: scale(1.2);
     opacity: 0; } }
-
-.dropzone .dz-preview .dz-image {
-  display: none; }
 

@@ -6,5 +6,9 @@
   {
     "outputFile": "src/css/login.css",
     "inputFile": "src/css/login.scss"
+  },
+  {
+    "outputFile": "src/css/custom-dropzone.css",
+    "inputFile": "src/css/custom-dropzone.scss"
   }
 ]

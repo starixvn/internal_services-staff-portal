@@ -394,6 +394,13 @@ body {
     .attach-file {
         //display: grid;
         //grid-template-columns: inherit;
+        /*.key {
+            display: table;
+            .text {
+                display: table-cell;
+                vertical-align: middle;                
+            }
+        }*/
     }
     .item-head {
         background: #f5e598;
@@ -750,13 +757,7 @@ body {
 	}
 }
 
-.dropzone {
-    .dz-preview {
-        .dz-image {
-            display: none;
-        }
-    }
-}
+
 
 
 
