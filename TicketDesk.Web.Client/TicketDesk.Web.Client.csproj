@@ -404,6 +404,7 @@
     <Compile Include="Infrastructure\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\PagedListAsync.cs" />
     <Compile Include="Infrastructure\Extensions\PagedListExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\SummerNoteStringExtensions.cs" />
     <Compile Include="Infrastructure\Filters\CustomJsonResultAttribute.cs" />
     <Compile Include="Infrastructure\Filters\LocalizationFilterAttribute.cs" />
@@ -456,6 +457,7 @@
     <Compile Include="Models\Ticket\NewFeedbackTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewFacilityTicketViewModel.cs" />
+    <Compile Include="Models\Ticket\SingleTicketViewModel.cs" />
     <Compile Include="Models\Ticket\TicketFeedbackCustomField.cs" />
     <Compile Include="Models\Ticket\TicketWithFilesBaseViewModel.cs" />
     <Compile Include="Models\UserSignInViewModel.cs" />

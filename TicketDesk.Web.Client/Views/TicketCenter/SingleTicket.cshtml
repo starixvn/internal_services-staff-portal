@@ -60,10 +60,9 @@
 
 <main role="main">
     <div id="ticketDetailPanel" class="panel panel-info">
-        @(Model.CategoryId == (int)TicketCategoryTypes.Feedback 
-            ? Html.Action("TicketFeedbackDetails", "Ticket", new { ticketId = Model.TicketId }) 
-            : Html.Action("TicketDetails", "Ticket", new { ticketId = Model.TicketId }))
+        @Html.Action("TicketDetails", "Ticket", new { ticketId = Model.TicketId })
     </div>
+    
     <div class="panel panel-success">
         <div class="panel-heading" style="">
             <div class="btn-toolbar" role="toolbar">

@@ -17,7 +17,6 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Models.Extensions;
 
     [RoutePrefix("ticket")]
     [Route("{action=index}")]
@@ -90,17 +89,7 @@
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            string routeValue = RouteData.Values["controller"].ToString().ToLower();
-
-            // Get the correct parent menu id
-            MenuItem parentMenu = CurrentSession.MenuItemList.First(x => x.Parent == null && x.Url.Contains(routeValue));
-            var subMenuItems = CurrentSession.MenuItemList.Where(x => x.Parent != null && x.Parent.Id == parentMenu.Id).ToList();
-
-            List<MenuItem> items = new List<MenuItem>();
-            foreach (Fanex.NAP.Core.Model.MenuItem menuItem in subMenuItems)
-            {
-                items.Add(menuItem);
-            }
+            var items = GetIndexSubMenuItems();
 
             return View("_SubmenuNavigation", items);
         }
@@ -185,17 +174,19 @@
                 Ticket = new Ticket()
             };
 
-            var customFieldIds = Context.TicketCategoryCustomField
-                .Where(x => x.CategoryId == (int)TicketCategoryTypes.Facility)
-                .Select(x => x.CustomFieldId);
+            ////var customFieldIds = Context.TicketCategoryCustomField
+            ////    .Where(x => x.CategoryId == (int)TicketCategoryTypes.Facility)
+            ////    .Select(x => x.CustomFieldId);
 
-            var availableCustomField = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
+            ////var availableCustomField = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
 
-            foreach (CustomField customField in availableCustomField)
-            {
-                customField.CustomFieldValues =
-                    Context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
-            }
+            ////foreach (CustomField customField in availableCustomField)
+            ////{
+            ////    customField.CustomFieldValues =
+            ////        Context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
+            ////}
+
+            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Facility);
 
             model.RequestType = new CustomFieldValue
             {
@@ -347,23 +338,32 @@
             ////}
 
             // WARNING! This is also used as a child action and cannot be made async in MVC 5
-            ViewBag.DisplayProjects = Context.Projects.Any();
+            ////ViewBag.DisplayProjects = Context.Projects.Any();
+
             var ticket = Context.Tickets.Find(ticketId);
 
-            if (ticket == null)
+            SingleTicketViewModel singleTicketViewModel = new SingleTicketViewModel
             {
-                return PartialView("_TicketDetails", null);
-            }
+                Ticket = ticket,
+                CustomFieldValues = GetCustomFieldValuesForTicket(ticket)
+            };
 
-            switch (ticket.CategoryId)
-            {
-                case (int)TicketCategoryTypes.Feedback:
-                    return TicketFeedbackDetails(ticket);
-                case (int)TicketCategoryTypes.Facility:
-                    return FacilityTicketDetails(ticket);
-                default:
-                    return PartialView("_TicketDetails", ticket);
-            }
+            return PartialView("_TicketDetails", singleTicketViewModel);
+
+            ////if (ticket == null)
+            ////{
+            ////return PartialView("_TicketDetails", null);
+            ////}
+
+            ////switch (ticket.CategoryId)
+            ////{
+            ////    case (int)TicketCategoryTypes.Feedback:
+            ////        return TicketFeedbackDetails(ticket);
+            ////    case (int)TicketCategoryTypes.Facility:
+            ////        return FacilityTicketDetails(ticket);
+            ////    default:
+            ////        return PartialView("_TicketDetails", ticket);
+            ////}
         }
 
         [Route("ticket-events")]

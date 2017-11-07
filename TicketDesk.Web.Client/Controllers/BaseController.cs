@@ -4,6 +4,12 @@
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
+    using Infrastructure.Extensions;
+    using Models.Extensions;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using System.Web.Mvc;
 
     public class BaseController : Controller
@@ -31,5 +37,19 @@
         }
 
         protected IUserService UserService => NapContextHelper.UserService;
+
+        protected List<MenuItem> GetIndexSubMenuItems()
+        {
+            string routeValue = RouteData.Values["controller"].ToString().ToLower(CultureInfo.InvariantCulture);
+
+            // Get the correct parent menu id
+            MenuItem parentMenu = CurrentSession.MenuItemList.First(x =>
+                x.Parent == null && x.Url.Contains(routeValue, StringComparison.OrdinalIgnoreCase));
+
+            var subMenuItems = CurrentSession.MenuItemList.Where(x => x.Parent != null && x.Parent.Id == parentMenu.Id)
+                .ToList();
+
+            return subMenuItems.Select(menuItem => (MenuItem)menuItem).ToList();
+        }
     }
 }
