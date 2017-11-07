@@ -1,0 +1,53 @@
+﻿@model IList<TicketDesk.Web.Client.Models.Home.TicketGroup>
+
+<style>
+    table {
+        color: black;
+    }
+
+    table, tr, td, th {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+        tr.header {
+            cursor: pointer;
+        }
+
+    .header .sign:after {
+        content: "+";
+        display: inline-block;
+    }
+
+    .header.expand .sign:after {
+        content: "-";
+    }
+</style>
+
+<table>
+    <tr>
+        <th>#</th>
+        <th>Subject</th>
+        <th>Created Date</th>
+        <th>Status</th>
+    </tr>
+    @foreach (var ticketGroup in Model)
+    {
+        <tr class="header expand">
+            <th colspan="4"><span class="sign"></span> @ticketGroup.Name (@ticketGroup.Tickets.Count())</th>
+        </tr>
+
+        foreach (var ticket in ticketGroup.Tickets)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("Index","TicketCenter", new {id = ticket.TicketId})">@ticket.TicketId</a>
+                </td>
+                <td>@ticket.Title</td>
+                <td>@ticket.CreatedDate</td>
+                <td>@ticket.TicketStatus</td>
+            </tr>
+        }
+    }
+
+</table>

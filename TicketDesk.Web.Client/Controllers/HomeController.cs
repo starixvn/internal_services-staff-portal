@@ -8,11 +8,21 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using Domain;
+    using Domain.Model;
+    using Models.Home;
 
     [RoutePrefix("")]
     [Route("{action=index}")]
     public class HomeController : BaseController
     {
+        private TdDomainContext Context { get; }
+
+        public HomeController(TdDomainContext context)
+        {
+            Context = context;
+        }
+
         [Route("language")]
         public ActionResult SetLanguage(string name)
         {
@@ -33,7 +43,26 @@
         [Route("index")]
         public ActionResult Index()
         {
-            return View();
+            HomeViewModel homeViewModel = new HomeViewModel { TicketGroups = new List<TicketGroup>() };
+
+            // Get current user tickets
+            //homeViewModel.Tickets 
+            var tickets = Context.Tickets
+                .Where(x => (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo))
+                .GroupBy(x => x.TicketType).ToList();
+
+            foreach (IGrouping<string, Ticket> grouping in tickets)
+            {
+                TicketGroup ticketGroup = new TicketGroup
+                {
+                    Name = grouping.Key,
+                    Tickets = grouping
+                };
+
+                homeViewModel.TicketGroups.Add(ticketGroup);
+            }
+
+        return View(homeViewModel);
         }
 
         private static List<Models.Extensions.MenuItem> PopulateMenus(IEnumerable<MenuItem> menus)

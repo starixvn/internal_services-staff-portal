@@ -445,6 +445,8 @@
     <Compile Include="Models\Extensions\TicketSubscriberExtensions.cs" />
     <Compile Include="Models\FilterBarViewModel.cs" />
     <Compile Include="Infrastructure\Migration\Legacy\LegacySecurityMigrator.cs" />
+    <Compile Include="Models\Home\HomeViewModel.cs" />
+    <Compile Include="Models\Home\TicketGroup.cs" />
     <Compile Include="Models\IdUploaderViewModel.cs" />
     <Compile Include="Models\NavbarViewModel.cs" />
     <Compile Include="Models\ProjectListViewModel.cs" />
@@ -2364,6 +2366,8 @@
     <Content Include="Views\Shared\_SubmenuNavigation.cshtml" />
     <Content Include="Views\Shared\_DropzoneScripts.cshtml" />
     <Content Include="src\css\custom-dropzone.scss" />
+    <Content Include="Views\Home\_MyOpeningTicket.cshtml" />
+    <Content Include="Views\Home\_Announcement.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

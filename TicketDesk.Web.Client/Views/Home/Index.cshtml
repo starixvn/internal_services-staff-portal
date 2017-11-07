@@ -1,43 +1,27 @@
-﻿@using TicketDesk.Localization.Views.Home
+﻿@model TicketDesk.Web.Client.Models.Home.HomeViewModel
 
 @section title{ Services & Staffs Portal }
 
+@section scripts
+{
+    <script>
+        $('.header').on("click",
+            function() {
+                $(this).toggleClass('expand').nextUntil('tr.header').slideToggle(100);
+            });
+    </script>
+}
+
 <div class="panel col-md-12">
-    <div class="panel-heading text-info">Issue Tracking</div>
+    <div class="panel-heading text-info">My openning issue</div>
     <div class="panel-body">
-        <p class="text-info">Place holder</p>
+        @Html.Partial("_MyOpeningTicket", Model.TicketGroups)
     </div>
 </div>
 
 <div class="panel col-md-12">
     <div class="panel-heading text-info">Announcements</div>
     <div class="panel-body">
-        <p class="text-info">Place holder</p>
+        @Html.Partial("_Announcement")
     </div>
 </div>
-
-@*<main role="main" class="row">
-    <article class="col-md-8 left-side-box">
-        <a class="hidden-md hidden-lg" href="https://github.com/nulldesk/ticketdesk">@Html.Raw(Index.ForkMe)</a>
-
-        <div class="container-responsive">
-            <fieldset style="min-height: 350px; padding-right: 25px;">
-                <legend>
-                    @Html.Raw(Index.Welcome)
-                </legend>
-                @if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME")))
-                {
-                    <div class="alert alert-info">
-                        <h5>@Index.Congrat_Azure</h5>
-                    </div>
-                }
-                @Html.Raw(Index.Instructions)
-            </fieldset>
-          
-        </div>
-    </article>
-    <aside class="col-md-4 right-side-box">
-        <a class="hidden-xs hidden-sm" href="https://github.com/nulldesk/ticketdesk">@Html.Raw(Index.ForkMe)</a>
-        @Html.Raw(Index.ChangeList)
-    </aside>
-</main>*@
