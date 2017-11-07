@@ -80,7 +80,15 @@
                 this.on("addedfile",
                     function(file) {
                         $(".dropzone-previews").addClass("dropzone");
+                        var fileNumber = this.files.length;
                         CheckTotalBytes();
+                        $('.number-chosenfile').removeClass('hidden');
+                        $('.number-chosenfile .text').text('file were selected');
+                        $('.number-chosenfile .number').text(fileNumber);
+                        if(fileNumber > 1){
+                            $('.number-chosenfile .text').text('files were selected');
+                        }
+                        
                     });
                 this.on("reset",
                     function() {

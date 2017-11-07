@@ -2366,6 +2366,7 @@
     <Content Include="Views\Shared\_SubmenuNavigation.cshtml" />
     <Content Include="Views\Shared\_DropzoneScripts.cshtml" />
     <Content Include="src\css\custom-dropzone.scss" />
+    <Content Include="src\css\_variables.scss" />
     <Content Include="Views\Home\_MyOpeningTicket.cshtml" />
     <Content Include="Views\Home\_Announcement.cshtml" />
     <None Include="Web.azure.config">

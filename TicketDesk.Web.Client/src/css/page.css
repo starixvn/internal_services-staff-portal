@@ -297,6 +297,10 @@ body {
                 vertical-align: middle;                
             }
         }*/ }
+    .form-content .attach-file .key {
+      display: flex;
+      align-items: center;
+      line-height: unset; }
   .form-content .item-head {
     background: #f5e598;
     color: #2e4592;

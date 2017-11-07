@@ -1,16 +1,4 @@
-@font-face {
-    font-family: 'Open Sans';
-    /*font-display: auto;*/
-    src: local('Open Sans'), url('https://fonts.googleapis.com/css?family=Open+Sans:400,700,800');
-}
-
-$font-family: 'Open Sans', sans-serif;
-$font-size: 15px;
-$border-color: #d3d7db;
-$text-color: #333;
-$primary-color: #bf141a;
-$menu-color: #03285a;
-$title-form-bg: #2e4592;
+@import "_variables.scss";
 
 .input-validation-error{
     border-color: red;
@@ -392,6 +380,11 @@ body {
         display: flex;
     }
     .attach-file {
+        .key {
+            display: flex; 
+            align-items: center;
+            line-height: unset;
+        }
         //display: grid;
         //grid-template-columns: inherit;
         /*.key {
