@@ -1,0 +1,2529 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4DE41C1E-3E56-480E-9C88-0A4D6BACC798}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TicketDesk.Web.Client</RootNamespace>
+    <AssemblyName>TicketDesk.Web.Client</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>44373</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <ApplicationInsightsResourceId>/subscriptions/f96911eb-9288-41c5-afd8-30e2a9b16f96/resourcegroups/Default-Web-CentralUS/providers/microsoft.insights/components/ticketdesk2</ApplicationInsightsResourceId>
+    <UseGlobalApplicationHostFile />
+    <TypeScriptToolsVersion>2.4</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>TicketDesk.Web.Client.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>TicketDesk.Web.Client.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <!--<PropertyGroup>
+    <TypeScriptCompilerDir>..\TypeScript\MSBuild</TypeScriptCompilerDir>
+    <TscToolPath>..\TypeScript\SDKs</TscToolPath>
+  </PropertyGroup>-->
+  <ItemGroup>
+    <Reference Include="AngleSharp, Version=0.9.5.41771, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
+      <HintPath>..\packages\AngleSharp.0.9.5\lib\net45\AngleSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AzureBlobFileSystem, Version=0.0.7.0, Culture=neutral, PublicKeyToken=447fb21b5496a35a, processorArchitecture=MSIL">
+      <HintPath>..\packages\BlobFileSystem.Azure.0.0.7\lib\net45\AzureBlobFileSystem.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Couchbase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Caching.1.0.404.97\lib\net40\Couchbase.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CsQuery, Version=1.3.3.249, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Caching.1.0.404.97\lib\net40\Enyim.Caching.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Caching, Version=1.0.404.95, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Caching.1.0.404.97\lib\net40\Fanex.Caching.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Data, Version=0.5.404.63, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.NAP.Core, Version=2.1.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.NAP.Core.2.1.0.6\lib\net40\Fanex.NAP.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlSanitizer, Version=3.0.0.0, Culture=neutral, PublicKeyToken=61c49a1a9e79cc28, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlSanitizer.3.2.103\lib\net45\HtmlSanitizer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MarkdownSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.4.1\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.4.1\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.4.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.4.1\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.4.1\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.4.0\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.2.0.4\lib\net45\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Data.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.2.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=7.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.7.2.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Postal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45719375b8b4d528, processorArchitecture=MSIL">
+      <HintPath>..\packages\Postal.Mvc5.1.2.0\lib\net45\Postal.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RazorEngine, Version=3.10.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGrid, Version=9.5.1.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.9.5.1\lib\net452\SendGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.0.8.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.0.8\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web, Version=4.0.8.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.4.0.8\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web.Mvc, Version=4.0.8.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.Mvc.4.0.8\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="X.PagedList, Version=1.24.1.31653, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\X.PagedList.1.24.1.320\lib\net451\X.PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="X.PagedList.Mvc, Version=4.9.1.31908, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\X.PagedList.Mvc.4.9.1.310\lib\net45\X.PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\Startup.Insights.cs" />
+    <Compile Include="App_Start\Startup.PushNotifications.cs" />
+    <Compile Include="App_Start\Startup.SimpleInjector.cs" />
+    <Compile Include="App_Start\Startup.Bundles.cs" />
+    <Compile Include="App_Start\DatabaseConfig.cs" />
+    <Compile Include="App_Start\Startup.Filters.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\Startup.Routes.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CustomFieldSettingsController.cs" />
+    <Compile Include="Controllers\EmailTestController.cs" />
+    <Compile Include="Controllers\FileManagerController.cs" />
+    <Compile Include="Controllers\IdUploaderController.cs" />
+    <Compile Include="Controllers\NavigationController.cs" />
+    <Compile Include="Controllers\ProjectSettingsController.cs" />
+    <Compile Include="Controllers\PushNotificationSettingsController.cs" />
+    <Compile Include="Controllers\ApplicationSettingsController.cs" />
+    <Compile Include="Controllers\FirstRunSetupController.cs" />
+    <Compile Include="Controllers\ReferencesController.cs" />
+    <Compile Include="Controllers\SearchManagerController.cs" />
+    <Compile Include="Controllers\DataManagementController.cs" />
+    <Compile Include="Controllers\AutoCompleteController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\TicketActivityController.cs" />
+    <Compile Include="Controllers\TicketCenterController.cs" />
+    <Compile Include="Controllers\TicketController.cs" />
+    <Compile Include="Controllers\UserAdministrationController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Attribute\FileSizeAttribute.cs" />
+    <Compile Include="Infrastructure\Attribute\FileTypeAttribute.cs" />
+    <Compile Include="Infrastructure\Attribute\NumberOfFileAttribute.cs" />
+    <Compile Include="Infrastructure\DbSetupFilter.cs" />
+    <Compile Include="Infrastructure\Enumerations\SizeUnit.cs" />
+    <Compile Include="Infrastructure\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\PagedListAsync.cs" />
+    <Compile Include="Infrastructure\Extensions\PagedListExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\SummerNoteStringExtensions.cs" />
+    <Compile Include="Infrastructure\Filters\CustomJsonResultAttribute.cs" />
+    <Compile Include="Infrastructure\Filters\LocalizationFilterAttribute.cs" />
+    <Compile Include="Infrastructure\Filters\TdAuthorizeAttribute.cs" />
+    <Compile Include="Infrastructure\Helpers\CustomFieldForHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\DescriptionForHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\DisplayForHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\JsonCamelCaseResult.cs" />
+    <Compile Include="Infrastructure\Helpers\MimeTypeMap.cs" />
+    <Compile Include="Infrastructure\Helpers\PromptForHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\RazorViewHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\SortableColumnHeaderHelper.cs" />
+    <Compile Include="Infrastructure\Identity\FakeAuthenticationManager.cs" />
+    <Compile Include="Infrastructure\Identity\TicketDeskContextSecurityProvider.cs" />
+    <Compile Include="Infrastructure\Identity\TicketDeskSignInManager.cs" />
+    <Compile Include="Infrastructure\Identity\TicketDeskUserManagerExtensions.cs" />
+    <Compile Include="Infrastructure\Migration\Legacy\LegacyBackgroundMigrator.cs" />
+    <Compile Include="Infrastructure\Migration\Legacy\LegacyMigrator.cs" />
+    <Compile Include="Infrastructure\ModelBinders\CommaSeparatedValuesModelBinder.cs" />
+    <Compile Include="Infrastructure\ModelBinders\SummernoteModelBinder.cs" />
+    <Compile Include="Infrastructure\PushNotifications\InProcessPushNotificationScheduler.cs" />
+    <Compile Include="Infrastructure\WhenSetupEnabledAttribute.cs" />
+    <Compile Include="Infrastructure\ValidateOnlyIncomingValuesAttribute.cs" />
+    <Compile Include="Models\Account\AccountPasswordViewModel.cs" />
+    <Compile Include="Models\Account\AccountProfileViewModel.cs" />
+    <Compile Include="Models\Account\UserAccountInfoViewModel.cs" />
+    <Compile Include="Models\CustomFieldSettingViewModel.cs" />
+    <Compile Include="Models\CustomField\AddCustomFieldViewModel.cs" />
+    <Compile Include="Models\Extensions\ClientSettingExtensions.cs" />
+    <Compile Include="Models\Extensions\MenuItem.cs" />
+    <Compile Include="Models\Extensions\ProjectExtensions.cs" />
+    <Compile Include="Models\Extensions\SelectListExtensions.cs" />
+    <Compile Include="Models\Extensions\ApplicationSettingExtensions.cs" />
+    <Compile Include="Models\Extensions\StringExtensions.cs" />
+    <Compile Include="Models\Extensions\TicketEventExtensions.cs" />
+    <Compile Include="Models\Extensions\TicketDeskUserExtensions.cs" />
+    <Compile Include="Models\Extensions\TicketEventNotificationExtensions.cs" />
+    <Compile Include="Models\Extensions\TicketExtensions.cs" />
+    <Compile Include="Models\Extensions\TicketSubscriberExtensions.cs" />
+    <Compile Include="Models\FilterBarViewModel.cs" />
+    <Compile Include="Infrastructure\Migration\Legacy\LegacySecurityMigrator.cs" />
+    <Compile Include="Models\Home\HomeViewModel.cs" />
+    <Compile Include="Models\Home\TicketGroup.cs" />
+    <Compile Include="Models\IdUploaderViewModel.cs" />
+    <Compile Include="Models\NavbarViewModel.cs" />
+    <Compile Include="Models\ProjectListViewModel.cs" />
+    <Compile Include="Models\SystemInfoViewModel.cs" />
+    <Compile Include="Models\TicketCenterListViewModel.cs" />
+    <Compile Include="Models\TicketEmail.cs" />
+    <Compile Include="Models\Ticket\NewFeedbackTicketViewModel.cs" />
+    <Compile Include="Models\Ticket\NewTicketViewModel.cs" />
+    <Compile Include="Models\Ticket\NewFacilityTicketViewModel.cs" />
+    <Compile Include="Models\Ticket\TicketFeedbackCustomField.cs" />
+    <Compile Include="Models\Ticket\TicketWithFilesBaseViewModel.cs" />
+    <Compile Include="Models\UserSignInViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\filemanager\connectors\asp\FileManagerController.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\LOCAL\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\LOCAL\TicketDeskSpNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\select2-bootstrap.css" />
+    <Content Include="Content\css\select2-spinner.gif" />
+    <Content Include="Content\css\select2.css" />
+    <Content Include="Content\css\select2.png" />
+    <Content Include="Content\css\select2x2.png" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Images\arrow_down.png" />
+    <Content Include="Content\Images\arrow_top.png" />
+    <Content Include="Content\Images\error-assets\404.png" />
+    <Content Include="Content\Images\error-assets\500.png" />
+    <Content Include="Content\Images\error-assets\access.png" />
+    <Content Include="Content\Images\error-assets\cloud1.png" />
+    <Content Include="Content\Images\error-assets\cloud2.png" />
+    <Content Include="Content\Images\error-assets\face.png" />
+    <Content Include="Content\Images\error-assets\hand.png" />
+    <Content Include="Content\Images\error-assets\icon-plus-big.png" />
+    <Content Include="Content\Images\error-assets\icon-plus-small.png" />
+    <Content Include="Content\Images\error-assets\img-setting.png" />
+    <Content Include="Content\Images\error-assets\leave.png" />
+    <Content Include="Content\Images\error-assets\UM.png" />
+    <Content Include="Content\Images\general-file.png" />
+    <Content Include="Content\Images\TicketDesk-2.5-mobile.png" />
+    <Content Include="Content\Images\TicketDesk-2.5.png" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\site.css" />
+    <Content Include="Content\ticketdesk\error.css" />
+    <Content Include="favicon.ico" />
+    <Compile Include="App_Start\Startup.Search.cs" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="robots.txt" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
+    <None Include="Properties\PublishProfiles\filesystem-precompiled-release.pubxml" />
+    <None Include="Properties\PublishProfiles\SSP.pubxml" />
+    <None Include="Properties\PublishProfiles\TicketDesk.pubxml" />
+    <Content Include="Scripts\ai.0.22.9-build00167.js" />
+    <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\cldr.js" />
+    <Content Include="Scripts\cldr\event.js" />
+    <Content Include="Scripts\cldr\supplemental.js" />
+    <Content Include="Scripts\cldr\unresolved.js" />
+    <Content Include="Scripts\dropzone\basic.css" />
+    <Content Include="Scripts\dropzone\basic.min.css" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
+    <Content Include="Scripts\dropzone\dropzone.css" />
+    <Content Include="Scripts\dropzone\dropzone.js" />
+    <Content Include="Scripts\dropzone\dropzone.min.css" />
+    <Content Include="Scripts\dropzone\dropzone.min.js" />
+    <Content Include="Scripts\filemanager\.gitignore" />
+    <Content Include="Scripts\filemanager\bower.json" />
+    <Content Include="Scripts\filemanager\changelog" />
+    <Content Include="Scripts\filemanager\composer.json" />
+    <Content Include="Scripts\filemanager\config\filemanager.init.js" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\AbstractFileManager.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\error\FileManagerException.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\error\FMConfigException.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\error\FMFileNotFoundException.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\error\FMInitializationException.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\error\FMIOException.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\error\FMSyntaxException.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\error\FMUnallowedException.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\error\FMUploadException.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\IFileManager.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\impl\LocalFileManager.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\util\CopyDirectoryVisitor.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\util\DeleteDirectoryVisitor.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\util\FileManagerUtils.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\util\FileUtils.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\util\ImageUtils.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\util\JsonUtils.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\util\ServletUtils.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\util\StringUtils.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\com\fabriceci\fmc\util\ZipUtils.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\org\json\JSONArray.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\org\json\JSONException.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\org\json\JSONObject.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\org\json\JSONPointer.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\org\json\JSONPointerException.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\org\json\JSONString.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\org\json\JSONStringer.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\org\json\JSONTokener.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\org\json\JSONWriter.java" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\java\org\json\Property.java" />
+    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\src\edu\fuberlin\AbstractFileManager.java" />
+    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\src\edu\fuberlin\AbstractFM.java" />
+    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\src\edu\fuberlin\FileManagerI.java" />
+    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\src\edu\fuberlin\RichFileManager.java" />
+    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\src\org\json\JSONArray.java" />
+    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\src\org\json\JSONException.java" />
+    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\src\org\json\JSONObject.java" />
+    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\src\org\json\JSONString.java" />
+    <Content Include="Scripts\filemanager\connectors\jsp\libraries\java\src\org\json\JSONTokener.java" />
+    <Content Include="Scripts\filemanager\connectors\nodejs\filemanager.js" />
+    <Content Include="Scripts\filemanager\demo\assets\jquery-1.11.3.min.js" />
+    <Content Include="Scripts\filemanager\demo\index.html" />
+    <Content Include="Scripts\filemanager\images\accept.png" />
+    <Content Include="Scripts\filemanager\images\ajax-loader.gif" />
+    <Content Include="Scripts\filemanager\images\application_view_icons.png" />
+    <Content Include="Scripts\filemanager\images\application_view_list.png" />
+    <Content Include="Scripts\filemanager\images\bin_closed.png" />
+    <Content Include="Scripts\filemanager\images\bullet_arrow_down.png" />
+    <Content Include="Scripts\filemanager\images\bullet_arrow_up.png" />
+    <Content Include="Scripts\filemanager\images\clipboard\clipboard_clear.png" />
+    <Content Include="Scripts\filemanager\images\clipboard\clipboard_copy.png" />
+    <Content Include="Scripts\filemanager\images\clipboard\clipboard_cut.png" />
+    <Content Include="Scripts\filemanager\images\clipboard\clipboard_paste.png" />
+    <Content Include="Scripts\filemanager\images\copy.png" />
+    <Content Include="Scripts\filemanager\images\copy_url.png" />
+    <Content Include="Scripts\filemanager\images\download.png" />
+    <Content Include="Scripts\filemanager\images\edit.png" />
+    <Content Include="Scripts\filemanager\images\edit_dark.png" />
+    <Content Include="Scripts\filemanager\images\extract.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\drag-n-drop\cancel-1.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\drag-n-drop\cancel-2.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\drag-n-drop\cancel-3.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\drag-n-drop\cancel-4.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\drag-n-drop\cancel-5.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_aac.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_avi.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_bmp.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_chm.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_css.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_dll.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_doc.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_file.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_file_lock.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_fla.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_folder.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_folder_lock.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_folder_parent.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_gif.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_html.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_image.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_ini.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_jar.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_jpg.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_js.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_lasso.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_mdb.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_mov.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_movie.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_mp3.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_mpg.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_multiple.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_music.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_odp.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_ods.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_odt.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_pdf.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_php.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_png.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_ppt.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_py.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_rb.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_real.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_reg.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_rtf.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_sql.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_swf.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_txt.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_vbs.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_wav.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_wma.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_wmv.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_xls.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_xml.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_xsl.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\icon_zip.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\_Close.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\_Documents.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\_Favorites.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\_Image.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\_Movie.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\_Music.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\_Net.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\_ProgramFiles.png" />
+    <Content Include="Scripts\filemanager\images\fileicons\_Works.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_application.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_code.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_css.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_db.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_doc.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_file.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_file_lock.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_film.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_flash.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_folder.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_folder_lock.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_folder_open.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_html.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_java.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_linux.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_music.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_pdf.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_php.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_picture.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_ppt.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_psd.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_ruby.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_script.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_spinner.gif" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_txt.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_xls.png" />
+    <Content Include="Scripts\filemanager\images\filetree\ico_zip.png" />
+    <Content Include="Scripts\filemanager\images\filetree\line_conn.gif" />
+    <Content Include="Scripts\filemanager\images\filetree\loading.gif" />
+    <Content Include="Scripts\filemanager\images\filetree\preset.gif" />
+    <Content Include="Scripts\filemanager\images\filetree\preset.png" />
+    <Content Include="Scripts\filemanager\images\filter\black\file-all.png" />
+    <Content Include="Scripts\filemanager\images\filter\black\file-archive.png" />
+    <Content Include="Scripts\filemanager\images\filter\black\file-audio.png" />
+    <Content Include="Scripts\filemanager\images\filter\black\file-image.png" />
+    <Content Include="Scripts\filemanager\images\filter\black\file-media.png" />
+    <Content Include="Scripts\filemanager\images\filter\black\file-office.png" />
+    <Content Include="Scripts\filemanager\images\filter\black\file-video.png" />
+    <Content Include="Scripts\filemanager\images\filter\grey\file-all.png" />
+    <Content Include="Scripts\filemanager\images\filter\grey\file-archive.png" />
+    <Content Include="Scripts\filemanager\images\filter\grey\file-audio.png" />
+    <Content Include="Scripts\filemanager\images\filter\grey\file-image.png" />
+    <Content Include="Scripts\filemanager\images\filter\grey\file-media.png" />
+    <Content Include="Scripts\filemanager\images\filter\grey\file-office.png" />
+    <Content Include="Scripts\filemanager\images\filter\grey\file-video.png" />
+    <Content Include="Scripts\filemanager\images\fmlogo.png" />
+    <Content Include="Scripts\filemanager\images\folder_add.png" />
+    <Content Include="Scripts\filemanager\images\house.png" />
+    <Content Include="Scripts\filemanager\images\info.png" />
+    <Content Include="Scripts\filemanager\images\move.png" />
+    <Content Include="Scripts\filemanager\images\nav\black\home.png" />
+    <Content Include="Scripts\filemanager\images\nav\black\level-up.png" />
+    <Content Include="Scripts\filemanager\images\nav\black\refresh.png" />
+    <Content Include="Scripts\filemanager\images\nav\grey\home.png" />
+    <Content Include="Scripts\filemanager\images\nav\grey\level-up.png" />
+    <Content Include="Scripts\filemanager\images\nav\grey\refresh.png" />
+    <Content Include="Scripts\filemanager\images\original\clipboard\clipboard-clear.png" />
+    <Content Include="Scripts\filemanager\images\original\clipboard\clipboard-copy-lines.png" />
+    <Content Include="Scripts\filemanager\images\original\clipboard\clipboard-cut.png" />
+    <Content Include="Scripts\filemanager\images\original\clipboard\clipboard-paste.png" />
+    <Content Include="Scripts\filemanager\images\original\copy_url.png" />
+    <Content Include="Scripts\filemanager\images\original\copy_url_gray.png" />
+    <Content Include="Scripts\filemanager\images\original\copy_url_thick.png" />
+    <Content Include="Scripts\filemanager\images\original\extract.png" />
+    <Content Include="Scripts\filemanager\images\original\extract_gray.png" />
+    <Content Include="Scripts\filemanager\images\original\save_floppy.png" />
+    <Content Include="Scripts\filemanager\images\original\save_floppy_dark.png" />
+    <Content Include="Scripts\filemanager\images\parentfolder.png" />
+    <Content Include="Scripts\filemanager\images\plus.png" />
+    <Content Include="Scripts\filemanager\images\replace.png" />
+    <Content Include="Scripts\filemanager\images\reset.png" />
+    <Content Include="Scripts\filemanager\images\reset_dark.png" />
+    <Content Include="Scripts\filemanager\images\save.png" />
+    <Content Include="Scripts\filemanager\images\save_dark.png" />
+    <Content Include="Scripts\filemanager\images\spinner.gif" />
+    <Content Include="Scripts\filemanager\images\summary.png" />
+    <Content Include="Scripts\filemanager\images\tag.png" />
+    <Content Include="Scripts\filemanager\images\upload.png" />
+    <Content Include="Scripts\filemanager\images\vgrabber.gif" />
+    <Content Include="Scripts\filemanager\package.json" />
+    <Content Include="Scripts\filemanager\ReadMe.md" />
+    <Content Include="Scripts\filemanager\config\filemanager.config.default.json" />
+    <Content Include="Scripts\filemanager\connectors\ashx\filemanager.ashx" />
+    <Content Include="Scripts\filemanager\connectors\java\build.gradle" />
+    <Content Include="Scripts\filemanager\connectors\java\readme.md" />
+    <Content Include="Scripts\filemanager\connectors\java\settings.gradle" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\resources\filemanager.config.default.properties" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\resources\filemanager.lang.en.properties" />
+    <Content Include="Scripts\filemanager\connectors\java\src\main\resources\filemanager.lang.fr.properties" />
+    <Content Include="Scripts\filemanager\connectors\jsp\.gitignore" />
+    <Content Include="Scripts\filemanager\connectors\jsp\auth.jsp" />
+    <Content Include="Scripts\filemanager\connectors\jsp\build.gradle" />
+    <Content Include="Scripts\filemanager\connectors\jsp\config.properties" />
+    <Content Include="Scripts\filemanager\connectors\jsp\filemanager.jsp" />
+    <Content Include="Scripts\filemanager\connectors\jsp\readme.md" />
+    <Content Include="Scripts\filemanager\connectors\jsp\settings.gradle" />
+    <Content Include="Scripts\filemanager\connectors\php\.gitignore" />
+    <Content Include="Scripts\filemanager\connectors\php\filemanager.php" />
+    <Content Include="Scripts\filemanager\connectors\python\filemanager.py" />
+    <Content Include="Scripts\filemanager\languages\ar.json" />
+    <Content Include="Scripts\filemanager\languages\bs.json" />
+    <Content Include="Scripts\filemanager\languages\ca.json" />
+    <Content Include="Scripts\filemanager\languages\cs.json" />
+    <Content Include="Scripts\filemanager\languages\da.json" />
+    <Content Include="Scripts\filemanager\languages\de.json" />
+    <Content Include="Scripts\filemanager\languages\el.json" />
+    <Content Include="Scripts\filemanager\languages\en.json" />
+    <Content Include="Scripts\filemanager\languages\es.json" />
+    <Content Include="Scripts\filemanager\languages\fi.json" />
+    <Content Include="Scripts\filemanager\languages\fr.json" />
+    <Content Include="Scripts\filemanager\languages\he.json" />
+    <Content Include="Scripts\filemanager\languages\hu.json" />
+    <Content Include="Scripts\filemanager\languages\it.json" />
+    <Content Include="Scripts\filemanager\languages\ja.json" />
+    <Content Include="Scripts\filemanager\languages\nl.json" />
+    <Content Include="Scripts\filemanager\languages\pl.json" />
+    <Content Include="Scripts\filemanager\languages\pt.json" />
+    <Content Include="Scripts\filemanager\languages\ru.json" />
+    <Content Include="Scripts\filemanager\languages\sv.json" />
+    <Content Include="Scripts\filemanager\languages\th.json" />
+    <Content Include="Scripts\filemanager\languages\tr.json" />
+    <Content Include="Scripts\filemanager\languages\vn.json" />
+    <Content Include="Scripts\filemanager\languages\zh-cn.json" />
+    <Content Include="Scripts\filemanager\languages\zh-tw.json" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\.codeclimate.yml" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\.coveralls.yml" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\.eslintrc" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\.gitignore" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\bower.json" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\CHANGELOG.md" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\CONTRIBUTING.md" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\ISSUE_TEMPLATE" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\LICENSE.md" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\package.json" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\README.md" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\src\sass\alertify.scss" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\update.json" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\fonts\MaterialIcons-Regular.eot" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\fonts\MaterialIcons-Regular.ttf" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\fonts\MaterialIcons-Regular.woff" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\fonts\MaterialIcons-Regular.woff2" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\fonts\Roboto-Light.eot" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\fonts\Roboto-Light.ttf" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\fonts\Roboto-Light.woff" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\fonts\Roboto-Light.woff2" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\.babelrc" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\.banner" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\.editorconfig" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\.github\issue_template.md" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\.gitignore" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\.npmignore" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\.travis.yml" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\bower.json" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\contributing.md" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\package.json" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\readme.md" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\.gitattributes" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\.npmignore" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\.travis.yml" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\AUTHORS" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\CHANGELOG.md" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\CONTRIBUTING.md" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\LICENSE" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\package.json" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\README.md" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\.gitignore" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\bower.json" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\js\minified\jquery.mCustomScrollbar.min.js.gz" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\package.json" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\readme.md" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\.gitignore" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\.travis.yml" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\js\load-image.all.min.js.map" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\package.json" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\README.md" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\.gitignore" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\.travis.yml" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\js\tmpl.min.js.map" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\package.json" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\README.md" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\.gitignore" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\.jshintrc" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\bower.json" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\CONTRIBUTING.md" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\package.json" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\README.md" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\server\gae-go\app.yaml" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\server\gae-go\app\main.go" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\server\gae-python\app.yaml" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\server\gae-python\main.py" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\server\php\files\.gitignore" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\server\php\files\.htaccess" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\server\php\index.php" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\server\php\UploadHandler.php" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\.gitignore" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\.jshintrc" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\bower.json" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\ChangeLog.md" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\package.json" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\README.md" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\test\browserify\README.md" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\.editorconfig" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\.gitignore" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\.travis.yml" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\bower.json" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\contextMenu.jquery.json" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\dist\font\context-menu-icons.eot" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\dist\font\context-menu-icons.ttf" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\dist\font\context-menu-icons.woff" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\dist\font\context-menu-icons.woff2" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\dist\jquery.contextMenu.min.css.map" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\dist\jquery.contextMenu.min.js.map" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\package.json" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\README.md" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\.csscomb.json" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\.csslintrc" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\.jscsrc" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\.jshintrc" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\sass\icons\_icon_classes.scss.tpl" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\sass\icons\_mixins.scss" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\sass\icons\_variables.scss" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\sass\icons\_variables.scss.tpl" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\sass\jquery.contextMenu.scss" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\sass\_icons.scss" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\sass\_variables.scss" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\.csslintrc" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\.gitignore" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\.jscs.json" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\.jshintrc" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\package.json" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\README.md" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\.eslintrc.json" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\.gitattributes" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\.gitignore" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\bower.json" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\license.md" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\package.json" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\README.md" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\todo.md" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\_config.yml" />
+    <Content Include="Scripts\filemanager\scripts\toast\.gitignore" />
+    <Content Include="Scripts\filemanager\scripts\toast\.npmignore" />
+    <Content Include="Scripts\filemanager\scripts\toast\bower.json" />
+    <Content Include="Scripts\filemanager\scripts\toast\package.json" />
+    <Content Include="Scripts\filemanager\scripts\toast\README.md" />
+    <Content Include="Scripts\filemanager\scripts\toast\tests\package.json" />
+    <Content Include="Scripts\filemanager\userfiles\.htaccess" />
+    <Content Include="Scripts\filemanager\userfiles\web.config" />
+    <Content Include="Scripts\filemanager\config\filemanager.config.json" />
+    <Content Include="Scripts\filemanager\gruntfile.js" />
+    <Content Include="Scripts\filemanager\index.html" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\dist\css\alertify.css" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\dist\js\alertify.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\dist\js\ngAlertify.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\gulpfile.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\karma-ci.conf.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\karma.conf.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\src\css\alertify.css" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\src\js\alertify.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\src\js\ngAlertify.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\src\templates\alert.html" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\src\templates\confirm.html" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\src\templates\log.html" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\src\templates\prompt.html" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\test\commonjsSpec.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\test\dialogSpec.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\test\logSpec.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\test\ngAlertifySpec.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\test\settingsSpec.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\test\themesSpec.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\404.html" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\angular.html" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\bootstrap.html" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\css\bootstrap-demo.css" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\css\styles.css" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\css\styles.min.css" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\demo.html" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\fonts\Roboto-Light.svg" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\images\transparent.jpg" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\index.html" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\js\all.js" />
+    <Content Include="Scripts\filemanager\scripts\alertify.js\website\js\demo.js" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\demo\constructor-node.html" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\demo\constructor-nodelist.html" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\demo\constructor-selector.html" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\demo\function-target.html" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\demo\function-text.html" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\demo\target-div.html" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\demo\target-input.html" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\demo\target-textarea.html" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\dist\clipboard.js" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\dist\clipboard.min.js" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\karma.conf.js" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\package.js" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\src\clipboard-action.js" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\src\clipboard.js" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\test\clipboard-action.js" />
+    <Content Include="Scripts\filemanager\scripts\clipboard.js\test\clipboard.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\comment\comment.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\comment\continuecomment.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\dialog\dialog.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\dialog\dialog.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\display\autorefresh.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\display\fullscreen.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\display\fullscreen.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\display\panel.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\display\placeholder.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\display\rulers.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\edit\closebrackets.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\edit\closetag.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\edit\continuelist.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\edit\matchbrackets.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\edit\matchtags.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\edit\trailingspace.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\fold\brace-fold.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\fold\comment-fold.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\fold\foldcode.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\fold\foldgutter.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\fold\foldgutter.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\fold\indent-fold.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\fold\markdown-fold.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\fold\xml-fold.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\hint\anyword-hint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\hint\css-hint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\hint\html-hint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\hint\javascript-hint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\hint\show-hint.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\hint\show-hint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\hint\sql-hint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\hint\xml-hint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\lint\coffeescript-lint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\lint\css-lint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\lint\html-lint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\lint\javascript-lint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\lint\json-lint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\lint\lint.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\lint\lint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\lint\yaml-lint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\merge\merge.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\merge\merge.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\mode\loadmode.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\mode\multiplex.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\mode\multiplex_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\mode\overlay.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\mode\simple.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\runmode\colorize.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\runmode\runmode-standalone.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\runmode\runmode.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\runmode\runmode.node.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\scroll\annotatescrollbar.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\scroll\scrollpastend.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\scroll\simplescrollbars.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\scroll\simplescrollbars.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\search\jump-to-line.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\search\match-highlighter.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\search\matchesonscrollbar.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\search\matchesonscrollbar.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\search\search.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\search\searchcursor.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\selection\active-line.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\selection\mark-selection.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\selection\selection-pointer.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\tern\tern.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\tern\tern.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\tern\worker.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\addon\wrap\hardwrap.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\activeline.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\anywordhint.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\bidi.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\btree.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\buffers.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\changemode.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\closebrackets.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\closetag.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\complete.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\emacs.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\folding.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\fullscreen.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\hardwrap.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\html5complete.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\indentwrap.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\lint.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\loadmode.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\marker.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\markselection.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\matchhighlighter.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\matchtags.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\merge.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\multiplex.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\mustache.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\panel.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\placeholder.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\preview.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\requirejs.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\resize.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\rulers.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\runmode.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\search.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\simplemode.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\simplescrollbars.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\spanaffectswrapping_shim.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\sublime.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\tern.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\theme.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\trailingspace.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\variableheight.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\vim.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\visibletabs.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\widget.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\demo\xmlcomplete.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\activebookmark.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\docs.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\internals.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\logo.png" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\logo.svg" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\manual.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\realworld.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\releases.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\reporting.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\upgrade_v2.2.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\upgrade_v3.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\upgrade_v4.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\doc\yinyang.png" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\keymap\emacs.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\keymap\sublime.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\keymap\vim.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\lib\codemirror.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\lib\codemirror.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\apl\apl.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\apl\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\asciiarmor\asciiarmor.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\asciiarmor\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\asn.1\asn.1.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\asn.1\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\asterisk\asterisk.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\asterisk\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\brainfuck\brainfuck.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\brainfuck\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\clike\clike.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\clike\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\clike\scala.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\clike\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\clojure\clojure.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\clojure\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\cmake\cmake.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\cmake\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\cobol\cobol.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\cobol\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\coffeescript\coffeescript.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\coffeescript\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\commonlisp\commonlisp.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\commonlisp\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\crystal\crystal.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\crystal\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\css\css.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\css\gss.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\css\gss_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\css\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\css\less.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\css\less_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\css\scss.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\css\scss_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\css\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\cypher\cypher.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\cypher\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\cypher\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\dart\dart.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\dart\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\diff\diff.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\diff\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\django\django.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\django\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\dockerfile\dockerfile.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\dockerfile\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\dtd\dtd.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\dtd\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\dylan\dylan.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\dylan\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\dylan\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\d\d.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\d\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ebnf\ebnf.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ebnf\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ecl\ecl.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ecl\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\eiffel\eiffel.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\eiffel\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\elm\elm.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\elm\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\erlang\erlang.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\erlang\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\factor\factor.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\factor\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\fcl\fcl.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\fcl\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\forth\forth.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\forth\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\fortran\fortran.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\fortran\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\gas\gas.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\gas\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\gfm\gfm.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\gfm\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\gfm\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\gherkin\gherkin.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\gherkin\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\go\go.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\go\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\groovy\groovy.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\groovy\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\haml\haml.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\haml\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\haml\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\handlebars\handlebars.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\handlebars\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\haskell-literate\haskell-literate.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\haskell-literate\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\haskell\haskell.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\haskell\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\haxe\haxe.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\haxe\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\htmlembedded\htmlembedded.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\htmlembedded\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\htmlmixed\htmlmixed.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\htmlmixed\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\http\http.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\http\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\idl\idl.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\idl\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\javascript\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\javascript\javascript.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\javascript\json-ld.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\javascript\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\javascript\typescript.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\jinja2\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\jinja2\jinja2.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\jsx\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\jsx\jsx.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\jsx\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\julia\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\julia\julia.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\livescript\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\livescript\livescript.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\lua\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\lua\lua.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\markdown\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\markdown\markdown.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\markdown\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mathematica\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mathematica\mathematica.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mbox\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mbox\mbox.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\meta.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mirc\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mirc\mirc.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mllike\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mllike\mllike.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\modelica\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\modelica\modelica.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mscgen\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mscgen\mscgen.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mscgen\mscgen_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mscgen\msgenny_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mscgen\xu_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mumps\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\mumps\mumps.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\nginx\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\nginx\nginx.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\nsis\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\nsis\nsis.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ntriples\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ntriples\ntriples.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\octave\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\octave\octave.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\oz\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\oz\oz.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\pascal\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\pascal\pascal.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\pegjs\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\pegjs\pegjs.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\perl\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\perl\perl.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\php\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\php\php.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\php\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\pig\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\pig\pig.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\powershell\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\powershell\powershell.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\powershell\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\properties\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\properties\properties.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\protobuf\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\protobuf\protobuf.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\pug\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\pug\pug.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\puppet\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\puppet\puppet.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\python\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\python\python.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\python\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\q\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\q\q.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\rpm\changes\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\rpm\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\rpm\rpm.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\rst\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\rst\rst.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ruby\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ruby\ruby.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ruby\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\rust\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\rust\rust.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\rust\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\r\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\r\r.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\sass\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\sass\sass.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\sas\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\sas\sas.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\scheme\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\scheme\scheme.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\shell\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\shell\shell.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\shell\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\sieve\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\sieve\sieve.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\slim\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\slim\slim.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\slim\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\smalltalk\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\smalltalk\smalltalk.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\smarty\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\smarty\smarty.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\solr\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\solr\solr.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\soy\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\soy\soy.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\soy\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\sparql\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\sparql\sparql.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\spreadsheet\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\spreadsheet\spreadsheet.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\sql\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\sql\sql.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\stex\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\stex\stex.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\stex\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\stylus\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\stylus\stylus.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\swift\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\swift\swift.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\swift\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\tcl\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\tcl\tcl.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\textile\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\textile\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\textile\textile.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\tiddlywiki\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\tiddlywiki\tiddlywiki.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\tiddlywiki\tiddlywiki.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\tiki\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\tiki\tiki.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\tiki\tiki.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\toml\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\toml\toml.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\tornado\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\tornado\tornado.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\troff\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\troff\troff.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ttcn-cfg\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ttcn-cfg\ttcn-cfg.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ttcn\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\ttcn\ttcn.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\turtle\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\turtle\turtle.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\twig\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\twig\twig.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\vbscript\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\vbscript\vbscript.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\vb\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\vb\vb.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\velocity\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\velocity\velocity.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\verilog\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\verilog\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\verilog\verilog.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\vhdl\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\vhdl\vhdl.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\vue\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\vue\vue.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\webidl\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\webidl\webidl.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\xml\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\xml\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\xml\xml.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\xquery\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\xquery\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\xquery\xquery.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\yacas\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\yacas\yacas.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\yaml-frontmatter\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\yaml-frontmatter\yaml-frontmatter.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\yaml\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\yaml\yaml.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\z80\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\mode\z80\z80.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\rollup.config.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\codemirror.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\Display.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\focus.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\gutters.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\highlight_worker.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\line_numbers.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\mode_state.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\operations.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\scrollbars.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\scrolling.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\scroll_events.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\selection.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\update_display.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\update_line.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\update_lines.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\display\view_tracking.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\CodeMirror.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\commands.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\deleteNearSelection.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\drop_events.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\fromTextArea.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\global_events.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\key_events.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\legacy.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\main.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\methods.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\mouse_events.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\options.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\edit\utils.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\input\ContentEditableInput.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\input\indent.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\input\input.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\input\keymap.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\input\keynames.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\input\TextareaInput.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\line\highlight.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\line\line_data.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\line\pos.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\line\saw_special_spans.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\line\spans.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\line\utils_line.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\measurement\position_measurement.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\measurement\widgets.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\model\changes.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\model\change_measurement.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\model\chunk.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\model\Doc.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\model\document_data.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\model\history.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\model\line_widget.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\model\mark_text.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\model\selection.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\model\selection_updates.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\modes.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\util\bidi.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\util\browser.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\util\dom.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\util\event.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\util\feature_detection.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\util\misc.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\util\operation_group.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\src\util\StringStream.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\comment_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\doc_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\driver.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\emacs_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\index.html" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\lint.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\mode_test.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\mode_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\multi_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\phantom_driver.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\run.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\scroll_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\search_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\sql-hint-test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\sublime_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\test\vim_test.js" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\3024-day.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\3024-night.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\abcdef.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\ambiance-mobile.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\ambiance.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\base16-dark.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\base16-light.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\bespin.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\blackboard.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\cobalt.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\colorforth.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\dracula.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\duotone-dark.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\duotone-light.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\eclipse.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\elegant.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\erlang-dark.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\hopscotch.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\icecoder.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\isotope.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\lesser-dark.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\liquibyte.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\material.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\mbo.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\mdn-like.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\midnight.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\monokai.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\neat.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\neo.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\night.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\panda-syntax.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\paraiso-dark.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\paraiso-light.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\pastel-on-dark.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\railscasts.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\rubyblue.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\seti.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\solarized.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\the-matrix.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\tomorrow-night-bright.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\tomorrow-night-eighties.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\ttcn.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\twilight.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\vibrant-ink.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\xq-dark.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\xq-light.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\yeti.css" />
+    <Content Include="Scripts\filemanager\scripts\CodeMirror\theme\zenburn.css" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\jquery.mCustomScrollbar.css" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\jquery.mCustomScrollbar.js" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\jquery.mCustomScrollbar.min.css" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\js\minified\jquery-1.11.0.min.js" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\js\minified\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\js\minified\jquery-2.1.0.min.js" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\js\minified\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\js\minified\jquery.mCustomScrollbar.min.js" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\js\minified\jquery.mousewheel-3.0.6.min.js" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\js\minified\jquery.mousewheel.min.js" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\js\uncompressed\jquery.mCustomScrollbar.js" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\js\uncompressed\jquery.mousewheel-3.0.6.js" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\js\uncompressed\jquery.mousewheel.js" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\LICENSE.txt" />
+    <Content Include="Scripts\filemanager\scripts\custom-scrollbar-plugin\mCSB_buttons.png" />
+    <Content Include="Scripts\filemanager\scripts\filemanager.js" />
+    <Content Include="Scripts\filemanager\scripts\filemanager.min.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\css\demo.css" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\css\vendor\Jcrop.gif" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\css\vendor\jquery.Jcrop.css" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\index.html" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\index.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\js\demo.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\js\load-image-exif-map.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\js\load-image-exif.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\js\load-image-meta.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\js\load-image-orientation.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\js\load-image.all.min.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\js\load-image.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\js\vendor\jquery.Jcrop.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\js\vendor\jquery.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\test\index.html" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\test\test.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\test\vendor\canvas-to-blob.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\test\vendor\expect.js" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\test\vendor\mocha.css" />
+    <Content Include="Scripts\filemanager\scripts\JavaScript-Load-Image\test\vendor\mocha.js" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\css\demo.css" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\index.html" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\js\compile.js" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\js\demo.js" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\js\runtime.js" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\js\tmpl.js" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\js\tmpl.min.js" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\test\index.html" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\test\test.js" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\test\vendor\expect.js" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\test\vendor\mocha.css" />
+    <Content Include="Scripts\filemanager\scripts\javascript-templates\test\vendor\mocha.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery-1.11.3.min.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery-browser.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\angularjs.html" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\basic-plus.html" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\basic.html" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\cors\postmessage.html" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\cors\result.html" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\css\demo-ie8.css" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\css\demo.css" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\css\dropzone.css" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\css\jquery.fileupload-noscript.css" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\css\jquery.fileupload-ui-noscript.css" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\css\jquery.fileupload-ui.css" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\css\jquery.fileupload.css" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\css\style.css" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\Gruntfile.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\img\abort.png" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\img\info.png" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\img\loading.gif" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\img\progressbar.gif" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\img\remove.png" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\img\resume.png" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\img\start.png" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\img\uploading-spinner.gif" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\index.html" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\jquery-ui.html" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\app.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\canvas-to-blob.min.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\cors\jquery.postmessage-transport.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\cors\jquery.xdr-transport.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\jquery.fileupload-angular.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\jquery.fileupload-audio.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\jquery.fileupload-image.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\jquery.fileupload-jquery-ui.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\jquery.fileupload-process.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\jquery.fileupload-ui.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\jquery.fileupload-validate.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\jquery.fileupload-video.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\jquery.fileupload.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\jquery.iframe-transport.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\load-image.all.min.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\main.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\js\vendor\jquery.ui.widget.js" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\server\gae-go\static\favicon.ico" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\server\gae-go\static\robots.txt" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\server\gae-python\static\favicon.ico" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\server\gae-python\static\robots.txt" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\test\index.html" />
+    <Content Include="Scripts\filemanager\scripts\jQuery-File-Upload\test\test.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\Gruntfile.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\jquery.mousewheel.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\jquery.mousewheel.min.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\LICENSE.txt" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\test\browserify\bundle.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\test\browserify\index.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\test\browserify\main.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\test\index.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery-mousewheel\test\scroll.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery-ui\jquery-ui.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery-ui\src\jquery-ui.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery-ui\src\jquery-ui.min.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\dist\jquery.contextMenu.css" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\dist\jquery.contextMenu.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\dist\jquery.contextMenu.min.css" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\dist\jquery.contextMenu.min.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\dist\jquery.ui.position.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\dist\jquery.ui.position.min.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\gulpfile.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\karma.conf.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\icons\add.svg" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\icons\copy.svg" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\icons\cut.svg" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\icons\delete.svg" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\icons\edit.svg" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\icons\paste.svg" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\icons\quit.svg" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\jquery.contextMenu.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\jquery.ui.position.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.contextmenu\src\jquery.ui.position.min.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.fileDownload\jquery.fileDownload.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.fileDownload\jquery.fileDownload.min.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\dist\jquery-splitter.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\dist\jquery-splitter.min.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\3csplitter.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\3psplitter.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\4psplitter.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\basic-example.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\history.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\hsplitter.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\img\hdockbar-trans.gif" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\img\hgrabber.gif" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\img\vdockbar-trans.gif" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\img\vdockleft-trans.gif" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\img\vgrabber.gif" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\img\vgrabber2-active.gif" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\img\vgrabber2-normal.gif" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\index.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\main.css" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\vbasic.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\vsplitter-1.10.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\vsplitter-docking.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\vsplitter.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\examples\vsplitter2.html" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\Gruntfile.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\lib\jquery-1.10.2.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\lib\jquery-1.9.1.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\lib\jquery-2.0.0.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\lib\jquery.js" />
+    <Content Include="Scripts\filemanager\scripts\jquery.splitter\splitter.js" />
+    <Content Include="Scripts\filemanager\scripts\knockout-3.4.0.js" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\dist\lazyload.es2015.js" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\dist\lazyload.js" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\dist\lazyload.min.js" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\favicon.ico" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\Gruntfile.js" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\src\lazyload.autoInitialize.js" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\src\lazyload.core.js" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\src\lazyload.defaults.js" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\src\lazyload.setSources.js" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\src\lazyload.utils.js" />
+    <Content Include="Scripts\filemanager\scripts\lazyload\src\lazyload.viewport.js" />
+    <Content Include="Scripts\filemanager\scripts\markdown-it\default.min.css" />
+    <Content Include="Scripts\filemanager\scripts\markdown-it\highlight.min.js" />
+    <Content Include="Scripts\filemanager\scripts\markdown-it\markdown-it-footnote.min.js" />
+    <Content Include="Scripts\filemanager\scripts\markdown-it\markdown-it-replace-link.min.js" />
+    <Content Include="Scripts\filemanager\scripts\markdown-it\markdown-it.min.js" />
+    <Content Include="Scripts\filemanager\scripts\purl\purl.js" />
+    <Content Include="Scripts\filemanager\scripts\purl\purl.min.js" />
+    <Content Include="Scripts\filemanager\scripts\templates\upload-container.html" />
+    <Content Include="Scripts\filemanager\scripts\templates\upload-item.html" />
+    <Content Include="Scripts\filemanager\scripts\toast\gulpfile.js" />
+    <Content Include="Scripts\filemanager\scripts\toast\lib\toast.js" />
+    <Content Include="Scripts\filemanager\scripts\toast\lib\toast.min.js" />
+    <Content Include="Scripts\filemanager\scripts\toast\LICENSE.txt" />
+    <Content Include="Scripts\filemanager\scripts\toast\src\toast.js" />
+    <Content Include="Scripts\filemanager\scripts\toast\tests\foo.js" />
+    <Content Include="Scripts\filemanager\scripts\toast\tests\index.html" />
+    <Content Include="Scripts\filemanager\scripts\toast\tests\tests.js" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\compatibility.js" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\example.local.css" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\images\kogmbh.png" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\images\nlnet.png" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\images\texture.png" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\images\toolbarButton-download.png" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\images\toolbarButton-fullscreen.png" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\images\toolbarButton-menuArrows.png" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\images\toolbarButton-pageDown.png" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\images\toolbarButton-pageUp.png" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\images\toolbarButton-presentation.png" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\images\toolbarButton-zoomIn.png" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\images\toolbarButton-zoomOut.png" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\index.html" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\pdf.js" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\pdf.worker.js" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\pdfjsversion.js" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\text_layer_builder.js" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\ui_utils.js" />
+    <Content Include="Scripts\filemanager\scripts\ViewerJS\webodf.js" />
+    <Content Include="Scripts\filemanager\styles\filemanager.css" />
+    <Content Include="Scripts\filemanager\styles\fm-markdown.css" />
+    <Content Include="Scripts\filemanager\styles\ie9.css" />
+    <Content Include="Scripts\filemanager\styles\reset.css" />
+    <Content Include="Scripts\filemanager\themes\default\images\spinner.gif" />
+    <Content Include="Scripts\filemanager\themes\default\styles\theme.css" />
+    <Content Include="Scripts\filemanager\themes\flat-dark\images\fmlogo.png" />
+    <Content Include="Scripts\filemanager\themes\flat-dark\images\summary.png" />
+    <Content Include="Scripts\filemanager\themes\flat-dark\styles\theme.css" />
+    <None Include="Scripts\jquery-2.2.2.intellisense.js" />
+    <Content Include="Scripts\jquery-2.2.2.js" />
+    <Content Include="Scripts\jquery-2.2.2.min.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.af-ZA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.af.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.am-ET.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.am.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-AE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-BH.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-DZ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-EG.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-IQ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-JO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-KW.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-LB.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-LY.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-MA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-OM.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-QA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-SA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-SY.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-TN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar-YE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ar.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.arn-CL.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.arn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.as-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.as.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.az-Cyrl-AZ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.az-Cyrl.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.az-Latn-AZ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.az-Latn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.az.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ba-RU.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ba.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.be-BY.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.be.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.bg-BG.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.bg.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.bn-BD.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.bn-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.bn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.bo-CN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.bo.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.br-FR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.br.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.bs-Cyrl-BA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.bs-Cyrl.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.bs-Latn-BA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.bs-Latn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.bs.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ca-ES.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ca.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.co-FR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.co.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.cs-CZ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.cs.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.cy-GB.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.cy.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.da-DK.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.da.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.de-AT.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.de-CH.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.de-DE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.de-LI.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.de-LU.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.de.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.dsb-DE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.dsb.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.dv-MV.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.dv.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.el-GR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.el.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-029.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-AU.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-BZ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-CA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-GB.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-IE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-JM.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-MY.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-NZ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-PH.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-SG.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-TT.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-US.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-ZA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.en-ZW.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-AR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-BO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-CL.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-CO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-CR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-DO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-EC.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-ES.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-GT.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-HN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-MX.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-NI.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-PA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-PE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-PR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-PY.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-SV.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-US.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-UY.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es-VE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.es.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.et-EE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.et.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.eu-ES.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.eu.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fa-IR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fa.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fi-FI.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fi.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fil-PH.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fil.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fo-FO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fo.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fr-BE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fr-CA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fr-CH.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fr-FR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fr-LU.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fr-MC.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fr.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fy-NL.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.fy.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ga-IE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ga.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.gd-GB.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.gd.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.gl-ES.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.gl.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.gsw-FR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.gsw.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.gu-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.gu.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ha-Latn-NG.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ha-Latn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ha.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.he-IL.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.he.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.hi-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.hi.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.hr-BA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.hr-HR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.hr.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.hsb-DE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.hsb.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.hu-HU.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.hu.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.hy-AM.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.hy.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.id-ID.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.id.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ig-NG.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ig.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ii-CN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ii.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.is-IS.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.is.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.it-CH.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.it-IT.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.it.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.iu-Cans-CA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.iu-Cans.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.iu-Latn-CA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.iu-Latn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.iu.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ja-JP.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ja.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ka-GE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ka.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.kk-KZ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.kk.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.kl-GL.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.kl.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.km-KH.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.km.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.kn-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.kn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ko-KR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ko.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.kok-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.kok.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ky-KG.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ky.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.lb-LU.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.lb.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.lo-LA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.lo.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.lt-LT.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.lt.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.lv-LV.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.lv.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mi-NZ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mi.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mk-MK.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mk.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ml-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ml.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mn-Cyrl.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mn-MN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mn-Mong-CN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mn-Mong.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.moh-CA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.moh.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mr-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mr.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ms-BN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ms-MY.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ms.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mt-MT.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.mt.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.nb-NO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.nb.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ne-NP.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ne.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.nl-BE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.nl-NL.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.nl.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.nn-NO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.nn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.no.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.nso-ZA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.nso.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.oc-FR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.oc.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.or-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.or.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.pa-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.pa.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.pl-PL.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.pl.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.prs-AF.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.prs.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ps-AF.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ps.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.pt-BR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.pt-PT.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.pt.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.qut-GT.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.qut.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.quz-BO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.quz-EC.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.quz-PE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.quz.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.rm-CH.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.rm.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ro-RO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ro.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ru-RU.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ru.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.rw-RW.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.rw.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sa-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sa.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sah-RU.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sah.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.se-FI.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.se-NO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.se-SE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.se.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.si-LK.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.si.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sk-SK.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sk.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sl-SI.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sl.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sma-NO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sma-SE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sma.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.smj-NO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.smj-SE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.smj.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.smn-FI.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.smn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sms-FI.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sms.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sq-AL.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sq.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sr-Cyrl-BA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sr-Cyrl-CS.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sr-Cyrl-ME.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sr-Cyrl-RS.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sr-Cyrl.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sr-Latn-BA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sr-Latn-CS.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sr-Latn-ME.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sr-Latn-RS.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sr-Latn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sr.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sv-FI.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sv-SE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sv.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sw-KE.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.sw.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.syr-SY.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.syr.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ta-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ta.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.te-IN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.te.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tg-Cyrl-TJ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tg-Cyrl.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tg.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.th-TH.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.th.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tk-TM.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tk.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tn-ZA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tr-TR.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tr.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tt-RU.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tt.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tzm-Latn-DZ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tzm-Latn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.tzm.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ug-CN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ug.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.uk-UA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.uk.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ur-PK.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.ur.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.uz-Cyrl-UZ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.uz-Cyrl.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.uz-Latn-UZ.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.uz-Latn.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.uz.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.vi-VN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.vi.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.wo-SN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.wo.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.xh-ZA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.xh.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.yo-NG.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.yo.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zh-CHS.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zh-CHT.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zh-CN.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zh-Hans.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zh-Hant.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zh-HK.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zh-MO.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zh-SG.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zh-TW.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zh.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zu-ZA.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zu.js" />
+    <Content Include="Scripts\jquery.globalize\cultures\globalize.cultures.js" />
+    <Content Include="Scripts\jquery.globalize\globalize.js" />
+    <Content Include="Scripts\jquery.ui.sortable\jquery-ui-custom.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.globalize.js" />
+    <Content Include="Scripts\jquery.validate.globalize.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\pagedown\Markdown.Converter.js" />
+    <Content Include="Scripts\pagedown\Markdown.Sanitizer.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ar.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_az.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_bg.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ca.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_cs.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_da.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_de.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_el.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_es.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_et.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_eu.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_fa.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_fi.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_fr.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_gl.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_he.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_hr.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_hu.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_id.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_is.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_it.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ja.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ka.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ko.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_lt.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_lv.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_mk.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ms.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_nb.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_nl.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_pl.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_pt-BR.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_pt-PT.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ro.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_rs.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ru.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_sk.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_sv.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_th.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_tr.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ua.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ug-CN.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_uk.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_vi.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_zh-CN.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_zh-TW.js" />
+    <Content Include="Scripts\select2.js" />
+    <Content Include="Scripts\select2.min.js" />
+    <Content Include="Scripts\summernote\summernote-pt-BR.js" />
+    <Content Include="Scripts\summernote\summernote.css" />
+    <Content Include="Scripts\summernote\summernote.js" />
+    <Content Include="Scripts\summernote\summernote.min.js" />
+    <Content Include="Scripts\ticketdesk\admin-edit-user.js" />
+    <Content Include="Scripts\ticketdesk\locale_pt-BR.js" />
+    <Content Include="Scripts\ticketdesk\locale_en-US.js" />
+    <Content Include="Scripts\ticketdesk\common.js" />
+    <Content Include="Scripts\ticketdesk\search.js" />
+    <Content Include="Scripts\ticketdesk\admin-users.js" />
+    <Content Include="Scripts\ticketdesk\application-settings.js" />
+    <Content Include="Scripts\ticketdesk\TicketFeedback\edit-ticket.js" />
+    <Content Include="Scripts\ticketdesk\User\login.js" />
+    <Content Include="src\contents\images\bg01.png" />
+    <Content Include="src\contents\images\logo.png" />
+    <Content Include="src\contents\images\logo_login.png" />
+    <Content Include="src\css\custom-dropzone.css">
+      <DependentUpon>custom-dropzone.scss</DependentUpon>
+    </Content>
+    <Content Include="src\css\custom-dropzone.min.css">
+      <DependentUpon>custom-dropzone.css</DependentUpon>
+    </Content>
+    <Content Include="src\css\login.css">
+      <DependentUpon>login.scss</DependentUpon>
+    </Content>
+    <Content Include="src\css\login.min.css">
+      <DependentUpon>login.css</DependentUpon>
+    </Content>
+    <Content Include="src\css\page.css">
+      <DependentUpon>page.scss</DependentUpon>
+    </Content>
+    <Content Include="src\css\page.min.css">
+      <DependentUpon>page.css</DependentUpon>
+    </Content>
+    <Content Include="src\Fonts\iconFont\demo-files\demo.css" />
+    <Content Include="src\Fonts\iconFont\demo-files\demo.js" />
+    <Content Include="src\Fonts\iconFont\demo.html" />
+    <Content Include="src\Fonts\iconFont\fonts\icomoon.svg" />
+    <Content Include="src\Fonts\iconFont\Read Me.txt" />
+    <Content Include="src\Fonts\iconFont\style.css" />
+    <Content Include="src\js\filevalidation.js" />
+    <Content Include="src\js\page.js" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.css" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.min.css" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.css" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.min.css" />
+    <Content Include="src\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap.js" />
+    <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap.min.js" />
+    <Content Include="src\libs\bootstrap-3.3.7\js\npm.js" />
+    <Content Include="src\libs\dropzone\basic.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\libs\dropzone\dropzone.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\libs\dropzone\dropzone.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="src\libs\jquery-validate\1.17.0\jquery.validate.min.js" />
+    <Content Include="src\libs\jquery-validation-unobtrusive\3.2.6\jquery.validate.unobtrusive.min.js" />
+    <Content Include="src\libs\jquery\1.12.4\jquery-1.12.4.min.js" />
+    <Content Include="src\libs\normalize.css" />
+    <Content Include="src\libs\Touch\touche.js" />
+    <Content Include="Views\SearchManager\Index.cshtml" />
+    <Content Include="Views\DataManagement\Demo.cshtml" />
+    <Compile Include="App_Start\Startup.Database.cs" />
+    <Content Include="Properties\webjobs-list.json" />
+    <Content Include="Scripts\jquery.clickable-0.1.9.min.js.map">
+      <DependentUpon>jquery.clickable-0.1.9.min.js</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\jquery.clickable-0.1.9.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\jquery.clickable-0.1.9.min.js">
+      <DependentUpon>jquery.clickable-0.1.9.js</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\pagedown\Markdown.Editor.js" />
+    <Content Include="Scripts\ticketdesk\ticket-details.js" />
+    <Content Include="Scripts\ticketdesk\ticket-tags.js" />
+    <Content Include="Scripts\ticketdesk\ticketcenter.js" />
+    <Content Include="Scripts\ticketdesk\ticketcenter.min.js">
+      <DependentUpon>ticketcenter.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\ticketdesk\edit-ticket.js" />
+    <Content Include="Scripts\ticketdesk\ticket-file-uploader.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_UserMenu.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\TicketCenter\Index.cshtml" />
+    <Content Include="Views\TicketCenter\_ListMenu.cshtml" />
+    <Content Include="Views\TicketCenter\_FilterBar.cshtml" />
+    <Content Include="Views\TicketCenter\_TicketList.cshtml" />
+    <Content Include="Scripts\ticketdesk\ticketcenter.min.js.map">
+      <DependentUpon>ticketcenter.min.js</DependentUpon>
+    </Content>
+    <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Shared\_QuickSearch.cshtml" />
+    <Content Include="Views\Ticket\Index.cshtml" />
+    <Content Include="Views\Ticket\New.cshtml" />
+    <Content Include="Views\TicketActivity\_AddComment.cshtml" />
+    <Content Include="Views\TicketActivity\_ActivityButtons.cshtml" />
+    <Content Include="Views\TicketActivity\_ModifyAttachments.cshtml" />
+    <Content Include="Views\TicketActivity\_ReOpen.cshtml" />
+    <Content Include="Views\TicketActivity\_EditTicketInfo.cshtml" />
+    <Content Include="Views\TicketActivity\_SupplyMoreInfo.cshtml" />
+    <Content Include="Views\TicketActivity\_RequestMoreInfo.cshtml" />
+    <Content Include="Views\TicketActivity\_CancelMoreInfo.cshtml" />
+    <Content Include="Views\TicketActivity\_GiveUp.cshtml" />
+    <Content Include="Views\TicketActivity\_TakeOver.cshtml" />
+    <Content Include="Views\TicketActivity\_Assign.cshtml" />
+    <Content Include="Views\TicketActivity\_ReAssign.cshtml" />
+    <Content Include="Views\TicketActivity\_Pass.cshtml" />
+    <Content Include="Views\TicketActivity\_ForceClose.cshtml" />
+    <Content Include="Views\TicketActivity\_Resolve.cshtml" />
+    <Content Include="Views\TicketActivity\_Close.cshtml" />
+    <Content Include="Views\TicketActivity\_ActivityComment.cshtml" />
+    <Content Include="Views\Ticket\_TicketEvents.cshtml" />
+    <Content Include="Views\Ticket\_TicketDetails.cshtml" />
+    <Content Include="Views\TicketActivity\_ActivityForm.cshtml" />
+    <Content Include="Views\TicketActivity\_ChangeAssignment.cshtml" />
+    <Content Include="Views\DataManagement\Index.cshtml" />
+    <Content Include="Views\FirstRunSetup\Index.cshtml" />
+    <Content Include="Views\FirstRunSetup\_DatabaseInfo.cshtml" />
+    <Content Include="Views\FirstRunSetup\_NewDatabase.cshtml" />
+    <Content Include="Views\FirstRunSetup\_ViewStart.cshtml" />
+    <Content Include="Views\FirstRunSetup\_LegacyDatabase.cshtml" />
+    <Content Include="Views\FirstRunSetup\_AzureInfo.cshtml" />
+    <Content Include="Views\FirstRunSetup\_LegacySecurity.cshtml" />
+    <Content Include="Views\FirstRunSetup\_SetupCompleteInfo.cshtml" />
+    <Content Include="Views\ApplicationSettings\Index.cshtml" />
+    <Content Include="Views\PushNotificationSettings\Index.cshtml" />
+    <Content Include="Views\PushNotificationSettings\ListDeliveryProviderSettings.cshtml" />
+    <Content Include="Views\PushNotificationSettings\ConfigureDeliveryProvider.cshtml" />
+    <Content Include="Views\Emails\Ticket.Html.cshtml" />
+    <Content Include="Views\Emails\Web.config" />
+    <Content Include="Views\Emails\Ticket.cshtml" />
+    <Content Include="Views\Emails\Ticket.Text.cshtml" />
+    <Content Include="Views\Ticket\_TicketFiles.cshtml" />
+    <Content Include="Views\User\SignIn.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\EditProfile.cshtml" />
+    <Content Include="Views\UserAdministration\Index.cshtml" />
+    <Content Include="Views\UserAdministration\Edit.cshtml" />
+    <Content Include="Views\UserAdministration\_UserList.cshtml" />
+    <Content Include="Views\ProjectSettings\Index.cshtml" />
+    <Content Include="Views\ProjectSettings\Edit.cshtml" />
+    <Content Include="Views\ProjectSettings\New.cshtml" />
+    <Content Include="Views\Shared\_ProjectMenu.cshtml" />
+    <Content Include="Views\FirstRunSetup\CheckUpgradeProgress.cshtml" />
+    <Content Include="Views\Shared\_LanguageOptions.cshtml" />
+    <Content Include="Scripts\jQueryValidate-locales\jquery.validate_locale_pt-BR.js" />
+    <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
+    <Content Include="Views\Home\AccessDenied.cshtml" />
+    <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <Content Include="Views\Home\InternalError.cshtml" />
+    <Content Include="Views\Home\NotFound.cshtml" />
+    <Content Include="Views\Shared\_Navbar.cshtml" />
+    <Content Include="Views\FileManager\Index.cshtml" />
+    <Content Include="Views\CustomFieldSettings\Index.cshtml" />
+    <Content Include="Views\CustomFieldSettings\Add.cshtml" />
+    <Content Include="Views\Ticket\_TicketDescription.cshtml" />
+    <Content Include="Views\Ticket\_TicketAttachedFiles.cshtml" />
+    <Content Include="Views\Ticket\NewFacilityTicket.cshtml" />
+    <Content Include="Views\Ticket\_TicketFeedbackDetails.cshtml" />
+    <Content Include="Views\Ticket\_FeedbackCustomField.cshtml" />
+    <Content Include="Views\Ticket\_FacilityTicketDetails.cshtml" />
+    <Content Include="Scripts\jquery-2.2.2.min.map" />
+    <Content Include="Scripts\jquery.validate.globalize.min.js.map" />
+    <Content Include="Views\Emails\_ViewStart.cshtml" />
+    <Content Include="TicketDesk.Web.Client.ruleset" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.css.map" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.min.css.map" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.css.map" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.min.css.map" />
+    <Content Include="src\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="src\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="src\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="src\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="src\css\page.scss" />
+    <Content Include="src\Fonts\iconFont\fonts\icomoon.eot" />
+    <Content Include="src\Fonts\iconFont\fonts\icomoon.ttf" />
+    <Content Include="src\Fonts\iconFont\fonts\icomoon.woff" />
+    <Content Include="src\Fonts\iconFont\selection.json" />
+    <Content Include="Views\References\Index.cshtml" />
+    <Content Include="Views\TicketCenter\SingleTicket.cshtml" />
+    <Content Include="Views\References\BetOfTheDay.cshtml" />
+    <Content Include="Views\References\FeaturedEvent.cshtml" />
+    <Content Include="Views\References\Newsletter.cshtml" />
+    <Content Include="Views\References\TradingLimit.cshtml" />
+    <Content Include="Views\References\TvSchedules.cshtml" />
+    <Content Include="Views\Ticket\NewFeedbackTicket.cshtml" />
+    <Content Include="src\css\login.scss" />
+    <Content Include="Views\Ticket\_FeedbackTicketDetails.cshtml" />
+    <Content Include="Views\IdUploader\Index.cshtml" />
+    <Content Include="Views\Shared\_SubmenuNavigation.cshtml" />
+    <Content Include="Views\Shared\_DropzoneScripts.cshtml" />
+    <Content Include="src\css\custom-dropzone.scss" />
+<<<<<<< HEAD
+    <Content Include="Views\Home\_MyOpeningTicket.cshtml" />
+    <Content Include="Views\Home\_Announcement.cshtml" />
+=======
+    <Content Include="src\css\_variables.scss" />
+>>>>>>> #000 - customize style for dropzone
+    <None Include="Web.azure.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\libs\dropzone\debug\" />
+    <Folder Include="uploads\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\S22.Mail\S22.Mail.csproj">
+      <Project>{ca72a1aa-6f1a-4d5f-b98b-fd73f5407563}</Project>
+      <Name>S22.Mail</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Core\TicketDesk.Core.csproj">
+      <Project>{f2dc8fb5-9da1-4525-9b12-9bb855e7c635}</Project>
+      <Name>TicketDesk.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Criteria\TicketDesk.Criteria.csproj">
+      <Project>{e128a22b-91a4-4f5c-b306-4ab4129c9d1d}</Project>
+      <Name>TicketDesk.Criteria</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Domain.Legacy\TicketDesk.Domain.Legacy.csproj">
+      <Project>{a85d9882-1db3-40ec-a23e-6b4562f48bcf}</Project>
+      <Name>TicketDesk.Domain.Legacy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Domain\TicketDesk.Domain.csproj">
+      <Project>{dbd5279b-9f1c-4915-86a9-6a8f1cf0622d}</Project>
+      <Name>TicketDesk.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.IO\TicketDesk.IO.csproj">
+      <Project>{d9477c13-68c4-43e0-a30b-f06f444c5358}</Project>
+      <Name>TicketDesk.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Localization\TicketDesk.Localization.csproj">
+      <Project>{be8715f9-e858-473e-a2b6-561c9edca416}</Project>
+      <Name>TicketDesk.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.PushNotifications\TicketDesk.PushNotifications.csproj">
+      <Project>{6e3b1af8-762d-4b69-84c3-c79e74aa9c82}</Project>
+      <Name>TicketDesk.PushNotifications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Search.Azure\TicketDesk.Search.Azure.csproj">
+      <Project>{be284cb5-bf8b-4b51-a865-f2ab7bea2d02}</Project>
+      <Name>TicketDesk.Search.Azure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Search.Common\TicketDesk.Search.Common.csproj">
+      <Project>{f8c97321-f0cc-4af9-86e6-95e0e4840430}</Project>
+      <Name>TicketDesk.Search.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Search.Lucene\TicketDesk.Search.Lucene.csproj">
+      <Project>{54390f7f-a440-40f7-8b1a-28ab599a5213}</Project>
+      <Name>TicketDesk.Search.Lucene</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Service\TicketDesk.Service.csproj">
+      <Project>{00764825-d0eb-4060-a5b3-341cd845605a}</Project>
+      <Name>TicketDesk.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.Web.Identity\TicketDesk.Web.Identity.csproj">
+      <Project>{bd3617c2-a91e-40f3-a441-b085d2491399}</Project>
+      <Name>TicketDesk.Web.Identity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\filemanager\scripts\alertify.js\alertify-js.d.ts" />
+    <TypeScriptCompile Include="Scripts\filemanager\scripts\lazyload\typings\lazyload.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <!--<Import Project="..\TypeScript\MSBuild\Microsoft.TypeScript.targets" />-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52771</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44373/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.12\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.12\tools\webjobs.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <!-- This copies the application insights files into the bin folder before a build, which prevents the build from failing in Azure CI deployments  -->
+  <!-- This almost worked, but turns out this is a bug in kudu that we can't easily solve with custom build configurations
+        Reference kudu issue here: https://github.com/projectkudu/kudu/issues/1485
+        Leaving this here for future reference (some of these techniques are handy, even they don't help here)
+  -->
+  <!--
+  <Target Name="BeforeBuild">
+    <Message Text="== Copy AppInsightsAzureDeployReferences Files ==" Importance="normal" />
+    <Copy SourceFiles="%(None.Identity)" DestinationFiles="$(OutputPath)%(Filename)%(Extension)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Condition="'%(None.Link)' != ''" />
+  </Target>
+  -->
+  <!-- This includes the application insights files in the final copy from the build folder into the running website folder during Azure CI deployments  -->
+  <!--
+  <Target Name="AppInsightsAzureDeployReferences">
+    <ItemGroup>
+      <FilesForPackagingFromProject Include="%(None.Identity)" Condition="'%(None.Link)' != ''">
+        <DestinationRelativePath>$(OutputPath)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+  </Target>
+  <PropertyGroup>
+    <CopyAllFilesToSingleFolderForPackageDependsOn>
+      AppInsightsAzureDeployReferences;
+      $(CopyAllFilesToSingleFolderForPackageDependsOn);
+    </CopyAllFilesToSingleFolderForPackageDependsOn>
+    <CopyAllFilesToSingleFolderForMsdeployDependsOn>
+      AppInsightsAzureDeployReferences;
+      $(CopyAllFilesToSingleFolderForMsdeployDependsOn);
+    </CopyAllFilesToSingleFolderForMsdeployDependsOn>
+  </PropertyGroup>
+-->
+</Project>
