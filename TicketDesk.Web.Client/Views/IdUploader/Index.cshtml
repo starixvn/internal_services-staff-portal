@@ -27,6 +27,11 @@
                     });
                 });
         });
+
+        $('#notification-modal').on('hidden.bs.modal',
+            function() {
+                location.reload();
+            });
     </script>
 }
 

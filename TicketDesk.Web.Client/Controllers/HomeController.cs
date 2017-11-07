@@ -1,16 +1,19 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Domain;
+    using Domain.Infrastructure;
+    using Domain.Model;
+    using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Model;
+    using Fanex.NAP.Core.Web.Attribute;
     using Localization;
     using Models;
+    using Models.Home;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    using Domain;
-    using Domain.Model;
-    using Models.Home;
 
     [RoutePrefix("")]
     [Route("{action=index}")]
@@ -41,12 +44,12 @@
 
         [Route("")]
         [Route("index")]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             HomeViewModel homeViewModel = new HomeViewModel { TicketGroups = new List<TicketGroup>() };
 
             // Get current user tickets
-            //homeViewModel.Tickets 
             var tickets = Context.Tickets
                 .Where(x => (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo))
                 .GroupBy(x => x.TicketType).ToList();

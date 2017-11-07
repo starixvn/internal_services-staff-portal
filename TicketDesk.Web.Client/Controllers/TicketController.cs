@@ -17,6 +17,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Models.Extensions;
 
     [RoutePrefix("ticket")]
     [Route("{action=index}")]
@@ -87,9 +88,21 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public RedirectToRouteResult Index()
+        public ActionResult Index()
         {
-            return RedirectToAction("NewFacilityTicket", "Ticket");
+            string routeValue = RouteData.Values["controller"].ToString().ToLower();
+
+            // Get the correct parent menu id
+            MenuItem parentMenu = CurrentSession.MenuItemList.First(x => x.Parent == null && x.Url.Contains(routeValue));
+            var subMenuItems = CurrentSession.MenuItemList.Where(x => x.Parent != null && x.Parent.Id == parentMenu.Id).ToList();
+
+            List<MenuItem> items = new List<MenuItem>();
+            foreach (Fanex.NAP.Core.Model.MenuItem menuItem in subMenuItems)
+            {
+                items.Add(menuItem);
+            }
+
+            return View("_SubmenuNavigation", items);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
