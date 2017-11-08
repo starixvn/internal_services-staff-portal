@@ -64,6 +64,19 @@
             AssignRemoveButton();
         });
     </script>
+    
+    <script>
+        $(document).ready(function () {
+            // Default title for a ticket
+            $(".ticket-title").val("[REPAIRS AND SERVICES REQUISITION]");
+
+            $(".ticket-form").on("change",
+                function () {
+                    var values = $(this).serialize();
+                    $(".ticket-title").val("[REPAIRS AND SERVICES REQUISITION] - " + values["RequestType.Value"]);
+                });
+        });
+    </script>
 }
 
 @using (Html.BeginForm("NewFacilityTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form", enctype = "multipart/form-data" }))
@@ -78,7 +91,7 @@
         <div class="item-list item">
             @Html.LabelFor(x => x.Ticket.Title, new { @class = "key fullwidth border" })
             <div class="fullwidth">
-                @Html.TextBoxFor(x => x.Ticket.Title)
+                @Html.TextBoxFor(x => x.Ticket.Title, new {@class = "ticket-title"})
             </div>
         </div>
 

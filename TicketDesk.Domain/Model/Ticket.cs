@@ -22,7 +22,7 @@ namespace TicketDesk.Domain.Model
             TicketTags = new HashSet<TicketTag>();
             // ReSharper restore DoNotCallOverridableMethodsInConstructor
             var none = "empty";
-            Title = none;
+            ////Title = none;
             TicketType = none;
             Category = none;
             Details = none;

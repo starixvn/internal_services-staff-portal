@@ -261,7 +261,7 @@
 
             viewModel.TempId = Guid.NewGuid();
             viewModel.FeedbackBy.CustomField = availableCustomField.First(x => x.Name == "Feedback by");
-            viewModel.Subject.CustomField = availableCustomField.First(x => x.Name == "Subject");
+            ////viewModel.Subject.CustomField = availableCustomField.First(x => x.Name == "Subject");
             viewModel.CustomerName.CustomField = availableCustomField.First(x => x.Name == "Customer Name");
             viewModel.Feedback.CustomField = availableCustomField.First(x => x.Name == "Feedback");
 
@@ -298,11 +298,11 @@
                     viewModel.FeedbackBy.Value,
                     viewModel.Ticket.TicketId);
 
-                AddCustomFieldValue(
-                    null,
-                    viewModel.Subject.CustomFieldId,
-                    viewModel.Subject.Value,
-                    viewModel.Ticket.TicketId);
+                ////AddCustomFieldValue(
+                ////    null,
+                ////    viewModel.Subject.CustomFieldId,
+                ////    viewModel.Subject.Value,
+                ////    viewModel.Ticket.TicketId);
 
                 AddCustomFieldValue(
                     null,
@@ -386,7 +386,7 @@
 
             var viewModel = new NewFeedbackTicketViewModel();
             viewModel.FeedbackBy = customFieldValues.First(x => x.CustomField.Name == "Feedback by");
-            viewModel.Subject = customFieldValues.First(x => x.CustomField.Name == "Subject");
+            ////viewModel.Subject = customFieldValues.First(x => x.CustomField.Name == "Subject");
             viewModel.CustomerName = customFieldValues.First(x => x.CustomField.Name == "Customer Name");
             viewModel.Feedback = customFieldValues.First(x => x.CustomField.Name == "Feedback");
             

@@ -11,7 +11,7 @@
 
         public CustomFieldValue FeedbackBy { get; set; }
 
-        public CustomFieldValue Subject { get; set; }
+        ////public CustomFieldValue Subject { get; set; }
 
         public CustomFieldValue CustomerName { get; set; }
 
@@ -35,7 +35,7 @@
         {
             Ticket = new Ticket();
             FeedbackBy = new CustomFieldValue();
-            Subject = new CustomFieldValue();
+            ////Subject = new CustomFieldValue();
             CustomerName = new CustomFieldValue();
             Feedback = new CustomFieldValue();
         }
