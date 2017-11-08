@@ -45,18 +45,50 @@
         [Route("")]
         [Route("index")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int itemPerPage = 20)
         {
-            HomeViewModel homeViewModel = new HomeViewModel { TicketGroups = new List<TicketGroup>() };
+            HomeViewModel homeViewModel = new HomeViewModel
+            {
+                TicketGroups = new List<TicketGroup>(),
+                CurrentPage = page,
+                ItemPerPage = itemPerPage
+            };
 
-            // Get current user tickets
-            var tickets = Context.Tickets
-                .Where(x => (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo))
-                .GroupBy(x => x.CategoryId).ToList();
+            foreach (SelectListItem item in homeViewModel.ItemPerPageList)
+            {
+                if (itemPerPage.ToString() == item.Value)
+                {
+                    item.Selected = true;
+                }
+            }
 
             // Get ticket categories
             var categories = Context.TicketCategories.ToList();
 
+            var databasePage = page < 1 ? 0 : page - 1;
+
+            int skippedItem = databasePage * itemPerPage;
+
+            if (skippedItem < 0)
+            {
+                skippedItem = 0;
+            }
+
+            var count = Context.Tickets.Count(x => x.CreatedBy == CurrentSession.UserId.ToString());
+
+            homeViewModel.TotalPage = count % itemPerPage > 0
+                ? (count / itemPerPage) + 1
+                : count / itemPerPage;
+
+            // Get current user tickets
+            var tickets = Context.Tickets
+                .Where(x => (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo) &&
+                            x.CreatedBy == CurrentSession.UserId.ToString())
+                .OrderByDescending(x => x.TicketId)
+                .Skip(skippedItem)
+                .Take(itemPerPage)
+                .GroupBy(x => x.CategoryId).ToList();
+            
             foreach (IGrouping<int, Ticket> grouping in tickets)
             {
                 var categoryName = categories
