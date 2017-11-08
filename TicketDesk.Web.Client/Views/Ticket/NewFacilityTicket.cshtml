@@ -40,8 +40,8 @@
 
                 $(id).append(newHtml);
 
-                $(".btn-delete").show();
-                $(".btn-delete:first").hide();
+                $(".btn-delete-item").show();
+                $(".btn-delete-item:first").hide();
 
                 var last = $(id).children().last();
                 if ($(last).hasClass("even")) {
@@ -53,8 +53,8 @@
         }
 
         function AssignRemoveButton() {
-            $(".btn-delete:first").hide();
-            $("body").on("click", ".btn-delete", function () {
+            $(".btn-delete-item:first").hide();
+            $("body").on("click", ".btn-delete-item", function () {
                 $(this).parent().parent().remove();
             });
         }
@@ -132,7 +132,7 @@
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border" })
                         @Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "border" })
                         <div class="border span-2">
-                            <button class="btn btn-delete"><span class="icon-delete"></span>Delete Item</button>
+                            <button class="btn btn-delete btn-delete-item"><span class="icon-delete"></span>Delete Item</button>
                         </div>
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth border" })
@@ -149,7 +149,7 @@
 
                 <button type="button" id="add-file-btn">Add files</button>
                 <div class="number-chosenfile hidden"><span class="number"></span>&nbsp;<span class="text"></span></div>
-                <button type="button" class="btn btn-delete btn-delete-all"><span class="icon-delete"></span>Delete All</button>
+                <button type="button" class="btn btn-delete btn-delete-all-file"><span class="icon-delete"></span>Delete All</button>
                 <p class="dropzone-error-text"></p>
 
                 <div class="dropzone-previews">

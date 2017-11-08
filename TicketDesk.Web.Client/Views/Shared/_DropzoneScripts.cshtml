@@ -66,7 +66,7 @@
         var numberOfSelectedFile = dropzone.files.length;
 
         if (numberOfSelectedFile > 1) {
-            $('.number-chosenfile').removeClass('hidden');
+            $('.number-chosenfile').show();
             $('.number-chosenfile .text').text('file were selected');
             $('.number-chosenfile .number').text(numberOfSelectedFile);
             $('.number-chosenfile .text').text('files were selected');
@@ -139,4 +139,14 @@
                     });
             }
         });
+
+    $(document).ready(function() {
+        $(".btn-delete-all-file").on("click",
+            function() {
+                var files = ticketDeskDropzone.files;
+                for (var i = 0; i < files.length; i++) {
+                    ticketDeskDropzone.removeFile(files[i]);
+                }
+            });
+    });
 </script>
