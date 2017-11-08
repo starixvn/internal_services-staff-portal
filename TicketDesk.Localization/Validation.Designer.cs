@@ -133,7 +133,7 @@ namespace TicketDesk.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid Username or Password. Please provide a registered account. Otherwise, contact Admin for asssitance..
+        ///   Looks up a localized string similar to Invalid Username or Password..
         /// </summary>
         public static string InvalidUsernameOrPassword {
             get {

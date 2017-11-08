@@ -142,6 +142,6 @@
     <value>ERROR: Invalid username.</value>
   </data>
   <data name="InvalidUsernameOrPassword" xml:space="preserve">
-    <value>Invalid Username or Password. Please provide a registered account. Otherwise, contact Admin for asssitance.</value>
+    <value>Invalid Username or Password.</value>
   </data>
 </root>
