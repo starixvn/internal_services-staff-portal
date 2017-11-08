@@ -47,8 +47,32 @@
         }
     }
 
-    function CheckDuplicateFile(file) {
-        
+    function CheckDuplicateFile(dropzone, file) {
+        if (dropzone.files.length) {
+            var _i, _len;
+            for (_i = 0, _len = dropzone.files.length; _i < _len - 1; _i++) // -1 to exclude current file
+            {
+                if (dropzone.files[_i].name === file.name &&
+                    dropzone.files[_i].size === file.size &&
+                    dropzone.files[_i].lastModifiedDate.toString() === file.lastModifiedDate.toString()) {
+                    dropzone.removeFile(file);
+                    window.alert("Duplicated file: " + file.name);
+                }
+            }
+        }
+    }
+
+    function UpdateNumberOfSelectedFile(dropzone) {
+        var numberOfSelectedFile = dropzone.files.length;
+
+        if (numberOfSelectedFile > 1) {
+            $('.number-chosenfile').removeClass('hidden');
+            $('.number-chosenfile .text').text('file were selected');
+            $('.number-chosenfile .number').text(numberOfSelectedFile);
+            $('.number-chosenfile .text').text('files were selected');
+        } else {
+            $('.number-chosenfile').hide();
+        }
     }
 
     Dropzone.autoDiscover = false;
@@ -83,32 +107,26 @@
                                 ResumeQube(this);
                             }
                         }
+
+                        UpdateNumberOfSelectedFile(this);
                     });
                 this.on("addedfile",
                     function(file) {
                         $(".dropzone-previews").addClass("dropzone");
-                        var fileNumber = this.files.length;
+
                         CheckTotalBytes();
-                        $('.number-chosenfile').removeClass('hidden');
-                        $('.number-chosenfile .text').text('file were selected');
-                        $('.number-chosenfile .number').text(fileNumber);
+                        CheckDuplicateFile(this, file);
+                        UpdateNumberOfSelectedFile(this);
 
-                        if (fileNumber > 1) {
-                            $('.number-chosenfile .text').text('files were selected');
-                        }
+                        ////var fileNumber = this.files.length;
+                        
+                        ////$('.number-chosenfile').removeClass('hidden');
+                        ////$('.number-chosenfile .text').text('file were selected');
+                        ////$('.number-chosenfile .number').text(fileNumber);
 
-                        if (this.files.length) {
-                            var _i, _len;
-                            for (_i = 0, _len = this.files.length; _i < _len - 1; _i++) // -1 to exclude current file
-                            {
-                                if (this.files[_i].name === file.name &&
-                                    this.files[_i].size === file.size &&
-                                    this.files[_i].lastModifiedDate.toString() === file.lastModifiedDate.toString()) {
-                                    this.removeFile(file);
-                                    window.alert("Duplicated file: " + file.name);
-                                }
-                            }
-                        }
+                        ////if (fileNumber > 1) {
+                        ////    $('.number-chosenfile .text').text('files were selected');
+                        ////}
                     });
                 this.on("reset",
                     function() {
