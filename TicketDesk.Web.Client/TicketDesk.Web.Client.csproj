@@ -434,6 +434,7 @@
     <Compile Include="Models\CustomFieldSettingViewModel.cs" />
     <Compile Include="Models\CustomField\AddCustomFieldViewModel.cs" />
     <Compile Include="Models\Extensions\ClientSettingExtensions.cs" />
+    <Compile Include="Models\Extensions\MenuIconMapper.cs" />
     <Compile Include="Models\Extensions\MenuItem.cs" />
     <Compile Include="Models\Extensions\ProjectExtensions.cs" />
     <Compile Include="Models\Extensions\SelectListExtensions.cs" />

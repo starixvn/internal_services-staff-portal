@@ -49,7 +49,7 @@
             var subMenuItems = CurrentSession.MenuItemList.Where(x => x.Parent != null && x.Parent.Id == parentMenu.Id)
                 .ToList();
 
-            return subMenuItems.Select(menuItem => (MenuItem)menuItem).ToList();
+            return subMenuItems.Select(menuItem => (MenuItem)menuItem).OrderBy(x => x.DisplayOrder).ToList();
         }
     }
 }

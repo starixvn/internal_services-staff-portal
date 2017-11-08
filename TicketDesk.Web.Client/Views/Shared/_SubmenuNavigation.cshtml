@@ -6,7 +6,7 @@
     @foreach (var menu in Model)
     {
         var activeActionClass = Html.IsExactMatch(menu.Url);
-        <li><a class='@activeActionClass' link='@menu.Url'><i class='@menu.Description hovicon'></i><span class='text'>@menu.Name</span></a></li>
+        <li><a class='@activeActionClass' link='@menu.Url'><i class='@menu.IconClass hovicon'></i><span class='text'>@menu.Name</span></a></li>
     }
 </ul>
 

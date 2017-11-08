@@ -17,7 +17,7 @@
 
             var menuClass = Html.IsActiveRoute(menuLink);
 
-            <li class="@menuClass"><a href="@menuLink" class="menu-item"><i class="@menu.Description"></i><span class="text">@menu.Name</span></a></li>
+            <li class="@menuClass"><a href="@menuLink" class="menu-item"><i class="@menu.IconClass"></i><span class="text">@menu.Name</span></a></li>
         }
     
         @Html.Partial("_UserMenu", Model)
@@ -41,7 +41,7 @@
                 @foreach (var childItem in menu.Children)
                 {
                     var activeActionClass = Html.IsExactMatch(childItem.Url);
-                    <li><a href='@childItem.Url' class='@activeActionClass'><i class='@childItem.Description'></i><span class='text'>@childItem.Name</span></a></li>
+                    <li><a href='@childItem.Url' class='@activeActionClass'><i class='@childItem.IconClass'></i><span class='text'>@childItem.Name</span></a></li>
                 }
             </ul>
         }

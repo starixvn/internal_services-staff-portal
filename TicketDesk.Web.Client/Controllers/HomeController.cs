@@ -97,7 +97,8 @@
             // Get children menu item
             foreach (var menuItem in result)
             {
-                menuItem.Children = menus.Where(x => x.Parent != null && x.Parent.Id == menuItem.Id);
+                menuItem.Children = menus.Where(x => x.Parent != null && x.Parent.Id == menuItem.Id)
+                    .Select(x => (Models.Extensions.MenuItem)x);
             }
 
             return result.OrderBy(x => x.DisplayOrder).ToList();

@@ -36,7 +36,9 @@
 
         public int Policy { get; set; }
 
-        public IEnumerable<IMenuItem> Children { get; set; }
+        public IEnumerable<MenuItem> Children { get; set; }
+
+        public string IconClass { get; set; }
 
         public static implicit operator MenuItem(Fanex.NAP.Core.Model.MenuItem napMenuItem)
         {
@@ -56,8 +58,10 @@
                 ModifiedDate = napMenuItem.ModifiedDate,
                 Modifier = napMenuItem.Modifier,
                 Policy = napMenuItem.Policy,
-                Site = napMenuItem.Site
+                Site = napMenuItem.Site,
+                IconClass = MenuIconMapper.MenuIconDictionary[napMenuItem.Url]
             };
+
 
             return newMenuItem;
         }
