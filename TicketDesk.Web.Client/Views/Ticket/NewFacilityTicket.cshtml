@@ -87,15 +87,14 @@
 
     <div class="form-content facility-form">
         <div class="title">REPAIRS AND SERVICES REQUISITION FORM</div>
-        
-        <div class="item-list item">
-            @Html.LabelFor(x => x.Ticket.Title, new { @class = "key fullwidth border" })
-            <div class="fullwidth">
+        <div class="item-list">
+            @Html.LabelFor(x => x.Ticket.Title, new { @class = "key border" })
+            <div class="value span-3 border">
                 @Html.TextBoxFor(x => x.Ticket.Title, new {@class = "ticket-title"})
             </div>
         </div>
 
-        @Html.CustomFieldLabelFor(x => x.RequestType, new { @class = "key" })
+        @Html.CustomFieldLabelFor(x => x.RequestType, new { @class = "key border" })
         <div class="value span-3 border">
             <div class="radio-group">
                 @Html.HiddenFor(x => x.RequestType.CustomFieldId, new { Value = Model.RequestType.CustomField.Id })
@@ -150,6 +149,7 @@
 
                 <button type="button" id="add-file-btn">Add files</button>
                 <div class="number-chosenfile hidden"><span class="number"></span>&nbsp;<span class="text"></span></div>
+                <button type="button" class="btn btn-delete btn-delete-all"><span class="icon-delete"></span>Delete All</button>
                 <p class="dropzone-error-text"></p>
 
                 <div class="dropzone-previews">

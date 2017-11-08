@@ -485,7 +485,7 @@ body {
             font-size: 18px;
             position: relative;
             top: 2px;
-        }
+        }        
     }
     &.btn-primary {
         background: $title-form-bg;
@@ -502,6 +502,15 @@ body {
         margin: 16px 0 32px;
         padding: 12px;
         font-size: 16px;
+    }
+    &.btn-delete-all {
+        background: #ea1118;
+        color: #fff;
+        float: right;
+        margin-top: 8px;
+        .icon-delete {
+            color: #fff;
+        }
     }
 }
 

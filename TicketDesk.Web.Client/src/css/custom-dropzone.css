@@ -30,15 +30,19 @@ button.dz-clickable {
   border-top: 1px solid #d3d7db;
   overflow: auto;
   max-height: 120px;
-  padding: 12px; }
+  padding: 12px;
+  min-height: unset; }
   .dropzone .dz-preview {
     display: flex;
+    flex-wrap: wrap;
     min-height: unset;
     margin: 12px 0 0; }
+    .dropzone .dz-preview:after {
+      content: '';
+      width: 100%; }
     .dropzone .dz-preview .dz-image, .dropzone .dz-preview .dz-details .dz-size {
       display: none; }
     .dropzone .dz-preview .dz-details {
-      order: 1;
       position: initial;
       padding: 0;
       display: inline-block;
@@ -71,8 +75,7 @@ button.dz-clickable {
       font-size: 0;
       /*position: absolute;
             top: 4px;
-            left: 110px;*/
-      order: 2; }
+            left: 110px;*/ }
       .dropzone .dz-preview .dz-remove:before {
         content: "\e90d";
         font-size: 24px;
@@ -85,7 +88,7 @@ button.dz-clickable {
       .dropzone .dz-preview .dz-remove:hover {
         text-decoration: none; }
     .dropzone .dz-preview .dz-error-message {
-      order: 3;
+      order: 1;
       position: relative;
       top: unset;
       left: unset;
@@ -94,7 +97,8 @@ button.dz-clickable {
       line-height: normal;
       padding: 6px 12px;
       border-radius: 28px;
-      max-width: max-content; }
+      max-width: max-content;
+      margin-top: 6px; }
 
 .dropzone .dz-preview .dz-success-mark, .dropzone .dz-preview .dz-error-mark {
   display: none; }

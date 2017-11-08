@@ -33,15 +33,20 @@ button.dz-clickable {
     overflow: auto;
     max-height: 120px;
     padding: 12px;
+    min-height: unset;
     .dz-preview {
         display: flex;
+        flex-wrap: wrap;
         min-height: unset;
         margin: 12px 0 0;
+        &:after {
+            content: '';
+            width: 100%;
+        }
         .dz-image, .dz-details .dz-size {
             display: none;
         }
         .dz-details {
-            order: 1;
             position:initial;
             padding: 0;
             display: inline-block;
@@ -80,7 +85,6 @@ button.dz-clickable {
             /*position: absolute;
             top: 4px;
             left: 110px;*/
-            order: 2;
             &:before {
                 content: "\e90d";
                 font-size: 24px;
@@ -98,7 +102,7 @@ button.dz-clickable {
         }
         
         .dz-error-message {
-            order: 3;
+            order: 1;
             position: relative;
             top: unset;
             left: unset;
@@ -108,6 +112,7 @@ button.dz-clickable {
             padding: 6px 12px;
             border-radius: 28px;
             max-width: max-content;
+            margin-top: 6px;
         }
         
     }

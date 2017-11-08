@@ -380,6 +380,13 @@ body {
     margin: 16px 0 32px;
     padding: 12px;
     font-size: 16px; }
+  .btn.btn-delete-all {
+    background: #ea1118;
+    color: #fff;
+    float: right;
+    margin-top: 8px; }
+    .btn.btn-delete-all .icon-delete {
+      color: #fff; }
 
 .attach-file .key, .attach-file .value.span-3 {
   height: auto; }
