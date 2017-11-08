@@ -47,6 +47,10 @@
         }
     }
 
+    function CheckDuplicateFile(file) {
+        
+    }
+
     Dropzone.autoDiscover = false;
 
     var isRequeueing = false;
@@ -68,13 +72,16 @@
                         var deleteUrl = '@Url.Action("Delete", "File", new {id = Model.TempId})' +
                             "&fileName=" +
                             file.name;
-                        $.ajax({
-                            url: deleteUrl,
-                            method: "POST"
-                        });
-                        SetErrorText("");
-                        if (isRequeueing === false) {
-                            ResumeQube(this);
+
+                        if (file.status === "success") {
+                            $.ajax({
+                                url: deleteUrl,
+                                method: "POST"
+                            });
+                            SetErrorText("");
+                            if (isRequeueing === false) {
+                                ResumeQube(this);
+                            }
                         }
                     });
                 this.on("addedfile",
@@ -85,10 +92,23 @@
                         $('.number-chosenfile').removeClass('hidden');
                         $('.number-chosenfile .text').text('file were selected');
                         $('.number-chosenfile .number').text(fileNumber);
-                        if(fileNumber > 1){
+
+                        if (fileNumber > 1) {
                             $('.number-chosenfile .text').text('files were selected');
                         }
-                        
+
+                        if (this.files.length) {
+                            var _i, _len;
+                            for (_i = 0, _len = this.files.length; _i < _len - 1; _i++) // -1 to exclude current file
+                            {
+                                if (this.files[_i].name === file.name &&
+                                    this.files[_i].size === file.size &&
+                                    this.files[_i].lastModifiedDate.toString() === file.lastModifiedDate.toString()) {
+                                    this.removeFile(file);
+                                    window.alert("Duplicated file: " + file.name);
+                                }
+                            }
+                        }
                     });
                 this.on("reset",
                     function() {
