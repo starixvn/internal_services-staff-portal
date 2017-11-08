@@ -52,13 +52,21 @@
             // Get current user tickets
             var tickets = Context.Tickets
                 .Where(x => (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo))
-                .GroupBy(x => x.TicketType).ToList();
+                .GroupBy(x => x.CategoryId).ToList();
 
-            foreach (IGrouping<string, Ticket> grouping in tickets)
+            // Get ticket categories
+            var categories = Context.TicketCategories.ToList();
+
+            foreach (IGrouping<int, Ticket> grouping in tickets)
             {
+                var categoryName = categories
+                    .Where(x => x.CategoryId == grouping.Key)
+                    .Select(x => x.Name)
+                    .FirstOrDefault();
+
                 TicketGroup ticketGroup = new TicketGroup
                 {
-                    Name = grouping.Key,
+                    Name = categoryName,
                     Tickets = grouping
                 };
 
