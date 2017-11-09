@@ -68,7 +68,7 @@
         <div class="attach-file">
             <div class="key border">Attach files*:</div>
             <div class="value span-3 border">
-                <button type="button" id="add-file-btn">Browse</button>
+                <button type="button" id="add-file-btn" class="btn btn-browser">Browse</button>
 
                 <p class="dropzone-error-text"></p>
 
@@ -76,7 +76,7 @@
             </div>
             <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">@Model.MaxNumberOfFile Files</span> | Max total size of attachments: <span class="highlight">@(Model.MaxBytes / 1048576) MB</span> | Allowed file types: <span class="highlight">@string.Join(", ", Model.AcceptedExtensions)</span></div>
         </div>
->>>>>>> #000 - customize style for dropzone
+>>>>>>> #000 - fix some bugs UI
     </div>
     <input type="submit" class="btn btn-send" value="Send" />
 }

@@ -1,0 +1,39 @@
+﻿namespace TicketDesk.Web.Client.Models.Extensions
+{
+    using System.Collections.Generic;
+
+    public static class MenuIconMapper
+    {
+        public static Dictionary<string, string> MenuIconDictionary { get; set; } = new Dictionary<string, string>
+        {
+            { "/", "icon-home" },
+            { "/ticket/", "icon-myticket" },
+            { "/ticket/new-facility", "icon-facility" },
+            { "/ticket/new-feedback", "icon-feedback" },
+            { "/ticket/new-hardware", "icon-hardware" },
+            { "/ticket/new-software", "icon-software" },
+            { "/ticket/new-network", "icon-network" },
+<<<<<<< HEAD
+            { "/ticket/new-customersupport", "icon-customersupport" },
+=======
+            { "/ticket/new-customersupport", "icon-customersuport" },
+>>>>>>> #000 - fix some bugs UI
+            { "/ticket/new-incidient", "icon-incident" },
+            { "/tickets", "icon-ticketlist" },
+            { "/IdUploader", "icon-upload" },
+            { "/References", "icon-references" },
+            { "/References/tv-schedules", "icon-tv" },
+            { "/References/featured-event", "icon-feature" },
+            { "/References/bet-of-the-day", "icon-bet" },
+            { "/References/trading-limit", "icon-trading" },
+            { "/References/newsletter", "icon-newsletter" },
+            { "/admin/application-settings", "icon-admin-appsettings" },
+            { "/admin/projects", "icon-admin-shop" },
+            { "/admin/push-notification-settings", "icon-admin-notificationsettings" },
+            { "/admin/data-management/demo", "icon-admin-datademo" },
+            { "/admin/search-manager", "icon-admin-searchmanager" },
+            { "/admin/custom-field-settings", "icon-admin-customfieldsettings" },
+            { "/file-manager", "icon-filemanager" }
+        };
+    }
+}

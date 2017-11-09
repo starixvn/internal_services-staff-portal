@@ -87,7 +87,7 @@
         <div class="title">REPAIRS AND SERVICES REQUISITION FORM</div>
         <div class="item-list">
             @Html.LabelFor(x => x.Ticket.Title, new { @class = "key border" })
-            <div class="value span-3 border">
+            <div class="value span-3 border subject">
                 @Html.TextBoxFor(x => x.Ticket.Title, new {@class = "ticket-title"})
             </div>
         </div>
@@ -133,15 +133,33 @@
                             <button class="btn btn-delete btn-delete-item"><span class="icon-delete"></span>Delete Item</button>
                         </div>
 
-                        @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth border" })
+                        @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth border key" })
                         @Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "border" })
                     </div>
                 }
             }
 
         </div>
+<<<<<<< HEAD
         
         @Html.Partial("_DropzoneView", Model)
+=======
+
+        <div class="attach-file">
+            <div class="key border"><span class="text">Attach files*:</span></div>
+            <div class="value span-3 border">
+
+                <button type="button" id="add-file-btn" class="btn btn-browser">Browse</button>
+                <div class="number-chosenfile hidden"><span class="number"></span>&nbsp;<span class="text"></span></div>
+                <button type="button" class="btn btn-delete btn-delete-all-file"><span class="icon-delete"></span>Delete All</button>
+                <p class="dropzone-error-text"></p>
+
+                <div class="dropzone-previews">
+                </div>
+            </div>
+            <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">@Model.MaxNumberOfFile Files</span> | Max total size of attachments: <span class="highlight">@(Model.MaxBytes / 1048576) MB</span> | Allowed file types: <span class="highlight">@string.Join(", ", Model.AcceptedExtensions)</span></div>
+        </div>
+>>>>>>> #000 - fix some bugs UI
     </div>
     <input type="submit" class="btn btn-send" value="Send" />
 }

@@ -1,8 +1,4 @@
-﻿@font-face {
-  font-family: 'Open Sans';
-  /*font-display: auto;*/
-  src: local("Open Sans"), url("https://fonts.googleapis.com/css?family=Open+Sans:400,700,800"); }
-
+﻿@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700,800");
 .input-validation-error {
   border-color: red; }
 
@@ -38,7 +34,7 @@ body {
 
 .sticky-header {
   background: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
   position: absolute;
   top: 0;
   height: 96px;
@@ -181,9 +177,8 @@ body {
 .submenu .text {
   color: #03285a;
   text-transform: uppercase;
-  font-weight: 800;
+  font-weight: 700;
   position: relative;
-  top: -3px;
   left: 12px; }
 
 .submenu [class^="icon-"] {
@@ -199,7 +194,7 @@ body {
     background-color: #2e4592;
     height: 48px;
     text-transform: uppercase;
-    font-weight: 800;
+    font-weight: 700;
     color: #fff; }
   .tbl-content tbody > tr > td {
     height: 40px;
@@ -207,7 +202,7 @@ body {
     .tbl-content tbody > tr > td.key {
       text-transform: uppercase;
       color: #2e4592;
-      font-weight: 800; }
+      font-weight: 700; }
       .tbl-content tbody > tr > td.key:after {
         content: ':';
         float: right;
@@ -238,7 +233,7 @@ body {
 
 /****************************************************************************************************************/
 .bold {
-  font-weight: 800; }
+  font-weight: 700; }
 
 /**************************************************** Form ******************************************************/
 .form-horizontal {
@@ -271,11 +266,14 @@ body {
     background: #2e4592;
     height: 48px;
     line-height: 48px;
-    font-weight: 800; }
+    font-weight: 700; }
+  .form-content > .title {
+    font-size: 16px;
+    letter-spacing: 1px; }
   .form-content .key {
     text-transform: uppercase;
     color: #2e4592;
-    font-weight: 800;
+    font-weight: 700;
     margin-bottom: 0; }
   .form-content .value, .form-content .key {
     height: 40px;
@@ -319,18 +317,29 @@ body {
     flex: 1 100%; }
   .form-content input[type="text"], .form-content textarea {
     font-size: 16px; }
-    .form-content input[type="text"]:focus, .form-content textarea:focus {
-      border: 1px solid #333;
-      outline: none; }
   .form-content textarea {
     padding: 6px 12px;
     min-height: 120px; }
 
-.facility-form .fullwidth {
+input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
+  border: none !important;
+  box-shadow: 0 0 4px #1c6cf2; }
+
+.facility-form .attach-file .fullwidth {
   padding: 9px 12px; }
 
+.facility-form input[type="text"] {
+  border: none;
+  width: 102%;
+  height: 100%;
+  margin: 0 -12px;
+  padding: 0 12px; }
+
 .feedback-form .item {
-  border-left: 1px solid #d3d7db; }
+  border-left: 1px solid #d3d7db;
+  margin-top: 0; }
+  .feedback-form .item ~ .item {
+    margin-top: 12px; }
   .feedback-form .item .key.border {
     border-left: none; }
   .feedback-form .item input[type="text"] {
@@ -365,8 +374,7 @@ body {
   .btn.btn-delete {
     background: #ffc5c7;
     color: #333;
-    margin: 3px 0 0 8px;
-    padding: 4px 10px; }
+    margin: 3px 0 0 8px; }
     .btn.btn-delete .icon-delete {
       color: #ea1118;
       font-size: 18px;
@@ -385,13 +393,17 @@ body {
     font-size: 16px; }
     .btn.btn-send:hover {
       background: #122564; }
-  .btn.btn-delete-all {
+  .btn.btn-delete-all-file {
     background: #ea1118;
     color: #fff;
     float: right;
     margin-top: 8px; }
-    .btn.btn-delete-all .icon-delete {
+    .btn.btn-delete-all-file .icon-delete {
       color: #fff; }
+  .btn.btn-browser {
+    background: #dad7d7;
+    border: 1px solid #999;
+    color: #333; }
 
 .attach-file .key, .attach-file .value.span-3 {
   height: auto; }

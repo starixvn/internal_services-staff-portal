@@ -45,7 +45,7 @@ body {
 
 .sticky-header {
     background: #fff;
-    box-shadow: 0 0 10px rgba(0, 0,0, 0.3);
+    box-shadow: 0 0 3px rgba(0, 0,0, 0.3);
     position: absolute;
     top: 0;
     height: 96px;
@@ -223,9 +223,8 @@ body {
     .text {
         color: $menu-color;
         text-transform: uppercase;
-        font-weight: 800;
+        font-weight: 700;
         position: relative;
-        top: -3px;
         left: 12px;
     }
 
@@ -245,7 +244,7 @@ body {
         background-color: #2e4592;
         height: 48px;
         text-transform: uppercase;
-        font-weight: 800;
+        font-weight: 700;
         color: #fff;
     }
 
@@ -256,7 +255,7 @@ body {
         &.key {
             text-transform: uppercase;
             color: #2e4592;
-            font-weight: 800;
+            font-weight: 700;
 
             &:after {
                 content: ':';
@@ -308,7 +307,7 @@ body {
 /****************************************************************************************************************/
 
 .bold {
-    font-weight: 800;
+    font-weight: 700;
 }
 
 /**************************************************** Form ******************************************************/
@@ -351,12 +350,16 @@ body {
         background: $title-form-bg;
         height: 48px;
         line-height: 48px;
-        font-weight: 800;
+        font-weight: 700;
+    }
+    > .title {        
+        font-size: 16px;
+        letter-spacing: 1px;
     }
     .key {
         text-transform: uppercase;
         color: $title-form-bg;
-        font-weight: 800;
+        font-weight: 700;
         margin-bottom: 0;
     }
     .value, .key {        
@@ -421,22 +424,38 @@ body {
 
     input[type="text"], textarea {        
         font-size: 16px;
-         &:focus {
-            border: 1px solid #333;
-            outline: none;
-        }
     }
     textarea {
         padding: 6px 12px;        
         min-height: 120px;
     }
 }
-.facility-form .fullwidth {
-    padding: 9px 12px;
+input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
+        border: none !important;
+        box-shadow: 0 0 4px #1c6cf2;
+}
+.facility-form {
+    .attach-file .fullwidth {
+        padding: 9px 12px;
+    }
+    .subject {
+        //padding: 0;
+    }
+    input[type="text"] {
+        border: none;
+        width: 102%;
+        height: 100%;
+        margin: 0 -12px;
+        padding: 0 12px;
+    }
 }
 .feedback-form {
     .item {
         border-left: 1px solid $border-color;
+        margin-top: 0;
+        ~ .item {
+            margin-top: 12px;
+        }
         //grid-template-rows: 40px auto;
         .key.border {
             border-left: none;
@@ -482,7 +501,6 @@ body {
         background: #ffc5c7;
         color: #333;
         margin: 3px 0 0 8px;
-        padding: 4px 10px;
         .icon-delete {
             color: #ea1118;
             font-size: 18px;
@@ -517,6 +535,11 @@ body {
         .icon-delete {
             color: #fff;
         }
+    }
+    &.btn-browser {
+         background: #dad7d7;
+         border: 1px solid #999;
+         color: #333;
     }
 }
 
