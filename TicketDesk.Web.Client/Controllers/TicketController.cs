@@ -249,17 +249,11 @@
         [Route("new-hardware")]
         public ActionResult NewHardwareTicket()
         {
-            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Feedback);
+            //var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Feedback);
 
-            NewFeedbackTicketViewModel viewModel = new NewFeedbackTicketViewModel();
-
-            viewModel.TempId = Guid.NewGuid();
-            viewModel.FeedbackBy.CustomField = availableCustomField.First(x => x.Name == "Feedback by");
-            ////viewModel.Subject.CustomField = availableCustomField.First(x => x.Name == "Subject");
-            viewModel.CustomerName.CustomField = availableCustomField.First(x => x.Name == "Customer Name");
-            viewModel.Feedback.CustomField = availableCustomField.First(x => x.Name == "Feedback");
-
-            return View("NewFeedbackTicket", viewModel);
+            NewHardwareTicketViewModel viewModel = new NewHardwareTicketViewModel();
+            
+            return View("NewHardwareTicket", viewModel);
         }
 
         [Route("ticket-details")]
