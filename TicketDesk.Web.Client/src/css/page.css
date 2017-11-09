@@ -318,7 +318,8 @@ body {
   .form-content .fullwidth, .form-content textarea {
     flex: 1 100%; }
   .form-content input[type="text"], .form-content textarea {
-    font-size: 16px; }
+    font-size: 16px;
+    border: 1px solid #d3d7db; }
   .form-content textarea {
     padding: 6px 12px;
     min-height: 120px; }
