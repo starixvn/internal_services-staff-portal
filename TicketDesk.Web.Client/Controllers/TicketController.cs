@@ -12,7 +12,6 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
-    using System.Data.Entity.Validation;
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
@@ -95,76 +94,6 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        [Route("new")]
-        public async Task<ActionResult> New(int categoryId = 1)
-        {
-            NewTicketViewModel model = new NewTicketViewModel
-            {
-                Ticket = new Ticket()
-            };
-
-            var customFieldIds = Context.TicketCategoryCustomField.Where(x => x.CategoryId == categoryId)
-                .Select(x => x.CustomFieldId);
-
-            model.CustomFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
-
-            foreach (CustomField customField in model.CustomFields)
-            {
-                customField.CustomFieldValues =
-                    Context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
-            }
-
-            model.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
-            model.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
-
-            await SetProjectInfoForModelAsync(model.Ticket).ConfigureAwait(false);
-
-            ViewBag.TempId = Guid.NewGuid();
-
-            return View(model);
-        }
-
-        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [ValidateOnlyIncomingValues]
-        [ValidateInput(false)]
-        [Route("new")]
-        public async Task<ActionResult> New(Ticket ticket, Guid tempId)
-        {
-            if (ticket.IsHtml)
-            {
-                ticket.Details = ticket.Details.StripHtmlWhenEmpty();
-                if (string.IsNullOrEmpty(ticket.Details))
-                {
-                    ModelState.AddModelError("Details", Strings.RequiredField);
-                }
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    if (await CreateTicketAsync(ticket, tempId).ConfigureAwait(false))
-                    {
-                        return Context.SecurityProvider.IsReadTicketCenter
-                            ? RedirectToAction("Index", "TicketCenter", new { id = ticket.TicketId })
-                            : RedirectToAction("Index", "Home");
-                    }
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch (DbEntityValidationException)
-                {
-                    // TODO: catch rule exceptions? or can annotations handle this fully now?
-                }
-            }
-
-            ViewBag.TempId = tempId;
-            await SetProjectInfoForModelAsync(ticket).ConfigureAwait(false);
-            return View(ticket);
-        }
-
-        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [Route("new-facility")]
         public async Task<ActionResult> NewFacilityTicket()
         {
@@ -173,18 +102,6 @@
                 TempId = Guid.NewGuid(),
                 Ticket = new Ticket()
             };
-
-            ////var customFieldIds = Context.TicketCategoryCustomField
-            ////    .Where(x => x.CategoryId == (int)TicketCategoryTypes.Facility)
-            ////    .Select(x => x.CustomFieldId);
-
-            ////var availableCustomField = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
-
-            ////foreach (CustomField customField in availableCustomField)
-            ////{
-            ////    customField.CustomFieldValues =
-            ////        Context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
-            ////}
 
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Facility);
 
