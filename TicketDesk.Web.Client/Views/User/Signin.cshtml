@@ -15,7 +15,7 @@
     @Html.AntiForgeryToken()
 
     <div class="login-form">
-        <div class="logo"><img src="~/src/contents/images/logo_login.png" /></div>
+        <div class="logo"><img src="~/src/contents/images/logo.svg" /></div>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="field">
             @Html.LabelFor(m => m.Email)

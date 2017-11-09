@@ -16,7 +16,8 @@ a, a:hover {
 }
 button.dz-clickable {
     position: relative;
-    top: 2px;
+    top: 5px;
+    float: left;
     &:focus {
         outline: none;
     }
@@ -121,8 +122,9 @@ button.dz-clickable {
 }
 
 .number-chosenfile {
-    display: inline-block;
+    display: none;
     position: relative;
-    top: 3px;
+    top: 1px;
     margin-left: 8px;
+    float: left;
 }

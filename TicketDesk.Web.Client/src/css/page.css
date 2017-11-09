@@ -55,6 +55,8 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center; }
+  .logo .img-logo {
+    width: 200px; }
 
 .main-menu {
   display: -webkit-box;
@@ -337,9 +339,9 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 
 .feedback-form .item {
   border-left: 1px solid #d3d7db;
-  margin-top: 0; }
+  padding-top: 0; }
   .feedback-form .item ~ .item {
-    margin-top: 12px; }
+    padding-top: 12px; }
   .feedback-form .item .key.border {
     border-left: none; }
   .feedback-form .item input[type="text"] {
@@ -397,7 +399,9 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     background: #ea1118;
     color: #fff;
     float: right;
-    margin-top: 8px; }
+    margin-top: 8px;
+    position: relative;
+    top: -5px; }
     .btn.btn-delete-all-file .icon-delete {
       color: #fff; }
   .btn.btn-browser {

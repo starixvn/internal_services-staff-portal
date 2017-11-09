@@ -81,13 +81,15 @@
 
     function UpdateNumberOfSelectedFile(dropzone) {
         var numberOfSelectedFile = dropzone.files.length;
-
+        $('.number-chosenfile .number').text(numberOfSelectedFile);
         if (numberOfSelectedFile > 1) {
-            $('.number-chosenfile').show();
-            $('.number-chosenfile .text').text('file were selected');
-            $('.number-chosenfile .number').text(numberOfSelectedFile);
+            $('.number-chosenfile').show();            
             $('.number-chosenfile .text').text('files were selected');
-        } else {
+        } else if (numberOfSelectedFile == 1) {  
+            $('.number-chosenfile').show(); 
+            $('.number-chosenfile .text').text('file were selected');
+        }
+        else {            
             $('.number-chosenfile').hide();
         }
     }
