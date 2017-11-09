@@ -14,7 +14,7 @@
             { "/ticket/new-software", "icon-software" },
             { "/ticket/new-network", "icon-network" },
             { "/ticket/new-customersupport", "icon-customersupport" },
-            { "/ticket/new-incidient", "icon-incidient" },
+            { "/ticket/new-incidient", "icon-incident" },
             { "/tickets", "icon-ticketlist" },
             { "/IdUploader", "icon-upload" },
             { "/References", "icon-references" },
