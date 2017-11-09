@@ -38,7 +38,7 @@ body {
 
 .sticky-header {
   background: #fff;
-  border-bottom: 1px solid #d3d7db;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   position: absolute;
   top: 0;
   height: 96px;
@@ -101,7 +101,7 @@ body {
       background: #bf141a;
       -webkit-transition: width .3s;
       transition: width .3s;
-      margin-top: 10px; }
+      margin-top: 11px; }
     .main-menu .menu-item:hover:after {
       width: 100%; }
     @media all and (min-width: 1440px) {
@@ -162,10 +162,15 @@ body {
     .submenu-section .submenu {
       width: 270px; } }
 
+.submenu li {
+  height: 60px; }
+
 .submenu a {
   text-decoration: none;
-  padding: 17px 0 16px 25px;
-  display: block; }
+  display: flex;
+  height: 100%;
+  align-items: center;
+  padding-left: 25px; }
   .submenu a:hover, .submenu a.active {
     background: #bf141a;
     -webkit-transition: background-color 0.3s linear;
@@ -230,11 +235,6 @@ body {
 .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td,
 .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
   border: 1px solid #d3d7db; }
-
-.submenu a {
-  text-decoration: none;
-  padding: 17px 0 16px 25px;
-  display: block; }
 
 /****************************************************************************************************************/
 .bold {
@@ -319,6 +319,9 @@ body {
     flex: 1 100%; }
   .form-content input[type="text"], .form-content textarea {
     font-size: 16px; }
+    .form-content input[type="text"]:focus, .form-content textarea:focus {
+      border: 1px solid #333;
+      outline: none; }
   .form-content textarea {
     padding: 6px 12px;
     min-height: 120px; }
@@ -380,12 +383,14 @@ body {
     margin: 16px 0 32px;
     padding: 12px;
     font-size: 16px; }
-  .btn.btn-delete-all-file {
+    .btn.btn-send:hover {
+      background: #122564; }
+  .btn.btn-delete-all {
     background: #ea1118;
     color: #fff;
     float: right;
     margin-top: 8px; }
-    .btn.btn-delete-all-file .icon-delete {
+    .btn.btn-delete-all .icon-delete {
       color: #fff; }
 
 .attach-file .key, .attach-file .value.span-3 {
@@ -427,7 +432,7 @@ body {
   top: 0;
   width: 18px;
   height: 18px;
-  border: 1px solid #2e4592;
+  border: 2px solid #2e4592;
   border-radius: 100%;
   background: #fff; }
 

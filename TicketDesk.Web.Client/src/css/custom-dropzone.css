@@ -81,7 +81,7 @@ button.dz-clickable {
         font-size: 24px;
         color: #838282;
         position: relative;
-        top: -2px;
+        top: 1px;
         left: 5px; }
       .dropzone .dz-preview .dz-remove:hover:before {
         color: #bf141a; }

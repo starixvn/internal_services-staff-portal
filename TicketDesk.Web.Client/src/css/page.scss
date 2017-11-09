@@ -45,7 +45,7 @@ body {
 
 .sticky-header {
     background: #fff;
-    border-bottom: 1px solid $border-color;
+    box-shadow: 0 0 10px rgba(0, 0,0, 0.3);
     position: absolute;
     top: 0;
     height: 96px;
@@ -115,7 +115,7 @@ body {
             background: $primary-color;
             -webkit-transition: width .3s;
             transition: width .3s;
-            margin-top: 10px;
+            margin-top: 11px;
         }
 
         &:hover:after {
@@ -199,10 +199,15 @@ body {
 }
 
 .submenu {
+    li {
+        height: 60px;
+    }
     a {
         text-decoration: none;
-        padding: 17px 0 16px 25px;
-        display: block;
+        display: flex;
+        height: 100%;
+        align-items: center;
+        padding-left: 25px;
 
         &:hover, &.active {
             background: $primary-color;
@@ -298,13 +303,7 @@ body {
     border: 1px solid $border-color;
 }
 
-.submenu {
-    a {
-        text-decoration: none;
-        padding: 17px 0 16px 25px;
-        display: block;
-    }
-}
+
 
 /****************************************************************************************************************/
 
@@ -422,6 +421,10 @@ body {
 
     input[type="text"], textarea {        
         font-size: 16px;
+         &:focus {
+            border: 1px solid #333;
+            outline: none;
+        }
     }
     textarea {
         padding: 6px 12px;        
@@ -441,12 +444,12 @@ body {
         input[type="text"] {
             height: 40px;
             width: 100%;
-            padding: 0 12px;
+            padding: 0 12px;           
         }
         textarea {
             min-height: 100px;
             width: 100%;
-            margin-bottom: 6px;
+            margin-bottom: 6px;           
         }
     }
     .attach-file .fullwidth {
@@ -502,6 +505,9 @@ body {
         margin: 16px 0 32px;
         padding: 12px;
         font-size: 16px;
+        &:hover {
+            background: #122564;
+        }
     }
     &.btn-delete-all-file {
         background: #ea1118;
@@ -560,7 +566,7 @@ body {
     top: 0;
     width: 18px;
     height: 18px;
-    border: 1px solid $title-form-bg;
+    border: 2px solid $title-form-bg;
     border-radius: 100%;
     background: #fff;
 }
