@@ -1,4 +1,5 @@
 @import "_variables.scss";
+@import "_mixins.scss";
 
 .input-validation-error{
     border-color: red;
@@ -497,11 +498,12 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
         color: #fff;
     }
     &.btn-add {
+        @include button($title-form-bg);
         float: right;
         margin-top: 3px;       
     }
     &.btn-delete {
-        background: #ffc5c7;
+        @include button(#ffc5c7);
         color: #333;
         margin: 3px 0 0 8px;
         .icon-delete {
@@ -512,26 +514,22 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
         }        
     }
     &.btn-primary {
-        background: $title-form-bg;
+        @include button($title-form-bg);
     }
     &.btn-second {
-        background: #e6e6ea;
+        @include button(#e6e6ea);
         color: $text-color;
     }
 
 
     &.btn-send {
-        box-shadow: 0 0 6px rgba(102, 102, 102, 0.3);
         width: 100%;
         margin: 16px 0 32px;
         padding: 12px;
         font-size: 16px;
-        &:hover {
-            background: #122564;
-        }
     }
     &.btn-delete-all-file {
-        background: #ea1118;
+        @include button(#ea1118);
         color: #fff;
         float: right;
         margin-top: 8px;
@@ -542,7 +540,7 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
         }
     }
     &.btn-browser {
-         background: #dad7d7;
+         @include button(#dad7d7);
          border: 1px solid #999;
          color: #333;
     }
@@ -623,8 +621,12 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
 }
 
 
-#logOut {
+.modal {
     margin-top: 250px;
+}
+#attach-file-modal .modal-title {
+    color: $primary-color;
+    font-weight: 700;
 }
 
 .modal-dialog {

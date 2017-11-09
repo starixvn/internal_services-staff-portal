@@ -1,0 +1,7 @@
+﻿@mixin button($bgcolor) {
+    background-color: $bgcolor;
+    &:hover {
+        background: darken($bgcolor, 10%);
+        transition: all 0.3s ease;
+    }
+}

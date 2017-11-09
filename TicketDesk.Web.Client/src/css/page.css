@@ -371,43 +371,59 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   .btn:hover, .btn:focus {
     color: #fff; }
   .btn.btn-add {
+    background-color: #2e4592;
     float: right;
     margin-top: 3px; }
+    .btn.btn-add:hover {
+      background: #22336b;
+      transition: all 0.3s ease; }
   .btn.btn-delete {
-    background: #ffc5c7;
+    background-color: #ffc5c7;
     color: #333;
     margin: 3px 0 0 8px; }
+    .btn.btn-delete:hover {
+      background: #ff9296;
+      transition: all 0.3s ease; }
     .btn.btn-delete .icon-delete {
       color: #ea1118;
       font-size: 18px;
       position: relative;
       top: 2px; }
   .btn.btn-primary {
-    background: #2e4592; }
+    background-color: #2e4592; }
+    .btn.btn-primary:hover {
+      background: #22336b;
+      transition: all 0.3s ease; }
   .btn.btn-second {
-    background: #e6e6ea;
+    background-color: #e6e6ea;
     color: #333; }
+    .btn.btn-second:hover {
+      background: #cacad3;
+      transition: all 0.3s ease; }
   .btn.btn-send {
-    box-shadow: 0 0 6px rgba(102, 102, 102, 0.3);
     width: 100%;
     margin: 16px 0 32px;
     padding: 12px;
     font-size: 16px; }
-    .btn.btn-send:hover {
-      background: #122564; }
   .btn.btn-delete-all-file {
-    background: #ea1118;
+    background-color: #ea1118;
     color: #fff;
     float: right;
     margin-top: 8px;
     position: relative;
     top: -5px; }
+    .btn.btn-delete-all-file:hover {
+      background: #ba0e13;
+      transition: all 0.3s ease; }
     .btn.btn-delete-all-file .icon-delete {
       color: #fff; }
   .btn.btn-browser {
-    background: #dad7d7;
+    background-color: #dad7d7;
     border: 1px solid #999;
     color: #333; }
+    .btn.btn-browser:hover {
+      background: #c1bdbd;
+      transition: all 0.3s ease; }
 
 .attach-file .key, .attach-file .value.span-3 {
   height: auto; }
@@ -475,8 +491,12 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   -webkit-transform: scale(1);
   transform: scale(1); }
 
-#logOut {
+.modal {
   margin-top: 250px; }
+
+#attach-file-modal .modal-title {
+  color: #bf141a;
+  font-weight: 700; }
 
 .modal-dialog {
   color: #333; }
