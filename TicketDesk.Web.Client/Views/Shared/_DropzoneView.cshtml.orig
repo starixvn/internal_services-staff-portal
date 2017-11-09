@@ -1,0 +1,40 @@
+﻿@model TicketDesk.Web.Client.Models.Ticket.TicketWithFilesBaseViewModel
+
+<div id="attach-file-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Warning</h4>
+            </div>
+            <div class="modal-body">
+                <p class="dropzone-error-text"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="attach-file">
+    <div class="key border"><span class="text">Attach files*:</span></div>
+    <div class="value span-3 border">
+
+        <button type="button" id="add-file-btn" class="btn btn-browser">Browser...</button>
+        <div class="number-chosenfile"><span class="number"></span>&nbsp;<span class="text"></span></div>
+        <button type="button" class="btn btn-delete btn-delete-all-file"><span class="icon-delete"></span>Delete All</button>
+<<<<<<< HEAD
+        
+=======
+        <p class="dropzone-error-text"></p>
+        <div class="clearfix"></div>
+>>>>>>> #000 - fix some bugs UI
+        <div class="dropzone-previews">
+        </div>
+    </div>
+    <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">@Model.MaxNumberOfFile Files</span> | Max total size of attachments: <span class="highlight">@(Model.MaxBytes / 1048576) MB</span> | Allowed file types: <span class="highlight">@string.Join(", ", Model.AcceptedExtensions)</span></div>
+</div>
