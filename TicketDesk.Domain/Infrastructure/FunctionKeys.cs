@@ -22,6 +22,8 @@
 
         public const string FileManagement = "FileManagement";
 
+        public const string ManageUser = "ManageUser";
+
         #region Settings
 
         public const string CustomFieldSettings = "CustomFieldSettings";

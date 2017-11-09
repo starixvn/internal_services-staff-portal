@@ -2196,6 +2196,7 @@
     <Content Include="src\Fonts\iconFont\style.css" />
     <Content Include="src\js\filevalidation.js" />
     <Content Include="src\js\page.js" />
+    <Content Include="src\libs\animatecss\animate.min.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.min.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.css" />
@@ -2379,7 +2380,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\ticketdesk\User\" />
-    <Folder Include="src\libs\animatecss\" />
     <Folder Include="src\libs\dropzone\debug\" />
     <Folder Include="uploads\" />
   </ItemGroup>

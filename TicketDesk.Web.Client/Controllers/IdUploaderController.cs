@@ -1,7 +1,10 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
     using Domain;
+    using Domain.Infrastructure;
     using Domain.Model;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
     using Models;
     using System;
     using System.IO;
@@ -19,6 +22,7 @@
         }
 
         // GET: IdUploader
+        [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             IdUploaderViewModel viewModel = new IdUploaderViewModel
@@ -31,7 +35,7 @@
             return View(viewModel);
         }
 
-        //[NapAuth(FunctionKey = FunctionKeys., Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult NewCustomer(IdUploaderViewModel viewModel)
