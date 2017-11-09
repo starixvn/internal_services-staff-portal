@@ -249,8 +249,6 @@
         [Route("new-hardware")]
         public ActionResult NewHardwareTicket()
         {
-            //var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Feedback);
-
             NewHardwareTicketViewModel viewModel = new NewHardwareTicketViewModel();
             
             return View("NewHardwareTicket", viewModel);
