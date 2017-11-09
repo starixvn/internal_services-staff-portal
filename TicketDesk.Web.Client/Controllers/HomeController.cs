@@ -19,27 +19,23 @@
     [Route("{action=index}")]
     public class HomeController : BaseController
     {
-        private TdDomainContext Context { get; }
-
         public HomeController(TdDomainContext context)
         {
             Context = context;
         }
 
-        [Route("language")]
-        public ActionResult SetLanguage(string name)
+        private TdDomainContext Context { get; }
+
+        [Route("about")]
+        public ActionResult About()
         {
-            CultureHelper.SetCurrentCulture(name);
+            return View();
+        }
 
-            var cookie = new HttpCookie("_culture", name) { Expires = DateTime.Today.AddYears(1) };
-            Response.SetCookie(cookie);
-
-            if (Request.UrlReferrer != null && !string.IsNullOrEmpty(Request.UrlReferrer.AbsoluteUri))
-            {
-                return Redirect(Request.UrlReferrer.AbsoluteUri);
-            }
-
-            return RedirectToAction("Index", "Home");
+        [Route("access-denied", Name = "AccessDenied")]
+        public ActionResult AccessDenied()
+        {
+            return View();
         }
 
         [Route("")]
@@ -108,6 +104,48 @@
         return View(homeViewModel);
         }
 
+        [Route("internal-error", Name = "InternalError")]
+        public ActionResult InternalError()
+        {
+            return View();
+        }
+
+        [Route("menu")]
+        [ChildActionOnly]
+        public PartialViewResult Menu()
+        {
+            var model = new NavbarViewModel
+            {
+                MenuItems = PopulateMenus(CurrentSession.MenuItemList),
+                Username = CurrentSession.Username,
+                IsAuthenticated = CurrentSession.UserId > 0
+            };
+            
+            return PartialView("~/Views/Shared/_Navbar.cshtml", model);
+        }
+
+        [Route("not-found", Name = "NotFound")]
+        public ActionResult NotFound()
+        {
+            return View();
+        }
+
+        [Route("language")]
+        public ActionResult SetLanguage(string name)
+        {
+            CultureHelper.SetCurrentCulture(name);
+
+            var cookie = new HttpCookie("_culture", name) { Expires = DateTime.Today.AddYears(1) };
+            Response.SetCookie(cookie);
+
+            if (Request.UrlReferrer != null && !string.IsNullOrEmpty(Request.UrlReferrer.AbsoluteUri))
+            {
+                return Redirect(Request.UrlReferrer.AbsoluteUri);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
         private static List<Models.Extensions.MenuItem> PopulateMenus(IEnumerable<MenuItem> menus)
         {
             var result = new List<Models.Extensions.MenuItem>();
@@ -136,44 +174,6 @@
             }
 
             return result.OrderBy(x => x.DisplayOrder).ToList();
-        }
-
-        [Route("menu")]
-        [ChildActionOnly]
-        public PartialViewResult Menu()
-        {
-            var model = new NavbarViewModel
-            {
-                MenuItems = PopulateMenus(CurrentSession.MenuItemList),
-                Username = CurrentSession.Username,
-                IsAuthenticated = CurrentSession.UserId > 0
-            };
-            
-            return PartialView("~/Views/Shared/_Navbar.cshtml", model);
-        }
-
-        [Route("about")]
-        public ActionResult About()
-        {
-            return View();
-        }
-
-        [Route("access-denied", Name = "AccessDenied")]
-        public ActionResult AccessDenied()
-        {
-            return View();
-        }
-
-        [Route("not-found", Name = "NotFound")]
-        public ActionResult NotFound()
-        {
-            return View();
-        }
-
-        [Route("internal-error", Name = "InternalError")]
-        public ActionResult InternalError()
-        {
-            return View();
         }
     }
 }
