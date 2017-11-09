@@ -5,23 +5,23 @@
 @section css
 {
     <link href="~/src/libs/dropzone/dropzone.min.css" rel="stylesheet" />
+    <link href="~/src/css/custom-dropzone.css" rel="stylesheet" />
 }
 
 @section scripts
 {
-    <script src="~/src/libs/dropzone/dropzone.min.js"></script>
     @Html.Partial("_DropzoneScripts", Model)
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(".id-uploader-form").on("submit",
-                function(e) {
+                function (e) {
                     e.preventDefault();
                     $.ajax({
                         url: $(this).attr('action'),
                         method: $(this).attr('method'),
                         data: $(this).serialize(),
-                        success: function() {
+                        success: function () {
                             $("#notification-modal").modal();
                         }
                     });
@@ -29,7 +29,7 @@
         });
 
         $('#notification-modal').on('hidden.bs.modal',
-            function() {
+            function () {
                 location.reload();
             });
     </script>
@@ -89,17 +89,7 @@
                 @Html.TextAreaFor(x => x.Remark)
             </div>
         </div>
-        <div class="attach-file">
-            <div class="key border">Attach files*:</div>
-            <div class="value span-3 border">
-                <button type="button" id="add-file-btn">Add files</button>
-
-                <p class="dropzone-error-text"></p>
-
-                <div class="dropzone-previews"></div>
-            </div>
-            <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">@Model.MaxNumberOfFile Files</span> | Max total size of attachments: <span class="highlight">@(Model.MaxBytes / 1048576) MB</span> | Allowed file types: <span class="highlight">@string.Join(", ", Model.AcceptedExtensions)</span></div>
-        </div>
+        @Html.Partial("_DropzoneView", Model)
     </div>
-    <input type="submit" class="btn btn-send" value="Send"/>
+    <input type="submit" class="btn btn-send" value="Send" />
 }

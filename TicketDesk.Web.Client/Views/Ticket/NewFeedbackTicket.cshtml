@@ -13,7 +13,6 @@
 
 @section scripts
 {
-    <script src="~/src/libs/dropzone/dropzone.min.js"></script>
     @Html.Partial("_DropzoneScripts", Model)
 }
 
@@ -63,17 +62,7 @@
                 @Html.CustomFieldFor(x => x.Feedback)
             </div>
         </div>
-        <div class="attach-file">
-            <div class="key border">Attach files*:</div>
-            <div class="value span-3 border">
-                <button type="button" id="add-file-btn">Add files</button>
-
-                <p class="dropzone-error-text"></p>
-
-                <div class="dropzone-previews"></div>
-            </div>
-            <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">@Model.MaxNumberOfFile Files</span> | Max total size of attachments: <span class="highlight">@(Model.MaxBytes / 1048576) MB</span> | Allowed file types: <span class="highlight">@string.Join(", ", Model.AcceptedExtensions)</span></div>
-        </div>
+        @Html.Partial("_DropzoneView", Model)
     </div>
     <input type="submit" class="btn btn-send" value="Send" />
 }

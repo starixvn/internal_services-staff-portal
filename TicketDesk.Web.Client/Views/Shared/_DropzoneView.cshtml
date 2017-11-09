@@ -1,0 +1,16 @@
+﻿@model TicketDesk.Web.Client.Models.Ticket.TicketWithFilesBaseViewModel
+
+<div class="attach-file">
+    <div class="key border"><span class="text">Attach files*:</span></div>
+    <div class="value span-3 border">
+
+        <button type="button" id="add-file-btn">Add files</button>
+        <div class="number-chosenfile hidden"><span class="number"></span>&nbsp;<span class="text"></span></div>
+        <button type="button" class="btn btn-delete btn-delete-all-file"><span class="icon-delete"></span>Delete All</button>
+        <p class="dropzone-error-text"></p>
+
+        <div class="dropzone-previews">
+        </div>
+    </div>
+    <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">@Model.MaxNumberOfFile Files</span> | Max total size of attachments: <span class="highlight">@(Model.MaxBytes / 1048576) MB</span> | Allowed file types: <span class="highlight">@string.Join(", ", Model.AcceptedExtensions)</span></div>
+</div>
