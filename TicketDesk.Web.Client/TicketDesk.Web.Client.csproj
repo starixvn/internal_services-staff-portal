@@ -2166,7 +2166,7 @@
     <Content Include="Scripts\ticketdesk\admin-users.js" />
     <Content Include="Scripts\ticketdesk\application-settings.js" />
     <Content Include="Scripts\ticketdesk\TicketFeedback\edit-ticket.js" />
-    <Content Include="Scripts\ticketdesk\User\login.js" />
+    <Content Include="src\js\user\login.js" />
     <Content Include="src\contents\images\bg01.png" />
     <Content Include="src\contents\images\logo.png" />
     <Content Include="src\contents\images\logo_login.png" />
@@ -2378,6 +2378,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Scripts\ticketdesk\User\" />
+    <Folder Include="src\libs\animatecss\" />
     <Folder Include="src\libs\dropzone\debug\" />
     <Folder Include="uploads\" />
   </ItemGroup>

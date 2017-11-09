@@ -5,6 +5,11 @@
     @SignIn.Title
 }
 
+@section css
+{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+}
+
 @using (Html.BeginForm("SignIn", "User", new { ViewBag.ReturnUrl }, FormMethod.Post, new { id = "user-login-form", @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -31,11 +36,9 @@
 }
 
 @section Scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    
-    @Scripts.Render("~/bundles/validate")
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>*@
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>*@
 
-    <script src="~/Scripts/ticketdesk/User/login.js"></script>
+    @Scripts.Render("~/bundles/validate")
+
+    <script src="~/src/js/user/login.js"></script>
 }
