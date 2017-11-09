@@ -5,10 +5,19 @@
 @section scripts
 {
     <script>
-        $('.header').on("click",
-            function() {
-                $(this).toggleClass('expand').nextUntil('tr.header').slideToggle(100);
-            });
+        $(document).ready(function() {
+            $('.header').on("click",
+                function () {
+                    $(this).toggleClass('expand').nextUntil('tr.header').slideToggle(100);
+                });
+            $("#itemperpage-select").on("change",
+                function() {
+                    var selectedValue = $(this).val();
+
+                    window.location = "@Url.Action("Index", "Home", new {page = 1})" + "&itemPerPage=" + selectedValue;
+                });
+        });
+        
     </script>
 }
 
@@ -26,12 +35,12 @@
                     activeClass = "active";
                 }
 
-                <li class="@activeClass"><a href="@Url.Action("Index", "Home", new { page = (i + 1) })">@(i + 1)</a></li>
+                <li class="@activeClass"><a href="@Url.Action("Index", "Home", new { page = (i + 1), itemPerPage = Model.ItemPerPage })">@(i + 1)</a></li>
             }
         </ul>
         
         @Html.LabelForModel(Model.ItemPerPage)
-        @Html.DropDownListFor(x => x.ItemPerPage, Model.ItemPerPageList)
+        @Html.DropDownListFor(x => x.ItemPerPage, Model.ItemPerPageList, new {id="itemperpage-select"})
         
         @*<label>Page size: </label>
         <select>
