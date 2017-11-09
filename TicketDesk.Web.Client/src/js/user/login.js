@@ -22,12 +22,12 @@
 
             if ($.trim($("#Email").val()) === "") {
                 //$("#Email").effect("shake");
-                $('#Email').animateCss("shake");
+                $('#Email').startValidateEffect();
             }
 
             if ($.trim($("#Password").val()) === "") {
                 //$("#Password").effect("shake");
-                $("#Password").animateCss("shake");
+                $("#Password").startValidateEffect();
             }
         });
 });

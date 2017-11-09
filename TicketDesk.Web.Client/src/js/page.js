@@ -33,6 +33,17 @@ $.fn.extend({
     }
 });
 
+$.fn.extend({
+    startValidateEffect: function() {
+        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        var animationName = $(this).data("validateeffect");
+        this.addClass('animated ' + animationName).one(animationEnd, function () {
+            $(this).removeClass('animated ' + animationName);
+        });
+        return this;
+    }
+});
+
 $(document).ready(function() {
     //appendSubMenu();
 });

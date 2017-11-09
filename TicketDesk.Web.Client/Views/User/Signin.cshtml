@@ -7,7 +7,7 @@
 
 @section css
 {
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+    <link rel="stylesheet" href="~/src/libs/animatecss/animate.min.css" />
 }
 
 @using (Html.BeginForm("SignIn", "User", new { ViewBag.ReturnUrl }, FormMethod.Post, new { id = "user-login-form", @class = "form-horizontal", role = "form" }))
@@ -20,15 +20,13 @@
         <div class="field">
             @Html.LabelFor(m => m.Email)
             <div>
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control validate-effect", data_validateeffect="shake" })
             </div>
         </div>
         <div class="field">
             @Html.LabelFor(m => m.Password)
             <div>
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control validate-effect", data_validateeffect = "shake" })
             </div>
         </div>
         <button id="btnLogin" type="submit" class="btn btn-primary" tabindex="10">@SignIn.Login</button>
@@ -36,8 +34,6 @@
 }
 
 @section Scripts {
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>*@
-
     @Scripts.Render("~/bundles/validate")
 
     <script src="~/src/js/user/login.js"></script>
