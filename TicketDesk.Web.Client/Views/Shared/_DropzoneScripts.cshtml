@@ -4,9 +4,13 @@
 
 <script type="text/javascript">
 
-    function SetErrorText(text) {
-        $(".dropzone-error-text").text(text);
+    function SetErrorTextAndShowModal(text) {
         if (text !== "") {
+            $(".dropzone-error-text").text(text);
+            if (($("element").data('bs.modal') || {}).isShown) {
+                $('#attach-file-modal').modal('hide');
+            }
+
             $("#attach-file-modal").modal();
         }
     }
@@ -46,9 +50,9 @@
     function CheckTotalBytes() {
         if (IsTotalBytesViolated()) {
             var totalMb = @Model.MaxBytes / 1048576;
-            SetErrorText("Total size exceed maximum allowed of " + totalMb + " MB");
+            SetErrorTextAndShowModal("Total size exceed maximum allowed of " + totalMb + " MB");
         } else {
-            SetErrorText("");
+            SetErrorTextAndShowModal("");
         }
     }
 
@@ -72,9 +76,9 @@
             if (isDuplicate) {
                 errorText = errorText.slice(0, -3);
 
-                SetErrorText(errorText);
+                SetErrorTextAndShowModal(errorText);
             } else {
-                SetErrorText("");
+                SetErrorTextAndShowModal("");
             }
         }
     }
@@ -121,7 +125,7 @@
                                 url: deleteUrl,
                                 method: "POST"
                             });
-                            SetErrorText("");
+                            SetErrorTextAndShowModal("");
                             if (isRequeueing === false) {
                                 ResumeQube(this);
                             }
@@ -140,11 +144,11 @@
                 this.on("reset",
                     function() {
                         $(".dropzone-previews").removeClass("dropzone");
-                        SetErrorText("");
+                        SetErrorTextAndShowModal("");
                     });
                 this.on("maxfilesexceeded",
                     function() {
-                        SetErrorText("Total of file exceeded limit");
+                        SetErrorTextAndShowModal("Total of file exceeded limit");
                     });
             }
         });
