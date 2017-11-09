@@ -245,6 +245,23 @@
             return View("NewFeedbackTicket", viewModel);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [Route("new-hardware")]
+        public ActionResult NewHardwareTicket()
+        {
+            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Feedback);
+
+            NewFeedbackTicketViewModel viewModel = new NewFeedbackTicketViewModel();
+
+            viewModel.TempId = Guid.NewGuid();
+            viewModel.FeedbackBy.CustomField = availableCustomField.First(x => x.Name == "Feedback by");
+            ////viewModel.Subject.CustomField = availableCustomField.First(x => x.Name == "Subject");
+            viewModel.CustomerName.CustomField = availableCustomField.First(x => x.Name == "Customer Name");
+            viewModel.Feedback.CustomField = availableCustomField.First(x => x.Name == "Feedback");
+
+            return View("NewFeedbackTicket", viewModel);
+        }
+
         [Route("ticket-details")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketDetails(int ticketId, int? categoryId)
