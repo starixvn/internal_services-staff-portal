@@ -6,6 +6,9 @@
 
     function SetErrorText(text) {
         $(".dropzone-error-text").text(text);
+        if (text !== "") {
+            $("#attach-file-modal").modal();
+        }
     }
 
     function ResumeQube(dropzone) {
@@ -52,14 +55,26 @@
     function CheckDuplicateFile(dropzone, file) {
         if (dropzone.files.length) {
             var i, len;
+            var isDuplicate = false;
+            var errorText = "Duplicate file: ";
+
             for (i = 0, len = dropzone.files.length; i < len - 1; i++) // -1 to exclude current file
             {
                 if (dropzone.files[i].name === file.name &&
                     dropzone.files[i].size === file.size &&
                     dropzone.files[i].lastModifiedDate.toString() === file.lastModifiedDate.toString()) {
                     dropzone.removeFile(file);
-                    window.alert("Duplicated file: " + file.name);
+                    errorText += file.name + " | ";
+                    isDuplicate = true;
                 }
+            }
+
+            if (isDuplicate) {
+                errorText = errorText.slice(0, -3);
+
+                SetErrorText(errorText);
+            } else {
+                SetErrorText("");
             }
         }
     }
