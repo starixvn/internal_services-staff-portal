@@ -17,14 +17,22 @@
             $(".id-uploader-form").on("submit",
                 function (e) {
                     e.preventDefault();
-                    $.ajax({
-                        url: $(this).attr('action'),
-                        method: $(this).attr('method'),
-                        data: $(this).serialize(),
-                        success: function () {
-                            $("#notification-modal").modal();
+                    if ($(this).valid()) {
+                        if (CheckValidFiles()) {
+                            $.ajax({
+                                url: $(this).attr('action'),
+                                method: $(this).attr('method'),
+                                data: $(this).serialize(),
+                                success: function() {
+                                    $("#notification-modal").modal();
+                                }
+                            });
+                        } else {
+                            SetErrorTextAndShowModal("Invalid or missing files");
                         }
-                    });
+                    } else {
+                        SetErrorTextAndShowModal("Invalid data in field");
+                    }
                 });
         });
 

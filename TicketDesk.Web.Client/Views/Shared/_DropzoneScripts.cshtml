@@ -3,6 +3,18 @@
 <script src="~/src/libs/dropzone/dropzone.min.js"></script>
 
 <script type="text/javascript">
+    
+    function CheckValidFiles() {
+        var result = false;
+        var rejectedFiles = ticketDeskDropzone.getRejectedFiles();
+
+        if (ticketDeskDropzone.files.length > 0 && rejectedFiles.length === 0) {
+            // have file(s)
+            result = true;
+        }
+
+        return result;
+    }
 
     function SetErrorTextAndShowModal(text) {
         if (text !== "") {
