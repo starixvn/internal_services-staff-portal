@@ -2,7 +2,9 @@
 @using TicketDesk.Domain.Model
 @using TicketDesk.Localization.Views.Ticket
 @model TicketDesk.Web.Client.Models.Ticket.SingleTicketViewModel
-    
+
+@*<h3 class="text-info">@Model.Ticket.Title</h3>*@
+
 @foreach (var customFieldValue in Model.CustomFieldValues)
 {
     <h3 class="text-info">@customFieldValue.CustomField.Name</h3>
