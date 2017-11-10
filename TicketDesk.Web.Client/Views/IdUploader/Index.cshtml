@@ -14,16 +14,35 @@
 
     <script>
         $(document).ready(function () {
+
+            $(".id-uploader-form input").on("input",
+                function () {
+                    var validate = $(".id-uploader-form").validate();
+                    var formSummittedState = validate.submitted;
+                    var isValid = validate.checkForm();
+                    if (isValid) {
+                        $(".id-uploader-form input[type=submit]").removeClass("disabled");
+                    } else {
+                        $(".id-uploader-form input[type=submit]").addClass("disabled");
+                    }
+                    console.log(isValid);
+                    $(".id-uploader-form").validate().submitted = formSummittedState;
+                });
+
             $(".id-uploader-form").on("submit",
                 function (e) {
                     e.preventDefault();
+                    if ($(".id-uploader-form input[type=submit]").hasClass("disabled")) {
+                        return false;
+                    }
                     if ($(this).valid()) {
                         if (CheckValidFiles()) {
+                            $(".id-uploader-form input[type=submit]").addClass("disabled");
                             $.ajax({
                                 url: $(this).attr('action'),
                                 method: $(this).attr('method'),
                                 data: $(this).serialize(),
-                                success: function() {
+                                success: function () {
                                     $("#notification-modal").modal();
                                 }
                             });
@@ -99,5 +118,5 @@
         </div>
         @Html.Partial("_DropzoneView", Model)
     </div>
-    <input type="submit" class="btn btn-primary btn-send" value="Send" />
+    <input type="submit" class="btn btn-primary btn-send disabled" value="Send" />
 }

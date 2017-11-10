@@ -12,8 +12,8 @@
         [Display(Name = "Customer's Username")]
         public string CustomerUserName { get; set; }
 
-        // Match all unicode characters in all language, including 
-        // For full regex with unit test: https://regex101.com/r/WK8oGC/1
+        // Match all unicode characters in all language, including '-', ''', and exclude emoji characters
+        // For full regex with unit test: https://regex101.com/r/39xfTq/1
         [Required(ErrorMessage = "Customer's Name is required!")]
         [StringLength(maximumLength: 50, ErrorMessage = "Customer's Name should not less than 2 and more than 50 characters", MinimumLength = 2)]
         [RegularExpression(
