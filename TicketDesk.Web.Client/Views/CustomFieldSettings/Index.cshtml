@@ -7,60 +7,63 @@
     ViewBag.Title = "Custom Field Settings";
 }
 
-<h2>@ViewBag.Title</h2>
+<section>
+    <h2>@ViewBag.Title</h2>
+</section>
 
-<a href="@Url.Action("Add","CustomFieldSettings")" class="btn btn-success">Add new</a>
+<section>
+    <a href="@Url.Action("Add","CustomFieldSettings")" class="btn btn-success">Add new</a>
+</section>
 
-<br />
-<br />
-
-@if (Model.CustomFields.Any())
-{
-    <table class="table table-bordered text-info">
-        <tr>
-            <th>Id</th>
-            <th>Category</th>
-            <th>Type</th>
-            <th>Name</th>
-            <th>Value</th>
-            <th>Command</th>
-        </tr>
-        @foreach (var item in Model.CustomFields)
-        {
+<section>
+    @if (Model.CustomFields.Any())
+    {
+        <table class="table table-bordered text-info">
             <tr>
-                <td>@item.Id</td>
-                <td>
-                    @foreach (var cat in item.TicketCategories)
-                    {
-                        <p>@cat.Name</p>
-                        <br />
-                    }
-                </td>
-                <td>@item.CustomFieldType.Name</td>
-                <td>@item.Name</td>
-                <td>
-                    @if (item.Values != null && item.Values.Contains("\r\n"))
-                    {
-                        var values = Regex.Split(item.Values, "\r\n");
-                        foreach (var val in values)
-                        {
-                            <span>@val</span>
-                            <br/>
-                        }
-                    }
-                    else
-                    {
-                        @item.Values
-                    }
-                </td>
-                <td>
-                    <a href="@Url.Action("Delete", "CustomFieldSettings", new { id = item.Id })">Delete</a>
-                </td>
+                <th>Id</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Command</th>
             </tr>
-        }
-    </table>
-}
-else
-{
-    <p>No Custom Field in Database</p>
-}
+            @foreach (var item in Model.CustomFields)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>
+                        @foreach (var cat in item.TicketCategories)
+                        {
+                            <p>@cat.Name</p>
+                            <br />
+                        }
+                    </td>
+                    <td>@item.CustomFieldType.Name</td>
+                    <td>@item.Name</td>
+                    <td>
+                        @if (item.Values != null && item.Values.Contains("\r\n"))
+                        {
+                            var values = Regex.Split(item.Values, "\r\n");
+                            foreach (var val in values)
+                            {
+                                <span>@val</span>
+                                <br/>
+                            }
+                        }
+                        else
+                        {
+                            @item.Values
+                        }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Delete", "CustomFieldSettings", new { id = item.Id })">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <p>No Custom Field in Database</p>
+    }
+</section>
