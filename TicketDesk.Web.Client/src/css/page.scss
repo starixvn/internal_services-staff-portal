@@ -530,12 +530,10 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
         font-size: 16px;
     }
     &.btn-delete-all-file {
+        display: none;
         @include button(#ea1118);
         color: #fff;
         float: right;
-        margin-top: 8px;
-        position: relative;
-        top: -5px;
         .icon-delete {
             color: #fff;
         }
@@ -550,6 +548,7 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
 .attach-file {
     .key, .value.span-3 {
         height: auto;
+        min-height: 40px;
     }
     .field-validation-error {
         color: #ff0000;
@@ -621,7 +620,7 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
     transform: scale(1);
 }
 
-
+/**************************************************** Modal ******************************************************/
 .modal {
     margin-top: 250px;
 }
@@ -632,18 +631,35 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
 
 .modal-dialog {
     color: $text-color;
+    &.small-modal {
+        width: 370px;
+    }
     .modal-content {
         padding: 0 24px;
+        border-radius: 0;
+        box-shadow: 0 0 6px rgba(0,0,0,.3);
     }
     .modal-header, .modal-body, .modal-footer {
         padding: 15px 0;
     }
     .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &:before, &:after {
+            display:initial;
+            content: none;
+        }
         color: $menu-color;
         .modal-title {
             font-size: 16px;
             font-weight: 700;
+            order: 1;
         }
+    }
+    .modal-body {
+        font-size: 16px;
+        line-height: 26px;
     }
     .modal-footer {
         border-top: none;
@@ -657,6 +673,7 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
         font-size: 32px;
         font-weight: normal;
         opacity: 1;
+        order : 2;
     }
 }
 

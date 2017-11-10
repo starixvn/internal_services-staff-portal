@@ -407,12 +407,10 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     padding: 12px;
     font-size: 16px; }
   .btn.btn-delete-all-file {
+    display: none;
     background-color: #ea1118;
     color: #fff;
-    float: right;
-    margin-top: 8px;
-    position: relative;
-    top: -5px; }
+    float: right; }
     .btn.btn-delete-all-file:hover {
       background: #ba0e13;
       transition: all 0.3s ease; }
@@ -427,7 +425,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
       transition: all 0.3s ease; }
 
 .attach-file .key, .attach-file .value.span-3 {
-  height: auto; }
+  height: auto;
+  min-height: 40px; }
 
 .attach-file .field-validation-error {
   color: #ff0000; }
@@ -492,6 +491,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   -webkit-transform: scale(1);
   transform: scale(1); }
 
+/**************************************************** Modal ******************************************************/
 .modal {
   margin-top: 250px; }
 
@@ -501,15 +501,29 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 
 .modal-dialog {
   color: #333; }
+  .modal-dialog.small-modal {
+    width: 370px; }
   .modal-dialog .modal-content {
-    padding: 0 24px; }
+    padding: 0 24px;
+    border-radius: 0;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3); }
   .modal-dialog .modal-header, .modal-dialog .modal-body, .modal-dialog .modal-footer {
     padding: 15px 0; }
   .modal-dialog .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     color: #03285a; }
+    .modal-dialog .modal-header:before, .modal-dialog .modal-header:after {
+      display: initial;
+      content: none; }
     .modal-dialog .modal-header .modal-title {
       font-size: 16px;
-      font-weight: 700; }
+      font-weight: 700;
+      order: 1; }
+  .modal-dialog .modal-body {
+    font-size: 16px;
+    line-height: 26px; }
   .modal-dialog .modal-footer {
     border-top: none; }
     .modal-dialog .modal-footer button {
@@ -519,7 +533,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     color: #03285a;
     font-size: 32px;
     font-weight: normal;
-    opacity: 1; }
+    opacity: 1;
+    order: 2; }
 
 .hovicon {
   display: inline-block;

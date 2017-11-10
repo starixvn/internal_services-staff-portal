@@ -11,7 +11,7 @@ a, a:hover {
 
 button.dz-clickable {
   position: relative;
-  top: 5px;
+  top: 3px;
   float: left; }
   button.dz-clickable:focus {
     outline: none; }
