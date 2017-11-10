@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
     public class CustomField
     {
@@ -15,6 +14,10 @@
         public int CustomFieldTypeId { get; set; }
 
         public string Values { get; set; }
+
+        public bool IsEnabled { get; set; }
+
+        public int DisplayOrder { get; set; }
 
         [NotMapped]
         public CustomFieldType CustomFieldType { get; set; }

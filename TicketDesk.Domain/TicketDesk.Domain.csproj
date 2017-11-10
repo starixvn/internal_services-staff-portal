@@ -205,6 +205,10 @@
     <Compile Include="Migrations\201711030638005_Nexcel_UploadedUserId.Designer.cs">
       <DependentUpon>201711030638005_Nexcel_UploadedUserId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711100149123_Nexcel_CustomField_IsEnabledAndDisplayOrder.cs" />
+    <Compile Include="Migrations\201711100149123_Nexcel_CustomField_IsEnabledAndDisplayOrder.Designer.cs">
+      <DependentUpon>201711100149123_Nexcel_CustomField_IsEnabledAndDisplayOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -333,6 +337,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711030638005_Nexcel_UploadedUserId.resx">
       <DependentUpon>201711030638005_Nexcel_UploadedUserId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711100149123_Nexcel_CustomField_IsEnabledAndDisplayOrder.resx">
+      <DependentUpon>201711100149123_Nexcel_CustomField_IsEnabledAndDisplayOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
