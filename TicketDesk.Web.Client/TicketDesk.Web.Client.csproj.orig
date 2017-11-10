@@ -2171,6 +2171,13 @@
     <Content Include="Scripts\ticketdesk\admin-users.js" />
     <Content Include="Scripts\ticketdesk\application-settings.js" />
     <Content Include="Scripts\ticketdesk\TicketFeedback\edit-ticket.js" />
+<<<<<<< HEAD
+    <Content Include="src\contents\images\logo.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+=======
+    <Content Include="src\contents\images\logo.svg" />
+>>>>>>> #000 - fix bug action click for navigation on ios
     <Content Include="src\js\user\login.js" />
     <Content Include="src\contents\images\bg01.png" />
     <Content Include="src\contents\images\logo.png" />
@@ -2380,11 +2387,7 @@
     <Content Include="Views\Home\_Announcement.cshtml" />
     <Content Include="Views\Shared\_DropzoneView.cshtml" />
     <Content Include="Views\Ticket\NewHardwareTicket.cshtml" />
-<<<<<<< HEAD
     <Content Include="src\css\_mixins.scss" />
-=======
-    <Content Include="Views\User\View.cshtml" />
->>>>>>> 000 - login page without layout
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

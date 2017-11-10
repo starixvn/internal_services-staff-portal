@@ -107,6 +107,7 @@ body {
         font-weight: 700;
         padding-top: 18px;
         width: 160px;
+        position: relative;
 
         &.my-ticket {
             padding-top: 14px;
@@ -119,7 +120,8 @@ body {
             background: $primary-color;
             -webkit-transition: width .3s;
             transition: width .3s;
-            margin-top: 11px;
+            position: absolute;
+            bottom: 0;
         }
 
         &:hover:after {
@@ -734,9 +736,9 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
 }
 
 .hovicon:hover:after, .hovicon.cbutton--click:after {
-	-webkit-animation: sonarEffect 1.3s ease-out 75ms;
-	-moz-animation: sonarEffect 1.3s ease-out 75ms;
-	animation: sonarEffect 1.3s ease-out 75ms;
+	-webkit-animation: sonarEffect 0.5s ease-out;
+	-moz-animation: sonarEffect 0.5s ease-out;
+	animation: sonarEffect 0.5s ease-out;
 }
 
 .extend-menu {
@@ -744,7 +746,10 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
     flex-direction: row;
     flex-wrap: wrap;
     max-width: 1040px;
-    margin: 50px auto auto;
+    margin: 30px auto auto;
+    @media all and (max-width: 1280px) {
+        margin-top: 0;
+    }
     .text {
         display: block;
         text-transform: uppercase;
@@ -768,6 +773,9 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
         padding: 50px 0;
         width: 260px;
         white-space: nowrap;
+         @media all and (max-width: 1280px) {
+             padding: 30px 0;
+         }
     }
 }
 
@@ -813,6 +821,8 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
 		opacity: 0;
 	}
 }
+
+
 
 
 
