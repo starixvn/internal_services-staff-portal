@@ -326,12 +326,12 @@ body {
     padding: 6px 12px;
     min-height: 120px; }
 
+.attach-file .fullwidth {
+  padding: 9px 12px; }
+
 input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   border: none !important;
   box-shadow: 0 0 4px #1c6cf2; }
-
-.facility-form .attach-file .fullwidth {
-  padding: 9px 12px; }
 
 .facility-form input[type="text"] {
   border: none;
@@ -340,25 +340,26 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   margin: 0 -12px;
   padding: 0 12px; }
 
-.feedback-form .item {
-  border-left: 1px solid #d3d7db;
-  padding-top: 0; }
-  .feedback-form .item ~ .item {
-    padding-top: 12px; }
-  .feedback-form .item .key.border {
-    border-left: none; }
-  .feedback-form .item input[type="text"] {
-    height: 40px;
-    width: 100%;
-    padding: 0 12px; }
-  .feedback-form .item textarea {
-    min-height: 100px;
-    width: 100%;
-    margin-bottom: 6px; }
-
-.feedback-form .attach-file .fullwidth {
-  height: 40px;
-  line-height: 40px; }
+.feedback-form {
+  /*.attach-file .fullwidth {
+        height: 40px;
+        line-height: 40px;
+    }*/ }
+  .feedback-form .item {
+    border-left: 1px solid #d3d7db;
+    padding-top: 0; }
+    .feedback-form .item ~ .item {
+      padding-top: 12px; }
+    .feedback-form .item .key.border {
+      border-left: none; }
+    .feedback-form .item input[type="text"] {
+      height: 40px;
+      width: 100%;
+      padding: 0 12px; }
+    .feedback-form .item textarea {
+      min-height: 100px;
+      width: 100%;
+      margin-bottom: 6px; }
 
 /**************************************************** Button ******************************************************/
 .btn {

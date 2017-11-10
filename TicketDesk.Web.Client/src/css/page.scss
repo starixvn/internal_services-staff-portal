@@ -437,14 +437,15 @@ body {
         min-height: 120px;
     }
 }
+
+.attach-file .fullwidth {
+    padding: 9px 12px;
+}
 input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
         border: none !important;
         box-shadow: 0 0 4px #1c6cf2;
 }
 .facility-form {
-    .attach-file .fullwidth {
-        padding: 9px 12px;
-    }
     .subject {
         //padding: 0;
     }
@@ -478,10 +479,10 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
             margin-bottom: 6px;           
         }
     }
-    .attach-file .fullwidth {
+    /*.attach-file .fullwidth {
         height: 40px;
         line-height: 40px;
-    }
+    }*/
 }
 
 
