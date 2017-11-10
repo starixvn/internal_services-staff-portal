@@ -404,6 +404,7 @@
     <Compile Include="Infrastructure\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\PagedListAsync.cs" />
     <Compile Include="Infrastructure\Extensions\PagedListExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\SummerNoteStringExtensions.cs" />
     <Compile Include="Infrastructure\Filters\CustomJsonResultAttribute.cs" />
     <Compile Include="Infrastructure\Filters\LocalizationFilterAttribute.cs" />
@@ -433,6 +434,7 @@
     <Compile Include="Models\CustomFieldSettingViewModel.cs" />
     <Compile Include="Models\CustomField\AddCustomFieldViewModel.cs" />
     <Compile Include="Models\Extensions\ClientSettingExtensions.cs" />
+    <Compile Include="Models\Extensions\MenuIconMapper.cs" />
     <Compile Include="Models\Extensions\MenuItem.cs" />
     <Compile Include="Models\Extensions\ProjectExtensions.cs" />
     <Compile Include="Models\Extensions\SelectListExtensions.cs" />
@@ -453,9 +455,15 @@
     <Compile Include="Models\SystemInfoViewModel.cs" />
     <Compile Include="Models\TicketCenterListViewModel.cs" />
     <Compile Include="Models\TicketEmail.cs" />
+    <Compile Include="Models\Ticket\NewCustomerSupportTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewFeedbackTicketViewModel.cs" />
+    <Compile Include="Models\Ticket\NewHardwareTicketViewModel.cs" />
+    <Compile Include="Models\Ticket\NewIncidentTicketViewModel.cs" />
+    <Compile Include="Models\Ticket\NewNetworkTicketViewModel.cs" />
+    <Compile Include="Models\Ticket\NewSoftwareTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewFacilityTicketViewModel.cs" />
+    <Compile Include="Models\Ticket\SingleTicketViewModel.cs" />
     <Compile Include="Models\Ticket\TicketFeedbackCustomField.cs" />
     <Compile Include="Models\Ticket\TicketWithFilesBaseViewModel.cs" />
     <Compile Include="Models\UserSignInViewModel.cs" />
@@ -2163,7 +2171,7 @@
     <Content Include="Scripts\ticketdesk\admin-users.js" />
     <Content Include="Scripts\ticketdesk\application-settings.js" />
     <Content Include="Scripts\ticketdesk\TicketFeedback\edit-ticket.js" />
-    <Content Include="Scripts\ticketdesk\User\login.js" />
+    <Content Include="src\js\user\login.js" />
     <Content Include="src\contents\images\bg01.png" />
     <Content Include="src\contents\images\logo.png" />
     <Content Include="src\contents\images\logo_login.png" />
@@ -2193,6 +2201,7 @@
     <Content Include="src\Fonts\iconFont\style.css" />
     <Content Include="src\js\filevalidation.js" />
     <Content Include="src\js\page.js" />
+    <Content Include="src\libs\animatecss\animate.min.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.min.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.css" />
@@ -2366,18 +2375,22 @@
     <Content Include="Views\Shared\_SubmenuNavigation.cshtml" />
     <Content Include="Views\Shared\_DropzoneScripts.cshtml" />
     <Content Include="src\css\custom-dropzone.scss" />
-<<<<<<< HEAD
+    <Content Include="src\css\_variables.scss" />
     <Content Include="Views\Home\_MyOpeningTicket.cshtml" />
     <Content Include="Views\Home\_Announcement.cshtml" />
+    <Content Include="Views\Shared\_DropzoneView.cshtml" />
+<<<<<<< HEAD
+    <Content Include="Views\Ticket\NewHardwareTicket.cshtml" />
 =======
-    <Content Include="src\css\_variables.scss" />
->>>>>>> #000 - customize style for dropzone
+    <Content Include="src\css\_mixins.scss" />
+>>>>>>> #000 - fix some bugs UI
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Scripts\ticketdesk\User\" />
     <Folder Include="src\libs\dropzone\debug\" />
     <Folder Include="uploads\" />
   </ItemGroup>
