@@ -314,7 +314,7 @@ body {
     flex-flow: row wrap;
     flex: 1 100%; }
     .form-content .item.even {
-      background: #f7f7f7; }
+      background: #f2f2f2; }
       .form-content .item.even *:not(.btn-delete) {
         background: inherit; }
   .form-content .fullwidth, .form-content textarea {
