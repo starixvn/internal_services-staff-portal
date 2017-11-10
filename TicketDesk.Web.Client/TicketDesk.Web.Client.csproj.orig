@@ -2379,11 +2379,12 @@
     <Content Include="Views\Home\_MyOpeningTicket.cshtml" />
     <Content Include="Views\Home\_Announcement.cshtml" />
     <Content Include="Views\Shared\_DropzoneView.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Ticket\NewHardwareTicket.cshtml" />
-=======
+<<<<<<< HEAD
     <Content Include="src\css\_mixins.scss" />
->>>>>>> #000 - fix some bugs UI
+=======
+    <Content Include="Views\User\View.cshtml" />
+>>>>>>> 000 - login page without layout
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

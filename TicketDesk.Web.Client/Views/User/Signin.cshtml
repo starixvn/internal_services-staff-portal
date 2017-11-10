@@ -1,40 +1,88 @@
-﻿@using TicketDesk.Localization.Views.User
+﻿@{
+    Layout = null;
+}
+
+@using TicketDesk.Localization.Views.User
+@using TicketDesk.Core.Resources
 @model TicketDesk.Web.Client.Models.UserSignInViewModel
-@section title
-{
-    @SignIn.Title
-}
 
-@section css
-{
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="msapplication-config" content="none" />
+    <title>@SignIn.Title</title>
+
+    <link href="~/src/libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/src/libs/normalize.css" rel="stylesheet" />
+    <link href="~/src/Fonts/iconFont/style.css" rel="stylesheet" />
+    <link href="~/src/css/page.css" rel="stylesheet" />
+    <link href="~/src/css/login.css" rel="stylesheet" />
+    
     <link rel="stylesheet" href="~/src/libs/animatecss/animate.min.css" />
-}
+</head>
+<body>
 
-@using (Html.BeginForm("SignIn", "User", new { ViewBag.ReturnUrl }, FormMethod.Post, new { id = "user-login-form", @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
+    <div class="page-container">
+        
+        <div class="content">
+            @using (Html.BeginForm("SignIn", "User", new { ViewBag.ReturnUrl }, FormMethod.Post, new { id = "user-login-form", @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
 
-    <div class="login-form">
-        <div class="logo"><img src="~/src/contents/images/logo.svg" /></div>
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="field">
-            @Html.LabelFor(m => m.Email)
-            <div>
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control validate-effect", data_validateeffect="shake" })
-            </div>
+                <div class="login-form">
+                    <div class="logo"><img src="~/src/contents/images/logo.svg" /></div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="field">
+                        @Html.LabelFor(m => m.Email)
+                        <div>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control validate-effect", data_validateeffect = "shake" })
+                        </div>
+                    </div>
+                    <div class="field">
+                        @Html.LabelFor(m => m.Password)
+                        <div>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control validate-effect", data_validateeffect = "shake" })
+                        </div>
+                    </div>
+                    <button id="btnLogin" type="submit" class="btn btn-primary" tabindex="10">@SignIn.Login</button>
+                </div>
+            }
         </div>
-        <div class="field">
-            @Html.LabelFor(m => m.Password)
-            <div>
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control validate-effect", data_validateeffect = "shake" })
-            </div>
-        </div>
-        <button id="btnLogin" type="submit" class="btn btn-primary" tabindex="10">@SignIn.Login</button>
     </div>
-}
+    
+    <!-- Modal confirm logout -->
+    <div class="modal fade" id="logOut" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">@Messages.LogoutConfirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>@Messages.LogoutModalDescription</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="confirmLogOut">@Messages.Yes</button>
+                    <button type="button" class="btn btn-second" data-dismiss="modal">@Messages.No</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-@section Scripts {
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="~/src/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="~/src/libs/Touch/touche.js"></script>
+    <script src="~/Scripts/ticketdesk/common.js"></script>
+    <script src="~/src/js/page.js"></script>
+
     @Scripts.Render("~/bundles/validate")
 
     <script src="~/src/js/user/login.js"></script>
-}
+</body>
+</html>
