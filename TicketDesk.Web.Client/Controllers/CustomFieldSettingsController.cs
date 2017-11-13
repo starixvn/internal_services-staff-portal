@@ -8,6 +8,7 @@
     using Models;
     using Models.CustomField;
     using System.Collections.Generic;
+    using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -112,8 +113,9 @@
             var categoriesHaveCustomField = _domainContext.TicketCategoryCustomField.Where(x => x.CustomFieldId == id)
                 .Select(x => x.CategoryId);
 
-            AddCustomFieldViewModel viewModel = new AddCustomFieldViewModel
+            EditCustomFieldViewModel viewModel = new EditCustomFieldViewModel
             {
+                Id = id,
                 TicketCategories = new List<SelectListItem>(_domainContext.TicketCategories.Select(x =>
                     new SelectListItem
                     {
@@ -134,8 +136,38 @@
         [Route("edit")]
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Host)]
-        public ActionResult Edit(AddCustomFieldViewModel viewModel)
+        public ActionResult Edit(EditCustomFieldViewModel viewModel)
         {
+            var customField = _domainContext.CustomFields.First(x => x.Id == viewModel.Id);
+
+            customField.Name = viewModel.Name;
+            customField.Values = viewModel.Values;
+            customField.DisplayOrder = viewModel.DisplayOrder;
+            customField.IsEnabled = viewModel.IsEnabled;
+
+            _domainContext.CustomFields.AddOrUpdate(customField);
+
+            _domainContext.SaveChanges();
+
+            // Update ticket categories
+            var ticketCategoryCustomFields =
+                _domainContext.TicketCategoryCustomField.Where(x => x.CustomFieldId == viewModel.Id);
+
+            _domainContext.TicketCategoryCustomField.RemoveRange(ticketCategoryCustomFields);
+
+            foreach (var id in viewModel.TicketCategoryIds)
+            {
+                var ticketCategoryCustomField = new TicketCategoryCustomField
+                {
+                    CategoryId = id,
+                    CustomFieldId = customField.Id
+                };
+
+                _domainContext.TicketCategoryCustomField.Add(ticketCategoryCustomField);
+            }
+
+            _domainContext.SaveChanges();
+
             return RedirectToAction("Index");
         }
 

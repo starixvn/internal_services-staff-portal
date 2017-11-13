@@ -1,4 +1,4 @@
-﻿@model TicketDesk.Web.Client.Models.CustomField.AddCustomFieldViewModel
+﻿@model TicketDesk.Web.Client.Models.CustomField.EditCustomFieldViewModel
 
 @{
     ViewBag.Title = "Edit Custom Field";
@@ -8,6 +8,8 @@
 
 @using (Html.BeginForm("Edit", "CustomFieldSettings", FormMethod.Post, new { @class = "form-group" }))
 {
+    @Html.HiddenFor(x => x.Id)
+
     <div class="input-group">
         @Html.LabelFor(x => x.TicketCategoryIds)
         @Html.ListBoxFor(x => x.TicketCategoryIds, Model.TicketCategories, new { @class = "form-control" })
