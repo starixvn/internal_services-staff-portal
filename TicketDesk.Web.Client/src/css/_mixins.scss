@@ -1,7 +1,12 @@
-﻿@mixin button($bgcolor) {
+﻿@mixin button($bgcolor, $color) {
     background-color: $bgcolor;
-    &:hover {
+    color: $color;
+    &:hover:enabled {
         background: darken($bgcolor, 10%);
-        transition: all 0.3s ease;
+        transition: all 0.3s ease;        
+    }
+    &[disabled] {
+        opacity: 0.5;
+        color: rgba( $color, .5 );
     }
 }

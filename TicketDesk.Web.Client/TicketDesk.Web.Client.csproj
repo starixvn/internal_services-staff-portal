@@ -2176,7 +2176,6 @@
     <Content Include="src\contents\images\logo.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="src\js\formhandler.js" />
     <Content Include="src\js\user\login.js" />
     <Content Include="src\contents\images\bg01.png" />
     <Content Include="src\contents\images\logo.png" />
@@ -2229,6 +2228,11 @@
     <Content Include="src\libs\jquery-validation-unobtrusive\3.2.6\jquery.validate.unobtrusive.min.js" />
     <Content Include="src\libs\jquery\1.12.4\jquery-1.12.4.min.js" />
     <Content Include="src\libs\normalize.css" />
+    <Content Include="src\libs\rippler\css\rippler.css" />
+    <Content Include="src\libs\rippler\css\rippler.min.css" />
+    <Content Include="src\libs\rippler\js\jquery.rippler.js" />
+    <Content Include="src\libs\rippler\js\jquery.rippler.min.js" />
+    <Content Include="src\libs\rippler\svg\circle.svg" />
     <Content Include="src\libs\Touch\touche.js" />
     <Content Include="Views\SearchManager\Index.cshtml" />
     <Content Include="Views\DataManagement\Demo.cshtml" />
@@ -2387,6 +2391,7 @@
     <Content Include="Views\Shared\_DropzoneView.cshtml" />
     <Content Include="Views\Ticket\NewHardwareTicket.cshtml" />
     <Content Include="src\css\_mixins.scss" />
+    <Content Include="src\libs\rippler\css\rippler.css.map" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -2395,6 +2400,7 @@
   <ItemGroup>
     <Folder Include="Scripts\ticketdesk\User\" />
     <Folder Include="src\libs\dropzone\debug\" />
+    <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\S22.Mail\S22.Mail.csproj">

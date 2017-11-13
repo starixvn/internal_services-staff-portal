@@ -54,5 +54,7 @@
     height: 40px;
     font-size: 16px;
     padding: 6px 12px;
-    border-radius: 0; }
+    border-radius: 0;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0; }
 

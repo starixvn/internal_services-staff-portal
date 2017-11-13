@@ -1,6 +1,18 @@
 @import "_variables.scss";
 @import "_mixins.scss";
 
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../Fonts/iconFont/fonts/icomoon.eot?hant0m');
+  src:  url('../Fonts/iconFont/fonts/icomoon.eot?hant0m#iefix') format('embedded-opentype'),
+    url('../Fonts/iconFont/fonts/icomoon.ttf?hant0m') format('truetype'),
+    url('../Fonts/iconFont/fonts/icomoon.woff?hant0m') format('woff'),
+    url('../Fonts/iconFont/fonts/icomoon.svg?hant0m#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 .input-validation-error{
     border-color: red;
 }
@@ -165,6 +177,7 @@ body {
     display: flex;
     padding: 121px 25px 25px 25px;
     box-sizing: border-box;
+    flex-flow: row wrap;
     height: 100%;
     max-height: 100%;
 
@@ -241,6 +254,62 @@ body {
 }
 
 /******************************************* Table ******************************************/
+.feature {
+    border-radius: 0;
+    .panel-heading {
+        border-radius: 0;
+        background: $title-form-bg;
+        color: $text-second-color;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+    .panel-body {
+        padding: 10px;
+    }
+}
+.table {
+    table, tr, td, th {
+        border: none;
+    }
+}
+
+.table.table-bordered {
+    > thead > tr > th {
+        background: #ececec;
+        color: $title-form-bg;
+        font-size: 14px;
+    }
+    tr.header td {
+        background: #d5def7;
+        color: $title-form-bg;
+        text-transform: uppercase;
+        font-weight: 700;
+        .number-ticket {
+            color: $primary-color;
+        }
+    }
+}
+table {
+        color: black;
+    }
+
+table, tr, td, th {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+    tr.header {
+        cursor: pointer;
+    }
+
+.header .sign:after {
+    content: "+";
+    display: inline-block;
+}
+
+.header.expand .sign:after {
+    content: "-";
+}
 .tbl-content {
     width: 100%;
     background: #fff;
@@ -431,10 +500,16 @@ body {
     input[type="text"], textarea {        
         font-size: 16px;
         border: 1px solid $border-color;
+        -webkit-appearance: none;
+        -webkit-border-radius: 0;
+
     }
     textarea {
         padding: 6px 12px;        
         min-height: 120px;
+    }
+    .custom-dropdown {
+        padding: 0;
     }
 }
 
@@ -487,8 +562,11 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
 
 
 /**************************************************** Button ******************************************************/
+.btn-primary.disabled.focus, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled].focus, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
+    background: #2e4592;
+    opacity: 0.5;
+}
 .btn {
-    color: #fff;
     background: $title-form-bg;
     font-weight: bold;
     font-size: 15px;
@@ -502,13 +580,12 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
         color: #fff;
     }
     &.btn-add {
-        @include button($title-form-bg);
+        @include button($title-form-bg, $text-second-color);
         float: right;
         margin-top: 3px;       
     }
     &.btn-delete {
-        @include button(#ffc5c7);
-        color: #333;
+        @include button(#ffc5c7, #333);
         margin: 3px 0 0 8px;
         .icon-delete {
             color: #ea1118;
@@ -518,11 +595,10 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
         }        
     }
     &.btn-primary {
-        @include button($title-form-bg);
+        @include button($title-form-bg, $text-second-color);
     }
     &.btn-second {
-        @include button(#e6e6ea);
-        color: $text-color;
+        @include button(#e6e6ea, $text-color);
     }
 
 
@@ -534,17 +610,15 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
     }
     &.btn-delete-all-file {
         display: none;
-        @include button(#ea1118);
-        color: #fff;
+        @include button(#ea1118, $text-second-color);
         float: right;
         .icon-delete {
             color: #fff;
         }
     }
     &.btn-browser {
-         @include button(#dad7d7);
+         @include button(#dad7d7, #333);
          border: 1px solid #999;
-         color: #333;
     }
 }
 
@@ -680,6 +754,57 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
     }
 }
 
+/**************************************************** Dropdown ******************************************************/
+.custom-dropdown {
+    position: relative;
+} 
+
+.custom-dropdown select {
+  font-size: inherit;
+  border: 0;
+  margin: 0;
+  text-indent: 0.01px;
+  text-overflow: '';
+  height: 36px;
+  cursor: pointer;
+  width: 100%;
+  /*Hiding the select arrow for firefox*/
+  -moz-appearance: none;
+  /*Hiding the select arrow for chrome*/
+  -webkit-appearance:none;
+  /*Hiding the select arrow default implementation*/
+  appearance: none;
+  padding: 0 12px;
+  &:focus {
+      outline: none;
+  }
+}
+
+/*Hiding the select arrow for IE10*/
+.custom-dropdown select::-ms-expand {
+    display: none;
+}
+
+.custom-dropdown option {
+    padding: 4px;
+    background: #fff;
+    color: #545454;
+    height: 28px;
+}
+.custom-dropdown::after { /*  Custom dropdown arrow */
+  content: '\e914';
+  font-family: 'icomoon';
+  position: absolute;
+  right: 8px;
+  pointer-events:none;
+  font-size: 12px;
+  color: #858585;
+}
+
+.custom-dropdown .caret {
+    border: none;
+}
+
 
 .hovicon {
     display: inline-block;
@@ -780,6 +905,16 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
     }
 }
 
+.feature {
+    flex: 1 100%;
+}
+.width-100 {
+    width: 100px;
+}
+.width-150 {
+    width: 150px;
+}
+
 @-webkit-keyframes sonarEffect {
 	0% {
 		opacity: 0.3;
@@ -822,6 +957,7 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
 		opacity: 0;
 	}
 }
+
 
 
 

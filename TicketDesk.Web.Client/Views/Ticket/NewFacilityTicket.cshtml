@@ -121,7 +121,7 @@
         <div class="item-list" id="item-list">
             <div class="title item-head border">
                 <span>Item list</span>
-                <button class="btn btn-add" data-class="item-list"><span class="icon-add"></span>Add Item</button>
+                <button class="btn btn-add rippler rippler-default" data-class="item-list"><span class="icon-add"></span>Add Item</button>
             </div>
 
             @if (Model.Items != null)
@@ -140,9 +140,9 @@
                         @Html.CustomFieldIndex("Items", guid)
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border" })
-                        @Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "border" })
+                        <div class="value border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "" })</div>
                         <div class="border span-2">
-                            <button class="btn btn-delete btn-delete-item"><span class="icon-delete"></span>Delete Item</button>
+                            <button class="btn btn-delete btn-delete-item rippler rippler-default"><span class="icon-delete"></span>Delete Item</button>
                         </div>
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth border key" })
@@ -155,5 +155,5 @@
         
         @Html.Partial("_DropzoneView", Model)
     </div>
-    <input type="submit" class="btn btn-primary btn-send disabled" value="Send" />
+    <input type="submit" class="btn btn-primary btn-send rippler rippler-default" value="Send" />
 }

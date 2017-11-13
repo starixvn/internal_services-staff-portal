@@ -1,53 +1,33 @@
 ﻿@model IList<TicketDesk.Web.Client.Models.Home.TicketGroup>
 
-<style>
-    table {
-        color: black;
-    }
-
-    table, tr, td, th {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-
-        tr.header {
-            cursor: pointer;
-        }
-
-    .header .sign:after {
-        content: "+";
-        display: inline-block;
-    }
-
-    .header.expand .sign:after {
-        content: "-";
-    }
-</style>
-
 <table class="table table-bordered table-hover">
-    <tr>
-        <th>#</th>
-        <th>Subject</th>
-        <th>Created Date</th>
-        <th>Status</th>
-    </tr>
-    @foreach (var ticketGroup in Model)
-    {
-        <tr class="header expand">
-            <th colspan="4"><span class="sign"></span> @ticketGroup.Name (@ticketGroup.Tickets.Count())</th>
+    <thead>
+        <tr>
+            <th class="text-center width-100">#</th>
+            <th>Subject</th>
+            <th class="text-center width-150">Created Date</th>
+            <th class="text-center width-150">Status</th>
         </tr>
-
-        foreach (var ticket in ticketGroup.Tickets)
+    </thead>
+    <tbody>
+        @foreach (var ticketGroup in Model)
         {
-            <tr>
-                <td>
-                    <a href="@Url.Action("Index","TicketCenter", new {id = ticket.TicketId})">@ticket.TicketId</a>
-                </td>
-                <td>@ticket.Title</td>
-                <td>@ticket.CreatedDate</td>
-                <td>@ticket.TicketStatus</td>
+            <tr class="header">
+                <td colspan="4"><span class="sign"></span> @ticketGroup.Name <span class="number-ticket">(@ticketGroup.Tickets.Count())</span></td>
             </tr>
+
+            foreach (var ticket in ticketGroup.Tickets)
+            {
+                <tr class="child-@ticketGroup.Name">
+                    <td class="text-center">
+                        <a href="@Url.Action("Index","TicketCenter", new {id = ticket.TicketId})">@ticket.TicketId</a>
+                    </td>
+                    <td>@ticket.Title</td>
+                    <td class="text-center">@ticket.CreatedDate</td>
+                    <td class="text-center">@ticket.TicketStatus</td>
+                </tr>
+            }
         }
-    }
+    </tbody>
 
 </table>

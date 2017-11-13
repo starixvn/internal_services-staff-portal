@@ -8,7 +8,8 @@
         $(document).ready(function() {
             $('.header').on("click",
                 function () {
-                    $(this).toggleClass('expand').nextUntil('tr.header').slideToggle(100);
+                    //$(this).toggleClass('expand').nextUntil('tr.header').slideToggle(100);
+                    $(this).siblings().find('td').slideToggle('fast');
                 });
             $("#itemperpage-select").on("change",
                 function() {
@@ -21,16 +22,16 @@
     </script>
 }
 
-<div class="panel col-md-12">
+<div class="panel feature">
     <div class="panel-heading text-info">My openning issue</div>
     <div class="panel-body">
         @Html.Partial("_MyOpeningTicket", Model.TicketGroups)
-        
+
         <ul class="pagination">
             @for (int i = 0; i < Model.TotalPage; i++)
             {
                 var activeClass = "";
-                if (Model.CurrentPage == (i+1))
+                if (Model.CurrentPage == (i + 1))
                 {
                     activeClass = "active";
                 }
@@ -38,14 +39,15 @@
                 <li class="@activeClass"><a href="@Url.Action("Index", "Home", new { page = (i + 1), itemPerPage = Model.ItemPerPage })">@(i + 1)</a></li>
             }
         </ul>
-        
+
         @Html.LabelForModel(Model.ItemPerPage)
-        @Html.DropDownListFor(x => x.ItemPerPage, Model.ItemPerPageList, new {id="itemperpage-select"})
+        @Html.DropDownListFor(x => x.ItemPerPage, Model.ItemPerPageList, new { id = "itemperpage-select" })
 
     </div>
 </div>
 
-<div class="panel col-md-12">
+
+<div class="panel feature">
     <div class="panel-heading text-info">Announcements</div>
     <div class="panel-body">
         @Html.Partial("_Announcement")
