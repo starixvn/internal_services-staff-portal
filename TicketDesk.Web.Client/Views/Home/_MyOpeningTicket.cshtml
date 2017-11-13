@@ -23,7 +23,7 @@
                         <a href="@Url.Action("Index","TicketCenter", new {id = ticket.TicketId})">@ticket.TicketId</a>
                     </td>
                     <td>@ticket.Title</td>
-                    <td class="text-center">@ticket.CreatedDate</td>
+                    <td class="text-center">@ticket.CreatedDate.ToString("MMM dd, yyyy")</td>
                     <td class="text-center">@ticket.TicketStatus</td>
                 </tr>
             }
