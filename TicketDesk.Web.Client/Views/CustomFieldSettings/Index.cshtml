@@ -19,7 +19,9 @@
     <ul class="nav nav-tabs">
         @foreach (var ticketCategory in Model.TicketCategoryWithCustomFields)
         {
-            <li class="active"><a href="@Url.Action("Index", "CustomFieldSettings", new { id = ticketCategory.CategoryId })">@ticketCategory.Name</a></li>
+            var activeClass = ticketCategory.CategoryId == Model.SelectedCategoryId ? "active" : "";
+
+            <li class="@activeClass"><a href="@Url.Action("Index", "CustomFieldSettings", new { id = ticketCategory.CategoryId })">@ticketCategory.Name</a></li>
         }
     </ul>
 

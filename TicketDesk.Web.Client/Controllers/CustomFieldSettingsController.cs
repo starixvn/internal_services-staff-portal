@@ -29,6 +29,7 @@
 
             var viewModel = new CustomFieldSettingViewModel
             {
+                SelectedCategoryId = id,
                 TicketCategoryWithCustomFields =
                     _domainContext.TicketCategories.Where(x => categoryIds.Contains(x.CategoryId))
             };

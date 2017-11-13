@@ -5,6 +5,8 @@
 
     public class CustomFieldSettingViewModel
     {
+        public int SelectedCategoryId { get; set; }
+
         public IEnumerable<TicketCategory> TicketCategoryWithCustomFields { get; set; }
 
         public IEnumerable<Domain.Model.CustomField> CustomFields { get; set; }
