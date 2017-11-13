@@ -14,9 +14,16 @@
 @section scripts
 {
     @Html.Partial("_DropzoneScripts", Model)
+    <script src="~/src/js/formhandler.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            InitFormHandler("ticket-form", true);
+        });
+    </script>
 }
 
-@using (Html.BeginForm("NewFeedbackTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("NewFeedbackTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form filechange", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
@@ -64,5 +71,5 @@
         </div>
         @Html.Partial("_DropzoneView", Model)
     </div>
-    <input type="submit" class="btn btn-primary btn-send" value="Send" />
+    <input type="submit" class="btn btn-primary btn-send disabled" value="Send" />
 }

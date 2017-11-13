@@ -2176,6 +2176,7 @@
     <Content Include="src\contents\images\logo.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\js\formhandler.js" />
     <Content Include="src\js\user\login.js" />
     <Content Include="src\contents\images\bg01.png" />
     <Content Include="src\contents\images\logo.png" />
@@ -2392,6 +2393,7 @@
     <Content Include="Views\Ticket\NewHardwareTicket.cshtml" />
     <Content Include="src\css\_mixins.scss" />
     <Content Include="src\libs\rippler\css\rippler.css.map" />
+    <Content Include="Views\CustomFieldSettings\Edit.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -2400,7 +2402,6 @@
   <ItemGroup>
     <Folder Include="Scripts\ticketdesk\User\" />
     <Folder Include="src\libs\dropzone\debug\" />
-    <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\S22.Mail\S22.Mail.csproj">

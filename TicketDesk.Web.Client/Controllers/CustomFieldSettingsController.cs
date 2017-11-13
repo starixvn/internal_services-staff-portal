@@ -23,21 +23,23 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Read)]
-        public ActionResult Index()
+        public ActionResult Index(int id = 1)
         {
+            var categoryIds = _domainContext.TicketCategoryCustomField.Select(x => x.CategoryId);
+
             var viewModel = new CustomFieldSettingViewModel
             {
-                CustomFields = _domainContext.CustomFields
+                TicketCategoryWithCustomFields =
+                    _domainContext.TicketCategories.Where(x => categoryIds.Contains(x.CategoryId))
             };
+
+            var customFieldIds = _domainContext.TicketCategoryCustomField.Where(x => x.CategoryId == id)
+                .Select(x => x.CustomFieldId);
+
+            viewModel.CustomFields = _domainContext.CustomFields.Where(x => customFieldIds.Contains(x.Id));
 
             foreach (CustomField customField in viewModel.CustomFields)
             {
-                var categoryIds = _domainContext.TicketCategoryCustomField.Where(x => x.CustomFieldId == customField.Id)
-                    .Select(x => x.CategoryId);
-
-                customField.TicketCategories = _domainContext.TicketCategories
-                    .Where(x => categoryIds.Contains(x.CategoryId)).ToList();
-
                 customField.CustomFieldType =
                     _domainContext.CustomFieldTypes.First(x => x.Id == customField.CustomFieldTypeId);
             }
@@ -97,6 +99,42 @@
 
             _domainContext.SaveChanges();
 
+            return RedirectToAction("Index");
+        }
+
+        [Route("edit")]
+        [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Read)]
+        public ActionResult Edit(int id)
+        {
+            CustomField customField = _domainContext.CustomFields.First(x => x.Id == id);
+
+            var categoriesHaveCustomField = _domainContext.TicketCategoryCustomField.Where(x => x.CustomFieldId == id)
+                .Select(x => x.CategoryId);
+
+            AddCustomFieldViewModel viewModel = new AddCustomFieldViewModel
+            {
+                TicketCategories = new List<SelectListItem>(_domainContext.TicketCategories.Select(x =>
+                    new SelectListItem
+                    {
+                        Text = x.Name,
+                        Value = x.CategoryId.ToString(),
+                        Selected = categoriesHaveCustomField.Contains(x.CategoryId)
+                    })),
+                Name = customField.Name,
+                Values = customField.Values,
+                DisplayOrder = customField.DisplayOrder,
+                IsEnabled = customField.IsEnabled,
+                CustomFieldTypeId = customField.CustomFieldTypeId
+            };
+
+            return View(viewModel);
+        }
+
+        [Route("edit")]
+        [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Host)]
+        public ActionResult Edit(AddCustomFieldViewModel viewModel)
+        {
             return RedirectToAction("Index");
         }
 

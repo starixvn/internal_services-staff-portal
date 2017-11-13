@@ -16,28 +16,37 @@
 </section>
 
 <section>
+    <ul class="nav nav-tabs">
+        @foreach (var ticketCategory in Model.TicketCategoryWithCustomFields)
+        {
+            <li class="active"><a href="@Url.Action("Index", "CustomFieldSettings", new { id = ticketCategory.CategoryId })">@ticketCategory.Name</a></li>
+        }
+    </ul>
+
     @if (Model.CustomFields.Any())
     {
         <table class="table table-bordered text-info">
             <tr>
                 <th>Id</th>
-                <th>Category</th>
+                @*<th>Category</th>*@
                 <th>Type</th>
                 <th>Name</th>
                 <th>Value</th>
+                <th>Enabled</th>
+                <th>Display Order</th>
                 <th>Command</th>
             </tr>
             @foreach (var item in Model.CustomFields)
             {
                 <tr>
                     <td>@item.Id</td>
-                    <td>
+                    @*<td>
                         @foreach (var cat in item.TicketCategories)
                         {
                             <p>@cat.Name</p>
-                            <br />
+                            <br/>
                         }
-                    </td>
+                    </td>*@
                     <td>@item.CustomFieldType.Name</td>
                     <td>@item.Name</td>
                     <td>
@@ -56,6 +65,20 @@
                         }
                     </td>
                     <td>
+                        @if (item.IsEnabled)
+                        {
+                            <p>Enabled</p>
+                        }
+                        else
+                        {
+                            <p>Disabled</p>
+                        }
+                    </td>
+                    <td>
+                        <p>@item.DisplayOrder</p>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "CustomFieldSettings", new { id = item.Id })">Edit</a>
                         <a href="@Url.Action("Delete", "CustomFieldSettings", new { id = item.Id })">Delete</a>
                     </td>
                 </tr>

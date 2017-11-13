@@ -2171,13 +2171,11 @@
     <Content Include="Scripts\ticketdesk\admin-users.js" />
     <Content Include="Scripts\ticketdesk\application-settings.js" />
     <Content Include="Scripts\ticketdesk\TicketFeedback\edit-ticket.js" />
-<<<<<<< HEAD
+    <Content Include="src\contents\images\bg_l.png" />
+    <Content Include="src\contents\images\bg_r.png" />
     <Content Include="src\contents\images\logo.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-=======
-    <Content Include="src\contents\images\logo.svg" />
->>>>>>> #000 - fix bug action click for navigation on ios
     <Content Include="src\js\user\login.js" />
     <Content Include="src\contents\images\bg01.png" />
     <Content Include="src\contents\images\logo.png" />
@@ -2230,6 +2228,11 @@
     <Content Include="src\libs\jquery-validation-unobtrusive\3.2.6\jquery.validate.unobtrusive.min.js" />
     <Content Include="src\libs\jquery\1.12.4\jquery-1.12.4.min.js" />
     <Content Include="src\libs\normalize.css" />
+    <Content Include="src\libs\rippler\css\rippler.css" />
+    <Content Include="src\libs\rippler\css\rippler.min.css" />
+    <Content Include="src\libs\rippler\js\jquery.rippler.js" />
+    <Content Include="src\libs\rippler\js\jquery.rippler.min.js" />
+    <Content Include="src\libs\rippler\svg\circle.svg" />
     <Content Include="src\libs\Touch\touche.js" />
     <Content Include="Views\SearchManager\Index.cshtml" />
     <Content Include="Views\DataManagement\Demo.cshtml" />
@@ -2388,6 +2391,11 @@
     <Content Include="Views\Shared\_DropzoneView.cshtml" />
     <Content Include="Views\Ticket\NewHardwareTicket.cshtml" />
     <Content Include="src\css\_mixins.scss" />
+<<<<<<< HEAD
+    <Content Include="src\libs\rippler\css\rippler.css.map" />
+=======
+    <Content Include="Views\CustomFieldSettings\Edit.cshtml" />
+>>>>>>> 000 - Custom Fied grouped by category
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

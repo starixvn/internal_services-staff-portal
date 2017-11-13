@@ -21,5 +21,11 @@
 
         [Display(Name = "Values")]
         public string Values { get; set; }
+
+        [Display(Name = "Is Enabled")]
+        public bool IsEnabled { get; set; }
+
+        [Display(Name = "Display Order")]
+        public int DisplayOrder { get; set; }
     }
 }
