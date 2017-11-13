@@ -6,9 +6,9 @@
     
     function CheckValidFiles() {
         var result = false;
-        var rejectedFiles = ticketDeskDropzone.getRejectedFiles();
+        //var rejectedFiles = ticketDeskDropzone.getRejectedFiles();
 
-        if (ticketDeskDropzone.files.length > 0 && rejectedFiles.length === 0) {
+        if (ticketDeskDropzone.files.length > 0 && $(".dropzone-error-text").text().length === 0) {
             // have file(s)
             result = true;
         }
@@ -75,8 +75,8 @@
             var isDuplicate = false;
             var errorText = "Duplicate file: ";
 
-            for (i = 0, len = dropzone.files.length; i < len - 1; i++) // -1 to exclude current file
-            {
+            for (i = 0, len = dropzone.files.length; i < len - 1; i++) {
+                // -1 to exclude current file
                 if (dropzone.files[i].name === file.name &&
                     dropzone.files[i].size === file.size &&
                     dropzone.files[i].lastModifiedDate.toString() === file.lastModifiedDate.toString()) {
@@ -88,10 +88,10 @@
 
             if (isDuplicate) {
                 errorText = errorText.slice(0, -3);
-
                 SetErrorTextAndShowModal(errorText);
             } else {
                 SetErrorTextAndShowModal("");
+
             }
         }
     }
@@ -148,6 +148,7 @@
                         }
 
                         UpdateNumberOfSelectedFile(this);
+                        $(".filechange").trigger("filechange");
                     });
                 this.on("addedfile",
                     function(file) {
@@ -156,11 +157,13 @@
                         CheckTotalBytes();
                         CheckDuplicateFile(this, file);
                         UpdateNumberOfSelectedFile(this);
+                        $(".filechange").trigger("filechange");
                     });
                 this.on("reset",
                     function() {
                         $(".dropzone-previews").removeClass("dropzone");
                         SetErrorTextAndShowModal("");
+                        $(".filechange").trigger("filechange");
                     });
                 this.on("maxfilesexceeded",
                     function() {

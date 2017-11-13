@@ -13,20 +13,38 @@
     @Html.Partial("_DropzoneScripts", Model)
 
     <script>
+        
+        function CheckValidFilesIfDropzoneExisted() {
+            if (typeof ticketDeskDropzone !== "undefined") {
+                return CheckValidFiles();
+            } else {
+                return true;
+            }
+        }
+
+        function CheckFormAndTurnSubmitButton() {
+            var validate = $(".id-uploader-form").validate();
+            var formSummittedState = validate.submitted;
+            var isValid = validate.checkForm();
+            if (isValid && CheckValidFilesIfDropzoneExisted()) {
+                $(".id-uploader-form input[type=submit]").removeClass("disabled");
+            } else {
+                $(".id-uploader-form input[type=submit]").addClass("disabled");
+            }
+            //console.log(isValid);
+            $(".id-uploader-form").validate().submitted = formSummittedState;
+        }
+
         $(document).ready(function () {
 
             $(".id-uploader-form input").on("input",
                 function () {
-                    var validate = $(".id-uploader-form").validate();
-                    var formSummittedState = validate.submitted;
-                    var isValid = validate.checkForm();
-                    if (isValid) {
-                        $(".id-uploader-form input[type=submit]").removeClass("disabled");
-                    } else {
-                        $(".id-uploader-form input[type=submit]").addClass("disabled");
-                    }
-                    console.log(isValid);
-                    $(".id-uploader-form").validate().submitted = formSummittedState;
+                    CheckFormAndTurnSubmitButton();
+                });
+
+            $(".filechange").on("filechange",
+                function() {
+                    CheckFormAndTurnSubmitButton();
                 });
 
             $(".id-uploader-form").on("submit",
@@ -36,7 +54,7 @@
                         return false;
                     }
                     if ($(this).valid()) {
-                        if (CheckValidFiles()) {
+                        if (CheckValidFilesIfDropzoneExisted()) {
                             $(".id-uploader-form input[type=submit]").addClass("disabled");
                             $.ajax({
                                 url: $(this).attr('action'),
@@ -82,7 +100,7 @@
     </div>
 </div>
 
-@using (Html.BeginForm("NewCustomer", "IdUploader", null, FormMethod.Post, new { @class = "form-horizontal id-uploader-form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("NewCustomer", "IdUploader", null, FormMethod.Post, new { @class = "form-horizontal id-uploader-form filechange", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.TempId)
