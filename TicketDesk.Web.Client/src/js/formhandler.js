@@ -35,6 +35,7 @@
                             }
                         });
                     }
+
                 } else {
                     SetErrorTextAndShowModal("Invalid or missing files");
                     e.preventDefault();
@@ -45,6 +46,8 @@
                 e.preventDefault();
                 return false;
             }
+
+            return true;
         });
 }
 
