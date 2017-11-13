@@ -9,7 +9,11 @@
             $('.header').on("click",
                 function () {
                     //$(this).toggleClass('expand').nextUntil('tr.header').slideToggle(100);
-                    $(this).siblings().find('td').slideToggle('fast');
+                    var $this = $(this);
+                    groupTicket = $this.attr('data-title');
+                    var childRows = $('[data-group="' + groupTicket + '"]');
+                    childRows.find('td').slideToggle('fast');
+                    //$this.toggleClass('expand').siblings('[data-collapse]').find('td').slideToggle('fast');
                 });
             $("#itemperpage-select").on("change",
                 function() {

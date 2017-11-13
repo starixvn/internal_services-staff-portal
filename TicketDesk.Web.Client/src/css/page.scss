@@ -274,6 +274,7 @@ body {
 }
 
 .table.table-bordered {
+    
     > thead > tr > th {
         background: #ececec;
         color: $title-form-bg;
@@ -296,6 +297,7 @@ table {
 table, tr, td, th {
     border: 1px solid black;
     border-collapse: collapse;
+    font-size: 14px;
 }
 
     tr.header {
@@ -303,12 +305,20 @@ table, tr, td, th {
     }
 
 .header .sign:after {
-    content: "+";
+    content: "\002b";
     display: inline-block;
+    color: $text-second-color;
+    background: $title-form-bg;
+    text-align: center;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
 }
 
 .header.expand .sign:after {
-    content: "-";
+    content: "\2013";
+    line-height: 15px;
 }
 .tbl-content {
     width: 100%;

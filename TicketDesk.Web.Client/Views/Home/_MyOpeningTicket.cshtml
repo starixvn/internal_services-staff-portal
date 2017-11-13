@@ -12,13 +12,13 @@
     <tbody>
         @foreach (var ticketGroup in Model)
         {
-            <tr class="header">
+            <tr class="header" data-title="@ticketGroup.Name">
                 <td colspan="4"><span class="sign"></span> @ticketGroup.Name <span class="number-ticket">(@ticketGroup.Tickets.Count())</span></td>
             </tr>
 
             foreach (var ticket in ticketGroup.Tickets)
             {
-                <tr class="child-@ticketGroup.Name">
+                <tr class="" data-group="@ticketGroup.Name">
                     <td class="text-center">
                         <a href="@Url.Action("Index","TicketCenter", new {id = ticket.TicketId})">@ticket.TicketId</a>
                     </td>
