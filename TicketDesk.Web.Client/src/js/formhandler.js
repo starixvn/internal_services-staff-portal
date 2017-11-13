@@ -1,4 +1,4 @@
-﻿function InitFormHandler(formclassname) {
+﻿function InitFormHandler(formclassname, allowRedirect) {
     var selector = "." + formclassname;
     var formInputSelector = "." + formclassname + " input";
     var formSubmitSelector = "." + formclassname + " input[type=submit]";
@@ -14,27 +14,36 @@
         });
 
     $(selector).on("submit",
-        function (e) {
-            e.preventDefault();
+        function(e) {
             if ($(formSubmitSelector).hasClass("disabled")) {
+                e.preventDefault();
                 return false;
             }
             if ($(this).valid()) {
                 if (CheckValidFilesIfDropzoneExisted()) {
+
                     $(formSubmitSelector).addClass("disabled");
-                    $.ajax({
-                        url: $(this).attr('action'),
-                        method: $(this).attr('method'),
-                        data: $(this).serialize(),
-                        success: function () {
-                            $("#notification-modal").modal();
-                        }
-                    });
+
+                    if (!allowRedirect) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: $(this).attr('action'),
+                            method: $(this).attr('method'),
+                            data: $(this).serialize(),
+                            success: function(res, status, xhr) {
+                                $("#notification-modal").modal();
+                            }
+                        });
+                    }
                 } else {
                     SetErrorTextAndShowModal("Invalid or missing files");
+                    e.preventDefault();
+                    return false;
                 }
             } else {
                 SetErrorTextAndShowModal("Invalid data in field");
+                e.preventDefault();
+                return false;
             }
         });
 }

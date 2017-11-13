@@ -2395,7 +2395,6 @@
   <ItemGroup>
     <Folder Include="Scripts\ticketdesk\User\" />
     <Folder Include="src\libs\dropzone\debug\" />
-    <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\S22.Mail\S22.Mail.csproj">
