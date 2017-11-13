@@ -305,7 +305,7 @@ table, tr, td, th {
     }
 
 .header .sign:after {
-    content: "\002b";
+    content: "\2013";
     display: inline-block;
     color: $text-second-color;
     background: $title-form-bg;
@@ -317,7 +317,7 @@ table, tr, td, th {
 }
 
 .header.expand .sign:after {
-    content: "\2013";
+    content: "\002b";
     line-height: 15px;
 }
 .tbl-content {

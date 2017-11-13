@@ -12,6 +12,7 @@
                     var $this = $(this);
                     groupTicket = $this.attr('data-title');
                     var childRows = $('[data-group="' + groupTicket + '"]');
+                    $this.toggleClass('expand');
                     childRows.find('td').slideToggle('fast');
                     //$this.toggleClass('expand').siblings('[data-collapse]').find('td').slideToggle('fast');
                 });

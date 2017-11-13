@@ -237,7 +237,7 @@ tr.header {
   cursor: pointer; }
 
 .header .sign:after {
-  content: "\002b";
+  content: "\2013";
   display: inline-block;
   color: #fff;
   background: #2e4592;
@@ -248,7 +248,7 @@ tr.header {
   line-height: 18px; }
 
 .header.expand .sign:after {
-  content: "\2013";
+  content: "\002b";
   line-height: 15px; }
 
 .tbl-content {
