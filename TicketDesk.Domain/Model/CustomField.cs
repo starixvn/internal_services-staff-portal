@@ -19,6 +19,8 @@
 
         public int DisplayOrder { get; set; }
 
+        public bool IsRequired { get; set; }
+
         [NotMapped]
         public CustomFieldType CustomFieldType { get; set; }
 
