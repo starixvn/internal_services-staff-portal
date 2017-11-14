@@ -207,7 +207,8 @@ body {
     text-transform: uppercase;
     font-weight: 700; }
   .feature .panel-body {
-    padding: 10px; }
+    padding: 10px;
+    color: #333; }
 
 .table table, .table tr, .table td, .table th {
   border: none; }
@@ -311,9 +312,12 @@ tr.header {
 
 .page-size {
   display: inline-block;
-  color: #333; }
+  color: #333;
+  margin-right: 16px; }
   .page-size label {
     font-weight: normal; }
+  .page-size select {
+    padding: 5px 10px; }
 
 /****************************************************************************************************************/
 .bold {
