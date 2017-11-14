@@ -449,7 +449,7 @@
     <Compile Include="Models\FilterBarViewModel.cs" />
     <Compile Include="Infrastructure\Migration\Legacy\LegacySecurityMigrator.cs" />
     <Compile Include="Models\Home\HomeViewModel.cs" />
-    <Compile Include="Models\Home\IPagination.cs" />
+    <Compile Include="Models\Home\Pagination.cs" />
     <Compile Include="Models\Home\MyOpenningIssues.cs" />
     <Compile Include="Models\Home\TicketGroup.cs" />
     <Compile Include="Models\IdUploaderViewModel.cs" />

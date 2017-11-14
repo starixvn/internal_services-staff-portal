@@ -53,6 +53,8 @@
                 return View(model);
             }
 
+            model.Email = HttpUtility.HtmlEncode(model.Email);
+
             var user = UserService.GetByUsername(model.Email) as User;
 
             if (user != null)

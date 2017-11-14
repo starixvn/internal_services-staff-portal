@@ -75,11 +75,7 @@
             }
 
             homeViewModel.MyOpenningIssues.TotalItem = Context.Tickets.Count(x => x.CreatedBy == CurrentSession.UserId.ToString());
-
-            //homeViewModel.MyOpenningIssues.TotalPage = homeViewModel.MyOpenningIssues.TotalItem % itemPerPage > 0
-            //    ? (homeViewModel.MyOpenningIssues.TotalItem / itemPerPage) + 1
-            //    : homeViewModel.MyOpenningIssues.TotalItem / itemPerPage;
-
+            
             // Get current user tickets
             var tickets = Context.Tickets
                 .Where(x => (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo) &&

@@ -5,12 +5,10 @@
 
     public class UserSignInViewModel
     {
-        ////[Required(ErrorMessageResourceName = "EmptyUsername", ErrorMessageResourceType = typeof(Validation))]
         [Required]
         [Display(Name = "Username")]
         public string Email { get; set; }
-
-        ////[Required(ErrorMessageResourceName = "EmptyPassword", ErrorMessageResourceType = typeof(Validation))]
+        
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password", ResourceType = typeof(Strings))]

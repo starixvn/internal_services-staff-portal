@@ -20,12 +20,12 @@
                 $("#Email").focus();
             }
 
-            if ($.trim($("#Email").val()) === "") {
+            if ($.trim($("#Email").val()) === "" || $("#Email").hasClass("input-validation-error")) {
                 //$("#Email").effect("shake");
                 $('#Email').startValidateEffect();
             }
 
-            if ($.trim($("#Password").val()) === "") {
+            if ($.trim($("#Password").val()) === "" || $("#Password").hasClass("input-validation-error")) {
                 //$("#Password").effect("shake");
                 $("#Password").startValidateEffect();
             }
