@@ -395,8 +395,20 @@ table, tr, td, th {
     border: 1px solid $border-color;
 }
 
-
-
+.display-item {
+    float: right;
+}
+.pagination {
+    vertical-align: middle;
+    margin: 0;
+}
+.page-size {
+    display: inline-block;
+    color: $text-color;
+    label {
+        font-weight: normal;
+    }
+}
 /****************************************************************************************************************/
 
 .bold {
