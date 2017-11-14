@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
 
-    public class MyOpenningIssues
+    public class MyOpenningIssues : IPagination
     {
         /// <summary>
         /// CurrentPage start with 1
