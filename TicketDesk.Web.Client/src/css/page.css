@@ -334,6 +334,12 @@ tr.header {
     padding: 4px 8px 5px;
     display: inline-block;
     color: #767575; }
+    .pagination [class^="icon-"].disabled {
+      cursor: not-allowed;
+      background: rgba(232, 232, 232, 0.5);
+      color: rgba(118, 117, 117, 0.5); }
+      .pagination [class^="icon-"].disabled:hover {
+        border: 1px solid #999; }
     .pagination [class^="icon-"]:before {
       font-size: 18px; }
 

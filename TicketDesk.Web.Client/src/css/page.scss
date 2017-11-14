@@ -434,6 +434,14 @@ tr.header {
         padding: 4px 8px 5px;
         display: inline-block;
         color: #767575;
+        &.disabled {
+            cursor: not-allowed;
+            background: rgba(#e8e8e8, 0.5);
+            color: rgba(#767575, 0.5);
+            &:hover {
+                border: 1px solid #999;
+            }
+        }
         &:before {
             font-size: 18px;
         }
