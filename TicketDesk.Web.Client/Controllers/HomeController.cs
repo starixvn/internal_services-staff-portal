@@ -45,12 +45,16 @@
         {
             HomeViewModel homeViewModel = new HomeViewModel
             {
-                TicketGroups = new List<TicketGroup>(),
-                CurrentPage = page,
-                ItemPerPage = itemPerPage
+                MyOpenningIssues = new MyOpenningIssues
+                {
+                    TicketGroups = new List<TicketGroup>(),
+                    CurrentPage = page,
+                    ItemPerPage = itemPerPage
+                }
             };
 
-            foreach (SelectListItem item in homeViewModel.ItemPerPageList)
+
+            foreach (SelectListItem item in homeViewModel.MyOpenningIssues.ItemPerPageList)
             {
                 if (itemPerPage.ToString() == item.Value)
                 {
@@ -70,11 +74,11 @@
                 skippedItem = 0;
             }
 
-            var count = Context.Tickets.Count(x => x.CreatedBy == CurrentSession.UserId.ToString());
+            homeViewModel.MyOpenningIssues.TotalItem = Context.Tickets.Count(x => x.CreatedBy == CurrentSession.UserId.ToString());
 
-            homeViewModel.TotalPage = count % itemPerPage > 0
-                ? (count / itemPerPage) + 1
-                : count / itemPerPage;
+            //homeViewModel.MyOpenningIssues.TotalPage = homeViewModel.MyOpenningIssues.TotalItem % itemPerPage > 0
+            //    ? (homeViewModel.MyOpenningIssues.TotalItem / itemPerPage) + 1
+            //    : homeViewModel.MyOpenningIssues.TotalItem / itemPerPage;
 
             // Get current user tickets
             var tickets = Context.Tickets
@@ -84,7 +88,7 @@
                 .Skip(skippedItem)
                 .Take(itemPerPage)
                 .GroupBy(x => x.CategoryId).ToList();
-            
+
             foreach (IGrouping<int, Ticket> grouping in tickets)
             {
                 var categoryName = categories
@@ -98,10 +102,10 @@
                     Tickets = grouping
                 };
 
-                homeViewModel.TicketGroups.Add(ticketGroup);
+                homeViewModel.MyOpenningIssues.TicketGroups.Add(ticketGroup);
             }
 
-        return View(homeViewModel);
+            return View(homeViewModel);
         }
 
         [Route("internal-error", Name = "InternalError")]
@@ -120,7 +124,7 @@
                 Username = CurrentSession.Username,
                 IsAuthenticated = CurrentSession.UserId > 0
             };
-            
+
             return PartialView("~/Views/Shared/_Navbar.cshtml", model);
         }
 
