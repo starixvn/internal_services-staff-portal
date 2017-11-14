@@ -279,7 +279,6 @@ body {
     > thead > tr > th {
         background: #ececec;
         color: $title-form-bg;
-        font-size: 14px;
     }
     tr.header td {
         background: #d5def7;
@@ -288,6 +287,7 @@ body {
         font-weight: 700;
         .number-ticket {
             color: $primary-color;
+            font-weight: 600;
         }
     }
     tr td .id-ticket {
@@ -299,19 +299,22 @@ body {
     tr.even td {
         background: #f2f2f2;
     }
+    .sign {
+        margin-right: 4px;
+    }
 }
 
 table, tr, td, th {
     border: 1px solid black;
     border-collapse: collapse;
-    font-size: 14px;
     color: $text-color;
-
 }
-
-    tr.header {
-        cursor: pointer;
-    }
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 9px 8px;
+}
+tr.header {
+    cursor: pointer;
+}
 
 .header .sign:after {
     content: "\2013";
@@ -322,12 +325,11 @@ table, tr, td, th {
     vertical-align: middle;
     width: 18px;
     height: 18px;
-    line-height: 18px;
+    line-height: 16px;
 }
 
 .header.expand .sign:after {
     content: "\002b";
-    line-height: 15px;
 }
 .tbl-content {
     width: 100%;
@@ -402,16 +404,69 @@ table, tr, td, th {
 .pagination {
     vertical-align: middle;
     margin: 0;
+    > li {
+        margin: 0 2px;
+        &.active, &:hover {
+            a {
+                background: $title-form-bg;
+                color: $text-second-color;
+                border: 1px solid $title-form-bg;
+            }
+        }
+        &:first-child, &:last-child {
+            a {
+                border-radius: 2px;
+                position: relative;
+                top: 1px;
+            }
+        }
+
+    }
+    > li > a {
+        padding: 7px 13px;
+        float: unset;
+        background: #e8e8e8;
+        color: $text-color;
+        border: 1px solid #999;
+        border-radius: 2px;
+    }
+    [class^="icon-"] {
+        padding: 4px 8px 5px;
+        display: inline-block;
+        color: #767575;
+        &:before {
+            font-size: 18px;
+        }
+    }
 }
 .page-size {
     display: inline-block;
     color: $text-color;
     margin-right: 16px;
+    vertical-align: middle;
     label {
         font-weight: normal;
     }
-    select {
+    .custom-dropdown select {
         padding: 5px 10px;
+        color: $text-color;
+        padding: 0 42px 0 12px;
+        height: 34px
+    }
+    .custom-dropdown {
+        display: inline-block;
+        border: 1px solid #999;
+        margin-left: 4px;
+        &:after {
+            top: 0px;
+            padding: 0 10px;
+            height: 34px;
+            line-height: 34px;
+            display: inline-block;
+            right: 0;
+            border-left: 1px solid #999;
+            background-color: #e8e8e8;
+        }
     }
 }
 /****************************************************************************************************************/
@@ -943,8 +998,8 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
 .feature {
     flex: 1 100%;
 }
-.width-100 {
-    width: 100px;
+.width-80 {
+    width: 80px;
 }
 .width-150 {
     width: 150px;

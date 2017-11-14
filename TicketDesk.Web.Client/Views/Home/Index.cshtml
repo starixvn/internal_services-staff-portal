@@ -40,19 +40,21 @@
         @Html.Partial("_MyOpeningTicket", Model.MyOpenningIssues.TicketGroups)
         <div class="page-size">
             <label class="">@Html.DisplayNameFor(x => x.MyOpenningIssues.ItemPerPage)</label>
-            @Html.DropDownListFor(x => x.MyOpenningIssues.ItemPerPage, Model.MyOpenningIssues.ItemPerPageList, new { id = "itemperpage-select" })
+            <div class="custom-dropdown">
+                @Html.DropDownListFor(x => x.MyOpenningIssues.ItemPerPage, Model.MyOpenningIssues.ItemPerPageList, new { id = "itemperpage-select" })
+            </div>
         </div>  
 
         <ul class="pagination">
             @if (Model.MyOpenningIssues.CurrentPage == 1)
             {
                 <li>
-                    <a>Pre</a>
+                    <a class="icon-previous"></a>
                 </li>
             }
             else
             {
-                <li><a href="@Url.Action("Index", "Home", new { page = (Model.MyOpenningIssues.CurrentPage - 1), itemPerPage = Model.MyOpenningIssues.ItemPerPage })">Pre</a></li>
+                <li><a href="@Url.Action("Index", "Home", new { page = (Model.MyOpenningIssues.CurrentPage - 1), itemPerPage = Model.MyOpenningIssues.ItemPerPage })" class="icon-previous"></a></li>
             }
             @for (int i = 0; i < Model.MyOpenningIssues.TotalPage; i++)
             {
@@ -67,12 +69,12 @@
             @if (Model.MyOpenningIssues.CurrentPage == Model.MyOpenningIssues.TotalPage)
             {
                 <li>
-                    <a>Next</a>
+                    <a class="icon-next"></a>
                 </li>
             }
             else
             {
-                <li><a href="@Url.Action("Index", "Home", new { page = (Model.MyOpenningIssues.CurrentPage + 1), itemPerPage = Model.MyOpenningIssues.ItemPerPage })">Next</a></li>
+                <li><a href="@Url.Action("Index", "Home", new { page = (Model.MyOpenningIssues.CurrentPage + 1), itemPerPage = Model.MyOpenningIssues.ItemPerPage })" class="icon-next"></a></li>
             }
         </ul>           
         
