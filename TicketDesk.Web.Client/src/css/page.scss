@@ -289,15 +289,23 @@ body {
             color: $primary-color;
         }
     }
-}
-table {
-        color: black;
+    tr td .id-ticket {
+        color: #0060ff;
+        &:hover {
+            text-decoration: underline;
+        }
     }
+    tr.even td {
+        background: #f2f2f2;
+    }
+}
 
 table, tr, td, th {
     border: 1px solid black;
     border-collapse: collapse;
     font-size: 14px;
+    color: $text-color;
+
 }
 
     tr.header {

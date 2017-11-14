@@ -225,13 +225,19 @@ body {
   .table.table-bordered tr.header td .number-ticket {
     color: #bf141a; }
 
-table {
-  color: black; }
+.table.table-bordered tr td .id-ticket {
+  color: #0060ff; }
+  .table.table-bordered tr td .id-ticket:hover {
+    text-decoration: underline; }
+
+.table.table-bordered tr.even td {
+  background: #f2f2f2; }
 
 table, tr, td, th {
   border: 1px solid black;
   border-collapse: collapse;
-  font-size: 14px; }
+  font-size: 14px;
+  color: #333; }
 
 tr.header {
   cursor: pointer; }
