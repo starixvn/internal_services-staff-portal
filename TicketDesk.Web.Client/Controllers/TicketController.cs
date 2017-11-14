@@ -154,6 +154,8 @@
             // TODO: Replace with actual project ID represent for shop id here
             viewModel.Ticket.Project = Context.Projects.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
+
+            viewModel.RequestType.Value = viewModel.SelectedRequestType;
             
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
             {

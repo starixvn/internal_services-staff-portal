@@ -2228,6 +2228,8 @@
     <Content Include="src\libs\dropzone\dropzone.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\libs\forge\forge.min.js" />
+    <Content Include="src\libs\forge\prime.worker.min.js" />
     <Content Include="src\libs\jquery-validate\1.17.0\jquery.validate.min.js" />
     <Content Include="src\libs\jquery-validation-unobtrusive\3.2.6\jquery.validate.unobtrusive.min.js" />
     <Content Include="src\libs\jquery\1.12.4\jquery-1.12.4.min.js" />
@@ -2397,6 +2399,8 @@
     <Content Include="src\css\_mixins.scss" />
     <Content Include="src\libs\rippler\css\rippler.css.map" />
     <Content Include="Views\CustomFieldSettings\Edit.cshtml" />
+    <Content Include="src\libs\forge\forge.min.js.map" />
+    <Content Include="src\libs\forge\prime.worker.min.js.map" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

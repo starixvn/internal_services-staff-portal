@@ -4,16 +4,27 @@
 
 <script type="text/javascript">
     
+    function IsTotalBytesViolated() {
+        var allowedBytes = @Model.MaxBytes;
+        var totalBytes = GetTotalSize();
+
+        return totalBytes > allowedBytes;
+    }
+
     function CheckValidFiles() {
-        var result = false;
-        //var rejectedFiles = ticketDeskDropzone.getRejectedFiles();
-
-        if (ticketDeskDropzone.files.length > 0 && $(".dropzone-error-text").text().length === 0) {
+        if (ticketDeskDropzone.files.length > 0) {
             // have file(s)
-            result = true;
+            var rejectedFiles = ticketDeskDropzone.getRejectedFiles();
+            if (rejectedFiles.length > 0) {
+                for (var i = 0; i < rejectedFiles.length; i++) {
+                    if (rejectedFiles[i].status === "error" || rejectedFiles[i].status === "added") {
+                        // have error files
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
-
-        return result;
     }
 
     function SetErrorTextAndShowModal(text) {
@@ -91,7 +102,6 @@
                 SetErrorTextAndShowModal(errorText);
             } else {
                 SetErrorTextAndShowModal("");
-
             }
         }
     }
@@ -101,14 +111,14 @@
         $('.number-chosenfile .number').text(numberOfSelectedFile);
         if (numberOfSelectedFile > 1) {
             $('.btn-delete-all-file').show();
-            $('.number-chosenfile').show();            
+            $('.number-chosenfile').show();
             $('.number-chosenfile .text').text('files were selected');
-        } else if (numberOfSelectedFile == 1) { 
+        } else if (numberOfSelectedFile == 1) {
             $('.btn-delete-all-file').show();
-            $('.number-chosenfile').show(); 
+            $('.number-chosenfile').show();
             $('.number-chosenfile .text').text('file were selected');
         }
-        else {            
+        else {
             $('.number-chosenfile').hide();
             $('.btn-delete-all-file').hide();
         }
@@ -168,6 +178,14 @@
                 this.on("maxfilesexceeded",
                     function() {
                         SetErrorTextAndShowModal("Total of file exceeded limit");
+                    });
+                this.on("error",
+                    function(file, errorMessage) {
+                        SetErrorTextAndShowModal(errorMessage);
+                    });
+                this.on("processing",
+                    function() {
+                        $(".filechange").trigger("filechange");
                     });
             }
         });

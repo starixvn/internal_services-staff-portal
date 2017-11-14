@@ -49,6 +49,8 @@
 
             return true;
         });
+
+    CheckFormAndTurnSubmitButton(formclassname);
 }
 
 function CheckValidFilesIfDropzoneExisted() {
