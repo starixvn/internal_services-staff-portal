@@ -21,13 +21,13 @@
     <link href="~/src/Fonts/iconFont/style.css" rel="stylesheet" />
     <link href="~/src/css/page.css" rel="stylesheet" />
     <link href="~/src/css/login.css" rel="stylesheet" />
-    
+
     <link rel="stylesheet" href="~/src/libs/animatecss/animate.min.css" />
 </head>
 <body>
 
     <div class="page-container">
-        
+
         <div class="content">
             @using (Html.BeginForm("SignIn", "User", new { ViewBag.ReturnUrl }, FormMethod.Post, new { id = "user-login-form", @class = "form-horizontal", role = "form" }))
             {
@@ -53,7 +53,7 @@
             }
         </div>
     </div>
-    
+
     <!-- Modal confirm logout -->
     <div class="modal fade" id="logOut" role="dialog">
         <div class="modal-dialog">
@@ -82,6 +82,7 @@
     <script src="~/src/libs/rippler/js/jquery.rippler.min.js"></script>
     <script src="~/Scripts/ticketdesk/common.js"></script>
     <script src="~/src/js/page.js"></script>
+    <script src="~/src/libs/forge/forge.min.js"></script>
 
     @Scripts.Render("~/bundles/validate")
 
