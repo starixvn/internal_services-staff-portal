@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Web.Client.Models.Home
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
 
     public class MyOpenningIssues
@@ -18,6 +19,7 @@
 
         public int ToItemIndex => CurrentPage != TotalPage ? ItemPerPage * CurrentPage : TotalItem;
 
+        [Display(Name = "Page size")]
         public int ItemPerPage { get; set; }
 
         public IEnumerable<SelectListItem> ItemPerPageList

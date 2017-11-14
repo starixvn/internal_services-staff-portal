@@ -72,10 +72,10 @@
             }
         </ul>
 
-        @Html.LabelForModel(Model.MyOpenningIssues.ItemPerPage)
+        <label class="text-info">@Html.DisplayNameFor(x => x.MyOpenningIssues.ItemPerPage)</label>
         @Html.DropDownListFor(x => x.MyOpenningIssues.ItemPerPage, Model.MyOpenningIssues.ItemPerPageList, new { id = "itemperpage-select" })
         
-        <p>Displaying @Model.MyOpenningIssues.FromItemIndex to @Model.MyOpenningIssues.ToItemIndex of @Model.MyOpenningIssues.TotalItem item(s)</p>
+        <p class="text-info">Displaying @Model.MyOpenningIssues.FromItemIndex to @Model.MyOpenningIssues.ToItemIndex of @Model.MyOpenningIssues.TotalItem item(s)</p>
 
     </div>
 </div>
