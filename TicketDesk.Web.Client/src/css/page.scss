@@ -397,7 +397,23 @@ tr.header {
 .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
     border: 1px solid $border-color;
 }
-
+.status {
+    color: $text-second-color;
+    border-radius: 32px;
+    padding: 2px 12px 4px;
+}
+.inprogress {
+    @extend .status;
+    background-color: #ffa337;
+}
+.new {
+    @extend .status;
+    background-color: #65d26d;
+}
+.pending {
+    @extend .status;
+    background-color: #ec2a53;
+}
 .display-item {
     float: right;
 }

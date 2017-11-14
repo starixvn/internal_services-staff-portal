@@ -307,6 +307,20 @@ tr.header {
 .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
   border: 1px solid #d3d7db; }
 
+.status, .inprogress, .new, .pending {
+  color: #fff;
+  border-radius: 32px;
+  padding: 2px 12px 4px; }
+
+.inprogress {
+  background-color: #ffa337; }
+
+.new {
+  background-color: #65d26d; }
+
+.pending {
+  background-color: #ec2a53; }
+
 .display-item {
   float: right; }
 

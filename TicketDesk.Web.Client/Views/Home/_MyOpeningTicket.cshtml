@@ -33,7 +33,7 @@
                     </td>
                     <td>@ticket.Title</td>
                     <td class="text-center">@ticket.CreatedDate.ToString("MMM dd, yyyy")</td>
-                    <td class="text-center">@ticket.TicketStatus</td>
+                    <td class="text-center"><span class="inprogress">@ticket.TicketStatus</span></td>
                 </tr>
             }
         }
