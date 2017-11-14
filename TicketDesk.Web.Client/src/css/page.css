@@ -237,6 +237,20 @@ body {
 .table.table-bordered .sign {
   margin-right: 4px; }
 
+.table.table-bordered .sign:after {
+  content: "\2013";
+  display: inline-block;
+  color: #fff;
+  background: #2e4592;
+  text-align: center;
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  line-height: 16px; }
+
+.table.table-bordered .expand .sign:after {
+  content: "\002b"; }
+
 table, tr, td, th {
   border: 1px solid black;
   border-collapse: collapse;
@@ -248,20 +262,21 @@ table, tr, td, th {
 tr.header {
   cursor: pointer; }
 
-.header .sign:after {
-  content: "\2013";
-  display: inline-block;
-  color: #fff;
-  background: #2e4592;
-  text-align: center;
-  vertical-align: middle;
-  width: 18px;
-  height: 18px;
-  line-height: 16px; }
+/*.header .sign:after {
+    content: "\2013";
+    display: inline-block;
+    color: $text-second-color;
+    background: $title-form-bg;
+    text-align: center;
+    vertical-align: middle;
+    width: 18px;
+    height: 18px;
+    line-height: 16px;
+}
 
 .header.expand .sign:after {
-  content: "\002b"; }
-
+    content: "\002b";
+}*/
 .tbl-content {
   width: 100%;
   background: #fff;
@@ -601,6 +616,11 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     .btn.btn-browser[disabled] {
       opacity: 0.5;
       color: rgba(51, 51, 51, 0.5); }
+  .btn.btn-more {
+    width: 100%;
+    background: #bebebe;
+    color: #333;
+    height: 48px; }
 
 .attach-file .key, .attach-file .value.span-3 {
   height: auto;
@@ -855,6 +875,9 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 
 .width-150 {
   width: 150px; }
+
+.width-100 {
+  width: 100px; }
 
 @-webkit-keyframes sonarEffect {
   0% {

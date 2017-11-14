@@ -302,6 +302,21 @@ body {
     .sign {
         margin-right: 4px;
     }
+    .sign:after {
+        content: "\2013";
+        display: inline-block;
+        color: $text-second-color;
+        background: $title-form-bg;
+        text-align: center;
+        vertical-align: middle;
+        width: 18px;
+        height: 18px;
+        line-height: 16px;
+    }
+
+    .expand .sign:after {
+        content: "\002b";
+    }
 }
 
 table, tr, td, th {
@@ -316,7 +331,7 @@ tr.header {
     cursor: pointer;
 }
 
-.header .sign:after {
+/*.header .sign:after {
     content: "\2013";
     display: inline-block;
     color: $text-second-color;
@@ -330,7 +345,7 @@ tr.header {
 
 .header.expand .sign:after {
     content: "\002b";
-}
+}*/
 .tbl-content {
     width: 100%;
     background: #fff;
@@ -734,6 +749,12 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
          @include button(#dad7d7, #333);
          border: 1px solid #999;
     }
+    &.btn-more {
+        width: 100%;
+        background: #bebebe;
+        color: $text-color;
+        height: 48px;
+    }
 }
 
 .attach-file {
@@ -1027,6 +1048,9 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
 }
 .width-150 {
     width: 150px;
+}
+.width-100 {
+    width: 100px;
 }
 
 @-webkit-keyframes sonarEffect {
