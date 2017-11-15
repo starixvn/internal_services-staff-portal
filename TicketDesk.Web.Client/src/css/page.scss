@@ -317,6 +317,40 @@ body {
     .expand .sign:after {
         content: "\002b";
     }
+    &.tbl-announcement {
+        tr.expand td{
+            font-weight: normal;
+        }
+        tbody > tr > td {
+             border: none;
+            border-bottom: 1px solid $border-color;
+            font-weight: 700;
+        } 
+        .sign {
+            margin-right: 8px;
+        }
+        .sign:after   {
+            content: "\002b";
+        }  
+        tr.expand .sign:after {
+            content: "\2013";
+        }
+        tr.error td{
+            color: $primary-color;
+            .sign:after {
+                background: $primary-color;
+                color: $text-second-color
+            }
+        } 
+        tr.success td {
+            color: #65d26d;
+            background: initial;
+            .sign:after {
+                background: #65d26d;
+                color: $text-second-color
+            }
+        }
+    }
 }
 
 table, tr, td, th {

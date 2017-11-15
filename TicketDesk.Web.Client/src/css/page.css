@@ -251,6 +251,36 @@ body {
 .table.table-bordered .expand .sign:after {
   content: "\002b"; }
 
+.table.table-bordered.tbl-announcement tr.expand td {
+  font-weight: normal; }
+
+.table.table-bordered.tbl-announcement tbody > tr > td {
+  border: none;
+  border-bottom: 1px solid #d3d7db;
+  font-weight: 700; }
+
+.table.table-bordered.tbl-announcement .sign {
+  margin-right: 8px; }
+
+.table.table-bordered.tbl-announcement .sign:after {
+  content: "\002b"; }
+
+.table.table-bordered.tbl-announcement tr.expand .sign:after {
+  content: "\2013"; }
+
+.table.table-bordered.tbl-announcement tr.error td {
+  color: #bf141a; }
+  .table.table-bordered.tbl-announcement tr.error td .sign:after {
+    background: #bf141a;
+    color: #fff; }
+
+.table.table-bordered.tbl-announcement tr.success td {
+  color: #65d26d;
+  background: initial; }
+  .table.table-bordered.tbl-announcement tr.success td .sign:after {
+    background: #65d26d;
+    color: #fff; }
+
 table, tr, td, th {
   border: 1px solid black;
   border-collapse: collapse;
