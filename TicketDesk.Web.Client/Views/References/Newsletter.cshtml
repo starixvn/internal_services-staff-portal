@@ -1,7 +1,5 @@
-﻿@model dynamic
-
-@{
-    ViewBag.Title = "Newsletter";
+﻿@{
+    var filePath = ViewBag.FilePath != null ? (string)ViewBag.FilePath : string.Empty;
 }
 
-<h2>@ViewBag.Title</h2>
+<img src="@(!string.IsNullOrWhiteSpace(filePath) ? Url.Content(filePath) : string.Empty)" alt="" width="100%" />
