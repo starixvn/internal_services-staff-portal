@@ -29,8 +29,8 @@
             }
         }
 
-        [Required]
-        public string SelectedRequestType { get; set; }
+        ////[Required]
+        ////public string SelectedRequestType { get; set; }
     }
 
     public class Item

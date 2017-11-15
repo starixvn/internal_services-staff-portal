@@ -1,10 +1,10 @@
 ﻿namespace TicketDesk.Web.Client
 {
+    using App_Start;
     using Fanex.Data.Configuration;
     using Microsoft.ApplicationInsights.Extensibility;
     using System;
     using System.Diagnostics;
-    using App_Start;
 
     public class Global : System.Web.HttpApplication
     {
@@ -12,6 +12,9 @@
         {
             DisableApplicationInsightsOnDebug();
             DbSettingProviderManager.Current.Start();
+
+            // Configure FluentValidation for integration with ASP.NET MVC 5
+            Domain.Model.ModelValidation.Start.Configure();
         }
 
         /// <summary>

@@ -40,6 +40,7 @@
         <div class="value span-3 border">
             <div class="radio-group">
                 @Html.HiddenFor(x => x.FeedbackBy.CustomFieldId, new { Value = Model.FeedbackBy.CustomField.Id })
+                @Html.HiddenFor(x => x.FeedbackBy.CustomField.IsRequired, new { Value = Model.FeedbackBy.CustomField.IsRequired })
                 @foreach (string feedbackByValue in Model.FeedbackByValues)
                 {
                     var rdId = "rd-" + feedbackByValue.Replace(' ', '_');

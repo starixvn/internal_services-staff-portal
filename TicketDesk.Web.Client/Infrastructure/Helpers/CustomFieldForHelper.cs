@@ -144,30 +144,25 @@
                 input.MergeAttributes(attributes);
             }
 
-            TagBuilder customFieldIdTagBuilder = new TagBuilder("input")
-            {
-                Attributes =
-                {
-                    ["id"] = parentName + "[" + guid + "]." + fieldName + ".CustomFieldId",
-                    ["name"] = parentName + "[" + guid + "]." + fieldName + ".CustomFieldId",
-                    ["value"] = customFieldValue.CustomField.Id.ToString(),
-                    ["type"] = "hidden"
-                }
-            };
+            input = TransformTag(input, fieldName, nameof(customFieldValue.Value), parentName, guid);
+            
+            TagBuilder customFieldIdTagBuilder = BuildHiddenTag(
+                customFieldValue,
+                fieldName,
+                nameof(customFieldValue.CustomFieldId),
+                customFieldValue.CustomField.Id.ToString(),
+                parentName,
+                guid);
+            
+            TagBuilder customFieldIsRequiredTagBuilder = BuildHiddenTag(
+                customFieldValue,
+                fieldName,
+                $"{nameof(customFieldValue.CustomField)}.{nameof(customFieldValue.CustomField.IsRequired)}",
+                customFieldValue.CustomField.IsRequired.ToString(),
+                parentName,
+                guid);
 
-            if (!string.IsNullOrEmpty(guid) && !string.IsNullOrEmpty(parentName))
-            {
-                input.Attributes["id"] = parentName + "[" + guid + "]." + fieldName + ".Value";
-                input.Attributes["name"] = parentName + "[" + guid + "]." + fieldName + ".Value";
-            }
-            else
-            {
-                customFieldIdTagBuilder.Attributes["id"] = fieldName + ".CustomFieldId";
-                customFieldIdTagBuilder.Attributes["name"] = fieldName + ".CustomFieldId";
-                customFieldIdTagBuilder.Attributes["value"] = customFieldValue.CustomField.Id.ToString();
-            }
-
-            return customFieldIdTagBuilder + input.ToString();
+            return customFieldIdTagBuilder.ToString() + customFieldIsRequiredTagBuilder + input;
         }
 
         private static TagBuilder BuildInputTag(CustomFieldValue customFieldValue, string fieldName)
@@ -225,6 +220,72 @@
             }
 
             return input;
+        }
+
+        private static TagBuilder TransformTag(TagBuilder originalTag, string fieldName, string property, string parentName, string guid)
+        {
+            string idAttribute;
+            string nameAttribute;
+
+            if (string.IsNullOrEmpty(parentName) && string.IsNullOrEmpty(guid))
+            {
+                idAttribute = $"{fieldName}.CustomField.{property}";
+                nameAttribute = $"{fieldName}.CustomField.{property}";
+            }
+            else
+            {
+                idAttribute = $"{parentName}[{guid}].{fieldName}.{property}";
+                nameAttribute = $"{parentName}[{guid}].{fieldName}.{property}";
+            }
+
+            originalTag.Attributes["id"] = idAttribute;
+            originalTag.Attributes["name"] = nameAttribute;
+
+            return originalTag;
+        }
+
+        public static TagBuilder BuildHiddenTag(
+            CustomFieldValue customFieldValue,
+            string fieldName,
+            string property,
+            string valueAttribute,
+            string parentName = null,
+            string guid = null)
+        {
+            string idAttribute;
+            string nameAttribute;
+
+            if (string.IsNullOrEmpty(parentName) && string.IsNullOrEmpty(guid))
+            {
+                idAttribute = $"{fieldName}.CustomField.{property}";
+                nameAttribute = $"{fieldName}.CustomField.{property}";
+            }
+            else
+            {
+                idAttribute = $"{parentName}[{guid}].{fieldName}.{property}";
+                nameAttribute = $"{parentName}[{guid}].{fieldName}.{property}";
+            }
+            
+            ////string valueAttribute = customFieldValue
+            ////    .GetType()
+            ////    .GetProperty(property)
+            ////    ?.GetValue(customFieldValue, null)
+            ////    .ToString();
+
+            ////var test = typeof(CustomFieldValue).GetProperty(property)?.GetValue(customFieldValue, null);
+
+            TagBuilder hiddentTagBuilder = new TagBuilder("input")
+            {
+                Attributes =
+                {
+                    ["id"] = idAttribute,
+                    ["name"] = nameAttribute,
+                    ["value"] = valueAttribute,
+                    ["type"] = "hidden"
+                }
+            };
+
+            return hiddentTagBuilder;
         }
     }
 }

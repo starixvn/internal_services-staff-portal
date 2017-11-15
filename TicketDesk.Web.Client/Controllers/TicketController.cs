@@ -112,6 +112,7 @@
 
             model.Items = new List<Item>();
 
+            // TODO: Bug can happen here
             Item item = new Item
             {
                 ItemName = new CustomFieldValue
@@ -154,8 +155,6 @@
             // TODO: Replace with actual project ID represent for shop id here
             viewModel.Ticket.Project = Context.Projects.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
-
-            viewModel.RequestType.Value = viewModel.SelectedRequestType;
             
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
             {
@@ -167,6 +166,12 @@
             }
             
             await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
+
+            // TODO: Re-prepare model for view
+
+            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Facility);
+            viewModel.RequestType.CustomField = availableCustomField.First(x => x.Name == "Request Type");
+
             return View(viewModel);
         }
 
@@ -208,7 +213,6 @@
             viewModel.Ticket.Project = Context.Projects.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Feedback;
             
-            // TODO: Remove guid in CreateTicketAsync
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
             {
                 AddCustomFieldValue(
