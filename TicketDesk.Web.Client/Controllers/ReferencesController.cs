@@ -38,9 +38,7 @@
         [Route("bet-of-the-day")]
         public ActionResult BetOfTheDay()
         {
-            var today = DateTime.Now.Date;
-            var directory = string.Format("{0}/BetOfTheDay/{1}/{2}/{3}", _webRootPath, today.Year, today.Month, today.Day);
-            ViewBag.FilePath = GetFilePath(directory);
+            ViewBag.FilePath = GetFilePath("BetOfTheDay");
 
             return View();
         }
@@ -49,9 +47,7 @@
         [Route("featured-event")]
         public ActionResult FeaturedEvent()
         {
-            var today = DateTime.Now.Date;
-            var directory = string.Format("{0}/FeaturedEvent/{1}/{2}/{3}", _webRootPath, today.Year, today.Month, today.Day);
-            ViewBag.FilePath = GetFilePath(directory);
+            ViewBag.FilePath = GetFilePath("FeaturedEvent");
 
             return View();
         }
@@ -60,9 +56,7 @@
         [Route("newsletter")]
         public ActionResult Newsletter()
         {
-            var today = DateTime.Now.Date;
-            var directory = string.Format("{0}/Newsletter/{1}/{2}/{3}", _webRootPath, today.Year, today.Month, today.Day);
-            ViewBag.FilePath = GetFilePath(directory);
+            ViewBag.FilePath = GetFilePath("Newsletter");
 
             return View();
         }
@@ -71,9 +65,7 @@
         [Route("trading-limit")]
         public ActionResult TradingLimit()
         {
-            var today = DateTime.Now.Date;
-            var directory = string.Format("{0}/TradingLimit/{1}/{2}/{3}", _webRootPath, today.Year, today.Month, today.Day);
-            ViewBag.FilePath = GetFilePath(directory);
+            ViewBag.FilePath = GetFilePath("TradingLimit");
 
             return View();
         }
@@ -82,26 +74,26 @@
         [Route("tv-schedules")]
         public ActionResult TvSchedules()
         {
-            var today = DateTime.Now.Date;
-            var directory = string.Format("{0}/TvSchedules/{1}/{2}/{3}", _webRootPath, today.Year, today.Month, today.Day);
-            ViewBag.FilePath = GetFilePath(directory);
+            ViewBag.FilePath = GetFilePath("TvSchedules");
 
             return View();
         }
 
-        private string GetFilePath(string directory)
+        private string GetFilePath(string folder)
         {
             var filePath = string.Empty;
+            var today = DateTime.Now.Date;
+            var directory = string.Format("{0}/{1}/{2}/{3}/{4}", _webRootPath, folder, today.Year, today.Month, today.Day);
 
             if (Directory.Exists(directory))
             {
                 DirectoryInfo dirInfo = new DirectoryInfo(directory);
-                var filters = new[] { ".jpg", ".jpeg", ".png" };
+                var filters = new[] { ".jpg", ".jpeg", ".png", ".gif" };
                 IEnumerable<FileInfo> files = dirInfo.GetFiles().Where(f => filters.Contains(f.Extension, StringComparer.OrdinalIgnoreCase));
 
                 if (files.Any())
                 {
-                    filePath = string.Format("~/{0}", Path.Combine(_webPath, files.First().Name));
+                    filePath = string.Format("~/{0}/{1}/{2}/{3}/{4}/{5}", _webPath, folder, today.Year, today.Month, today.Day, files.First().Name);
                 }
             }
 
