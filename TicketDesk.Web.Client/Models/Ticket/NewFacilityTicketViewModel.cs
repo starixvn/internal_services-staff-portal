@@ -2,6 +2,7 @@
 {
     using Domain.Model;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
 
     public class NewFacilityTicketViewModel : TicketWithFilesBaseViewModel
@@ -28,10 +29,10 @@
             }
         }
 
-        ////[Required]
-        ////public string SelectedRequestType { get; set; }
+        [Required]
+        public string TestField { get; set; }
     }
-
+    
     public class Item
     {
         public string Index { get; set; }

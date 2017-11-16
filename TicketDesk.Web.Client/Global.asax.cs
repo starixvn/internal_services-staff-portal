@@ -14,7 +14,7 @@
             DbSettingProviderManager.Current.Start();
 
             // Configure FluentValidation for integration with ASP.NET MVC 5
-            Domain.Model.ModelValidation.Start.Configure();
+            ////Domain.Model.ModelValidation.Start.Configure();
         }
 
         /// <summary>

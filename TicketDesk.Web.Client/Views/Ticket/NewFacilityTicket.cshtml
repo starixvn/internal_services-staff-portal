@@ -28,13 +28,13 @@
         }
 
         function AssignAddMoreButton() {
-            $(".btn-add").click(function(event) {
+            $(".btn-add").click(function (event) {
                 event.preventDefault();
                 var id = "#" + $(this).data("class");
                 var clone = $(id).children().last().clone();
                 var guid = clone.children().first().val();
                 var regex = new RegExp(guid, "g");
-                var newHtml = clone.html(function(i, oldHtml) {
+                var newHtml = clone.html(function (i, oldHtml) {
                     return oldHtml.replace(regex, GenerateGuid());
                 });
 
@@ -64,7 +64,7 @@
             AssignRemoveButton();
         });
     </script>
-    
+
     <script>
         $(document).ready(function () {
             InitFormHandler("ticket-form", true);
@@ -97,6 +97,9 @@
 
     @Html.ValidationSummary()
 
+    @Html.ValidationMessageFor(x => x.TestField)
+    @Html.TextAreaFor(x => x.TestField)
+
     <div class="form-content facility-form">
         <div class="title">REPAIRS AND SERVICES REQUISITION FORM</div>
         <div class="item-list">
@@ -116,7 +119,6 @@
                     var rdId = "rd-" + requestType.Replace(' ', '_');
                     <p>
                         @Html.RadioButtonFor(x => x.RequestType.Value, requestType, new { id = rdId })
-                        @*@Html.RadioButtonFor(x => x.RequestType.Value, requestType)*@
                         <label for="@rdId">@requestType</label>
                     </p>
                 }
@@ -144,7 +146,6 @@
                         @Html.CustomFieldIndex("Items", guid)
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border" })
-                        @*@Html.ValidationMessageFor(x => x.Items.ElementAt(i).ItemName.Value)*@
                         <div class="value border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "" })</div>
                         <div class="border span-2">
                             <button class="btn btn-delete btn-delete-item rippler rippler-default"><span class="icon-delete"></span>Delete Item</button>
@@ -157,7 +158,7 @@
             }
 
         </div>
-        
+
         @Html.Partial("_DropzoneView", Model)
     </div>
     <input type="submit" class="btn btn-primary btn-send rippler rippler-default" value="Send" />

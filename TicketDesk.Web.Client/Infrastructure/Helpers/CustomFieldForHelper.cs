@@ -153,16 +153,17 @@
                 customFieldValue.CustomField.Id.ToString(),
                 parentName,
                 guid);
-            
-            TagBuilder customFieldIsRequiredTagBuilder = BuildHiddenTag(
-                customFieldValue,
-                fieldName,
-                $"{nameof(customFieldValue.CustomField)}.{nameof(customFieldValue.CustomField.IsRequired)}",
-                customFieldValue.CustomField.IsRequired.ToString(),
-                parentName,
-                guid);
 
-            return customFieldIdTagBuilder.ToString() + customFieldIsRequiredTagBuilder + input;
+            ////TagBuilder customFieldIsRequiredTagBuilder = BuildHiddenTag(
+            ////    customFieldValue,
+            ////    fieldName,
+            ////    $"{nameof(customFieldValue.CustomField)}.{nameof(customFieldValue.CustomField.IsRequired)}",
+            ////    customFieldValue.CustomField.IsRequired.ToString(),
+            ////    parentName,
+            ////    guid);
+
+            ////return customFieldIdTagBuilder.ToString() + customFieldIsRequiredTagBuilder + input;
+            return customFieldIdTagBuilder.ToString() + input;
         }
 
         private static TagBuilder BuildInputTag(CustomFieldValue customFieldValue, string fieldName)
@@ -217,6 +218,12 @@
                     input.Attributes.Add("name", fieldName + ".Value");
                     input.Attributes.Add("placeholder", customFieldValue.CustomField.Values);
                     break;
+            }
+
+            if (customFieldValue.CustomField.IsRequired)
+            {
+                input.Attributes.Add("required", "required");
+                input.Attributes.Add("data-val-required", fieldName + "is required");
             }
 
             return input;
