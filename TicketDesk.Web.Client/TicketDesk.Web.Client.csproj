@@ -518,12 +518,12 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\site.css" />
     <Content Include="Content\ticketdesk\error.css" />
-    <Content Include="favicon.ico" />
     <Compile Include="App_Start\Startup.Search.cs" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="favicon.png" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
