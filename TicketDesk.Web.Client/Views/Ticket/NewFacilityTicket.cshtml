@@ -94,18 +94,14 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
     @Html.HiddenFor(model => model.TempId)
-
-    @Html.ValidationSummary()
-
-    @Html.ValidationMessageFor(x => x.TestField)
-    @Html.TextAreaFor(x => x.TestField)
+    @Html.HiddenFor(model => model.SelectedRequestType, new { @class = "required-radio-value" })
 
     <div class="form-content facility-form">
         <div class="title">REPAIRS AND SERVICES REQUISITION FORM</div>
         <div class="item-list">
             @Html.LabelFor(x => x.Ticket.Title, new { @class = "key border" })
             <div class="value span-3 border subject">
-                @Html.TextBoxFor(x => x.Ticket.Title, new {@class = "ticket-title"})
+                @Html.TextBoxFor(x => x.Ticket.Title, new { @class = "ticket-title" })
             </div>
         </div>
 
@@ -113,12 +109,11 @@
         <div class="value span-3 border">
             <div class="radio-group">
                 @Html.HiddenFor(x => x.RequestType.CustomFieldId, new { Value = Model.RequestType.CustomField.Id })
-                @Html.HiddenFor(x => x.RequestType.CustomField.IsRequired, new { Value = Model.RequestType.CustomField.IsRequired })
                 @foreach (string requestType in Model.RequestTypes)
                 {
                     var rdId = "rd-" + requestType.Replace(' ', '_');
                     <p>
-                        @Html.RadioButtonFor(x => x.RequestType.Value, requestType, new { id = rdId })
+                        @Html.RadioButtonFor(x => x.RequestType.Value, requestType, new { id = rdId, @class = "required-radio" })
                         <label for="@rdId">@requestType</label>
                     </p>
                 }
@@ -161,5 +156,5 @@
 
         @Html.Partial("_DropzoneView", Model)
     </div>
-    <input type="submit" class="btn btn-primary btn-send rippler rippler-default" value="Send" />
+    <input type="submit" class="btn btn-primary btn-send rippler rippler-default" value="Send"/>
 }
