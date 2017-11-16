@@ -229,12 +229,12 @@
 
             if (string.IsNullOrEmpty(parentName) && string.IsNullOrEmpty(guid))
             {
-                idAttribute = $"{fieldName}.CustomField.{property}";
+                idAttribute = $"{fieldName}_CustomField_{property}";
                 nameAttribute = $"{fieldName}.CustomField.{property}";
             }
             else
             {
-                idAttribute = $"{parentName}[{guid}].{fieldName}.{property}";
+                idAttribute = $"{parentName}[{guid}]_{fieldName}_{property}";
                 nameAttribute = $"{parentName}[{guid}].{fieldName}.{property}";
             }
 

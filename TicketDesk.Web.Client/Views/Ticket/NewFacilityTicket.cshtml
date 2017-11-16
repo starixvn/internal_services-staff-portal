@@ -116,6 +116,7 @@
                     var rdId = "rd-" + requestType.Replace(' ', '_');
                     <p>
                         @Html.RadioButtonFor(x => x.RequestType.Value, requestType, new { id = rdId })
+                        @*@Html.RadioButtonFor(x => x.RequestType.Value, requestType)*@
                         <label for="@rdId">@requestType</label>
                     </p>
                 }
