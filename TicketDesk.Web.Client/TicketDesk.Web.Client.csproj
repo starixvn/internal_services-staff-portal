@@ -2410,6 +2410,9 @@
     <Content Include="Views\CustomFieldSettings\Edit.cshtml" />
     <Content Include="src\libs\forge\forge.min.js.map" />
     <Content Include="src\libs\forge\prime.worker.min.js.map" />
+    <Content Include="Web.local.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
