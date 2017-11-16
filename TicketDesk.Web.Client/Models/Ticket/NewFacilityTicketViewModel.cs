@@ -2,7 +2,6 @@
 {
     using Domain.Model;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
 
     public class NewFacilityTicketViewModel : TicketWithFilesBaseViewModel
@@ -28,9 +27,6 @@
                 return _requestTypes;
             }
         }
-
-        [Required]
-        public string TestField { get; set; }
     }
     
     public class Item

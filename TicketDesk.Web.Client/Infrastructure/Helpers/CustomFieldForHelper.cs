@@ -220,11 +220,11 @@
                     break;
             }
 
-            if (customFieldValue.CustomField.IsRequired)
-            {
-                input.Attributes.Add("required", "required");
-                input.Attributes.Add("data-val-required", fieldName + "is required");
-            }
+            ////if (customFieldValue.CustomField.IsRequired)
+            ////{
+            ////    input.Attributes.Add("required", "required");
+            ////    input.Attributes.Add("data-val-required", fieldName + " is required");
+            ////}
 
             return input;
         }

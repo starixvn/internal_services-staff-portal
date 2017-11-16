@@ -74,6 +74,7 @@
       <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
       <Private>True</Private>
@@ -270,6 +271,7 @@
     <Compile Include="Model\Extensions\TicketTagExtensions.cs" />
     <Compile Include="Model\Extensions\UserTicketListFilterColumnExtensions.cs" />
     <Compile Include="Model\Extensions\UserTicketListSettingsCollectionExtensions.cs" />
+    <Compile Include="Model\Extensions\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\TicketCategory.cs" />
     <Compile Include="Model\TicketCategoryCustomField.cs" />
