@@ -64,7 +64,7 @@
                     activeClass = "active";
                 }
                 
-                <li class="@activeClass"><a href="@Url.Action("Index", "Home", new { page = (i + 1), itemPerPage = Model.MyOpenningIssues.ItemPerPage })">@(i + 1)</a></li>
+                <li class="@activeClass"><a href="@Url.Action("Index", "Home", new { page = (i + 1), itemPerPage = Model.MyOpenningIssues.ItemPerPage })" >@(i + 1)</a></li>
             }
             @if (Model.MyOpenningIssues.CurrentPage == Model.MyOpenningIssues.TotalPage)
             {
