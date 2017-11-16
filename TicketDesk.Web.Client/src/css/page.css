@@ -522,6 +522,10 @@ tr.header {
     min-height: 120px; }
   .form-content .custom-dropdown {
     padding: 0; }
+  .form-content textarea {
+    min-height: 100px;
+    width: 100%;
+    margin-bottom: 6px; }
 
 .attach-file .fullwidth {
   padding: 9px 12px; }
@@ -536,6 +540,12 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   height: 100%;
   margin: 0 -12px;
   padding: 0 12px; }
+
+.facility-form .fullwidth.input-area {
+  padding: 12px; }
+  .facility-form .fullwidth.input-area textarea {
+    height: 100%;
+    margin-bottom: 0; }
 
 .feedback-form {
   /*.attach-file .fullwidth {
@@ -553,10 +563,6 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
       height: 40px;
       width: 100%;
       padding: 0 12px; }
-    .feedback-form .item textarea {
-      min-height: 100px;
-      width: 100%;
-      margin-bottom: 6px; }
 
 /**************************************************** Button ******************************************************/
 .btn-primary.disabled.focus, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled].focus, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {

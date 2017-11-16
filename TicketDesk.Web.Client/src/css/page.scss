@@ -674,6 +674,11 @@ tr.header {
     .custom-dropdown {
         padding: 0;
     }
+    textarea {
+        min-height: 100px;
+        width: 100%;
+        margin-bottom: 6px;           
+    }
 }
 
 .attach-file .fullwidth {
@@ -694,6 +699,13 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
         margin: 0 -12px;
         padding: 0 12px;
     }
+    .fullwidth.input-area {
+        padding: 12px;
+        textarea {
+            height: 100%;
+            margin-bottom: 0;
+        }
+    }
 }
 .feedback-form {
     .item {
@@ -710,11 +722,6 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
             height: 40px;
             width: 100%;
             padding: 0 12px;           
-        }
-        textarea {
-            min-height: 100px;
-            width: 100%;
-            margin-bottom: 6px;           
         }
     }
     /*.attach-file .fullwidth {

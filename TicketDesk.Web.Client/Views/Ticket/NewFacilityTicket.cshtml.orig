@@ -95,6 +95,8 @@
     @Html.HiddenFor(model => model.Ticket.IsHtml)
     @Html.HiddenFor(model => model.TempId)
 
+    @Html.ValidationSummary()
+
     <div class="form-content facility-form">
         <div class="title">REPAIRS AND SERVICES REQUISITION FORM</div>
         <div class="item-list">
@@ -108,11 +110,13 @@
         <div class="value span-3 border">
             <div class="radio-group">
                 @Html.HiddenFor(x => x.RequestType.CustomFieldId, new { Value = Model.RequestType.CustomField.Id })
+                @Html.HiddenFor(x => x.RequestType.CustomField.IsRequired, new { Value = Model.RequestType.CustomField.IsRequired })
                 @foreach (string requestType in Model.RequestTypes)
                 {
                     var rdId = "rd-" + requestType.Replace(' ', '_');
                     <p>
                         @Html.RadioButtonFor(x => x.RequestType.Value, requestType, new { id = rdId })
+                        @*@Html.RadioButtonFor(x => x.RequestType.Value, requestType)*@
                         <label for="@rdId">@requestType</label>
                     </p>
                 }
@@ -140,13 +144,19 @@
                         @Html.CustomFieldIndex("Items", guid)
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border" })
+                        @*@Html.ValidationMessageFor(x => x.Items.ElementAt(i).ItemName.Value)*@
                         <div class="value border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "" })</div>
                         <div class="border span-2">
                             <button class="btn btn-delete btn-delete-item rippler rippler-default"><span class="icon-delete"></span>Delete Item</button>
                         </div>
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth border key" })
+<<<<<<< HEAD
+                        @*@Html.ValidationMessageFor(x => x.Items.ElementAt(i).Reason.Value)*@
                         @Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "border" })
+=======
+                        <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "" })</div>
+>>>>>>> #000 - add favicon icon
                     </div>
                 }
             }
@@ -155,9 +165,5 @@
         
         @Html.Partial("_DropzoneView", Model)
     </div>
-<<<<<<< HEAD
-    <input type="submit" class="btn btn-primary btn-send disabled" value="Send" />
-=======
     <input type="submit" class="btn btn-primary btn-send rippler rippler-default" value="Send" />
->>>>>>> #000 - fix bug UI
 }

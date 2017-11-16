@@ -151,8 +151,7 @@
                         </div>
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth border key" })
-                        @*@Html.ValidationMessageFor(x => x.Items.ElementAt(i).Reason.Value)*@
-                        @Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "border" })
+                        <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "" })</div>
                     </div>
                 }
             }
