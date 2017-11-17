@@ -1,42 +1,44 @@
-﻿@model IList<TicketDesk.Web.Client.Models.Home.TicketGroup>
+﻿@model TicketDesk.Web.Client.Models.Home.MyOpenningIssues
 
 <table class="table table-bordered table-hover" id="home-myopenning-tickets">
     <thead>
-        <tr>
-            <th class="text-center width-80">#</th>
-            <th>Subject</th>
-            <th class="text-center width-150">Created Date</th>
-            <th class="text-center width-150">Status</th>
-        </tr>
+    <tr>
+        <th class="text-center width-80">#</th>
+        <th>Subject</th>
+        <th class="text-center width-150">Created Date</th>
+        <th class="text-center width-150">Status</th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var ticketGroup in Model)
+    @foreach (var ticketGroup in Model.TicketGroups)
+    {
+        <tr class="header" data-title="@ticketGroup.Name">
+            <td colspan="4"><span class="sign"></span> @ticketGroup.Name <span class="number-ticket">(@ticketGroup.Tickets.Count())</span></td>
+        </tr>
+
+        int index = -1;
+
+        foreach (var ticket in ticketGroup.Tickets)
         {
-            <tr class="header" data-title="@ticketGroup.Name">
-                <td colspan="4"><span class="sign"></span> @ticketGroup.Name <span class="number-ticket">(@ticketGroup.Tickets.Count())</span></td>
-            </tr>
-
-            int index = -1;
-
-            foreach (var ticket in ticketGroup.Tickets)
+            index++;
+            string evenClass = "";
+            if (index % 2 == 1)
             {
-                index++;
-                string evenClass = "";
-                if (index % 2 == 1)
-                {
-                    evenClass = "even";
-                }
-
-                <tr class="@evenClass" data-group="@ticketGroup.Name">
-                    <td class="text-center">
-                        <a href="@Url.Action("Index","TicketCenter", new {id = ticket.TicketId})" class="id-ticket">@ticket.TicketId</a>
-                    </td>
-                    <td>@ticket.Title</td>
-                    <td class="text-center">@ticket.CreatedDate.ToString("MMM dd, yyyy")</td>
-                    <td class="text-center"><span class="inprogress">@ticket.TicketStatus</span></td>
-                </tr>
+                evenClass = "even";
             }
+
+            <tr class="@evenClass" data-group="@ticketGroup.Name">
+                <td class="text-center">
+                    <a href="@Url.Action("Index","TicketCenter", new {id = ticket.TicketId})" class="id-ticket">@ticket.TicketId</a>
+                </td>
+                <td>@ticket.Title</td>
+                <td class="text-center">@ticket.CreatedDate.ToString("MMM dd, yyyy")</td>
+                <td class="text-center"><span class="inprogress">@ticket.TicketStatus</span></td>
+            </tr>
         }
+    }
     </tbody>
 
 </table>
+
+@Html.Partial("_Pagination", Model)

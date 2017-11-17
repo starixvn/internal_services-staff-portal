@@ -10,6 +10,7 @@
         /// CurrentPage start with 1
         /// </summary>
         public int CurrentPage { get; set; }
+
         /// <summary>
         /// If current page = 1 (first page) => From item 1
         /// If current page = 2 and ItemPerPage = 20 => From item 21
@@ -57,5 +58,9 @@
         public virtual int TotalPage => TotalItem % ItemPerPage > 0
             ? (TotalItem / ItemPerPage) + 1
             : TotalItem / ItemPerPage;
+
+        public string Action { get; set; }
+
+        public string Controller { get; set; }
     }
 }

@@ -28,49 +28,14 @@
 <div class="panel feature">
     <div class="panel-heading text-info">My openning issue</div>
     <div class="panel-body">
-        @Html.Partial("_MyOpeningTicket", Model.MyOpenningIssues.TicketGroups)
-        <div class="page-size">
-            <label class="">@Html.DisplayNameFor(x => x.MyOpenningIssues.ItemPerPage)</label>
-            <div class="custom-dropdown">
-                @Html.DropDownListFor(x => x.MyOpenningIssues.ItemPerPage, Model.MyOpenningIssues.ItemPerPageList, new { id = "itemperpage-select" })
-            </div>
-        </div>  
-
-        <ul class="pagination">
-            @if (Model.MyOpenningIssues.CurrentPage == 1)
-            {
-                <li>
-                    <a class="icon-previous disabled"></a>
-                </li>
-            }
-            else
-            {
-                <li><a href="@Url.Action("Index", "Home", new { page = (Model.MyOpenningIssues.CurrentPage - 1), itemPerPage = Model.MyOpenningIssues.ItemPerPage })" class="icon-previous"></a></li>
-            }
-            @for (int i = 0; i < Model.MyOpenningIssues.TotalPage; i++)
-            {
-                var activeClass = "";
-                if (Model.MyOpenningIssues.CurrentPage == (i + 1))
-                {
-                    activeClass = "active";
-                }
-                
-                <li class="@activeClass"><a href="@Url.Action("Index", "Home", new { page = (i + 1), itemPerPage = Model.MyOpenningIssues.ItemPerPage })" >@(i + 1)</a></li>
-            }
-            @if (Model.MyOpenningIssues.CurrentPage == Model.MyOpenningIssues.TotalPage)
-            {
-                <li>
-                    <a class="icon-next disabled"></a>
-                </li>
-            }
-            else
-            {
-                <li><a href="@Url.Action("Index", "Home", new { page = (Model.MyOpenningIssues.CurrentPage + 1), itemPerPage = Model.MyOpenningIssues.ItemPerPage })" class="icon-next"></a></li>
-            }
-        </ul>           
-        
-        <p class="display-item">Displaying @Model.MyOpenningIssues.FromItemIndex to @Model.MyOpenningIssues.ToItemIndex of @Model.MyOpenningIssues.TotalItem item(s)</p>
-
+        @if (Model.MyOpenningIssues.TicketGroups.Any())
+        {
+            @Html.Partial("_MyOpeningTicket", Model.MyOpenningIssues)
+        }
+        else
+        {
+            <p>No tickets to display</p>
+        }
     </div>
 </div>
 

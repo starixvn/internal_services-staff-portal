@@ -49,7 +49,9 @@
                 {
                     TicketGroups = new List<TicketGroup>(),
                     CurrentPage = page,
-                    ItemPerPage = itemPerPage
+                    ItemPerPage = itemPerPage,
+                    Action = "Index",
+                    Controller = "Home"
                 }
             };
 
