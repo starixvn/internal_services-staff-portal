@@ -18,6 +18,12 @@
     <script src="~/src/js/formhandler.js"></script>
 
     <script>
+        function ResetFormValidator() {
+            $(".ticket-form").removeData('validator');
+            $(".ticket-form").removeData('unobtrusiveValidation');
+            $.validator.unobtrusive.parse(".ticket-form");
+        }
+
         function GenerateGuid() {
             function s4() {
                 return Math.floor((1 + Math.random()) * 0x10000)
@@ -41,6 +47,8 @@
 
                 $(id).append(newHtml);
 
+                ResetFormValidator();
+
                 $(".btn-delete-item").show();
                 $(".btn-delete-item:first").hide();
 
@@ -57,6 +65,7 @@
             $(".btn-delete-item:first").hide();
             $("body").on("click", ".btn-delete-item", function () {
                 $(this).parent().parent().remove();
+                ResetFormValidator();
             });
         }
 

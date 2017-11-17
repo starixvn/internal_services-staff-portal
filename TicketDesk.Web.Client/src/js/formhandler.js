@@ -1,18 +1,19 @@
 ﻿function InitFormHandler(formclassname, allowRedirect) {
     var selector = "." + formclassname;
-    var formInputSelector = "." + formclassname + " input";
     var formSubmitSelector = "." + formclassname + " input[type=submit]";
 
     SetValueForRequiredRadioButton(formclassname);
-
-    $(formInputSelector).on("input",
-        function () {
+    
+    $(selector).on("input",
+        "input",
+        function() {
             console.log("on input");
             CheckFormAndTurnSubmitButton(formclassname);
         });
 
-    $("." + formclassname + " textarea").on("input",
-        function() {
+    $(selector).on("input",
+        "textarea",
+        function () {
             console.log("on input");
             CheckFormAndTurnSubmitButton(formclassname);
         });
