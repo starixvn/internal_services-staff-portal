@@ -2,26 +2,17 @@
 
 @section title{ Services & Staffs Portal }
 
-@section css
-{
-    @*<link rel="stylesheet" type="text/css" href="~/src/libs/datatables/datatables.min.css"/>*@
-}
-
 @section scripts
 {
-    @*<script type="text/javascript" src="~/src/libs/datatables/datatables.min.js"></script>*@
-
     <script>
         $(document).ready(function() {
             $('.header').on("click",
                 function () {
-                    //$(this).toggleClass('expand').nextUntil('tr.header').slideToggle(100);
                     var $this = $(this);
-                    groupTicket = $this.attr('data-title');
+                    var groupTicket = $this.attr('data-title');
                     var childRows = $('[data-group="' + groupTicket + '"]');
                     $this.toggleClass('expand');
                     childRows.find('td').slideToggle('fast');
-                    //$this.toggleClass('expand').siblings('[data-collapse]').find('td').slideToggle('fast');
                 });
             $("#itemperpage-select").on("change",
                 function() {

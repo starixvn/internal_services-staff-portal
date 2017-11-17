@@ -370,6 +370,7 @@
     <Compile Include="App_Start\Startup.Routes.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomFieldSettingsController.cs" />
     <Compile Include="Controllers\EmailTestController.cs" />
@@ -2406,6 +2407,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Ticket\_HardwareTicketDetail.cshtml" />
+    <Content Include="Views\Announcement\Index.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
