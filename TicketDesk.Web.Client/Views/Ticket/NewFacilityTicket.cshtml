@@ -22,6 +22,7 @@
             $(".ticket-form").removeData('validator');
             $(".ticket-form").removeData('unobtrusiveValidation');
             $.validator.unobtrusive.parse(".ticket-form");
+            CheckFormAndTurnSubmitButton("ticket-form");
         }
 
         function GenerateGuid() {
