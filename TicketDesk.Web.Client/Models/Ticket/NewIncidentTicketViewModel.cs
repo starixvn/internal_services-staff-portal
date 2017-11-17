@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Models.Ticket
 {
+    using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
     using Domain.Model;
 
@@ -28,6 +29,9 @@
         public CustomFieldValue TimeOfIncident { get; set; }
 
         public CustomFieldValue Desciption { get; set; }
+
+        [Required]
+        public string SelectedReportByValue { get; set; }
 
         public NewIncidentTicketViewModel()
         {

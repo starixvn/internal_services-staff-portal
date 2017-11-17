@@ -28,11 +28,8 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
-    @Html.HiddenFor(model => model.Ticket.TicketType)
-    @Html.HiddenFor(model => model.Ticket.Category)
-    @Html.HiddenFor(model => model.Ticket.Priority)
-    @Html.HiddenFor(model => model.Ticket.Details)
     @Html.HiddenFor(model => model.TempId)
+    @Html.HiddenFor(model => model.SelectedReportByValue, new { @class = "required-radio-value" })
 
     <div class="form-content feedback-form">
         <div class="title">INCIDENT REPORT FORM</div>
@@ -40,13 +37,12 @@
         <div class="value span-3 border">
             <div class="radio-group">
                 @Html.HiddenFor(x => x.ReportBy.CustomFieldId, new { Value = Model.ReportBy.CustomField.Id })
-                @Html.HiddenFor(x => x.ReportBy.CustomField.IsRequired, new { Value = Model.ReportBy.CustomField.IsRequired })
                 @foreach (string reporter in Model.ReportByValues)
                 {
                     var rdId = "rd-" + reporter.Replace(' ', '_');
 
                     <p>
-                        @Html.RadioButtonFor(x => x.ReportBy.Value, reporter, new { id = rdId, Checked = "checked" })
+                        @Html.RadioButtonFor(x => x.ReportBy.Value, reporter, new { id = rdId, @class = "required-radio" })
                         <label for="@rdId">@reporter</label>
                     </p>
                 }
