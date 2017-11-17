@@ -41,7 +41,7 @@
             @{
                 var guid = Guid.NewGuid().ToString();
             }
-            @Html.CustomFieldIndex("System", guid)
+            @*@Html.CustomFieldIndex("System", guid)*@
 
             @Html.CustomFieldLabelWithGuidIndexFor(x => x.System, guid, null, new { @class = "key border" })
             <div class="value border custom-dropdown">

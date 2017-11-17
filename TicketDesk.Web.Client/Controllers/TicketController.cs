@@ -226,9 +226,9 @@
                 // Save changes to ticket's custom field
                 await Context.SaveChangesAsync().ConfigureAwait(false);
 
-                ////return Context.SecurityProvider.IsReadTicketCenter
-                ////    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
-                ////    : RedirectToAction("Index", "Home");
+                return Context.SecurityProvider.IsReadTicketCenter
+                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
+                    : RedirectToAction("Index", "Home");
             }
 
             await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);

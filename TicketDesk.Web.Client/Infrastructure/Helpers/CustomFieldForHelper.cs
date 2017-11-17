@@ -10,6 +10,26 @@
 
     public static class CustomFieldForHelper
     {
+        public static TagBuilder BuildHiddenTag(
+            CustomFieldValue customFieldValue,
+            string fieldName,
+            string property,
+            string valueAttribute)
+        {
+            TagBuilder hiddentTagBuilder = new TagBuilder("input")
+            {
+                Attributes =
+                {
+                    ["id"] = $"{fieldName}.{property}",
+                    ["name"] = $"{fieldName}.{property}",
+                    ["value"] = valueAttribute,
+                    ["type"] = "hidden"
+                }
+            };
+
+            return hiddentTagBuilder;
+        }
+
         public static MvcHtmlString CustomFieldFor<TModel, TValue>(
             this HtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> propertyExpression,
@@ -24,37 +44,41 @@
             return new MvcHtmlString(str);
         }
 
-        public static MvcHtmlString CustomFieldWithGuidIndexFor<TModel, TValue>(
-            this HtmlHelper<TModel> html,
-            Expression<Func<TModel, TValue>> propertyExpression,
-            string guid,
-            string parentName,
-            object htmlAttributes = null)
-            where TModel
-            : class
-        {
-            var item = propertyExpression.Compile()(html.ViewData.Model) as CustomFieldValue;
-            var htmlFieldName = ExpressionHelper.GetExpressionText(propertyExpression);
-
-            var str = BuildHtmlString(item, guid, parentName, htmlFieldName, htmlAttributes);
-
-            return new MvcHtmlString(str);
-        }
-
         public static MvcHtmlString CustomFieldIndex(this HtmlHelper html, string parentName, string guid)
         {
             // Index tag
             TagBuilder indexTag = new TagBuilder("input");
             indexTag.Attributes.Add("type", "hidden");
-            indexTag.Attributes.Add("name", parentName + ".Index");
+            indexTag.Attributes.Add("name", $"{parentName}.Index");
             indexTag.Attributes.Add("value", guid);
 
             TagBuilder itemIndexTag = new TagBuilder("input");
             itemIndexTag.Attributes.Add("type", "hidden");
-            itemIndexTag.Attributes.Add("name", parentName + "[" + guid + "].Index");
+            itemIndexTag.Attributes.Add("name", $"{parentName}[{guid}].Index");
             itemIndexTag.Attributes.Add("value", guid);
 
             return new MvcHtmlString(indexTag.ToString() + itemIndexTag);
+        }
+
+        public static MvcHtmlString CustomFieldLabelFor<TModel, TValue>(
+            this HtmlHelper<TModel> html,
+            Expression<Func<TModel, TValue>> propertyExpression,
+            object htmlAttributes = null)
+        {
+            var customFieldValue = propertyExpression.Compile()(html.ViewData.Model) as CustomFieldValue;
+            var htmlFieldName = ExpressionHelper.GetExpressionText(propertyExpression);
+
+            TagBuilder label = new TagBuilder("label");
+            label.Attributes.Add("for", htmlFieldName + ".Value");
+            label.SetInnerText(customFieldValue?.CustomField.Name);
+
+            if (htmlAttributes != null)
+            {
+                var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+                label.MergeAttributes(attributes);
+            }
+
+            return new MvcHtmlString(label.ToString());
         }
 
         public static MvcHtmlString CustomFieldLabelWithGuidIndexFor(
@@ -103,25 +127,21 @@
             return new MvcHtmlString(label.ToString());
         }
 
-        public static MvcHtmlString CustomFieldLabelFor<TModel, TValue>(
+        public static MvcHtmlString CustomFieldWithGuidIndexFor<TModel, TValue>(
             this HtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> propertyExpression,
+            string guid,
+            string parentName,
             object htmlAttributes = null)
+            where TModel
+            : class
         {
-            var customFieldValue = propertyExpression.Compile()(html.ViewData.Model) as CustomFieldValue;
+            var item = propertyExpression.Compile()(html.ViewData.Model) as CustomFieldValue;
             var htmlFieldName = ExpressionHelper.GetExpressionText(propertyExpression);
 
-            TagBuilder label = new TagBuilder("label");
-            label.Attributes.Add("for", htmlFieldName + ".Value");
-            label.SetInnerText(customFieldValue?.CustomField.Name);
+            var str = BuildHtmlString(item, guid, parentName, htmlFieldName, htmlAttributes);
 
-            if (htmlAttributes != null)
-            {
-                var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
-                label.MergeAttributes(attributes);
-            }
-
-            return new MvcHtmlString(label.ToString());
+            return new MvcHtmlString(str);
         }
 
         private static string BuildHtmlString(
@@ -137,6 +157,18 @@
             }
 
             var input = BuildInputTag(customFieldValue, fieldName);
+            
+            TagBuilder id = BuildHiddenTag(
+                customFieldValue,
+                fieldName,
+                nameof(customFieldValue.CustomFieldId),
+                customFieldValue.CustomField.Id.ToString());
+
+            if (!string.IsNullOrEmpty(parentName) && !string.IsNullOrEmpty(guid))
+            {
+                input = TransformTag(input, fieldName, nameof(customFieldValue.Value), parentName, guid);
+                id = TransformTag(id, fieldName, nameof(customFieldValue.CustomFieldId), parentName, guid);
+            }
 
             if (htmlAttributes != null)
             {
@@ -144,26 +176,7 @@
                 input.MergeAttributes(attributes);
             }
 
-            input = TransformTag(input, fieldName, nameof(customFieldValue.Value), parentName, guid);
-            
-            TagBuilder customFieldIdTagBuilder = BuildHiddenTag(
-                customFieldValue,
-                fieldName,
-                nameof(customFieldValue.CustomFieldId),
-                customFieldValue.CustomField.Id.ToString(),
-                parentName,
-                guid);
-
-            ////TagBuilder customFieldIsRequiredTagBuilder = BuildHiddenTag(
-            ////    customFieldValue,
-            ////    fieldName,
-            ////    $"{nameof(customFieldValue.CustomField)}.{nameof(customFieldValue.CustomField.IsRequired)}",
-            ////    customFieldValue.CustomField.IsRequired.ToString(),
-            ////    parentName,
-            ////    guid);
-
-            ////return customFieldIdTagBuilder.ToString() + customFieldIsRequiredTagBuilder + input;
-            return customFieldIdTagBuilder.ToString() + input;
+            return id.ToString() + input;
         }
 
         private static TagBuilder BuildInputTag(CustomFieldValue customFieldValue, string fieldName)
@@ -228,70 +241,21 @@
             return input;
         }
 
+        /// <summary>
+        /// Tranform a normal tag to an guid index with parent property tag for correct binding to a list of object
+        /// </summary>
+        /// <param name="originalTag"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="property"></param>
+        /// <param name="parentName"></param>
+        /// <param name="guid"></param>
+        /// <returns></returns>
         private static TagBuilder TransformTag(TagBuilder originalTag, string fieldName, string property, string parentName, string guid)
         {
-            string idAttribute;
-            string nameAttribute;
-
-            if (string.IsNullOrEmpty(parentName) && string.IsNullOrEmpty(guid))
-            {
-                idAttribute = $"{fieldName}_CustomField_{property}";
-                nameAttribute = $"{fieldName}.CustomField.{property}";
-            }
-            else
-            {
-                idAttribute = $"{parentName}[{guid}]_{fieldName}_{property}";
-                nameAttribute = $"{parentName}[{guid}].{fieldName}.{property}";
-            }
-
-            originalTag.Attributes["id"] = idAttribute;
-            originalTag.Attributes["name"] = nameAttribute;
+            originalTag.Attributes["id"] = $"{parentName}[{guid}]_{fieldName}_{property}";
+            originalTag.Attributes["name"] = $"{parentName}[{guid}].{fieldName}.{property}";
 
             return originalTag;
-        }
-
-        public static TagBuilder BuildHiddenTag(
-            CustomFieldValue customFieldValue,
-            string fieldName,
-            string property,
-            string valueAttribute,
-            string parentName = null,
-            string guid = null)
-        {
-            string idAttribute;
-            string nameAttribute;
-
-            if (string.IsNullOrEmpty(parentName) && string.IsNullOrEmpty(guid))
-            {
-                idAttribute = $"{fieldName}.CustomField.{property}";
-                nameAttribute = $"{fieldName}.CustomField.{property}";
-            }
-            else
-            {
-                idAttribute = $"{parentName}[{guid}].{fieldName}.{property}";
-                nameAttribute = $"{parentName}[{guid}].{fieldName}.{property}";
-            }
-            
-            ////string valueAttribute = customFieldValue
-            ////    .GetType()
-            ////    .GetProperty(property)
-            ////    ?.GetValue(customFieldValue, null)
-            ////    .ToString();
-
-            ////var test = typeof(CustomFieldValue).GetProperty(property)?.GetValue(customFieldValue, null);
-
-            TagBuilder hiddentTagBuilder = new TagBuilder("input")
-            {
-                Attributes =
-                {
-                    ["id"] = idAttribute,
-                    ["name"] = nameAttribute,
-                    ["value"] = valueAttribute,
-                    ["type"] = "hidden"
-                }
-            };
-
-            return hiddentTagBuilder;
         }
     }
 }
