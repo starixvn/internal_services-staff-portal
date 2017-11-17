@@ -14,6 +14,7 @@
 @section scripts
 {
     @Html.Partial("_DropzoneScripts", Model)
+
     <script src="~/src/js/formhandler.js"></script>
     
     <script>
@@ -27,12 +28,12 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
-    @*@Html.HiddenFor(model => model.Ticket.Title)*@
-    @Html.HiddenFor(model => model.Ticket.TicketType)
+    @*@Html.HiddenFor(model => model.Ticket.TicketType)
     @Html.HiddenFor(model => model.Ticket.Category)
     @Html.HiddenFor(model => model.Ticket.Priority)
-    @Html.HiddenFor(model => model.Ticket.Details)
+    @Html.HiddenFor(model => model.Ticket.Details)*@
     @Html.HiddenFor(model => model.TempId)
+    @Html.HiddenFor(model => model.SelectedFeedbackByValue, new { @class = "required-radio-value" })
 
     <div class="form-content feedback-form">
         <div class="title">FEEDBACK FORM</div>
@@ -40,13 +41,12 @@
         <div class="value span-3 border">
             <div class="radio-group">
                 @Html.HiddenFor(x => x.FeedbackBy.CustomFieldId, new { Value = Model.FeedbackBy.CustomField.Id })
-                @Html.HiddenFor(x => x.FeedbackBy.CustomField.IsRequired, new { Value = Model.FeedbackBy.CustomField.IsRequired })
                 @foreach (string feedbackByValue in Model.FeedbackByValues)
                 {
                     var rdId = "rd-" + feedbackByValue.Replace(' ', '_');
 
                     <p>
-                        @Html.RadioButtonFor(x => x.FeedbackBy.Value, feedbackByValue, new { id = rdId })
+                        @Html.RadioButtonFor(x => x.FeedbackBy.Value, feedbackByValue, new { id = rdId, @class = "required-radio" })
                         <label for="@rdId">@feedbackByValue</label>
                     </p>
                 }

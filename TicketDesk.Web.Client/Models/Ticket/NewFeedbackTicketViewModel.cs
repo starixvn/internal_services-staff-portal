@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Web.Client.Models.Ticket
 {
     using Domain.Model;
+    using System.ComponentModel.DataAnnotations;
     using System.Text.RegularExpressions;
 
     public class NewFeedbackTicketViewModel : TicketWithFilesBaseViewModel
@@ -10,9 +11,7 @@
         public Ticket Ticket { get; set; }
 
         public CustomFieldValue FeedbackBy { get; set; }
-
-        ////public CustomFieldValue Subject { get; set; }
-
+        
         public CustomFieldValue CustomerName { get; set; }
 
         public CustomFieldValue Feedback { get; set; }
@@ -31,11 +30,13 @@
             }
         }
 
+        [Required]
+        public string SelectedFeedbackByValue { get; set; }
+
         public NewFeedbackTicketViewModel()
         {
             Ticket = new Ticket();
             FeedbackBy = new CustomFieldValue();
-            ////Subject = new CustomFieldValue();
             CustomerName = new CustomFieldValue();
             Feedback = new CustomFieldValue();
         }

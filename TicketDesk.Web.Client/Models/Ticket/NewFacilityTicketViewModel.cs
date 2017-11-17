@@ -31,6 +31,13 @@
 
         [Required]
         public string SelectedRequestType { get; set; }
+
+        public NewFacilityTicketViewModel()
+        {
+            Ticket = new Ticket();
+            RequestType = new CustomFieldValue();
+            Items = new List<Item>();
+        }
     }
     
     public class Item
@@ -40,5 +47,11 @@
         public CustomFieldValue ItemName { get; set; }
 
         public CustomFieldValue Reason { get; set; }
+
+        public Item()
+        {
+            ItemName = new CustomFieldValue();
+            Reason = new CustomFieldValue();
+        }
     }
 }

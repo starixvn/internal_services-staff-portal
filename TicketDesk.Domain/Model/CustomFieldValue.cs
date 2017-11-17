@@ -16,7 +16,7 @@
         public int TicketId { get; set; }
 
         public int CustomFieldId { get; set; }
-        
+
         [NotMapped]
         public virtual CustomField CustomField { get; set; }
     }
