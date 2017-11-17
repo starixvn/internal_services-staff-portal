@@ -3,13 +3,6 @@
 <script src="~/src/libs/dropzone/dropzone.min.js"></script>
 
 <script type="text/javascript">
-    
-    function IsTotalBytesViolated() {
-        var allowedBytes = @Model.MaxBytes;
-        var totalBytes = GetTotalSize();
-
-        return totalBytes > allowedBytes;
-    }
 
     function CheckValidFiles() {
         if (ticketDeskDropzone.files.length > 0) {
@@ -23,8 +16,18 @@
                     }
                 }
             }
+
+            if (IsTotalBytesViolated()) {
+                // Max size violated
+                return false;
+            }
+
             return true;
         }
+
+        // TODO: confirm file is required here
+        // there is no files
+        return false;
     }
 
     function SetErrorTextAndShowModal(text) {
@@ -113,7 +116,7 @@
             $('.btn-delete-all-file').show();
             $('.number-chosenfile').show();
             $('.number-chosenfile .text').text('files were selected');
-        } else if (numberOfSelectedFile == 1) {
+        } else if (numberOfSelectedFile === 1) {
             $('.btn-delete-all-file').show();
             $('.number-chosenfile').show();
             $('.number-chosenfile .text').text('file were selected');
