@@ -25,9 +25,13 @@
             return true;
         }
 
-        // TODO: confirm file is required here
-        // there is no files
-        return false;
+        if (@Json.Encode(Model.IsFileRequired) === true) {
+            // there is no files
+            return false;
+        } else {
+            return true;
+        }
+        
     }
 
     function SetErrorTextAndShowModal(text) {
