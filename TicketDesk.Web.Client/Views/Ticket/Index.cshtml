@@ -63,13 +63,17 @@
             @Html.Action("TicketDetails", new { ticketId = Model.TicketId })
         </div>*@
     <div id="ticketDetailPanel" class="panel panel-info">
-        @if (Model.CategoryId == (int)TicketCategoryTypes.Feedback)
+        @switch (Model.CategoryId)
         {
-            @Html.Action("TicketFeedbackDetails", new { ticketId = Model.TicketId })
-        }
-        else
-        {
-            @Html.Action("TicketDetails", new { ticketId = Model.TicketId })
+            case (int)TicketCategoryTypes.Feedback:
+                Html.Action("TicketFeedbackDetails", new { ticketId = Model.TicketId });
+                break;
+            case (int)TicketCategoryTypes.Hardware:
+                Html.Action("TicketHardwareDetails", new { ticketId = Model.TicketId });
+                break;
+            default:
+                Html.Action("TicketDetails", new { ticketId = Model.TicketId });
+                break;
         }
     </div>
     <div class="panel panel-success">

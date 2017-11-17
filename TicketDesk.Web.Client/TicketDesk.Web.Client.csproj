@@ -2405,6 +2405,7 @@
     <Content Include="Web.local.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Ticket\_HardwareTicketDetail.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
