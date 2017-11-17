@@ -37,8 +37,7 @@
             var ticket = await Context.Tickets.Include(t => t.TicketSubscribers)
                 .Include(t => t.TicketEvents.Select(e => e.TicketEventNotifications))
                 .FirstOrDefaultAsync(t => t.TicketId == ticketId).ConfigureAwait(false);
-            var subscriber =
-                ticket.TicketSubscribers.FirstOrDefault(s => s.SubscriberId == Context.SecurityProvider.CurrentUserId);
+            var subscriber = ticket.TicketSubscribers.FirstOrDefault(s => s.SubscriberId == Context.SecurityProvider.CurrentUserId);
             var isSubscribed = false;
             if (subscriber == null)
             {
@@ -62,7 +61,7 @@
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult FacilityTicketDetails(Ticket ticket)
         {
-            NewFacilityTicketViewModel viewModel = new NewFacilityTicketViewModel
+            var viewModel = new NewFacilityTicketViewModel
             {
                 Ticket = ticket
             };
@@ -72,9 +71,7 @@
         public List<CustomFieldValue> GetCustomFieldValuesForTicket(Ticket ticket)
         {
             var customFieldValues = Context.CustomFieldValues.Where(x => x.TicketId == ticket.TicketId).ToList();
-
             var customFieldIds = customFieldValues.Select(x => x.CustomFieldId);
-
             var customFields = Context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
 
             foreach (CustomFieldValue customFieldValue in customFieldValues)
@@ -99,17 +96,22 @@
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Facility);
 
-            NewFacilityTicketViewModel viewModel = new NewFacilityTicketViewModel();
-
-            viewModel.TempId = Guid.NewGuid();
-
-            viewModel.RequestType.CustomField = availableCustomField.First(x => x.Name == "Request Type");
+            var viewModel = new NewFacilityTicketViewModel
+            {
+                TempId = Guid.NewGuid(),
+                RequestType = { CustomField = availableCustomField.First(x => x.Name == "Request Type") }
+            };
 
             // TODO: Bug can happen here
             // Mapping object from custom field to ViewModel manually
-            Item item = new Item();
-            item.ItemName.CustomField = availableCustomField.First(x => x.Name == "Item");
-            item.Reason.CustomField = availableCustomField.First(x => x.Name == "Reason for Repair/Improvement Request");
+            var item = new Item
+            {
+                ItemName = { CustomField = availableCustomField.First(x => x.Name == "Item") },
+                Reason =
+                {
+                    CustomField = availableCustomField.First(x => x.Name == "Reason for Repair/Improvement Request")
+                }
+            };
 
             viewModel.Items.Add(item);
 
@@ -154,7 +156,6 @@
             await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
             // TODO: Re-prepare model for view
-
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Facility);
             viewModel.RequestType.CustomField = availableCustomField.First(x => x.Name == "Request Type");
 
@@ -167,15 +168,18 @@
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Feedback);
 
-            NewFeedbackTicketViewModel viewModel = new NewFeedbackTicketViewModel();
-
-            viewModel.TempId = Guid.NewGuid();
-            viewModel.FeedbackBy.CustomField = availableCustomField.First(x => x.Name == "Feedback by");
-            viewModel.CustomerName.CustomField = availableCustomField.First(x => x.Name == "Customer Name");
-            viewModel.Feedback.CustomField = availableCustomField.First(x => x.Name == "Feedback");
-
-            viewModel.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
-            viewModel.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
+            var viewModel = new NewFeedbackTicketViewModel
+            {
+                TempId = Guid.NewGuid(),
+                FeedbackBy = { CustomField = availableCustomField.First(x => x.Name == "Feedback by") },
+                CustomerName = { CustomField = availableCustomField.First(x => x.Name == "Customer Name") },
+                Feedback = { CustomField = availableCustomField.First(x => x.Name == "Feedback") },
+                Ticket =
+                {
+                    Owner = Context.SecurityProvider.CurrentUserId,
+                    IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote"
+                }
+            };
 
             await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
@@ -205,23 +209,9 @@
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
             {
-                AddCustomFieldValue(
-                    null,
-                    viewModel.FeedbackBy.CustomFieldId,
-                    viewModel.FeedbackBy.Value,
-                    viewModel.Ticket.TicketId);
-
-                AddCustomFieldValue(
-                    null,
-                    viewModel.CustomerName.CustomFieldId,
-                    viewModel.CustomerName.Value,
-                    viewModel.Ticket.TicketId);
-
-                AddCustomFieldValue(
-                    null,
-                    viewModel.Feedback.CustomFieldId,
-                    viewModel.Feedback.Value,
-                    viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.FeedbackBy.CustomFieldId, viewModel.FeedbackBy.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.CustomerName.CustomFieldId, viewModel.CustomerName.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.Feedback.CustomFieldId, viewModel.Feedback.Value, viewModel.Ticket.TicketId);
 
                 // Save changes to ticket's custom field
                 await Context.SaveChangesAsync().ConfigureAwait(false);
@@ -241,17 +231,20 @@
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Incident);
 
-            NewIncidentTicketViewModel viewModel = new NewIncidentTicketViewModel();
+            var viewModel = new NewIncidentTicketViewModel
+            {
+                TempId = Guid.NewGuid(),
+                ReportBy = { CustomField = availableCustomField.First(x => x.Name == "Report By") },
+                TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
+                Desciption = { CustomField = availableCustomField.First(x => x.Name == "Description") }
+            };
 
-            viewModel.TempId = Guid.NewGuid();
-            viewModel.ReportBy.CustomField = availableCustomField.First(x => x.Name == "Report By");
-            viewModel.TimeOfIncident.CustomField = availableCustomField.First(x => x.Name == "Time of incident");
-            viewModel.Desciption.CustomField = availableCustomField.First(x => x.Name == "Description");
             if (viewModel.TimeOfIncident.Value == null)
             {
                 var nowDate = DateTime.Now.ToString("yyyy-MM-ddThh:mm");
                 viewModel.TimeOfIncident.Value = nowDate;
             }
+
             return View("NewIncidentTicket", viewModel);
         }
 
@@ -277,23 +270,9 @@
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
             {
-                AddCustomFieldValue(
-                    null,
-                    viewModel.ReportBy.CustomFieldId,
-                    viewModel.ReportBy.Value,
-                    viewModel.Ticket.TicketId);
-
-                AddCustomFieldValue(
-                    null,
-                    viewModel.TimeOfIncident.CustomFieldId,
-                    viewModel.TimeOfIncident.Value,
-                    viewModel.Ticket.TicketId);
-
-                AddCustomFieldValue(
-                    null,
-                    viewModel.Desciption.CustomFieldId,
-                    viewModel.Desciption.Value,
-                    viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.ReportBy.CustomFieldId, viewModel.ReportBy.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.TimeOfIncident.CustomFieldId, viewModel.TimeOfIncident.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.Desciption.CustomFieldId,  viewModel.Desciption.Value, viewModel.Ticket.TicketId);
 
                 await Context.SaveChangesAsync().ConfigureAwait(false);
 
@@ -311,11 +290,13 @@
         public ActionResult NewHardwareTicket()
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Hardware);
-            NewHardwareTicketViewModel viewModel = new NewHardwareTicketViewModel();
-            viewModel.TempId = Guid.NewGuid();
-            viewModel.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
-            viewModel.System.CustomField = availableCustomField.First(x => x.Name == "System");
-            viewModel.Description.CustomField = availableCustomField.First(x => x.Name == "Description");
+            var viewModel = new NewHardwareTicketViewModel
+            {
+                TempId = Guid.NewGuid(),
+                Ticket = { Owner = Context.SecurityProvider.CurrentUserId },
+                System = { CustomField = availableCustomField.First(x => x.Name == "System") },
+                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
+            };
 
             return View("NewHardwareTicket", viewModel);
         }
@@ -343,17 +324,8 @@
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
             {
-                AddCustomFieldValue(
-                    null,
-                    viewModel.System.CustomFieldId,
-                    viewModel.System.Value,
-                    viewModel.Ticket.TicketId);
-
-                AddCustomFieldValue(
-                    null,
-                    viewModel.Description.CustomFieldId,
-                    viewModel.Description.Value,
-                    viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.System.CustomFieldId, viewModel.System.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.Description.CustomFieldId, viewModel.Description.Value, viewModel.Ticket.TicketId);
 
                 // Save changes to ticket's custom field
                 await Context.SaveChangesAsync().ConfigureAwait(false);
@@ -382,7 +354,7 @@
 
             var ticket = Context.Tickets.Find(ticketId);
 
-            SingleTicketViewModel singleTicketViewModel = new SingleTicketViewModel
+            var singleTicketViewModel = new SingleTicketViewModel
             {
                 Ticket = ticket,
                 CustomFieldValues = GetCustomFieldValuesForTicket(ticket)
@@ -424,11 +396,12 @@
 
             var customFieldValues = GetCustomFieldValuesForTicket(ticket);
 
-            var viewModel = new NewFeedbackTicketViewModel();
-            viewModel.FeedbackBy = customFieldValues.First(x => x.CustomField.Name == "Feedback by");
-            ////viewModel.Subject = customFieldValues.First(x => x.CustomField.Name == "Subject");
-            viewModel.CustomerName = customFieldValues.First(x => x.CustomField.Name == "Customer Name");
-            viewModel.Feedback = customFieldValues.First(x => x.CustomField.Name == "Feedback");
+            var viewModel = new NewFeedbackTicketViewModel
+            {
+                FeedbackBy = customFieldValues.First(x => x.CustomField.Name == "Feedback by"),
+                CustomerName = customFieldValues.First(x => x.CustomField.Name == "Customer Name"),
+                Feedback = customFieldValues.First(x => x.CustomField.Name == "Feedback")
+            };
 
             return PartialView("_FeedbackTicketDetails", viewModel);
         }
@@ -439,9 +412,11 @@
         {
             ticket.Project = Context.Projects.First(x => x.ProjectId == 1);
             var customFieldValues = GetCustomFieldValuesForTicket(ticket);
-            var viewModel = new NewHardwareTicketViewModel();
-            viewModel.System = customFieldValues.First(x => x.CustomField.Name == "System");
-            viewModel.Description = customFieldValues.First(x => x.CustomField.Name == "Description");
+            var viewModel = new NewHardwareTicketViewModel
+            {
+                System = customFieldValues.First(x => x.CustomField.Name == "System"),
+                Description = customFieldValues.First(x => x.CustomField.Name == "Description")
+            };
 
             return PartialView("_HardwareTicketDetails", viewModel);
         }
@@ -451,8 +426,7 @@
         public ActionResult TicketFiles(int ticketId)
         {
             // WARNING! This is also used as a child action and cannot be made async in MVC 5
-            var attachments =
-                TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(CultureInfo.InvariantCulture), false);
+            var attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(CultureInfo.InvariantCulture), false);
             ViewBag.TicketId = ticketId;
             return PartialView("_TicketFiles", attachments);
         }
@@ -470,26 +444,13 @@
 
         private async Task AddTicketCustomField(NewFacilityTicketViewModel viewModel)
         {
-            AddCustomFieldValue(
-                null,
-                viewModel.RequestType.CustomFieldId,
-                viewModel.RequestType.Value,
-                viewModel.Ticket.TicketId);
+            AddCustomFieldValue(null, viewModel.RequestType.CustomFieldId, viewModel.RequestType.Value, viewModel.Ticket.TicketId);
 
             // add item to database
             foreach (Item item in viewModel.Items)
             {
-                AddCustomFieldValue(
-                    item.Index,
-                    item.ItemName.CustomFieldId,
-                    item.ItemName.Value,
-                    viewModel.Ticket.TicketId);
-
-                AddCustomFieldValue(
-                    item.Index,
-                    item.Reason.CustomFieldId,
-                    item.Reason.Value,
-                    viewModel.Ticket.TicketId);
+                AddCustomFieldValue(item.Index, item.ItemName.CustomFieldId, item.ItemName.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(item.Index, item.Reason.CustomFieldId, item.Reason.Value, viewModel.Ticket.TicketId);
             }
 
             // Save changes to ticket's custom field
