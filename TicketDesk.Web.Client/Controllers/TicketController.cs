@@ -252,6 +252,77 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [Route("new-incident")]
+        public ActionResult NewIncidentTicket()
+        {
+            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Incident);
+
+            NewIncidentTicketViewModel viewModel = new NewIncidentTicketViewModel();
+
+            viewModel.TempId = Guid.NewGuid();
+            viewModel.ReportBy.CustomField = availableCustomField.First(x => x.Name == "Report By");
+            viewModel.TimeOfIncident.CustomField = availableCustomField.First(x => x.Name == "Time of incident");
+            viewModel.Desciption.CustomField = availableCustomField.First(x => x.Name == "Description");
+            if (viewModel.TimeOfIncident.Value == null)
+            {
+                var nowDate = DateTime.Now.ToString("yyyy-MM-ddThh:mm");
+                viewModel.TimeOfIncident.Value = nowDate;
+            }
+            return View("NewIncidentTicket", viewModel);
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateOnlyIncomingValues]
+        [ValidateInput(false)]
+        [Route("new-incident")]
+        public async Task<ActionResult> NewIncidentTicket(NewIncidentTicketViewModel viewModel)
+        {
+            if (viewModel.Ticket.IsHtml)
+            {
+                viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
+                if (string.IsNullOrEmpty(viewModel.Ticket.Details))
+                {
+                    ModelState.AddModelError("Details", Strings.RequiredField);
+                }
+            }
+
+            viewModel.Ticket.Project = Context.Projects.Find(1);
+            viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Incident;
+
+            if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
+            {
+                AddCustomFieldValue(
+                    null,
+                    viewModel.ReportBy.CustomFieldId,
+                    viewModel.ReportBy.Value,
+                    viewModel.Ticket.TicketId);
+
+                AddCustomFieldValue(
+                    null,
+                    viewModel.TimeOfIncident.CustomFieldId,
+                    viewModel.TimeOfIncident.Value,
+                    viewModel.Ticket.TicketId);
+
+                AddCustomFieldValue(
+                    null,
+                    viewModel.Desciption.CustomFieldId,
+                    viewModel.Desciption.Value,
+                    viewModel.Ticket.TicketId);
+
+                await Context.SaveChangesAsync().ConfigureAwait(false);
+
+                return Context.SecurityProvider.IsReadTicketCenter
+                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
+                    : RedirectToAction("Index", "Home");
+            }
+
+            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
+            return View("NewIncidentTicket", viewModel);
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [Route("new-hardware")]
         public ActionResult NewHardwareTicket()
         {
