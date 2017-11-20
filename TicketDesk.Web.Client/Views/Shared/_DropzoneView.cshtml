@@ -13,7 +13,7 @@
                 <p class="dropzone-error-text"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary rippler rippler-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary rippler rippler-default" data-dismiss="modal">@Resources.Resources.Dropzone_Modal_Close</button>
             </div>
         </div>
 
@@ -24,12 +24,12 @@
     <div class="key border"><span class="text">Attach files<span class="highlight">*</span></span></div>
     <div class="value span-3 border">
 
-        <button type="button" id="add-file-btn" class="btn btn-browser rippler rippler-default">Browse...</button>
+        <button type="button" id="add-file-btn" class="btn btn-browser rippler rippler-default">@Resources.Resources.Dropzone_Form_Browse</button>
         <div class="number-chosenfile"><span class="number"></span>&nbsp;<span class="text"></span></div>
-        <button type="button" class="btn btn-delete btn-delete-all-file rippler rippler-default"><span class="icon-delete"></span>Delete All</button>
+        <button type="button" class="btn btn-delete btn-delete-all-file rippler rippler-default"><span class="icon-delete"></span>@Resources.Resources.Dropzone_Form_DeleteAll</button>
         <div class="clearfix"></div>
         <div class="dropzone-previews">
         </div>
     </div>
-    <div class="fullwidth bold border"><span class="highlight">*</span>Max number of attachments: <span class="highlight">@Model.MaxNumberOfFile Files</span> | Max total size of attachments: <span class="highlight">@(Model.MaxBytes / 1048576) MB</span> | Allowed file types: <span class="highlight">@string.Join(", ", Model.AcceptedExtensions)</span></div>
+    <div class="fullwidth bold border"><span class="highlight">*</span>@Resources.Resources.Dropzone_Form_TotalFiles<span class="highlight">@Model.MaxNumberOfFile Files</span> | @Resources.Resources.Dropzone_Form_TotalSize<span class="highlight">@(Model.MaxBytes / 1048576) MB</span> | @Resources.Resources.Dropzone_Form_AllowedTypes<span class="highlight">@string.Join(", ", Model.AcceptedExtensions)</span></div>
 </div>

@@ -359,6 +359,16 @@
     <Compile Include="..\GlobalSuppressions.cs">
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
+    <Compile Include="App_GlobalResources\Resources.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Resources.vi-VN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.vi-VN.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\Startup.Insights.cs" />
     <Compile Include="App_Start\Startup.PushNotifications.cs" />
@@ -399,6 +409,7 @@
     <Compile Include="Infrastructure\Attribute\FileSizeAttribute.cs" />
     <Compile Include="Infrastructure\Attribute\FileTypeAttribute.cs" />
     <Compile Include="Infrastructure\Attribute\NumberOfFileAttribute.cs" />
+    <Compile Include="Infrastructure\CultureAwareControllerActivator.cs" />
     <Compile Include="Infrastructure\DbSetupFilter.cs" />
     <Compile Include="Infrastructure\Enumerations\SizeUnit.cs" />
     <Compile Include="Infrastructure\Extensions\EnumerableExtensions.cs" />
@@ -2499,6 +2510,13 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App_GlobalResources\Resources.resx" />
+    <Content Include="App_GlobalResources\Resources.vi-VN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resources.vi-VN.designer.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

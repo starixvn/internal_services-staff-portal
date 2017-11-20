@@ -5,12 +5,15 @@
     using Microsoft.ApplicationInsights.Extensibility;
     using System;
     using System.Diagnostics;
+    using System.Web.Mvc;
+    using Infrastructure;
 
     public class Global : System.Web.HttpApplication
     {
         protected void Application_Start(object sender, EventArgs e)
         {
             DisableApplicationInsightsOnDebug();
+            ControllerBuilder.Current.SetControllerFactory(new DefaultControllerFactory(new CultureAwareControllerActivator()));
             DbSettingProviderManager.Current.Start();
         }
 

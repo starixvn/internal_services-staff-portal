@@ -80,8 +80,9 @@
 
     function CheckTotalBytes() {
         if (IsTotalBytesViolated()) {
-            var totalMb = @Model.MaxBytes / 1048576;
-            SetErrorTextAndShowModal("Total size exceed maximum allowed of " + totalMb + " MB");
+            //var totalMb = (@Model.MaxBytes / 1048576);
+            //SetErrorTextAndShowModal("Total size exceed maximum allowed of " + totalMb + " MB");
+            SetErrorTextAndShowModal("@string.Format(Resources.Resources.Dropzone_Error_TotalSizeViolated, (Model.MaxBytes / 1048576))");
         } else {
             SetErrorTextAndShowModal("");
         }
@@ -91,7 +92,7 @@
         if (dropzone.files.length) {
             var i, len;
             var isDuplicate = false;
-            var errorText = "Duplicate file: ";
+            var errorText = "@Resources.Resources.Dropzone_Error_DuplicateFile";
 
             for (i = 0, len = dropzone.files.length; i < len - 1; i++) {
                 // -1 to exclude current file
@@ -119,11 +120,11 @@
         if (numberOfSelectedFile > 1) {
             $('.btn-delete-all-file').show();
             $('.number-chosenfile').show();
-            $('.number-chosenfile .text').text('files were selected');
+            $('.number-chosenfile .text').text('@Resources.Resources.Dropzone_Info_MultipleFilesSelected');
         } else if (numberOfSelectedFile === 1) {
             $('.btn-delete-all-file').show();
             $('.number-chosenfile').show();
-            $('.number-chosenfile .text').text('file were selected');
+            $('.number-chosenfile .text').text('@Resources.Resources.Dropzone_Info_SingleFileSelected');
         }
         else {
             $('.number-chosenfile').hide();
@@ -184,7 +185,7 @@
                     });
                 this.on("maxfilesexceeded",
                     function() {
-                        SetErrorTextAndShowModal("Total of file exceeded limit");
+                        SetErrorTextAndShowModal("@Resources.Resources.Dropzone_Error_MaxFilesExceeded");
                     });
                 this.on("error",
                     function(file, errorMessage) {
