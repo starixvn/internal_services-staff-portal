@@ -11,6 +11,7 @@
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Web.Security;
 
     public class BaseController : Controller
     {
@@ -50,6 +51,28 @@
                 .ToList();
 
             return subMenuItems.Select(menuItem => (MenuItem)menuItem).OrderBy(x => x.DisplayOrder).ToList();
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (CurrentSession.UserId <= 0 && !IsCurrentRouteSignIn())
+            {
+                FormsAuthentication.SignOut();
+                var url = Url.Action("SignIn", "User", new { returnUrl = Request.Url?.AbsolutePath });
+
+                filterContext.Result = Redirect(url);
+            }
+        }
+
+        private bool IsCurrentRouteSignIn()
+        {
+            var signInRoute = Url.Action("SignIn", "User");
+            if (Request.Url == null)
+            {
+                return false;
+            }
+
+            return signInRoute == Request.Url.AbsolutePath;
         }
     }
 }
