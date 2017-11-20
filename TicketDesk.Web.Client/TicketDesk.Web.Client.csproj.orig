@@ -370,6 +370,7 @@
     <Compile Include="App_Start\Startup.Routes.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomFieldSettingsController.cs" />
     <Compile Include="Controllers\EmailTestController.cs" />
@@ -433,6 +434,7 @@
     <Compile Include="Models\Account\UserAccountInfoViewModel.cs" />
     <Compile Include="Models\CustomFieldSettingViewModel.cs" />
     <Compile Include="Models\CustomField\AddCustomFieldViewModel.cs" />
+    <Compile Include="Models\CustomField\EditCustomFieldViewModel.cs" />
     <Compile Include="Models\Extensions\ClientSettingExtensions.cs" />
     <Compile Include="Models\Extensions\MenuIconMapper.cs" />
     <Compile Include="Models\Extensions\MenuItem.cs" />
@@ -448,6 +450,8 @@
     <Compile Include="Models\FilterBarViewModel.cs" />
     <Compile Include="Infrastructure\Migration\Legacy\LegacySecurityMigrator.cs" />
     <Compile Include="Models\Home\HomeViewModel.cs" />
+    <Compile Include="Models\Home\Pagination.cs" />
+    <Compile Include="Models\Home\MyOpenningIssues.cs" />
     <Compile Include="Models\Home\TicketGroup.cs" />
     <Compile Include="Models\IdUploaderViewModel.cs" />
     <Compile Include="Models\NavbarViewModel.cs" />
@@ -507,12 +511,12 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\site.css" />
     <Content Include="Content\ticketdesk\error.css" />
-    <Content Include="favicon.ico" />
     <Compile Include="App_Start\Startup.Search.cs" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="favicon.png" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -537,6 +541,7 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="manifest.json" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\filesystem-precompiled-release.pubxml" />
     <None Include="Properties\PublishProfiles\SSP.pubxml" />
@@ -2173,9 +2178,11 @@
     <Content Include="Scripts\ticketdesk\TicketFeedback\edit-ticket.js" />
     <Content Include="src\contents\images\bg_l.png" />
     <Content Include="src\contents\images\bg_r.png" />
+    <Content Include="src\contents\images\favicon.png" />
     <Content Include="src\contents\images\logo.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\js\formhandler.js" />
     <Content Include="src\js\user\login.js" />
     <Content Include="src\contents\images\bg01.png" />
     <Content Include="src\contents\images\logo.png" />
@@ -2224,6 +2231,8 @@
     <Content Include="src\libs\dropzone\dropzone.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\libs\forge\forge.min.js" />
+    <Content Include="src\libs\forge\prime.worker.min.js" />
     <Content Include="src\libs\jquery-validate\1.17.0\jquery.validate.min.js" />
     <Content Include="src\libs\jquery-validation-unobtrusive\3.2.6\jquery.validate.unobtrusive.min.js" />
     <Content Include="src\libs\jquery\1.12.4\jquery-1.12.4.min.js" />
@@ -2391,11 +2400,20 @@
     <Content Include="Views\Shared\_DropzoneView.cshtml" />
     <Content Include="Views\Ticket\NewHardwareTicket.cshtml" />
     <Content Include="src\css\_mixins.scss" />
-<<<<<<< HEAD
     <Content Include="src\libs\rippler\css\rippler.css.map" />
-=======
     <Content Include="Views\CustomFieldSettings\Edit.cshtml" />
->>>>>>> 000 - Custom Fied grouped by category
+    <Content Include="src\libs\forge\forge.min.js.map" />
+    <Content Include="src\libs\forge\prime.worker.min.js.map" />
+    <Content Include="Web.local.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Ticket\_HardwareTicketDetail.cshtml" />
+    <Content Include="Views\Announcement\Index.cshtml" />
+<<<<<<< HEAD
+    <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
+    <Content Include="Views\Shared\_Pagination.cshtml" />
+=======
+>>>>>>> #000 - fix bug UI
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -2404,7 +2422,6 @@
   <ItemGroup>
     <Folder Include="Scripts\ticketdesk\User\" />
     <Folder Include="src\libs\dropzone\debug\" />
-    <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\S22.Mail\S22.Mail.csproj">

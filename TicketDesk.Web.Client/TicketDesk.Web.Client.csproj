@@ -1760,10 +1760,6 @@
     <Content Include="Scripts\filemanager\themes\flat-dark\images\fmlogo.png" />
     <Content Include="Scripts\filemanager\themes\flat-dark\images\summary.png" />
     <Content Include="Scripts\filemanager\themes\flat-dark\styles\theme.css" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-2.2.2.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.2.js" />
     <Content Include="Scripts\jquery-2.2.2.min.js" />
@@ -2431,7 +2427,6 @@
     </Content>
     <Content Include="Views\Ticket\_HardwareTicketDetails.cshtml" />
     <Content Include="Views\Announcement\Index.cshtml" />
-    <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
