@@ -8,7 +8,7 @@
 
     public class ApplicationSecuritySetting
     {
-        private ICollection<string> defaultNewUserRoles;
+        private ICollection<string> _defaultNewUserRoles;
 
         public ApplicationSecuritySetting()
         {
@@ -44,7 +44,7 @@
         {
             get
             {
-                return defaultNewUserRoles;
+                return _defaultNewUserRoles;
             }
 
             set
@@ -54,7 +54,7 @@
                     value.Add("TdPendingUsers");
                 }
 
-                defaultNewUserRoles = value;
+                _defaultNewUserRoles = value;
             }
         }
     }

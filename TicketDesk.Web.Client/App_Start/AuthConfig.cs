@@ -13,7 +13,7 @@
         {
             var user = HttpContext.Current.User;
 
-            if (user != null && user.Identity is FormsIdentity && user.Identity.IsAuthenticated)
+            if (user?.Identity is FormsIdentity && user.Identity.IsAuthenticated)
             {
                 HttpCookie httpCookie = context.Request.Cookies[FormsAuthentication.FormsCookieName];
 
@@ -38,9 +38,8 @@
         {
             var currentSession = new CurrentSession();
             var userService = new UserService();
-            var logOutUserCriteria = new LogOutUserCriteria();
+            var logOutUserCriteria = new LogOutUserCriteria { OnUserId = currentSession.OnUserId };
 
-            logOutUserCriteria.OnUserId = currentSession.OnUserId;
             userService.UserLogOut(logOutUserCriteria);
             currentSession.ClearAll();
         }

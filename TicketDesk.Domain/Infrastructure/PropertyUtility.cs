@@ -1,35 +1,17 @@
-﻿// TicketDesk - Attribution notice
-// Original Code By:
-//       Rich Tebb - http://stackoverflow.com/a/5015911/10115
-//       alex - http://stackoverflow.com/a/10048758/10115
-//       Matija Grcic - http://stackoverflow.com/a/20383378/10115
-//
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Resources;
-using System.Threading;
-
-namespace TicketDesk.Domain
+﻿namespace TicketDesk.Domain
 {
+    using System;
+    using System.Collections;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Reflection;
+    using System.Resources;
+    using System.Threading;
+
     public static class PropertyUtility
     {
         public static T GetAttribute<T>(this MemberInfo member, bool isRequired) where T : Attribute
@@ -54,13 +36,14 @@ namespace TicketDesk.Domain
             var memberInfo = GetPropertyInformation(propertyExpression.Body);
             if (memberInfo == null)
             {
-                throw new ArgumentException(@"No property reference expression was found.", "propertyExpression");
+                throw new ArgumentException(@"No property reference expression was found.", nameof(propertyExpression));
             }
 
             var displayAttribute = memberInfo.GetAttribute<DisplayAttribute>(false);
 
             if (displayAttribute != null)
             {
+                Debug.Assert(displayAttribute.ResourceType.FullName != null, "displayAttribute.ResourceType.FullName != null");
                 var resourceManager = new ResourceManager(displayAttribute.ResourceType.FullName, displayAttribute.ResourceType.Assembly);
                 var entry = resourceManager.GetResourceSet(Thread.CurrentThread.CurrentUICulture, true, true)
                       .OfType<DictionaryEntry>()

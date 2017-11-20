@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using TicketDesk.Localization;
-using TicketDesk.Localization.Domain;
-
-namespace TicketDesk.Domain.Model
+﻿namespace TicketDesk.Domain.Model
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using TicketDesk.Localization;
+    using TicketDesk.Localization.Domain;
+
     public class Project
     {
         [Key]

@@ -1,24 +1,11 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using Microsoft.AspNet.Identity;
-using System.Collections.Generic;
-using System.Linq;
-using TicketDesk.Localization.Identity;
-using TicketDesk.Web.Identity.Model;
-
-namespace TicketDesk.Web.Identity
+﻿namespace TicketDesk.Web.Identity
 {
+    using Localization.Identity;
+    using Microsoft.AspNet.Identity;
+    using Model;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class TicketDeskRoleManager : RoleManager<TicketDeskRole>
     {
         public TicketDeskRoleManager(IRoleStore<TicketDeskRole, string> roleStore)
@@ -26,91 +13,73 @@ namespace TicketDesk.Web.Identity
         {
         }
 
-        public static IEnumerable<TicketDeskRole> DefaultRoles
+        public static IEnumerable<TicketDeskRole> DefaultRoles => new[]
         {
-            get
+            new TicketDeskRole
             {
-                return new[]
-                {
-                    new TicketDeskRole
-                    {
-                        Name = "TdAdministrators",
-                        DisplayName = DefaultRolesDisplayName["TdAdministrators"],
-                        Description = DefaultRolesDescription["TdAdministrators"],
-                    },
-                     new TicketDeskRole
-                    {
-                        Name = "TdHelpDeskUsers",
-                        DisplayName = DefaultRolesDisplayName["TdHelpDeskUsers"],
-                        Description = DefaultRolesDescription["TdHelpDeskUsers"],
-                     },
-                     new TicketDeskRole
-                    {
-                        Name = "TdInternalUsers",
-                        DisplayName = DefaultRolesDisplayName["TdInternalUsers"],
-                        Description = DefaultRolesDescription["TdInternalUsers"],
-                     },
-                     new TicketDeskRole
-                    {
-                        Name = "TdPendingUsers",
-                        DisplayName = DefaultRolesDisplayName["TdPendingUsers"],
-                        Description = DefaultRolesDescription["TdPendingUsers"],
-                     }
-                };
+                Name = "TdAdministrators",
+                DisplayName = DefaultRolesDisplayName["TdAdministrators"],
+                Description = DefaultRolesDescription["TdAdministrators"],
+            },
+            new TicketDeskRole
+            {
+                Name = "TdHelpDeskUsers",
+                DisplayName = DefaultRolesDisplayName["TdHelpDeskUsers"],
+                Description = DefaultRolesDescription["TdHelpDeskUsers"],
+            },
+            new TicketDeskRole
+            {
+                Name = "TdInternalUsers",
+                DisplayName = DefaultRolesDisplayName["TdInternalUsers"],
+                Description = DefaultRolesDescription["TdInternalUsers"],
+            },
+            new TicketDeskRole
+            {
+                Name = "TdPendingUsers",
+                DisplayName = DefaultRolesDisplayName["TdPendingUsers"],
+                Description = DefaultRolesDescription["TdPendingUsers"],
             }
-        }
+        };
 
-        public static IDictionary<string, string> DefaultRolesDisplayName
+        public static IDictionary<string, string> DefaultRolesDisplayName => new Dictionary<string, string>
         {
-            get
             {
-                return new Dictionary<string, string>
-                {
-                    {
-                        "TdAdministrators",
-                        Strings.Role_Administrator
-                    },
-                    {
-                        "TdHelpDeskUsers",
-                        Strings.Role_HelpDesk
-                     },
-                    {
-                        "TdInternalUsers",
-                        Strings.Role_InternalUser
-                     },
-                    {
-                        "TdPendingUsers",
-                        Strings.Role_PendingApproval
-                     }
-                };
+                "TdAdministrators",
+                Strings.Role_Administrator
+            },
+            {
+                "TdHelpDeskUsers",
+                Strings.Role_HelpDesk
+            },
+            {
+                "TdInternalUsers",
+                Strings.Role_InternalUser
+            },
+            {
+                "TdPendingUsers",
+                Strings.Role_PendingApproval
             }
-        }
+        };
 
-        public static IDictionary<string, string> DefaultRolesDescription
+        public static IDictionary<string, string> DefaultRolesDescription => new Dictionary<string, string>
         {
-            get
             {
-                return new Dictionary<string, string>
-                {
-                    {
-                        "TdAdministrators",
-                        Strings.Role_Administrator_Description
-                    },
-                    {
-                        "TdHelpDeskUsers",
-                        Strings.Role_HelpDesk_Description
-                     },
-                    {
-                        "TdInternalUsers",
-                        Strings.Role_InternalUser_Description
-                     },
-                    {
-                        "TdPendingUsers",
-                        Strings.Role_PendingApproval_Description
-                     }
-                };
+                "TdAdministrators",
+                Strings.Role_Administrator_Description
+            },
+            {
+                "TdHelpDeskUsers",
+                Strings.Role_HelpDesk_Description
+            },
+            {
+                "TdInternalUsers",
+                Strings.Role_InternalUser_Description
+            },
+            {
+                "TdPendingUsers",
+                Strings.Role_PendingApproval_Description
             }
-        }
+        };
 
         public IOrderedEnumerable<TicketDeskUser> GetTdInternalUsers(TicketDeskUserManager userManager)
         {

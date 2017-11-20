@@ -1,27 +1,14 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Principal;
-using TicketDesk.Web.Identity.Model;
-
-namespace TicketDesk.Web.Identity
+﻿namespace TicketDesk.Web.Identity
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Model;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Security.Principal;
+
     public static class TdIdentityExtensions
     {
         public static IEnumerable<TicketDeskUser> GetUsersInRole(this ICollection<IdentityUserRole> roleUsers, UserManager<TicketDeskUser> userManager)
@@ -34,16 +21,11 @@ namespace TicketDesk.Web.Identity
         {
             if (identity == null)
             {
-                throw new ArgumentNullException("identity");
+                throw new ArgumentNullException(nameof(identity));
             }
 
             var ci = identity as ClaimsIdentity;
-            if (ci != null)
-            {
-                return ci.FindFirstValue(ClaimTypes.GivenName);
-            }
-
-            return null;
+            return ci?.FindFirstValue(ClaimTypes.GivenName);
         }
     }
 }

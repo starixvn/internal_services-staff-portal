@@ -1,35 +1,19 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading;
-using System.Web.Hosting;
-using System.Web.Mvc;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Model;
-using TicketDesk.PushNotifications;
-using TicketDesk.PushNotifications.Migrations;
-using TicketDesk.PushNotifications.Model;
-using TicketDesk.Web.Client.Infrastructure;
-using TicketDesk.Web.Identity;
-using TicketDesk.Web.Identity.Model;
-
-namespace TicketDesk.Web.Client
+﻿namespace TicketDesk.Web.Client
 {
+    using Domain;
+    using Domain.Model;
+    using Infrastructure;
+    using PushNotifications;
+    using PushNotifications.Migrations;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Threading;
+    using System.Web.Hosting;
+    using System.Web.Mvc;
+
     public partial class Startup
     {
         /// <summary>
@@ -94,77 +78,77 @@ namespace TicketDesk.Web.Client
             context.Dispose();
         }
 
-        private static void EnsureBroadcastNotificaitonsConfiguration(TdPushNotificationContext context)
-        {
-            var broadcastUserSettings = context.SubscriberPushNotificationSettingsManager.GetSettingsForSubscriberAsync("new ticket broadcast").Result;
+        ////private static void EnsureBroadcastNotificaitonsConfiguration(TdPushNotificationContext context)
+        ////{
+        ////    var broadcastUserSettings = context.SubscriberPushNotificationSettingsManager.GetSettingsForSubscriberAsync("new ticket broadcast").Result;
 
-            var broadcastAppSettings = context.TicketDeskPushNotificationSettings.BroadcastSettings;
-            if (broadcastUserSettings == null)
-            {
-                broadcastUserSettings = new SubscriberNotificationSetting
-                {
-                    SubscriberId = "new ticket broadcast"
-                };
-                context.SubscriberPushNotificationSettingsManager.AddSettingsForSubscriber(broadcastUserSettings);
-            }
+        ////    var broadcastAppSettings = context.TicketDeskPushNotificationSettings.BroadcastSettings;
+        ////    if (broadcastUserSettings == null)
+        ////    {
+        ////        broadcastUserSettings = new SubscriberNotificationSetting
+        ////        {
+        ////            SubscriberId = "new ticket broadcast"
+        ////        };
+        ////        context.SubscriberPushNotificationSettingsManager.AddSettingsForSubscriber(broadcastUserSettings);
+        ////    }
 
-            if (broadcastAppSettings.BroadcastMode == ApplicationPushNotificationSetting.PushNotificationBroadcastMode.CustomAddress
-                 && !string.IsNullOrEmpty(broadcastAppSettings.SendToCustomEmailAddress))
-            {
-                broadcastUserSettings.PushNotificationDestinations.Add(
-                    new PushNotificationDestination
-                    {
-                        SubscriberId = "new ticket broadcast",
-                        DestinationAddress = broadcastAppSettings.SendToCustomEmailAddress,
-                        DestinationType = "email",
-                        SubscriberName = broadcastAppSettings.SendToCustomEmailDisplayName
-                    });
-            }
-            else
-            {
-                var roleManager = DependencyResolver.Current.GetService<TicketDeskRoleManager>();
-                var userManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
+        ////    if (broadcastAppSettings.BroadcastMode == ApplicationPushNotificationSetting.PushNotificationBroadcastMode.CustomAddress
+        ////         && !string.IsNullOrEmpty(broadcastAppSettings.SendToCustomEmailAddress))
+        ////    {
+        ////        broadcastUserSettings.PushNotificationDestinations.Add(
+        ////            new PushNotificationDestination
+        ////            {
+        ////                SubscriberId = "new ticket broadcast",
+        ////                DestinationAddress = broadcastAppSettings.SendToCustomEmailAddress,
+        ////                DestinationType = "email",
+        ////                SubscriberName = broadcastAppSettings.SendToCustomEmailDisplayName
+        ////            });
+        ////    }
+        ////    else
+        ////    {
+        ////        var roleManager = DependencyResolver.Current.GetService<TicketDeskRoleManager>();
+        ////        var userManager = DependencyResolver.Current.GetService<TicketDeskUserManager>();
                 
-                var usersForNotification = roleManager.GetTdHelpDeskUsers(userManager)
-                    .Union(roleManager.GetTdTdAdministrators(userManager))
-                    .Distinct(new UniqueNameEmailDisplayUserEqualityComparer()).ToArray();
+        ////        var usersForNotification = roleManager.GetTdHelpDeskUsers(userManager)
+        ////            .Union(roleManager.GetTdTdAdministrators(userManager))
+        ////            .Distinct(new UniqueNameEmailDisplayUserEqualityComparer()).ToArray();
 
-                var existingDestinations = broadcastUserSettings
-                    .PushNotificationDestinations
-                    .Where(pnd => pnd.DestinationType == "email" && pnd.SubscriberId == "new ticket broadcast")
-                    .ToArray();
+        ////        var existingDestinations = broadcastUserSettings
+        ////            .PushNotificationDestinations
+        ////            .Where(pnd => pnd.DestinationType == "email" && pnd.SubscriberId == "new ticket broadcast")
+        ////            .ToArray();
 
-                // remove users not in list anymore
-                var usersToRemove = existingDestinations
-                    .Where(us => !usersForNotification
-                    .Any(un => un.Email == us.DestinationAddress && un.DisplayName == us.SubscriberName))
-                    .ToList();
+        ////        // remove users not in list anymore
+        ////        var usersToRemove = existingDestinations
+        ////            .Where(us => !usersForNotification
+        ////            .Any(un => un.Email == us.DestinationAddress && un.DisplayName == us.SubscriberName))
+        ////            .ToList();
 
-                foreach (var us in usersToRemove)
-                {
-                    broadcastUserSettings.PushNotificationDestinations.Remove(us);
-                }
+        ////        foreach (var us in usersToRemove)
+        ////        {
+        ////            broadcastUserSettings.PushNotificationDestinations.Remove(us);
+        ////        }
 
-                // add users in list, but not already in destinations
-                foreach (var nu in usersForNotification)
-                {
-                    if (!existingDestinations.Any(ed => nu.Email == ed.DestinationAddress && nu.DisplayName == ed.SubscriberName))
-                    {
-                        broadcastUserSettings.PushNotificationDestinations.Add(
-                            new PushNotificationDestination
-                            {
-                                SubscriberId = "new ticket broadcast",
-                                DestinationAddress = nu.Email,
-                                DestinationType = "email",
-                                SubscriberName = nu.DisplayName
-                            });
-                    }
-                }
-            }
+        ////        // add users in list, but not already in destinations
+        ////        foreach (var nu in usersForNotification)
+        ////        {
+        ////            if (!existingDestinations.Any(ed => nu.Email == ed.DestinationAddress && nu.DisplayName == ed.SubscriberName))
+        ////            {
+        ////                broadcastUserSettings.PushNotificationDestinations.Add(
+        ////                    new PushNotificationDestination
+        ////                    {
+        ////                        SubscriberId = "new ticket broadcast",
+        ////                        DestinationAddress = nu.Email,
+        ////                        DestinationType = "email",
+        ////                        SubscriberName = nu.DisplayName
+        ////                    });
+        ////            }
+        ////        }
+        ////    }
 
-            broadcastUserSettings.IsEnabled = broadcastAppSettings.IsBroadcastEnabled;
-            context.SaveChanges();
-        }
+        ////    broadcastUserSettings.IsEnabled = broadcastAppSettings.IsBroadcastEnabled;
+        ////    context.SaveChanges();
+        ////}
 
         private static Action<CancellationToken> CreateNewTicketBroadcastNotification(IEnumerable<Ticket> tickets)
         {

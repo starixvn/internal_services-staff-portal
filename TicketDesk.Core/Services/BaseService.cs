@@ -6,7 +6,7 @@
     {
         public BaseService(IBaseRepository repository = null)
         {
-            this.Repository = repository ?? new BaseRepository();
+            Repository = repository ?? new BaseRepository();
         }
 
         public IBaseRepository Repository { get; set; }

@@ -1,5 +1,8 @@
 ﻿namespace TicketDesk.Web.Client
 {
+    using Identity;
+    using Identity.Migrations;
+    using Identity.Model;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin;
@@ -7,9 +10,6 @@
     using Owin;
     using SimpleInjector;
     using System;
-    using Identity;
-    using Identity.Migrations;
-    using Identity.Model;
 
     public partial class Startup
     {

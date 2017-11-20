@@ -1,17 +1,4 @@
-﻿// TicketDesk - Attribution notice
-// Contributor(s):
-//
-//      Stephen Redd (https://github.com/stephenredd)
-//
-// This file is distributed under the terms of the Microsoft Public
-// License (Ms-PL). See http://opensource.org/licenses/MS-PL
-// for the complete terms of use.
-//
-// For any distribution that contains code from this file, this notice of
-// attribution must remain intact, and a copy of the license must be
-// provided to the recipient.
-
-namespace TicketDesk.Web.Client
+﻿namespace TicketDesk.Web.Client
 {
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
@@ -48,49 +35,19 @@ namespace TicketDesk.Web.Client
             }
         }
 
-        public override bool IsTdHelpDeskUser
-        {
-            get { return UserManager.IsTdHelpDeskUser(CurrentUserId); }
-        }
+        public override bool IsTdHelpDeskUser => UserManager.IsTdHelpDeskUser(CurrentUserId);
 
-        public override bool IsTdInternalUser
-        {
-            get { return UserManager.IsTdInternalUser(CurrentUserId); }
-        }
+        public override bool IsTdInternalUser => UserManager.IsTdInternalUser(CurrentUserId);
 
-        public override bool IsTdAdministrator
-        {
-            get { return UserManager.IsTdAdministrator(CurrentUserId); }
-        }
+        public override bool IsTdAdministrator => UserManager.IsTdAdministrator(CurrentUserId);
 
-        public override bool IsTdPendingUser
-        {
-            get { return UserManager.IsTdPendingUser(CurrentUserId); }
-        }
+        public override bool IsTdPendingUser => UserManager.IsTdPendingUser(CurrentUserId);
 
-        public override bool IsReadTicketCenter
-        {
-            get
-            {
-                return IsHasTicketPolicy(FunctionKeys.TicketCenter, (int)Constant.Policy.Read);
-            }
-        }
+        public override bool IsReadTicketCenter => IsHasTicketPolicy(FunctionKeys.TicketCenter, (int)Constant.Policy.Read);
 
-        public override bool IsHostTicketCenter
-        {
-            get
-            {
-                return IsHasTicketPolicy(FunctionKeys.TicketCenter, (int)Constant.Policy.Host);
-            }
-        }
+        public override bool IsHostTicketCenter => IsHasTicketPolicy(FunctionKeys.TicketCenter, (int)Constant.Policy.Host);
 
-        public override bool IsReadNewTicket
-        {
-            get
-            {
-                return IsHasTicketPolicy(FunctionKeys.NewTicket, (int)Constant.Policy.Read);
-            }
-        }
+        public override bool IsReadNewTicket => IsHasTicketPolicy(FunctionKeys.NewTicket, (int)Constant.Policy.Read);
 
         private bool IsHasTicketPolicy(string functionKey, int policy)
         {
