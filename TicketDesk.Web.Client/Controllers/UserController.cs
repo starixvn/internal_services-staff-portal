@@ -39,6 +39,13 @@
         {
             ViewBag.ReturnUrl = returnUrl;
 
+            if (Request.IsAuthenticated)
+            {
+                return string.IsNullOrEmpty(returnUrl) 
+                    ? RedirectToLocal(returnUrl) 
+                    : RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
