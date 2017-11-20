@@ -123,7 +123,7 @@
 
             public static bool IsLegacyDatabase => DatabaseConfig.IsLegacyDatabase();
 
-            public static bool IsEmptyDatabase => DatabaseConfig.IsEmptyDatabase();
+            private static bool IsEmptyDatabase => DatabaseConfig.IsEmptyDatabase();
 
             public bool IsCompatibleWithEfModel { get; }
 

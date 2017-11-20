@@ -1,13 +1,5 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data.Entity;
-    using System.Globalization;
-    using System.Linq;
-    using System.Reflection;
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
     using Core.Enumerations;
     using Domain;
     using Domain.Infrastructure;
@@ -17,6 +9,13 @@
     using IO;
     using Localization.Controllers;
     using Models.Ticket;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Globalization;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
 
     [RoutePrefix("ticket")]
     [Route("{action=index}")]

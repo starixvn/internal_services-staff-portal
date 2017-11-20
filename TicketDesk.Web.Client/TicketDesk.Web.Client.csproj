@@ -2297,7 +2297,6 @@
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Shared\_QuickSearch.cshtml" />
     <Content Include="Views\Ticket\Index.cshtml" />
-    <Content Include="Views\Ticket\New.cshtml" />
     <Content Include="Views\TicketActivity\_AddComment.cshtml" />
     <Content Include="Views\TicketActivity\_ActivityButtons.cshtml" />
     <Content Include="Views\TicketActivity\_ModifyAttachments.cshtml" />
@@ -2363,7 +2362,6 @@
     <Content Include="Views\Ticket\_TicketDescription.cshtml" />
     <Content Include="Views\Ticket\_TicketAttachedFiles.cshtml" />
     <Content Include="Views\Ticket\NewFacilityTicket.cshtml" />
-    <Content Include="Views\Ticket\_TicketFeedbackDetails.cshtml" />
     <Content Include="Views\Ticket\_FeedbackCustomField.cshtml" />
     <Content Include="Views\Ticket\_FacilityTicketDetails.cshtml" />
     <Content Include="Scripts\jquery-2.2.2.min.map" />
@@ -2410,7 +2408,7 @@
     <Content Include="Web.local.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Ticket\_HardwareTicketDetail.cshtml" />
+    <Content Include="Views\Ticket\_HardwareTicketDetails.cshtml" />
     <Content Include="Views\Announcement\Index.cshtml" />
     <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
