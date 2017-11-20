@@ -272,7 +272,7 @@
             {
                 AddCustomFieldValue(null, viewModel.ReportBy.CustomFieldId, viewModel.ReportBy.Value, viewModel.Ticket.TicketId);
                 AddCustomFieldValue(null, viewModel.TimeOfIncident.CustomFieldId, viewModel.TimeOfIncident.Value, viewModel.Ticket.TicketId);
-                AddCustomFieldValue(null, viewModel.Desciption.CustomFieldId,  viewModel.Desciption.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.Desciption.CustomFieldId, viewModel.Desciption.Value, viewModel.Ticket.TicketId);
 
                 await Context.SaveChangesAsync().ConfigureAwait(false);
 

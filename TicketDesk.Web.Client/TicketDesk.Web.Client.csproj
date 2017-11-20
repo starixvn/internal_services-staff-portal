@@ -480,6 +480,8 @@
     <Content Include="App_Data\LOCAL\TicketDeskSpNames.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -547,6 +549,8 @@
     <None Include="Properties\PublishProfiles\TicketDesk.pubxml" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\cldr.js" />
@@ -2117,6 +2121,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\pagedown\Markdown.Converter.js" />
     <Content Include="Scripts\pagedown\Markdown.Sanitizer.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_ar.js" />
@@ -2217,11 +2225,13 @@
     <Content Include="src\js\filevalidation.js" />
     <Content Include="src\js\page.js" />
     <Content Include="src\libs\animatecss\animate.min.css" />
+    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-datetimepicker.min.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.min.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.min.css" />
     <Content Include="src\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap-datetimepicker.min.js" />
     <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap.js" />
     <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap.min.js" />
     <Content Include="src\libs\bootstrap-3.3.7\js\npm.js" />
