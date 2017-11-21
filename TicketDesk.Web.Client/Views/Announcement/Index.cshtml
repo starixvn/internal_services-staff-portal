@@ -3,7 +3,7 @@
 @section title{ Announcement }
 @section css
 {
-    <link href="~/src/libs/datetimepicker/css/datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 }
 <div class="announcement-detail">
     <div class="form-content">
@@ -17,7 +17,7 @@
                     <div class='col-md-5'>
                         <div class="form-group">
                             <label>From</label>
-                            <div class='input-group date' id='datetimepicker6'>
+                            <div class='input-group date' id='from-date'>
                                 <input type='text' class="form-control" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -28,7 +28,7 @@
                     <div class='col-md-5'>
                         <div class="form-group">
                             <label>To</label>
-                            <div class='input-group date' id='datetimepicker7'>
+                            <div class='input-group date' id='to-date'>
                                 <input type='text' class="form-control" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -38,6 +38,51 @@
                     </div>
                 </div>
             </form>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>MESSAGE</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <span>11/11/2017 2:58:00 PM 1074220864</span></br>
+                            <span>[Autumn (Series Winner) - 7/11] statement will be moved to 9/11 (GMT -4). Sorry for the inconvenience caused!</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>
+                            <span>11/11/2017 2:58:00 PM 1074220864</span></br>
+                            <span>[Autumn (Series Winner) - 7/11] statement will be moved to 9/11 (GMT -4). Sorry for the inconvenience caused!</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>
+                            <span>11/11/2017 2:58:00 PM 1074220864</span></br>
+                            <span>[Autumn (Series Winner) - 7/11] statement will be moved to 9/11 (GMT -4). Sorry for the inconvenience caused!</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>
+                            <span>11/11/2017 2:58:00 PM 1074220864</span></br>
+                            <span>[Autumn (Series Winner) - 7/11] statement will be moved to 9/11 (GMT -4). Sorry for the inconvenience caused!</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>
+                            <span>11/11/2017 2:58:00 PM 1074220864</span></br>
+                            <span>[Autumn (Series Winner) - 7/11] statement will be moved to 9/11 (GMT -4). Sorry for the inconvenience caused!</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>    
 </div>
@@ -47,16 +92,16 @@
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 
     <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker6').datetimepicker();
-            $('#datetimepicker7').datetimepicker({
+        $(document).ready(function () {
+            $('#from-date').datetimepicker();
+            $('#to-date').datetimepicker({
                 useCurrent: false //Important! See issue #1075
             });
-            $("#datetimepicker6").on("dp.change", function (e) {
-                $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+            $("#from-date").on("dp.change", function (e) {
+                $('#to-date').data("DateTimePicker").minDate(e.date);
             });
-            $("#datetimepicker7").on("dp.change", function (e) {
-                $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+            $("#to-date").on("dp.change", function (e) {
+                $('#from-date').data("DateTimePicker").maxDate(e.date);
             });
         });
 </script>
