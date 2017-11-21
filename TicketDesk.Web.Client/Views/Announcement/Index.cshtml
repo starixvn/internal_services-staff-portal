@@ -6,35 +6,29 @@
     <link href="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 }
 <div class="announcement-detail">
-    <div class="form-content">
-        <div class="title">
+    <div class="form-content feature">
+        <div class="title panel-heading">
             <a href="@Url.Action("Index","Home")" class="btn">Back to dashboard</a>
             Announcements
         </div>
-        <div class="content-announcement">
+        <div class="content-announcement panel-body">
             <form class="form-inline filter" role="form">
-                <div class="container">
-                    <div class='col-md-5'>
-                        <div class="form-group">
-                            <label>From</label>
-                            <div class='input-group date' id='from-date'>
-                                <input type='text' class="form-control" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
+                <div class="form-group">
+                    <label>From</label>
+                    <div class='input-group date' id='from-date'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
                     </div>
-                    <div class='col-md-5'>
-                        <div class="form-group">
-                            <label>To</label>
-                            <div class='input-group date' id='to-date'>
-                                <input type='text' class="form-control" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label>To</label>
+                    <div class='input-group date' id='to-date'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
                     </div>
                 </div>
             </form>
@@ -93,9 +87,12 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#from-date').datetimepicker();
+            $('#from-date').datetimepicker({
+                format: 'DD/MM/YYYY'
+            });
             $('#to-date').datetimepicker({
-                useCurrent: false //Important! See issue #1075
+                useCurrent: false, //Important! See issue #1075
+                format: 'DD/MM/YYYY'
             });
             $("#from-date").on("dp.change", function (e) {
                 $('#to-date').data("DateTimePicker").minDate(e.date);

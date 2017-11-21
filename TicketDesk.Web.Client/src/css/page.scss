@@ -353,11 +353,13 @@ body {
     }
 }
 
-table, tr, td, th {
-    border: 1px solid black;
-    border-collapse: collapse;
-    color: $text-color;
-}
+/*.panel-body {
+    table, tr, td, th {
+        border-collapse: collapse;
+        color: $text-color;
+    }
+}*/
+
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     padding: 9px 8px;
 }
@@ -738,7 +740,6 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
     opacity: 0.5;
 }
 .btn {
-    background: $title-form-bg;
     font-weight: bold;
     font-size: 15px;
     padding: 5px 10px;
@@ -1152,10 +1153,53 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
     left: 0;
   }
 }
+/******************************************* DatePicker ***********************************************/
+.datepicker{
+    .new {
+        background: inherit;
+    }
+}
 
+.bootstrap-datetimepicker-widget {
+    &.dropdown-menu {
+         width: auto !important;
+         min-width: 349px;
+    }
+    table tr td {
+        border-radius: 2px;
+    }
+    table tr td.day {
+        font-weight: 600;
+        height: 40px;
+        width: 40px;
+        &.today, &:hover {
+            background: $title-form-bg;
+            color: $text-second-color;
+        }
+        &.today:before {
+            border-bottom-color: $title-form-bg;
+        }
+    }
+    table tr td.active, table tr td span.active {
+        background: $primary-color;
+    }
+    table tr td span:hover {
+        background: $title-form-bg;
+        color: $text-second-color;
+    }
+}
+.bootstrap-datetimepicker-widget table td.disabled, .bootstrap-datetimepicker-widget table td.disabled:hover {
+    color: rgba(#777, 0.2);
+}
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th {
+    padding: 5px 11px;
+}
 /******************************************* Annoucement Details ***********************************************/
 .announcement-detail {
     flex: 1 100%;
+    .filter {
+        margin: 8px 0 18px;
+    }
 }
 
 
