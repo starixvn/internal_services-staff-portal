@@ -441,7 +441,6 @@ tr.header {
   box-shadow: 0 0 6px rgba(102, 102, 102, 0.3);
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
   color: #333; }
   .form-content label {
     margin-bottom: 0; }
@@ -463,7 +462,8 @@ tr.header {
     background: #2e4592;
     height: 48px;
     line-height: 48px;
-    font-weight: 700; }
+    font-weight: 700;
+    text-transform: uppercase; }
   .form-content > .title {
     font-size: 16px;
     letter-spacing: 1px; }
@@ -961,4 +961,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     position: absolute;
     top: 100%;
     left: 0; } }
+
+/******************************************* Annoucement Details ***********************************************/
+.announcement-detail {
+  flex: 1 100%; }
 

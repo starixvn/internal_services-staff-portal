@@ -2242,6 +2242,10 @@
     <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap.js" />
     <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap.min.js" />
     <Content Include="src\libs\bootstrap-3.3.7\js\npm.js" />
+    <Content Include="src\libs\bootstrap-datetimepicker\css\bootstrap-datetimepicker-standalone.css" />
+    <Content Include="src\libs\bootstrap-datetimepicker\css\bootstrap-datetimepicker.css" />
+    <Content Include="src\libs\bootstrap-datetimepicker\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="src\libs\bootstrap-datetimepicker\js\bootstrap-datetimepicker.min.js" />
     <Content Include="src\libs\dropzone\basic.min.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -559,7 +559,7 @@ tr.header {
     display: flex;
     flex-flow: row wrap;
     // grid-template-columns: repeat(4, 1fr);
-    align-items: center;
+    //align-items: center;
     color: $text-color;
     label {
         margin-bottom : 0;
@@ -589,6 +589,7 @@ tr.header {
         height: 48px;
         line-height: 48px;
         font-weight: 700;
+        text-transform: uppercase;
     }
     > .title {        
         font-size: 16px;
@@ -1150,6 +1151,11 @@ input[type="text"]:focus, textarea:focus,  x:-moz-any-link, x:default {
     top: 100%;
     left: 0;
   }
+}
+
+/******************************************* Annoucement Details ***********************************************/
+.announcement-detail {
+    flex: 1 100%;
 }
 
 
