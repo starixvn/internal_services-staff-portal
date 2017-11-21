@@ -70,6 +70,15 @@ namespace TicketDesk.Web.Client.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Domain_Model_Ticket_Title {
+            get {
+                return ResourceManager.GetString("Domain_Model_Ticket_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duplicate file: .
         /// </summary>
         public static string Dropzone_Error_DuplicateFile {
@@ -84,6 +93,15 @@ namespace TicketDesk.Web.Client.App_GlobalResources {
         public static string Dropzone_Error_MaxFilesExceeded {
             get {
                 return ResourceManager.GetString("Dropzone_Error_MaxFilesExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry.
+        /// </summary>
+        public static string Dropzone_Error_Sorry {
+            get {
+                return ResourceManager.GetString("Dropzone_Error_Sorry", resourceCulture);
             }
         }
         

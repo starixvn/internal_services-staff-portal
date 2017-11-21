@@ -126,6 +126,9 @@
   <data name="Dropzone_Error_MaxFilesExceeded" xml:space="preserve">
     <value>Total of file exceeded limit</value>
   </data>
+  <data name="Dropzone_Error_Sorry" xml:space="preserve">
+    <value>Sorry</value>
+  </data>
   <data name="Dropzone_Error_TotalSizeViolated" xml:space="preserve">
     <value>Total size exceed maximum allowed of {0} MB</value>
   </data>
@@ -170,5 +173,8 @@
   </data>
   <data name="Views_Ticket_NewFacilityTicket_Title" xml:space="preserve">
     <value>REPAIRS AND SERVICES REQUISITION FORM</value>
+  </data>
+  <data name="Domain_Model_Ticket_Title" xml:space="preserve">
+    <value>Title</value>
   </data>
 </root>

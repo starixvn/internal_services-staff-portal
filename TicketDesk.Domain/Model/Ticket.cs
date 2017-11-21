@@ -7,6 +7,7 @@ namespace TicketDesk.Domain.Model
     using System.Linq;
     using TicketDesk.Localization;
     using TicketDesk.Localization.Domain;
+    using TicketDesk.Localization.Resources;
 
     public class Ticket
     {
@@ -49,7 +50,8 @@ namespace TicketDesk.Domain.Model
 
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
         [StringLength(500, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
-        [Display(ResourceType = typeof(Strings), Name = "TicketTitle", ShortName = "TicketTitleShort")]
+        //[Display(ResourceType = typeof(Strings), Name = "TicketTitle", ShortName = "TicketTitleShort")]
+        [Display(ResourceType = typeof(Resources), Name = "Domain_Model_Ticket_Title")]
         public string Title { get; set; }
 
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]

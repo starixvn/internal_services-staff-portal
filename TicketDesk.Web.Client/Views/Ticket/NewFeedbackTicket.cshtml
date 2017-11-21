@@ -28,10 +28,6 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
-    @*@Html.HiddenFor(model => model.Ticket.TicketType)
-    @Html.HiddenFor(model => model.Ticket.Category)
-    @Html.HiddenFor(model => model.Ticket.Priority)
-    @Html.HiddenFor(model => model.Ticket.Details)*@
     @Html.HiddenFor(model => model.TempId)
     @Html.HiddenFor(model => model.SelectedFeedbackByValue, new { @class = "required-radio-value" })
 
