@@ -93,7 +93,7 @@
         if (dropzone.files.length) {
             var i, len;
             var isDuplicate = false;
-            var errorText = "@Resources.Dropzone_Error_DuplicateFile";
+            var errorText = "@Html.Raw(Resources.Dropzone_Error_DuplicateFile)";
 
             for (i = 0, len = dropzone.files.length; i < len - 1; i++) {
                 // -1 to exclude current file
@@ -121,11 +121,11 @@
         if (numberOfSelectedFile > 1) {
             $('.btn-delete-all-file').show();
             $('.number-chosenfile').show();
-            $('.number-chosenfile .text').text('@Resources.Dropzone_Info_MultipleFilesSelected');
+            $('.number-chosenfile .text').text('@Html.Raw(Resources.Dropzone_Info_MultipleFilesSelected)');
         } else if (numberOfSelectedFile === 1) {
             $('.btn-delete-all-file').show();
             $('.number-chosenfile').show();
-            $('.number-chosenfile .text').text('@Resources.Dropzone_Info_SingleFileSelected');
+            $('.number-chosenfile .text').text('@Html.Raw(Resources.Dropzone_Info_SingleFileSelected)');
         }
         else {
             $('.number-chosenfile').hide();
@@ -186,7 +186,7 @@
                     });
                 this.on("maxfilesexceeded",
                     function() {
-                        SetErrorTextAndShowModal("@Resources.Dropzone_Error_MaxFilesExceeded");
+                        SetErrorTextAndShowModal("@Html.Raw(Resources.Dropzone_Error_MaxFilesExceeded)");
                     });
                 this.on("error",
                     function(file, errorMessage) {
