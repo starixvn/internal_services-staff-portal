@@ -82,7 +82,7 @@
             InitFormHandler("ticket-form", true);
 
             // Default title for a ticket
-            $(".ticket-title").val("[@Resources.Views_Ticket_NewFacilityTicket_FormTitle]");
+            $(".ticket-title").val("[@Html.Raw(Resources.Views_Ticket_NewFacilityTicket_FormTitle)]");
 
             $(".ticket-form").on("change",
                 function () {
@@ -95,7 +95,7 @@
                             break;
                         }
                     }
-                    $(".ticket-title").val("[@Resources.Views_Ticket_NewFacilityTicket_FormTitle] - " + requestTypeValue);
+                    $(".ticket-title").val("[@Html.Raw(Resources.Views_Ticket_NewFacilityTicket_FormTitle)] - " + requestTypeValue);
                 });
         });
     </script>

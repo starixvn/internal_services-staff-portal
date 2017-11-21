@@ -83,7 +83,7 @@
         if (IsTotalBytesViolated()) {
             //var totalMb = (@Model.MaxBytes / 1048576);
             //SetErrorTextAndShowModal("Total size exceed maximum allowed of " + totalMb + " MB");
-            SetErrorTextAndShowModal("@string.Format(Resources.Dropzone_Error_TotalSizeViolated, (Model.MaxBytes / 1048576))");
+            SetErrorTextAndShowModal("@Html.Raw(string.Format(Resources.Dropzone_Error_TotalSizeViolated, (Model.MaxBytes / 1048576)))");
         } else {
             SetErrorTextAndShowModal("");
         }

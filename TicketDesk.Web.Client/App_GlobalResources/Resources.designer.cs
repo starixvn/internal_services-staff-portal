@@ -106,6 +106,15 @@ namespace TicketDesk.Web.Client.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ATTACH FILES.
+        /// </summary>
+        public static string Dropzone_Form_AttachFiles {
+            get {
+                return ResourceManager.GetString("Dropzone_Form_AttachFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse....
         /// </summary>
         public static string Dropzone_Form_Browse {
@@ -174,15 +183,6 @@ namespace TicketDesk.Web.Client.App_GlobalResources {
         public static string Views_Ticket_NewFacilityTicket_AddItem {
             get {
                 return ResourceManager.GetString("Views_Ticket_NewFacilityTicket_AddItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ATTACH FILES.
-        /// </summary>
-        public static string Views_Ticket_NewFacilityTicket_AttachFiles {
-            get {
-                return ResourceManager.GetString("Views_Ticket_NewFacilityTicket_AttachFiles", resourceCulture);
             }
         }
         

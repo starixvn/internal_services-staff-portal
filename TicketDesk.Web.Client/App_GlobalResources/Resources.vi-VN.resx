@@ -132,6 +132,9 @@
   <data name="Dropzone_Form_AllowedTypes" xml:space="preserve">
     <value>Loại file được phép: </value>
   </data>
+  <data name="Dropzone_Form_AttachFiles" xml:space="preserve">
+    <value>FILES ĐÍNH KÈM</value>
+  </data>
   <data name="Dropzone_Form_Browse" xml:space="preserve">
     <value>Duyệt file...</value>
   </data>
@@ -155,9 +158,6 @@
   </data>
   <data name="Views_Ticket_NewFacilityTicket_AddItem" xml:space="preserve">
     <value>Thêm</value>
-  </data>
-  <data name="Views_Ticket_NewFacilityTicket_AttachFiles" xml:space="preserve">
-    <value>FILES ĐÍNH KÈM</value>
   </data>
   <data name="Views_Ticket_NewFacilityTicket_DeleteItem" xml:space="preserve">
     <value>Xóa</value>

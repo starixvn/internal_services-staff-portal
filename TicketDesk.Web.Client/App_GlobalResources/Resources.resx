@@ -132,6 +132,9 @@
   <data name="Dropzone_Form_AllowedTypes" xml:space="preserve">
     <value>Allowed file types: </value>
   </data>
+  <data name="Dropzone_Form_AttachFiles" xml:space="preserve">
+    <value>ATTACH FILES</value>
+  </data>
   <data name="Dropzone_Form_Browse" xml:space="preserve">
     <value>Browse...</value>
   </data>
@@ -155,9 +158,6 @@
   </data>
   <data name="Views_Ticket_NewFacilityTicket_AddItem" xml:space="preserve">
     <value>Add Item</value>
-  </data>
-  <data name="Views_Ticket_NewFacilityTicket_AttachFiles" xml:space="preserve">
-    <value>ATTACH FILES</value>
   </data>
   <data name="Views_Ticket_NewFacilityTicket_DeleteItem" xml:space="preserve">
     <value>Delete Item</value>
