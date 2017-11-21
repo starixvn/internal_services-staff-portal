@@ -46,7 +46,7 @@
         private static readonly Dictionary<string, string> _cultures = new Dictionary<string, string>
         {
             { "en-US", "English" },
-            { "pt-BR", "Português do Brasil" }
+            { "vi-VN", "Tiếng Việt (Vietnamese)" }
         };
 
         // Default culture
@@ -54,7 +54,7 @@
         {
             get
             {
-                var name = "en-US";
+                var name = "vi-VN";
                 var config = WebConfigurationManager.OpenWebConfiguration("/");
 
                 var section = config.GetSection("system.web/globalization") as GlobalizationSection;
@@ -84,7 +84,7 @@
         /// Returns a valid culture name based on "name" parameter. If "name" is not valid, it returns the default culture
         /// </summary>
         /// <param name="name" >Culture's name (e.g. en-US)</param>
-        public static string GetImplementedCulture(string name)
+        private static string GetImplementedCulture(string name)
         {
             return GetImplementedCulture(name, GetDefaultCulture());
         }
@@ -94,7 +94,7 @@
         /// </summary>
         /// <param name="name" >Culture's name (e.g. en-US)</param>
         /// <param name="defaultCulture" >Default culture (e.g. en-US)</param>
-        public static string GetImplementedCulture(string name, string defaultCulture)
+        private static string GetImplementedCulture(string name, string defaultCulture)
         {
             // make sure it's not null
             // return Default culture
@@ -136,7 +136,7 @@
         /// Returns default culture name which is the first name decalared (e.g. en-US)
         /// </summary>
         /// <returns></returns>
-        public static string GetDefaultCulture()
+        private static string GetDefaultCulture()
         {
             return DefaultCulture; // return Default culture
         }
@@ -151,7 +151,7 @@
             return GetNeutralCulture(Thread.CurrentThread.CurrentCulture.Name);
         }
 
-        public static string GetNeutralCulture(string name)
+        private static string GetNeutralCulture(string name)
         {
             if (!name.Contains("-"))
             {

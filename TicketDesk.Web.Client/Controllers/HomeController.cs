@@ -6,13 +6,10 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Web.Attribute;
-    using Localization;
     using Models;
     using Models.Home;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
 
     [RoutePrefix("")]
@@ -130,22 +127,6 @@
         public ActionResult NotFound()
         {
             return View();
-        }
-
-        [Route("language")]
-        public ActionResult SetLanguage(string name)
-        {
-            CultureHelper.SetCurrentCulture(name);
-
-            var cookie = new HttpCookie("_culture", name) { Expires = DateTime.Today.AddYears(1) };
-            Response.SetCookie(cookie);
-
-            if (Request.UrlReferrer != null && !string.IsNullOrEmpty(Request.UrlReferrer.AbsoluteUri))
-            {
-                return Redirect(Request.UrlReferrer.AbsoluteUri);
-            }
-
-            return RedirectToAction("Index", "Home");
         }
 
         private static List<Models.Extensions.MenuItem> PopulateMenus(IEnumerable<MenuItem> menus)

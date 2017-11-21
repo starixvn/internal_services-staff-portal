@@ -1,16 +1,16 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using Domain;
     using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Localization.Controllers;
+    using Models;
     using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Domain;
-    using Domain.Model;
-    using Localization.Controllers;
-    using Models;
 
     [RoutePrefix("admin")]
     [Route("{action=index}")]
