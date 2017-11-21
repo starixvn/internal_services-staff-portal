@@ -65,7 +65,7 @@
 
 function SetValueForRequiredRadioButton(formclassname) {
     $(".required-radio").on("change",
-        function() {
+        function () {
             $(".required-radio-value").val($(".required-radio:checked").val());
             CheckFormAndTurnSubmitButton(formclassname);
         });
