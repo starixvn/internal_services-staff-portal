@@ -2370,7 +2370,6 @@
     <Content Include="Views\ProjectSettings\New.cshtml" />
     <Content Include="Views\Shared\_ProjectMenu.cshtml" />
     <Content Include="Views\FirstRunSetup\CheckUpgradeProgress.cshtml" />
-    <Content Include="Views\Shared\_LanguageOptions.cshtml" />
     <Content Include="Scripts\jQueryValidate-locales\jquery.validate_locale_pt-BR.js" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
     <Content Include="Views\Home\AccessDenied.cshtml" />
@@ -2434,6 +2433,7 @@
     <Content Include="Views\Announcement\Index.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
     <Content Include="Views\LanguageSetting\Index.cshtml" />
+    <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -1,4 +1,5 @@
-﻿@model TicketDesk.Web.Client.Models.Ticket.TicketWithFilesBaseViewModel
+﻿@using TicketDesk.Web.Client.App_GlobalResources
+@model TicketDesk.Web.Client.Models.Ticket.TicketWithFilesBaseViewModel
 
 <script src="~/src/libs/dropzone/dropzone.min.js"></script>
 
@@ -82,7 +83,7 @@
         if (IsTotalBytesViolated()) {
             //var totalMb = (@Model.MaxBytes / 1048576);
             //SetErrorTextAndShowModal("Total size exceed maximum allowed of " + totalMb + " MB");
-            SetErrorTextAndShowModal("@string.Format(Resources.Resources.Dropzone_Error_TotalSizeViolated, (Model.MaxBytes / 1048576))");
+            SetErrorTextAndShowModal("@string.Format(Resources.Dropzone_Error_TotalSizeViolated, (Model.MaxBytes / 1048576))");
         } else {
             SetErrorTextAndShowModal("");
         }
@@ -92,7 +93,7 @@
         if (dropzone.files.length) {
             var i, len;
             var isDuplicate = false;
-            var errorText = "@Resources.Resources.Dropzone_Error_DuplicateFile";
+            var errorText = "@Resources.Dropzone_Error_DuplicateFile";
 
             for (i = 0, len = dropzone.files.length; i < len - 1; i++) {
                 // -1 to exclude current file
@@ -120,11 +121,11 @@
         if (numberOfSelectedFile > 1) {
             $('.btn-delete-all-file').show();
             $('.number-chosenfile').show();
-            $('.number-chosenfile .text').text('@Resources.Resources.Dropzone_Info_MultipleFilesSelected');
+            $('.number-chosenfile .text').text('@Resources.Dropzone_Info_MultipleFilesSelected');
         } else if (numberOfSelectedFile === 1) {
             $('.btn-delete-all-file').show();
             $('.number-chosenfile').show();
-            $('.number-chosenfile .text').text('@Resources.Resources.Dropzone_Info_SingleFileSelected');
+            $('.number-chosenfile .text').text('@Resources.Dropzone_Info_SingleFileSelected');
         }
         else {
             $('.number-chosenfile').hide();
@@ -185,7 +186,7 @@
                     });
                 this.on("maxfilesexceeded",
                     function() {
-                        SetErrorTextAndShowModal("@Resources.Resources.Dropzone_Error_MaxFilesExceeded");
+                        SetErrorTextAndShowModal("@Resources.Dropzone_Error_MaxFilesExceeded");
                     });
                 this.on("error",
                     function(file, errorMessage) {

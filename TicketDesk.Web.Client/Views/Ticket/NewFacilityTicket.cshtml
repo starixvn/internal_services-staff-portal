@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
+@using TicketDesk.Web.Client.App_GlobalResources
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 
 @model TicketDesk.Web.Client.Models.Ticket.NewFacilityTicketViewModel
@@ -81,7 +82,7 @@
             InitFormHandler("ticket-form", true);
 
             // Default title for a ticket
-            $(".ticket-title").val("[@Resources.Resources.Views_Ticket_NewFacilityTicket_FormTitle]");
+            $(".ticket-title").val("[@Resources.Views_Ticket_NewFacilityTicket_FormTitle]");
 
             $(".ticket-form").on("change",
                 function () {
@@ -94,7 +95,7 @@
                             break;
                         }
                     }
-                    $(".ticket-title").val("[@Resources.Resources.Views_Ticket_NewFacilityTicket_FormTitle] - " + requestTypeValue);
+                    $(".ticket-title").val("[@Resources.Views_Ticket_NewFacilityTicket_FormTitle] - " + requestTypeValue);
                 });
         });
     </script>
@@ -108,7 +109,7 @@
     @Html.HiddenFor(model => model.SelectedRequestType, new { @class = "required-radio-value" })
 
     <div class="form-content facility-form">
-        <div class="title">@Resources.Resources.Views_Ticket_NewFacilityTicket_Title</div>
+        <div class="title">@Resources.Views_Ticket_NewFacilityTicket_Title</div>
         <div class="item-list">
             @Html.LabelFor(x => x.Ticket.Title, new { @class = "key border" })
             <div class="value span-3 border subject">
@@ -132,8 +133,8 @@
         </div>
         <div class="item-list" id="item-list">
             <div class="title item-head border">
-                <span>@Resources.Resources.Views_Ticket_NewFacilityTicket_ItemList</span>
-                <button class="btn btn-add rippler rippler-default" data-class="item-list"><span class="icon-add"></span>@Resources.Resources.Views_Ticket_NewFacilityTicket_AddItem</button>
+                <span>@Resources.Views_Ticket_NewFacilityTicket_ItemList</span>
+                <button class="btn btn-add rippler rippler-default" data-class="item-list"><span class="icon-add"></span>@Resources.Views_Ticket_NewFacilityTicket_AddItem</button>
             </div>
 
             @if (Model.Items != null)
@@ -154,7 +155,7 @@
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border" })
                         <div class="value border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "" })</div>
                         <div class="border span-2">
-                            <button class="btn btn-delete btn-delete-item rippler rippler-default"><span class="icon-delete"></span>@Resources.Resources.Views_Ticket_NewFacilityTicket_DeleteItem</button>
+                            <button class="btn btn-delete btn-delete-item rippler rippler-default"><span class="icon-delete"></span>@Resources.Views_Ticket_NewFacilityTicket_DeleteItem</button>
                         </div>
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth border key" })
@@ -167,5 +168,5 @@
 
         @Html.Partial("_DropzoneView", Model)
     </div>
-    <input type="submit" class="btn btn-primary btn-send rippler rippler-default" value="@Resources.Resources.Common_Form_Send"/>
+    <input type="submit" class="btn btn-primary btn-send rippler rippler-default" value="@Resources.Common_Form_Send"/>
 }

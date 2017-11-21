@@ -14,7 +14,6 @@
     using System.Data.Entity;
     using System.Globalization;
     using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Mvc;
 
@@ -95,7 +94,6 @@
         [Route("new-facility")]
         public async Task<ActionResult> NewFacilityTicket()
         {
-            var test = Thread.CurrentThread.CurrentUICulture;
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Facility);
 
             var viewModel = new NewFacilityTicketViewModel
