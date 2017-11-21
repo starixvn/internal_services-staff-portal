@@ -174,4 +174,7 @@
   <data name="Toggle" xml:space="preserve">
     <value>Toggle navigation</value>
   </data>
+  <data name="LogOff" xml:space="preserve">
+    <value>Log Off</value>
+  </data>
 </root>

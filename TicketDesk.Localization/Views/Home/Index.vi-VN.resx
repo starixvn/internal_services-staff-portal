@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ChangeList" xml:space="preserve">
+    <value>&lt;h3&gt;TD 2.5 thay đổi danh sách&lt;/h3&gt;
+        &lt;strong&gt;Tính năng Cập Nhật&lt;/strong&gt;
+        &lt;ul&gt;&lt;li&gt;Trực tuyến thiết lập (đầu tiên chạy-thiết lập)&lt;/li&gt; &lt;li&gt;Nhiều dự án&lt;/li&gt; &lt;li&gt;nhiều tùy chọn trình soạn thảo văn bản phong phú&lt;/li&gt; &lt;li&gt;Giao diện người dùng phản ứng nhanh (hỗ trợ điện thoại màn hình nhỏ)&lt;/li&gt;&lt;/ul&gt;
+        &lt;strong&gt;Công nghệ Cập Nhật&lt;/strong&gt;
+        &lt;ul&gt;&lt;li&gt;Khuôn khổ thực thể 6 x mã đầu tiên&lt;/li&gt; &lt;li&gt;MVC 5 x - dao cạo xem động cơ&lt;/li&gt; &lt;li&gt;khởi động 3&lt;/li&gt; &lt;li&gt;phun đơn giản (IoC / DI)&lt;/li&gt; &lt;li&gt;Aspnet.Identity 2.x&lt;/li&gt; &lt;li&gt;Deployable a Zure &lt;ul&gt;&lt;li&gt;Trang web Azure&lt;/li&gt; &lt;li&gt;Azure lí&lt;/li&gt; &lt;li&gt;Azure tìm dịch vụ&lt;/li&gt; &lt;li&gt;Cơ sở dữ liệu SQL Azure&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="Congrat_Azure" xml:space="preserve">
+    <value>Chúc mừng! Bạn xuất hiện để chạy ở Azure.</value>
+  </data>
+  <data name="ForkMe" xml:space="preserve">
+    <value>&lt; img style = "vị trí: tuyệt đối; Top:-20px; bên phải: 0; biên giới: 0; "src ="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/ 68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67 "alt ="Cho tôi ngã trên GitHub"dữ liệu-kinh điển-src ="https://s3.amazonaws.com/github/ribbons/forkme _ right_gray_6d6d6d.png "&gt;</value>
+  </data>
+  <data name="Instructions" xml:space="preserve">
+    <value>&lt;p&gt;Nó đã là một con đường dài, nhưng cuối cùng TicketDesk 2,5 là gần như đã sẵn sàng để sản xuất sử dụng. Các phiên bản beta nên được ổn định, đủ để đánh giá và thử nghiệm. Có một số các cạnh thô vẫn còn, nhưng chúng tôi đang nỗ lực để sửa chữa những người lên trước khi phát hành cuối cùng.
+                &lt;/p&gt; &lt;div class=""&gt; &lt;p&gt;xin vui lòng giữ sau đây trong tâm trí trong khi đánh giá các phiên bản beta:&lt;/p&gt; &lt;ul class="text-muted"&gt; &lt;li&gt;TicketDesk 2,5 có thể nâng cấp cơ sở dữ liệu của v2.1.4, nhưng Hãy làm cho bản sao lưu đầu tiên!
+                        &lt;/li&gt; &lt;li&gt;TicketDesk 2,5 không hỗ trợ Active Directory hội nhập.
+                        &lt;/li&gt; &lt;li&gt;Nếu bạn tìm thấy lỗi, vui lòng đăng vấn đề về &lt;a href="https://github.com/NullDesk/TicketDesk/issues"&gt; theo dõi vấn đề TicketDesk GitHub&lt;/a&gt;&lt;/li&gt;
+                        &lt;li&gt;Trang này sẽ được thay thế bằng một người dùng đơn giản bảng trước khi phát hành cuối cùng.&lt;/li&gt;
+                    &lt;/ul&gt; &lt;div&gt;&lt;p&gt;Cho các tài liệu và cấu hình chi tiết, xin vui lòng ghé qua &lt;a href="https://github.com/NullDesk/TicketDesk/wiki"&gt; GitHub Wiki&lt;/a&gt;&lt;/p&gt;
+                        
+                        
+
+                    &lt;/div&gt;&lt;/div&gt;</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Chào mừng đến với TicketDesk 2,5 &lt;span class="small"&gt; (beta)&lt;/span&gt;</value>
+  </data>
+</root>

@@ -1,0 +1,414 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AllowInternalUsersToEditPriority" xml:space="preserve">
+    <value>Cho phép người dùng chỉnh sửa các ưu tiên?</value>
+  </data>
+  <data name="AllowInternalUsersToEditTags" xml:space="preserve">
+    <value>Cho phép người dùng chỉnh sửa thẻ?</value>
+  </data>
+  <data name="Changes_From_To" xml:space="preserve">
+    <value>{0}: từ "{1}" đến "{2}"</value>
+  </data>
+  <data name="Changes_Title" xml:space="preserve">
+    <value>Thay đổi:</value>
+  </data>
+  <data name="CheckSecurity_NotAuthorized" xml:space="preserve">
+    <value>Người dùng không có quyền thực hiện các hoạt động này.</value>
+  </data>
+  <data name="DefaultNewUserRoles" xml:space="preserve">
+    <value>Vai trò người dùng mới mặc định</value>
+  </data>
+  <data name="Project_Description" xml:space="preserve">
+    <value>Mô tả</value>
+  </data>
+  <data name="Project_Name" xml:space="preserve">
+    <value>Tên dự án</value>
+  </data>
+  <data name="SelectList_Categories" xml:space="preserve">
+    <value>Thể loại</value>
+  </data>
+  <data name="SelectList_Priorities" xml:space="preserve">
+    <value>Ưu tiên</value>
+  </data>
+  <data name="SelectList_TicketTypes" xml:space="preserve">
+    <value>Các loại vé</value>
+  </data>
+  <data name="TicketActivity_Assign" xml:space="preserve">
+    <value>Chỉ định</value>
+  </data>
+  <data name="TicketActivity_CancelMoreInfo" xml:space="preserve">
+    <value>Hủy bỏ thông tin thêm</value>
+  </data>
+  <data name="TicketActivity_Close" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
+  <data name="TicketActivity_Comment" xml:space="preserve">
+    <value>Bình luận</value>
+  </data>
+  <data name="TicketActivity_Create" xml:space="preserve">
+    <value>Tạo ra</value>
+  </data>
+  <data name="TicketActivity_CreateOnBehalfOf" xml:space="preserve">
+    <value>Tạo ra</value>
+  </data>
+  <data name="TicketActivity_Edit" xml:space="preserve">
+    <value>Chỉnh sửa</value>
+  </data>
+  <data name="TicketActivity_EditAttachments" xml:space="preserve">
+    <value>Chỉnh sửa file đính kèm</value>
+  </data>
+  <data name="TicketActivity_ForceClose" xml:space="preserve">
+    <value>Lực lượng đóng</value>
+  </data>
+  <data name="TicketActivity_GiveUp" xml:space="preserve">
+    <value>Từ bỏ</value>
+  </data>
+  <data name="TicketActivity_Pass" xml:space="preserve">
+    <value>Vượt qua</value>
+  </data>
+  <data name="TicketActivity_ProvideInfo" xml:space="preserve">
+    <value>Cung cấp thông tin</value>
+  </data>
+  <data name="TicketActivity_ReAssign" xml:space="preserve">
+    <value>Tái chỉ định</value>
+  </data>
+  <data name="TicketActivity_ReOpen" xml:space="preserve">
+    <value>Mở lại</value>
+  </data>
+  <data name="TicketActivity_RequestMoreInfo" xml:space="preserve">
+    <value>Yêu cầu thêm thông tin</value>
+  </data>
+  <data name="TicketActivity_Resolve" xml:space="preserve">
+    <value>Giải quyết</value>
+  </data>
+  <data name="TicketActivity_TakeOver" xml:space="preserve">
+    <value>Take Over</value>
+  </data>
+  <data name="TicketActivityAddComment" xml:space="preserve">
+    <value>Thêm bình luận</value>
+  </data>
+  <data name="TicketActivityAssign" xml:space="preserve">
+    <value>giao vé cho {0}</value>
+  </data>
+  <data name="TicketActivityCancelMoreInfo" xml:space="preserve">
+    <value>đã hủy bỏ các yêu cầu cho biết thêm thông tin</value>
+  </data>
+  <data name="TicketActivityClose" xml:space="preserve">
+    <value>đóng cửa vé</value>
+  </data>
+  <data name="TicketActivityCreate" xml:space="preserve">
+    <value>tạo vé</value>
+  </data>
+  <data name="TicketActivityCreateOnBehalfOf" xml:space="preserve">
+    <value>tạo vé đại diện cho {0}</value>
+  </data>
+  <data name="TicketActivityEditTicketInfo" xml:space="preserve">
+    <value>đổi vé</value>
+  </data>
+  <data name="TicketActivityForceClose" xml:space="preserve">
+    <value>đóng cửa vé bằng vũ lực</value>
+  </data>
+  <data name="TicketActivityGiveUp" xml:space="preserve">
+    <value>đã đưa lên trên vé</value>
+  </data>
+  <data name="TicketActivityModifyAttachments" xml:space="preserve">
+    <value>Sửa đổi vé tập tin đính kèm</value>
+  </data>
+  <data name="TicketActivityPass" xml:space="preserve">
+    <value>thông qua vé cho {0}</value>
+  </data>
+  <data name="TicketActivityReactivate" xml:space="preserve">
+    <value>và kích hoạt lại vé.</value>
+  </data>
+  <data name="TicketActivityReAssign" xml:space="preserve">
+    <value>giao vé đến {0}</value>
+  </data>
+  <data name="TicketActivityReOpen" xml:space="preserve">
+    <value>tái mở cửa vé</value>
+  </data>
+  <data name="TicketActivityRequestMoreInfo" xml:space="preserve">
+    <value>yêu cầu thêm thông tin</value>
+  </data>
+  <data name="TicketActivityResolve" xml:space="preserve">
+    <value>giải quyết vé</value>
+  </data>
+  <data name="TicketActivitySupplyMoreInfo" xml:space="preserve">
+    <value>đã cung cấp thêm thông tin</value>
+  </data>
+  <data name="TicketActivityTakeOver" xml:space="preserve">
+    <value>đã thực hiện trên vé</value>
+  </data>
+  <data name="DefaultListNameHistoryTickets" xml:space="preserve">
+    <value>Vé lịch sử</value>
+  </data>
+  <data name="DefaultListNameMyTickets" xml:space="preserve">
+    <value>Vé của tôi</value>
+  </data>
+  <data name="DefaultListNameOpenTickets" xml:space="preserve">
+    <value>Mở vé</value>
+  </data>
+  <data name="ExceptionSecurityUserCannotCreateNewTicket" xml:space="preserve">
+    <value>Người dùng không có quyền tạo mới vé</value>
+  </data>
+  <data name="ExceptionSettingsTypeConversionError" xml:space="preserve">
+    <value>Thiết lập các loại chuyển đổi lỗi: không thể chuyển đổi SettingName [{0}] để xác định SettingType [{1}]</value>
+  </data>
+  <data name="TicketAffectsCustomer" xml:space="preserve">
+    <value>Ảnh hưởng đến khách hàng</value>
+  </data>
+  <data name="TicketAffectsCustomerShort" xml:space="preserve">
+    <value>Khách hàng</value>
+  </data>
+  <data name="TicketAssignedTo" xml:space="preserve">
+    <value>Phân công</value>
+  </data>
+  <data name="TicketAssignedToShort" xml:space="preserve">
+    <value>Phân công</value>
+  </data>
+  <data name="TicketCategory" xml:space="preserve">
+    <value>Thể loại</value>
+  </data>
+  <data name="TicketCategoryShort" xml:space="preserve">
+    <value>Thể loại</value>
+  </data>
+  <data name="TicketCreatedBy" xml:space="preserve">
+    <value>Tạo bởi</value>
+  </data>
+  <data name="TicketCreatedByShort" xml:space="preserve">
+    <value>Tạo bởi</value>
+  </data>
+  <data name="TicketCreatedDate" xml:space="preserve">
+    <value>Tạo ngày</value>
+  </data>
+  <data name="TicketCreatedDateShort" xml:space="preserve">
+    <value>Tạo ngày</value>
+  </data>
+  <data name="TicketCurrentStatusDate" xml:space="preserve">
+    <value>Tình trạng ngày</value>
+  </data>
+  <data name="TicketCurrentStatusDateShort" xml:space="preserve">
+    <value>Tình trạng ngày</value>
+  </data>
+  <data name="TicketCurrentStatusSetBy" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="TicketCurrentStatusSetByShort" xml:space="preserve">
+    <value>Trạng thái</value>
+  </data>
+  <data name="TicketDetails" xml:space="preserve">
+    <value>Thông tin chi tiết</value>
+  </data>
+  <data name="TicketDetailsShort" xml:space="preserve">
+    <value>Thông tin chi tiết</value>
+  </data>
+  <data name="TicketIsHtml" xml:space="preserve">
+    <value>Là Html</value>
+  </data>
+  <data name="TicketIsHtmlShort" xml:space="preserve">
+    <value>Là Html</value>
+  </data>
+  <data name="TicketLastUpdateBy" xml:space="preserve">
+    <value>Cập Nhật bởi</value>
+  </data>
+  <data name="TicketLastUpdateByShort" xml:space="preserve">
+    <value>Cập Nhật bởi</value>
+  </data>
+  <data name="TicketLastUpdateDate" xml:space="preserve">
+    <value>Cập Nhật ngày</value>
+  </data>
+  <data name="TicketLastUpdateDateShort" xml:space="preserve">
+    <value>Cập Nhật ngày</value>
+  </data>
+  <data name="TicketOwner" xml:space="preserve">
+    <value>Chủ sở hữu</value>
+  </data>
+  <data name="TicketOwnerShort" xml:space="preserve">
+    <value>Chủ sở hữu</value>
+  </data>
+  <data name="TicketPriority" xml:space="preserve">
+    <value>Ưu tiên</value>
+  </data>
+  <data name="TicketPriorityShort" xml:space="preserve">
+    <value>Ưu tiên</value>
+  </data>
+  <data name="TicketStatusActive" xml:space="preserve">
+    <value>Hoạt động</value>
+  </data>
+  <data name="TicketStatusClosed" xml:space="preserve">
+    <value>Đóng cửa</value>
+  </data>
+  <data name="TicketStatusMoreInfo" xml:space="preserve">
+    <value>Xem thêm thông tin</value>
+  </data>
+  <data name="TicketStatusResolved" xml:space="preserve">
+    <value>Giải quyết</value>
+  </data>
+  <data name="TicketTagList" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="TicketTagListShort" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="TicketTicketId" xml:space="preserve">
+    <value>Id vé</value>
+  </data>
+  <data name="TicketTicketIdShort" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="TicketTicketStatus" xml:space="preserve">
+    <value>Tình trạng</value>
+  </data>
+  <data name="TicketTicketStatusShort" xml:space="preserve">
+    <value>Tình trạng</value>
+  </data>
+  <data name="TicketTicketType" xml:space="preserve">
+    <value>Loại hình</value>
+  </data>
+  <data name="TicketTicketTypeShort" xml:space="preserve">
+    <value>Loại hình</value>
+  </data>
+  <data name="TicketTitle" xml:space="preserve">
+    <value>Tiêu đề</value>
+  </data>
+  <data name="TicketTitleShort" xml:space="preserve">
+    <value>Tiêu đề</value>
+  </data>
+  <data name="TicketActivityPriority" xml:space="preserve">
+    <value> ở mức ưu tiên của {0}</value>
+  </data>
+  <data name="DefaultListNameAssignedToMe" xml:space="preserve">
+    <value>Tôi được chỉ định</value>
+  </data>
+  <data name="DefaultListNameUnassigned" xml:space="preserve">
+    <value>Unassigned</value>
+  </data>
+  <data name="TicketProject" xml:space="preserve">
+    <value>Dự án</value>
+  </data>
+  <data name="TicketProjectShort" xml:space="preserve">
+    <value>Dự án</value>
+  </data>
+  <data name="AllowInternalUsersToSetAssigned" xml:space="preserve">
+    <value>Cho phép các người dùng nội bộ để thiết lập các định lĩnh vực (vé tạo mới chỉ)?</value>
+  </data>
+  <data name="AllowInternalUsersToSetOwner" xml:space="preserve">
+    <value>Cho phép các người dùng nội bộ để thiết lập hoặc thay đổi chủ sở hữu vé?</value>
+  </data>
+</root>

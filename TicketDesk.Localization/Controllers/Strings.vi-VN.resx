@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,4 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChangePasswordSuccess" xml:space="preserve">
+    <value>Mật khẩu của bạn đã bị thay đổi.</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Lỗi đã xảy ra.</value>
+  </data>
+  <data name="InvalidLoginAttempt" xml:space="preserve">
+    <value>Cố gắng đăng nhập không hợp lệ.</value>
+  </data>
+  <data name="ModelProjects_DefaultOption" xml:space="preserve">
+    <value>Tất cả các dự án</value>
+  </data>
+  <data name="NewFiles" xml:space="preserve">
+    <value>Tập tin mới:</value>
+  </data>
+  <data name="ProfileSaveSuccess" xml:space="preserve">
+    <value>Hồ sơ của bạn đã được Cập Nhật.</value>
+  </data>
+  <data name="RemovedFiles" xml:space="preserve">
+    <value>Loại bỏ tệp:</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Lĩnh vực này là cần thiết.</value>
+  </data>
+  <data name="ShowingFromAllProjects" xml:space="preserve">
+    <value>Hiển thị kết quả từ tất cả các dự án</value>
+  </data>
+  <data name="ShowingFromProject" xml:space="preserve">
+    <value>Hiển thị kết quả từ dự án: {0}</value>
+  </data>
+  <data name="UnableToChangeDemoUser" xml:space="preserve">
+    <value>Không thể thay đổi cấu hình chi tiết cho người dùng giới thiệu.</value>
+  </data>
+  <data name="UnableToCreateProject" xml:space="preserve">
+    <value>Không thể tạo dự án, xin vui lòng thử lại.</value>
+  </data>
+  <data name="UnableToRemoveProject" xml:space="preserve">
+    <value>Không thể loại bỏ các dự án, xin vui lòng thử lại.</value>
+  </data>
 </root>
