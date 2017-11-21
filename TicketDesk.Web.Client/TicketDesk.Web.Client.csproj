@@ -2435,6 +2435,7 @@
     <Content Include="Views\Shared\_Pagination.cshtml" />
     <Content Include="Views\LanguageSetting\Index.cshtml" />
     <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
+    <Content Include="Views\Ticket\NewNetworkTicket.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

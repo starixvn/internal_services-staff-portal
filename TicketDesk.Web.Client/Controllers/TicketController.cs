@@ -236,7 +236,7 @@
                 TempId = Guid.NewGuid(),
                 ReportBy = { CustomField = availableCustomField.First(x => x.Name == "Report By") },
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
-                Desciption = { CustomField = availableCustomField.First(x => x.Name == "Description") }
+                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };
 
             if (viewModel.TimeOfIncident.Value == null)
@@ -272,7 +272,7 @@
             {
                 AddCustomFieldValue(null, viewModel.ReportBy.CustomFieldId, viewModel.ReportBy.Value, viewModel.Ticket.TicketId);
                 AddCustomFieldValue(null, viewModel.TimeOfIncident.CustomFieldId, viewModel.TimeOfIncident.Value, viewModel.Ticket.TicketId);
-                AddCustomFieldValue(null, viewModel.Desciption.CustomFieldId, viewModel.Desciption.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.Description.CustomFieldId, viewModel.Description.Value, viewModel.Ticket.TicketId);
 
                 await Context.SaveChangesAsync().ConfigureAwait(false);
 
@@ -338,6 +338,21 @@
             await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
             return View(viewModel);
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [Route("new-network")]
+        public ActionResult NewNetworkTicket()
+        {
+            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Network);
+
+            var viewModel = new NewNetworkTicketViewModel
+            {
+                TempId = Guid.NewGuid(),
+                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
+            };
+
+            return View("NewNetworkTicket", viewModel);
         }
 
         [Route("ticket-details")]

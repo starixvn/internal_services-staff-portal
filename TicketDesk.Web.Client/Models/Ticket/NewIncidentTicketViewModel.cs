@@ -28,7 +28,7 @@
 
         public CustomFieldValue TimeOfIncident { get; set; }
 
-        public CustomFieldValue Desciption { get; set; }
+        public CustomFieldValue Description { get; set; }
 
         [Required]
         public string SelectedReportByValue { get; set; }
@@ -38,7 +38,7 @@
             Ticket = new Ticket();
             ReportBy = new CustomFieldValue();
             TimeOfIncident = new CustomFieldValue();
-            Desciption = new CustomFieldValue();
+            Description = new CustomFieldValue();
         }
     }
 }
