@@ -2519,10 +2519,6 @@
     <EmbeddedResource Include="App_GlobalResources\Resources.resx" />
     <Content Include="App_GlobalResources\Resources.vi-VN.resx">
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\Resources.vi-VN.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Resources.vi-VN.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <PropertyGroup>
