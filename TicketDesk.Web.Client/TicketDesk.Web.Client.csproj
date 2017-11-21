@@ -2320,7 +2320,6 @@
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Shared\_QuickSearch.cshtml" />
     <Content Include="Views\Ticket\Index.cshtml" />
-
     <Content Include="Views\TicketActivity\_AddComment.cshtml" />
     <Content Include="Views\TicketActivity\_ActivityButtons.cshtml" />
     <Content Include="Views\TicketActivity\_ModifyAttachments.cshtml" />
@@ -2516,10 +2515,14 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="App_GlobalResources\Resources.resx" />
-    <Content Include="App_GlobalResources\Resources.vi-VN.resx">
-      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
-    </Content>
+    <EmbeddedResource Include="App_GlobalResources\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_GlobalResources\Resources.vi-VN.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.vi-VN.designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
