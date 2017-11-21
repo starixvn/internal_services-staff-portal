@@ -490,7 +490,7 @@ tr.header {
             display: table;
             .text {
                 display: table-cell;
-                vertical-align: middle;                
+                vertical-align: middle;
             }
         }*/ }
     .form-content .attach-file .key {
@@ -547,6 +547,11 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   .facility-form .fullwidth.input-area textarea {
     height: 100%;
     margin-bottom: 0; }
+
+.form-content input[type="text"] {
+  height: 40px;
+  width: 100%;
+  padding: 0 12px; }
 
 .feedback-form {
   /*.attach-file .fullwidth {
