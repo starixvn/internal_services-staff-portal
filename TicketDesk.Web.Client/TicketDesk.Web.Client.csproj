@@ -367,7 +367,7 @@
     <Compile Include="App_GlobalResources\Resources.vi-VN.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>Resources.vi-VN.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\Startup.Insights.cs" />
