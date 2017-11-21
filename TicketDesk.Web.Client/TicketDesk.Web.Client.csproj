@@ -367,7 +367,7 @@
     <Compile Include="App_GlobalResources\Resources.vi-VN.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.vi-VN.resx</DependentUpon>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\Startup.Insights.cs" />
@@ -2520,7 +2520,7 @@
       <LastGenOutput>Resources.designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="App_GlobalResources\Resources.vi-VN.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Resources.vi-VN.designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
