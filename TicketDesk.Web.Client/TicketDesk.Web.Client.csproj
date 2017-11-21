@@ -359,15 +359,15 @@
     <Compile Include="..\GlobalSuppressions.cs">
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
+    <Compile Include="App_GlobalResources\Resources.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Resources.vi-VN.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.vi-VN.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Resources1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\Startup.Insights.cs" />
@@ -2233,20 +2233,14 @@
     <Content Include="src\js\filevalidation.js" />
     <Content Include="src\js\page.js" />
     <Content Include="src\libs\animatecss\animate.min.css" />
-    <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-datetimepicker.min.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap-theme.min.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.css" />
     <Content Include="src\libs\bootstrap-3.3.7\css\bootstrap.min.css" />
     <Content Include="src\libs\bootstrap-3.3.7\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap-datetimepicker.min.js" />
     <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap.js" />
     <Content Include="src\libs\bootstrap-3.3.7\js\bootstrap.min.js" />
     <Content Include="src\libs\bootstrap-3.3.7\js\npm.js" />
-    <Content Include="src\libs\bootstrap-datetimepicker\css\bootstrap-datetimepicker-standalone.css" />
-    <Content Include="src\libs\bootstrap-datetimepicker\css\bootstrap-datetimepicker.css" />
-    <Content Include="src\libs\bootstrap-datetimepicker\css\bootstrap-datetimepicker.min.css" />
-    <Content Include="src\libs\bootstrap-datetimepicker\js\bootstrap-datetimepicker.min.js" />
     <Content Include="src\libs\dropzone\basic.min.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2319,6 +2313,7 @@
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Shared\_QuickSearch.cshtml" />
     <Content Include="Views\Ticket\Index.cshtml" />
+
     <Content Include="Views\TicketActivity\_AddComment.cshtml" />
     <Content Include="Views\TicketActivity\_ActivityButtons.cshtml" />
     <Content Include="Views\TicketActivity\_ModifyAttachments.cshtml" />
@@ -2383,6 +2378,7 @@
     <Content Include="Views\Ticket\_TicketDescription.cshtml" />
     <Content Include="Views\Ticket\_TicketAttachedFiles.cshtml" />
     <Content Include="Views\Ticket\NewFacilityTicket.cshtml" />
+    <Content Include="Views\Ticket\_TicketFeedbackDetails.cshtml" />
     <Content Include="Views\Ticket\_FeedbackCustomField.cshtml" />
     <Content Include="Views\Ticket\_FacilityTicketDetails.cshtml" />
     <Content Include="Scripts\jquery-2.2.2.min.map" />
@@ -2513,14 +2509,14 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="App_GlobalResources\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+    <EmbeddedResource Include="App_GlobalResources\Resources.resx" />
+    <Content Include="App_GlobalResources\Resources.vi-VN.resx">
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="App_GlobalResources\Resources.vi-VN.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Resources.vi-VN.designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

@@ -359,6 +359,19 @@
     <Compile Include="..\GlobalSuppressions.cs">
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
+<<<<<<< HEAD
+    <Compile Include="App_GlobalResources\Resources.vi-VN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.vi-VN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Resources1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+=======
+>>>>>>> #000 - style for announcement detail page
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\Startup.Insights.cs" />
     <Compile Include="App_Start\Startup.PushNotifications.cs" />
@@ -376,6 +389,7 @@
     <Compile Include="Controllers\EmailTestController.cs" />
     <Compile Include="Controllers\FileManagerController.cs" />
     <Compile Include="Controllers\IdUploaderController.cs" />
+    <Compile Include="Controllers\LanguageSettingController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Controllers\ProjectSettingsController.cs" />
     <Compile Include="Controllers\PushNotificationSettingsController.cs" />
@@ -456,6 +470,7 @@
     <Compile Include="Models\IdUploaderViewModel.cs" />
     <Compile Include="Models\NavbarViewModel.cs" />
     <Compile Include="Models\ProjectListViewModel.cs" />
+    <Compile Include="Models\Settings\LanguageSettingsViewModel.cs" />
     <Compile Include="Models\SystemInfoViewModel.cs" />
     <Compile Include="Models\TicketCenterListViewModel.cs" />
     <Compile Include="Models\TicketEmail.cs" />
@@ -541,7 +556,6 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="manifest.json" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\filesystem-precompiled-release.pubxml" />
     <None Include="Properties\PublishProfiles\SSP.pubxml" />
@@ -2346,7 +2360,6 @@
     <Content Include="Views\ProjectSettings\New.cshtml" />
     <Content Include="Views\Shared\_ProjectMenu.cshtml" />
     <Content Include="Views\FirstRunSetup\CheckUpgradeProgress.cshtml" />
-    <Content Include="Views\Shared\_LanguageOptions.cshtml" />
     <Content Include="Scripts\jQueryValidate-locales\jquery.validate_locale_pt-BR.js" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
     <Content Include="Views\Home\AccessDenied.cshtml" />
@@ -2409,11 +2422,9 @@
     </Content>
     <Content Include="Views\Ticket\_HardwareTicketDetail.cshtml" />
     <Content Include="Views\Announcement\Index.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
-=======
->>>>>>> #000 - fix bug UI
+    <Content Include="Views\LanguageSetting\Index.cshtml" />
+    <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -2492,6 +2503,19 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
+<<<<<<< HEAD
+  <ItemGroup>
+    <EmbeddedResource Include="App_GlobalResources\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_GlobalResources\Resources.vi-VN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resources.vi-VN.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+=======
+>>>>>>> #000 - style for announcement detail page
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
