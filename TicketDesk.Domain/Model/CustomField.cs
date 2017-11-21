@@ -11,9 +11,13 @@
 
         public string Name { get; set; }
 
+        public string Name_vi { get; set; }
+
         public int CustomFieldTypeId { get; set; }
 
         public string Values { get; set; }
+
+        public string Values_vi { get; set; }
 
         public bool IsEnabled { get; set; }
 
