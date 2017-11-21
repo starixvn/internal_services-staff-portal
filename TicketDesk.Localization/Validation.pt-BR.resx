@@ -132,4 +132,16 @@
   <data name="InvalidEmail" xml:space="preserve">
     <value>O campo {0} não é um endereço de e-mail válido.</value>
   </data>
+  <data name="InvalidUsername" xml:space="preserve">
+    <value>ERROR: Invalid username.</value>
+  </data>
+  <data name="EmptyPassword" xml:space="preserve">
+    <value>ERROR: O campo da senha está vazio.</value>
+  </data>
+  <data name="EmptyUsername" xml:space="preserve">
+    <value>ERROR: O campo do nome de utilizador está vazio.</value>
+  </data>
+  <data name="InvalidUsernameOrPassword" xml:space="preserve">
+    <value>Nome de usuário ou e-mail  inválido</value>
+  </data>
 </root>

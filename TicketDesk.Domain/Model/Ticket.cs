@@ -7,7 +7,6 @@ namespace TicketDesk.Domain.Model
     using System.Linq;
     using TicketDesk.Localization;
     using TicketDesk.Localization.Domain;
-    using TicketDesk.Localization.Resources;
 
     public class Ticket
     {
