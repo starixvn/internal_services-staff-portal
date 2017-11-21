@@ -355,6 +355,42 @@
             return View("NewNetworkTicket", viewModel);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateOnlyIncomingValues]
+        [ValidateInput(false)]
+        [Route("new-network")]
+        public async Task<ActionResult> NewNetworkTicket(NewNetworkTicketViewModel viewModel)
+        {
+            if (viewModel.Ticket.IsHtml)
+            {
+                viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
+                if (string.IsNullOrEmpty(viewModel.Ticket.Details))
+                {
+                    ModelState.AddModelError("Details", Strings.RequiredField);
+                }
+            }
+
+            viewModel.Ticket.Project = Context.Projects.Find(1);
+            viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Network;
+
+            if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
+            {
+                AddCustomFieldValue(null, viewModel.Description.CustomFieldId, viewModel.Description.Value, viewModel.Ticket.TicketId);
+
+                await Context.SaveChangesAsync().ConfigureAwait(false);
+
+                return Context.SecurityProvider.IsReadTicketCenter
+                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
+                    : RedirectToAction("Index", "Home");
+            }
+
+            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
+
+            return View(viewModel);
+        }
+
         [Route("ticket-details")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketDetails(int ticketId, int? categoryId)
