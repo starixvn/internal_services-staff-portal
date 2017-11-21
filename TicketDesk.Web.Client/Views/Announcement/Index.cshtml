@@ -3,44 +3,48 @@
 @section title{ Announcement }
 @section css
 {
-    <link href="~/src/libs/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/src/libs/datetimepicker/css/datetimepicker.min.css" rel="stylesheet" />
 }
-<div class="announcement-detail form-content">
-    <div class="title">
-        <a href="@Url.Action("Index","Home")" class="btn">Back to dashboard</a>
-        Announcements
-    </div>
-    <div class="content-announcement">
-        <form class="form-inline filter" role="form">
-            <div class="container">
-                <div class='col-md-5'>
-                    <div class="form-group">
-                        <div class='input-group date' id='datetimepicker6'>
-                            <input type='text' class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
+<div class="announcement-detail">
+    <div class="form-content">
+        <div class="title">
+            <a href="@Url.Action("Index","Home")" class="btn">Back to dashboard</a>
+            Announcements
+        </div>
+        <div class="content-announcement">
+            <form class="form-inline filter" role="form">
+                <div class="container">
+                    <div class='col-md-5'>
+                        <div class="form-group">
+                            <label>From</label>
+                            <div class='input-group date' id='datetimepicker6'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-md-5'>
+                        <div class="form-group">
+                            <label>To</label>
+                            <div class='input-group date' id='datetimepicker7'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class='col-md-5'>
-                    <div class="form-group">
-                        <div class='input-group date' id='datetimepicker7'>
-                            <input type='text' class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+    </div>    
 </div>
 @section scripts
 {
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-    <script src="~/src/libs/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/src/libs/datetimepicker/moment.js"></script>
+    <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 
     <script type="text/javascript">
         $(function () {
