@@ -273,4 +273,52 @@
   <data name="Dropzone_Message_MaxFilesExceeded" xml:space="preserve">
     <value>Bạn không thể tải lên tập tin mới nữa</value>
   </data>
+  <data name="Views_IdUploader_Validation_CustomerUserName_Required" xml:space="preserve">
+    <value>Phải có tên đăng nhập của khách hàng</value>
+  </data>
+  <data name="Views_IdUploader_Validation_CustomerName_Regex" xml:space="preserve">
+    <value>Tên khách hàng không được chứa ký tự đặc biệt</value>
+  </data>
+  <data name="Views_IdUploader_Validation_IdNumber_Required" xml:space="preserve">
+    <value>Số ID là cần thiết!</value>
+  </data>
+  <data name="Views_IdUploader_Validation_CustomerName_StringLength" xml:space="preserve">
+    <value>Tên của khách hàng nên không ít hơn 2 và hơn 50 ký tự</value>
+  </data>
+  <data name="Views_IdUploader_Validation_CustomerName_Required" xml:space="preserve">
+    <value>Phải có tên của khách hàng</value>
+  </data>
+  <data name="Views_IdUploader_Validation_CustomerUserName_Regex" xml:space="preserve">
+    <value>Tên đăng nhập của khách hàng không được chứa ký tự đặc biệt</value>
+  </data>
+  <data name="Views_IdUploader_Validation_CustomerUserName_StringLength" xml:space="preserve">
+    <value>Tên đăng nhập của khách hàng nên không ít hơn 2 và nhiều hơn 50 ký tự</value>
+  </data>
+  <data name="Views_IdUploader_Validation_IdNumber_StringLength" xml:space="preserve">
+    <value>Số chứng minh nhân dân không đúng</value>
+  </data>
+  <data name="Views_IdUploader_Validation_IdNumber_Regex" xml:space="preserve">
+    <value>Số chứng minh nhân dân không được chứa chữ</value>
+  </data>
+  <data name="Views_IdUploader_Display_IdNumber" xml:space="preserve">
+    <value>Số chứng minh nhân dân</value>
+  </data>
+  <data name="Views_IdUploader_Display_Remark" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="Views_IdUploader_UploadSuccess" xml:space="preserve">
+    <value>Tải lên thành công</value>
+  </data>
+  <data name="Views_IdUploader_InformationSavedSuccessfully" xml:space="preserve">
+    <value>Thông tin được lưu thành công</value>
+  </data>
+  <data name="Views_IdUploader_Display_CustomerUserName" xml:space="preserve">
+    <value>Tên đăng nhập của khách hàng</value>
+  </data>
+  <data name="Views_IdUploader_Display_CustomerName" xml:space="preserve">
+    <value>Tên của khách hàng</value>
+  </data>
+  <data name="Views_IdUploader_Form_Title" xml:space="preserve">
+    <value>MẪU TẢI LÊN CHỨNG MINH NHÂN DÂN</value>
+  </data>
 </root>

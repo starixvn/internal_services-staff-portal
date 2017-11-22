@@ -1,4 +1,5 @@
-﻿@model TicketDesk.Web.Client.Models.IdUploaderViewModel
+﻿@using TicketDesk.Localization.Client
+@model TicketDesk.Web.Client.Models.IdUploaderViewModel
 
 @section title { ID Uploader }
 
@@ -33,13 +34,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Upload Success</h4>
+                <h4 class="modal-title">@Resources.Views_IdUploader_UploadSuccess</h4>
             </div>
             <div class="modal-body">
-                <p>Information saved successfully</p>
+                <p>@Resources.Views_IdUploader_InformationSavedSuccessfully</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">@Resources.Dropzone_Modal_Close</button>
             </div>
         </div>
 
@@ -52,7 +53,7 @@
     @Html.HiddenFor(x => x.TempId)
 
     <div class="form-content feedback-form">
-        <div class="title">ID UPLOADER FORM</div>
+        <div class="title">@Resources.Views_IdUploader_Form_Title</div>
         <div class="item-list item">
             @Html.LabelFor(x => x.CustomerUserName, new { @class = "key fullwidth border" })
             <div class="fullwidth">
@@ -82,5 +83,5 @@
         </div>
         @Html.Partial("_DropzoneView", Model)
     </div>
-    <input type="submit" class="btn btn-primary btn-send" value="Send" />
+    <input type="submit" class="btn btn-primary btn-send" value="@Resources.Common_Form_Send" />
 }

@@ -273,4 +273,52 @@
   <data name="Dropzone_Message_MaxFilesExceeded" xml:space="preserve">
     <value>You can not upload any more files.</value>
   </data>
+  <data name="Views_IdUploader_UploadSuccess" xml:space="preserve">
+    <value>Upload Success</value>
+  </data>
+  <data name="Views_IdUploader_InformationSavedSuccessfully" xml:space="preserve">
+    <value>Information saved successfully</value>
+  </data>
+  <data name="Views_IdUploader_Validation_CustomerUserName_Required" xml:space="preserve">
+    <value>Customer Username is required!</value>
+  </data>
+  <data name="Views_IdUploader_Validation_CustomerUserName_StringLength" xml:space="preserve">
+    <value>Customer Username should not less than 2 and more than 50 characters</value>
+  </data>
+  <data name="Views_IdUploader_Validation_CustomerUserName_Regex" xml:space="preserve">
+    <value>Customer Username should not contains special characters</value>
+  </data>
+  <data name="Views_IdUploader_Validation_CustomerName_Required" xml:space="preserve">
+    <value>Customer's Name is required!</value>
+  </data>
+  <data name="Views_IdUploader_Validation_CustomerName_StringLength" xml:space="preserve">
+    <value>Customer's Name should not less than 2 and more than 50 characters</value>
+  </data>
+  <data name="Views_IdUploader_Validation_CustomerName_Regex" xml:space="preserve">
+    <value>Customer's Name should not contains special characters</value>
+  </data>
+  <data name="Views_IdUploader_Validation_IdNumber_Required" xml:space="preserve">
+    <value>ID Number is required!</value>
+  </data>
+  <data name="Views_IdUploader_Validation_IdNumber_StringLength" xml:space="preserve">
+    <value>ID Number is not correct</value>
+  </data>
+  <data name="Views_IdUploader_Validation_IdNumber_Regex" xml:space="preserve">
+    <value>ID Number should not contains any character</value>
+  </data>
+  <data name="Views_IdUploader_Display_CustomerUserName" xml:space="preserve">
+    <value>Customer's Username</value>
+  </data>
+  <data name="Views_IdUploader_Display_CustomerName" xml:space="preserve">
+    <value>Customer's Name</value>
+  </data>
+  <data name="Views_IdUploader_Display_IdNumber" xml:space="preserve">
+    <value>Id number</value>
+  </data>
+  <data name="Views_IdUploader_Display_Remark" xml:space="preserve">
+    <value>Remark</value>
+  </data>
+  <data name="Views_IdUploader_Form_Title" xml:space="preserve">
+    <value>ID UPLOADER FORM</value>
+  </data>
 </root>

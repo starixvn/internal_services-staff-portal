@@ -439,6 +439,150 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer&apos;s Name.
+        /// </summary>
+        public static string Views_IdUploader_Display_CustomerName {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Display_CustomerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer&apos;s Username.
+        /// </summary>
+        public static string Views_IdUploader_Display_CustomerUserName {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Display_CustomerUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id number.
+        /// </summary>
+        public static string Views_IdUploader_Display_IdNumber {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Display_IdNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remark.
+        /// </summary>
+        public static string Views_IdUploader_Display_Remark {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Display_Remark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID UPLOADER FORM.
+        /// </summary>
+        public static string Views_IdUploader_Form_Title {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Form_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information saved successfully.
+        /// </summary>
+        public static string Views_IdUploader_InformationSavedSuccessfully {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_InformationSavedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Success.
+        /// </summary>
+        public static string Views_IdUploader_UploadSuccess {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_UploadSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer&apos;s Name should not contains special characters.
+        /// </summary>
+        public static string Views_IdUploader_Validation_CustomerName_Regex {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Validation_CustomerName_Regex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer&apos;s Name is required!.
+        /// </summary>
+        public static string Views_IdUploader_Validation_CustomerName_Required {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Validation_CustomerName_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer&apos;s Name should not less than 2 and more than 50 characters.
+        /// </summary>
+        public static string Views_IdUploader_Validation_CustomerName_StringLength {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Validation_CustomerName_StringLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Username should not contains special characters.
+        /// </summary>
+        public static string Views_IdUploader_Validation_CustomerUserName_Regex {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Validation_CustomerUserName_Regex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Username is required!.
+        /// </summary>
+        public static string Views_IdUploader_Validation_CustomerUserName_Required {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Validation_CustomerUserName_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Username should not less than 2 and more than 50 characters.
+        /// </summary>
+        public static string Views_IdUploader_Validation_CustomerUserName_StringLength {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Validation_CustomerUserName_StringLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID Number should not contains any character.
+        /// </summary>
+        public static string Views_IdUploader_Validation_IdNumber_Regex {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Validation_IdNumber_Regex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID Number is required!.
+        /// </summary>
+        public static string Views_IdUploader_Validation_IdNumber_Required {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Validation_IdNumber_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID Number is not correct.
+        /// </summary>
+        public static string Views_IdUploader_Validation_IdNumber_StringLength {
+            get {
+                return ResourceManager.GetString("Views_IdUploader_Validation_IdNumber_StringLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Ticket.
         /// </summary>
         public static string Views_Ticket_Index_NewTicket {
