@@ -41,7 +41,7 @@
             var textToShow = text;
 
             var culture = getCookie("_culture");
-            if (culture !== "en-US") {
+            if (culture !== "en-US" && vietnameseText !== undefined) {
                 textToShow = vietnameseText;
             }
 
@@ -141,23 +141,22 @@
         }
     }
 
-    Dropzone.prototype.defaultOptions.dictDefaultMessage = "@Html.Raw(Resources.Dropzone_Message_Default)";
-    Dropzone.prototype.defaultOptions.dictFallbackMessage = "@Html.Raw(Resources.Dropzone_Message_Fallback)";
-    Dropzone.prototype.defaultOptions.dictFallbackText = "@Html.Raw(Resources.Dropzone_Message_FallbackText)";
-    Dropzone.prototype.defaultOptions.dictFileTooBig = "@Html.Raw(Resources.Dropzone_Message_FileTooBig)";
-    Dropzone.prototype.defaultOptions.dictInvalidFileType = "@Html.Raw(Resources.Dropzone_Message_InvalidFileType)";
-    Dropzone.prototype.defaultOptions.dictResponseError = "@Html.Raw(Resources.Dropzone_Message_ResponseError)";
-    Dropzone.prototype.defaultOptions.dictCancelUpload = "@Html.Raw(Resources.Dropzone_Message_CancelUpload)";
-    Dropzone.prototype.defaultOptions.dictCancelUploadConfirmation = "@Html.Raw(Resources.Dropzone_Message_CancelUploadConfirmation)";
-    Dropzone.prototype.defaultOptions.dictRemoveFile = "@Html.Raw(Resources.Dropzone_Message_RemoveFile)";
-    Dropzone.prototype.defaultOptions.dictMaxFilesExceeded = "@Html.Raw(Resources.Dropzone_Message_MaxFilesExceeded)";
-
     Dropzone.autoDiscover = false;
 
     var isRequeueing = false;
 
     var ticketDeskDropzone = new Dropzone("#add-file-btn",
         {
+            dictDefaultMessage: "@Html.Raw(Resources.Dropzone_Message_Default)",
+            dictFallbackMessage: "@Html.Raw(Resources.Dropzone_Message_Fallback)",
+            dictFallbackText: "@Html.Raw(Resources.Dropzone_Message_FallbackText)",
+            dictFileTooBig: "@Html.Raw(Resources.Dropzone_Message_FileTooBig)",
+            dictInvalidFileType: "@Html.Raw(Resources.Dropzone_Message_InvalidFileType)",
+            dictResponseError: "@Html.Raw(Resources.Dropzone_Message_ResponseError)",
+            dictCancelUpload: "@Html.Raw(Resources.Dropzone_Message_CancelUpload)",
+            dictCancelUploadConfirmation: "@Html.Raw(Resources.Dropzone_Message_CancelUploadConfirmation)",
+            dictRemoveFile: "@Html.Raw(Resources.Dropzone_Message_RemoveFile)",
+            dictMaxFilesExceeded: "@Html.Raw(Resources.Dropzone_Message_MaxFilesExceeded)",
             url: '@Url.Action("Upload", "File", new { tempId = Model.TempId })',
             uploadMultiple: true,
             parallelUploads: 1,
