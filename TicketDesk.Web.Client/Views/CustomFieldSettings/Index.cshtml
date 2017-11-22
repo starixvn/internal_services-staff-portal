@@ -33,7 +33,9 @@
                 @*<th>Category</th>*@
                 <th>Type</th>
                 <th>Name</th>
+                <th>Name VI</th>
                 <th>Value</th>
+                <th>Value VI</th>
                 <th>Enabled</th>
                 <th>Display Order</th>
                 <th>Command</th>
@@ -51,6 +53,7 @@
                     </td>*@
                     <td>@item.CustomFieldType.Name</td>
                     <td>@item.Name</td>
+                    <td>@item.Name_vi</td>
                     <td>
                         @if (item.Values != null && item.Values.Contains("\r\n"))
                         {
@@ -64,6 +67,21 @@
                         else
                         {
                             @item.Values
+                        }
+                    </td>
+                    <td>
+                        @if (item.Values_vi != null && item.Values_vi.Contains("\r\n"))
+                        {
+                            var values = Regex.Split(item.Values_vi, "\r\n");
+                            foreach (var val in values)
+                            {
+                                <span>@val</span>
+                                <br />
+                            }
+                        }
+                        else
+                        {
+                            @item.Values_vi
                         }
                     </td>
                     <td>

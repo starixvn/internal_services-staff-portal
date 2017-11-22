@@ -19,8 +19,14 @@
         [Display(Name = "Name")]
         public string Name { get; set; }
 
+        [Display(Name = "Name VI")]
+        public string Name_vi { get; set; }
+
         [Display(Name = "Values")]
         public string Values { get; set; }
+
+        [Display(Name = "Values_vi")]
+        public string Values_vi { get; set; }
 
         [Display(Name = "Is Enabled")]
         public bool IsEnabled { get; set; }

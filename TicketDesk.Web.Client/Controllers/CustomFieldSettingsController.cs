@@ -80,8 +80,10 @@
             CustomField customField = new CustomField
             {
                 Name = viewModel.Name,
+                Name_vi = viewModel.Name_vi,
                 CustomFieldTypeId = viewModel.CustomFieldTypeId,
-                Values = viewModel.Values
+                Values = viewModel.Values,
+                Values_vi = viewModel.Values_vi
             };
 
             _domainContext.CustomFields.Add(customField);
@@ -124,7 +126,9 @@
                         Selected = categoriesHaveCustomField.Contains(x.CategoryId)
                     })),
                 Name = customField.Name,
+                Name_vi = customField.Name_vi,
                 Values = customField.Values,
+                Values_vi = customField.Values_vi,
                 DisplayOrder = customField.DisplayOrder,
                 IsEnabled = customField.IsEnabled,
                 CustomFieldTypeId = customField.CustomFieldTypeId
@@ -141,6 +145,8 @@
             var customField = _domainContext.CustomFields.First(x => x.Id == viewModel.Id);
 
             customField.Name = viewModel.Name;
+            customField.Name_vi = viewModel.Name_vi;
+            customField.Values_vi = viewModel.Values_vi;
             customField.Values = viewModel.Values;
             customField.DisplayOrder = viewModel.DisplayOrder;
             customField.IsEnabled = viewModel.IsEnabled;

@@ -31,8 +31,18 @@
     </div>
 
     <div class="input-group">
+        @Html.LabelFor(x => x.Name_vi)
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+    </div>
+
+    <div class="input-group">
         @Html.LabelFor(x => x.Values)
         @Html.TextAreaFor(x => x.Values, new { @class = "form-control" })
+    </div>
+
+    <div class="input-group">
+        @Html.LabelFor(x => x.Values_vi)
+        @Html.TextAreaFor(x => x.Values_vi, new { @class = "form-control" })
     </div>
 
     <div class="input-group">
