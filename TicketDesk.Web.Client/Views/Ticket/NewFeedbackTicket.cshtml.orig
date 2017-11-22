@@ -1,0 +1,78 @@
+﻿@using TicketDesk.Localization.Client
+@using TicketDesk.Localization.Views.Ticket
+@using TicketDesk.Web.Client.Infrastructure.Helpers
+
+@model TicketDesk.Web.Client.Models.Ticket.NewFeedbackTicketViewModel
+
+@section title { @New.Title }
+
+@section css
+{
+    <link href="~/src/libs/dropzone/dropzone.min.css" rel="stylesheet" />
+    <link href="~/src/css/custom-dropzone.css" rel="stylesheet" />
+}
+
+@section scripts
+{
+    @Html.Partial("_DropzoneScripts", Model)
+
+    <script src="~/src/js/formhandler.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            InitFormHandler("ticket-form", true);
+        });
+    </script>
+}
+
+@using (Html.BeginForm("NewFeedbackTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form filechange", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Ticket.IsHtml)
+    @Html.HiddenFor(model => model.TempId)
+    @Html.HiddenFor(model => model.SelectedFeedbackByValue, new { @class = "required-radio-value" })
+
+    <div class="form-content feedback-form">
+<<<<<<< HEAD
+        <div class="title">@Resources.Views_Ticket_NewFeedbackTicket_Title</div>
+        @Html.CustomFieldLabelFor(x => x.FeedbackBy, new { @class = "key border" })
+=======
+        <div class="title">FEEDBACK FORM</div>
+        <div class="key border">@Model.FeedbackBy.CustomField.Name</div>
+>>>>>>> 000 - update language transfer
+        <div class="value span-3 border">
+            <div class="radio-group">
+                @Html.HiddenFor(x => x.FeedbackBy.CustomFieldId, new { Value = Model.FeedbackBy.CustomField.Id })
+                @foreach (string feedbackByValue in Model.FeedbackByValues)
+                {
+                    var rdId = "rd-" + feedbackByValue.Replace(' ', '_');
+
+                    <p>
+                        @Html.RadioButtonFor(x => x.FeedbackBy.Value, feedbackByValue, new { id = rdId, @class = "required-radio" })
+                        <label for="@rdId">@feedbackByValue</label>
+                    </p>
+                }
+            </div>
+        </div>
+        <div class="item-list item">
+            @Html.LabelFor(x => x.Ticket.Title, new { @class = "key fullwidth border" })
+            <div class="fullwidth">
+                @Html.TextBoxFor(x => x.Ticket.Title)
+            </div>
+        </div>
+        <div class="item-list item">
+            @Html.CustomFieldLabelFor(x => x.CustomerName, new { @class = "key fullwidth" })
+            <div class="fullwidth">
+                @Html.CustomFieldFor(x => x.CustomerName)
+            </div>
+        </div>
+        <div class="item-list item">
+            @Html.CustomFieldLabelFor(x => x.Feedback, new { @class = "key fullwidth" })
+            <div class="fullwidth">
+                @Html.CustomFieldFor(x => x.Feedback)
+            </div>
+        </div>
+        @Html.Partial("_DropzoneView", Model)
+    </div>
+    <input type="submit" class="btn btn-primary btn-send" value="@Resources.Common_Form_Send" />
+}
