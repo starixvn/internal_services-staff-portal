@@ -359,7 +359,6 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
-        [ValidateInput(false)]
         [Route("new-network")]
         public async Task<ActionResult> NewNetworkTicket(NewNetworkTicketViewModel viewModel)
         {
