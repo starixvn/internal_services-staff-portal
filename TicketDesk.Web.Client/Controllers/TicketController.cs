@@ -16,6 +16,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Localization.Client;
 
     [RoutePrefix("ticket")]
     [Route("{action=index}")]
@@ -85,6 +86,7 @@
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewBag.Title = Resources.Views_Ticket_Index_NewTicket;
             var items = GetIndexSubMenuItems();
 
             return View("_SubmenuNavigation", items);

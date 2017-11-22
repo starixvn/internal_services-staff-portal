@@ -177,7 +177,61 @@
   <data name="Domain_Model_Ticket_Title" xml:space="preserve">
     <value>Title</value>
   </data>
-  <data name="View_UserSignIn_Username" xml:space="preserve">
+  <data name="Views_User_SignIn_Username" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="Common_App_Title" xml:space="preserve">
+    <value>Services &amp; Staffs Portal</value>
+  </data>
+  <data name="Views_Home_Index_MyOpenningIssue" xml:space="preserve">
+    <value>My opening issue</value>
+  </data>
+  <data name="Views_Home_Index_NoTicket" xml:space="preserve">
+    <value>No tickets to display</value>
+  </data>
+  <data name="Views_Home_Index_Annoucements" xml:space="preserve">
+    <value>Announcements</value>
+  </data>
+  <data name="Domain_Model_Ticket_CreatedDate" xml:space="preserve">
+    <value>Created Date</value>
+  </data>
+  <data name="Domain_Model_Ticket_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Common_Table_Pagination_DisplayingText" xml:space="preserve">
+    <value>Displaying {0} to {1} of {2} item(s)</value>
+  </data>
+  <data name="Views_Home_AccessDenied_Title" xml:space="preserve">
+    <value>OOOH! 403, ACCESS DENIED</value>
+  </data>
+  <data name="Views_Home_AccessDenied_Info" xml:space="preserve">
+    <value>Sorry about that, but you don't have permission to access this page</value>
+  </data>
+  <data name="Views_Home_AccessDenied_Action" xml:space="preserve">
+    <value>Fortunately, you can go back to</value>
+  </data>
+  <data name="Views_Home_AccessDenied_ActionText" xml:space="preserve">
+    <value>Take me back to home</value>
+  </data>
+  <data name="Views_Home_Annoucement_More" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="Views_Home_Error_Title" xml:space="preserve">
+    <value>Internal Server Error</value>
+  </data>
+  <data name="Views_Home_Error_Text" xml:space="preserve">
+    <value>Oh dear, it looks like something went wrong</value>
+  </data>
+  <data name="Views_Home_Error_Text2" xml:space="preserve">
+    <value>We'll take a look at that shortly</value>
+  </data>
+  <data name="Views_Home_NotFound_Text" xml:space="preserve">
+    <value>The page you were looking for doesn't exist</value>
+  </data>
+  <data name="Common_Table_Pagination_PageSize" xml:space="preserve">
+    <value>Page size</value>
+  </data>
+  <data name="Views_Ticket_Index_NewTicket" xml:space="preserve">
+    <value>New Ticket</value>
   </data>
 </root>

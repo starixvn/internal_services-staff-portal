@@ -1,5 +1,6 @@
-﻿@model TicketDesk.Web.Client.Models.Home.Pagination
-    
+﻿@using TicketDesk.Localization.Client
+@model TicketDesk.Web.Client.Models.Home.Pagination
+
 <div class="page-size">
     <label class="">@Html.DisplayNameFor(x => x.ItemPerPage)</label>
     <div class="custom-dropdown">
@@ -40,4 +41,4 @@
     }
 </ul>
 
-<p class="display-item">Displaying @Model.FromItemIndex to @Model.ToItemIndex of @Model.TotalItem item(s)</p>
+<p class="display-item">@string.Format(Resources.Common_Table_Pagination_DisplayingText, Model.FromItemIndex, Model.ToItemIndex, Model.TotalItem)</p>

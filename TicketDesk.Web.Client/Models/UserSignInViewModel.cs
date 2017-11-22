@@ -7,7 +7,7 @@
     public class UserSignInViewModel
     {
         [Required]
-        [Display(ResourceType = typeof(Resources), Name = "View_UserSignIn_Username")]
+        [Display(ResourceType = typeof(Resources), Name = "Views_User_SignIn_Username")]
         public string Email { get; set; }
         
         [Required]

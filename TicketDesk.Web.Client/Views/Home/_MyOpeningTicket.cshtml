@@ -1,12 +1,13 @@
-﻿@model TicketDesk.Web.Client.Models.Home.MyOpenningIssues
+﻿@using TicketDesk.Localization.Client
+@model TicketDesk.Web.Client.Models.Home.MyOpenningIssues
 
 <table class="table table-bordered table-hover" id="home-myopenning-tickets">
     <thead>
     <tr>
         <th class="text-center width-80">#</th>
-        <th>Subject</th>
-        <th class="text-center width-150">Created Date</th>
-        <th class="text-center width-150">Status</th>
+        <th>@Resources.Domain_Model_Ticket_Title</th>
+        <th class="text-center width-150">@Resources.Domain_Model_Ticket_CreatedDate</th>
+        <th class="text-center width-150">@Resources.Domain_Model_Ticket_Status</th>
     </tr>
     </thead>
     <tbody>

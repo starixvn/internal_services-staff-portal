@@ -4,8 +4,10 @@
     using Domain.Model;
     using System;
     using System.Linq.Expressions;
+    using System.Reflection;
     using System.Text;
     using System.Text.RegularExpressions;
+    using System.Threading;
     using System.Web.Mvc;
 
     public static class CustomFieldForHelper
@@ -70,7 +72,9 @@
 
             TagBuilder label = new TagBuilder("label");
             label.Attributes.Add("for", htmlFieldName + ".Value");
-            label.SetInnerText(customFieldValue?.CustomField.Name);
+
+            string innerText = GetMultiligualStringOfCustomField(customFieldValue);
+            label.SetInnerText(innerText);
 
             if (htmlAttributes != null)
             {
@@ -81,25 +85,37 @@
             return new MvcHtmlString(label.ToString());
         }
 
-        public static MvcHtmlString CustomFieldLabelWithGuidIndexFor(
-            this HtmlHelper html,
-            CustomField customField,
-            string guid,
-            string parentName,
-            object htmlAttributes = null)
+        private static string GetMultiligualStringOfCustomField(CustomFieldValue customFieldValue)
         {
-            TagBuilder label = new TagBuilder("label");
-            label.Attributes.Add("for", parentName + "[" + guid + "].customfield_" + customField.Id);
-            label.SetInnerText(customField.Name);
-
-            if (htmlAttributes != null)
+            string languageSuffix = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+            if (languageSuffix != "en")
             {
-                var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
-                label.MergeAttributes(attributes);
+                PropertyInfo propertyInfo = typeof(CustomField).GetProperty("Name_" + languageSuffix);
+                return propertyInfo?.GetValue(customFieldValue?.CustomField, null).ToString();
             }
 
-            return new MvcHtmlString(label.ToString());
+            return customFieldValue?.CustomField.Name;
         }
+
+        ////public static MvcHtmlString CustomFieldLabelWithGuidIndexFor(
+        ////    this HtmlHelper html,
+        ////    CustomField customField,
+        ////    string guid,
+        ////    string parentName,
+        ////    object htmlAttributes = null)
+        ////{
+        ////    TagBuilder label = new TagBuilder("label");
+        ////    label.Attributes.Add("for", parentName + "[" + guid + "].customfield_" + customField.Id);
+        ////    label.SetInnerText(customField.Name);
+
+        ////    if (htmlAttributes != null)
+        ////    {
+        ////        var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+        ////        label.MergeAttributes(attributes);
+        ////    }
+
+        ////    return new MvcHtmlString(label.ToString());
+        ////}
 
         public static MvcHtmlString CustomFieldLabelWithGuidIndexFor<TModel, TValue>(
             this HtmlHelper<TModel> html,
@@ -115,7 +131,9 @@
             label.Attributes.Add("for", parentName + "[" + guid + "]." + htmlFieldName);
             if (customFieldValue != null)
             {
-                label.SetInnerText(customFieldValue.CustomField.Name);
+                string innerText = GetMultiligualStringOfCustomField(customFieldValue);
+                label.SetInnerText(innerText);
+                ////label.SetInnerText(customFieldValue.CustomField.Name);
             }
 
             if (htmlAttributes != null)

@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
+    using Localization.Client;
 
     public class Pagination
     {
@@ -15,14 +16,14 @@
         /// If current page = 1 (first page) => From item 1
         /// If current page = 2 and ItemPerPage = 20 => From item 21
         /// </summary>
-        public virtual int FromItemIndex => CurrentPage == 1 ? 1 : ((CurrentPage - 1) * ItemPerPage) + 1;
+        public int FromItemIndex => CurrentPage == 1 ? 1 : ((CurrentPage - 1) * ItemPerPage) + 1;
 
-        public virtual int ToItemIndex => CurrentPage != TotalPage ? ItemPerPage * CurrentPage : TotalItem;
+        public int ToItemIndex => CurrentPage != TotalPage ? ItemPerPage * CurrentPage : TotalItem;
 
-        [Display(Name = "Page size")]
+        [Display(ResourceType = typeof(Resources), Name = "Common_Table_Pagination_PageSize")]
         public int ItemPerPage { get; set; }
 
-        public virtual IEnumerable<SelectListItem> ItemPerPageList
+        public IEnumerable<SelectListItem> ItemPerPageList
         {
             get
             {
@@ -55,7 +56,7 @@
 
         public int TotalItem { get; set; }
 
-        public virtual int TotalPage => TotalItem % ItemPerPage > 0
+        public int TotalPage => TotalItem % ItemPerPage > 0
             ? (TotalItem / ItemPerPage) + 1
             : TotalItem / ItemPerPage;
 

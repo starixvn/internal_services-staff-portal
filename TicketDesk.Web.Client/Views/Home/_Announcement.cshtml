@@ -1,4 +1,5 @@
-﻿<table class="table table-bordered tbl-announcement">
+﻿@using TicketDesk.Localization.Client
+<table class="table table-bordered tbl-announcement">
     <tbody>
         <tr class="header">
             <td colspan="2">10/3/2017</td>
@@ -28,6 +29,4 @@
         </tr>
     </tbody>
 </table>
-<a class="btn btn-default btn-more rippler rippler-default" href="@Url.Action("Index","Announcement")">More</a>
-
-
+<a class="btn btn-default btn-more rippler rippler-default" href="@Url.Action("Index","Announcement")">@Resources.Views_Home_Annoucement_More</a>

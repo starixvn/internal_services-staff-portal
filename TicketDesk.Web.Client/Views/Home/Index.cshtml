@@ -1,6 +1,7 @@
-﻿@model TicketDesk.Web.Client.Models.Home.HomeViewModel
+﻿@using TicketDesk.Localization.Client
+@model TicketDesk.Web.Client.Models.Home.HomeViewModel
 
-@section title{ Services & Staffs Portal }
+@section title{ @Resources.Common_App_Title }
 
 @section scripts
 {
@@ -26,7 +27,7 @@
 }
 
 <div class="panel feature">
-    <div class="panel-heading text-info">My openning issue</div>
+    <div class="panel-heading text-info">@Resources.Views_Home_Index_MyOpenningIssue</div>
     <div class="panel-body">
         @if (Model.MyOpenningIssues.TicketGroups.Any())
         {
@@ -34,14 +35,14 @@
         }
         else
         {
-            <p>No tickets to display</p>
+            <p>@Resources.Views_Home_Index_NoTicket</p>
         }
     </div>
 </div>
 
 
 <div class="panel feature">
-    <div class="panel-heading text-info">Announcements</div>
+    <div class="panel-heading text-info">@Resources.Views_Home_Index_Annoucements</div>
     <div class="panel-body">
         @Html.Partial("_Announcement")
     </div>

@@ -61,11 +61,56 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Services &amp; Staffs Portal.
+        /// </summary>
+        public static string Common_App_Title {
+            get {
+                return ResourceManager.GetString("Common_App_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send.
         /// </summary>
         public static string Common_Form_Send {
             get {
                 return ResourceManager.GetString("Common_Form_Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Displaying {0} to {1} of {2} item(s).
+        /// </summary>
+        public static string Common_Table_Pagination_DisplayingText {
+            get {
+                return ResourceManager.GetString("Common_Table_Pagination_DisplayingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page size.
+        /// </summary>
+        public static string Common_Table_Pagination_PageSize {
+            get {
+                return ResourceManager.GetString("Common_Table_Pagination_PageSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created Date.
+        /// </summary>
+        public static string Domain_Model_Ticket_CreatedDate {
+            get {
+                return ResourceManager.GetString("Domain_Model_Ticket_CreatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Domain_Model_Ticket_Status {
+            get {
+                return ResourceManager.GetString("Domain_Model_Ticket_Status", resourceCulture);
             }
         }
         
@@ -196,11 +241,119 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username.
+        ///   Looks up a localized string similar to Fortunately, you can go back to.
         /// </summary>
-        public static string View_UserSignIn_Username {
+        public static string Views_Home_AccessDenied_Action {
             get {
-                return ResourceManager.GetString("View_UserSignIn_Username", resourceCulture);
+                return ResourceManager.GetString("Views_Home_AccessDenied_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take me back to home.
+        /// </summary>
+        public static string Views_Home_AccessDenied_ActionText {
+            get {
+                return ResourceManager.GetString("Views_Home_AccessDenied_ActionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry about that, but you don&apos;t have permission to access this page.
+        /// </summary>
+        public static string Views_Home_AccessDenied_Info {
+            get {
+                return ResourceManager.GetString("Views_Home_AccessDenied_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OOOH! 403, ACCESS DENIED.
+        /// </summary>
+        public static string Views_Home_AccessDenied_Title {
+            get {
+                return ResourceManager.GetString("Views_Home_AccessDenied_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More.
+        /// </summary>
+        public static string Views_Home_Annoucement_More {
+            get {
+                return ResourceManager.GetString("Views_Home_Annoucement_More", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oh dear, it looks like something went wrong.
+        /// </summary>
+        public static string Views_Home_Error_Text {
+            get {
+                return ResourceManager.GetString("Views_Home_Error_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;ll take a look at that shortly.
+        /// </summary>
+        public static string Views_Home_Error_Text2 {
+            get {
+                return ResourceManager.GetString("Views_Home_Error_Text2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal Server Error.
+        /// </summary>
+        public static string Views_Home_Error_Title {
+            get {
+                return ResourceManager.GetString("Views_Home_Error_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Announcements.
+        /// </summary>
+        public static string Views_Home_Index_Annoucements {
+            get {
+                return ResourceManager.GetString("Views_Home_Index_Annoucements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My opening issue.
+        /// </summary>
+        public static string Views_Home_Index_MyOpenningIssue {
+            get {
+                return ResourceManager.GetString("Views_Home_Index_MyOpenningIssue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No tickets to display.
+        /// </summary>
+        public static string Views_Home_Index_NoTicket {
+            get {
+                return ResourceManager.GetString("Views_Home_Index_NoTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The page you were looking for doesn&apos;t exist.
+        /// </summary>
+        public static string Views_Home_NotFound_Text {
+            get {
+                return ResourceManager.GetString("Views_Home_NotFound_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Ticket.
+        /// </summary>
+        public static string Views_Ticket_Index_NewTicket {
+            get {
+                return ResourceManager.GetString("Views_Ticket_Index_NewTicket", resourceCulture);
             }
         }
         
@@ -246,6 +399,15 @@ namespace TicketDesk.Localization.Client {
         public static string Views_Ticket_NewFacilityTicket_Title {
             get {
                 return ResourceManager.GetString("Views_Ticket_NewFacilityTicket_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string Views_User_SignIn_Username {
+            get {
+                return ResourceManager.GetString("Views_User_SignIn_Username", resourceCulture);
             }
         }
     }

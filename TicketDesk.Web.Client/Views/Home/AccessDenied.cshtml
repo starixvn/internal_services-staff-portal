@@ -1,4 +1,5 @@
-﻿@{
+﻿@using TicketDesk.Localization.Client
+@{
     ViewBag.Title = "AccessDenied";
     Layout = null;
 }
@@ -21,10 +22,10 @@
             <img class="hand" src="~/Content/images/error-assets/hand.png" />
         </div>
 
-        <h2 class="title">OOOH! 403, ACCESS DENIED</h2>
-        <p class="text">Sorry about that, but you don't have permission to access this page</p>
-        <p class="text">Fortunately, you can go back to</p>
-        <a class="cta-button" href="~/"><i class="icon fa fa-arrow-left"></i>Take me back to home</a>
+        <h2 class="title">@Resources.Views_Home_AccessDenied_Title</h2>
+        <p class="text">@Resources.Views_Home_AccessDenied_Info</p>
+        <p class="text">@Resources.Views_Home_AccessDenied_Action</p>
+        <a class="cta-button" href="~/"><i class="icon fa fa-arrow-left"></i>@Resources.Views_Home_AccessDenied_ActionText</a>
     </div>
 </body>
 </html>

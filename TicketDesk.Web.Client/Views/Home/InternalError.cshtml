@@ -1,4 +1,5 @@
-﻿@{
+﻿@using TicketDesk.Localization.Client
+@{
     ViewBag.Title = "InternalError";
     Layout = null;
 }
@@ -23,10 +24,10 @@
         </div>
 
         <h2 class="title margin-bottom-0 big-title">500</h2>
-        <h2 class="title margin-top-0">Internal Server Error</h2>
-        <p class="text margin-bottom-0">Oh dear, it looks like something went wrong</p>
-        <p class="text">We'll take a look at that shortly</p>
-        <a class="cta-button" href="~/"><i class="icon fa fa-arrow-left"></i>Take me back to home</a>
+        <h2 class="title margin-top-0">@Resources.Views_Home_Error_Title</h2>
+        <p class="text margin-bottom-0">@Resources.Views_Home_Error_Text</p>
+        <p class="text">@Resources.Views_Home_Error_Text2</p>
+        <a class="cta-button" href="~/"><i class="icon fa fa-arrow-left"></i>@Resources.Views_Home_AccessDenied_ActionText</a>
     </div>
 </body>
 </html>
