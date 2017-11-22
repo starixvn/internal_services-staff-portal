@@ -208,7 +208,8 @@ body {
     font-weight: 700; }
   .feature .panel-body {
     padding: 10px;
-    color: #333; }
+    color: #333;
+    width: 100%; }
 
 .table table, .table tr, .table td, .table th {
   border: none; }
@@ -666,6 +667,16 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     line-height: 48px;
     border: none;
     box-shadow: 1px 3px 4px #999; }
+  .btn.btn-back {
+    background-color: #bebebe;
+    color: #333;
+    text-transform: initial; }
+    .btn.btn-back:hover:enabled {
+      background: #a5a5a5;
+      transition: all 0.3s ease; }
+    .btn.btn-back[disabled] {
+      opacity: 0.5;
+      color: rgba(51, 51, 51, 0.5); }
 
 .attach-file .key, .attach-file .value.span-3 {
   height: auto;
@@ -1004,6 +1015,33 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 /******************************************* Annoucement Details ***********************************************/
 .announcement-detail {
   flex: 1 100%; }
-  .announcement-detail .filter {
-    margin: 8px 0 18px; }
+
+.filter {
+  margin: 8px 0 18px; }
+  .filter .form-group {
+    margin-right: 32px; }
+    .filter .form-group label {
+      font-weight: 600;
+      margin-right: 8px; }
+  .filter .input-group.date .form-control {
+    width: 150px; }
+  .filter .input-group.date .input-group-addon {
+    background: #fff;
+    border: none; }
+  .filter .input-group.date .icon-calendar {
+    color: #bf141a;
+    font-size: 20px; }
+
+.tbl-announcement-detail tbody tr td:first-child {
+  vertical-align: middle; }
+
+.btn.btn-back {
+  padding: 0 6px 6px 0;
+  margin-right: 8px; }
+  .btn.btn-back [class^="icon-"] {
+    font-size: 24px;
+    font-weight: 700;
+    position: relative;
+    top: 4px;
+    margin-right: 0; }
 

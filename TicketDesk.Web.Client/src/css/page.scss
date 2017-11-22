@@ -275,6 +275,7 @@ body {
     .panel-body {
         padding: 10px;
         color: $text-color;
+        width: 100%;
     }
 }
 
@@ -893,6 +894,11 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         border: none;
         box-shadow: 1px 3px 4px #999;
     }
+
+    &.btn-back {
+        @include button(#bebebe, #333);
+        text-transform: initial;
+    }
 }
 
 .attach-file {
@@ -1335,9 +1341,43 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 }
 /******************************************* Annoucement Details ***********************************************/
 .announcement-detail {
-    flex: 1 100%;
+    flex: 1 100%;    
+}
+.filter {
+    margin: 8px 0 18px;
+    .form-group {
+        margin-right: 32px;
+        label {
+            font-weight: 600;
+            margin-right: 8px;
+        }
+    }
+    .input-group.date {
+        .form-control {
+            width: 150px;
+        }
+        .input-group-addon {
+            background: #fff;
+            border: none;
+        }
+        .icon-calendar {
+            color: $primary-color;
+            font-size: 20px;
+        }
+    }
+}
+.tbl-announcement-detail tbody tr td:first-child {
+    vertical-align: middle;
+}
 
-    .filter {
-        margin: 8px 0 18px;
+.btn.btn-back {
+    padding: 0 6px 6px 0;
+    margin-right: 8px;
+    [class^="icon-"] {
+        font-size: 24px;
+        font-weight: 700;
+        position: relative;
+        top: 4px;
+        margin-right: 0;
     }
 }
