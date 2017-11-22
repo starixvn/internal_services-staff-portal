@@ -899,7 +899,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   margin: 30px auto auto; }
   @media all and (max-width: 1280px) {
     .extend-menu {
-      margin-top: 0; } }
+      margin-top: 0;
+      max-width: 782px; } }
   .extend-menu .text {
     display: block;
     text-transform: uppercase;
@@ -1019,7 +1020,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .filter {
   margin: 8px 0 18px; }
   .filter .form-group {
-    margin-right: 32px; }
+    margin-right: 28px; }
     .filter .form-group label {
       font-weight: 600;
       margin-right: 8px; }

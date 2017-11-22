@@ -1176,6 +1176,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 
     @media all and (max-width: 1280px) {
         margin-top: 0;
+        max-width: 782px;
     }
 
     .text {
@@ -1346,7 +1347,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .filter {
     margin: 8px 0 18px;
     .form-group {
-        margin-right: 32px;
+        margin-right: 28px;
         label {
             font-weight: 600;
             margin-right: 8px;

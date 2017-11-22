@@ -52,4 +52,10 @@ $(document).ready(function() {
        , addElement: 'div'   // e.g. 'svg'(feature)
        , duration: 400
     });
+    $('input[type="text"]').focus(function () {
+        $(this)[0].scrollIntoView();
+    });
+    $('textarea').focus(function () {
+        $(this)[0].scrollIntoView();
+    });
 });

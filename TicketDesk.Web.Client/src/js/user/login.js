@@ -30,16 +30,9 @@
                 $("#Password").startValidateEffect();
             }
         });
-    var $htmlOrBody = $('html, body'), // scrolling happens on body for some browsers, html for others
-    scrollTopPadding = 80,
-    scrollTopLast = 0;
+
     $('.field .form-control').focus(function () {
-        // save the current scroll position for blur event
-        scrollTopLast = $(window).scrollTop();
-        // scroll to the textarea
-        $htmlOrBody.scrollTop($(this).offset().top - scrollTopPadding);
-    }).blur(function () {
-        // scroll back to position before textarea focus
-        $htmlOrBody.scrollTop(scrollTopLast);
+        $(this)[0].scrollIntoView();
     });
+
 });
