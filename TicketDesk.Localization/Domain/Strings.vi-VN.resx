@@ -148,7 +148,7 @@
     <value>Ưu tiên</value>
   </data>
   <data name="SelectList_TicketTypes" xml:space="preserve">
-    <value>Các loại vé</value>
+    <value>Các loại ticket</value>
   </data>
   <data name="TicketActivity_Assign" xml:space="preserve">
     <value>Chỉ định</value>
@@ -163,10 +163,10 @@
     <value>Bình luận</value>
   </data>
   <data name="TicketActivity_Create" xml:space="preserve">
-    <value>Tạo ra</value>
+    <value>Tạo</value>
   </data>
   <data name="TicketActivity_CreateOnBehalfOf" xml:space="preserve">
-    <value>Tạo ra</value>
+    <value>Tạo</value>
   </data>
   <data name="TicketActivity_Edit" xml:space="preserve">
     <value>Chỉnh sửa</value>
@@ -205,7 +205,7 @@
     <value>Thêm bình luận</value>
   </data>
   <data name="TicketActivityAssign" xml:space="preserve">
-    <value>giao vé cho {0}</value>
+    <value>giao ticket cho {0}</value>
   </data>
   <data name="TicketActivityCancelMoreInfo" xml:space="preserve">
     <value>đã hủy bỏ các yêu cầu cho biết thêm thông tin</value>
@@ -214,58 +214,58 @@
     <value>đóng cửa vé</value>
   </data>
   <data name="TicketActivityCreate" xml:space="preserve">
-    <value>tạo vé</value>
+    <value>tạo ticket</value>
   </data>
   <data name="TicketActivityCreateOnBehalfOf" xml:space="preserve">
-    <value>tạo vé đại diện cho {0}</value>
+    <value>tạo ticket đại diện cho {0}</value>
   </data>
   <data name="TicketActivityEditTicketInfo" xml:space="preserve">
-    <value>đổi vé</value>
+    <value>thay đổi ticket</value>
   </data>
   <data name="TicketActivityForceClose" xml:space="preserve">
-    <value>đóng cửa vé bằng vũ lực</value>
+    <value>ép buộc đóng ticket</value>
   </data>
   <data name="TicketActivityGiveUp" xml:space="preserve">
-    <value>đã đưa lên trên vé</value>
+    <value>đã bỏ qua ticket này</value>
   </data>
   <data name="TicketActivityModifyAttachments" xml:space="preserve">
-    <value>Sửa đổi vé tập tin đính kèm</value>
+    <value>Sửa đổi files đính kèm</value>
   </data>
   <data name="TicketActivityPass" xml:space="preserve">
-    <value>thông qua vé cho {0}</value>
+    <value>thông qua ticket cho {0}</value>
   </data>
   <data name="TicketActivityReactivate" xml:space="preserve">
-    <value>và kích hoạt lại vé.</value>
+    <value>và kích hoạt lại ticket.</value>
   </data>
   <data name="TicketActivityReAssign" xml:space="preserve">
-    <value>giao vé đến {0}</value>
+    <value>giao ticket đến {0}</value>
   </data>
   <data name="TicketActivityReOpen" xml:space="preserve">
-    <value>tái mở cửa vé</value>
+    <value>mở lại ticket</value>
   </data>
   <data name="TicketActivityRequestMoreInfo" xml:space="preserve">
     <value>yêu cầu thêm thông tin</value>
   </data>
   <data name="TicketActivityResolve" xml:space="preserve">
-    <value>giải quyết vé</value>
+    <value>giải quyết ticket</value>
   </data>
   <data name="TicketActivitySupplyMoreInfo" xml:space="preserve">
     <value>đã cung cấp thêm thông tin</value>
   </data>
   <data name="TicketActivityTakeOver" xml:space="preserve">
-    <value>đã thực hiện trên vé</value>
+    <value>đã thực hiện trên ticket</value>
   </data>
   <data name="DefaultListNameHistoryTickets" xml:space="preserve">
-    <value>Vé lịch sử</value>
+    <value>Lịch sử của ticket</value>
   </data>
   <data name="DefaultListNameMyTickets" xml:space="preserve">
-    <value>Vé của tôi</value>
+    <value>Ticket của tôi</value>
   </data>
   <data name="DefaultListNameOpenTickets" xml:space="preserve">
-    <value>Mở vé</value>
+    <value>Tickets đang mở</value>
   </data>
   <data name="ExceptionSecurityUserCannotCreateNewTicket" xml:space="preserve">
-    <value>Người dùng không có quyền tạo mới vé</value>
+    <value>Người dùng không có quyền tạo mới ticket</value>
   </data>
   <data name="ExceptionSettingsTypeConversionError" xml:space="preserve">
     <value>Thiết lập các loại chuyển đổi lỗi: không thể chuyển đổi SettingName [{0}] để xác định SettingType [{1}]</value>
@@ -367,7 +367,7 @@
     <value>Tags</value>
   </data>
   <data name="TicketTicketId" xml:space="preserve">
-    <value>Id vé</value>
+    <value>Ticket ID</value>
   </data>
   <data name="TicketTicketIdShort" xml:space="preserve">
     <value>ID</value>
@@ -394,10 +394,10 @@
     <value> ở mức ưu tiên của {0}</value>
   </data>
   <data name="DefaultListNameAssignedToMe" xml:space="preserve">
-    <value>Tôi được chỉ định</value>
+    <value>Được chỉ định cho tôi</value>
   </data>
   <data name="DefaultListNameUnassigned" xml:space="preserve">
-    <value>Unassigned</value>
+    <value>Chưa được chỉ định</value>
   </data>
   <data name="TicketProject" xml:space="preserve">
     <value>Dự án</value>
@@ -406,9 +406,9 @@
     <value>Dự án</value>
   </data>
   <data name="AllowInternalUsersToSetAssigned" xml:space="preserve">
-    <value>Cho phép các người dùng nội bộ để thiết lập các định lĩnh vực (vé tạo mới chỉ)?</value>
+    <value>Cho phép các người dùng nội bộ để thiết lập các định lĩnh vực (chỉ cho tạo mới ticket)?</value>
   </data>
   <data name="AllowInternalUsersToSetOwner" xml:space="preserve">
-    <value>Cho phép các người dùng nội bộ để thiết lập hoặc thay đổi chủ sở hữu vé?</value>
+    <value>Cho phép các người dùng nội bộ để thiết lập hoặc thay đổi chủ sở hữu Ticket?</value>
   </data>
 </root>

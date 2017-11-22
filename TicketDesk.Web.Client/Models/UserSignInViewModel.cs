@@ -1,12 +1,13 @@
 ﻿namespace TicketDesk.Web.Client.Models
 {
+    using Localization.Client;
     using Localization.Models;
     using System.ComponentModel.DataAnnotations;
 
     public class UserSignInViewModel
     {
         [Required]
-        [Display(Name = "Username")]
+        [Display(ResourceType = typeof(Resources), Name = "View_UserSignIn_Username")]
         public string Email { get; set; }
         
         [Required]

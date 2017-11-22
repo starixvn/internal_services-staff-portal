@@ -121,7 +121,7 @@
     <value>Cài đặt chống tiếng ồn</value>
   </data>
   <data name="BroadcastNotification_Header" xml:space="preserve">
-    <value>Thông báo vé mới</value>
+    <value>Thông báo ticket mới</value>
   </data>
   <data name="Delivery_Header" xml:space="preserve">
     <value>Giao hàng tận nơi các nhà cung cấp</value>
@@ -140,10 +140,10 @@
     <value>Ít nhất một nhà cung cấp phải được kích hoạt để cho các tin nhắn được gửi đi.</value>
   </data>
   <data name="Saved_Alert" xml:space="preserve">
-    <value>Thiết đặt lưu!</value>
+    <value>Đã lưu cài đặt!</value>
   </data>
   <data name="SaveOption" xml:space="preserve">
-    <value>Tiết kiệm</value>
+    <value>Lưu</value>
   </data>
   <data name="SiteRootUrl" xml:space="preserve">
     <value>Url trang web gốc</value>

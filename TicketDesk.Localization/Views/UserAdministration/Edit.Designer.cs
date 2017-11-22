@@ -106,7 +106,7 @@ namespace TicketDesk.Localization.Views.UserAdministration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Privledged users to whom tickets will be assigned. This role has access to the full set of ticket activities. This role also includes all permissions of the Intnerl User role..
+        ///   Looks up a localized string similar to Privileged users to whom tickets will be assigned. This role has access to the full set of ticket activities. This role also includes all permissions of the Intnerl User role..
         /// </summary>
         public static string HelpDeskStaff_Description {
             get {

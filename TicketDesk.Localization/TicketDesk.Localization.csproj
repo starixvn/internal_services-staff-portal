@@ -641,6 +641,7 @@
     <EmbeddedResource Include="Domain\Strings.vi-VN.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.vi-VN.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Identity\Strings.vi-VN.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -986,6 +987,7 @@
     <EmbeddedResource Include="Views\Ticket\New.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>New.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Ticket\New.vi-VN.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

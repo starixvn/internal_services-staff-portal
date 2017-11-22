@@ -140,7 +140,7 @@
     <value>Tập tin</value>
   </data>
   <data name="Header" xml:space="preserve">
-    <value>Tạo vé mới</value>
+    <value>Tạo ticket mới</value>
   </data>
   <data name="PreviewOption" xml:space="preserve">
     <value>Xem trước</value>
@@ -149,12 +149,12 @@
     <value>Tạo ra</value>
   </data>
   <data name="TicketTitle_Placeholder" xml:space="preserve">
-    <value>Vé tiêu đề</value>
+    <value>tiêu đề ticket</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Vé mới</value>
+    <value>Ticket mới</value>
   </data>
   <data name="UnableCreateTicket" xml:space="preserve">
-    <value>Không thể tạo ra vé, xin vui lòng sửa các lỗi dưới đây</value>
+    <value>Không thể tạo ra ticket, xin vui lòng sửa các lỗi dưới đây</value>
   </data>
 </root>

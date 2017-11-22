@@ -133,7 +133,7 @@
     <value>Help Desk Staff</value>
   </data>
   <data name="HelpDeskStaff_Description" xml:space="preserve">
-    <value>Privledged users to whom tickets will be assigned. This role has access to the full set of ticket activities. This role also includes all permissions of the Intnerl User role.</value>
+    <value>Privileged users to whom tickets will be assigned. This role has access to the full set of ticket activities. This role also includes all permissions of the Intnerl User role.</value>
   </data>
   <data name="InternalUsers" xml:space="preserve">
     <value>Internal Users</value>

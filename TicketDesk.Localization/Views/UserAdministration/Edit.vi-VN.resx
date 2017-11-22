@@ -121,7 +121,7 @@
     <value>Quản trị viên</value>
   </data>
   <data name="Administrators_Description" xml:space="preserve">
-    <value>Người dùng sẽ quản lý cài đặt của TicketDesk, và có thể quản lý các tài khoản người dùng và quyền truy cập. Vai trò này cũng bao gồm tất cả các quyền từ vai trò giúp bàn nhân viên và người sử dụng nội bộ.</value>
+    <value>Users who will manage TicketDesk's settings, and can manage user accounts and permissions. This role also includes all permissions from Help Desk Staff and Internal User roles.</value>
   </data>
   <data name="BackOption" xml:space="preserve">
     <value>Trở lại cho người dùng</value>
@@ -130,10 +130,10 @@
     <value>Chi tiết tài khoản</value>
   </data>
   <data name="HelpDeskStaff" xml:space="preserve">
-    <value>Nhân viên phục vụ bàn trợ giúp</value>
+    <value>Nhân viên Help Desk</value>
   </data>
   <data name="HelpDeskStaff_Description" xml:space="preserve">
-    <value>Privledged người sử dụng mà vé sẽ được chỉ định. Vai trò này có quyền truy cập vào tập hợp đầy đủ của các hoạt động của vé. Vai trò này cũng bao gồm tất cả các quyền vai trò người dùng Intnerl.</value>
+    <value>Privileged users to whom tickets will be assigned. This role has access to the full set of ticket activities. This role also includes all permissions of the Intnerl User role.</value>
   </data>
   <data name="InternalUsers" xml:space="preserve">
     <value>Người dùng nội bộ</value>

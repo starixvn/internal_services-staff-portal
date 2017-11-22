@@ -196,6 +196,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string View_UserSignIn_Username {
+            get {
+                return ResourceManager.GetString("View_UserSignIn_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Item.
         /// </summary>
         public static string Views_Ticket_NewFacilityTicket_AddItem {

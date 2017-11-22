@@ -124,7 +124,7 @@
     <value>ApiKey sử dụng để xác thực với SendGrid (nhà cung cấp này không hỗ trợ thông tin đăng nhập tên đăng nhập/mật khẩu).</value>
   </data>
   <data name="ClickTracking" xml:space="preserve">
-    <value>Click theo dõi</value>
+    <value>Theo dõi click</value>
   </data>
   <data name="ClickTracking_Description" xml:space="preserve">
     <value>Cho phép SendGrid của click theo dõi tính năng</value>
@@ -142,19 +142,19 @@
     <value>Kích hoạt</value>
   </data>
   <data name="DeliveryAttemptInterval" xml:space="preserve">
-    <value>Khoảng thời gian cố gắng giao hàng (phút)</value>
+    <value>Khoảng thời gian cố gắng gửi (phút)</value>
   </data>
   <data name="DeliveryAttemptInterval_Description" xml:space="preserve">
-    <value>Làm thế nào thường xuyên để kiểm tra các thông báo đẩy đã sẵn sàng để được gửi.</value>
+    <value>Bao lâu thì kiểm tra các thông báo đẩy đã sẵn sàng để được gửi.</value>
   </data>
   <data name="DeliveryProviders" xml:space="preserve">
-    <value>Giao hàng tận nơi các nhà cung cấp</value>
+    <value>Dịch vụ để gửi</value>
   </data>
   <data name="EnableSSL" xml:space="preserve">
-    <value>Sử SSL</value>
+    <value>Dùng SSL</value>
   </data>
   <data name="ExcludeSubscribersOwnEvents" xml:space="preserve">
-    <value>Loại trừ các sự kiện của thuê bao</value>
+    <value>Loại trừ các sự kiện của người sở hữu</value>
   </data>
   <data name="ExcludeSubscribersOwnEvents_Description" xml:space="preserve">
     <value>Điều này ngăn chặn đẩy các thông báo gửi đến cùng một người dùng có hành động kích hoạt thông báo.</value>

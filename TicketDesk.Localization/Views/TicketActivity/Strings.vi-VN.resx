@@ -152,7 +152,7 @@
     <value>Hủy bỏ</value>
   </data>
   <data name="Form_TicketTitle_Placeholder" xml:space="preserve">
-    <value>Vé tiêu đề</value>
+    <value>Tiêu đề ticket</value>
   </data>
   <data name="ReOpen_AssignToMe" xml:space="preserve">
     <value>Gán cho tôi?</value>
@@ -164,12 +164,12 @@
     <value>Tình trạng</value>
   </data>
   <data name="SupplyMoreInfo_Instructions" xml:space="preserve">
-    <value>Bỏ đánh dấu này để cung cấp thông tin mà không thay đổi trạng thái của vé.</value>
+    <value>Bỏ đánh dấu này để cung cấp thông tin mà không thay đổi trạng thái của ticket.</value>
   </data>
   <data name="SupplyMoreInfo_Label" xml:space="preserve">
     <value>Tình trạng</value>
   </data>
   <data name="SupplyMoreInfo_ReactivateTicket" xml:space="preserve">
-    <value>Kích hoạt lại vé</value>
+    <value>Kích hoạt lại ticket</value>
   </data>
 </root>
