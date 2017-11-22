@@ -46,7 +46,7 @@
                     : RedirectToAction("Index", "Home");
             }
 
-            return View();
+            return View(new UserSignInViewModel());
         }
 
         [HttpPost]

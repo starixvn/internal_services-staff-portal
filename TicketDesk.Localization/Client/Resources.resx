@@ -239,11 +239,13 @@
   </data>
   <data name="Views_Ticket_NewIncidentTicket_Title" xml:space="preserve">
     <value>INCIDENT REPORT FORM</value>
+  </data>
   <data name="Dropzone_Message_Default" xml:space="preserve">
     <value>Drop files here to upload</value>
   </data>
   <data name="Views_Ticket_NewNetworkTicket_Title" xml:space="preserve">
     <value>NETWORK REPORT FORM</value>
+  </data>
   <data name="Dropzone_Message_Fallback" xml:space="preserve">
     <value>Your browser does not support drag'n'drop file uploads.</value>
   </data>
