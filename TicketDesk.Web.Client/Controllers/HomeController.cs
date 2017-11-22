@@ -10,6 +10,7 @@
     using Models.Home;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Web.Mvc;
 
     [RoutePrefix("")]
@@ -86,10 +87,17 @@
 
             foreach (IGrouping<int, Ticket> grouping in tickets)
             {
-                var categoryName = categories
-                    .Where(x => x.CategoryId == grouping.Key)
-                    .Select(x => x.Name)
-                    .FirstOrDefault();
+                string languageSuffix = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+
+                var categoryName = languageSuffix == "en"
+                    ? categories
+                        .Where(x => x.CategoryId == grouping.Key)
+                        .Select(x => x.Name)
+                        .FirstOrDefault()
+                    : categories
+                        .Where(x => x.CategoryId == grouping.Key)
+                        .Select(x => x.Name_vi)
+                        .FirstOrDefault();
 
                 TicketGroup ticketGroup = new TicketGroup
                 {

@@ -1,4 +1,4 @@
-namespace TicketDesk.Domain.Migrations
+﻿namespace TicketDesk.Domain.Migrations
 {
     using Model;
     using System;
@@ -26,37 +26,44 @@ namespace TicketDesk.Domain.Migrations
                 new TicketCategory
                 {
                     CategoryId = 1,
-                    Name = "Facility"
+                    Name = "Facility",
+                    Name_vi = "Cơ sở thiết bị"
                 },
                 new TicketCategory
                 {
                     CategoryId = 2,
-                    Name = "Hardware"
+                    Name = "Hardware",
+                    Name_vi = "Phần cứng"
                 },
                 new TicketCategory
                 {
                     CategoryId = 3,
-                    Name = "Software"
+                    Name = "Software",
+                    Name_vi = "Phần mềm"
                 },
                 new TicketCategory
                 {
                     CategoryId = 4,
-                    Name = "Network"
+                    Name = "Network",
+                    Name_vi = "Mạng"
                 },
                 new TicketCategory
                 {
                     CategoryId = 5,
-                    Name = "Customer Support"
+                    Name = "Customer Support",
+                    Name_vi = "Hỗ trợ khách hàng"
                 },
                 new TicketCategory
                 {
                     CategoryId = 6,
-                    Name = "Incident"
+                    Name = "Incident",
+                    Name_vi = "Sự cố"
                 },
                 new TicketCategory
                 {
                     CategoryId = 7,
-                    Name = "Feedback"
+                    Name = "Feedback",
+                    Name_vi = "Phản hồi"
                 });
         }
 
