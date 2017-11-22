@@ -1,4 +1,6 @@
-﻿@using TicketDesk.Localization.Views.Ticket
+﻿@using TicketDesk.Localization.Client
+@using TicketDesk.Localization.Views.Ticket
+@using TicketDesk.Localization.Views.Ticket
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 @using TicketDesk.Web.Client.Models.Ticket
 
@@ -42,8 +44,8 @@
     @Html.HiddenFor(model => model.SelectedReportByValue, new { @class = "required-radio-value" })
 
     <div class="form-content incident-form">
-        <div class="title">INCIDENT REPORT FORM</div>
-        <div class="key border">@Model.ReportBy.CustomField.Name</div>
+        <div class="title">@Resources.Views_Ticket_NewIncidentTicket_Title</div>
+        @Html.CustomFieldLabelFor(x => x.ReportBy, new { @class = "key border" })
         <div class="value span-3 border">
             <div class="radio-group">
                 @Html.HiddenFor(x => x.ReportBy.CustomFieldId, new { Value = Model.ReportBy.CustomField.Id })

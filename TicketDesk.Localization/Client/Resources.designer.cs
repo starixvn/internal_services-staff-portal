@@ -412,6 +412,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INCIDENT REPORT FORM.
+        /// </summary>
+        public static string Views_Ticket_NewIncidentTicket_Title {
+            get {
+                return ResourceManager.GetString("Views_Ticket_NewIncidentTicket_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Views_User_SignIn_Username {
