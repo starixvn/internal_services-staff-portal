@@ -43,7 +43,7 @@
 
     <div class="form-content incident-form">
         <div class="title">INCIDENT REPORT FORM</div>
-        <div class="key border">Report by</div>
+        <div class="key border">@Model.ReportBy.CustomField.Name</div>
         <div class="value span-3 border">
             <div class="radio-group">
                 @Html.HiddenFor(x => x.ReportBy.CustomFieldId, new { Value = Model.ReportBy.CustomField.Id })

@@ -1,8 +1,8 @@
 ﻿namespace TicketDesk.Web.Client.Models.Ticket
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Text.RegularExpressions;
     using Domain.Model;
+    using Infrastructure.Helpers;
 
     public class NewIncidentTicketViewModel : TicketWithFilesBaseViewModel
     {
@@ -21,7 +21,7 @@
                     return _reportByValues;
                 }
 
-                _reportByValues = Regex.Split(ReportBy.CustomField.Values, "\r\n");
+                _reportByValues = CustomFieldForHelper.GetMultilingualCustomFieldValuesAsArray(ReportBy.CustomField);
                 return _reportByValues;
             }
         }
