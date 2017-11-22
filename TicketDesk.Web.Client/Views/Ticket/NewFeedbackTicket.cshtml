@@ -1,4 +1,5 @@
-﻿@using TicketDesk.Localization.Views.Ticket
+﻿@using TicketDesk.Localization.Client
+@using TicketDesk.Localization.Views.Ticket
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 
 @model TicketDesk.Web.Client.Models.Ticket.NewFeedbackTicketViewModel
@@ -32,8 +33,8 @@
     @Html.HiddenFor(model => model.SelectedFeedbackByValue, new { @class = "required-radio-value" })
 
     <div class="form-content feedback-form">
-        <div class="title">FEEDBACK FORM</div>
-        <div class="key border">Feedback by</div>
+        <div class="title">@Resources.Views_Ticket_NewFeedbackTicket_Title</div>
+        @Html.CustomFieldLabelFor(x => x.FeedbackBy, new { @class = "key border" })
         <div class="value span-3 border">
             <div class="radio-group">
                 @Html.HiddenFor(x => x.FeedbackBy.CustomFieldId, new { Value = Model.FeedbackBy.CustomField.Id })
@@ -68,5 +69,5 @@
         </div>
         @Html.Partial("_DropzoneView", Model)
     </div>
-    <input type="submit" class="btn btn-primary btn-send" value="Send" />
+    <input type="submit" class="btn btn-primary btn-send" value="@Resources.Common_Form_Send" />
 }
