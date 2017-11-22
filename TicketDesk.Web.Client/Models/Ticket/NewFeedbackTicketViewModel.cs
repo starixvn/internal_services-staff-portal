@@ -1,8 +1,8 @@
 ﻿namespace TicketDesk.Web.Client.Models.Ticket
 {
     using Domain.Model;
+    using Infrastructure.Helpers;
     using System.ComponentModel.DataAnnotations;
-    using System.Text.RegularExpressions;
 
     public class NewFeedbackTicketViewModel : TicketWithFilesBaseViewModel
     {
@@ -25,7 +25,7 @@
                     return _feedbackByValues;
                 }
 
-                _feedbackByValues = Regex.Split(FeedbackBy.CustomField.Values, "\r\n");
+                _feedbackByValues = CustomFieldForHelper.GetMultilingualCustomFieldValuesAsArray(FeedbackBy.CustomField);
                 return _feedbackByValues;
             }
         }

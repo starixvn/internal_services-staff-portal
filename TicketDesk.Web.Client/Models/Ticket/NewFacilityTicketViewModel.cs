@@ -1,9 +1,9 @@
 ﻿namespace TicketDesk.Web.Client.Models.Ticket
 {
     using Domain.Model;
+    using Infrastructure.Helpers;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Text.RegularExpressions;
 
     public class NewFacilityTicketViewModel : TicketWithFilesBaseViewModel
     {
@@ -13,7 +13,7 @@
 
         public CustomFieldValue RequestType { get; set; }
 
-        public ICollection<Item> Items { get; set; }
+        public ICollection<Item> Items { get; }
 
         public string[] RequestTypes
         {
@@ -23,8 +23,8 @@
                 {
                     return _requestTypes;
                 }
-
-                _requestTypes = Regex.Split(RequestType.CustomField.Values, "\r\n");
+                
+                _requestTypes = CustomFieldForHelper.GetMultilingualCustomFieldValuesAsArray(RequestType.CustomField);
                 return _requestTypes;
             }
         }

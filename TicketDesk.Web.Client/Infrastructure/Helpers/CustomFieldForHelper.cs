@@ -97,26 +97,6 @@
             return customFieldValue?.CustomField.Name;
         }
 
-        ////public static MvcHtmlString CustomFieldLabelWithGuidIndexFor(
-        ////    this HtmlHelper html,
-        ////    CustomField customField,
-        ////    string guid,
-        ////    string parentName,
-        ////    object htmlAttributes = null)
-        ////{
-        ////    TagBuilder label = new TagBuilder("label");
-        ////    label.Attributes.Add("for", parentName + "[" + guid + "].customfield_" + customField.Id);
-        ////    label.SetInnerText(customField.Name);
-
-        ////    if (htmlAttributes != null)
-        ////    {
-        ////        var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
-        ////        label.MergeAttributes(attributes);
-        ////    }
-
-        ////    return new MvcHtmlString(label.ToString());
-        ////}
-
         public static MvcHtmlString CustomFieldLabelWithGuidIndexFor<TModel, TValue>(
             this HtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> propertyExpression,
@@ -133,7 +113,6 @@
             {
                 string innerText = GetMultiligualStringOfCustomField(customFieldValue);
                 label.SetInnerText(innerText);
-                ////label.SetInnerText(customFieldValue.CustomField.Name);
             }
 
             if (htmlAttributes != null)
@@ -221,7 +200,8 @@
                     input.Attributes.Add("name", fieldName + ".Value");
                     break;
                 case (int)CustomFieldTypes.List:
-                    var values = Regex.Split(customFieldValue.CustomField.Values, "\r\n");
+                    string[] values = GetMultilingualCustomFieldValuesAsArray(customFieldValue.CustomField);
+                    ////values = Regex.Split(customFieldValue.CustomField.Values, "\r\n");
                     input = new TagBuilder("select");
                     input.Attributes.Add("id", fieldName + ".Value");
                     input.Attributes.Add("name", fieldName + ".Value");
@@ -239,7 +219,7 @@
                     input = new TagBuilder("textarea");
                     input.Attributes.Add("id", fieldName + ".Value");
                     input.Attributes.Add("name", fieldName + ".Value");
-                    input.Attributes.Add("placeholder", customFieldValue.CustomField.Values);
+                    input.Attributes.Add("placeholder", GetMultilingualCustomFieldValuesAsString(customFieldValue.CustomField));
                     break;
                 //// case (int)CustomFieldTypes.String:
                 default:
@@ -247,7 +227,7 @@
                     input.Attributes.Add("type", "text");
                     input.Attributes.Add("id", fieldName + ".Value");
                     input.Attributes.Add("name", fieldName + ".Value");
-                    input.Attributes.Add("placeholder", customFieldValue.CustomField.Values);
+                    input.Attributes.Add("placeholder", GetMultilingualCustomFieldValuesAsString(customFieldValue.CustomField));
                     break;
             }
 
@@ -257,6 +237,25 @@
             }
 
             return input;
+        }
+
+        public static string[] GetMultilingualCustomFieldValuesAsArray(CustomField customField)
+        {
+            string valueString = GetMultilingualCustomFieldValuesAsString(customField);
+
+            return valueString != null ? Regex.Split(valueString, "\r\n") : null;
+        }
+
+        private static string GetMultilingualCustomFieldValuesAsString(CustomField customField)
+        {
+            string languageSuffix = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+            if (languageSuffix != "en")
+            {
+                PropertyInfo propertyInfo = typeof(CustomField).GetProperty("Values_" + languageSuffix);
+                return propertyInfo?.GetValue(customField, null)?.ToString();
+            }
+
+            return customField.Values;
         }
 
         /// <summary>
