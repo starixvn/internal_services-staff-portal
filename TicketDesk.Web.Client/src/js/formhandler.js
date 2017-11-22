@@ -47,12 +47,12 @@
                     }
 
                 } else {
-                    SetErrorTextAndShowModal("Invalid or missing files");
+                    SetErrorTextAndShowModal("Invalid or missing files","Files không hợp lệ hoặc không có file nào");
                     e.preventDefault();
                     return false;
                 }
             } else {
-                SetErrorTextAndShowModal("Invalid data in field");
+                SetErrorTextAndShowModal("Invalid data in fields","Không có dữ liệu trong các ô");
                 e.preventDefault();
                 return false;
             }

@@ -232,6 +232,96 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel upload.
+        /// </summary>
+        public static string Dropzone_Message_CancelUpload {
+            get {
+                return ResourceManager.GetString("Dropzone_Message_CancelUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to cancel this upload?.
+        /// </summary>
+        public static string Dropzone_Message_CancelUploadConfirmation {
+            get {
+                return ResourceManager.GetString("Dropzone_Message_CancelUploadConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drop files here to upload.
+        /// </summary>
+        public static string Dropzone_Message_Default {
+            get {
+                return ResourceManager.GetString("Dropzone_Message_Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your browser does not support drag&apos;n&apos;drop file uploads..
+        /// </summary>
+        public static string Dropzone_Message_Fallback {
+            get {
+                return ResourceManager.GetString("Dropzone_Message_Fallback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please use the fallback form below to upload your files like in the olden days..
+        /// </summary>
+        public static string Dropzone_Message_FallbackText {
+            get {
+                return ResourceManager.GetString("Dropzone_Message_FallbackText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB..
+        /// </summary>
+        public static string Dropzone_Message_FileTooBig {
+            get {
+                return ResourceManager.GetString("Dropzone_Message_FileTooBig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can&apos;t upload files of this type..
+        /// </summary>
+        public static string Dropzone_Message_InvalidFileType {
+            get {
+                return ResourceManager.GetString("Dropzone_Message_InvalidFileType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can not upload any more files..
+        /// </summary>
+        public static string Dropzone_Message_MaxFilesExceeded {
+            get {
+                return ResourceManager.GetString("Dropzone_Message_MaxFilesExceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove file.
+        /// </summary>
+        public static string Dropzone_Message_RemoveFile {
+            get {
+                return ResourceManager.GetString("Dropzone_Message_RemoveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server responded with {{statusCode}} code..
+        /// </summary>
+        public static string Dropzone_Message_ResponseError {
+            get {
+                return ResourceManager.GetString("Dropzone_Message_ResponseError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string Dropzone_Modal_Close {

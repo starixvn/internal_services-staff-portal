@@ -35,9 +35,17 @@
         
     }
 
-    function SetErrorTextAndShowModal(text) {
+    function SetErrorTextAndShowModal(text, vietnameseText) {
         if (text !== "") {
-            $(".dropzone-error-text").text(text);
+
+            var textToShow = text;
+
+            var culture = getCookie("_culture");
+            if (culture !== "en-US") {
+                textToShow = vietnameseText;
+            }
+
+            $(".dropzone-error-text").text(textToShow);
             if (($("element").data('bs.modal') || {}).isShown) {
                 $('#attach-file-modal').modal('hide');
             }
@@ -132,6 +140,17 @@
             $('.btn-delete-all-file').hide();
         }
     }
+
+    Dropzone.prototype.defaultOptions.dictDefaultMessage = "@Html.Raw(Resources.Dropzone_Message_Default)";
+    Dropzone.prototype.defaultOptions.dictFallbackMessage = "@Html.Raw(Resources.Dropzone_Message_Fallback)";
+    Dropzone.prototype.defaultOptions.dictFallbackText = "@Html.Raw(Resources.Dropzone_Message_FallbackText)";
+    Dropzone.prototype.defaultOptions.dictFileTooBig = "@Html.Raw(Resources.Dropzone_Message_FileTooBig)";
+    Dropzone.prototype.defaultOptions.dictInvalidFileType = "@Html.Raw(Resources.Dropzone_Message_InvalidFileType)";
+    Dropzone.prototype.defaultOptions.dictResponseError = "@Html.Raw(Resources.Dropzone_Message_ResponseError)";
+    Dropzone.prototype.defaultOptions.dictCancelUpload = "@Html.Raw(Resources.Dropzone_Message_CancelUpload)";
+    Dropzone.prototype.defaultOptions.dictCancelUploadConfirmation = "@Html.Raw(Resources.Dropzone_Message_CancelUploadConfirmation)";
+    Dropzone.prototype.defaultOptions.dictRemoveFile = "@Html.Raw(Resources.Dropzone_Message_RemoveFile)";
+    Dropzone.prototype.defaultOptions.dictMaxFilesExceeded = "@Html.Raw(Resources.Dropzone_Message_MaxFilesExceeded)";
 
     Dropzone.autoDiscover = false;
 

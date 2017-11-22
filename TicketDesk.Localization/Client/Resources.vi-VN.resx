@@ -239,8 +239,36 @@
   </data>
   <data name="Views_Ticket_NewIncidentTicket_Title" xml:space="preserve">
     <value>BÁO CÁO SỰ CỐ</value>
+  <data name="Dropzone_Message_Default" xml:space="preserve">
+    <value>Thả tập tin vào đây để tải lên</value>
   </data>
   <data name="Views_Ticket_NewNetworkTicket_Title" xml:space="preserve">
     <value>BÁO CÁO SỰ CỐ MẠNG</value>
+  <data name="Dropzone_Message_Fallback" xml:space="preserve">
+    <value>Trình duyệt của bạn không hỗ trợ kéo và thả tập tin</value>
+  </data>
+  <data name="Dropzone_Message_FallbackText" xml:space="preserve">
+    <value>Dùng bảng dưới dây để tải tập tin giống các trình duyệt cũ</value>
+  </data>
+  <data name="Dropzone_Message_FileTooBig" xml:space="preserve">
+    <value>Tập tin là quá lớn ({{filesize}} MiB). Dung lượng tối đa cho 1 file: {{maxFilesize}} MiB.</value>
+  </data>
+  <data name="Dropzone_Message_InvalidFileType" xml:space="preserve">
+    <value>Bạn không thể tải lên tệp loại này.</value>
+  </data>
+  <data name="Dropzone_Message_ResponseError" xml:space="preserve">
+    <value>Server trả về mã lỗi {{statusCode}}.</value>
+  </data>
+  <data name="Dropzone_Message_CancelUpload" xml:space="preserve">
+    <value>Hủy bỏ tải lên</value>
+  </data>
+  <data name="Dropzone_Message_CancelUploadConfirmation" xml:space="preserve">
+    <value>Bạn có chắc bạn muốn hủy bỏ tải lên này?</value>
+  </data>
+  <data name="Dropzone_Message_RemoveFile" xml:space="preserve">
+    <value>Loại bỏ tệp</value>
+  </data>
+  <data name="Dropzone_Message_MaxFilesExceeded" xml:space="preserve">
+    <value>Bạn không thể tải lên tập tin mới nữa</value>
   </data>
 </root>
