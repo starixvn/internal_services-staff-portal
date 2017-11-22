@@ -86,12 +86,11 @@
 
             $(".ticket-form").on("change",
                 function () {
-                    var values = $(this).serialize().split("&");
+                    var values = $(this).serializeArray();
                     var requestTypeValue = "";
                     for (var i = 0; i < values.length; i++) {
-                        if (values[i].indexOf("RequestType.Value") !== -1) {
-                            requestTypeValue = values[i].split("=")[1];
-                            requestTypeValue = requestTypeValue.replace("+", " ");
+                        if (values[i].name === "RequestType.Value") {
+                            requestTypeValue = values[i].value;
                             break;
                         }
                     }
