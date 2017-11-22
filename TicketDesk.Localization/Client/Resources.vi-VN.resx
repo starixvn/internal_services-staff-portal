@@ -240,4 +240,7 @@
   <data name="Views_Ticket_NewIncidentTicket_Title" xml:space="preserve">
     <value>BÁO CÁO SỰ CỐ</value>
   </data>
+  <data name="Views_Ticket_NewNetworkTicket_Title" xml:space="preserve">
+    <value>BÁO CÁO SỰ CỐ MẠNG</value>
+  </data>
 </root>

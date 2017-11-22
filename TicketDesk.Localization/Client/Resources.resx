@@ -240,4 +240,7 @@
   <data name="Views_Ticket_NewIncidentTicket_Title" xml:space="preserve">
     <value>INCIDENT REPORT FORM</value>
   </data>
+  <data name="Views_Ticket_NewNetworkTicket_Title" xml:space="preserve">
+    <value>NETWORK REPORT FORM</value>
+  </data>
 </root>
