@@ -8,5 +8,7 @@
         public int CategoryId { get; set; }
 
         public string Name { get; set; }
+
+        public string Name_vi { get; set; }
     }
 }
