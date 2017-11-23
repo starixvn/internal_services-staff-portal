@@ -331,6 +331,51 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back to dashboard.
+        /// </summary>
+        public static string Views_Announcement_BackToDashboard {
+            get {
+                return ResourceManager.GetString("Views_Announcement_BackToDashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        public static string Views_Announcement_From {
+            get {
+                return ResourceManager.GetString("Views_Announcement_From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MESSAGE.
+        /// </summary>
+        public static string Views_Announcement_Message {
+            get {
+                return ResourceManager.GetString("Views_Announcement_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string Views_Announcement_Submit {
+            get {
+                return ResourceManager.GetString("Views_Announcement_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        public static string Views_Announcement_To {
+            get {
+                return ResourceManager.GetString("Views_Announcement_To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fortunately, you can go back to.
         /// </summary>
         public static string Views_Home_AccessDenied_Action {

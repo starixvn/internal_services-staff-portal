@@ -1,4 +1,5 @@
-﻿@model dynamic
+﻿@using TicketDesk.Localization.Client
+@model dynamic
 
 @section title{ Announcement }
 @section css
@@ -8,13 +9,13 @@
 <div class="announcement-detail">
     <div class="form-content feature">
         <div class="title panel-heading">
-            <a href="@Url.Action("Index","Home")" class="btn btn-back rippler rippler-default"><span class="icon-angle-left"></span>Back to dashboard</a>
-            Announcements
+            <a href="@Url.Action("Index","Home")" class="btn btn-back rippler rippler-default"><span class="icon-angle-left"></span>@Resources.Views_Announcement_BackToDashboard</a>
+            @Resources.Views_Home_Index_Annoucements
         </div>
         <div class="content-announcement panel-body">
             <form class="form-inline filter" role="form">
                 <div class="form-group">
-                    <label>From</label>
+                    <label>@Resources.Views_Announcement_From</label>
                     <div class='input-group date' id='from-date'>
                         <input type='text' class="form-control"/>
                         <span class="input-group-addon">
@@ -23,7 +24,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>To</label>
+                    <label>@Resources.Views_Announcement_To</label>
                     <div class='input-group date' id='to-date'>
                         <input type='text' class="form-control"/>
                         <span class="input-group-addon">
@@ -32,14 +33,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Submit" class="btn btn-primary"/>
+                    <input type="submit" value="@Resources.Views_Announcement_Submit" class="btn btn-primary"/>
                 </div>
             </form>
             <table class="table table-bordered tbl-announcement-detail">
                 <thead>
                     <tr>
                         <th class="text-center">#</th>
-                        <th class="text-center">MESSAGE</th>
+                        <th class="text-center">@Resources.Views_Announcement_Message</th>
                     </tr>
                 </thead>
                 <tbody>
