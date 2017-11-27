@@ -38,6 +38,7 @@
         <div class="value span-3 border">
             <div class="radio-group">
                 @Html.HiddenFor(x => x.FeedbackBy.CustomFieldId, new { Value = Model.FeedbackBy.CustomField.Id })
+                @Html.ValidationMessageFor(x => x.SelectedFeedbackByValue)
                 @foreach (string feedbackByValue in Model.FeedbackByValues)
                 {
                     var rdId = "rd-" + feedbackByValue.Replace(' ', '_');
@@ -52,6 +53,7 @@
         <div class="item-list item">
             @Html.LabelFor(x => x.Ticket.Title, new { @class = "key fullwidth border" })
             <div class="fullwidth">
+                @Html.ValidationMessageFor(x => x.Ticket.Title)
                 @Html.TextBoxFor(x => x.Ticket.Title)
             </div>
         </div>
@@ -65,6 +67,7 @@
         <div class="item-list item">
             @Html.CustomFieldLabelFor(x => x.Feedback, new { @class = "key fullwidth" })
             <div class="fullwidth">
+                @Html.ValidationMessageFor(x => x.Feedback.Value)
                 @Html.CustomFieldFor(x => x.Feedback)
             </div>
         </div>

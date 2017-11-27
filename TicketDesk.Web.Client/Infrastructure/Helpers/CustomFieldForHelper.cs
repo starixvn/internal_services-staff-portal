@@ -233,7 +233,7 @@
             if (customFieldValue.CustomField.IsRequired)
             {
                 AddAttributes(input, "data-val", "true");
-                input.Attributes.Add("data-val-required", "This custom field is required");
+                input.Attributes.Add("data-val-required", customFieldValue.CustomField.Name + " is required");
             }
 
             if (input.Attributes.ContainsKey("type") &&
@@ -242,22 +242,53 @@
                 if (!string.IsNullOrEmpty(customFieldValue.CustomField.Regex))
                 {
                     AddAttributes(input, "data-val", "true");
-                    input.Attributes.Add("data-val-regex", "This custom field must apply regex");
+                    input.Attributes.Add("data-val-regex", customFieldValue.CustomField.RegexValidationErrorMessage);
                     input.Attributes.Add("data-val-regex-pattern", customFieldValue.CustomField.Regex);
                 }
 
-                if (customFieldValue.CustomField.MinLength != -1)
+                int max = customFieldValue.CustomField.MaxLength;
+                int min = customFieldValue.CustomField.MinLength;
+
+                if (min != -1)
                 {
                     AddAttributes(input, "data-val", "true");
-                    AddAttributes(input, "data-val-length", "Length error");
-                    input.Attributes.Add("data-val-length-min", customFieldValue.CustomField.MinLength.ToString());
+                    input.Attributes.Add("data-val-length-min", min.ToString());
                 }
 
-                if (customFieldValue.CustomField.MaxLength != -1)
+                if (max != -1)
                 {
                     AddAttributes(input, "data-val", "true");
-                    AddAttributes(input, "data-val-length", "Length error");
-                    input.Attributes.Add("data-val-length-max", customFieldValue.CustomField.MaxLength.ToString());
+                    input.Attributes.Add("data-val-length-max", max.ToString());
+                }
+
+                
+
+                if (min != -1 && max != -1)
+                {
+                    AddAttributes(input, "data-val-length",
+                        string.Format(
+                            "{0} must between {1}-{2} characters",
+                            customFieldValue.CustomField.Name,
+                            min,
+                            max));
+                }
+
+                if (min == -1 && max != -1)
+                {
+                    AddAttributes(input, "data-val-length",
+                        string.Format(
+                            "{0} must shorter than {1} characters",
+                            customFieldValue.CustomField.Name,
+                            max));
+                }
+
+                if (min != -1 && max == -1)
+                {
+                    AddAttributes(input, "data-val-length",
+                        string.Format(
+                            "{0} must longer than {1} characters",
+                            customFieldValue.CustomField.Name,
+                            min));
                 }
             }
 
