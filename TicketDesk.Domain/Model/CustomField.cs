@@ -25,6 +25,10 @@
 
         public bool IsRequired { get; set; }
 
+        public int MinStringLength { get; set; }
+
+        public int MaxStringLength { get; set; }
+
         [NotMapped]
         public CustomFieldType CustomFieldType { get; set; }
 
