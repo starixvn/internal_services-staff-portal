@@ -4,31 +4,31 @@
 
     SetValueForRequiredRadioButton(formclassname);
     
-    $(selector).on("input",
-        "input",
-        function() {
-            console.log("on input");
-            CheckFormAndTurnSubmitButton(formclassname);
-        });
+    //$(selector).on("input",
+    //    "input",
+    //    function() {
+    //        console.log("on input");
+    //        CheckFormAndTurnSubmitButton(formclassname);
+    //    });
 
-    $(selector).on("input",
-        "textarea",
-        function () {
-            console.log("on input");
-            CheckFormAndTurnSubmitButton(formclassname);
-        });
+    //$(selector).on("input",
+    //    "textarea",
+    //    function () {
+    //        console.log("on input");
+    //        CheckFormAndTurnSubmitButton(formclassname);
+    //    });
 
-    $(".filechange").on("filechange",
-        function () {
-            CheckFormAndTurnSubmitButton(formclassname);
-        });
+    //$(".filechange").on("filechange",
+    //    function () {
+    //        CheckFormAndTurnSubmitButton(formclassname);
+    //    });
 
     $(selector).on("submit",
         function(e) {
-            if ($(formSubmitSelector).hasClass("disabled")) {
-                e.preventDefault();
-                return false;
-            }
+            //if ($(formSubmitSelector).hasClass("disabled")) {
+            //    e.preventDefault();
+            //    return false;
+            //}
             if ($(this).valid()) {
                 if (CheckValidFilesIfDropzoneExisted()) {
 
@@ -60,14 +60,15 @@
             return true;
         });
 
-    CheckFormAndTurnSubmitButton(formclassname);
+    //CheckFormAndTurnSubmitButton(formclassname);
 }
 
 function SetValueForRequiredRadioButton(formclassname) {
     $(".required-radio").on("change",
         function () {
             $(".required-radio-value").val($(".required-radio:checked").val());
-            CheckFormAndTurnSubmitButton(formclassname);
+            $(".required-radio-value").valid();
+            //CheckFormAndTurnSubmitButton(formclassname);
         });
 }
 
@@ -80,21 +81,21 @@ function CheckValidFilesIfDropzoneExisted() {
 }
 
 function CheckFormAndTurnSubmitButton(formclassname) {
-    var selector = "." + formclassname;
-    var inputSelector = "." + formclassname + " input[type=submit]";
+    //var selector = "." + formclassname;
+    //var inputSelector = "." + formclassname + " input[type=submit]";
 
-    var validate = $(selector).validate();
-    var formSummittedState = validate.submitted;
-    var isValid = validate.checkForm();
-    if (isValid && CheckValidFilesIfDropzoneExisted()) {
-        // Enable the button
-        //$(inputSelector).attr("disabled", false);
-    } else {
-        // Disable the button
-        //$(inputSelector).attr("disabled", true);
-    }
+    //var validate = $(selector).validate();
+    //var formSummittedState = validate.submitted;
+    //var isValid = validate.checkForm();
+    //if (isValid && CheckValidFilesIfDropzoneExisted()) {
+    //    // Enable the button
+    //    $(inputSelector).attr("disabled", false);
+    //} else {
+    //    // Disable the button
+    //    $(inputSelector).attr("disabled", true);
+    //}
 
-    $(selector).validate().submitted = formSummittedState;
+    //$(selector).validate().submitted = formSummittedState;
 }
 
 $.validator.setDefaults({

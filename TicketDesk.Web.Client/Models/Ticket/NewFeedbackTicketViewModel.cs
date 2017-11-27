@@ -30,7 +30,7 @@
             }
         }
 
-        [Required]
+        [Required(ErrorMessage = "Feedback by is required")]
         public string SelectedFeedbackByValue { get; set; }
 
         public NewFeedbackTicketViewModel()

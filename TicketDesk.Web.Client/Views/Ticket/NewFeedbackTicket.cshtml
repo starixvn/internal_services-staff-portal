@@ -30,7 +30,6 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
     @Html.HiddenFor(model => model.TempId)
-    @Html.HiddenFor(model => model.SelectedFeedbackByValue, new { @class = "required-radio-value" })
 
     <div class="form-content feedback-form">
         <div class="title">@Resources.Views_Ticket_NewFeedbackTicket_Title</div>
@@ -38,6 +37,7 @@
         <div class="value span-3 border">
             <div class="radio-group">
                 @Html.HiddenFor(x => x.FeedbackBy.CustomFieldId, new { Value = Model.FeedbackBy.CustomField.Id })
+                @Html.HiddenFor(model => model.SelectedFeedbackByValue, new { @class = "required-radio-value" })
                 @Html.ValidationMessageFor(x => x.SelectedFeedbackByValue)
                 @foreach (string feedbackByValue in Model.FeedbackByValues)
                 {
