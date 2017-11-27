@@ -7,13 +7,13 @@ namespace TicketDesk.Domain.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Nexcel_CustomField_MinMax_StringLength : IMigrationMetadata
+    public sealed partial class Nexcel_CustomField_MinMaxLength : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Nexcel_CustomField_MinMax_StringLength));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Nexcel_CustomField_MinMaxLength));
         
         string IMigrationMetadata.Id
         {
-            get { return "201711270733518_Nexcel_CustomField_MinMax_StringLength"; }
+            get { return "201711270847124_Nexcel_CustomField_MinMaxLength"; }
         }
         
         string IMigrationMetadata.Source

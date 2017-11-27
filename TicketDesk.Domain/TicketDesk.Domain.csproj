@@ -247,9 +247,13 @@
     <Compile Include="Migrations\201711221015366_Nexcel_TicketCategories_NameVi.Designer.cs">
       <DependentUpon>201711221015366_Nexcel_TicketCategories_NameVi.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711270733518_Nexcel_CustomField_MinMax_StringLength.cs" />
-    <Compile Include="Migrations\201711270733518_Nexcel_CustomField_MinMax_StringLength.Designer.cs">
-      <DependentUpon>201711270733518_Nexcel_CustomField_MinMax_StringLength.cs</DependentUpon>
+    <Compile Include="Migrations\201711270810536_Nexcel_CustomField_Regex.cs" />
+    <Compile Include="Migrations\201711270810536_Nexcel_CustomField_Regex.Designer.cs">
+      <DependentUpon>201711270810536_Nexcel_CustomField_Regex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711270847124_Nexcel_CustomField_MinMaxLength.cs" />
+    <Compile Include="Migrations\201711270847124_Nexcel_CustomField_MinMaxLength.Designer.cs">
+      <DependentUpon>201711270847124_Nexcel_CustomField_MinMaxLength.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
@@ -393,8 +397,11 @@
     <EmbeddedResource Include="Migrations\201711221015366_Nexcel_TicketCategories_NameVi.resx">
       <DependentUpon>201711221015366_Nexcel_TicketCategories_NameVi.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711270733518_Nexcel_CustomField_MinMax_StringLength.resx">
-      <DependentUpon>201711270733518_Nexcel_CustomField_MinMax_StringLength.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711270810536_Nexcel_CustomField_Regex.resx">
+      <DependentUpon>201711270810536_Nexcel_CustomField_Regex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711270847124_Nexcel_CustomField_MinMaxLength.resx">
+      <DependentUpon>201711270847124_Nexcel_CustomField_MinMaxLength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

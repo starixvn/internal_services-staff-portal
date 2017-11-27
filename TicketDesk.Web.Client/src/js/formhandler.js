@@ -88,10 +88,10 @@ function CheckFormAndTurnSubmitButton(formclassname) {
     var isValid = validate.checkForm();
     if (isValid && CheckValidFilesIfDropzoneExisted()) {
         // Enable the button
-        $(inputSelector).attr("disabled", false);
+        //$(inputSelector).attr("disabled", false);
     } else {
         // Disable the button
-        $(inputSelector).attr("disabled", true);
+        //$(inputSelector).attr("disabled", true);
     }
 
     $(selector).validate().submitted = formSummittedState;

@@ -12,8 +12,7 @@
 
     public static class CustomFieldForHelper
     {
-        public static TagBuilder BuildHiddenTag(
-            CustomFieldValue customFieldValue,
+        private static TagBuilder BuildHiddenTag(
             string fieldName,
             string property,
             string valueAttribute)
@@ -156,7 +155,6 @@
             var input = BuildInputTag(customFieldValue, fieldName);
             
             TagBuilder id = BuildHiddenTag(
-                customFieldValue,
                 fieldName,
                 nameof(customFieldValue.CustomFieldId),
                 customFieldValue.CustomField.Id.ToString());
@@ -179,6 +177,8 @@
         private static TagBuilder BuildInputTag(CustomFieldValue customFieldValue, string fieldName)
         {
             TagBuilder input;
+            ////string idString = fieldName + ".Value";
+            ////string nameString = fieldName + "_Value";
             switch (customFieldValue.CustomField.CustomFieldTypeId)
             {
                 case (int)CustomFieldTypes.Bool:
@@ -201,7 +201,6 @@
                     break;
                 case (int)CustomFieldTypes.List:
                     string[] values = GetMultilingualCustomFieldValuesAsArray(customFieldValue.CustomField);
-                    ////values = Regex.Split(customFieldValue.CustomField.Values, "\r\n");
                     input = new TagBuilder("select");
                     input.Attributes.Add("id", fieldName + ".Value");
                     input.Attributes.Add("name", fieldName + ".Value");
@@ -233,10 +232,44 @@
 
             if (customFieldValue.CustomField.IsRequired)
             {
-                input.Attributes.Add("required", "required");
+                AddAttributes(input, "data-val", "true");
+                input.Attributes.Add("data-val-required", "This custom field is required");
+            }
+
+            if (input.Attributes.ContainsKey("type") &&
+                (input.Attributes["type"] == "text" || input.Attributes["type"] == "textarea"))
+            {
+                if (!string.IsNullOrEmpty(customFieldValue.CustomField.Regex))
+                {
+                    AddAttributes(input, "data-val", "true");
+                    input.Attributes.Add("data-val-regex", "This custom field must apply regex");
+                    input.Attributes.Add("data-val-regex-pattern", customFieldValue.CustomField.Regex);
+                }
+
+                if (customFieldValue.CustomField.MinLength != -1)
+                {
+                    AddAttributes(input, "data-val", "true");
+                    AddAttributes(input, "data-val-length", "Length error");
+                    input.Attributes.Add("data-val-length-min", customFieldValue.CustomField.MinLength.ToString());
+                }
+
+                if (customFieldValue.CustomField.MaxLength != -1)
+                {
+                    AddAttributes(input, "data-val", "true");
+                    AddAttributes(input, "data-val-length", "Length error");
+                    input.Attributes.Add("data-val-length-max", customFieldValue.CustomField.MaxLength.ToString());
+                }
             }
 
             return input;
+        }
+
+        private static void AddAttributes(TagBuilder tag, string key, string value)
+        {
+            if (!tag.Attributes.ContainsKey(key))
+            {
+                tag.Attributes.Add(key, value);
+            }
         }
 
         public static string[] GetMultilingualCustomFieldValuesAsArray(CustomField customField)

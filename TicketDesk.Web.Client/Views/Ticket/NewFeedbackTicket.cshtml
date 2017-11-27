@@ -58,6 +58,7 @@
         <div class="item-list item">
             @Html.CustomFieldLabelFor(x => x.CustomerName, new { @class = "key fullwidth" })
             <div class="fullwidth">
+                @Html.ValidationMessageFor(x => x.CustomerName.Value)
                 @Html.CustomFieldFor(x => x.CustomerName)
             </div>
         </div>

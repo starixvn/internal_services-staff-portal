@@ -25,9 +25,11 @@
 
         public bool IsRequired { get; set; }
 
-        public int MinStringLength { get; set; }
+        public string Regex { get; set; }
 
-        public int MaxStringLength { get; set; }
+        public int MinLength { get; set; }
+
+        public int MaxLength { get; set; }
 
         [NotMapped]
         public CustomFieldType CustomFieldType { get; set; }
