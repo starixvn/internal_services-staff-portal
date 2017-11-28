@@ -2,6 +2,7 @@
 {
     using Core.Enumerations;
     using Domain.Model;
+    using Localization.Client;
     using System;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -73,6 +74,11 @@
             label.Attributes.Add("for", htmlFieldName + ".Value");
 
             string innerText = GetMultiligualStringOfCustomField(customFieldValue);
+            if (customFieldValue != null && customFieldValue.CustomField.IsRequired)
+            {
+                innerText += "*";
+            }
+
             label.SetInnerText(innerText);
 
             if (htmlAttributes != null)
@@ -230,69 +236,87 @@
                     break;
             }
 
-            if (customFieldValue.CustomField.IsRequired)
-            {
-                AddAttributes(input, "data-val", "true");
-                input.Attributes.Add("data-val-required", customFieldValue.CustomField.Name + " is required");
-            }
+            AddUnobtrusiveValidations(customFieldValue, input);
+
+            return input;
+        }
+
+        private static void AddUnobtrusiveValidations(CustomFieldValue customFieldValue, TagBuilder input)
+        {
+            RequiredUnobtrusiveValidation(customFieldValue, input);
 
             if (input.Attributes.ContainsKey("type") &&
                 (input.Attributes["type"] == "text" || input.Attributes["type"] == "textarea"))
             {
-                if (!string.IsNullOrEmpty(customFieldValue.CustomField.Regex))
-                {
-                    AddAttributes(input, "data-val", "true");
-                    input.Attributes.Add("data-val-regex", customFieldValue.CustomField.RegexValidationErrorMessage);
-                    input.Attributes.Add("data-val-regex-pattern", customFieldValue.CustomField.Regex);
-                }
+                RegexPatternUnobtrusiveValidation(customFieldValue, input);
 
-                int max = customFieldValue.CustomField.MaxLength;
-                int min = customFieldValue.CustomField.MinLength;
+                TextLenghtUnobtrusiveValidation(customFieldValue, input);
+            }
+        }
 
-                if (min != -1)
-                {
-                    AddAttributes(input, "data-val", "true");
-                    input.Attributes.Add("data-val-length-min", min.ToString());
-                }
+        private static void RegexPatternUnobtrusiveValidation(CustomFieldValue customFieldValue, TagBuilder input)
+        {
+            if (!string.IsNullOrEmpty(customFieldValue.CustomField.Regex))
+            {
+                AddAttributes(input, "data-val", "true");
+                input.Attributes.Add("data-val-regex", customFieldValue.CustomField.RegexValidationErrorMessage);
+                input.Attributes.Add("data-val-regex-pattern", customFieldValue.CustomField.Regex);
+            }
+        }
 
-                if (max != -1)
-                {
-                    AddAttributes(input, "data-val", "true");
-                    input.Attributes.Add("data-val-length-max", max.ToString());
-                }
+        private static void TextLenghtUnobtrusiveValidation(CustomFieldValue customFieldValue, TagBuilder input)
+        {
+            int max = customFieldValue.CustomField.MaxLength;
+            int min = customFieldValue.CustomField.MinLength;
 
-                
-
-                if (min != -1 && max != -1)
-                {
-                    AddAttributes(input, "data-val-length",
-                        string.Format(
-                            "{0} must between {1}-{2} characters",
-                            customFieldValue.CustomField.Name,
-                            min,
-                            max));
-                }
-
-                if (min == -1 && max != -1)
-                {
-                    AddAttributes(input, "data-val-length",
-                        string.Format(
-                            "{0} must shorter than {1} characters",
-                            customFieldValue.CustomField.Name,
-                            max));
-                }
-
-                if (min != -1 && max == -1)
-                {
-                    AddAttributes(input, "data-val-length",
-                        string.Format(
-                            "{0} must longer than {1} characters",
-                            customFieldValue.CustomField.Name,
-                            min));
-                }
+            if (min != -1)
+            {
+                AddAttributes(input, "data-val", "true");
+                input.Attributes.Add("data-val-length-min", min.ToString());
             }
 
-            return input;
+            if (max != -1)
+            {
+                AddAttributes(input, "data-val", "true");
+                input.Attributes.Add("data-val-length-max", max.ToString());
+            }
+
+            if (min != -1 && max != -1)
+            {
+                AddAttributes(input, "data-val-length",
+                    string.Format(
+                        Resources.CustomFieldForHelper_AddUnobtrusiveValidations_LengthRangeWarning,
+                        customFieldValue.CustomField.Name,
+                        min,
+                        max));
+            }
+
+            if (min == -1 && max != -1)
+            {
+                AddAttributes(input, "data-val-length",
+                    string.Format(
+                        Resources.CustomFieldForHelper_AddUnobtrusiveValidations_ShorterLengthWarning,
+                        customFieldValue.CustomField.Name,
+                        max));
+            }
+
+            if (min != -1 && max == -1)
+            {
+                AddAttributes(input, "data-val-length",
+                    string.Format(
+                        Resources.CustomFieldForHelper_AddUnobtrusiveValidations_LongerLengthWarning,
+                        customFieldValue.CustomField.Name,
+                        min));
+            }
+        }
+
+        private static void RequiredUnobtrusiveValidation(CustomFieldValue customFieldValue, TagBuilder input)
+        {
+            if (customFieldValue.CustomField.IsRequired)
+            {
+                AddAttributes(input, "data-val", "true");
+                input.Attributes.Add("data-val-required", customFieldValue.CustomField.Name + Resources.CustomFieldForHelper_AddUnobtrusiveValidations_IsRequired);
+            }
         }
 
         private static void AddAttributes(TagBuilder tag, string key, string value)

@@ -418,6 +418,7 @@
     <Compile Include="Infrastructure\Helpers\MimeTypeMap.cs" />
     <Compile Include="Infrastructure\Helpers\PromptForHelper.cs" />
     <Compile Include="Infrastructure\Helpers\RazorViewHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\RequiredLabelForHelper.cs" />
     <Compile Include="Infrastructure\Helpers\SortableColumnHeaderHelper.cs" />
     <Compile Include="Infrastructure\Identity\FakeAuthenticationManager.cs" />
     <Compile Include="Infrastructure\Identity\TicketDeskContextSecurityProvider.cs" />

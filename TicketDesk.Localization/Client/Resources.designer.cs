@@ -97,6 +97,42 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  is required.
+        /// </summary>
+        public static string CustomFieldForHelper_AddUnobtrusiveValidations_IsRequired {
+            get {
+                return ResourceManager.GetString("CustomFieldForHelper_AddUnobtrusiveValidations_IsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} must between {1}-{2} characters.
+        /// </summary>
+        public static string CustomFieldForHelper_AddUnobtrusiveValidations_LengthRangeWarning {
+            get {
+                return ResourceManager.GetString("CustomFieldForHelper_AddUnobtrusiveValidations_LengthRangeWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} must longer than {1} characters.
+        /// </summary>
+        public static string CustomFieldForHelper_AddUnobtrusiveValidations_LongerLengthWarning {
+            get {
+                return ResourceManager.GetString("CustomFieldForHelper_AddUnobtrusiveValidations_LongerLengthWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} must shorter than {1} characters.
+        /// </summary>
+        public static string CustomFieldForHelper_AddUnobtrusiveValidations_ShorterLengthWarning {
+            get {
+                return ResourceManager.GetString("CustomFieldForHelper_AddUnobtrusiveValidations_ShorterLengthWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created Date.
         /// </summary>
         public static string Domain_Model_Ticket_CreatedDate {

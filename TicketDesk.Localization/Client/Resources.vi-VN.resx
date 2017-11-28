@@ -336,4 +336,16 @@
   <data name="Views_Announcement_Message" xml:space="preserve">
     <value>TIN NHẮN</value>
   </data>
+  <data name="CustomFieldForHelper_AddUnobtrusiveValidations_IsRequired" xml:space="preserve">
+    <value> được yêu cầu</value>
+  </data>
+  <data name="CustomFieldForHelper_AddUnobtrusiveValidations_LengthRangeWarning" xml:space="preserve">
+    <value>{0} phải nằm trong {1}-{2} ký tự</value>
+  </data>
+  <data name="CustomFieldForHelper_AddUnobtrusiveValidations_ShorterLengthWarning" xml:space="preserve">
+    <value>{0} phải ngắn hơn {1} ký tự</value>
+  </data>
+  <data name="CustomFieldForHelper_AddUnobtrusiveValidations_LongerLengthWarning" xml:space="preserve">
+    <value>{0} phải dài hơn {1} ký tự</value>
+  </data>
 </root>

@@ -336,4 +336,16 @@
   <data name="Views_Announcement_Message" xml:space="preserve">
     <value>MESSAGE</value>
   </data>
+  <data name="CustomFieldForHelper_AddUnobtrusiveValidations_IsRequired" xml:space="preserve">
+    <value> is required</value>
+  </data>
+  <data name="CustomFieldForHelper_AddUnobtrusiveValidations_LengthRangeWarning" xml:space="preserve">
+    <value>{0} must between {1}-{2} characters</value>
+  </data>
+  <data name="CustomFieldForHelper_AddUnobtrusiveValidations_ShorterLengthWarning" xml:space="preserve">
+    <value>{0} must shorter than {1} characters</value>
+  </data>
+  <data name="CustomFieldForHelper_AddUnobtrusiveValidations_LongerLengthWarning" xml:space="preserve">
+    <value>{0} must longer than {1} characters</value>
+  </data>
 </root>
