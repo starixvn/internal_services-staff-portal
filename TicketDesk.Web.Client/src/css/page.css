@@ -252,6 +252,9 @@ body {
 .table.table-bordered .expand .sign:after {
   content: "\002b"; }
 
+.table.table-bordered.tbl-announcement tr.header {
+  pointer-events: none; }
+
 .table.table-bordered.tbl-announcement tr.expand td {
   font-weight: normal; }
 

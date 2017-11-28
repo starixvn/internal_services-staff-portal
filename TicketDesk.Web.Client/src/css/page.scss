@@ -336,6 +336,9 @@ body {
     }
 
     &.tbl-announcement {
+        tr.header {
+            pointer-events: none;
+        }
         tr.expand td {
             font-weight: normal;
         }
