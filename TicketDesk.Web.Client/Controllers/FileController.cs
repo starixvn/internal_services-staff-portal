@@ -43,8 +43,10 @@
         [Route("delete")]
         public JsonResult Delete(Guid id, string fileName)
         {
+            string asciiFileName = TicketDeskFileStore.RemoveDiacritics(fileName);
+
             // ticketdesk never lets the UI directly delete a file attachment unless it is a pending.
-            TicketDeskFileStore.DeleteAttachment(fileName, id.ToString(), true);
+            TicketDeskFileStore.DeleteAttachment(asciiFileName, id.ToString(), true);
 
             // dropzone expects a message property back
             return new JsonCamelCaseResult { Data = new { Message = string.Empty } };

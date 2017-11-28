@@ -3,8 +3,10 @@
     using AzureBlobFileSystem;
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
     using System.Web;
 
@@ -12,7 +14,7 @@
     {
         private static IStorageProvider _currentProvider;
 
-        internal static IStorageProvider Current
+        private static IStorageProvider Current
         {
             get
             {
@@ -129,7 +131,8 @@
 
         private static string GetFilePath(string fileName, string containerId, bool isPending)
         {
-            var validFileName = isPending ? $"{fileName}.{containerId}" : fileName;
+            string asciiFileName = RemoveDiacritics(fileName);
+            var validFileName = isPending ? $"{asciiFileName}.{containerId}" : asciiFileName;
 
             var path = GetFileFolderPath(containerId, isPending);
             return Current.Combine(path, validFileName);
@@ -144,6 +147,23 @@
         {
             var path = Current.Combine("ticketdesk-attachments", isPending ? "pending" : containerId);
             return path;
+        }
+
+        public static string RemoveDiacritics(string text)
+        {
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
     }
 }
