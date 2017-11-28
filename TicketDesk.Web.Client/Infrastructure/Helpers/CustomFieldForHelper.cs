@@ -251,8 +251,8 @@
         {
             RequiredUnobtrusiveValidation(customFieldValue, input);
 
-            if (input.Attributes.ContainsKey("type") &&
-                (input.Attributes["type"] == "text" || input.Attributes["type"] == "textarea"))
+            if ((input.Attributes.ContainsKey("type") && input.Attributes["type"] == "text") 
+                || input.TagName == "textarea")
             {
                 RegexPatternUnobtrusiveValidation(customFieldValue, input);
 

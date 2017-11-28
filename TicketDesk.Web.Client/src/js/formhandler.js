@@ -4,6 +4,28 @@
 
     SetValueForRequiredRadioButton(formclassname);
 
+    if ($("input[type='text']").attr("data-val-length-max") !== undefined) {
+        $("input[type='text']").on("input",
+            function () {
+                var maxChar = $(this).attr("data-val-length-max");
+                if ($(this).val().length > maxChar) {
+                    var textRemain = $(this).val().substring(0, maxChar);
+                    $(this).val(textRemain);
+                }
+            });
+    }
+
+    if ($("textarea").attr("data-val-length-max") !== undefined) {
+        $("textarea").on("input",
+            function () {
+                var maxChar2 = $(this).attr("data-val-length-max");
+                if ($(this).val().length > maxChar2) {
+                    var textRemain = $(this).val().substring(0, maxChar2);
+                    $(this).val(textRemain);
+                }
+            });
+    }
+
     $('#notification-modal').on('hidden.bs.modal',
         function () {
             location.reload();
