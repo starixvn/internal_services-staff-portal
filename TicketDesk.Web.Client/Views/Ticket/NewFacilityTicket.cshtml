@@ -107,7 +107,8 @@
                     if (itemNames === "") {
                         itemNames = values[j].value;
                     } else {
-                        itemNames = itemNames + ", " + values[j].value;
+                        itemNames = itemNames + "...";
+                        break;
                     }
                 }
             }
@@ -115,25 +116,23 @@
             return "[" + baseTitle + "] - " + requestTypeValue + " " + itemNames;
         }
 
-       
-
         $(document).ready(function () {
             InitFormHandler("ticket-form", false);
 
             var title = ToTitleCase("@Html.Raw(Resources.Views_Ticket_NewFacilityTicket_FormTitle)");
 
             // Default title for a ticket
-            $("#title_prefix").text("[" + title + "]");
+            $(".ticket-title").val("[" + title + "]");
 
             $(".ticket-form").on("change",
                 function () {
-                    $("#title_prefix").text(GetTitle(title));
+                    $(".ticket-title").val(GetTitle(title));
                 });
 
-            $("#title_prefix, #title_custome").on("input",
-                function() {
-                    $("#ticket-title").val($("#title_prefix").val() + " - " + $("#title_custome").val());
-                });
+            //$("#title_prefix, #title_custome").on("input",
+            //    function() {
+            //        $("#ticket-title").val($("#title_prefix").val() + " - " + $("#title_custome").val());
+            //    });
             $('.subject input[type="text"]').keypress(function () {
                 var value = ($(this).val().length + 1) * 8;
                 $(this).css('width', value + 'px');
@@ -177,8 +176,9 @@
             @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "key border" })
             <div class="value span-3 border subject">
                 @Html.ValidationMessageFor(x => x.Ticket.Title)
-                <span  id="title_prefix" disabled="disabled"></span>
-                <input type="text" id="title_custome" />
+                @*<span  id="title_prefix" disabled="disabled"></span>
+                <input type="text" id="title_custome" />*@
+                @Html.TextBoxFor(model => model.Ticket.Title, new { @class = "ticket-title" })
             </div>
         </div>
 
