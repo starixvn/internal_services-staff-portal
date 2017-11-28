@@ -105,13 +105,14 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
     @Html.HiddenFor(model => model.TempId)
-    @Html.HiddenFor(model => model.SelectedRequestType, new { @class = "required-radio-value" })
+    
 
     <div class="form-content facility-form">
         <div class="title">@Resources.Views_Ticket_NewFacilityTicket_Title</div>
         <div class="item-list">
             @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "key border" })
             <div class="value span-3 border subject">
+                @Html.ValidationMessageFor(x => x.Ticket.Title)
                 @Html.TextBoxFor(x => x.Ticket.Title, new { @class = "ticket-title" })
             </div>
         </div>
@@ -120,6 +121,8 @@
         <div class="value span-3 border">
             <div class="radio-group">
                 @Html.HiddenFor(x => x.RequestType.CustomFieldId, new { Value = Model.RequestType.CustomField.Id })
+                @Html.HiddenFor(model => model.SelectedRequestType, new { @class = "required-radio-value" })
+                @Html.ValidationMessageFor(x => x.SelectedRequestType)
                 @foreach (string requestType in Model.RequestTypes)
                 {
                     var rdId = "rd-" + requestType.Replace(' ', '_');
@@ -152,12 +155,14 @@
                         @Html.CustomFieldIndex("Items", guid)
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border" })
+                        @Html.ValidationMessageFor(x => x.Items.ElementAt(i).ItemName, null, new {data_valmsg_for = "Items[" + guid + "].ItemName.Value" })
                         <div class="value border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "" })</div>
                         <div class="border span-2">
                             <button class="btn btn-delete btn-delete-item rippler rippler-default"><span class="icon-delete"></span>@Resources.Views_Ticket_NewFacilityTicket_DeleteItem</button>
                         </div>
-
+                        
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth border key" })
+                        @Html.ValidationMessageFor(x => x.Items.ElementAt(i).Reason, null, new { data_valmsg_for = "Items[" + guid + "].Reason.Value" })
                         <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "" })</div>
                     </div>
                 }
