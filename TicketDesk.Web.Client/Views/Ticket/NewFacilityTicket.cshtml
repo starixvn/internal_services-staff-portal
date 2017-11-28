@@ -110,7 +110,7 @@
     <div class="form-content facility-form">
         <div class="title">@Resources.Views_Ticket_NewFacilityTicket_Title</div>
         <div class="item-list">
-            @Html.LabelFor(x => x.Ticket.Title, new { @class = "key border" })
+            @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "key border" })
             <div class="value span-3 border subject">
                 @Html.TextBoxFor(x => x.Ticket.Title, new { @class = "ticket-title" })
             </div>

@@ -117,6 +117,12 @@
             if (customFieldValue != null)
             {
                 string innerText = GetMultiligualStringOfCustomField(customFieldValue);
+
+                if (customFieldValue.CustomField.IsRequired)
+                {
+                    innerText += "*";
+                }
+
                 label.SetInnerText(innerText);
             }
 
