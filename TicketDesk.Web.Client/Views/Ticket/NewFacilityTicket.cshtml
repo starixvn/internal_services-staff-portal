@@ -115,23 +115,31 @@
             return "[" + baseTitle + "] - " + requestTypeValue + " " + itemNames;
         }
 
+       
+
         $(document).ready(function () {
             InitFormHandler("ticket-form", false);
 
             var title = ToTitleCase("@Html.Raw(Resources.Views_Ticket_NewFacilityTicket_FormTitle)");
 
             // Default title for a ticket
-            $("#title_prefix").val("[" + title + "]");
+            $("#title_prefix").text("[" + title + "]");
 
             $(".ticket-form").on("change",
                 function () {
-                    $("#title_prefix").val(GetTitle(title));
+                    $("#title_prefix").text(GetTitle(title));
                 });
 
             $("#title_prefix, #title_custome").on("input",
                 function() {
                     $("#ticket-title").val($("#title_prefix").val() + " - " + $("#title_custome").val());
                 });
+            $('.subject input[type="text"]').keypress(function () {
+                var value = ($(this).val().length + 1) * 8;
+                $(this).css('width', value + 'px');
+            });
+
+            
         });
     </script>
 }
@@ -165,11 +173,11 @@
 
     <div class="form-content facility-form">
         <div class="title">@Resources.Views_Ticket_NewFacilityTicket_Title</div>
-        <div class="item-list">
+        <div class="item-list height-auto">
             @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "key border" })
             <div class="value span-3 border subject">
                 @Html.ValidationMessageFor(x => x.Ticket.Title)
-                <input type="text" id="title_prefix" disabled="disabled">
+                <span  id="title_prefix" disabled="disabled"></span>
                 <input type="text" id="title_custome" />
             </div>
         </div>

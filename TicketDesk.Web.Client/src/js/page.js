@@ -68,10 +68,13 @@ $(document).ready(function() {
        , addElement: 'div'   // e.g. 'svg'(feature)
        , duration: 400
     });
-    $('input[type="text"]').focus(function () {
-        $(this)[0].scrollIntoView();
-    });
-    $('textarea').focus(function () {
-        $(this)[0].scrollIntoView();
-    });
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        $('input[type="text"]').focus(function () {
+            $(this)[0].scrollIntoView();
+        });
+        $('textarea').focus(function () {
+            $(this)[0].scrollIntoView();
+        });
+    }
+    
 });

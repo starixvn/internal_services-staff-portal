@@ -751,6 +751,11 @@ tr.header {
         width: 100%;
         margin-bottom: 6px;
     }
+    .subject textarea {
+        min-height: unset;
+        width: auto;
+        max-width: 100%;
+    }
 }
 
 .attach-file .fullwidth {
@@ -903,7 +908,29 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         text-transform: initial;
     }
 }
-
+.height-auto {
+    .key, .value.span-3 {
+        height: auto;
+        min-height: 40px;
+        line-height: unset;
+    }
+    .key {
+        display: flex;
+        align-items: center;
+        line-height: unset;
+    }
+    #title_prefix {
+        display: inline-block;
+        padding-right: 16px;
+    }
+    #title_custome {
+        width: auto;
+        max-width: 400px;
+    }
+    .value.span-3 {
+       
+    }
+}
 .attach-file {
     .key, .value.span-3 {
         height: auto;

@@ -531,6 +531,10 @@ tr.header {
     min-height: 100px;
     width: 100%;
     margin-bottom: 6px; }
+  .form-content .subject textarea {
+    min-height: unset;
+    width: auto;
+    max-width: 100%; }
 
 .attach-file .fullwidth {
   padding: 9px 12px; }
@@ -680,6 +684,24 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     .btn.btn-back[disabled] {
       opacity: 0.5;
       color: rgba(51, 51, 51, 0.5); }
+
+.height-auto .key, .height-auto .value.span-3 {
+  height: auto;
+  min-height: 40px;
+  line-height: unset; }
+
+.height-auto .key {
+  display: flex;
+  align-items: center;
+  line-height: unset; }
+
+.height-auto #title_prefix {
+  display: inline-block;
+  padding-right: 16px; }
+
+.height-auto #title_custome {
+  width: auto;
+  max-width: 400px; }
 
 .attach-file .key, .attach-file .value.span-3 {
   height: auto;
