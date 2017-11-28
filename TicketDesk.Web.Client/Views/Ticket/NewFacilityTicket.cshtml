@@ -54,6 +54,8 @@
                 $(".btn-delete-item").show();
                 $(".btn-delete-item:first").hide();
 
+                $(".ticket-form").trigger("change");
+
                 var last = $(id).children().last();
                 if ($(last).hasClass("even")) {
                     $(last).removeClass("even");
@@ -68,6 +70,8 @@
             $("body").on("click", ".btn-delete-item", function () {
                 $(this).parent().parent().remove();
                 ResetFormValidator();
+
+                $(".ticket-form").trigger("change");
             });
         }
 
@@ -78,15 +82,24 @@
     </script>
 
     <script>
-        $(document).ready(function () {
-            InitFormHandler("ticket-form", true);
+        function ToTitleCase(str) {
+            return str.toLowerCase().split(' ').map(function (word) {
+                return word.replace(word[0], word[0].toUpperCase());
+            }).join(' ');
+        }
+
+        $(document).ready(function() {
+            InitFormHandler("ticket-form", false);
+
+            var title = ToTitleCase("@Html.Raw(Resources.Views_Ticket_NewFacilityTicket_FormTitle)");
 
             // Default title for a ticket
-            $(".ticket-title").val("[@Html.Raw(Resources.Views_Ticket_NewFacilityTicket_FormTitle)]");
+            $(".ticket-title").val("[" + title + "]");
 
             $(".ticket-form").on("change",
-                function () {
+                function() {
                     var values = $(this).serializeArray();
+
                     var requestTypeValue = "";
                     for (var i = 0; i < values.length; i++) {
                         if (values[i].name === "RequestType.Value") {
@@ -94,11 +107,43 @@
                             break;
                         }
                     }
-                    $(".ticket-title").val("[@Html.Raw(Resources.Views_Ticket_NewFacilityTicket_FormTitle)] - " + requestTypeValue);
+
+                    var itemNames = "";
+                    for (var j = 0; j < values.length; j++) {
+                        if (values[j].name.indexOf("ItemName.Value") !== -1) {
+                            if (itemNames === "") {
+                                itemNames = values[j].value;
+                            } else {
+                                itemNames = itemNames + ", " + values[j].value;
+                            }
+                        }
+                    }
+
+                    $(".ticket-title").val("[" + title + "] - " + requestTypeValue + " - " + itemNames);
                 });
         });
     </script>
 }
+
+<!-- Modal -->
+<div id="notification-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@Resources.Common_Form_Success</h4>
+            </div>
+            <div class="modal-body">
+                <p>@Resources.Views_Ticket_Modal_SentMessage</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">@Resources.Dropzone_Modal_Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 @using (Html.BeginForm("NewFacilityTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form filechange", enctype = "multipart/form-data" }))
 {

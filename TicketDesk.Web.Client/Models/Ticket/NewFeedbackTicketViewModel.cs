@@ -3,6 +3,7 @@
     using Domain.Model;
     using Infrastructure.Helpers;
     using System.ComponentModel.DataAnnotations;
+    using Localization.Client;
 
     public class NewFeedbackTicketViewModel : TicketWithFilesBaseViewModel
     {
@@ -30,7 +31,7 @@
             }
         }
 
-        [Required(ErrorMessage = "Feedback by is required")]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = "Views_Ticket_Feedback_FeedbackByRequired")]
         public string SelectedFeedbackByValue { get; set; }
 
         public NewFeedbackTicketViewModel()

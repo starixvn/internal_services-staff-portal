@@ -4,6 +4,7 @@
     using Infrastructure.Helpers;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Localization.Client;
 
     public class NewFacilityTicketViewModel : TicketWithFilesBaseViewModel
     {
@@ -29,7 +30,7 @@
             }
         }
 
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = "Views_Ticket_NewFacilityTicket_RequestTypeRequired")]
         public string SelectedRequestType { get; set; }
 
         public NewFacilityTicketViewModel()

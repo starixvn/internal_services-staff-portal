@@ -15,7 +15,7 @@
             MaxBytes = 33554432;
             AcceptedExtensions = new[] { ".jpg", ".jpeg", ".png", ".pdf" };
             MaxNumberOfFile = 20;
-            IsFileRequired = true;
+            IsFileRequired = false;
         }
     }
 }

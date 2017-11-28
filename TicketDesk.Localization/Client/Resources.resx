@@ -348,4 +348,16 @@
   <data name="CustomFieldForHelper_AddUnobtrusiveValidations_LongerLengthWarning" xml:space="preserve">
     <value>{0} must longer than {1} characters</value>
   </data>
+  <data name="Common_Form_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="Views_Ticket_Modal_SentMessage" xml:space="preserve">
+    <value>Your request was successfully sent.</value>
+  </data>
+  <data name="Views_Ticket_NewFacilityTicket_RequestTypeRequired" xml:space="preserve">
+    <value>Request type is required</value>
+  </data>
+  <data name="Views_Ticket_Feedback_FeedbackByRequired" xml:space="preserve">
+    <value>Feedback by is required</value>
+  </data>
 </root>

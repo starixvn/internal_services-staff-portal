@@ -79,6 +79,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        public static string Common_Form_Success {
+            get {
+                return ResourceManager.GetString("Common_Form_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Displaying {0} to {1} of {2} item(s).
         /// </summary>
         public static string Common_Table_Pagination_DisplayingText {
@@ -664,11 +673,29 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Feedback by is required.
+        /// </summary>
+        public static string Views_Ticket_Feedback_FeedbackByRequired {
+            get {
+                return ResourceManager.GetString("Views_Ticket_Feedback_FeedbackByRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Ticket.
         /// </summary>
         public static string Views_Ticket_Index_NewTicket {
             get {
                 return ResourceManager.GetString("Views_Ticket_Index_NewTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your request was successfully sent..
+        /// </summary>
+        public static string Views_Ticket_Modal_SentMessage {
+            get {
+                return ResourceManager.GetString("Views_Ticket_Modal_SentMessage", resourceCulture);
             }
         }
         
@@ -705,6 +732,15 @@ namespace TicketDesk.Localization.Client {
         public static string Views_Ticket_NewFacilityTicket_ItemList {
             get {
                 return ResourceManager.GetString("Views_Ticket_NewFacilityTicket_ItemList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request type is required.
+        /// </summary>
+        public static string Views_Ticket_NewFacilityTicket_RequestTypeRequired {
+            get {
+                return ResourceManager.GetString("Views_Ticket_NewFacilityTicket_RequestTypeRequired", resourceCulture);
             }
         }
         

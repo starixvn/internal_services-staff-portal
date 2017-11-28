@@ -3,6 +3,11 @@
     var formSubmitSelector = "." + formclassname + " input[type=submit]";
 
     SetValueForRequiredRadioButton(formclassname);
+
+    $('#notification-modal').on('hidden.bs.modal',
+        function () {
+            location.reload();
+        });
     
     //$(selector).on("input",
     //    "input",
