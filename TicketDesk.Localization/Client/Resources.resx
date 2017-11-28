@@ -360,4 +360,7 @@
   <data name="Views_Ticket_Feedback_FeedbackByRequired" xml:space="preserve">
     <value>Feedback by is required</value>
   </data>
+  <data name="Common_Form_Characters" xml:space="preserve">
+    <value>characters</value>
+  </data>
 </root>

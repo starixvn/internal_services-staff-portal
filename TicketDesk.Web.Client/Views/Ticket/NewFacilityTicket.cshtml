@@ -219,7 +219,7 @@
                         </div>
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth border key" })
-                        <p>(@Model.Items.ElementAt(i).Reason.CustomField.MaxLength characters)</p>
+                        <p>(@Model.Items.ElementAt(i).Reason.CustomField.MaxLength @Resources.Common_Form_Characters)</p>
                         @Html.ValidationMessageFor(x => x.Items.ElementAt(i).Reason, null, new { data_valmsg_for = "Items[" + guid + "].Reason.Value" })
                         <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "" })</div>
                     </div>

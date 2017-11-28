@@ -360,4 +360,7 @@
   <data name="Views_Ticket_Feedback_FeedbackByRequired" xml:space="preserve">
     <value>Người phản hồi là bắt buộc</value>
   </data>
+  <data name="Common_Form_Characters" xml:space="preserve">
+    <value>ký tự</value>
+  </data>
 </root>

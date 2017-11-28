@@ -70,6 +70,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to characters.
+        /// </summary>
+        public static string Common_Form_Characters {
+            get {
+                return ResourceManager.GetString("Common_Form_Characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send.
         /// </summary>
         public static string Common_Form_Send {
