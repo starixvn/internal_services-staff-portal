@@ -150,6 +150,7 @@
     </Compile>
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TicketExtensions.cs" />
     <Compile Include="IContextHelper.cs" />
     <Compile Include="Infrastructure\AsyncHelper.cs" />
     <Compile Include="Infrastructure\CommentRequiredAttribute.cs" />

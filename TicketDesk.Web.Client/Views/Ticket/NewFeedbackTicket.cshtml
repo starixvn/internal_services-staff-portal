@@ -1,4 +1,5 @@
-﻿@using TicketDesk.Localization.Client
+﻿@using TicketDesk.Domain.Extensions
+@using TicketDesk.Localization.Client
 @using TicketDesk.Localization.Views.Ticket
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 
@@ -72,6 +73,7 @@
         </div>
         <div class="item-list item">
             @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "key fullwidth border" })
+            <p>(@Model.Ticket.GetTitleMaxLength() @Resources.Common_Form_Characters)</p>
             <div class="fullwidth">
                 @Html.ValidationMessageFor(x => x.Ticket.Title)
                 @Html.TextBoxFor(x => x.Ticket.Title)
@@ -79,6 +81,7 @@
         </div>
         <div class="item-list item">
             @Html.CustomFieldLabelFor(x => x.CustomerName, new { @class = "key fullwidth" })
+            <p>(@Model.CustomerName.CustomField.MaxLength @Resources.Common_Form_Characters)</p>
             <div class="fullwidth">
                 @Html.ValidationMessageFor(x => x.CustomerName.Value)
                 @Html.CustomFieldFor(x => x.CustomerName)
@@ -86,6 +89,7 @@
         </div>
         <div class="item-list item">
             @Html.CustomFieldLabelFor(x => x.Feedback, new { @class = "key fullwidth" })
+            <p>(@Model.Feedback.CustomField.MaxLength @Resources.Common_Form_Characters)</p>
             <div class="fullwidth">
                 @Html.ValidationMessageFor(x => x.Feedback.Value)
                 @Html.CustomFieldFor(x => x.Feedback)
