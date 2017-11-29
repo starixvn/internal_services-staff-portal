@@ -38,7 +38,7 @@
 
         [Route("")]
         [Route("index")]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.ListAssignedTicket, Policy = Constant.Policy.Read)]
         public ActionResult Index(int page = 1, int itemPerPage = 20)
         {
             HomeViewModel homeViewModel = new HomeViewModel
