@@ -12,6 +12,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Data.Entity.Validation;
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
@@ -512,9 +513,22 @@
         private async Task<bool> CreateTicketAsync(Ticket ticket, Guid tempId)
         {
             Context.Tickets.Add(ticket);
-            await Context.SaveChangesAsync().ConfigureAwait(false);
-            ticket.CommitPendingAttachments(tempId);
-
+            try
+            {
+                await Context.SaveChangesAsync().ConfigureAwait(false);
+                ticket.CommitPendingAttachments(tempId);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                    }
+                }
+            }
+            
             return ticket.TicketId != default(int);
         }
 

@@ -49,7 +49,7 @@
             if ($(this).valid()) {
                 if (CheckValidFilesIfDropzoneExisted()) {
 
-                    $(formSubmitSelector).addClass("disabled");
+                    $(formSubmitSelector).disable();
 
                     if (!allowRedirect) {
                         e.preventDefault();

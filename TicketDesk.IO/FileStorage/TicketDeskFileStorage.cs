@@ -3,7 +3,6 @@
     using AzureBlobFileSystem;
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -12,6 +11,10 @@
 
     public static class TicketDeskFileStore
     {
+        private static readonly string Dir = Path.Combine(
+            AppDomain.CurrentDomain.GetData("DataDirectory").ToString(),
+            "filestore");
+
         private static IStorageProvider _currentProvider;
 
         private static IStorageProvider Current
@@ -27,8 +30,7 @@
                     }
                     else
                     {
-                        var dir = Path.Combine(AppDomain.CurrentDomain.GetData("DataDirectory").ToString(), "filestore");
-                        _currentProvider = new FileSystemStorageProvider(dir);
+                        _currentProvider = new FileSystemStorageProvider(Dir);
                     }
                 }
 
@@ -36,7 +38,8 @@
             }
         }
 
-        public static bool MoveFile(string fileName, string oldContainerId, string newContainerId, bool wasPending, bool isPending)
+        public static bool MoveFile(string fileName, string oldContainerId, string newContainerId, bool wasPending,
+            bool isPending)
         {
             var oldPath = GetFilePath(fileName, oldContainerId, wasPending);
             ////var oldFolder = GetFileFolderPath(oldContainerId, wasPending);
@@ -89,12 +92,33 @@
             });
         }
 
-        public static async Task<bool> SaveAttachmentAsync(Stream inputStream, string fileName, string containerId, bool isPending)
+        public static async Task<bool> SaveAttachmentAsync(Stream inputStream, string fileName, string containerId,
+            bool isPending)
         {
             var path = GetFilePath(fileName, containerId, isPending);
-            using (var writer = new StreamWriter(Current.CreateFile(path).OpenWrite()))
+            ////using (var writer = new StreamWriter(Current.CreateFile(path).OpenWrite()))
+            ////{
+            ////    await inputStream.CopyToAsync(writer.BaseStream).ConfigureAwait(false);
+            ////}
+
+            //try
+            //{
+                var file = Current.CreateFile(path);
+            //}
+            //catch (Exception e)
+            //{
+            //    string[] fileSegments = path.Split('.');
+
+            //}
+
+            var writer = new StreamWriter(file.OpenWrite());
+            try
             {
                 await inputStream.CopyToAsync(writer.BaseStream).ConfigureAwait(false);
+            }
+            finally
+            {
+                writer.Dispose();
             }
 
             return true;
@@ -131,8 +155,22 @@
 
         private static string GetFilePath(string fileName, string containerId, bool isPending)
         {
+            // 260 is the upper limit for full file path
+            // 74 is the length of 'ticketdesk-attachments\\pending\\' character to combine directory path and file name to full file path, plus guid at the end
+
+            int characterLimit = 260 - Dir.Length - 74;
+
             string asciiFileName = RemoveDiacritics(fileName);
-            var validFileName = isPending ? $"{asciiFileName}.{containerId}" : asciiFileName;
+
+            string extension = asciiFileName.Split('.').Last();
+            string name = asciiFileName.Substring(0, asciiFileName.LastIndexOf('.'));
+
+            if(name.Length > characterLimit)
+            {
+                name = name.Substring(0, characterLimit);
+            }
+
+            var validFileName = isPending ? $"{name}.{extension}.{containerId}" : $"{name}.{extension}";
 
             var path = GetFileFolderPath(containerId, isPending);
             return Current.Combine(path, validFileName);
@@ -140,7 +178,9 @@
 
         private static string TrimIdFromName(string fileName, string containerId)
         {
-            return fileName.EndsWith(containerId) ? fileName.Substring(0, fileName.Length - (containerId.Length + 1)) : fileName;
+            return fileName.EndsWith(containerId)
+                ? fileName.Substring(0, fileName.Length - (containerId.Length + 1))
+                : fileName;
         }
 
         private static string GetFileFolderPath(string containerId, bool isPending)
@@ -151,19 +191,13 @@
 
         public static string RemoveDiacritics(string text)
         {
-            var normalizedString = text.Normalize(NormalizationForm.FormD);
-            var stringBuilder = new StringBuilder();
-
-            foreach (var c in normalizedString)
-            {
-                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
-                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
-                {
-                    stringBuilder.Append(c);
-                }
-            }
-
-            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+            string normalized = text.Normalize(NormalizationForm.FormKD);
+            Encoding removal = Encoding.GetEncoding(
+                Encoding.ASCII.CodePage,
+                new EncoderReplacementFallback(""),
+                new DecoderReplacementFallback(""));
+            byte[] bytes = removal.GetBytes(normalized);
+            return Encoding.ASCII.GetString(bytes);
         }
     }
 }
