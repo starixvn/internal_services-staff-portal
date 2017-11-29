@@ -49,7 +49,7 @@
             if ($(this).valid()) {
                 if (CheckValidFilesIfDropzoneExisted()) {
 
-                    $(formSubmitSelector).disable();
+                    $(formSubmitSelector).prop('disabled', true);
 
                     if (!allowRedirect) {
                         e.preventDefault();
@@ -68,11 +68,12 @@
                     e.preventDefault();
                     return false;
                 }
-            } else {
-                SetErrorTextAndShowModal("Invalid data in fields", "Không có dữ liệu trong các ô");
-                e.preventDefault();
-                return false;
             }
+            //else {
+            //    SetErrorTextAndShowModal("Invalid data in fields", "Không có dữ liệu trong các ô");
+            //    e.preventDefault();
+            //    return false;
+            //}
 
             return true;
         });
