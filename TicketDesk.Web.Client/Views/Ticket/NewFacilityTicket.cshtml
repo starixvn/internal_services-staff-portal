@@ -174,9 +174,7 @@
             @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "key border" })
             <div class="value span-3 border subject">
                 @Html.ValidationMessageFor(x => x.Ticket.Title)
-                @*<span  id="title_prefix" disabled="disabled"></span>
-                <input type="text" id="title_custome" />*@
-                @Html.TextBoxFor(model => model.Ticket.Title, new { @class = "ticket-title" })
+                @Html.TextBoxFor(model => model.Ticket.Title, new { @class = "ticket-title" , disabled="disabled"})
             </div>
         </div>
 
