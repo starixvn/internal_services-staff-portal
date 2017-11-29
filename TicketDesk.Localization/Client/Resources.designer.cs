@@ -538,7 +538,7 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer&apos;s Name.
+        ///   Looks up a localized string similar to Customer&apos;s Name *.
         /// </summary>
         public static string Views_IdUploader_Display_CustomerName {
             get {
@@ -547,7 +547,7 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer&apos;s Username.
+        ///   Looks up a localized string similar to Customer&apos;s Username *.
         /// </summary>
         public static string Views_IdUploader_Display_CustomerUserName {
             get {
@@ -556,7 +556,7 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Id number.
+        ///   Looks up a localized string similar to Id number *.
         /// </summary>
         public static string Views_IdUploader_Display_IdNumber {
             get {

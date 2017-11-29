@@ -301,7 +301,7 @@
     <value>Số chứng minh nhân dân không được chứa chữ</value>
   </data>
   <data name="Views_IdUploader_Display_IdNumber" xml:space="preserve">
-    <value>Số chứng minh nhân dân</value>
+    <value>Số chứng minh nhân dân *</value>
   </data>
   <data name="Views_IdUploader_Display_Remark" xml:space="preserve">
     <value>Ghi chú</value>
@@ -313,10 +313,10 @@
     <value>Thông tin được lưu thành công</value>
   </data>
   <data name="Views_IdUploader_Display_CustomerUserName" xml:space="preserve">
-    <value>Tên đăng nhập của khách hàng</value>
+    <value>Tên đăng nhập của khách hàng *</value>
   </data>
   <data name="Views_IdUploader_Display_CustomerName" xml:space="preserve">
-    <value>Tên của khách hàng</value>
+    <value>Tên của khách hàng *</value>
   </data>
   <data name="Views_IdUploader_Form_Title" xml:space="preserve">
     <value>MẪU TẢI LÊN CHỨNG MINH NHÂN DÂN</value>

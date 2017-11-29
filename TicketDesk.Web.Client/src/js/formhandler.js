@@ -7,7 +7,7 @@
     $("body").on("input",
         "input[type='text'], textarea",
         function() {
-            if ($(this).attr("data-val-length-max") !== undefined) {
+            if ($(this).attr("data-val-length-max") !== undefined && !$(this).hasClass("skip-limit")) {
                 var maxChar = $(this).attr("data-val-length-max");
                 if ($(this).val().length > maxChar) {
                     var textRemain = $(this).val().substring(0, maxChar);
@@ -64,7 +64,7 @@
                     }
 
                 } else {
-                    SetErrorTextAndShowModal("Invalid or missing files", "Files không hợp lệ hoặc không có file nào");
+                    SetErrorTextAndShowModal("Invalid or missing files or total file size exceeded max number", "Files không hợp lệ hoặc không có file nào hoặc tổng dung lượng file vượt quá giới hạn cho phép");
                     e.preventDefault();
                     return false;
                 }

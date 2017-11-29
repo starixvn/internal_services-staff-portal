@@ -71,7 +71,7 @@
         <div class="item-list item">
             @Html.LabelFor(x => x.IdNumber, new { @class = "key fullwidth" })
             <div class="fullwidth">
-                @Html.TextBoxFor(x => x.IdNumber)
+                @Html.TextBoxFor(x => x.IdNumber, new {@class="skip-limit"})
                 @Html.ValidationMessageFor(x => x.IdNumber)
             </div>
         </div>
