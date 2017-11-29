@@ -54,52 +54,55 @@
 
     <div class="form-content feedback-form">
         <div class="title">@Resources.Views_Ticket_NewFeedbackTicket_Title</div>
-        @Html.CustomFieldLabelFor(x => x.FeedbackBy, new { @class = "key border" })
-        <div class="value span-3 border">
-            <div class="radio-group">
-                @Html.HiddenFor(x => x.FeedbackBy.CustomFieldId, new { Value = Model.FeedbackBy.CustomField.Id })
-                @Html.HiddenFor(model => model.SelectedFeedbackByValue, new { @class = "required-radio-value" })
-                @Html.ValidationMessageFor(x => x.SelectedFeedbackByValue)
-                @foreach (string feedbackByValue in Model.FeedbackByValues)
+        <div class="height-auto">
+            @Html.CustomFieldLabelFor(x => x.FeedbackBy, new { @class = "key border" })
+            <div class="value span-3 border">
+                <div class="radio-group">
+                    @Html.HiddenFor(x => x.FeedbackBy.CustomFieldId, new { Value = Model.FeedbackBy.CustomField.Id })
+                    @Html.HiddenFor(model => model.SelectedFeedbackByValue, new { @class = "required-radio-value" })
+
+                    @foreach (string feedbackByValue in Model.FeedbackByValues)
                 {
                     var rdId = "rd-" + feedbackByValue.Replace(' ', '_');
 
-                    <p>
-                        @Html.RadioButtonFor(x => x.FeedbackBy.Value, feedbackByValue, new { id = rdId, @class = "required-radio" })
-                        <label for="@rdId">@feedbackByValue</label>
-                    </p>
-                }
+                        <p>
+                            @Html.RadioButtonFor(x => x.FeedbackBy.Value, feedbackByValue, new { id = rdId, @class = "required-radio" })
+                            <label for="@rdId">@feedbackByValue</label>
+                        </p>
+                    }
+                </div>
+                @Html.ValidationMessageFor(x => x.SelectedFeedbackByValue)
             </div>
-        </div>
+        </div>       
         <div class="item-list item">
             <div class="key fullwidth border">
                 @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "" })
-                <span>(@Model.Ticket.GetTitleMaxLength() @Resources.Common_Form_Characters)</span>
+                <span class="highlight">(@Model.Ticket.GetTitleMaxLength() @Resources.Common_Form_Characters)</span>
             </div>            
             <div class="fullwidth">
-                @Html.ValidationMessageFor(x => x.Ticket.Title)
                 @Html.TextBoxFor(x => x.Ticket.Title)
+                @Html.ValidationMessageFor(x => x.Ticket.Title)
             </div>
         </div>
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.CustomerName, new { @class = "" })
-                <span>(@Model.CustomerName.CustomField.MaxLength @Resources.Common_Form_Characters)</span>
+                <span class="highlight">(@Model.CustomerName.CustomField.MaxLength @Resources.Common_Form_Characters)</span>
             </div>
            
-            <div class="fullwidth">
-                @Html.ValidationMessageFor(x => x.CustomerName.Value)
+            <div class="fullwidth">                
                 @Html.CustomFieldFor(x => x.CustomerName)
+                @Html.ValidationMessageFor(x => x.CustomerName.Value)
             </div>
         </div>
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.Feedback, new { @class = "" })
-                <span>(@Model.Feedback.CustomField.MaxLength @Resources.Common_Form_Characters)</span>
+                <span class="highlight">(@Model.Feedback.CustomField.MaxLength @Resources.Common_Form_Characters)</span>
             </div>           
             <div class="fullwidth">
-                @Html.ValidationMessageFor(x => x.Feedback.Value)
                 @Html.CustomFieldFor(x => x.Feedback)
+                @Html.ValidationMessageFor(x => x.Feedback.Value)
             </div>
         </div>
         @Html.Partial("_DropzoneView", Model)
