@@ -92,33 +92,16 @@
             });
         }
 
-        public static async Task<bool> SaveAttachmentAsync(Stream inputStream, string fileName, string containerId,
+        public static async Task<bool> SaveAttachmentAsync(
+            Stream inputStream,
+            string fileName,
+            string containerId,
             bool isPending)
         {
             var path = GetFilePath(fileName, containerId, isPending);
-            ////using (var writer = new StreamWriter(Current.CreateFile(path).OpenWrite()))
-            ////{
-            ////    await inputStream.CopyToAsync(writer.BaseStream).ConfigureAwait(false);
-            ////}
-
-            //try
-            //{
-                var file = Current.CreateFile(path);
-            //}
-            //catch (Exception e)
-            //{
-            //    string[] fileSegments = path.Split('.');
-
-            //}
-
-            var writer = new StreamWriter(file.OpenWrite());
-            try
+            using (var writer = new StreamWriter(Current.CreateFile(path).OpenWrite()))
             {
                 await inputStream.CopyToAsync(writer.BaseStream).ConfigureAwait(false);
-            }
-            finally
-            {
-                writer.Dispose();
             }
 
             return true;
@@ -192,6 +175,7 @@
         public static string RemoveDiacritics(string text)
         {
             string normalized = text.Normalize(NormalizationForm.FormKD);
+            normalized = normalized.Replace('&', '_');
             Encoding removal = Encoding.GetEncoding(
                 Encoding.ASCII.CodePage,
                 new EncoderReplacementFallback(""),
