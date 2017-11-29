@@ -72,24 +72,31 @@
             </div>
         </div>
         <div class="item-list item">
-            @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "key fullwidth border" })
-            <p>(@Model.Ticket.GetTitleMaxLength() @Resources.Common_Form_Characters)</p>
+            <div class="key fullwidth border">
+                @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "" })
+                <span>(@Model.Ticket.GetTitleMaxLength() @Resources.Common_Form_Characters)</span>
+            </div>            
             <div class="fullwidth">
                 @Html.ValidationMessageFor(x => x.Ticket.Title)
                 @Html.TextBoxFor(x => x.Ticket.Title)
             </div>
         </div>
         <div class="item-list item">
-            @Html.CustomFieldLabelFor(x => x.CustomerName, new { @class = "key fullwidth" })
-            <p>(@Model.CustomerName.CustomField.MaxLength @Resources.Common_Form_Characters)</p>
+            <div class="key fullwidth">
+                @Html.CustomFieldLabelFor(x => x.CustomerName, new { @class = "" })
+                <span>(@Model.CustomerName.CustomField.MaxLength @Resources.Common_Form_Characters)</span>
+            </div>
+           
             <div class="fullwidth">
                 @Html.ValidationMessageFor(x => x.CustomerName.Value)
                 @Html.CustomFieldFor(x => x.CustomerName)
             </div>
         </div>
         <div class="item-list item">
-            @Html.CustomFieldLabelFor(x => x.Feedback, new { @class = "key fullwidth" })
-            <p>(@Model.Feedback.CustomField.MaxLength @Resources.Common_Form_Characters)</p>
+            <div class="key fullwidth">
+                @Html.CustomFieldLabelFor(x => x.Feedback, new { @class = "" })
+                <span>(@Model.Feedback.CustomField.MaxLength @Resources.Common_Form_Characters)</span>
+            </div>           
             <div class="fullwidth">
                 @Html.ValidationMessageFor(x => x.Feedback.Value)
                 @Html.CustomFieldFor(x => x.Feedback)

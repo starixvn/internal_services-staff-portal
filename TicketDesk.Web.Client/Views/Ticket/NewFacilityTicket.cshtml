@@ -221,8 +221,11 @@
                             <button class="btn btn-delete btn-delete-item rippler rippler-default"><span class="icon-delete"></span>@Resources.Views_Ticket_NewFacilityTicket_DeleteItem</button>
                         </div>
 
-                        @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "fullwidth border key" })
-                        <p>(@Model.Items.ElementAt(i).Reason.CustomField.MaxLength @Resources.Common_Form_Characters)</p>
+                        <div class="fullwidth border key">
+                            @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "" })
+                            <span>(@Model.Items.ElementAt(i).Reason.CustomField.MaxLength @Resources.Common_Form_Characters)</span>
+                        </div>
+                        
                         @Html.ValidationMessageFor(x => x.Items.ElementAt(i).Reason, null, new { data_valmsg_for = "Items[" + guid + "].Reason.Value" })
                         <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "" })</div>
                     </div>
