@@ -830,6 +830,10 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         height: 40px;
         line-height: 40px;
     }*/
+    textarea + .field-validation-error {
+        position: relative;
+        top: -10px;
+    }
 }
 
 /**************************************************** Button ******************************************************/

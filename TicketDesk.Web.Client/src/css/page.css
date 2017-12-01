@@ -586,6 +586,9 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
       height: 40px;
       width: 100%;
       padding: 0 12px; }
+  .feedback-form textarea + .field-validation-error {
+    position: relative;
+    top: -10px; }
 
 /**************************************************** Button ******************************************************/
 .btn-primary.disabled.focus, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled].focus, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
