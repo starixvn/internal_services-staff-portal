@@ -20,6 +20,7 @@
         function () {
             location.reload();
             $("input[type='text'], textarea").val("");
+            $("input[type='radio']").prop("checked", false);
         });
     
     //$(selector).on("input",
