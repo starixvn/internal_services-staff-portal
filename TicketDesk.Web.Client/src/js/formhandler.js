@@ -19,8 +19,8 @@
     $('#notification-modal').on('hidden.bs.modal',
         function () {
             location.reload();
-            $("input[type='text'], textarea").val("");
-            $("input[type='radio']").prop("checked", false);
+            $(selector).validate().resetForm();
+            $(selector)[0].reset();
         });
     
     //$(selector).on("input",
