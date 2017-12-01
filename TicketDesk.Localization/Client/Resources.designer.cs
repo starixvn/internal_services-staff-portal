@@ -601,7 +601,7 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer&apos;s Name should not contains special characters.
+        ///   Looks up a localized string similar to Customer&apos;s Name should not contain special characters.
         /// </summary>
         public static string Views_IdUploader_Validation_CustomerName_Regex {
             get {
@@ -628,7 +628,7 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer Username should not contains special characters.
+        ///   Looks up a localized string similar to Customer Username should not contain special characters.
         /// </summary>
         public static string Views_IdUploader_Validation_CustomerUserName_Regex {
             get {
@@ -655,7 +655,7 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ID Number should not contains any character.
+        ///   Looks up a localized string similar to ID Number should not contain any character.
         /// </summary>
         public static string Views_IdUploader_Validation_IdNumber_Regex {
             get {

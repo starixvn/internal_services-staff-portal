@@ -286,7 +286,7 @@
     <value>Customer Username should not less than 2 and more than 50 characters</value>
   </data>
   <data name="Views_IdUploader_Validation_CustomerUserName_Regex" xml:space="preserve">
-    <value>Customer Username should not contains special characters</value>
+    <value>Customer Username should not contain special characters</value>
   </data>
   <data name="Views_IdUploader_Validation_CustomerName_Required" xml:space="preserve">
     <value>Customer's Name is required!</value>
@@ -295,7 +295,7 @@
     <value>Customer's Name should not less than 2 and more than 50 characters</value>
   </data>
   <data name="Views_IdUploader_Validation_CustomerName_Regex" xml:space="preserve">
-    <value>Customer's Name should not contains special characters</value>
+    <value>Customer's Name should not contain special characters</value>
   </data>
   <data name="Views_IdUploader_Validation_IdNumber_Required" xml:space="preserve">
     <value>ID Number is required!</value>
@@ -304,7 +304,7 @@
     <value>ID Number is not correct</value>
   </data>
   <data name="Views_IdUploader_Validation_IdNumber_Regex" xml:space="preserve">
-    <value>ID Number should not contains any character</value>
+    <value>ID Number should not contain any character</value>
   </data>
   <data name="Views_IdUploader_Display_CustomerUserName" xml:space="preserve">
     <value>Customer's Username *</value>
