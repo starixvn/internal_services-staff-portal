@@ -389,10 +389,10 @@
     <value>Type</value>
   </data>
   <data name="TicketTitle" xml:space="preserve">
-    <value>Title</value>
+    <value>Subject</value>
   </data>
   <data name="TicketTitleShort" xml:space="preserve">
-    <value>Title</value>
+    <value>Subject</value>
   </data>
   <data name="TicketActivityPriority" xml:space="preserve">
     <value> at a priority of {0}</value>

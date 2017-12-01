@@ -925,7 +925,7 @@ namespace TicketDesk.Localization.Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
+        ///   Looks up a localized string similar to Subject.
         /// </summary>
         public static string TicketTitle {
             get {
@@ -934,7 +934,7 @@ namespace TicketDesk.Localization.Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
+        ///   Looks up a localized string similar to Subject.
         /// </summary>
         public static string TicketTitleShort {
             get {
