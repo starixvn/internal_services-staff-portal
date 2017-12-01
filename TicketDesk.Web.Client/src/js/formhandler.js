@@ -19,6 +19,7 @@
     $('#notification-modal').on('hidden.bs.modal',
         function () {
             location.reload();
+            $("input[type='text'], textarea").val("");
         });
     
     //$(selector).on("input",
