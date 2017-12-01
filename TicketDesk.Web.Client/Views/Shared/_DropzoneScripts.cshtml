@@ -134,8 +134,7 @@
             $('.btn-delete-all-file').show();
             $('.number-chosenfile').show();
             $('.number-chosenfile .text').text('@Html.Raw(Resources.Dropzone_Info_SingleFileSelected)');
-        }
-        else {
+        } else {
             $('.number-chosenfile').hide();
             $('.btn-delete-all-file').hide();
         }
@@ -206,10 +205,10 @@
                     function() {
                         SetErrorTextAndShowModal("@Html.Raw(Resources.Dropzone_Error_MaxFilesExceeded)");
                     });
-                this.on("error",
-                    function(file, errorMessage) {
-                        SetErrorTextAndShowModal(errorMessage);
-                    });
+                //this.on("error",
+                //    function(file, errorMessage) {
+                //        SetErrorTextAndShowModal(errorMessage);
+                //    });
                 this.on("processing",
                     function() {
                         $(".filechange").trigger("filechange");
