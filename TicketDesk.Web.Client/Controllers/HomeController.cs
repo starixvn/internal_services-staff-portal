@@ -80,7 +80,7 @@
             var tickets = Context.Tickets
                 .Where(x => (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo) &&
                             x.CreatedBy == CurrentSession.UserId.ToString())
-                .OrderByDescending(x => x.CategoryId)
+                .OrderBy(x => x.CategoryId)
                 .ThenByDescending(x => x.TicketId)
                 .Skip(skippedItem)
                 .Take(itemPerPage)
