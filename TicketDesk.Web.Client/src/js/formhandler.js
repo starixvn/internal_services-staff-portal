@@ -6,7 +6,8 @@
 
     $("body").on("input",
         "input[type='text'], textarea",
-        function() {
+        function () {
+            CheckFormAndTurnSubmitButton(formclassname);
             if ($(this).attr("data-val-length-max") !== undefined && !$(this).hasClass("skip-limit")) {
                 var maxChar = $(this).attr("data-val-length-max");
                 if ($(this).val().length > maxChar) {
@@ -104,21 +105,21 @@ function CheckValidFilesIfDropzoneExisted() {
 }
 
 function CheckFormAndTurnSubmitButton(formclassname) {
-    //var selector = "." + formclassname;
-    //var inputSelector = "." + formclassname + " input[type=submit]";
+    var selector = "." + formclassname;
+    var inputSelector = "." + formclassname + " input[type=submit]";
 
-    //var validate = $(selector).validate();
-    //var formSummittedState = validate.submitted;
-    //var isValid = validate.checkForm();
-    //if (isValid && CheckValidFilesIfDropzoneExisted()) {
-    //    // Enable the button
-    //    $(inputSelector).attr("disabled", false);
-    //} else {
-    //    // Disable the button
-    //    $(inputSelector).attr("disabled", true);
-    //}
+    var validate = $(selector).validate();
+    var formSummittedState = validate.submitted;
+    var isValid = validate.checkForm();
+    if (isValid && CheckValidFilesIfDropzoneExisted()) {
+        // Enable the button
+        //$(inputSelector).attr("disabled", false);
+    } else {
+        // Disable the button
+        //$(inputSelector).attr("disabled", true);
+    }
 
-    //$(selector).validate().submitted = formSummittedState;
+    $(selector).validate().submitted = formSummittedState;
 }
 
 $.validator.setDefaults({
