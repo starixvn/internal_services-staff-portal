@@ -175,7 +175,7 @@
     <value>REPAIRS AND SERVICES REQUISITION FORM</value>
   </data>
   <data name="Domain_Model_Ticket_Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Subject</value>
   </data>
   <data name="Views_User_SignIn_Username" xml:space="preserve">
     <value>Username</value>
