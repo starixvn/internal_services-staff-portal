@@ -53,7 +53,6 @@
                 }
             };
 
-
             foreach (SelectListItem item in homeViewModel.MyOpenningIssues.ItemPerPageList)
             {
                 if (itemPerPage.ToString() == item.Value)
@@ -75,7 +74,7 @@
             }
 
             homeViewModel.MyOpenningIssues.TotalItem = Context.Tickets.Count(x => x.CreatedBy == CurrentSession.UserId.ToString());
-            
+
             // Get current user tickets
             var tickets = Context.Tickets
                 .Where(x => (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo) &&
@@ -85,7 +84,13 @@
                 .Skip(skippedItem)
                 .Take(itemPerPage)
                 .GroupBy(x => x.CategoryId).ToList();
+            PrepareTicketGroups(homeViewModel, categories, tickets);
 
+            return View(homeViewModel);
+        }
+
+        private void PrepareTicketGroups(HomeViewModel homeViewModel, List<TicketCategory> categories, List<IGrouping<int, Ticket>> tickets)
+        {
             foreach (IGrouping<int, Ticket> grouping in tickets)
             {
                 string languageSuffix = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
@@ -113,8 +118,6 @@
 
                 homeViewModel.MyOpenningIssues.TicketGroups.Add(ticketGroup);
             }
-
-            return View(homeViewModel);
         }
 
         [Route("internal-error", Name = "InternalError")]
