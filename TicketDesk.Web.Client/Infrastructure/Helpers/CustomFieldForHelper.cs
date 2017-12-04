@@ -74,13 +74,16 @@
             label.Attributes.Add("for", htmlFieldName + ".Value");
 
             string innerText = GetMultiligualStringOfCustomField(customFieldValue);
+
             if (customFieldValue != null && customFieldValue.CustomField.IsRequired)
             {
                 label.InnerHtml = innerText + "<span class=\"highlight\"> *</span>";
             }
-
-            ////label.SetInnerText(innerText);
-
+            else
+            {
+                label.SetInnerText(innerText);
+            }
+            
             if (htmlAttributes != null)
             {
                 var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
@@ -122,8 +125,10 @@
                 {
                     label.InnerHtml = innerText + "<span class=\"highlight\"> *</span>";
                 }
-
-                ////label.SetInnerText(innerText);
+                else
+                {
+                    label.SetInnerText(innerText);
+                }
             }
             
             if (htmlAttributes != null)
