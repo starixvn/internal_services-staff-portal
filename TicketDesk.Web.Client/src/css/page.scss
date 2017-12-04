@@ -1067,6 +1067,17 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     .modal-body {
         font-size: 16px;
         line-height: 26px;
+
+        pre {
+            font-size: 16px;
+            border: none;
+            border-radius: 0;
+            background-color: #fff;
+            padding: 0;
+            font-family: $font-family;
+            margin: 0;
+            line-height: unset;
+        }
     }
 
     .modal-footer {

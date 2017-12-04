@@ -809,6 +809,15 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   .modal-dialog .modal-body {
     font-size: 16px;
     line-height: 26px; }
+    .modal-dialog .modal-body pre {
+      font-size: 16px;
+      border: none;
+      border-radius: 0;
+      background-color: #fff;
+      padding: 0;
+      font-family: "Open Sans", sans-serif;
+      margin: 0;
+      line-height: unset; }
   .modal-dialog .modal-footer {
     border-top: none; }
     .modal-dialog .modal-footer button {
