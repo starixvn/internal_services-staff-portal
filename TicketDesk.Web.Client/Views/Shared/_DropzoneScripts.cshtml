@@ -91,7 +91,7 @@
         if (IsTotalBytesViolated()) {
             //var totalMb = (@Model.MaxBytes / 1048576);
             //SetErrorTextAndShowModal("Total size exceed maximum allowed of " + totalMb + " MB");
-            SetErrorTextAndShowModal("@Html.Raw(string.Format(Resources.Dropzone_Error_TotalSizeViolated, (Model.MaxBytes / 1048576)))");
+            @*SetErrorTextAndShowModal("@Html.Raw(string.Format(Resources.Dropzone_Error_TotalSizeViolated, (Model.MaxBytes / 1048576)))");*@
         } else {
             SetErrorTextAndShowModal("");
         }
@@ -116,7 +116,7 @@
 
             if (isDuplicate) {
                 errorText = errorText.slice(0, -3);
-                SetErrorTextAndShowModal(errorText);
+                //SetErrorTextAndShowModal(errorText);
             } else {
                 SetErrorTextAndShowModal("");
             }
@@ -156,6 +156,7 @@
             dictCancelUploadConfirmation: "@Html.Raw(Resources.Dropzone_Message_CancelUploadConfirmation)",
             dictRemoveFile: "@Html.Raw(Resources.Dropzone_Message_RemoveFile)",
             dictMaxFilesExceeded: "@Html.Raw(Resources.Dropzone_Message_MaxFilesExceeded)",
+            maxFilesize: 32,
             url: '@Url.Action("Upload", "File", new { tempId = Model.TempId })',
             uploadMultiple: true,
             parallelUploads: 1,
@@ -201,10 +202,10 @@
                         SetErrorTextAndShowModal("");
                         $(".filechange").trigger("filechange");
                     });
-                this.on("maxfilesexceeded",
+                @*this.on("maxfilesexceeded",
                     function() {
                         SetErrorTextAndShowModal("@Html.Raw(Resources.Dropzone_Error_MaxFilesExceeded)");
-                    });
+                    });*@
                 //this.on("error",
                 //    function(file, errorMessage) {
                 //        SetErrorTextAndShowModal(errorMessage);

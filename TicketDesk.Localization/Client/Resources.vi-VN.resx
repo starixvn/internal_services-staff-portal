@@ -363,4 +363,7 @@
   <data name="Common_Form_Characters" xml:space="preserve">
     <value>ký tự</value>
   </data>
+  <data name="IdUploaderViewModel_Remark_Remark_should_not_than_5000_characters" xml:space="preserve">
+    <value>Ghi chú không được có quá 5000 ký tự</value>
+  </data>
 </root>

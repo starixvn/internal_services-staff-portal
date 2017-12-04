@@ -363,4 +363,7 @@
   <data name="Common_Form_Characters" xml:space="preserve">
     <value>characters</value>
   </data>
+  <data name="IdUploaderViewModel_Remark_Remark_should_not_than_5000_characters" xml:space="preserve">
+    <value>Remark should not than 5000 characters</value>
+  </data>
 </root>

@@ -385,6 +385,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remark should not than 5000 characters.
+        /// </summary>
+        public static string IdUploaderViewModel_Remark_Remark_should_not_than_5000_characters {
+            get {
+                return ResourceManager.GetString("IdUploaderViewModel_Remark_Remark_should_not_than_5000_characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back to dashboard.
         /// </summary>
         public static string Views_Announcement_BackToDashboard {

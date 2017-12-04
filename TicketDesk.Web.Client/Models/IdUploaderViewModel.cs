@@ -28,6 +28,7 @@
         public string IdNumber { get; set; }
 
         [Display(ResourceType = typeof(Resources), Name = "Views_IdUploader_Display_Remark")]
+        [StringLength(maximumLength: 5000, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = "IdUploaderViewModel_Remark_Remark_should_not_than_5000_characters")]
         public string Remark { get; set; }
     }
 }
