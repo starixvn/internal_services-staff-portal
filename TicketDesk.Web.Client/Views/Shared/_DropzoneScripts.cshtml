@@ -44,6 +44,7 @@
 
             CheckTotalBytes();
             CheckTotalFiles(ticketDeskDropzone);
+            CheckFileType(ticketDeskDropzone);
 
             var rejectedFiles = ticketDeskDropzone.getRejectedFiles();
             if (rejectedFiles.length > 0) {
@@ -78,6 +79,18 @@
             isMaxFilesViolated = true;
         } else {
             isMaxFilesViolated = false;
+        }
+    }
+
+    function CheckFileType(dropzone) {
+        var total = dropzone.files.length;
+        isFileTypeViolated = false;
+        for (var i = 0; i < total; i++) {
+            var test = dropzone.files[i].name.split('.').pop();
+            if (!fileType.includes(test)) {
+                isFileTypeViolated = true;
+                break;
+            }
         }
     }
 
