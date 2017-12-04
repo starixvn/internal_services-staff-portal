@@ -77,7 +77,7 @@
 
             if (customFieldValue != null && customFieldValue.CustomField.IsRequired)
             {
-                label.InnerHtml = innerText + "<span class=\"highlight\"> *</span>";
+                label.InnerHtml = innerText + "<span class=\"highlight\">&nbsp;*</span>";
             }
             else
             {
@@ -123,7 +123,7 @@
 
                 if (customFieldValue.CustomField.IsRequired)
                 {
-                    label.InnerHtml = innerText + "<span class=\"highlight\"> *</span>";
+                    label.InnerHtml = innerText + "<span class=\"highlight\">&nbsp;*</span>";
                 }
                 else
                 {

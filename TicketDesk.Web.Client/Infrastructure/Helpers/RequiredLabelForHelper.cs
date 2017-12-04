@@ -18,7 +18,7 @@
 
             if (metaData.IsRequired)
             {
-                labelText += "<span class=\"highlight\"> *</span>";
+                labelText += "<span class=\"highlight\">&nbsp;*</span>";
             }
 
             if (string.IsNullOrEmpty(labelText))

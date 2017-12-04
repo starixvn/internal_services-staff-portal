@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Localization.Client
+@using TicketDesk.Web.Client.Infrastructure.Helpers
 @model TicketDesk.Web.Client.Models.IdUploaderViewModel
 
 @section title { ID Uploader }
@@ -55,28 +56,28 @@
     <div class="form-content feedback-form">
         <div class="title">@Resources.Views_IdUploader_Form_Title</div>
         <div class="item-list item">
-            @Html.LabelFor(x => x.CustomerUserName, new { @class = "key fullwidth border" })
+            @Html.RequiredLabelFor(x => x.CustomerUserName, new { @class = "key fullwidth border" })
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.CustomerUserName)
                 @Html.ValidationMessageFor(x => x.CustomerUserName)
             </div>
         </div>
         <div class="item-list item">
-            @Html.LabelFor(x => x.CustomerName, new { @class = "key fullwidth" })
+            @Html.RequiredLabelFor(x => x.CustomerName, new { @class = "key fullwidth" })
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.CustomerName)
                 @Html.ValidationMessageFor(x => x.CustomerName)
             </div>
         </div>
         <div class="item-list item">
-            @Html.LabelFor(x => x.IdNumber, new { @class = "key fullwidth" })
+            @Html.RequiredLabelFor(x => x.IdNumber, new { @class = "key fullwidth" })
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.IdNumber, new {@class="skip-limit"})
                 @Html.ValidationMessageFor(x => x.IdNumber)
             </div>
         </div>
         <div class="item-list item">
-            @Html.LabelFor(x => x.Remark, new { @class = "key fullwidth" })
+            @Html.RequiredLabelFor(x => x.Remark, new { @class = "key fullwidth" })
             <div class="fullwidth">
                 @Html.TextAreaFor(x => x.Remark)
             </div>
