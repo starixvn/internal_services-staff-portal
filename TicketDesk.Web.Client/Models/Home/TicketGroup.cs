@@ -7,6 +7,8 @@
     {
         public string Name { get; set; }
 
+        public int TotalTickets { get; set; }
+
         public IEnumerable<Ticket> Tickets { get; set; }
     }
 }

@@ -80,7 +80,8 @@
             var tickets = Context.Tickets
                 .Where(x => (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo) &&
                             x.CreatedBy == CurrentSession.UserId.ToString())
-                .OrderByDescending(x => x.TicketId)
+                .OrderByDescending(x => x.CategoryId)
+                .ThenByDescending(x => x.TicketId)
                 .Skip(skippedItem)
                 .Take(itemPerPage)
                 .GroupBy(x => x.CategoryId).ToList();
@@ -99,10 +100,15 @@
                         .Select(x => x.Name_vi)
                         .FirstOrDefault();
 
+                var total = Context.Tickets.Count(x => (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo) &&
+                    x.CreatedBy == CurrentSession.UserId.ToString() &&
+                    x.CategoryId == grouping.Key);
+
                 TicketGroup ticketGroup = new TicketGroup
                 {
                     Name = categoryName,
-                    Tickets = grouping
+                    Tickets = grouping,
+                    TotalTickets = total
                 };
 
                 homeViewModel.MyOpenningIssues.TicketGroups.Add(ticketGroup);
