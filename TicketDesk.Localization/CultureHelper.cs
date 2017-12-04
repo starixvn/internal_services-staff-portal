@@ -54,7 +54,7 @@
         {
             get
             {
-                var name = "vi-VN";
+                var name = "en-US";
                 var config = WebConfigurationManager.OpenWebConfiguration("/");
 
                 var section = config.GetSection("system.web/globalization") as GlobalizationSection;

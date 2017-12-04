@@ -18,10 +18,10 @@
 
             if (metaData.IsRequired)
             {
-                labelText += "<span class=\"required\">*</span>";
+                labelText += "<span class=\"highlight\"> *</span>";
             }
 
-            if (String.IsNullOrEmpty(labelText))
+            if (string.IsNullOrEmpty(labelText))
             {
                 return MvcHtmlString.Empty;
             }
