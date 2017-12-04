@@ -46,6 +46,7 @@
                 for (var i = 0; i < rejectedFiles.length; i++) {
                     if (rejectedFiles[i].status === "error" || rejectedFiles[i].status === "added") {
                         // have error files
+                        CheckTotalBytes();
                         return false;
                     }
                 }
