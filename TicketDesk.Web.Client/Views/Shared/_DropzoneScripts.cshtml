@@ -41,12 +41,15 @@
     function CheckValidFiles() {
         if (ticketDeskDropzone.files.length > 0) {
             // have file(s)
+
+            CheckTotalBytes();
+            CheckTotalFiles(ticketDeskDropzone);
+
             var rejectedFiles = ticketDeskDropzone.getRejectedFiles();
             if (rejectedFiles.length > 0) {
                 for (var i = 0; i < rejectedFiles.length; i++) {
                     if (rejectedFiles[i].status === "error" || rejectedFiles[i].status === "added") {
                         // have error files
-                        CheckTotalBytes();
                         return false;
                     }
                 }
@@ -67,6 +70,15 @@
             return true;
         }
 
+    }
+
+    function CheckTotalFiles(dropzone) {
+        var total = dropzone.files.length;
+        if (total > maxNumber) {
+            isMaxFilesViolated = true;
+        } else {
+            isMaxFilesViolated = false;
+        }
     }
 
     function SetErrorTextAndShowModal(text, vietnameseText) {
