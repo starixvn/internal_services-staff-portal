@@ -527,7 +527,8 @@ tr.header {
     -webkit-border-radius: 0; }
   .form-content textarea {
     padding: 6px 12px;
-    min-height: 120px; }
+    min-height: 120px;
+    resize: vertical; }
   .form-content .custom-dropdown {
     padding: 0; }
   .form-content input[disabled="disabled"] {

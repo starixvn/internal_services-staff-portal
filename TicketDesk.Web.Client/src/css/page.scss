@@ -743,6 +743,7 @@ tr.header {
     textarea {
         padding: 6px 12px;
         min-height: 120px;
+        resize: vertical;
     }
 
     .custom-dropdown {
