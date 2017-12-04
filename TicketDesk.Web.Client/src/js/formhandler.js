@@ -4,17 +4,25 @@
 
     SetValueForRequiredRadioButton(formclassname);
 
+    var textInput = $("input[type='text'], textarea");
+    textInput.each(function(object) {
+        if ($(this).attr("data-val-length-max") !== undefined && !$(this).hasClass("skip-limit")) {
+            var maxChar = $(this).attr("data-val-length-max");
+            $(this).attr('maxlength', maxChar);
+        }
+    });
+    
     $("body").on("input",
         "input[type='text'], textarea",
         function () {
             CheckFormAndTurnSubmitButton(formclassname);
-            if ($(this).attr("data-val-length-max") !== undefined && !$(this).hasClass("skip-limit")) {
-                var maxChar = $(this).attr("data-val-length-max");
-                if ($(this).val().length > maxChar) {
-                    var textRemain = $(this).val().substring(0, maxChar);
-                    $(this).val(textRemain);
-                }
-            }
+            //if ($(this).attr("data-val-length-max") !== undefined && !$(this).hasClass("skip-limit")) {
+                //var maxChar = $(this).attr("data-val-length-max");
+                //if ($(this).val().length > maxChar) {
+                //    var textRemain = $(this).val().substring(0, maxChar);
+                //    $(this).val(textRemain);
+                //}
+            //}
         });
 
     $('#notification-modal').on('hidden.bs.modal',

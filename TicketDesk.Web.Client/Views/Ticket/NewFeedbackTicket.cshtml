@@ -1,4 +1,6 @@
-﻿@using TicketDesk.Domain.Extensions
+﻿@using System.ComponentModel.DataAnnotations
+@using TicketDesk.Domain.Infrastructure
+@using TicketDesk.Domain.Model
 @using TicketDesk.Localization.Client
 @using TicketDesk.Localization.Views.Ticket
 @using TicketDesk.Web.Client.Infrastructure.Helpers
@@ -77,7 +79,10 @@
         <div class="item-list item">
             <div class="key fullwidth border">
                 @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "" })
-                <span class="highlight">(@Model.Ticket.GetTitleMaxLength() @Resources.Common_Form_Characters)</span>
+                @*@{
+                    var max = AttributeHelper.GetPropertyAttributeValue<Ticket, string, StringLengthAttribute, int>(prop => prop.Title, attr => attr.MaximumLength);
+                }
+                <span class="highlight">(@max @Resources.Common_Form_Characters)</span>*@
             </div>            
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.Ticket.Title)
@@ -87,7 +92,7 @@
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.CustomerName, new { @class = "" })
-                <span class="highlight">(@Model.CustomerName.CustomField.MaxLength @Resources.Common_Form_Characters)</span>
+                @*<span class="highlight">(@Model.CustomerName.CustomField.MaxLength @Resources.Common_Form_Characters)</span>*@
             </div>
            
             <div class="fullwidth">                
@@ -98,7 +103,7 @@
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.Feedback, new { @class = "" })
-                <span class="highlight">(@Model.Feedback.CustomField.MaxLength @Resources.Common_Form_Characters)</span>
+                @*<span class="highlight">(@Model.Feedback.CustomField.MaxLength @Resources.Common_Form_Characters)</span>*@
             </div>           
             <div class="fullwidth">
                 @Html.CustomFieldFor(x => x.Feedback)
