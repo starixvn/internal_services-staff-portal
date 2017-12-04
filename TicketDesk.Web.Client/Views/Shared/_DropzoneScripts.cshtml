@@ -5,6 +5,39 @@
 
 <script type="text/javascript">
 
+    var isFileRequired = @Json.Encode(Model.IsFileRequired);
+    var isMaxFilesViolated = false;
+    var maxNumber = @Model.MaxNumberOfFile;
+    var isTotalSizeViolated = false;
+    var totalSize = @Model.MaxBytes / 1048576;
+    var allowedBytes = @Model.MaxBytes;
+    var isFileTypeViolated = false;
+    var fileType = "@string.Join(", ",Model.AcceptedExtensions)";
+
+    function ResetError() {
+        isMaxFilesViolated = false;
+        isTotalSizeViolated = false;
+        isFileTypeViolated = false;
+    }
+
+    function BuildFileErrorText() {
+        var text = "";
+        if (isFileRequired) {
+            text = "Attached file is required\n";
+        }
+        if (isMaxFilesViolated) {
+            text = text + "Max number of attachments exceeded " + maxNumber + "\n";
+        }
+        if (isTotalSizeViolated) {
+            text = text + "Total size of attachments exceeded " + totalSize + "MB\n";
+        }
+        if (isFileTypeViolated) {
+            text = text + "Attachments must be " + fileType;
+        }
+
+        return text;
+    }
+
     function CheckValidFiles() {
         if (ticketDeskDropzone.files.length > 0) {
             // have file(s)
@@ -26,13 +59,13 @@
             return true;
         }
 
-        if (@Json.Encode(Model.IsFileRequired) === true) {
+        if (isFileRequired === true) {
             // there is no files
             return false;
         } else {
             return true;
         }
-        
+
     }
 
     function SetErrorTextAndShowModal(text, vietnameseText) {
@@ -81,9 +114,7 @@
     }
 
     function IsTotalBytesViolated() {
-        var allowedBytes = @Model.MaxBytes;
         var totalBytes = GetTotalSize();
-
         return totalBytes > allowedBytes;
     }
 
@@ -92,7 +123,9 @@
             //var totalMb = (@Model.MaxBytes / 1048576);
             //SetErrorTextAndShowModal("Total size exceed maximum allowed of " + totalMb + " MB");
             @*SetErrorTextAndShowModal("@Html.Raw(string.Format(Resources.Dropzone_Error_TotalSizeViolated, (Model.MaxBytes / 1048576)))");*@
+            isTotalSizeViolated = true;
         } else {
+            isTotalSizeViolated = false;
             SetErrorTextAndShowModal("");
         }
     }
@@ -160,9 +193,9 @@
             url: '@Url.Action("Upload", "File", new { tempId = Model.TempId })',
             uploadMultiple: true,
             parallelUploads: 1,
-            maxFiles: @Model.MaxNumberOfFile,
+            maxFiles: maxNumber,
             createImageThumbnails: false,
-            acceptedFiles: "@string.Join(", ",Model.AcceptedExtensions)",
+            acceptedFiles: fileType,
             addRemoveLinks: true,
             previewsContainer: ".dropzone-previews",
             clickable: "#add-file-btn",
@@ -179,6 +212,7 @@
                                 method: "POST"
                             });
                             SetErrorTextAndShowModal("");
+                            ResetError();
                             if (isRequeueing === false) {
                                 ResumeQube(this);
                             }
@@ -202,14 +236,19 @@
                         SetErrorTextAndShowModal("");
                         $(".filechange").trigger("filechange");
                     });
-                @*this.on("maxfilesexceeded",
+                this.on("maxfilesexceeded",
                     function() {
-                        SetErrorTextAndShowModal("@Html.Raw(Resources.Dropzone_Error_MaxFilesExceeded)");
-                    });*@
-                //this.on("error",
-                //    function(file, errorMessage) {
-                //        SetErrorTextAndShowModal(errorMessage);
-                //    });
+                        @*SetErrorTextAndShowModal("@Html.Raw(Resources.Dropzone_Error_MaxFilesExceeded)");*@
+                        isMaxFilesViolated = true;
+                    });
+                this.on("error",
+                    function(file, errorMessage) {
+                        //SetErrorTextAndShowModal(errorMessage);
+                        var test = file.name.split('.').pop();
+                        if (!fileType.includes(test)) {
+                            isFileTypeViolated = true;
+                        }
+                    });
                 this.on("processing",
                     function() {
                         $(".filechange").trigger("filechange");

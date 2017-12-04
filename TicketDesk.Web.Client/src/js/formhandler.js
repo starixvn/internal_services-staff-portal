@@ -66,7 +66,10 @@
                     }
 
                 } else {
-                    SetErrorTextAndShowModal("Invalid or missing files or total file size exceeded max number", "Files không hợp lệ hoặc không có file nào hoặc tổng dung lượng file vượt quá giới hạn cho phép");
+                    // Errors in files
+                    var englishText = BuildFileErrorText();
+                    //SetErrorTextAndShowModal("Invalid or missing files or total file size exceeded max number", "Files không hợp lệ hoặc không có file nào hoặc tổng dung lượng file vượt quá giới hạn cho phép");
+                    SetErrorTextAndShowModal(englishText);
                     e.preventDefault();
                     return false;
                 }
