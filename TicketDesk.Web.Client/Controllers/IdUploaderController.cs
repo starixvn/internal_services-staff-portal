@@ -38,6 +38,7 @@
         [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult NewCustomer(IdUploaderViewModel viewModel)
         {
             if (ModelState.IsValid)
