@@ -7,6 +7,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Models;
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Net;
@@ -72,23 +73,31 @@
             var pendingFolder = Server.MapPath("~/App_Data/filestore/ticketdesk-attachments/pending");
 
             string fileEnding = tempId.ToString();
-            
-            // Get all file belongs to that record
-            var files = Directory.EnumerateFiles(pendingFolder)
-                .Where(x => x.EndsWith(fileEnding));
 
-            // Get names of the files
-            var names = files.Select(x => x.Replace(pendingFolder, string.Empty).TrimStart('\\')).ToList();
-
-            // Move the file from pending folder to commited folder
-            foreach (string file in names)
+            try
             {
-                string fileToMove = file.Replace(fileEnding, string.Empty).TrimEnd('.');
+                // Get all file belongs to that record
+                var files = Directory.EnumerateFiles(pendingFolder)
+                    .Where(x => x.EndsWith(fileEnding));
 
-                Directory.Move(
-                    Path.Combine(pendingFolder, file), 
-                    Path.Combine(commitedFolder.FullName, fileToMove));
+                // Get names of the files
+                var names = files.Select(x => x.Replace(pendingFolder, string.Empty).TrimStart('\\')).ToList();
+
+                // Move the file from pending folder to commited folder
+                foreach (string file in names)
+                {
+                    string fileToMove = file.Replace(fileEnding, string.Empty).TrimEnd('.');
+
+                    Directory.Move(
+                        Path.Combine(pendingFolder, file),
+                        Path.Combine(commitedFolder.FullName, fileToMove));
+                }
             }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+            
         }
 
         private DirectoryInfo CreateFolder(string folderName)
