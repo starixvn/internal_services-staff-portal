@@ -70,6 +70,11 @@
                             data: $(this).serialize(),
                             success: function(res, status, xhr) {
                                 $("#notification-modal").modal();
+                            },
+                            error: function (request, error) {
+                                $("#notification-modal div.modal-header > h4").text(error);
+                                $("#notification-modal div.modal-body > p").text("User must not enter html, javascript code inside input fields");
+                                $("#notification-modal").modal();
                             }
                         });
                     }

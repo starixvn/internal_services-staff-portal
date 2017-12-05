@@ -7,6 +7,7 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using IO;
+    using Localization.Client;
     using Localization.Controllers;
     using Models.Ticket;
     using System;
@@ -15,9 +16,9 @@
     using System.Data.Entity.Validation;
     using System.Globalization;
     using System.Linq;
+    using System.Net;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Localization.Client;
 
     [RoutePrefix("ticket")]
     [Route("{action=index}")]
@@ -129,40 +130,22 @@
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateOnlyIncomingValues]
-        [ValidateInput(false)]
         [Route("new-facility")]
         public async Task<ActionResult> NewFacilityTicket(NewFacilityTicketViewModel viewModel)
         {
-            if (viewModel.Ticket.IsHtml)
-            {
-                viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
-                if (string.IsNullOrEmpty(viewModel.Ticket.Details))
-                {
-                    ModelState.AddModelError("Details", Strings.RequiredField);
-                }
-            }
-
             // TODO: Replace with actual project ID represent for shop id here
             viewModel.Ticket.Project = Context.Projects.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
+            ReValidateModelState(viewModel);
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
             {
                 await AddTicketCustomField(viewModel).ConfigureAwait(false);
 
-                return Context.SecurityProvider.IsReadTicketCenter
-                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
-                    : RedirectToAction("Index", "Home");
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
-
-            // TODO: Re-prepare model for view
-            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Facility);
-            viewModel.RequestType.CustomField = availableCustomField.First(x => x.Name == "Request Type");
-
-            return View(viewModel);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
@@ -192,40 +175,31 @@
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateOnlyIncomingValues]
-        [ValidateInput(false)]
         [Route("new-feedback")]
         public async Task<ActionResult> NewFeedbackTicket(NewFeedbackTicketViewModel viewModel)
         {
-            if (viewModel.Ticket.IsHtml)
-            {
-                viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
-                if (string.IsNullOrEmpty(viewModel.Ticket.Details))
-                {
-                    ModelState.AddModelError("Details", Strings.RequiredField);
-                }
-            }
-
             // TODO: Replace with actual project ID represent for shop id here
             viewModel.Ticket.Project = Context.Projects.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Feedback;
 
+            ReValidateModelState(viewModel);
+
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
             {
-                AddCustomFieldValue(null, viewModel.FeedbackBy.CustomFieldId, viewModel.FeedbackBy.Value, viewModel.Ticket.TicketId);
-                AddCustomFieldValue(null, viewModel.CustomerName.CustomFieldId, viewModel.CustomerName.Value, viewModel.Ticket.TicketId);
-                AddCustomFieldValue(null, viewModel.Feedback.CustomFieldId, viewModel.Feedback.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.FeedbackBy.CustomFieldId, viewModel.FeedbackBy.Value,
+                    viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.CustomerName.CustomFieldId, viewModel.CustomerName.Value,
+                    viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.Feedback.CustomFieldId, viewModel.Feedback.Value,
+                    viewModel.Ticket.TicketId);
 
                 // Save changes to ticket's custom field
                 await Context.SaveChangesAsync().ConfigureAwait(false);
 
-                return Context.SecurityProvider.IsReadTicketCenter
-                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
-                    : RedirectToAction("Index", "Home");
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
-            return View("NewFeedbackTicket", viewModel);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]

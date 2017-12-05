@@ -74,5 +74,11 @@
 
             return signInRoute == Request.Url.AbsolutePath;
         }
+
+        protected void ReValidateModelState(object viewModel)
+        {
+            ModelState.Clear();
+            TryValidateModel(viewModel);
+        }
     }
 }

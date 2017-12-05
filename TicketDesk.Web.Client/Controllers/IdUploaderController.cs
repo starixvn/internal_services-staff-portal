@@ -55,9 +55,11 @@
                 Context.SaveChanges();
 
                 MoveFiles(uploadedUserId.Id.ToString(), viewModel.TempId);
+
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         private void MoveFiles(string folderName, Guid tempId)

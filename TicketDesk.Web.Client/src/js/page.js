@@ -1,27 +1,3 @@
-//function appendSubMenu() {
-//    $('.main-menu .menu-item').on('click', function(){
-//       var text = $(this).children(".text").text();
-//        var subMenu = $('.submenu-section');
-//        var content = $(".content");
-//        if(text == "References") {
-//            subMenu.removeClass("hidden");
-//            subMenu.empty().append("<ul class='submenu'>\
-//                                            <li><a href='#' class=''><i class='icon-tv'></i><span class='text'>TV Schedules</span></a></li>\
-//                                            <li><a href='#' class=''><i class='icon-feature'></i><span class='text'>Featured events</span></a></li>\
-//                                            <li><a href='#' class=''><i class='icon-bet'></i><span class='text'>Bet of the day</span></a></li>\
-//                                            <li><a href='#' class=''><i class='icon-trading'></i><span class='text'>Trading limits</span></a></li>\
-//                                            <li><a href='#' class=''><i class='icon-newsletter'></i><span class='text'>Newsletters</span></a></li>\
-//                                        </ul>");
-//            content.addClass("menu-open");
-            
-            
-//        }
-//        else {
-//            content.removeClass("menu-open");
-//        }
-//    });
-//}
-
 // Extend the animate.css
 $.fn.extend({
     animateCss: function (animationName) {
