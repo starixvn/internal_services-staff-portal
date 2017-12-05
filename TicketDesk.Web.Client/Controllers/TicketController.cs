@@ -130,6 +130,7 @@
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         [Route("new-facility")]
         public async Task<ActionResult> NewFacilityTicket(NewFacilityTicketViewModel viewModel)
         {
@@ -175,6 +176,7 @@
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         [Route("new-feedback")]
         public async Task<ActionResult> NewFeedbackTicket(NewFeedbackTicketViewModel viewModel)
         {

@@ -4,13 +4,7 @@
 
     SetValueForRequiredRadioButton(formclassname);
 
-    var textInput = $("input[type='text'], textarea");
-    textInput.each(function(object) {
-        if ($(this).attr("data-val-length-max") !== undefined && !$(this).hasClass("skip-limit")) {
-            var maxChar = $(this).attr("data-val-length-max");
-            $(this).attr('maxlength', maxChar);
-        }
-    });
+    ApplyMaxLengh();
     
     $("body").on("input",
         "input[type='text'], textarea",
@@ -73,7 +67,7 @@
                             },
                             error: function (request, error) {
                                 $("#notification-modal div.modal-header > h4").text(error);
-                                $("#notification-modal div.modal-body > p").text("User must not enter html, javascript code inside input fields");
+                                $("#notification-modal div.modal-body > p").text("Error status code: " + request.status);
                                 $("#notification-modal").modal();
                             }
                         });
@@ -98,6 +92,16 @@
         });
 
     //CheckFormAndTurnSubmitButton(formclassname);
+}
+
+function ApplyMaxLengh() {
+    var textInput = $("input[type='text'], textarea");
+    textInput.each(function (object) {
+        if ($(this).attr("data-val-length-max") !== undefined && !$(this).hasClass("skip-limit")) {
+            var maxChar = $(this).attr("data-val-length-max");
+            $(this).attr('maxlength', maxChar);
+        }
+    });
 }
 
 function SetValueForRequiredRadioButton(formclassname) {
