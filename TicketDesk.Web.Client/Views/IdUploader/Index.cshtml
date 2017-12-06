@@ -1,5 +1,9 @@
-﻿@using TicketDesk.Localization.Client
+﻿@using System.ComponentModel.DataAnnotations
+@using TicketDesk.Domain.Infrastructure
+@using TicketDesk.Domain.Model
+@using TicketDesk.Localization.Client
 @using TicketDesk.Web.Client.Infrastructure.Helpers
+@using TicketDesk.Web.Client.Models
 @model TicketDesk.Web.Client.Models.IdUploaderViewModel
 
 @section title { ID Uploader }
@@ -79,6 +83,10 @@
         </div>
         <div class="item-list item">
             @Html.RequiredLabelFor(x => x.Remark, new { @class = "key fullwidth" })
+            @*@{
+                var max = AttributeHelper.GetPropertyAttributeValue<IdUploaderViewModel, string, StringLengthAttribute, int>(prop => prop.Remark, attr => attr.MaximumLength);
+            }
+            <span class="highlight">(@max @Resources.Common_Form_Characters)</span>*@
             <div class="fullwidth">
                 @Html.TextAreaFor(x => x.Remark)
                 @Html.ValidationMessageFor(x => x.Remark)

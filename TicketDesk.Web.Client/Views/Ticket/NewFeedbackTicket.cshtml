@@ -103,7 +103,7 @@
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.Feedback, new { @class = "" })
-                @*<span class="highlight">(@Model.Feedback.CustomField.MaxLength @Resources.Common_Form_Characters)</span>*@
+                <span class="highlight">(@Model.Feedback.CustomField.MaxLength @Resources.Common_Form_Characters)</span>
             </div>           
             <div class="fullwidth">
                 @Html.CustomFieldFor(x => x.Feedback)
