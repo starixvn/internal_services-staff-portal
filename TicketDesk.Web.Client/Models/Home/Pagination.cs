@@ -21,7 +21,7 @@
         public int ToItemIndex => CurrentPage != TotalPage ? ItemPerPage * CurrentPage : TotalItem;
 
         [Display(ResourceType = typeof(Resources), Name = "Common_Table_Pagination_PageSize")]
-        public int ItemPerPage { get; set; }
+        public int ItemPerPage { get; set; } = 20;
 
         public IEnumerable<SelectListItem> ItemPerPageList
         {

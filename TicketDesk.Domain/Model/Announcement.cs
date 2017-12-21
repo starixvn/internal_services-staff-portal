@@ -18,12 +18,24 @@
         /// 0: Normal
         /// 1: Important
         /// </summary>
-        public int Status { get; set; }
+        public AnnouncementStatus Status { get; set; }
 
         /// <summary>
         /// 0: Scheduled
         /// 1: Published
         /// </summary>
-        public int State { get; set; }
+        public AnnouncementState State { get; set; }
+    }
+
+    public enum AnnouncementStatus
+    {
+        Normal,
+        Important
+    }
+
+    public enum AnnouncementState
+    {
+        Scheduled,
+        Published
     }
 }
