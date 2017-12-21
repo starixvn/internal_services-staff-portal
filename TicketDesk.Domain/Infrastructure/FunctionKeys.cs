@@ -22,7 +22,9 @@
 
         public const string FileManagement = "FileManagement";
 
-        public const string ManageUser = "ManageUser";
+        public const string Announcement = "Announcement";
+
+        public const string IdUploader = "IdUploader";
 
         #region Settings
 

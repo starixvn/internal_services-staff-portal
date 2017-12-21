@@ -23,7 +23,7 @@
         }
 
         // GET: IdUploader
-        [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.IdUploader, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             IdUploaderViewModel viewModel = new IdUploaderViewModel
@@ -36,7 +36,7 @@
             return View(viewModel);
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.ManageUser, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.IdUploader, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]

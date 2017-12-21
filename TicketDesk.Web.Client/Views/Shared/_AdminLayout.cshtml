@@ -1,0 +1,72 @@
+﻿@using TicketDesk.Core.Resources
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="msapplication-config" content="none" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/src/contents/images/favicon.png" />
+    <title>@RenderSection("title", required: false)</title>
+
+    <link href="~/src/libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/src/libs/normalize.css" rel="stylesheet" />
+    <link href="~/src/libs/rippler/css/rippler.min.css" rel="stylesheet" />
+    <link href="~/src/Fonts/iconFont/style.css" rel="stylesheet" />
+    <link href="~/src/css/page.css" rel="stylesheet" />
+
+    @RenderSection("css", false)
+    @RenderSection("customHeader", required: false)
+</head>
+<body>
+
+    <div class="page-container">
+        
+        <nav>
+            <ul>
+                <li>
+                    <a href="@Url.Action("Announcement","Admin")">Announcement</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            @RenderBody()
+        </div>
+    </div>
+
+
+    <!-- Modal confirm logout -->
+    <div class="modal fade" id="logOut" role="dialog">
+        <div class="modal-dialog small-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">@Messages.LogoutConfirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>@Messages.LogoutModalDescription</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary rippler rippler-default" id="confirmLogOut">@Messages.Yes</button>
+                    <button type="button" class="btn btn-second rippler rippler-default" data-dismiss="modal">@Messages.No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="~/src/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="~/src/libs/Touch/touche.js"></script>
+    <script src="~/src/libs/rippler/js/jquery.rippler.min.js"></script>
+    <script src="~/Scripts/ticketdesk/common.js"></script>
+    <script src="~/src/js/page.js"></script>
+
+    @Scripts.Render("~/bundles/validate")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

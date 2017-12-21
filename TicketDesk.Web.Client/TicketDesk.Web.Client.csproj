@@ -29,6 +29,7 @@
     <ApplicationInsightsResourceId>/subscriptions/f96911eb-9288-41c5-afd8-30e2a9b16f96/resourcegroups/Default-Web-CentralUS/providers/microsoft.insights/components/ticketdesk2</ApplicationInsightsResourceId>
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>2.4</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -370,6 +371,7 @@
     <Compile Include="App_Start\Startup.Routes.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomFieldSettingsController.cs" />
@@ -2426,6 +2428,8 @@
     <Content Include="Views\LanguageSetting\Index.cshtml" />
     <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
     <Content Include="Views\Ticket\NewNetworkTicket.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
