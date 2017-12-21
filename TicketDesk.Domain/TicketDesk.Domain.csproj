@@ -260,6 +260,10 @@
     <Compile Include="Migrations\201711270925525_Nexcel_CustomField_RegexValidationErrorMessage.Designer.cs">
       <DependentUpon>201711270925525_Nexcel_CustomField_RegexValidationErrorMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712210203078_Nexcel_Announcement.cs" />
+    <Compile Include="Migrations\201712210203078_Nexcel_Announcement.Designer.cs">
+      <DependentUpon>201712210203078_Nexcel_Announcement.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -277,6 +281,7 @@
       <DependentUpon>201412012200330_Td2.5.002.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\Announcement.cs" />
     <Compile Include="Model\ApplicaitonSettingsModel\ApplicationPermissionsSetting.cs" />
     <Compile Include="Model\ApplicaitonSettingsModel\ApplicationSecuritySetting.cs" />
     <Compile Include="Model\ApplicaitonSettingsModel\ApplicationSelectListSetting.cs" />
@@ -410,6 +415,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711270925525_Nexcel_CustomField_RegexValidationErrorMessage.resx">
       <DependentUpon>201711270925525_Nexcel_CustomField_RegexValidationErrorMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712210203078_Nexcel_Announcement.resx">
+      <DependentUpon>201712210203078_Nexcel_Announcement.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
