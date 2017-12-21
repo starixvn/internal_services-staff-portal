@@ -4,6 +4,7 @@
     using System.Web.Mvc;
     using Domain;
     using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Models.Admin;
@@ -28,6 +29,23 @@
             viewModel.Announcements = Context.Announcements.ToList();
 
             return View(viewModel);
+        }
+
+        public ActionResult AddAnnouncement()
+        {
+            Announcement newAnnouncement = new Announcement();
+            return View(newAnnouncement);
+        }
+
+        [HttpPost]
+        public ActionResult AddAnnouncement(Announcement announcement)
+        {
+            announcement.State = AnnouncementState.Scheduled;
+            Context.Announcements.Add(announcement);
+
+            Context.SaveChanges();
+
+            return RedirectToAction("Announcement", "Admin");
         }
     }
 }
