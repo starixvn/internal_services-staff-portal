@@ -4,17 +4,27 @@
     using System.Linq;
     using System.Net;
     using System.Web.Mvc;
+    using Client.Controllers;
     using Domain;
     using Domain.Model;
+    using Models.Announcements;
 
-    public class AnnouncementsController : Controller
+    public class AnnouncementsController : BaseController
     {
         private readonly TdDomainContext context = new TdDomainContext();
 
         // GET: Admin/Announcements
-        public ActionResult Index()
+        public ActionResult Index(AnnouncementViewModel viewModel = null)
         {
-            return View(context.Announcements.ToList());
+            if (viewModel == null)
+            {
+                viewModel = new AnnouncementViewModel
+                {
+                    Announcements = context.Announcements.ToList()
+                };
+            }
+            
+            return View(viewModel);
         }
 
         // GET: Admin/Announcements/Details/5

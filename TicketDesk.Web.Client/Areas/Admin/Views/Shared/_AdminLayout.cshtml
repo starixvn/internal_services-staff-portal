@@ -9,53 +9,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="msapplication-config" content="none" />
     <link rel="shortcut icon" type="image/x-icon" href="~/src/contents/images/favicon.png" />
-    <title>@RenderSection("title", required: false)</title>
+    <title>Admin - @ViewBag.Title</title>
 
     <link href="~/src/libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/src/libs/normalize.css" rel="stylesheet" />
     <link href="~/src/libs/rippler/css/rippler.min.css" rel="stylesheet" />
     <link href="~/src/Fonts/iconFont/style.css" rel="stylesheet" />
-    <link href="~/src/css/page.css" rel="stylesheet" />
 
     @RenderSection("Styles", false)
     @RenderSection("customHeader", required: false)
 </head>
+
 <body>
 
-    <div class="page-container">
+    @Html.Action("Menu", "Home")
 
-        <nav>
-            <ul>
-                <li>
-                    <a href="@Url.Action("Index","Announcements")">Announcement</a>
-                </li>
-            </ul>
-        </nav>
+    <main>
+        @RenderBody()
+    </main>
 
-        <div class="content bg-primary">
-            @RenderBody()
-        </div>
-    </div>
-
-
-    <!-- Modal confirm logout -->
-    <div class="modal fade" id="logOut" role="dialog">
-        <div class="modal-dialog small-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">@Messages.LogoutConfirmation</h4>
-                </div>
-                <div class="modal-body">
-                    <p>@Messages.LogoutModalDescription</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary rippler rippler-default" id="confirmLogOut">@Messages.Yes</button>
-                    <button type="button" class="btn btn-second rippler rippler-default" data-dismiss="modal">@Messages.No</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <footer class="bg-success">Footer here</footer>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -65,7 +38,6 @@
     <script src="~/src/libs/Touch/touche.js"></script>
     <script src="~/src/libs/rippler/js/jquery.rippler.min.js"></script>
     <script src="~/Scripts/ticketdesk/common.js"></script>
-    <script src="~/src/js/page.js"></script>
 
     @Scripts.Render("~/bundles/validate")
 

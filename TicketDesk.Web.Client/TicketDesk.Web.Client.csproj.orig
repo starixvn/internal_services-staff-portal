@@ -29,6 +29,7 @@
     <ApplicationInsightsResourceId>/subscriptions/f96911eb-9288-41c5-afd8-30e2a9b16f96/resourcegroups/Default-Web-CentralUS/providers/microsoft.insights/components/ticketdesk2</ApplicationInsightsResourceId>
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>2.4</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -359,16 +360,6 @@
     <Compile Include="..\GlobalSuppressions.cs">
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
-    <Compile Include="App_GlobalResources\Resources.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_GlobalResources\Resources.vi-VN.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.vi-VN.resx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\Startup.Insights.cs" />
     <Compile Include="App_Start\Startup.PushNotifications.cs" />
@@ -379,6 +370,14 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\Startup.Routes.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AnnouncementsController.cs" />
+<<<<<<< HEAD
+    <Compile Include="Areas\Admin\Controllers\ReferencesController.cs" />
+=======
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
+>>>>>>> 000 - Layout page
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -428,6 +427,7 @@
     <Compile Include="Infrastructure\Helpers\MimeTypeMap.cs" />
     <Compile Include="Infrastructure\Helpers\PromptForHelper.cs" />
     <Compile Include="Infrastructure\Helpers\RazorViewHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\RequiredLabelForHelper.cs" />
     <Compile Include="Infrastructure\Helpers\SortableColumnHeaderHelper.cs" />
     <Compile Include="Infrastructure\Identity\FakeAuthenticationManager.cs" />
     <Compile Include="Infrastructure\Identity\TicketDeskContextSecurityProvider.cs" />
@@ -443,6 +443,7 @@
     <Compile Include="Models\Account\AccountPasswordViewModel.cs" />
     <Compile Include="Models\Account\AccountProfileViewModel.cs" />
     <Compile Include="Models\Account\UserAccountInfoViewModel.cs" />
+    <Compile Include="Models\Admin\AnnouncementViewModel.cs" />
     <Compile Include="Models\CustomFieldSettingViewModel.cs" />
     <Compile Include="Models\CustomField\AddCustomFieldViewModel.cs" />
     <Compile Include="Models\CustomField\EditCustomFieldViewModel.cs" />
@@ -551,6 +552,13 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Announcements\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcements\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcements\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcements\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcements\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminNavbar.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2132,7 +2140,6 @@
     <Content Include="src\libs\datetimepicker\moment-with-locales.js" />
     <Content Include="src\libs\datetimepicker\moment-with-locales.min.js" />
     <Content Include="src\libs\datetimepicker\moment.js" />
-    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\pagedown\Markdown.Converter.js" />
     <Content Include="Scripts\pagedown\Markdown.Sanitizer.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_ar.js" />
@@ -2320,7 +2327,6 @@
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Shared\_QuickSearch.cshtml" />
     <Content Include="Views\Ticket\Index.cshtml" />
-
     <Content Include="Views\TicketActivity\_AddComment.cshtml" />
     <Content Include="Views\TicketActivity\_ActivityButtons.cshtml" />
     <Content Include="Views\TicketActivity\_ModifyAttachments.cshtml" />
@@ -2385,7 +2391,6 @@
     <Content Include="Views\Ticket\_TicketDescription.cshtml" />
     <Content Include="Views\Ticket\_TicketAttachedFiles.cshtml" />
     <Content Include="Views\Ticket\NewFacilityTicket.cshtml" />
-    <Content Include="Views\Ticket\_TicketFeedbackDetails.cshtml" />
     <Content Include="Views\Ticket\_FeedbackCustomField.cshtml" />
     <Content Include="Views\Ticket\_FacilityTicketDetails.cshtml" />
     <Content Include="Scripts\jquery-2.2.2.min.map" />
@@ -2435,17 +2440,22 @@
     <Content Include="Views\Ticket\_HardwareTicketDetails.cshtml" />
     <Content Include="Views\Announcement\Index.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\LanguageSetting\Index.cshtml" />
-=======
->>>>>>> #000 - style for announcement detail page
     <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
+    <Content Include="Views\Ticket\NewNetworkTicket.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\References\" />
+=======
+    <Folder Include="Areas\Admin\Views\Home\" />
+>>>>>>> 000 - Layout page
     <Folder Include="Scripts\ticketdesk\User\" />
     <Folder Include="src\libs\dropzone\debug\" />
   </ItemGroup>
@@ -2517,16 +2527,6 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="App_GlobalResources\Resources.resx" />
-    <Content Include="App_GlobalResources\Resources.vi-VN.resx">
-      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\Resources.vi-VN.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Resources.vi-VN.designer.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

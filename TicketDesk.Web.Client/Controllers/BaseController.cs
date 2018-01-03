@@ -1,17 +1,17 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
-    using Domain;
-    using Fanex.NAP.Core.Service.Interface;
-    using Fanex.NAP.Core.Web.Context;
-    using Fanex.NAP.Core.Web.Session;
-    using Infrastructure.Extensions;
-    using Models.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Security;
+    using Domain;
+    using Fanex.NAP.Core.Service.Interface;
+    using Fanex.NAP.Core.Web.Context;
+    using Fanex.NAP.Core.Web.Session;
+    using Infrastructure.Extensions;
+    using Models.Extensions;
 
     public class BaseController : Controller
     {

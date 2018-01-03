@@ -1,64 +1,67 @@
-﻿@model IEnumerable<TicketDesk.Domain.Model.Announcement>
+﻿@model TicketDesk.Web.Client.Areas.Admin.Models.Announcements.AnnouncementViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Announcements Settings";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Message)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PublishedDateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProjectId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State)
-        </th>
-        <th></th>
-    </tr>
+<a class="btn btn-primary" href="@Url.Action("Create","Announcements")">+ Create new Announcement</a>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Message)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublishedDateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.State)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+<!--Filter-->
+<section>
+    @using (Html.BeginForm("Index","Announcements"))
+    {
+        <div class="input-group">
+            @Html.LabelFor(x => x.PublishedFrom)
+            @Html.TextBoxFor(x => x.PublishedFrom, new { @type = "datetime-local" })
+        </div>
+        <div class="input-group">
+            @Html.LabelFor(x => x.PublishedTo)
+            @Html.TextBoxFor(x => x.PublishedTo, new { @type = "datetime-local" })
+        </div>
+        <div class="input-group">
+            @Html.LabelFor(x => x.Status)
+            @Html.EnumDropDownListFor(x => x.Status)
+        </div>
+        <div class="input-group">
+            @Html.LabelFor(x => x.State)
+            @Html.EnumDropDownListFor(x => x.State)
+        </div>
+    }
+</section>
 
-</table>
+<!--Table-->
+<section>
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>ID</th>
+            <th>Last Modified</th>
+            <th>Modified By</th>
+            <th>Published Date</th>
+            <th>Annoucement</th>
+            <th>Status</th>
+            <th>Publish</th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var item in Model.Announcements) {
+        <tr>
+            <td>0</td>
+            <td>@item.Id</td>
+            <td></td>
+            <td></td>
+            <td>@item.PublishedDateTime</td>
+            <td>@item.Status</td>
+            <td>@item.State</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+        }
+    </table>
+</section>

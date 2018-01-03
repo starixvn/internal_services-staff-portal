@@ -1,5 +1,9 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using System.Web.Mvc;
     using Domain;
     using Domain.Infrastructure;
     using Domain.Model;
@@ -8,10 +12,6 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Models;
     using Models.Home;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
-    using System.Web.Mvc;
 
     [RoutePrefix("")]
     [Route("{action=index}")]
