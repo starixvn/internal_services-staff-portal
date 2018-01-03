@@ -441,6 +441,8 @@
     <Compile Include="Models\Account\AccountProfileViewModel.cs" />
     <Compile Include="Models\Account\UserAccountInfoViewModel.cs" />
     <Compile Include="Models\Admin\AnnouncementViewModel.cs" />
+    <Compile Include="Models\Admin\BaseReference.cs" />
+    <Compile Include="Models\Admin\TVScheduleReferencesViewModel.cs" />
     <Compile Include="Models\CustomFieldSettingViewModel.cs" />
     <Compile Include="Models\CustomField\AddCustomFieldViewModel.cs" />
     <Compile Include="Models\CustomField\EditCustomFieldViewModel.cs" />
@@ -556,6 +558,7 @@
     <Content Include="Areas\Admin\Views\Announcements\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminNavbar.cshtml" />
+    <Content Include="Areas\Admin\Views\References\TVSchedules.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2448,7 +2451,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Home\" />
-    <Folder Include="Areas\Admin\Views\References\" />
     <Folder Include="Scripts\ticketdesk\User\" />
     <Folder Include="src\libs\dropzone\debug\" />
   </ItemGroup>

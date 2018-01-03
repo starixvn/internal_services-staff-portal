@@ -372,12 +372,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AnnouncementsController.cs" />
-<<<<<<< HEAD
     <Compile Include="Areas\Admin\Controllers\ReferencesController.cs" />
-=======
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
->>>>>>> 000 - Layout page
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -444,6 +441,8 @@
     <Compile Include="Models\Account\AccountProfileViewModel.cs" />
     <Compile Include="Models\Account\UserAccountInfoViewModel.cs" />
     <Compile Include="Models\Admin\AnnouncementViewModel.cs" />
+    <Compile Include="Models\Admin\BaseReference.cs" />
+    <Compile Include="Models\Admin\TVScheduleReferencesViewModel.cs" />
     <Compile Include="Models\CustomFieldSettingViewModel.cs" />
     <Compile Include="Models\CustomField\AddCustomFieldViewModel.cs" />
     <Compile Include="Models\CustomField\EditCustomFieldViewModel.cs" />
@@ -558,7 +557,11 @@
     <Content Include="Areas\Admin\Views\Announcements\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Areas\Admin\Views\Shared\_AdminNavbar.cshtml" />
+=======
+    <Content Include="Areas\Admin\Views\References\TVSchedules.cshtml" />
+>>>>>>> 89009 - add view tv schedules
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2451,11 +2454,11 @@
   </ItemGroup>
   <ItemGroup>
 <<<<<<< HEAD
-    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Home\" />
     <Folder Include="Areas\Admin\Views\References\" />
 =======
-    <Folder Include="Areas\Admin\Views\Home\" />
->>>>>>> 000 - Layout page
+    <Folder Include="Areas\Admin\Models\" />
+>>>>>>> 89009 - add view tv schedules
     <Folder Include="Scripts\ticketdesk\User\" />
     <Folder Include="src\libs\dropzone\debug\" />
   </ItemGroup>

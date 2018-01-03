@@ -1,36 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Configuration;
+﻿using System.Linq;
 using System.Web.Mvc;
 using TicketDesk.Core.Enumerations;
 using TicketDesk.Domain;
+using TicketDesk.Web.Client.Models.Admin;
 
 namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
     public class ReferencesController : Controller
     {
-        private readonly string _webRootPath;
-        private readonly string _webPath;
         private TdDomainContext Context = new TdDomainContext();
-
-        public ReferencesController()
-        {
-            _webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
-            _webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _webPath);
-
-            if (!Directory.Exists(_webRootPath))
-            {
-                Directory.CreateDirectory(_webRootPath);
-            }
-        }
 
         public ActionResult TVSchedules()
         {
-            var tvSchedulesList = Context.References.Where(x => x.ReferenceType == ReferenceType.TvSchedule).ToList();
-            return View(tvSchedulesList);
+            var tvSchedulesViewModel = new TVScheduleReferencesViewModel
+            {
+                References = Context.References.Where(x => x.ReferenceType == ReferenceType.TvSchedule).ToList()
+            };
+
+            return View(tvSchedulesViewModel);
         }
 
         // GET: Admin/References/Details/5
