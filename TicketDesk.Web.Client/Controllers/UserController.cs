@@ -1,5 +1,11 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Security;
     using Fanex.Common;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Model;
@@ -8,12 +14,6 @@
     using Fanex.NAP.Core.Web.Auth;
     using Localization;
     using Models;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Security;
 
     [RoutePrefix("user")]
     [Route("{action}")]

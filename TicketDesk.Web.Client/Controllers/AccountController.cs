@@ -1,21 +1,21 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
-using System;
-using System.Configuration;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using TicketDesk.Localization.Controllers;
-using TicketDesk.PushNotifications;
-using TicketDesk.PushNotifications.Model;
-using TicketDesk.Web.Client.Models;
-using TicketDesk.Web.Identity;
-using TicketDesk.Web.Identity.Model;
-
-namespace TicketDesk.Web.Client.Controllers
+﻿namespace TicketDesk.Web.Client.Controllers
 {
-    [TdAuthorizeAttribute]
+    using System;
+    using System.Configuration;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
+    using Identity;
+    using Identity.Model;
+    using Localization.Controllers;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.Owin.Security;
+    using Models;
+    using PushNotifications;
+    using PushNotifications.Model;
+
+    [TdAuthorize]
     [RoutePrefix("account")]
     [Route("{action=manage}")]
     public class AccountController : Controller

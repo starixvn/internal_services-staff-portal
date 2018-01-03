@@ -17,17 +17,17 @@
     <link href="~/src/Fonts/iconFont/style.css" rel="stylesheet" />
     <link href="~/src/css/page.css" rel="stylesheet" />
 
-    @RenderSection("css", false)
+    @RenderSection("Styles", false)
     @RenderSection("customHeader", required: false)
 </head>
 <body>
 
     <div class="page-container">
-        
+
         <nav>
             <ul>
                 <li>
-                    <a href="@Url.Action("Announcement","Admin")">Announcement</a>
+                    <a href="@Url.Action("Index","Announcements")">Announcement</a>
                 </li>
             </ul>
         </nav>

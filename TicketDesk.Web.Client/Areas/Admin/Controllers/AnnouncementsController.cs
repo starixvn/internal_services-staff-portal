@@ -9,12 +9,12 @@
 
     public class AnnouncementsController : Controller
     {
-        private TdDomainContext db = new TdDomainContext();
+        private readonly TdDomainContext context = new TdDomainContext();
 
         // GET: Admin/Announcements
         public ActionResult Index()
         {
-            return View(db.Announcements.ToList());
+            return View(context.Announcements.ToList());
         }
 
         // GET: Admin/Announcements/Details/5
@@ -24,11 +24,13 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Announcement announcement = db.Announcements.Find(id);
+
+            var announcement = context.Announcements.Find(id);
             if (announcement == null)
             {
                 return HttpNotFound();
             }
+
             return View(announcement);
         }
 
@@ -47,8 +49,8 @@
         {
             if (ModelState.IsValid)
             {
-                db.Announcements.Add(announcement);
-                db.SaveChanges();
+                context.Announcements.Add(announcement);
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -62,11 +64,13 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Announcement announcement = db.Announcements.Find(id);
+
+            var announcement = context.Announcements.Find(id);
             if (announcement == null)
             {
                 return HttpNotFound();
             }
+
             return View(announcement);
         }
 
@@ -79,10 +83,11 @@
         {
             if (ModelState.IsValid)
             {
-                db.Entry(announcement).State = EntityState.Modified;
-                db.SaveChanges();
+                context.Entry(announcement).State = EntityState.Modified;
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(announcement);
         }
 
@@ -93,11 +98,13 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Announcement announcement = db.Announcements.Find(id);
+
+            var announcement = context.Announcements.Find(id);
             if (announcement == null)
             {
                 return HttpNotFound();
             }
+
             return View(announcement);
         }
 
@@ -106,9 +113,13 @@
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Announcement announcement = db.Announcements.Find(id);
-            db.Announcements.Remove(announcement);
-            db.SaveChanges();
+            var announcement = context.Announcements.Find(id);
+            if (announcement != null)
+            {
+                context.Announcements.Remove(announcement);
+                context.SaveChanges();
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -116,8 +127,9 @@
         {
             if (disposing)
             {
-                db.Dispose();
+                context.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }
