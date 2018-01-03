@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enumerations\CustomFieldTypeEnum.cs" />
+    <Compile Include="Enumerations\ReferenceTypes.cs" />
     <Compile Include="Enumerations\TicketCategoryTypes.cs" />
     <Compile Include="Helpers\Enumerations.cs" />
     <Compile Include="Helpers\HelperService.cs" />

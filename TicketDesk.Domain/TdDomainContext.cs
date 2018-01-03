@@ -96,6 +96,8 @@ namespace TicketDesk.Domain
 
         public DbSet<Announcement> Announcements { get; set; }
 
+        public DbSet<Reference> References { get; set; }
+
         public UserSettingsManager UserSettingsManager => _userSettingsManager ?? (_userSettingsManager = new UserSettingsManager(this));
 
         /// <summary>
