@@ -10,7 +10,7 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [StringLength(2000, ErrorMessage = "Message must under 2000 characters")]
+        [StringLength(5000, ErrorMessage = "Message must under 5000 characters")]
         public string Message { get; set; }
 
         public DateTime CreatedDateTime { get; set; }

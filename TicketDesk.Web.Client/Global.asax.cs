@@ -5,11 +5,13 @@
     using Microsoft.ApplicationInsights.Extensibility;
     using System;
     using System.Diagnostics;
+    using System.Web.Mvc;
 
     public class Global : System.Web.HttpApplication
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            AreaRegistration.RegisterAllAreas();
             DisableApplicationInsightsOnDebug();
             DbSettingProviderManager.Current.Start();
         }

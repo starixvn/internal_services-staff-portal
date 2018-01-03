@@ -1,6 +1,7 @@
 namespace TicketDesk.Domain.Migrations
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Data.Entity.Migrations;
     
     public partial class Nexcel_Announcement : DbMigration
@@ -12,7 +13,7 @@ namespace TicketDesk.Domain.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Message = c.String(maxLength: 2000),
+                        Message = c.String(maxLength: 5000),
                         CreatedDateTime = c.DateTime(nullable: false),
                         PublishedDateTime = c.DateTime(nullable: false),
                         ProjectId = c.Int(nullable: false),
