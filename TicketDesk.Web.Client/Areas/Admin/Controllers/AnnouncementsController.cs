@@ -47,7 +47,8 @@
         // GET: Admin/Announcements/Create
         public ActionResult Create()
         {
-            return View();
+            var newAnnouncement = new Announcement();
+            return View(newAnnouncement);
         }
 
         // POST: Admin/Announcements/Create
@@ -55,7 +56,7 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Message,CreatedDateTime,PublishedDateTime,ProjectId,Status,State")] Announcement announcement)
+        public ActionResult Create(Announcement announcement)
         {
             if (ModelState.IsValid)
             {

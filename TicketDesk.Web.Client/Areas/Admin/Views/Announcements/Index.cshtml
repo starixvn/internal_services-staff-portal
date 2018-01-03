@@ -11,24 +11,26 @@
 
 <!--Filter-->
 <section>
-    @using (Html.BeginForm("Index", "Announcements"))
+    @using (Html.BeginForm("Index", "Announcements", FormMethod.Get, new { @class = "form-inline" }))
     {
         <div class="input-group">
             @Html.LabelFor(x => x.PublishedFrom)
-            @Html.TextBoxFor(x => x.PublishedFrom, new { @type = "datetime-local" })
+            @Html.TextBoxFor(x => x.PublishedFrom, new { type = "date-local", @class = "form-control" })
         </div>
         <div class="input-group">
             @Html.LabelFor(x => x.PublishedTo)
-            @Html.TextBoxFor(x => x.PublishedTo, new { @type = "datetime-local" })
+            @Html.TextBoxFor(x => x.PublishedTo, new { type = "date-local", @class = "form-control" })
         </div>
         <div class="input-group">
             @Html.LabelFor(x => x.Status)
-            @Html.EnumDropDownListFor(x => x.Status)
+            @Html.EnumDropDownListFor(x => x.Status, new { @class = "form-control" })
         </div>
         <div class="input-group">
             @Html.LabelFor(x => x.State)
-            @Html.EnumDropDownListFor(x => x.State)
+            @Html.EnumDropDownListFor(x => x.State, new { @class = "form-control" })
         </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
     }
 </section>
 
@@ -54,8 +56,8 @@
                 <tr>
                     <td>0</td>
                     <td>@item.Id</td>
-                    <td></td>
-                    <td></td>
+                    <td>@item.LastModified</td>
+                    <td>@item.ModifiedBy</td>
                     <td>@item.PublishedDateTime</td>
                     <td>@item.Status</td>
                     <td>@item.State</td>
