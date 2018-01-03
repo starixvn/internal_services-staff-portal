@@ -260,13 +260,13 @@
     <Compile Include="Migrations\201711270925525_Nexcel_CustomField_RegexValidationErrorMessage.Designer.cs">
       <DependentUpon>201711270925525_Nexcel_CustomField_RegexValidationErrorMessage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712210203078_Nexcel_Announcement.cs" />
-    <Compile Include="Migrations\201712210203078_Nexcel_Announcement.Designer.cs">
-      <DependentUpon>201712210203078_Nexcel_Announcement.cs</DependentUpon>
+    <Compile Include="Migrations\201801030825287_Nexcel_Announcement.cs" />
+    <Compile Include="Migrations\201801030825287_Nexcel_Announcement.Designer.cs">
+      <DependentUpon>201801030825287_Nexcel_Announcement.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801030722546_Nexcel_Reference.cs" />
-    <Compile Include="Migrations\201801030722546_Nexcel_Reference.Designer.cs">
-      <DependentUpon>201801030722546_Nexcel_Reference.cs</DependentUpon>
+    <Compile Include="Migrations\201801030827154_Nexcel_Reference.cs" />
+    <Compile Include="Migrations\201801030827154_Nexcel_Reference.Designer.cs">
+      <DependentUpon>201801030827154_Nexcel_Reference.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
@@ -421,11 +421,11 @@
     <EmbeddedResource Include="Migrations\201711270925525_Nexcel_CustomField_RegexValidationErrorMessage.resx">
       <DependentUpon>201711270925525_Nexcel_CustomField_RegexValidationErrorMessage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712210203078_Nexcel_Announcement.resx">
-      <DependentUpon>201712210203078_Nexcel_Announcement.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801030825287_Nexcel_Announcement.resx">
+      <DependentUpon>201801030825287_Nexcel_Announcement.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801030722546_Nexcel_Reference.resx">
-      <DependentUpon>201801030722546_Nexcel_Reference.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801030827154_Nexcel_Reference.resx">
+      <DependentUpon>201801030827154_Nexcel_Reference.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

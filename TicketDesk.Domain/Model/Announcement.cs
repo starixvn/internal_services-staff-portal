@@ -26,6 +26,10 @@
 
         [Display(Name = "State")]
         public AnnouncementState State { get; set; }
+
+        public DateTime LastModified { get; set; }
+
+        public string ModifiedBy { get; set; }
     }
 
     public enum AnnouncementStatus
