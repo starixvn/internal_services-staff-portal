@@ -1,14 +1,16 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using TicketDesk.Core.Enumerations;
 using TicketDesk.Domain;
+using TicketDesk.Domain.Model;
 using TicketDesk.Web.Client.Models.Admin;
 
 namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
     public class ReferencesController : Controller
     {
-        private TdDomainContext Context = new TdDomainContext();
+        private readonly TdDomainContext Context = new TdDomainContext();
 
         public ActionResult TVSchedules()
         {
@@ -20,8 +22,8 @@ namespace TicketDesk.Web.Client.Areas.Admin.Controllers
             return View(tvSchedulesViewModel);
         }
 
-        // GET: Admin/References/Details/5
-        public ActionResult Details(int id)
+        [HttpPost]
+        public ActionResult TVSchedules(List<Reference> values)
         {
             return View();
         }
