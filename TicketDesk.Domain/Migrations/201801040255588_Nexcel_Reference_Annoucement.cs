@@ -12,12 +12,11 @@ namespace TicketDesk.Domain.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Message = c.String(nullable: false, maxLength: 5000),
+                        Message = c.String(nullable: false),
                         CreatedDateTime = c.DateTime(nullable: false),
                         PublishedDateTime = c.DateTime(nullable: false),
                         ProjectId = c.Int(nullable: false),
                         Status = c.Int(nullable: false),
-                        State = c.Int(nullable: false),
                         LastModified = c.DateTime(nullable: false),
                         ModifiedBy = c.String(),
                     })

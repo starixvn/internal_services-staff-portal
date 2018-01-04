@@ -29,7 +29,21 @@
         public AnnouncementStatus Status { get; set; }
 
         [Display(Name = "State")]
-        public AnnouncementState State { get; set; }
+        [NotMapped]
+        public AnnouncementState State
+        {
+            get
+            {
+                var result = AnnouncementState.Published;
+
+                if (PublishedDateTime >= DateTime.Now)
+                {
+                    result = AnnouncementState.Scheduled;
+                }
+
+                return result;
+            }
+        }
 
         public DateTime LastModified { get; set; }
 

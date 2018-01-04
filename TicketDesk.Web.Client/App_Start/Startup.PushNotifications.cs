@@ -196,6 +196,11 @@
                 // ReSharper disable once EmptyGeneralCatchClause
                 try
                 {
+                    if (notifications == null)
+                    {
+                        return;
+                    }
+
                     var notificationIds = notifications.Select(n => n.EventId).ToArray();
                     var domainContext = DependencyResolver.Current.GetService<TdDomainContext>();
                     var multiProject = domainContext.Projects.Count() > 1;
