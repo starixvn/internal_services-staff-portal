@@ -1,6 +1,4 @@
-﻿
-
-namespace TicketDesk.Domain.Model
+﻿namespace TicketDesk.Domain.Model
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -15,11 +13,8 @@ namespace TicketDesk.Domain.Model
 
         public DateTime DateAppear { get; set; }
 
+        [StringLength(500, ErrorMessage = "Image link must under 500 characters")]
         public string ImageLink { get; set; }
-
-        public string CreatedBy { get; set; }
-
-        public DateTime CreatedDate { get; set; }
 
         public string LastUpdateby { get; set; }
 

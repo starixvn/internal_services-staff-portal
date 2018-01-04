@@ -268,6 +268,10 @@
     <Compile Include="Migrations\201801040124276_Nexcel_Reference.Designer.cs">
       <DependentUpon>201801040124276_Nexcel_Reference.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801040159370_Remove_CreatedByAndCreatedDate.cs" />
+    <Compile Include="Migrations\201801040159370_Remove_CreatedByAndCreatedDate.Designer.cs">
+      <DependentUpon>201801040159370_Remove_CreatedByAndCreatedDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -426,6 +430,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801040124276_Nexcel_Reference.resx">
       <DependentUpon>201801040124276_Nexcel_Reference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801040159370_Remove_CreatedByAndCreatedDate.resx">
+      <DependentUpon>201801040159370_Remove_CreatedByAndCreatedDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
