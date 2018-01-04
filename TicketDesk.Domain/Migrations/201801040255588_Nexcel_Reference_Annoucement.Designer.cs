@@ -7,13 +7,13 @@ namespace TicketDesk.Domain.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Remove_CreatedByAndCreatedDate : IMigrationMetadata
+    public sealed partial class Nexcel_Reference_Annoucement : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Remove_CreatedByAndCreatedDate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Nexcel_Reference_Annoucement));
         
         string IMigrationMetadata.Id
         {
-            get { return "201801040159370_Remove_CreatedByAndCreatedDate"; }
+            get { return "201801040255588_Nexcel_Reference_Annoucement"; }
         }
         
         string IMigrationMetadata.Source

@@ -260,13 +260,9 @@
     <Compile Include="Migrations\201711270925525_Nexcel_CustomField_RegexValidationErrorMessage.Designer.cs">
       <DependentUpon>201711270925525_Nexcel_CustomField_RegexValidationErrorMessage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801040124276_Nexcel_Reference.cs" />
-    <Compile Include="Migrations\201801040124276_Nexcel_Reference.Designer.cs">
-      <DependentUpon>201801040124276_Nexcel_Reference.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801040159370_Remove_CreatedByAndCreatedDate.cs" />
-    <Compile Include="Migrations\201801040159370_Remove_CreatedByAndCreatedDate.Designer.cs">
-      <DependentUpon>201801040159370_Remove_CreatedByAndCreatedDate.cs</DependentUpon>
+    <Compile Include="Migrations\201801040255588_Nexcel_Reference_Annoucement.cs" />
+    <Compile Include="Migrations\201801040255588_Nexcel_Reference_Annoucement.Designer.cs">
+      <DependentUpon>201801040255588_Nexcel_Reference_Annoucement.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
@@ -421,11 +417,8 @@
     <EmbeddedResource Include="Migrations\201711270925525_Nexcel_CustomField_RegexValidationErrorMessage.resx">
       <DependentUpon>201711270925525_Nexcel_CustomField_RegexValidationErrorMessage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801040124276_Nexcel_Reference.resx">
-      <DependentUpon>201801040124276_Nexcel_Reference.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801040159370_Remove_CreatedByAndCreatedDate.resx">
-      <DependentUpon>201801040159370_Remove_CreatedByAndCreatedDate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801040255588_Nexcel_Reference_Annoucement.resx">
+      <DependentUpon>201801040255588_Nexcel_Reference_Annoucement.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
