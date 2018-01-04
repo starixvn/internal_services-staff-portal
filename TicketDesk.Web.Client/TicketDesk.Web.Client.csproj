@@ -492,6 +492,7 @@
     <Content Include="App_Data\LOCAL\TicketDeskSpNames.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="src\js\admin\announcement\newannouncement.js" />
     <Content Include="src\libs\datetimepicker\bootstrap-datetimepicker.css" />
     <Content Include="src\libs\datetimepicker\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />

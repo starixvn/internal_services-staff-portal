@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
+    using System;
     using System.Data.Entity;
     using System.Linq;
     using System.Net;
@@ -13,21 +14,19 @@
     {
         private readonly TdDomainContext context = new TdDomainContext();
 
-        // GET: Admin/Announcements
         public ActionResult Index(AnnouncementViewModel viewModel = null)
         {
-            if (viewModel == null)
+            if (viewModel?.Announcements == null)
             {
                 viewModel = new AnnouncementViewModel
                 {
                     Announcements = context.Announcements.ToList()
                 };
             }
-            
+
             return View(viewModel);
         }
 
-        // GET: Admin/Announcements/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -44,31 +43,46 @@
             return View(announcement);
         }
 
-        // GET: Admin/Announcements/Create
         public ActionResult Create()
         {
-            var newAnnouncement = new Announcement();
-            return View(newAnnouncement);
+            var viewModel = new NewAnnouncementViewModel
+            {
+                Announcement = new Announcement(),
+                IsImportant = false
+            };
+
+            return View(viewModel);
         }
 
-        // POST: Admin/Announcements/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Announcement announcement)
+        public ActionResult Create(NewAnnouncementViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                context.Announcements.Add(announcement);
+                // Set date-time
+                viewModel.Announcement.CreatedDateTime = DateTime.Now;
+
+                viewModel.Announcement.LastModified = DateTime.Now;
+                viewModel.Announcement.ModifiedBy = CurrentSession.Username;
+
+                if (viewModel.Date != null && viewModel.Time != null)
+                {
+                    var publishedDateTime = viewModel.Date.Value;
+                    publishedDateTime = publishedDateTime.AddSeconds(viewModel.Time.Value.TotalSeconds);
+
+                    viewModel.Announcement.PublishedDateTime = publishedDateTime;
+                }
+
+                context.Announcements.Add(viewModel.Announcement);
                 context.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
-            return View(announcement);
+            return View(viewModel);
         }
 
-        // GET: Admin/Announcements/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -85,9 +99,6 @@
             return View(announcement);
         }
 
-        // POST: Admin/Announcements/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Message,CreatedDateTime,PublishedDateTime,ProjectId,Status,State")] Announcement announcement)
@@ -102,7 +113,6 @@
             return View(announcement);
         }
 
-        // GET: Admin/Announcements/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -119,7 +129,6 @@
             return View(announcement);
         }
 
-        // POST: Admin/Announcements/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

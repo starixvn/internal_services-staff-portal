@@ -2,28 +2,41 @@
 {
     using System;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
     using System.Web.Mvc;
 
     public static class RequiredLabelForHelper
     {
-        public static MvcHtmlString RequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> helper,
-            Expression<Func<TModel, TValue>> expression, object htmlAttributes)
+        public static MvcHtmlString RequiredLabelFor<TModel, TValue>(
+            this HtmlHelper<TModel> helper,
+            Expression<Func<TModel, TValue>> expression,
+            object htmlAttributes,
+            bool isIncludeMaxlength = false)
         {
             var metaData = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
 
-            string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
-            string labelText = metaData.DisplayName ?? metaData.PropertyName ?? htmlFieldName.Split('.').Last();
+            var htmlFieldName = ExpressionHelper.GetExpressionText(expression);
+            var labelText = metaData.DisplayName ?? metaData.PropertyName ?? htmlFieldName.Split('.').Last();
+
+            if (string.IsNullOrEmpty(labelText))
+            {
+                return MvcHtmlString.Empty;
+            }
 
             if (metaData.IsRequired)
             {
                 labelText += "<span class=\"highlight\">&nbsp;*</span>";
             }
 
-            if (string.IsNullOrEmpty(labelText))
+            if (isIncludeMaxlength)
             {
-                return MvcHtmlString.Empty;
+                var member = expression.Body as MemberExpression;
+                var propertyInfo = member?.Member as PropertyInfo;
+                var maxLength = propertyInfo?.GetCustomAttribute<StringLengthAttribute>().MaximumLength;
+                labelText += $"<span class=\"highlight\">({maxLength} characters)</span>";
             }
 
             var label = new TagBuilder("label");

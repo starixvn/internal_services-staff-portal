@@ -59,11 +59,11 @@
                     <td>@item.LastModified</td>
                     <td>@item.ModifiedBy</td>
                     <td>@item.PublishedDateTime</td>
+                    <td>@item.Message</td>
                     <td>@item.Status</td>
                     <td>@item.State</td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                     </td>
                 </tr>
