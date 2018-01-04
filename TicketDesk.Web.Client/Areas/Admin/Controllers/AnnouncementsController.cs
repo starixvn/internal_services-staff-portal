@@ -44,23 +44,8 @@
         {
             if (ModelState.IsValid)
             {
-                // Set date-time
-                viewModel.Announcement.CreatedDateTime = DateTime.Now;
-                viewModel.Announcement.LastModified = DateTime.Now;
+                CommitAnnouncement(viewModel);
 
-                // Set published date-time
-                if (viewModel.Date != null && viewModel.Time != null)
-                {
-                    var publishedDateTime = viewModel.Date.Value;
-                    publishedDateTime = publishedDateTime.AddSeconds(viewModel.Time.Value.TotalSeconds);
-
-                    viewModel.Announcement.PublishedDateTime = publishedDateTime;
-                }
-
-                viewModel.Announcement.ModifiedBy = CurrentSession.Username;
-
-                viewModel.Announcement.Status = viewModel.IsImportant ? AnnouncementStatus.Important : AnnouncementStatus.Normal;
-                
                 context.Announcements.Add(viewModel.Announcement);
                 context.SaveChanges();
 
@@ -78,9 +63,15 @@
             }
 
             var announcement = context.Announcements.Find(id);
+
             if (announcement == null)
             {
                 return HttpNotFound();
+            }
+
+            if (announcement.State == AnnouncementState.Published)
+            {
+                return RedirectToAction("Index");
             }
 
             var viewModel = new NewAnnouncementViewModel
@@ -98,24 +89,18 @@
         [ValidateAntiForgeryToken]
         public ActionResult Edit(NewAnnouncementViewModel viewModel)
         {
+            // Prevent edit published Announcement
+            var announcement = context.Announcements.Find(viewModel.Announcement.Id);
+
+            var invalidAnnouncement = ReturnInvalidAnnouncement(announcement);
+            if (invalidAnnouncement != null)
+            {
+                return invalidAnnouncement;
+            }
+
             if (ModelState.IsValid)
             {
-                // Set date-time
-                viewModel.Announcement.CreatedDateTime = DateTime.Now;
-                viewModel.Announcement.LastModified = DateTime.Now;
-
-                // Set published date-time
-                if (viewModel.Date != null && viewModel.Time != null)
-                {
-                    var publishedDateTime = viewModel.Date.Value;
-                    publishedDateTime = publishedDateTime.AddSeconds(viewModel.Time.Value.TotalSeconds);
-
-                    viewModel.Announcement.PublishedDateTime = publishedDateTime;
-                }
-
-                viewModel.Announcement.ModifiedBy = CurrentSession.Username;
-
-                viewModel.Announcement.Status = viewModel.IsImportant ? AnnouncementStatus.Important : AnnouncementStatus.Normal;
+                CommitAnnouncement(viewModel);
 
                 context.Entry(viewModel.Announcement).State = EntityState.Modified;
                 context.SaveChanges();
@@ -123,6 +108,41 @@
             }
 
             return View(viewModel);
+        }
+
+        private ActionResult ReturnInvalidAnnouncement(Announcement announcement)
+        {
+            if (announcement == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (announcement.State == AnnouncementState.Published)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return null;
+        }
+
+        private void CommitAnnouncement(NewAnnouncementViewModel viewModel)
+        {
+            // Set date-time
+            viewModel.Announcement.CreatedDateTime = DateTime.Now;
+            viewModel.Announcement.LastModified = DateTime.Now;
+
+            // Set published date-time
+            if (viewModel.Date != null && viewModel.Time != null)
+            {
+                var publishedDateTime = viewModel.Date.Value;
+                publishedDateTime = publishedDateTime.AddSeconds(viewModel.Time.Value.TotalSeconds);
+
+                viewModel.Announcement.PublishedDateTime = publishedDateTime;
+            }
+
+            viewModel.Announcement.ModifiedBy = CurrentSession.Username;
+
+            viewModel.Announcement.Status = viewModel.IsImportant ? AnnouncementStatus.Important : AnnouncementStatus.Normal;
         }
 
         public ActionResult Delete(int? id)
@@ -133,9 +153,11 @@
             }
 
             var announcement = context.Announcements.Find(id);
-            if (announcement == null)
+
+            var invalidAnnouncement = ReturnInvalidAnnouncement(announcement);
+            if (invalidAnnouncement != null)
             {
-                return HttpNotFound();
+                return invalidAnnouncement;
             }
 
             return View(announcement);
@@ -146,6 +168,13 @@
         public ActionResult DeleteConfirmed(int id)
         {
             var announcement = context.Announcements.Find(id);
+
+            var invalidAnnouncement = ReturnInvalidAnnouncement(announcement);
+            if (invalidAnnouncement != null)
+            {
+                return invalidAnnouncement;
+            }
+
             if (announcement != null)
             {
                 context.Announcements.Remove(announcement);
