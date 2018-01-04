@@ -562,7 +562,6 @@
     <Content Include="Areas\Admin\Views\References\TVSchedules.cshtml" />
     <Content Include="Areas\Admin\Views\References\_ReferenceEntryEditor.cshtml" />
     <Content Include="Areas\Admin\Views\References\NewsLetter.cshtml" />
-    <Content Include="Areas\Admin\Views\References\_ReferenceCommon.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
