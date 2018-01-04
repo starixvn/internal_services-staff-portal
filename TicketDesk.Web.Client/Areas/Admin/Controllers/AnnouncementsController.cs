@@ -110,41 +110,6 @@
             return View(viewModel);
         }
 
-        private ActionResult ReturnInvalidAnnouncement(Announcement announcement)
-        {
-            if (announcement == null)
-            {
-                return HttpNotFound();
-            }
-
-            if (announcement.State == AnnouncementState.Published)
-            {
-                return RedirectToAction("Index");
-            }
-
-            return null;
-        }
-
-        private void CommitAnnouncement(NewAnnouncementViewModel viewModel)
-        {
-            // Set date-time
-            viewModel.Announcement.CreatedDateTime = DateTime.Now;
-            viewModel.Announcement.LastModified = DateTime.Now;
-
-            // Set published date-time
-            if (viewModel.Date != null && viewModel.Time != null)
-            {
-                var publishedDateTime = viewModel.Date.Value;
-                publishedDateTime = publishedDateTime.AddSeconds(viewModel.Time.Value.TotalSeconds);
-
-                viewModel.Announcement.PublishedDateTime = publishedDateTime;
-            }
-
-            viewModel.Announcement.ModifiedBy = CurrentSession.Username;
-
-            viewModel.Announcement.Status = viewModel.IsImportant ? AnnouncementStatus.Important : AnnouncementStatus.Normal;
-        }
-
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -192,6 +157,41 @@
             }
 
             base.Dispose(disposing);
+        }
+
+        private void CommitAnnouncement(NewAnnouncementViewModel viewModel)
+        {
+            // Set date-time
+            viewModel.Announcement.CreatedDateTime = DateTime.Now;
+            viewModel.Announcement.LastModified = DateTime.Now;
+
+            // Set published date-time
+            if (viewModel.Date != null && viewModel.Time != null)
+            {
+                var publishedDateTime = viewModel.Date.Value;
+                publishedDateTime = publishedDateTime.AddSeconds(viewModel.Time.Value.TotalSeconds);
+
+                viewModel.Announcement.PublishedDateTime = publishedDateTime;
+            }
+
+            viewModel.Announcement.ModifiedBy = CurrentSession.Username;
+
+            viewModel.Announcement.Status = viewModel.IsImportant ? AnnouncementStatus.Important : AnnouncementStatus.Normal;
+        }
+
+        private ActionResult ReturnInvalidAnnouncement(Announcement announcement)
+        {
+            if (announcement == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (announcement.State == AnnouncementState.Published)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return null;
         }
     }
 }
