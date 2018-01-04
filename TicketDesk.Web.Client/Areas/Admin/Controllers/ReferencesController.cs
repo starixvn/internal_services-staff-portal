@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
 using TicketDesk.Core.Enumerations;
@@ -14,7 +14,7 @@ namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 
         public ActionResult TVSchedules()
         {
-            var tvSchedulesViewModel = new TVScheduleReferencesViewModel
+            var tvSchedulesViewModel = new ReferenceViewModel
             {
                 References = Context.References.Where(x => x.ReferenceType == ReferenceType.TvSchedule).ToList()
             };
@@ -23,9 +23,29 @@ namespace TicketDesk.Web.Client.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult TVSchedules(List<Reference> values)
+        public ActionResult TVSchedules(ReferenceViewModel viewModel)
         {
-            return View();
+            var references = viewModel.References;
+            var userId = Context.SecurityProvider.CurrentUserId;
+            if (references != null)
+            {
+                foreach (Reference reference in references)
+                {
+                    var tvSchedule = new Reference
+                    {
+                        DateAppear = reference.DateAppear,
+                        ImageLink = reference.ImageLink,
+                        ReferenceType = ReferenceType.TvSchedule,
+                        LastUpdateBy = userId,
+                        LastUpdateDate = DateTime.Now
+                    };
+
+                    Context.References.Add(tvSchedule);
+                }
+                Context.SaveChanges();
+            }
+
+            return Json(new JsonResult { });
         }
 
         // GET: Admin/References/Create

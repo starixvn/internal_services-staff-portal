@@ -1,5 +1,5 @@
 ﻿@using TicketDesk.Web.Client.Models.Admin
-@model TVScheduleReferencesViewModel
+@model ReferenceViewModel
 
 @{
     ViewBag.Title = "TVSchedules";
@@ -19,7 +19,8 @@
 
         @foreach (var tvSchedules in Model.References)
         {
-            <a href="/">Oliver</a>
+            <p>@tvSchedules.DateAppear</p>
+            <p>@tvSchedules.ImageLink</p>
         }
 
         <div class="form-group">
