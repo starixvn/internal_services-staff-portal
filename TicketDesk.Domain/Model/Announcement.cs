@@ -10,18 +10,22 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Display(Name = "Announcement Content")]
         [StringLength(5000, ErrorMessage = "Message must under 5000 characters")]
+        [Required(ErrorMessage = "Announcement Message is required")]
         public string Message { get; set; }
-
+        
         public DateTime CreatedDateTime { get; set; }
 
         [Display(Name = "Publish Date")]
+        [Required(ErrorMessage = "Publish date/time is required")]
         public DateTime PublishedDateTime { get; set; }
 
         [Display(Name = "Specific to Shop")]
         public int ProjectId { get; set; }
 
         [Display(Name = "Status")]
+        [Required(ErrorMessage = "Announcement status is required")]
         public AnnouncementStatus Status { get; set; }
 
         [Display(Name = "State")]

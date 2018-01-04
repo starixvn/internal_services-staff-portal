@@ -375,6 +375,7 @@
     <Compile Include="Areas\Admin\Controllers\ReferencesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Announcements\NewAnnouncementViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
