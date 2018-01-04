@@ -1,0 +1,21 @@
+﻿<ul id="AddImageZone">
+    @foreach (var tvSchedule in Model.References)
+    {
+        Html.RenderPartial("_ReferenceEntryEditor", tvSchedule);
+    }
+</ul>
+
+<div class="form-group">
+    <div class="col-md-3">
+        <input type="button" id="AddNewsLetterImage" value="Add Image" class="btn btn-success" />
+    </div>
+    <div class="col-md-3">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+    <div class="col-md-6">
+        <p>Alowed file type: jpeg, jpg, png</p>
+        <p>Maximum file size: 2MB/file</p>
+        <p>Maximum number of upload files: 31 files</p>
+    </div>
+</div>
+    </div>

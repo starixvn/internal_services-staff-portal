@@ -1,0 +1,18 @@
+﻿@using TicketDesk.Domain.Model
+@using TicketDesk.Core.Enumerations
+@model Reference
+
+<li class="reference-entry">
+    @if (Model.ReferenceType != ReferenceType.NewsLetter)
+    {
+        @Html.LabelFor(model => model.DateAppear)
+        @Html.EditorFor(model => model.DateAppear)
+        @Html.ValidationMessageFor(model => model.DateAppear)
+    }
+
+    @Html.LabelFor(model => model.ImageLink)
+    @Html.EditorFor(model => model.ImageLink)
+    @Html.ValidationMessageFor(model => model.ImageLink)
+
+    <input type="button" class="btn btn-danger remove-entry" onclick="$(this).parent().remove()"  value="Delete">
+</li>

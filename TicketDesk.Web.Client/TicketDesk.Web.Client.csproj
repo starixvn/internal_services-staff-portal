@@ -442,7 +442,7 @@
     <Compile Include="Models\Account\AccountProfileViewModel.cs" />
     <Compile Include="Models\Account\UserAccountInfoViewModel.cs" />
     <Compile Include="Models\Admin\AnnouncementViewModel.cs" />
-    <Compile Include="Models\Admin\ReferenceViewModel.cs" />
+    <Compile Include="Models\Admin\ListReferencesViewModel.cs" />
     <Compile Include="Models\CustomFieldSettingViewModel.cs" />
     <Compile Include="Models\CustomField\AddCustomFieldViewModel.cs" />
     <Compile Include="Models\CustomField\EditCustomFieldViewModel.cs" />
@@ -493,6 +493,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="src\js\admin\announcement\newannouncement.js" />
+    <Content Include="Scripts\reference\reference.js" />
     <Content Include="src\libs\datetimepicker\bootstrap-datetimepicker.css" />
     <Content Include="src\libs\datetimepicker\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -559,6 +560,9 @@
     <Content Include="Areas\Admin\Views\Announcements\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminNavbar.cshtml" />
     <Content Include="Areas\Admin\Views\References\TVSchedules.cshtml" />
+    <Content Include="Areas\Admin\Views\References\_ReferenceEntryEditor.cshtml" />
+    <Content Include="Areas\Admin\Views\References\NewsLetter.cshtml" />
+    <Content Include="Areas\Admin\Views\References\_ReferenceCommon.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

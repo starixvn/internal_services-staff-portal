@@ -12,10 +12,13 @@
         public int Id { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Date Appear")]
         public DateTime DateAppear { get; set; }
 
-        [StringLength(500, ErrorMessage = "Image link must under 500 characters")]
         [Required]
+        [StringLength(500, ErrorMessage = "Image URL must under 500 characters")]
+        [Display(Name = "Image URL")]
         public string ImageLink { get; set; }
 
         [Required]

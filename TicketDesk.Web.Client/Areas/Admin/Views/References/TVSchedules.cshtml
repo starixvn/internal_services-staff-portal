@@ -1,5 +1,5 @@
 ﻿@using TicketDesk.Web.Client.Models.Admin
-@model ReferenceViewModel
+@model ListReferencesViewModel
 
 @{
     ViewBag.Title = "TVSchedules";
@@ -16,16 +16,24 @@
         <h4>Reference</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        @foreach (var tvSchedules in Model.References)
-        {
-            <p>@tvSchedules.DateAppear</p>
-            <p>@tvSchedules.ImageLink</p>
-        }
+        <ul id="AddImageZone">
+            @foreach (var tvSchedule in Model.References)
+            {
+                Html.RenderPartial("_ReferenceEntryEditor", tvSchedule);
+            }
+        </ul>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="col-md-3">
+                <input type="button" id="AddImage" value="Add Image" class="btn btn-success" />
+            </div>
+            <div class="col-md-3">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+            <div class="col-md-6">
+                <p>Alowed file type: jpeg, jpg, png</p>
+                <p>Maximum file size: 2MB/file</p>
+                <p>Maximum number of upload files: 31 files</p>
             </div>
         </div>
     </div>
@@ -38,3 +46,4 @@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/reference/reference.js"></script>

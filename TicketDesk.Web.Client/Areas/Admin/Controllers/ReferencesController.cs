@@ -1,20 +1,24 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
-using TicketDesk.Core.Enumerations;
-using TicketDesk.Domain;
-using TicketDesk.Domain.Model;
-using TicketDesk.Web.Client.Models.Admin;
-
-namespace TicketDesk.Web.Client.Areas.Admin.Controllers
+﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+    using TicketDesk.Core.Enumerations;
+    using TicketDesk.Domain;
+    using TicketDesk.Domain.Infrastructure;
+    using TicketDesk.Domain.Model;
+    using TicketDesk.Web.Client.Models.Admin;
+
     public class ReferencesController : Controller
     {
         private readonly TdDomainContext Context = new TdDomainContext();
 
         public ActionResult TVSchedules()
         {
-            var tvSchedulesViewModel = new ReferenceViewModel
+            var tvSchedulesViewModel = new ListReferencesViewModel
             {
                 References = Context.References.Where(x => x.ReferenceType == ReferenceType.TvSchedule).ToList()
             };
@@ -23,95 +27,73 @@ namespace TicketDesk.Web.Client.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult TVSchedules(ReferenceViewModel viewModel)
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        public ActionResult TVSchedules(ListReferencesViewModel viewModel)
         {
-            var references = viewModel.References;
-            var userId = Context.SecurityProvider.CurrentUserId;
-            if (references != null)
+            if (ModelState.IsValid)
             {
-                foreach (Reference reference in references)
-                {
-                    var tvSchedule = new Reference
-                    {
-                        DateAppear = reference.DateAppear,
-                        ImageLink = reference.ImageLink,
-                        ReferenceType = ReferenceType.TvSchedule,
-                        LastUpdateBy = userId,
-                        LastUpdateDate = DateTime.Now
-                    };
+                var references = viewModel.References;
 
-                    Context.References.Add(tvSchedule);
+                if (references != null)
+                {
+                    RemoveOldReference(ReferenceType.TvSchedule);
+
+                    foreach (Reference reference in references)
+                    {
+                        SaveEachReference(reference, ReferenceType.TvSchedule);
+                    }
+                    Context.SaveChanges();
                 }
-                Context.SaveChanges();
             }
 
             return Json(new JsonResult { });
         }
 
-        // GET: Admin/References/Create
-        public ActionResult Create()
+        public ActionResult ReferenceEntity(ReferenceType referenceType)
         {
-            return View();
+            var reference = new Reference
+            {
+                ReferenceType = referenceType
+            };
+            return PartialView("_ReferenceEntryEditor", reference);
         }
 
-        // POST: Admin/References/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        private void SaveEachReference(Reference reference, ReferenceType referenceType)
         {
-            try
+            var tvSchedule = new Reference
             {
-                // TODO: Add insert logic here
+                DateAppear = reference.DateAppear,
+                ImageLink = reference.ImageLink,
+                ReferenceType = referenceType,
+                LastUpdateBy = Context.SecurityProvider.CurrentUserId,
+                LastUpdateDate = DateTime.Now
+            };
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            Context.References.Add(tvSchedule);
         }
 
-        // GET: Admin/References/Edit/5
-        public ActionResult Edit(int id)
+        private void RemoveOldReference(ReferenceType referenceType)
         {
-            return View();
-        }
+            IList<Reference> oldReferences = Context.References.Where(x => x.ReferenceType == referenceType).ToList();
 
-        // POST: Admin/References/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            if (oldReferences != null)
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                foreach (var reference in oldReferences)
+                {
+                    Context.References.Remove(reference);
+                }
+                Context.SaveChanges();
             }
         }
 
-        // GET: Admin/References/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult NewsLetter()
         {
-            return View();
-        }
-
-        // POST: Admin/References/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
+            var tvSchedulesViewModel = new ListReferencesViewModel
             {
-                // TODO: Add delete logic here
+                References = Context.References.Where(x => x.ReferenceType == ReferenceType.NewsLetter).ToList()
+            };
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(tvSchedulesViewModel);
         }
     }
 }

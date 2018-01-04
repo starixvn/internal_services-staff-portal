@@ -375,6 +375,7 @@
     <Compile Include="Areas\Admin\Controllers\ReferencesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Announcements\NewAnnouncementViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -441,8 +442,7 @@
     <Compile Include="Models\Account\AccountProfileViewModel.cs" />
     <Compile Include="Models\Account\UserAccountInfoViewModel.cs" />
     <Compile Include="Models\Admin\AnnouncementViewModel.cs" />
-    <Compile Include="Models\Admin\BaseReference.cs" />
-    <Compile Include="Models\Admin\TVScheduleReferencesViewModel.cs" />
+    <Compile Include="Models\Admin\ListReferencesViewModel.cs" />
     <Compile Include="Models\CustomFieldSettingViewModel.cs" />
     <Compile Include="Models\CustomField\AddCustomFieldViewModel.cs" />
     <Compile Include="Models\CustomField\EditCustomFieldViewModel.cs" />
@@ -492,6 +492,11 @@
     <Content Include="App_Data\LOCAL\TicketDeskSpNames.xml">
       <SubType>Designer</SubType>
     </Content>
+<<<<<<< HEAD
+    <Content Include="src\js\admin\announcement\newannouncement.js" />
+=======
+    <Content Include="Scripts\reference\reference.js" />
+>>>>>>> 89009 - create references view and controller
     <Content Include="src\libs\datetimepicker\bootstrap-datetimepicker.css" />
     <Content Include="src\libs\datetimepicker\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -554,14 +559,13 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Announcements\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Announcements\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Areas\Admin\Views\Shared\_AdminNavbar.cshtml" />
-=======
     <Content Include="Areas\Admin\Views\References\TVSchedules.cshtml" />
->>>>>>> 89009 - add view tv schedules
+    <Content Include="Areas\Admin\Views\References\_ReferenceEntryEditor.cshtml" />
+    <Content Include="Areas\Admin\Views\References\NewsLetter.cshtml" />
+    <Content Include="Areas\Admin\Views\References\_ReferenceCommon.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2453,12 +2457,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Folder Include="Areas\Admin\Views\Home\" />
-    <Folder Include="Areas\Admin\Views\References\" />
-=======
-    <Folder Include="Areas\Admin\Models\" />
->>>>>>> 89009 - add view tv schedules
     <Folder Include="Scripts\ticketdesk\User\" />
     <Folder Include="src\libs\dropzone\debug\" />
   </ItemGroup>
