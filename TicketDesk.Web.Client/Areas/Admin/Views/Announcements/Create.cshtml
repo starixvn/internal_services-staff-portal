@@ -40,7 +40,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Date, new { type = "date", id = "announcement-date" })
+                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { type = "date", id = "announcement-date" })
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,7 +52,7 @@
                 @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button class="btn btn-default" type="button" id="set-current-datetime-button">Get Current Date/Time</button>

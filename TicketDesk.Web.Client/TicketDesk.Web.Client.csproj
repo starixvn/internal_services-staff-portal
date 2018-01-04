@@ -555,7 +555,6 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Announcements\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Announcements\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminNavbar.cshtml" />
