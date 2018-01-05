@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Web.Client.Models.Admin
+﻿namespace TicketDesk.Web.Client.Areas.Admin.Models.References
 {
     using System.Collections.Generic;
     using TicketDesk.Domain.Model;

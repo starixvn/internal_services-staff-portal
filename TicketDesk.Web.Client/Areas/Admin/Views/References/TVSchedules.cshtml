@@ -1,9 +1,14 @@
-﻿@using TicketDesk.Web.Client.Models.Admin
+﻿@using TicketDesk.Web.Client.Areas.Admin.Models.References
 @model ListReferencesViewModel
 
 @{
     ViewBag.Title = "TVSchedules";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section css
+{
+    <link href="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 }
 
 <h2>TVSchedules</h2>
@@ -41,4 +46,17 @@
 
 @section scripts {
     <script src="~/Scripts/reference/reference.js"></script>
-    }
+    <script src="~/src/libs/datetimepicker/moment.js"></script>
+    <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.datetimepicker').datetimepicker({
+                format: 'DD/MM/YYYY hh:mm',
+                defaultDate: new Date(),
+                maxDate: new Date(),
+                sideBySide: true
+            });
+        });
+    </script>
+}

@@ -13,22 +13,22 @@
     using TicketDesk.Domain;
     using TicketDesk.Domain.Infrastructure;
     using TicketDesk.Domain.Model;
-    using TicketDesk.Web.Client.Models.Admin;
+    using TicketDesk.Web.Client.Areas.Admin.Models.References;
 
     public class ReferencesController : Controller
     {
         private readonly TdDomainContext Context = new TdDomainContext();
-        private readonly string _webRootPath;
-        private readonly string _webPath;
+        private readonly string webRootPath;
+        private readonly int imageSizeLimit = 2 * 1024 * 1024; // 2MB
 
         public ReferencesController()
         {
-            _webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
-            _webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _webPath);
+            string webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
+            webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, webPath);
 
-            if (!Directory.Exists(_webRootPath))
+            if (!Directory.Exists(webRootPath))
             {
-                Directory.CreateDirectory(_webRootPath);
+                Directory.CreateDirectory(webRootPath);
             }
         }
 
@@ -44,22 +44,17 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult TVSchedules(ListReferencesViewModel viewModel)
+        public ActionResult TVSchedules(IEnumerable<Reference> references)
         {
             if (ModelState.IsValid)
             {
-                var references = viewModel.References;
+                RemoveOldReference(ReferenceType.TvSchedule);
 
-                if (references != null)
+                foreach (Reference reference in references)
                 {
-                    RemoveOldReference(ReferenceType.TvSchedule);
-
-                    foreach (Reference reference in references)
-                    {
-                        SaveEachReference(reference, ReferenceType.TvSchedule);
-                    }
-                    Context.SaveChanges();
+                    SaveEachReference(reference, ReferenceType.TvSchedule);
                 }
+                Context.SaveChanges();
             }
 
             return Json(new JsonResult { });
@@ -78,7 +73,7 @@
         {
             var tvSchedule = new Reference
             {
-                DateAppear = reference.DateAppear,
+                DateAppear = referenceType != ReferenceType.NewsLetter ? reference.DateAppear : DateTime.Now,
                 ImageLink = reference.ImageLink,
                 ReferenceType = referenceType,
                 LastUpdateBy = Context.SecurityProvider.CurrentUserId,
@@ -115,32 +110,71 @@
         [HttpPost]
         public ActionResult UploadImage()
         {
-            string _path = string.Empty;
             HttpPostedFileBase file = Request.Files[0];
-            try
+            var filePath = string.Empty;
+            bool isSuccessful = false;
+
+            if (file.ContentLength > 0)
             {
-                if (file.ContentLength > 0)
+                var today = DateTime.Now.Date;
+                var directory = string.Format("{0}/{1}/{2}/{3}", webRootPath, today.Year, today.Month, today.Day);
+                string fileName = Path.GetFileName(file.FileName);
+                int fileSize = file.ContentLength;
+
+                if (!ValidExtention(fileName))
                 {
-                    string fileName = Path.GetFileName(file.FileName);
-                    if (ValidExtention(fileName))
-                    {
-                        _path = Path.Combine(Server.MapPath("~/UploadedFiles"), fileName);
-                        //file.SaveAs(_path);
-                    }
+                    return Json(new { isSuccessful, message = "Fail to upload image. The format is not supported." });
                 }
-            }
-            catch
-            {
-                ViewBag.Message = "File upload failed!!";
+
+                if (fileSize > imageSizeLimit)
+                {
+                    return Json(new { isSuccessful, message = "Fail to upload image. The image you're trying to upload exceeds 2MB limit." });
+                }
+
+                var fileExist = System.IO.File.Exists(Path.Combine(directory, file.FileName));
+
+                if (fileExist)
+                {
+                    filePath = MakeWebPath(Path.Combine(directory, file.FileName));
+                }
+                else
+                {
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+
+                    filePath = MakeWebPath(Path.Combine(directory, file.FileName));
+                    file.SaveAs(filePath);
+                }
+
+                return Json(new { isSuccessful = true, filePath });
             }
 
-            return Json(new { isSuccess = true, _path });
+            return Json(new { isSuccessful, message = "Upload fail" });
         }
 
         private static bool ValidExtention(string fileName)
         {
             string ext = Path.GetExtension(fileName).ToLowerInvariant();
             return ext == ".jpg" || ext == ".png" || ext == ".jpeg";
+        }
+
+        private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
+        {
+            var validPath = path.Replace("\\", "/");
+
+            if (addSeperatorToBegin)
+            {
+                validPath = "/" + validPath;
+            }
+
+            if (addSeperatorToLast)
+            {
+                validPath = validPath + "/";
+            }
+
+            return validPath;
         }
     }
 }

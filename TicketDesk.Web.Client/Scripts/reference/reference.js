@@ -25,6 +25,7 @@ function checkLimitedImage(limit) {
 }
 
 $("#AddImageZone").on("change", ".upload-image", function (e) {
+    var uploadEntry = $(this).parent();
     var files = e.target.files;
     if (files.length > 0) {
         if (window.FormData !== undefined) {
@@ -37,7 +38,11 @@ $("#AddImageZone").on("change", ".upload-image", function (e) {
                 processData: false,
                 data: data,
                 success: function (result) {
-                    console.log(result);
+                    if (result.isSuccessful) {
+                        uploadEntry.find("input[name=ImageLink]").val(result.filePath);
+                    } else {
+                        uploadEntry.find("input[name=ImageLink]").addClass("error");
+                    }
                 },
                 error: function (xhr, status, p3, p4) {
                     var err = "Error " + " " + status + " " + p3 + " " + p4;
