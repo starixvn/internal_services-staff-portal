@@ -6,6 +6,7 @@
     using System.Net;
     using System.Web.Mvc;
     using Client.Controllers;
+    using DelegateDecompiler;
     using Domain;
     using Domain.Model;
     using Models.Announcements;
@@ -17,10 +18,13 @@
 
         public ActionResult Index(AnnouncementViewModel viewModel = null)
         {
-            if (viewModel?.Announcements == null)
+            if (viewModel == null)
             {
                 viewModel = new AnnouncementViewModel();
+            }
 
+            if (viewModel.Announcements == null)
+            {
                 IQueryable<Announcement> announcements = context.Announcements;
 
                 if (viewModel.PublishedFrom != null)
@@ -40,7 +44,7 @@
 
                 if (viewModel.State != null)
                 {
-                    announcements = announcements.Where(x => x.State == viewModel.State);
+                    announcements = announcements.Where(x => x.State == viewModel.State).Decompile();
                 }
 
                 viewModel.Announcements = announcements.ToList();

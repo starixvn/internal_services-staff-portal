@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using DelegateDecompiler;
 
     public class Announcement
     {
@@ -29,6 +30,7 @@
 
         [Display(Name = "State")]
         [NotMapped]
+        [Computed]
         public AnnouncementState State
         {
             get
