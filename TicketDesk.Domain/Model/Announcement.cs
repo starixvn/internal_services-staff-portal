@@ -18,8 +18,7 @@
         public DateTime CreatedDateTime { get; set; }
 
         [Display(Name = "Publish Date")]
-        [Required(ErrorMessage = "Publish date/time is required")]
-        public DateTime PublishedDateTime { get; set; }
+        public DateTime? PublishedDateTime { get; set; }
 
         [Display(Name = "Specific to Shop")]
         public int ProjectId { get; set; }

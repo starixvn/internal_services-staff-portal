@@ -100,8 +100,8 @@
             {
                 Announcement = announcement,
                 IsImportant = announcement.Status == AnnouncementStatus.Important,
-                Date = announcement.PublishedDateTime.Date,
-                Time = announcement.PublishedDateTime.TimeOfDay
+                Date = announcement.PublishedDateTime?.Date,
+                Time = announcement.PublishedDateTime?.TimeOfDay
             };
 
             return View(viewModel);

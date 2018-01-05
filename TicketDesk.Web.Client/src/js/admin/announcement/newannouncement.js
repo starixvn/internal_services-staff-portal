@@ -23,27 +23,27 @@
 
     getCurrentDate: function () {
         var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1; //January is 0!
+        var dd = announcement.addMissingZero(today.getDate());
+        var mm = announcement.addMissingZero(today.getMonth() + 1); //January is 0!
         var yyyy = today.getFullYear();
 
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-
-        return yyyy + '-' + mm + '-' + dd;
+        return yyyy + "-" + mm + "-" + dd;
     },
 
     getCurrentTime: function () {
         var today = new Date();
-        var hh = today.getHours();
-        var mm = today.getMinutes();
+        var hh = announcement.addMissingZero(today.getHours());
+        var mm = announcement.addMissingZero(today.getMinutes());
 
-        return hh + ':' + mm;
+        return hh + ":" + mm;
+    },
+
+    addMissingZero: function(data) {
+        if (data < 10) {
+            data = "0" + data;
+        }
+
+        return data;
     }
 };
 
