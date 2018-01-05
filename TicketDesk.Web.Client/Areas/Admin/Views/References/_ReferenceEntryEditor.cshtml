@@ -14,6 +14,6 @@
     @Html.EditorFor(model => model.ImageLink)
     @Html.ValidationMessageFor(model => model.ImageLink)
 
-    <input type="file" id="profile_pic" name="profile_pic" accept=".jpg, .jpeg, .png">
+    <input class="upload-image" type="file" accept=".jpg, .jpeg, .png">
     <input type="button" class="btn btn-danger remove-entry" onclick="$(this).parent().remove()" value="Delete">
 </li>

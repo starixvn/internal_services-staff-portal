@@ -4,7 +4,10 @@
     using Fanex.NAP.Core.Web.Attribute;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Web;
+    using System.Web.Configuration;
     using System.Web.Mvc;
     using TicketDesk.Core.Enumerations;
     using TicketDesk.Domain;
@@ -15,6 +18,19 @@
     public class ReferencesController : Controller
     {
         private readonly TdDomainContext Context = new TdDomainContext();
+        private readonly string _webRootPath;
+        private readonly string _webPath;
+
+        public ReferencesController()
+        {
+            _webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
+            _webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _webPath);
+
+            if (!Directory.Exists(_webRootPath))
+            {
+                Directory.CreateDirectory(_webRootPath);
+            }
+        }
 
         public ActionResult TVSchedules()
         {
@@ -94,6 +110,37 @@
             };
 
             return View(tvSchedulesViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult UploadImage()
+        {
+            string _path = string.Empty;
+            HttpPostedFileBase file = Request.Files[0];
+            try
+            {
+                if (file.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(file.FileName);
+                    if (ValidExtention(fileName))
+                    {
+                        _path = Path.Combine(Server.MapPath("~/UploadedFiles"), fileName);
+                        //file.SaveAs(_path);
+                    }
+                }
+            }
+            catch
+            {
+                ViewBag.Message = "File upload failed!!";
+            }
+
+            return Json(new { isSuccess = true, _path });
+        }
+
+        private static bool ValidExtention(string fileName)
+        {
+            string ext = Path.GetExtension(fileName).ToLowerInvariant();
+            return ext == ".jpg" || ext == ".png" || ext == ".jpeg";
         }
     }
 }
