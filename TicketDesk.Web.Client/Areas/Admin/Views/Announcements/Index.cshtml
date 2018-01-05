@@ -15,19 +15,19 @@
     {
         <div class="input-group">
             @Html.LabelFor(x => x.PublishedFrom)
-            @Html.TextBoxFor(x => x.PublishedFrom, new { type = "date-local", @class = "form-control" })
+            @Html.TextBoxFor(x => x.PublishedFrom, new { type = "date", @class = "form-control" })
         </div>
         <div class="input-group">
             @Html.LabelFor(x => x.PublishedTo)
-            @Html.TextBoxFor(x => x.PublishedTo, new { type = "date-local", @class = "form-control" })
+            @Html.TextBoxFor(x => x.PublishedTo, new { type = "date", @class = "form-control" })
         </div>
         <div class="input-group">
             @Html.LabelFor(x => x.Status)
-            @Html.EnumDropDownListFor(x => x.Status, new { @class = "form-control" })
+            @Html.EnumDropDownListFor(x => x.Status, "All", new { @class = "form-control" })
         </div>
         <div class="input-group">
             @Html.LabelFor(x => x.State)
-            @Html.EnumDropDownListFor(x => x.State, new { @class = "form-control" })
+            @Html.EnumDropDownListFor(x => x.State, "All", new { @class = "form-control" })
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>

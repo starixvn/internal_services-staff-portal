@@ -4,6 +4,7 @@
     using Client.Controllers;
     using Client.Models;
 
+    [TdAuthorize]
     public class HomeController : BaseController
     {
         [ChildActionOnly]

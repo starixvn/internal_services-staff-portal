@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using Client.Models.Home;
     using Domain.Model;
 
@@ -9,12 +10,16 @@
     {
         public IEnumerable<Announcement> Announcements { get; set; }
 
+        [Display(Name = "Published From")]
         public DateTime? PublishedFrom { get; set; }
 
+        [Display(Name = "Published To")]
         public DateTime? PublishedTo { get; set; }
 
-        public AnnouncementStatus Status { get; set; }
+        [Display(Name = "Status")]
+        public AnnouncementStatus? Status { get; set; }
 
-        public AnnouncementState State { get; set; }
+        [Display(Name = "State")]
+        public AnnouncementState? State { get; set; }
     }
 }

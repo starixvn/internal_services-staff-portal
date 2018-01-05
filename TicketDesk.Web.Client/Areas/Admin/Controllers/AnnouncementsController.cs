@@ -10,6 +10,7 @@
     using Domain.Model;
     using Models.Announcements;
 
+    [TdAuthorize]
     public class AnnouncementsController : BaseController
     {
         private readonly TdDomainContext context = new TdDomainContext();
@@ -18,10 +19,31 @@
         {
             if (viewModel?.Announcements == null)
             {
-                viewModel = new AnnouncementViewModel
+                viewModel = new AnnouncementViewModel();
+
+                IQueryable<Announcement> announcements = context.Announcements;
+
+                if (viewModel.PublishedFrom != null)
                 {
-                    Announcements = context.Announcements.ToList()
-                };
+                    announcements = announcements.Where(x => viewModel.PublishedFrom <= x.PublishedDateTime);
+                }
+
+                if (viewModel.PublishedTo != null)
+                {
+                    announcements = announcements.Where(x => x.PublishedDateTime <= viewModel.PublishedTo);
+                }
+
+                if (viewModel.Status != null)
+                {
+                    announcements = announcements.Where(x => x.Status == viewModel.Status);
+                }
+
+                if (viewModel.State != null)
+                {
+                    announcements = announcements.Where(x => x.State == viewModel.State);
+                }
+
+                viewModel.Announcements = announcements.ToList();
             }
 
             return View(viewModel);
