@@ -3,11 +3,20 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Client.Models.Home;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
+    using Client.Models.Common;
     using Domain.Model;
 
     public class AnnouncementViewModel : Pagination
     {
+        public AnnouncementViewModel()
+        {
+            Action = "Index";
+            Controller = "Announcements";
+        }
+
         public IEnumerable<Announcement> Announcements { get; set; }
 
         [Display(Name = "Published From")]
@@ -21,5 +30,60 @@
 
         [Display(Name = "State")]
         public AnnouncementState? State { get; set; }
+
+        public override string NextUrl()
+        {
+            return IndexUrl(CurrentPage + 1, ItemPerPage);
+        }
+
+        public override string PreviousUrl()
+        {
+            return IndexUrl(CurrentPage - 1, ItemPerPage);
+        }
+
+        public override string IndexUrl(int i, int itemPerPage)
+        {
+            var index = new AnnouncementViewModel
+            {
+                CurrentPage = i,
+                ItemPerPage = itemPerPage,
+                PublishedFrom = PublishedFrom,
+                PublishedTo = PublishedTo,
+                Status = Status,
+                State = State
+            };
+
+            var routeValues = new RouteValueDictionary
+            {
+                { nameof(index.CurrentPage), index.CurrentPage },
+                { nameof(index.ItemPerPage), index.ItemPerPage },
+                { nameof(index.PublishedFrom), index.PublishedFrom },
+                { nameof(index.PublishedTo), index.PublishedTo }
+            };
+
+            if (index.Status != null)
+            {
+                routeValues.Add(nameof(index.Status), (int)index.Status);
+            }
+
+            if (index.State != null)
+            {
+                routeValues.Add(nameof(index.State), (int)index.State);
+            }
+
+            return UrlHelper.GenerateUrl(
+                "Admin_default",
+                Action,
+                Controller,
+                routeValues,
+                RouteTable.Routes,
+                HttpContext.Current.Request.RequestContext,
+                false);
+        }
+
+        public override string PageSizeUrl(int itemPerPage)
+        {
+            return IndexUrl(1, itemPerPage);
+        }
     }
 }

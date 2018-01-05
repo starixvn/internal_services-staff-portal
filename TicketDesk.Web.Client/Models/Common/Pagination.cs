@@ -1,16 +1,17 @@
-﻿namespace TicketDesk.Web.Client.Models.Home
+﻿namespace TicketDesk.Web.Client.Models.Common
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using System.Web.Mvc;
     using Localization.Client;
 
-    public class Pagination
+    public abstract class Pagination
     {
         /// <summary>
         /// CurrentPage start with 1
         /// </summary>
-        public int CurrentPage { get; set; }
+        public int CurrentPage { get; set; } = 1;
 
         /// <summary>
         /// If current page = 1 (first page) => From item 1
@@ -27,9 +28,9 @@
         {
             get
             {
-                List<SelectListItem> selectListItems = new List<SelectListItem>();
+                var selectListItems = new List<SelectListItem>();
 
-                SelectListItem selectListItem = new SelectListItem
+                var selectListItem = new SelectListItem
                 {
                     Text = "20",
                     Value = "20"
@@ -54,6 +55,8 @@
             }
         }
 
+        public virtual IList<int> PageSizes => new List<int> { 20, 40, 60 };
+
         public int TotalItem { get; set; }
 
         public int TotalPage => TotalItem % ItemPerPage > 0
@@ -63,5 +66,13 @@
         public string Action { get; set; }
 
         public string Controller { get; set; }
+
+        public abstract string NextUrl();
+
+        public abstract string PreviousUrl();
+
+        public abstract string IndexUrl(int i, int itemPerPage);
+
+        public abstract string PageSizeUrl(int itemPerPage);
     }
 }

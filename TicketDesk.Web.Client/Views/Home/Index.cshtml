@@ -15,12 +15,12 @@
                     $this.toggleClass('expand');
                     childRows.find('td').slideToggle('fast');
                 });
-            $("#itemperpage-select").on("change",
+            @*$("#itemperpage-select").on("change",
                 function() {
                     var selectedValue = $(this).val();
 
                     window.location = "@Url.Action("Index", "Home", new {page = 1})" + "&itemPerPage=" + selectedValue;
-                });
+                });*@
         });
         
     </script>

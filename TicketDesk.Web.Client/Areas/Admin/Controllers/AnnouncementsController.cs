@@ -25,32 +25,53 @@
 
             if (viewModel.Announcements == null)
             {
-                IQueryable<Announcement> announcements = context.Announcements;
-
-                if (viewModel.PublishedFrom != null)
-                {
-                    announcements = announcements.Where(x => viewModel.PublishedFrom <= DbFunctions.TruncateTime(x.PublishedDateTime));
-                }
-
-                if (viewModel.PublishedTo != null)
-                {
-                    announcements = announcements.Where(x => DbFunctions.TruncateTime(x.PublishedDateTime) <= viewModel.PublishedTo).Decompile();
-                }
-
-                if (viewModel.Status != null)
-                {
-                    announcements = announcements.Where(x => x.Status == viewModel.Status);
-                }
-
-                if (viewModel.State != null)
-                {
-                    announcements = announcements.Where(x => x.State == viewModel.State).Decompile();
-                }
+                var announcements = QueryAnnouncements(viewModel);
 
                 viewModel.Announcements = announcements.ToList();
             }
 
             return View(viewModel);
+        }
+
+        private IQueryable<Announcement> QueryAnnouncements(AnnouncementViewModel viewModel)
+        {
+            IQueryable<Announcement> announcements = context.Announcements;
+
+            if (viewModel.PublishedFrom != null)
+            {
+                announcements =
+                    announcements.Where(x => viewModel.PublishedFrom <= DbFunctions.TruncateTime(x.PublishedDateTime));
+            }
+
+            if (viewModel.PublishedTo != null)
+            {
+                announcements = announcements.Where(x => DbFunctions.TruncateTime(x.PublishedDateTime) <= viewModel.PublishedTo)
+                    .Decompile();
+            }
+
+            if (viewModel.Status != null)
+            {
+                announcements = announcements.Where(x => x.Status == viewModel.Status);
+            }
+
+            if (viewModel.State != null)
+            {
+                announcements = announcements.Where(x => x.State == viewModel.State).Decompile();
+            }
+
+            // Pagination filter
+            var databasePage = viewModel.CurrentPage < 1 ? 0 : viewModel.CurrentPage - 1;
+
+            int skippedItem = databasePage * viewModel.ItemPerPage;
+
+            if (skippedItem < 0)
+            {
+                skippedItem = 0;
+            }
+
+            viewModel.TotalItem = announcements.Count();
+
+            return announcements.OrderByDescending(x => x.Id).Skip(skippedItem).Take(viewModel.ItemPerPage);
         }
 
         public ActionResult Create()

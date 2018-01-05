@@ -39,34 +39,30 @@
         [Route("")]
         [Route("index")]
         [NapAuth(FunctionKey = FunctionKeys.ListAssignedTicket, Policy = Constant.Policy.Read)]
-        public ActionResult Index(int page = 1, int itemPerPage = 20)
+        public ActionResult Index(HomeViewModel homeViewModel)
         {
-            HomeViewModel homeViewModel = new HomeViewModel
+            if (homeViewModel?.MyOpenningIssues == null)
             {
-                MyOpenningIssues = new MyOpenningIssues
+                homeViewModel = new HomeViewModel
                 {
-                    TicketGroups = new List<TicketGroup>(),
-                    CurrentPage = page,
-                    ItemPerPage = itemPerPage,
-                    Action = "Index",
-                    Controller = "Home"
-                }
-            };
-
-            foreach (SelectListItem item in homeViewModel.MyOpenningIssues.ItemPerPageList)
-            {
-                if (itemPerPage.ToString() == item.Value)
-                {
-                    item.Selected = true;
-                }
+                    MyOpenningIssues = new MyOpenningIssues()
+                };
             }
+
+            ////foreach (SelectListItem item in homeViewModel.MyOpenningIssues.ItemPerPageList)
+            ////{
+            ////    if (homeViewModel.MyOpenningIssues.ToString() == item.Value)
+            ////    {
+            ////        item.Selected = true;
+            ////    }
+            ////}
 
             // Get ticket categories
             var categories = Context.TicketCategories.ToList();
 
-            var databasePage = page < 1 ? 0 : page - 1;
+            var databasePage = homeViewModel.MyOpenningIssues.CurrentPage < 1 ? 0 : homeViewModel.MyOpenningIssues.CurrentPage - 1;
 
-            int skippedItem = databasePage * itemPerPage;
+            int skippedItem = databasePage * homeViewModel.MyOpenningIssues.ItemPerPage;
 
             if (skippedItem < 0)
             {
@@ -82,7 +78,7 @@
                 .OrderBy(x => x.CategoryId)
                 .ThenByDescending(x => x.TicketId)
                 .Skip(skippedItem)
-                .Take(itemPerPage)
+                .Take(homeViewModel.MyOpenningIssues.ItemPerPage)
                 .GroupBy(x => x.CategoryId).ToList();
             PrepareTicketGroups(homeViewModel, categories, tickets);
 
