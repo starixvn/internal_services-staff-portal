@@ -5,25 +5,7 @@
 
 @section scripts
 {
-    <script>
-        $(document).ready(function() {
-            $('.header').on("click",
-                function () {
-                    var $this = $(this);
-                    var groupTicket = $this.attr('data-title');
-                    var childRows = $('[data-group="' + groupTicket + '"]');
-                    $this.toggleClass('expand');
-                    childRows.find('td').slideToggle('fast');
-                });
-            @*$("#itemperpage-select").on("change",
-                function() {
-                    var selectedValue = $(this).val();
-
-                    window.location = "@Url.Action("Index", "Home", new {page = 1})" + "&itemPerPage=" + selectedValue;
-                });*@
-        });
-        
-    </script>
+    <script type="text/javascript" src="~/src/js/home/home.js"></script>
 }
 
 <div class="panel feature">

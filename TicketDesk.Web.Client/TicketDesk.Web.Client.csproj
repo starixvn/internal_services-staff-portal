@@ -502,6 +502,7 @@
     </Content>
     <Content Include="src\js\admin\announcement\newannouncement.js" />
     <Content Include="Scripts\reference\reference.js" />
+    <Content Include="src\js\home\home.js" />
     <Content Include="src\libs\datetimepicker\bootstrap-datetimepicker.css" />
     <Content Include="src\libs\datetimepicker\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />

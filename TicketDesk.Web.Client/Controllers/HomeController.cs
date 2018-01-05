@@ -39,8 +39,10 @@
         [Route("")]
         [Route("index")]
         [NapAuth(FunctionKey = FunctionKeys.ListAssignedTicket, Policy = Constant.Policy.Read)]
-        public ActionResult Index(HomeViewModel homeViewModel)
+        public ActionResult Index(HomeViewModel viewModel)
         {
+            var homeViewModel = viewModel;
+
             if (homeViewModel?.MyOpenningIssues == null)
             {
                 homeViewModel = new HomeViewModel
@@ -49,27 +51,10 @@
                 };
             }
 
-            ////foreach (SelectListItem item in homeViewModel.MyOpenningIssues.ItemPerPageList)
-            ////{
-            ////    if (homeViewModel.MyOpenningIssues.ToString() == item.Value)
-            ////    {
-            ////        item.Selected = true;
-            ////    }
-            ////}
+            homeViewModel.MyOpenningIssues.TotalItem = Context.Tickets.Count(x => x.CreatedBy == CurrentSession.UserId.ToString());
 
             // Get ticket categories
             var categories = Context.TicketCategories.ToList();
-
-            var databasePage = homeViewModel.MyOpenningIssues.CurrentPage < 1 ? 0 : homeViewModel.MyOpenningIssues.CurrentPage - 1;
-
-            int skippedItem = databasePage * homeViewModel.MyOpenningIssues.ItemPerPage;
-
-            if (skippedItem < 0)
-            {
-                skippedItem = 0;
-            }
-
-            homeViewModel.MyOpenningIssues.TotalItem = Context.Tickets.Count(x => x.CreatedBy == CurrentSession.UserId.ToString());
 
             // Get current user tickets
             var tickets = Context.Tickets
@@ -77,9 +62,10 @@
                             x.CreatedBy == CurrentSession.UserId.ToString())
                 .OrderBy(x => x.CategoryId)
                 .ThenByDescending(x => x.TicketId)
-                .Skip(skippedItem)
+                .Skip(homeViewModel.MyOpenningIssues.Skipped)
                 .Take(homeViewModel.MyOpenningIssues.ItemPerPage)
                 .GroupBy(x => x.CategoryId).ToList();
+
             PrepareTicketGroups(homeViewModel, categories, tickets);
 
             return View(homeViewModel);

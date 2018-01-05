@@ -15,7 +15,7 @@
                 }
 
                 <li class="@selectedClass">
-                    <a href="@Model.PageSizeUrl(size)">@size</a>
+                    <a href="@Model.PageSizeLink(size)">@size</a>
                 </li>
             }
         </ul>
@@ -32,7 +32,7 @@
     else
     {
         @*<li><a href="@Url.Action(Model.Action, Model.Controller, new { page = (Model.CurrentPage - 1), itemPerPage = Model.ItemPerPage })" class="icon-previous"></a></li>*@
-        <li><a href="@Model.PreviousUrl()" class="icon-previous"></a></li>
+        <li><a href="@Model.PreviousLink()" class="icon-previous"></a></li>
     }
 
     @for (int i = 0; i < Model.TotalPage; i++)
@@ -45,7 +45,7 @@
 
         <li class="@activeClass">
             @*<a href="@Url.Action(Model.Action, Model.Controller, new { page = (i + 1), itemPerPage = Model.ItemPerPage })">@(i + 1)</a>*@
-            <a href="@Model.IndexUrl(i + 1, Model.ItemPerPage)">@(i + 1)</a>
+            <a href="@Model.IndexLink(i + 1, Model.ItemPerPage)">@(i + 1)</a>
         </li>
     }
 
@@ -59,7 +59,7 @@
     {
         <li>
             @*<a href="@Url.Action(Model.Action, Model.Controller, new { page = (Model.CurrentPage + 1), itemPerPage = Model.ItemPerPage })" class="icon-next"></a>*@
-            <a href="@Model.NextUrl()" class="icon-next"></a>
+            <a href="@Model.NextLink()" class="icon-next"></a>
         </li>
     }
 </ul>

@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
     using System.Web.Mvc;
     using Localization.Client;
 
@@ -67,12 +66,29 @@
 
         public string Controller { get; set; }
 
-        public abstract string NextUrl();
+        public int Skipped
+        {
+            get
+            {
+                var databasePage = CurrentPage < 1 ? 0 : CurrentPage - 1;
 
-        public abstract string PreviousUrl();
+                var skippedItem = databasePage * ItemPerPage;
 
-        public abstract string IndexUrl(int i, int itemPerPage);
+                if (skippedItem < 0)
+                {
+                    skippedItem = 0;
+                }
 
-        public abstract string PageSizeUrl(int itemPerPage);
+                return skippedItem;
+            }
+        }
+
+        public abstract string NextLink();
+
+        public abstract string PreviousLink();
+
+        public abstract string IndexLink(int i, int itemPerPage);
+
+        public abstract string PageSizeLink(int itemPerPage);
     }
 }

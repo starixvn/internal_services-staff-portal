@@ -59,19 +59,9 @@
                 announcements = announcements.Where(x => x.State == viewModel.State).Decompile();
             }
 
-            // Pagination filter
-            var databasePage = viewModel.CurrentPage < 1 ? 0 : viewModel.CurrentPage - 1;
-
-            int skippedItem = databasePage * viewModel.ItemPerPage;
-
-            if (skippedItem < 0)
-            {
-                skippedItem = 0;
-            }
-
             viewModel.TotalItem = announcements.Count();
 
-            return announcements.OrderByDescending(x => x.Id).Skip(skippedItem).Take(viewModel.ItemPerPage);
+            return announcements.OrderByDescending(x => x.Id).Skip(viewModel.Skipped).Take(viewModel.ItemPerPage);
         }
 
         public ActionResult Create()

@@ -19,17 +19,17 @@
 
         public IList<TicketGroup> TicketGroups { get; set; }
 
-        public override string NextUrl()
+        public override string NextLink()
         {
-            return IndexUrl(CurrentPage + 1, ItemPerPage);
+            return IndexLink(CurrentPage + 1, ItemPerPage);
         }
 
-        public override string PreviousUrl()
+        public override string PreviousLink()
         {
-            return IndexUrl(CurrentPage - 1, ItemPerPage);
+            return IndexLink(CurrentPage - 1, ItemPerPage);
         }
 
-        public override string IndexUrl(int i, int itemPerPage)
+        public override string IndexLink(int i, int itemPerPage)
         {
             var homeViewModel = new HomeViewModel
             {
@@ -56,9 +56,9 @@
                 false);
         }
 
-        public override string PageSizeUrl(int itemPerPage)
+        public override string PageSizeLink(int itemPerPage)
         {
-            return IndexUrl(1, itemPerPage);
+            return IndexLink(1, itemPerPage);
         }
     }
 }
