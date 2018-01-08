@@ -1,7 +1,7 @@
-﻿namespace TicketDesk.Web.Client.Models
+﻿namespace TicketDesk.Web.Client.Models.CustomField
 {
-    using Domain.Model;
     using System.Collections.Generic;
+    using Domain.Model;
 
     public class CustomFieldSettingViewModel
     {

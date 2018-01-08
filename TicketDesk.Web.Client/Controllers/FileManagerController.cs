@@ -14,6 +14,7 @@
     using System.Web;
     using System.Web.Configuration;
     using System.Web.Mvc;
+    using Service.Interface;
 
 
     [RoutePrefix("file-manager")]

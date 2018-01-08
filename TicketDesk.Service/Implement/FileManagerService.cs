@@ -1,8 +1,9 @@
-﻿namespace TicketDesk.Service
+﻿namespace TicketDesk.Service.Implement
 {
     using Core.Model;
     using Core.Services;
     using Criteria.FileManager;
+    using Interface;
 
     public class FileManagerService : BaseService, IFileManagerService
     {

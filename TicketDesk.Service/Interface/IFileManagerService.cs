@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Service
+﻿namespace TicketDesk.Service.Interface
 {
     using Core.Model;
     using Criteria.FileManager;
