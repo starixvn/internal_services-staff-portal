@@ -11,12 +11,12 @@
             </tr>
 
             int index = -1;
-            foreach (var annoucement in group.Announcements)
+            foreach (var announcement in group.Announcements)
             {
                 index++;
 
-                bool isExpand = annoucement.Message.Length > 50;
-                bool isImportant = annoucement.Status == AnnouncementStatus.Important;
+                bool isExpand = announcement.Message.Length > 50;
+                bool isImportant = announcement.Status == AnnouncementStatus.Important;
                 bool isEven = index % 2 == 1;
 
                 string announcementClass = "";
@@ -34,8 +34,8 @@
                 }
 
                 <tr class="@announcementClass">
-                    <td class="width-150"><span class="sign"></span>@annoucement.PublishedDateTime.Value.ToShortTimeString()</td>
-                    <td>@annoucement.Message</td>
+                    <td class="width-150"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToShortTimeString()</td>
+                    <td>@announcement.Message</td>
                 </tr>
             }
         }
@@ -71,4 +71,4 @@
         </tr>*@
     </tbody>
 </table>
-<a class="btn btn-default btn-more rippler rippler-default" href="@Url.Action("MoreAnnouncement","Home")">@Resources.Views_Home_Annoucement_More</a>
+<a class="btn btn-default btn-more rippler rippler-default" href="@Url.Action("MoreAnnouncement","Home")">@Resources.Views_Home_Announcement_More</a>

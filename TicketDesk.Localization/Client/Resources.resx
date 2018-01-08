@@ -189,7 +189,7 @@
   <data name="Views_Home_Index_NoTicket" xml:space="preserve">
     <value>No tickets to display</value>
   </data>
-  <data name="Views_Home_Index_Annoucements" xml:space="preserve">
+  <data name="Views_Home_Index_Announcements" xml:space="preserve">
     <value>Announcements</value>
   </data>
   <data name="Domain_Model_Ticket_CreatedDate" xml:space="preserve">
@@ -213,7 +213,7 @@
   <data name="Views_Home_AccessDenied_ActionText" xml:space="preserve">
     <value>Take me back to home</value>
   </data>
-  <data name="Views_Home_Annoucement_More" xml:space="preserve">
+  <data name="Views_Home_Announcement_More" xml:space="preserve">
     <value>More</value>
   </data>
   <data name="Views_Home_Error_Title" xml:space="preserve">

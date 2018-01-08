@@ -82,12 +82,12 @@
 
             var result = new List<AnnouncementGroup>();
 
-            // Get top 10 annoucement by published time
-            var annoucements = GetAnnouncements(0, 10)
+            // Get top 10 announcement by published time
+            var announcements = GetAnnouncements(0, 10)
                 .GroupBy(x => DbFunctions.TruncateTime(x.PublishedDateTime.Value))
                 .OrderByDescending(x => x.Key);
 
-            foreach (var group in annoucements)
+            foreach (var group in announcements)
             {
                 if (group.Key == null)
                 {
@@ -197,34 +197,34 @@
 
         public ActionResult MoreAnnouncement(MoreAnnouncementViewModel viewModel)
         {
-            var moreAnnoucementViewModel = viewModel ?? new MoreAnnouncementViewModel();
+            var moreannouncementViewModel = viewModel ?? new MoreAnnouncementViewModel();
 
-            var announcements = QueryAnnouncement(moreAnnoucementViewModel);
+            var announcements = QueryAnnouncement(moreannouncementViewModel);
 
-            moreAnnoucementViewModel.TotalItem = announcements.Count();
-            moreAnnoucementViewModel.Announcements = announcements
+            moreannouncementViewModel.TotalItem = announcements.Count();
+            moreannouncementViewModel.Announcements = announcements
                 .OrderByDescending(x => x.Id)
-                .Skip(moreAnnoucementViewModel.Skipped)
-                .Take(moreAnnoucementViewModel.ItemPerPage)
+                .Skip(moreannouncementViewModel.Skipped)
+                .Take(moreannouncementViewModel.ItemPerPage)
                 .ToList();
             
-            return View(moreAnnoucementViewModel);
+            return View(moreannouncementViewModel);
         }
 
-        private IQueryable<Announcement> QueryAnnouncement(MoreAnnouncementViewModel moreAnnoucementViewModel)
+        private IQueryable<Announcement> QueryAnnouncement(MoreAnnouncementViewModel moreAnnouncementViewModel)
         {
             IQueryable<Announcement> announcements = Context.Announcements;
 
-            if (moreAnnoucementViewModel.PublishedFrom != null)
+            if (moreAnnouncementViewModel.PublishedFrom != null)
             {
                 announcements = announcements.Where(x =>
-                    moreAnnoucementViewModel.PublishedFrom <= DbFunctions.TruncateTime(x.PublishedDateTime));
+                    moreAnnouncementViewModel.PublishedFrom <= DbFunctions.TruncateTime(x.PublishedDateTime));
             }
 
-            if (moreAnnoucementViewModel.PublishedTo != null)
+            if (moreAnnouncementViewModel.PublishedTo != null)
             {
                 announcements = announcements.Where(x =>
-                    DbFunctions.TruncateTime(x.PublishedDateTime) <= moreAnnoucementViewModel.PublishedTo);
+                    DbFunctions.TruncateTime(x.PublishedDateTime) <= moreAnnouncementViewModel.PublishedTo);
             }
 
             announcements = announcements.Where(x => x.State == AnnouncementState.Published).Decompile();

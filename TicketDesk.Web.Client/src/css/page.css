@@ -1054,7 +1054,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {
   padding: 5px 11px; }
 
-/******************************************* Annoucement Details ***********************************************/
+/******************************************* Announcement Details ***********************************************/
 .announcement-detail {
   flex: 1 100%; }
 

@@ -477,9 +477,9 @@ namespace TicketDesk.Localization.Client {
         /// <summary>
         ///   Looks up a localized string similar to More.
         /// </summary>
-        public static string Views_Home_Annoucement_More {
+        public static string Views_Home_Announcement_More {
             get {
-                return ResourceManager.GetString("Views_Home_Annoucement_More", resourceCulture);
+                return ResourceManager.GetString("Views_Home_Announcement_More", resourceCulture);
             }
         }
         
@@ -513,9 +513,9 @@ namespace TicketDesk.Localization.Client {
         /// <summary>
         ///   Looks up a localized string similar to Announcements.
         /// </summary>
-        public static string Views_Home_Index_Annoucements {
+        public static string Views_Home_Index_Announcements {
             get {
-                return ResourceManager.GetString("Views_Home_Index_Annoucements", resourceCulture);
+                return ResourceManager.GetString("Views_Home_Index_Announcements", resourceCulture);
             }
         }
         
