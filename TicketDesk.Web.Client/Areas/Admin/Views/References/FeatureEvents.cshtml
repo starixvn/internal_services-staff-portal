@@ -1,0 +1,69 @@
+﻿@using TicketDesk.Web.Client.Areas.Admin.Models.References
+@model ListReferencesViewModel
+
+@{
+    ViewBag.Title = "TVSchedules";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section css
+{
+    <link href="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+
+<h2>Feature Events</h2>
+
+@using (Html.BeginForm(new { @class = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Reference</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <ul id="ImageZone">
+            @for (var i = 0; i < Model.References.Count(); i++)
+            {
+                <li class="reference-entry">
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.References[i].DateAppear)
+                        @Html.TextBoxFor(model => model.References[i].DateAppear, new { @class = "datetimepicker form-control" })
+                        @Html.ValidationMessageFor(model => model.References[i].DateAppear)
+                    </div>
+
+                    <div class="col-xs-4">
+                        @Html.LabelFor(model => model.References[i].ImageLink)
+                        @Html.TextBoxFor(model => model.References[i].ImageLink, new { @class = "form-control image-url" })
+                        @Html.ValidationMessageFor(model => model.References[i].ImageLink)
+                    </div>
+
+                    <div class="col-xs-4" style="margin-top: 25px">
+                        <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" style="display: inline-block">
+                        <input type="button" class="btn btn-danger remove-entry" value="Delete">
+                    </div>
+                </li>
+            }
+        </ul>
+
+        <div class="form-group">
+            <div class="col-md-3">
+                <input type="button" id="AddImage" value="Add Image" class="btn btn-success" />
+            </div>
+            <div class="col-md-3">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+            <div class="col-md-6">
+                <p>Alowed file type: jpeg, jpg, png</p>
+                <p>Maximum file size: 2MB/file</p>
+                <p>Maximum number of upload files: 31 files</p>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts {
+    <script src="~/src/libs/datetimepicker/moment.js"></script>
+    <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/src/js/admin/reference/reference.js"></script>
+
+}

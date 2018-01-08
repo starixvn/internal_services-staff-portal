@@ -5,7 +5,7 @@
         TvSchedule,
         FeaturedEvent,
         BestOfTheDay,
-        TradingLimit,
+        TradingLimits,
         NewsLetter
     }
 }

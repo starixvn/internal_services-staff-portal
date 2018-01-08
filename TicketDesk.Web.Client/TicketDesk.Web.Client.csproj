@@ -384,6 +384,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\NewAnnouncementViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\References\ReferenceViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -502,7 +503,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="src\js\admin\announcement\newannouncement.js" />
-    <Content Include="Scripts\reference\reference.js" />
+    <Content Include="src\js\admin\reference\reference.js" />
     <Content Include="src\js\home\home.js" />
     <Content Include="src\libs\datetimepicker\bootstrap-datetimepicker.css" />
     <Content Include="src\libs\datetimepicker\bootstrap-datetimepicker.min.css" />
@@ -572,6 +573,9 @@
     <Content Include="Areas\Admin\Views\References\TVSchedules.cshtml" />
     <Content Include="Areas\Admin\Views\References\_ReferenceEntryEditor.cshtml" />
     <Content Include="Areas\Admin\Views\References\NewsLetter.cshtml" />
+    <Content Include="Areas\Admin\Views\References\FeatureEvents.cshtml" />
+    <Content Include="Areas\Admin\Views\References\BestOfTheDay.cshtml" />
+    <Content Include="Areas\Admin\Views\References\TradingLimits.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

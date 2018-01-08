@@ -1,19 +1,25 @@
-﻿@using TicketDesk.Domain.Model
+﻿@using TicketDesk.Web.Client.Areas.Admin.Models.References
 @using TicketDesk.Core.Enumerations
-@model Reference
+@model ReferenceViewModel
 
 <li class="reference-entry">
     @if (Model.ReferenceType != ReferenceType.NewsLetter)
     {
-        @Html.LabelFor(model => model.DateAppear)
-        @Html.EditorFor(model => model.DateAppear)
-        @Html.ValidationMessageFor(model => model.DateAppear)
+        <div class="col-xs-4">
+            @Html.LabelFor(model => model.DateAppear)
+            @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
+            @Html.ValidationMessageFor(model => model.DateAppear)
+        </div>
+
     }
+    <div class="col-xs-4">
+        @Html.LabelFor(model => model.ImageLink)
+        @Html.TextBoxFor(model => model.ImageLink, new { @class = "form-control image-url" })
+        @Html.ValidationMessageFor(model => model.ImageLink)
+    </div>
 
-    @Html.LabelFor(model => model.ImageLink)
-    @Html.EditorFor(model => model.ImageLink)
-    @Html.ValidationMessageFor(model => model.ImageLink)
-
-    <input class="upload-image" type="file" accept=".jpg, .jpeg, .png">
-    <input type="button" class="btn btn-danger remove-entry" onclick="$(this).parent().remove()" value="Delete">
+    <div class="col-xs-4" style="margin-top: 25px">
+        <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" style="display: inline-block">
+        <input type="button" class="btn btn-danger remove-entry" value="Delete">
+    </div>
 </li>

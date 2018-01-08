@@ -1,7 +1,5 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -9,6 +7,8 @@
     using System.Web;
     using System.Web.Configuration;
     using System.Web.Mvc;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
     using TicketDesk.Core.Enumerations;
     using TicketDesk.Domain;
     using TicketDesk.Domain.Infrastructure;
@@ -34,53 +34,154 @@
 
         public ActionResult TVSchedules()
         {
-            var tvSchedulesViewModel = new ListReferencesViewModel
-            {
-                References = Context.References.Where(x => x.ReferenceType == ReferenceType.TvSchedule).ToList()
-            };
-
-            return View(tvSchedulesViewModel);
+            var viewModel = GetListReferences(ReferenceType.TvSchedule);
+            return View(viewModel);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult TVSchedules(IEnumerable<Reference> references)
+        public ActionResult TVSchedules(ListReferencesViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                RemoveOldReference(ReferenceType.TvSchedule);
-
-                foreach (Reference reference in references)
-                {
-                    SaveEachReference(reference, ReferenceType.TvSchedule);
-                }
-                Context.SaveChanges();
+                InsertListReference(ReferenceType.TvSchedule, viewModel);
             }
 
-            return Json(new JsonResult { });
+            return View(viewModel);
         }
 
-        public ActionResult ReferenceEntity(ReferenceType referenceType)
+        public ActionResult FeatureEvents()
         {
-            var reference = new Reference
+            var viewModel = GetListReferences(ReferenceType.FeaturedEvent);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        public ActionResult FeatureEvents(ListReferencesViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                InsertListReference(ReferenceType.FeaturedEvent, viewModel);
+            }
+
+            return View(viewModel);
+        }
+
+        public ActionResult BestOfTheDay()
+        {
+            var viewModel = GetListReferences(ReferenceType.BestOfTheDay);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        public ActionResult BestOfTheDay(ListReferencesViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                InsertListReference(ReferenceType.BestOfTheDay, viewModel);
+            }
+
+            return View(viewModel);
+        }
+
+        public ActionResult TradingLimits()
+        {
+            var viewModel = GetListReferences(ReferenceType.TradingLimits);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        public ActionResult TradingLimits(ListReferencesViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                InsertListReference(ReferenceType.TradingLimits, viewModel);
+            }
+
+            return View(viewModel);
+        }
+
+        public ActionResult NewsLetter()
+        {
+            var viewModel = GetListReferences(ReferenceType.NewsLetter);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        public ActionResult NewsLetter(ListReferencesViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                InsertListReference(ReferenceType.NewsLetter, viewModel);
+            }
+
+            return View(viewModel);
+        }
+
+        public ActionResult GetReferenceEntity(ReferenceType referenceType)
+        {
+            var reference = new ReferenceViewModel
             {
                 ReferenceType = referenceType
             };
             return PartialView("_ReferenceEntryEditor", reference);
         }
 
-        private void SaveEachReference(Reference reference, ReferenceType referenceType)
+        private void InsertListReference(ReferenceType referenceType, ListReferencesViewModel listReferences)
         {
-            var tvSchedule = new Reference
+            var references = listReferences.References;
+            RemoveOldReference(referenceType);
+            if (references.Count > 0)
+            {
+                foreach (ReferenceViewModel reference in references)
+                {
+                    SaveEachReference(reference, referenceType);
+                }
+            }
+
+            Context.SaveChanges();
+        }
+
+        private ListReferencesViewModel GetListReferences(ReferenceType referenceType)
+        {
+            var references = Context.References.Where(x => x.ReferenceType == referenceType).ToList();
+            var listViewModel = new List<ReferenceViewModel>();
+
+            foreach (Reference reference in references)
+            {
+                var referenceViewModel = new ReferenceViewModel
+                {
+                    DateAppear = reference.DateAppear,
+                    ImageLink = reference.ImageLink,
+                    ReferenceType = reference.ReferenceType
+                };
+                listViewModel.Add(referenceViewModel);
+            }
+
+            return new ListReferencesViewModel { References = listViewModel };
+        }
+
+        private void SaveEachReference(ReferenceViewModel reference, ReferenceType referenceType)
+        {
+            var data = new Reference
             {
                 DateAppear = referenceType != ReferenceType.NewsLetter ? reference.DateAppear : DateTime.Now,
                 ImageLink = reference.ImageLink,
                 ReferenceType = referenceType,
-                LastUpdateBy = Context.SecurityProvider.CurrentUserId,
+                LastUpdateBy = "test",
                 LastUpdateDate = DateTime.Now
             };
 
-            Context.References.Add(tvSchedule);
+            Context.References.Add(data);
         }
 
         private void RemoveOldReference(ReferenceType referenceType)
@@ -95,16 +196,6 @@
                 }
                 Context.SaveChanges();
             }
-        }
-
-        public ActionResult NewsLetter()
-        {
-            var tvSchedulesViewModel = new ListReferencesViewModel
-            {
-                References = Context.References.Where(x => x.ReferenceType == ReferenceType.NewsLetter).ToList()
-            };
-
-            return View(tvSchedulesViewModel);
         }
 
         [HttpPost]

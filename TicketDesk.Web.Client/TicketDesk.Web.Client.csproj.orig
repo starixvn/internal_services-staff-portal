@@ -384,6 +384,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\NewAnnouncementViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\References\ReferenceViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -449,12 +450,7 @@
     <Compile Include="Models\Account\AccountPasswordViewModel.cs" />
     <Compile Include="Models\Account\AccountProfileViewModel.cs" />
     <Compile Include="Models\Account\UserAccountInfoViewModel.cs" />
-<<<<<<< HEAD
-    <Compile Include="Models\Admin\AnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\References\ListReferencesViewModel.cs" />
-=======
-    <Compile Include="Models\Admin\ListReferencesViewModel.cs" />
->>>>>>> 000 - Generic Pagination control
     <Compile Include="Models\CustomFieldSettingViewModel.cs" />
     <Compile Include="Models\CustomField\AddCustomFieldViewModel.cs" />
     <Compile Include="Models\CustomField\EditCustomFieldViewModel.cs" />
@@ -472,8 +468,10 @@
     <Compile Include="Models\Extensions\TicketSubscriberExtensions.cs" />
     <Compile Include="Models\FilterBarViewModel.cs" />
     <Compile Include="Infrastructure\Migration\Legacy\LegacySecurityMigrator.cs" />
+    <Compile Include="Models\Home\AnnouncementGroup.cs" />
     <Compile Include="Models\Home\HomeViewModel.cs" />
     <Compile Include="Models\Common\Pagination.cs" />
+    <Compile Include="Models\Home\MoreAnnouncementViewModel.cs" />
     <Compile Include="Models\Home\MyOpenningIssues.cs" />
     <Compile Include="Models\Home\TicketGroup.cs" />
     <Compile Include="Models\IdUploaderViewModel.cs" />
@@ -505,7 +503,12 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="src\js\admin\announcement\newannouncement.js" />
+<<<<<<< HEAD
     <Content Include="Scripts\reference\reference.js" />
+    <Content Include="src\js\home\home.js" />
+=======
+    <Content Include="src\js\admin\reference\reference.js" />
+>>>>>>> 89009 - add reference successful
     <Content Include="src\libs\datetimepicker\bootstrap-datetimepicker.css" />
     <Content Include="src\libs\datetimepicker\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -574,6 +577,9 @@
     <Content Include="Areas\Admin\Views\References\TVSchedules.cshtml" />
     <Content Include="Areas\Admin\Views\References\_ReferenceEntryEditor.cshtml" />
     <Content Include="Areas\Admin\Views\References\NewsLetter.cshtml" />
+    <Content Include="Areas\Admin\Views\References\FeatureEvents.cshtml" />
+    <Content Include="Areas\Admin\Views\References\BestOfTheDay.cshtml" />
+    <Content Include="Areas\Admin\Views\References\TradingLimits.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2459,6 +2465,7 @@
     <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
     <Content Include="Views\Ticket\NewNetworkTicket.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Home\MoreAnnouncement.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

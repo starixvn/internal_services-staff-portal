@@ -12,8 +12,7 @@
         public int Id { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [Display(Name = "Date Appear")]
+        [DataType(DataType.DateTime)]
         public DateTime DateAppear { get; set; }
 
         [Required]
