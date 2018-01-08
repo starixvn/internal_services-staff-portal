@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Web.Client.Infrastructure.Enumerations
+﻿namespace TicketDesk.Core.Enumerations
 {
     public enum SizeUnit
     {

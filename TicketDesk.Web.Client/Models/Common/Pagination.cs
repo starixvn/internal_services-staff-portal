@@ -83,12 +83,21 @@
             }
         }
 
-        public abstract string NextLink();
+        public virtual string NextLink()
+        {
+            return IndexLink(CurrentPage + 1, ItemPerPage);
+        }
 
-        public abstract string PreviousLink();
+        public virtual string PreviousLink()
+        {
+            return IndexLink(CurrentPage - 1, ItemPerPage);
+        }
 
         public abstract string IndexLink(int i, int itemPerPage);
 
-        public abstract string PageSizeLink(int itemPerPage);
+        public virtual string PageSizeLink(int itemPerPage)
+        {
+            return IndexLink(1, itemPerPage);
+        }
     }
 }

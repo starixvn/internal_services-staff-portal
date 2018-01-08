@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Core.Enumerations;
 
     public partial class Startup
     {
@@ -10,7 +11,7 @@
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapMvcAttributeRoutes();
             routes.MapRoute(
-                name: "Default",
+                name: RouteNames.Default.ToString(),
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                 namespaces: new[] { "TicketDesk.Web.Client.Controllers" });

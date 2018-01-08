@@ -1,11 +1,11 @@
 ﻿namespace TicketDesk.Web.Client.Infrastructure.Helpers
 {
-    using Attribute;
-    using Enumerations;
     using System;
     using System.Reflection;
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
+    using Attribute;
+    using Core.Enumerations;
 
     public static class RazorViewHelper
     {

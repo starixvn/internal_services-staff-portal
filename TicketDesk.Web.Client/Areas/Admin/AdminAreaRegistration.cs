@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin
 {
     using System.Web.Mvc;
+    using Core.Enumerations;
 
     public class AdminAreaRegistration : AreaRegistration
     {
@@ -9,7 +10,7 @@
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
-                "Admin_default",
+                RouteNames.AdminDefault.ToString(),
                 "Admin/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional },
                 namespaces: new[] { "TicketDesk.Web.Client.Areas.Admin.Controllers" }

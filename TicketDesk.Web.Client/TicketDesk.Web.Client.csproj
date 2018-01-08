@@ -418,7 +418,6 @@
     <Compile Include="Infrastructure\Attribute\FileTypeAttribute.cs" />
     <Compile Include="Infrastructure\Attribute\NumberOfFileAttribute.cs" />
     <Compile Include="Infrastructure\DbSetupFilter.cs" />
-    <Compile Include="Infrastructure\Enumerations\SizeUnit.cs" />
     <Compile Include="Infrastructure\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\PagedListAsync.cs" />

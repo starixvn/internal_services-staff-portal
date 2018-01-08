@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using System.Web.Routing;
     using Common;
+    using Core.Enumerations;
     using Domain.Model;
 
     public class MoreAnnouncementViewModel : Pagination
@@ -21,16 +22,6 @@
         public DateTime? PublishedTo { get; set; }
 
         public IList<Announcement> Announcements { get; set; }
-
-        public override string NextLink()
-        {
-            return IndexLink(CurrentPage + 1, ItemPerPage);
-        }
-
-        public override string PreviousLink()
-        {
-            return IndexLink(CurrentPage - 1, ItemPerPage);
-        }
 
         public override string IndexLink(int i, int itemPerPage)
         {
@@ -51,18 +42,13 @@
             };
 
             return UrlHelper.GenerateUrl(
-                "Default",
+                RouteNames.Default.ToString(),
                 Action,
                 Controller,
                 routeValues,
                 RouteTable.Routes,
                 HttpContext.Current.Request.RequestContext,
                 false);
-        }
-
-        public override string PageSizeLink(int itemPerPage)
-        {
-            return IndexLink(1, itemPerPage);
         }
     }
 }
