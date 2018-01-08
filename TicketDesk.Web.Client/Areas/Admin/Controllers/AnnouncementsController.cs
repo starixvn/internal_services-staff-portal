@@ -39,14 +39,12 @@
 
             if (viewModel.PublishedFrom != null)
             {
-                announcements =
-                    announcements.Where(x => viewModel.PublishedFrom <= DbFunctions.TruncateTime(x.PublishedDateTime));
+                announcements = announcements.Where(x => viewModel.PublishedFrom <= DbFunctions.TruncateTime(x.PublishedDateTime));
             }
 
             if (viewModel.PublishedTo != null)
             {
-                announcements = announcements.Where(x => DbFunctions.TruncateTime(x.PublishedDateTime) <= viewModel.PublishedTo)
-                    .Decompile();
+                announcements = announcements.Where(x => DbFunctions.TruncateTime(x.PublishedDateTime) <= viewModel.PublishedTo);
             }
 
             if (viewModel.Status != null)

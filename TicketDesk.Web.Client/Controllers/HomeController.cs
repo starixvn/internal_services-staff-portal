@@ -15,8 +15,8 @@
     using Models;
     using Models.Home;
 
-    [RoutePrefix("")]
-    [Route("{action=index}")]
+    ////[RoutePrefix("")]
+    ////[Route("{action=index}")]
     public class HomeController : BaseController
     {
         public HomeController(TdDomainContext context)
@@ -26,20 +26,14 @@
 
         private TdDomainContext Context { get; }
 
-        [Route("about")]
+        ////[Route("about")]
         public ActionResult About()
         {
             return View();
         }
 
-        [Route("access-denied", Name = "AccessDenied")]
-        public ActionResult AccessDenied()
-        {
-            return View();
-        }
-
-        [Route("")]
-        [Route("index")]
+        ////[Route("")]
+        ////[Route("index")]
         [NapAuth(FunctionKey = FunctionKeys.ListAssignedTicket, Policy = Constant.Policy.Read)]
         public ActionResult Index(HomeViewModel viewModel)
         {
@@ -54,19 +48,17 @@
                 };
             }
 
-            homeViewModel.MyOpenningIssues = PopulateHomeTickets();
+            homeViewModel.MyOpenningIssues.TotalItem =
+                Context.Tickets.Count(x => x.CreatedBy == CurrentSession.UserId.ToString());
+
+            PopulateHomeTickets(homeViewModel.MyOpenningIssues);
             homeViewModel.AnnouncementGroups = PopulateHomeAnnouncements();
 
             return View(homeViewModel);
         }
 
-        private MyOpenningIssues PopulateHomeTickets()
+        private void PopulateHomeTickets(MyOpenningIssues myOpenningIssues)
         {
-            var myOpenningIssues = new MyOpenningIssues
-            {
-                TotalItem = Context.Tickets.Count(x => x.CreatedBy == CurrentSession.UserId.ToString())
-            };
-
             // Get ticket categories
             var categories = Context.TicketCategories.ToList();
 
@@ -82,30 +74,18 @@
                 .GroupBy(x => x.CategoryId).ToList();
 
             myOpenningIssues.TicketGroups = PrepareTicketGroups(categories, tickets);
-
-            return myOpenningIssues;
         }
 
         private IList<AnnouncementGroup> PopulateHomeAnnouncements()
-        {
-            return PopulateAnnouncements(0, 10);
-        }
-
-        private IList<AnnouncementGroup> PopulateAnnouncements(int skip, int take)
         {
             // ANNOUNCEMENTS
 
             var result = new List<AnnouncementGroup>();
 
             // Get top 10 annoucement by published time
-            var annoucements = Context.Announcements
-                .Where(x => x.PublishedDateTime != null && x.State == AnnouncementState.Published)
-                .OrderByDescending(x => x.PublishedDateTime)
-                .Skip(skip)
-                .Take(take)
+            var annoucements = GetAnnouncements(0, 10)
                 .GroupBy(x => DbFunctions.TruncateTime(x.PublishedDateTime.Value))
-                .OrderByDescending(x => x.Key)
-                .Decompile();
+                .OrderByDescending(x => x.Key);
 
             foreach (var group in annoucements)
             {
@@ -124,6 +104,16 @@
             }
 
             return result;
+        }
+        
+        private IQueryable<Announcement> GetAnnouncements(int skip, int take)
+        {
+            return Context.Announcements
+                .Where(x => x.PublishedDateTime != null && x.State == AnnouncementState.Published)
+                .OrderByDescending(x => x.PublishedDateTime)
+                .Skip(skip)
+                .Take(take)
+                .Decompile();
         }
 
         private IList<TicketGroup> PrepareTicketGroups(IList<TicketCategory> categories, IEnumerable<IGrouping<int, Ticket>> tickets)
@@ -161,13 +151,7 @@
             return result;
         }
 
-        [Route("internal-error", Name = "InternalError")]
-        public ActionResult InternalError()
-        {
-            return View();
-        }
-
-        [Route("menu")]
+        ////[Route("menu")]
         [ChildActionOnly]
         public PartialViewResult Menu()
         {
@@ -179,12 +163,6 @@
             };
 
             return PartialView("~/Views/Shared/_Navbar.cshtml", model);
-        }
-
-        [Route("not-found", Name = "NotFound")]
-        public ActionResult NotFound()
-        {
-            return View();
         }
 
         private static List<Models.Extensions.MenuItem> PopulateMenus(IEnumerable<MenuItem> menus)
@@ -217,14 +195,40 @@
             return result.OrderBy(x => x.DisplayOrder).ToList();
         }
 
-        public ActionResult MoreAnnouncement()
+        public ActionResult MoreAnnouncement(MoreAnnouncementViewModel viewModel)
         {
-            var moreAnnoucementViewModel = new MoreAnnouncementViewModel();
-            moreAnnoucementViewModel.AnnouncementGroups = PopulateAnnouncements(
-                moreAnnoucementViewModel.Skipped,
-                moreAnnoucementViewModel.ItemPerPage);
+            var moreAnnoucementViewModel = viewModel ?? new MoreAnnouncementViewModel();
 
+            var announcements = QueryAnnouncement(moreAnnoucementViewModel);
+
+            moreAnnoucementViewModel.TotalItem = announcements.Count();
+            moreAnnoucementViewModel.Announcements = announcements
+                .OrderByDescending(x => x.Id)
+                .Skip(moreAnnoucementViewModel.Skipped)
+                .Take(moreAnnoucementViewModel.ItemPerPage)
+                .ToList();
+            
             return View(moreAnnoucementViewModel);
+        }
+
+        private IQueryable<Announcement> QueryAnnouncement(MoreAnnouncementViewModel moreAnnoucementViewModel)
+        {
+            IQueryable<Announcement> announcements = Context.Announcements;
+
+            if (moreAnnoucementViewModel.PublishedFrom != null)
+            {
+                announcements = announcements.Where(x =>
+                    moreAnnoucementViewModel.PublishedFrom <= DbFunctions.TruncateTime(x.PublishedDateTime));
+            }
+
+            if (moreAnnoucementViewModel.PublishedTo != null)
+            {
+                announcements = announcements.Where(x =>
+                    DbFunctions.TruncateTime(x.PublishedDateTime) <= moreAnnoucementViewModel.PublishedTo);
+            }
+
+            announcements = announcements.Where(x => x.State == AnnouncementState.Published).Decompile();
+            return announcements;
         }
     }
 }

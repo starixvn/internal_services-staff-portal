@@ -390,6 +390,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomFieldSettingsController.cs" />
     <Compile Include="Controllers\EmailTestController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FileManagerController.cs" />
     <Compile Include="Controllers\IdUploaderController.cs" />
     <Compile Include="Controllers\LanguageSettingController.cs" />
@@ -2397,10 +2398,10 @@
     <Content Include="Views\FirstRunSetup\CheckUpgradeProgress.cshtml" />
     <Content Include="Scripts\jQueryValidate-locales\jquery.validate_locale_pt-BR.js" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
-    <Content Include="Views\Home\AccessDenied.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
-    <Content Include="Views\Home\InternalError.cshtml" />
-    <Content Include="Views\Home\NotFound.cshtml" />
+    <Content Include="Views\Error\InternalError.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\FileManager\Index.cshtml" />
     <Content Include="Views\CustomFieldSettings\Index.cshtml" />

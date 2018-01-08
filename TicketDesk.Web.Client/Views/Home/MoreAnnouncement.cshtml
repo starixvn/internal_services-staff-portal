@@ -10,34 +10,41 @@
 }
 <div class="announcement-detail">
     <div class="form-content feature">
+
         <div class="title panel-heading">
-            <a href="@Url.Action("Index","Home")" class="btn btn-back rippler rippler-default"><span class="icon-angle-left"></span>@Resources.Views_Announcement_BackToDashboard</a>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-back rippler rippler-default"><span class="icon-angle-left"></span>@Resources.Views_Announcement_BackToDashboard</a>
             @Resources.Views_Home_Index_Annoucements
         </div>
+
         <div class="content-announcement panel-body">
-            <form class="form-inline filter" role="form">
+
+            @using (Html.BeginForm("MoreAnnouncement", "Home", FormMethod.Get, new { @class = "form-inline filter" }))
+            {
                 <div class="form-group">
-                    <label>@Resources.Views_Announcement_From</label>
-                    <div class='input-group date' id='from-date'>
-                        <input type='text' class="form-control" />
+                    @Html.LabelFor(x => x.PublishedFrom)
+                    <div class='input-group date'>
+                        @Html.TextBoxFor(x => x.PublishedFrom, new { @class = "form-control", id = "from-date" })
                         <span class="input-group-addon">
                             <span class="icon-calendar"></span>
                         </span>
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <label>@Resources.Views_Announcement_To</label>
-                    <div class='input-group date' id='to-date'>
-                        <input type='text' class="form-control" />
+                    @Html.LabelFor(x => x.PublishedTo)
+                    <div class='input-group date'>
+                        @Html.TextBoxFor(x => x.PublishedTo, new { @class = "form-control", id = "to-date" })
                         <span class="input-group-addon">
                             <span class="icon-calendar"></span>
                         </span>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <input type="submit" value="@Resources.Views_Announcement_Submit" class="btn btn-primary" />
                 </div>
-            </form>
+            }
+
             <table class="table table-bordered tbl-announcement-detail">
                 <thead>
                     <tr>
@@ -47,41 +54,33 @@
                 </thead>
 
                 <tbody>
-                    @foreach (var group in Model.AnnouncementGroups)
+                    @for (var index = 0; index < Model.Announcements.Count; index++)
                     {
-                        <tr class="header">
-                            <td colspan="2">@group.Name</td>
-                        </tr>
+                        bool isImportant = Model.Announcements[index].Status == AnnouncementStatus.Important;
+                        bool isEven = index % 2 == 1;
 
-                        int index = -1;
-                        foreach (var annoucement in group.Announcements)
+                        string announcementClass = "";
+                        if (isImportant)
                         {
-                            index++;
-
-                            bool isImportant = annoucement.Status == AnnouncementStatus.Important;
-                            bool isEven = index % 2 == 1;
-
-                            string announcementClass = "";
-                            if (isImportant)
-                            {
-                                announcementClass += " error";
-                            }
-                            if (isEven)
-                            {
-                                announcementClass += " even";
-                            }
-
-                            <tr class="@announcementClass">
-                                <td class="text-center">@(index + 1)</td>
-                                <td>
-                                    <span>@annoucement.PublishedDateTime.Value.ToString("g") @annoucement.Id</span><br>
-                                    <span>@annoucement.Message</span>
-                                </td>
-                            </tr>
+                            announcementClass += " error";
                         }
+                        if (isEven)
+                        {
+                            announcementClass += " even";
+                        }
+
+                        <tr class="@announcementClass">
+                            <td class="text-center">@(index + 1)</td>
+                            <td>
+                                <span>@Model.Announcements[index].PublishedDateTime.Value.ToString("g") @Model.Announcements[index].Id</span><br>
+                                <span>@Model.Announcements[index].Message</span>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
+
+            @Html.Partial("_Pagination", Model)
         </div>
     </div>
 </div>
@@ -93,11 +92,11 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#from-date').datetimepicker({
-                format: 'DD/MM/YYYY'
+                format: 'MM-DD-YYYY'
             });
             $('#to-date').datetimepicker({
                 useCurrent: false, //Important! See issue #1075
-                format: 'DD/MM/YYYY'
+                format: 'MM-DD-YYYY'
             });
             $("#from-date").on("dp.change", function (e) {
                 $('#to-date').data("DateTimePicker").minDate(e.date);

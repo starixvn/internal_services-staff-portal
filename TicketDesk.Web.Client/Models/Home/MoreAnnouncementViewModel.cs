@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using System.Web.Routing;
     using Common;
+    using Domain.Model;
 
     public class MoreAnnouncementViewModel : Pagination
     {
@@ -19,7 +20,7 @@
 
         public DateTime? PublishedTo { get; set; }
 
-        public IList<AnnouncementGroup> AnnouncementGroups { get; set; }
+        public IList<Announcement> Announcements { get; set; }
 
         public override string NextLink()
         {
