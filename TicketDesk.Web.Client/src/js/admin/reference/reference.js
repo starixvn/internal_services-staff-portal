@@ -1,11 +1,11 @@
-﻿InitDateTimePicker();
+﻿ReInitDateTimePicker();
 
 $("#AddImage").click(function () {
     $.get('/Admin/References/GetReferenceEntity?referenceType=0', function (html) {
         if (checkLimitedImage(31)) {
             $("#ImageZone").append(html);
             UpdateFormFieldsName();
-            InitDateTimePicker();
+            ReInitDateTimePicker();
         } else {
             alert("Limit of images is 31.");
         }
@@ -26,8 +26,20 @@ $("#AddImageNewsLetter").click(function () {
 $("form").on("click", ".remove-entry", function () {
     $(this).parent().parent().remove();
     UpdateFormFieldsName();
-    InitDateTimePicker();
+    ReInitDateTimePicker();
 });
+
+$("form").on("dp.hide", ".datetimepicker", function (e) {
+    ReInitDateTimePicker();
+})
+
+$("form").on("dp.show", ".datetimepicker", function (e) {
+    ReInitDateTimePicker();
+})
+
+$("form").on("dp.change", ".datetimepicker", function (e) {
+    ReInitDateTimePicker();
+})
 
 function ReInitDateTimePicker() {
     $(".datetimepicker").each(function () {
@@ -38,7 +50,7 @@ function ReInitDateTimePicker() {
 function InitDateTimePicker() {
     var nowDate = new Date();
     $(".datetimepicker").datetimepicker({
-        format: 'DD/MM/YYYY',
+        format: "DD-MM-YYYY",
         minDate: new Date(),
         maxDate: nowDate.setFullYear(nowDate.getFullYear() + 1),
         disabledDates: GetSelectedDates()
@@ -49,7 +61,7 @@ function GetSelectedDates() {
     var selectedDates = [];
     $(".datetimepicker").each(function (i, e) {
         var selectedDate = $(this).val();
-        selectedDates.push(selectedDate);
+        selectedDates.push(ConvertDate(selectedDate));
     });
     return selectedDates;
 }
@@ -65,9 +77,15 @@ function UpdateFormFieldsName() {
         UpdateReferencesIndex(i, e);
     });
 }
+
 function UpdateReferencesIndex(index, element) {
     $(element).find(".datetimepicker").attr("name", "References[" + index + "].DateAppear");
     $(element).find(".image-url").attr("name", "References[" + index + "].ImageLink");
+}
+
+function ConvertDate(date) {
+    var newdate = date.split("-").reverse().join("-");
+    return newdate;
 }
 
 $("#ImageZone").on("change", ".upload-image", function (e) {
@@ -85,16 +103,16 @@ $("#ImageZone").on("change", ".upload-image", function (e) {
                 data: data,
                 success: function (result) {
                     if (result.isSuccessful) {
-                        uploadEntry.find("input[name=ImageLink]").val(result.filePath);
+                        uploadEntry.find(".image-url").val(result.filePath);
                     } else {
-                        uploadEntry.find("input[name=ImageLink]").addClass("error");
+                        uploadEntry.find(".image-url").addClass("error");
                     }
                 },
                 error: function (xhr, status, p3, p4) {
                     var err = "Error " + " " + status + " " + p3 + " " + p4;
                     if (xhr.responseText && xhr.responseText[0] === "{")
                         err = JSON.parse(xhr.responseText).Message;
-                    console.log(err);
+                    alert(err);
                 }
             });
         } else {
