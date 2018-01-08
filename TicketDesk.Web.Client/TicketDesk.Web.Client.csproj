@@ -449,7 +449,6 @@
     <Compile Include="Models\Account\AccountPasswordViewModel.cs" />
     <Compile Include="Models\Account\AccountProfileViewModel.cs" />
     <Compile Include="Models\Account\UserAccountInfoViewModel.cs" />
-    <Compile Include="Models\Admin\AnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\References\ListReferencesViewModel.cs" />
     <Compile Include="Models\CustomFieldSettingViewModel.cs" />
     <Compile Include="Models\CustomField\AddCustomFieldViewModel.cs" />
@@ -468,8 +467,10 @@
     <Compile Include="Models\Extensions\TicketSubscriberExtensions.cs" />
     <Compile Include="Models\FilterBarViewModel.cs" />
     <Compile Include="Infrastructure\Migration\Legacy\LegacySecurityMigrator.cs" />
+    <Compile Include="Models\Home\AnnouncementGroup.cs" />
     <Compile Include="Models\Home\HomeViewModel.cs" />
     <Compile Include="Models\Common\Pagination.cs" />
+    <Compile Include="Models\Home\MoreAnnouncementViewModel.cs" />
     <Compile Include="Models\Home\MyOpenningIssues.cs" />
     <Compile Include="Models\Home\TicketGroup.cs" />
     <Compile Include="Models\IdUploaderViewModel.cs" />
@@ -2456,6 +2457,7 @@
     <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
     <Content Include="Views\Ticket\NewNetworkTicket.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Home\MoreAnnouncement.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

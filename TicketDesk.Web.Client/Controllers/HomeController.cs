@@ -1,9 +1,11 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Linq;
     using System.Threading;
     using System.Web.Mvc;
+    using DelegateDecompiler;
     using Domain;
     using Domain.Infrastructure;
     using Domain.Model;
@@ -47,35 +49,89 @@
             {
                 homeViewModel = new HomeViewModel
                 {
-                    MyOpenningIssues = new MyOpenningIssues()
+                    MyOpenningIssues = new MyOpenningIssues(),
+                    AnnouncementGroups = new List<AnnouncementGroup>()
                 };
             }
 
-            homeViewModel.MyOpenningIssues.TotalItem = Context.Tickets.Count(x => x.CreatedBy == CurrentSession.UserId.ToString());
+            homeViewModel.MyOpenningIssues = PopulateHomeTickets();
+            homeViewModel.AnnouncementGroups = PopulateHomeAnnouncements();
+
+            return View(homeViewModel);
+        }
+
+        private MyOpenningIssues PopulateHomeTickets()
+        {
+            var myOpenningIssues = new MyOpenningIssues
+            {
+                TotalItem = Context.Tickets.Count(x => x.CreatedBy == CurrentSession.UserId.ToString())
+            };
 
             // Get ticket categories
             var categories = Context.TicketCategories.ToList();
 
             // Get current user tickets
             var tickets = Context.Tickets
-                .Where(x => (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo) &&
-                            x.CreatedBy == CurrentSession.UserId.ToString())
+                .Where(x =>
+                    (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo)
+                    && x.CreatedBy == CurrentSession.UserId.ToString())
                 .OrderBy(x => x.CategoryId)
                 .ThenByDescending(x => x.TicketId)
-                .Skip(homeViewModel.MyOpenningIssues.Skipped)
-                .Take(homeViewModel.MyOpenningIssues.ItemPerPage)
+                .Skip(myOpenningIssues.Skipped)
+                .Take(myOpenningIssues.ItemPerPage)
                 .GroupBy(x => x.CategoryId).ToList();
 
-            PrepareTicketGroups(homeViewModel, categories, tickets);
+            myOpenningIssues.TicketGroups = PrepareTicketGroups(categories, tickets);
 
-            return View(homeViewModel);
+            return myOpenningIssues;
         }
 
-        private void PrepareTicketGroups(HomeViewModel homeViewModel, List<TicketCategory> categories, List<IGrouping<int, Ticket>> tickets)
+        private IList<AnnouncementGroup> PopulateHomeAnnouncements()
         {
-            foreach (IGrouping<int, Ticket> grouping in tickets)
+            return PopulateAnnouncements(0, 10);
+        }
+
+        private IList<AnnouncementGroup> PopulateAnnouncements(int skip, int take)
+        {
+            // ANNOUNCEMENTS
+
+            var result = new List<AnnouncementGroup>();
+
+            // Get top 10 annoucement by published time
+            var annoucements = Context.Announcements
+                .Where(x => x.PublishedDateTime != null && x.State == AnnouncementState.Published)
+                .OrderByDescending(x => x.PublishedDateTime)
+                .Skip(skip)
+                .Take(take)
+                .GroupBy(x => DbFunctions.TruncateTime(x.PublishedDateTime.Value))
+                .OrderByDescending(x => x.Key)
+                .Decompile();
+
+            foreach (var group in annoucements)
             {
-                string languageSuffix = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+                if (group.Key == null)
+                {
+                    continue;
+                }
+
+                var announcementGroup = new AnnouncementGroup
+                {
+                    Name = group.Key.Value.ToString("d"),
+                    Announcements = group
+                };
+
+                result.Add(announcementGroup);
+            }
+
+            return result;
+        }
+
+        private IList<TicketGroup> PrepareTicketGroups(IList<TicketCategory> categories, IEnumerable<IGrouping<int, Ticket>> tickets)
+        {
+            var result = new List<TicketGroup>();
+            foreach (var grouping in tickets)
+            {
+                var languageSuffix = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
 
                 var categoryName = languageSuffix == "en"
                     ? categories
@@ -87,19 +143,22 @@
                         .Select(x => x.Name_vi)
                         .FirstOrDefault();
 
-                var total = Context.Tickets.Count(x => (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo) &&
-                    x.CreatedBy == CurrentSession.UserId.ToString() &&
-                    x.CategoryId == grouping.Key);
+                var total = Context.Tickets.Count(x =>
+                    (x.TicketStatus == TicketStatus.Active || x.TicketStatus == TicketStatus.MoreInfo)
+                    && x.CreatedBy == CurrentSession.UserId.ToString()
+                    && x.CategoryId == grouping.Key);
 
-                TicketGroup ticketGroup = new TicketGroup
+                var ticketGroup = new TicketGroup
                 {
                     Name = categoryName,
                     Tickets = grouping,
-                    TotalTickets = total
+                    TotalItems = total
                 };
 
-                homeViewModel.MyOpenningIssues.TicketGroups.Add(ticketGroup);
+                result.Add(ticketGroup);
             }
+
+            return result;
         }
 
         [Route("internal-error", Name = "InternalError")]
@@ -156,6 +215,16 @@
             }
 
             return result.OrderBy(x => x.DisplayOrder).ToList();
+        }
+
+        public ActionResult MoreAnnouncement()
+        {
+            var moreAnnoucementViewModel = new MoreAnnouncementViewModel();
+            moreAnnoucementViewModel.AnnouncementGroups = PopulateAnnouncements(
+                moreAnnoucementViewModel.Skipped,
+                moreAnnoucementViewModel.ItemPerPage);
+
+            return View(moreAnnoucementViewModel);
         }
     }
 }

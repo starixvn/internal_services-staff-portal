@@ -1,16 +1,58 @@
-﻿@using TicketDesk.Localization.Client
+﻿@using TicketDesk.Domain.Model
+@using TicketDesk.Localization.Client
+@model IList<TicketDesk.Web.Client.Models.Home.AnnouncementGroup>
+
 <table class="table table-bordered tbl-announcement">
     <tbody>
-        <tr class="header">
+        @foreach (var group in Model)
+        {
+            <tr class="header">
+                <td colspan="2">@group.Name</td>
+            </tr>
+
+            int index = -1;
+            foreach (var annoucement in group.Announcements)
+            {
+                index++;
+
+                bool isExpand = annoucement.Message.Length > 50;
+                bool isImportant = annoucement.Status == AnnouncementStatus.Important;
+                bool isEven = index % 2 == 1;
+
+                string announcementClass = "";
+                if (isExpand)
+                {
+                    announcementClass += " expand";
+                }
+                if (isImportant)
+                {
+                    announcementClass += " error";
+                }
+                if (isEven)
+                {
+                    announcementClass += " even";
+                }
+
+                <tr class="@announcementClass">
+                    <td class="width-150"><span class="sign"></span>@annoucement.PublishedDateTime.Value.ToShortTimeString()</td>
+                    <td>@annoucement.Message</td>
+                </tr>
+            }
+        }
+
+        @*<tr class="header">
             <td colspan="2">10/3/2017</td>
         </tr>
+
         <tr>
             <td class="width-150"><span class="sign"></span>5:12:04 PM</td>
             <td>Test upload batch msg 9799001025...</td>
         </tr>
-        <tr  class="header">
+
+        <tr class="header">
             <td colspan="2">10/4/2017</td>
         </tr>
+
         <tr class="expand even">
             <td><span class="sign"></span>5:12:04 PM</td>
             <td>Attn:[E Sports] Due to result undecided, "DK Scuderia -vs- FTD club C" "CDEC Gaming -vs- NewBee.Y" [Dota 2 - ECL Autumn (Series Winner) - 7/11] statement will be moved to 9/11 (GMT -4). Sorry for the inconvenience caused!</td>
@@ -26,7 +68,7 @@
         <tr class="success">
             <td><span class="sign"></span>5:12:04 PM</td>
             <td>Attn:[E Sports] Due to result undecided, "DK Scuderia -vs- FTD club C" "CDEC Gaming -vs- NewBee.</td>
-        </tr>
+        </tr>*@
     </tbody>
 </table>
-<a class="btn btn-default btn-more rippler rippler-default" href="@Url.Action("Index","Announcement")">@Resources.Views_Home_Annoucement_More</a>
+<a class="btn btn-default btn-more rippler rippler-default" href="@Url.Action("MoreAnnouncement","Home")">@Resources.Views_Home_Annoucement_More</a>
