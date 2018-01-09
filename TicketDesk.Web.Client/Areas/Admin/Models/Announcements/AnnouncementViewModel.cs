@@ -8,6 +8,7 @@
     using System.Web.Routing;
     using Client.Models.Common;
     using Core.Enumerations;
+    using Criteria.Announcement;
     using Domain.Model;
 
     public class AnnouncementViewModel : Pagination
@@ -31,6 +32,17 @@
 
         [Display(Name = "State")]
         public AnnouncementState? State { get; set; }
+
+        public GetAnnouncementsCriteria GetQueryCriteria()
+        {
+            return new GetAnnouncementsCriteria
+            {
+                PublishedFrom = PublishedFrom,
+                PublishedTo = PublishedTo,
+                Status = Status,
+                State = State
+            };
+        }
 
         public override string IndexLink(int i, int itemPerPage)
         {

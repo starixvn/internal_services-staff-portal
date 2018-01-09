@@ -87,6 +87,8 @@
             container.Register<IFunctionService>(() => new FunctionService(), hybridLifestyle);
             container.Register<IFileManagerService>(() => new FileManagerService(), hybridLifestyle);
 
+            container.Register<IAnnouncementService>(() => new AnnouncementService(), hybridLifestyle);
+
             container.RegisterInitializer<TicketDeskUserManager>(manager => manager.ConfigureDataProtection(app));
             ////container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
             container.RegisterMvcControllers(typeof(Startup).Assembly);

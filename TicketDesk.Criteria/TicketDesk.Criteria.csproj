@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Announcement\GetAnnouncementsCriteria.cs" />
     <Compile Include="FileManager\DeleteFileCriteria.cs" />
     <Compile Include="FileManager\UploadFileCriteria.cs" />
     <Compile Include="FileManager\AddFolderCriteria.cs" />
@@ -83,6 +84,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="TicketDesk.Criteria.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TicketDesk.Domain\TicketDesk.Domain.csproj">
+      <Project>{DBD5279B-9F1C-4915-86A9-6A8F1CF0622D}</Project>
+      <Name>TicketDesk.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

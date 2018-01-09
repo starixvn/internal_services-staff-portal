@@ -1,11 +1,5 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
-    using Core.Resources;
-    using Criteria.FileManager;
-    using Domain.Infrastructure;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
-    using Service;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -14,6 +8,11 @@
     using System.Web;
     using System.Web.Configuration;
     using System.Web.Mvc;
+    using Core.Resources;
+    using Criteria.FileManager;
+    using Domain.Infrastructure;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
     using Service.Interface;
 
 
