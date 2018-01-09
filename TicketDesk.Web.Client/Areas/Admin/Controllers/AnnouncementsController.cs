@@ -31,7 +31,8 @@
 
                 viewModel.TotalItem = announcements.Count();
 
-                viewModel.Announcements = announcements.OrderByDescending(x => x.Id).Skip(viewModel.Skipped).Take(viewModel.ItemPerPage).ToList();
+                viewModel.Announcements =
+                    _announcementService.Pagination(announcements, viewModel.Skipped, viewModel.ItemPerPage);
             }
 
             return View(viewModel);

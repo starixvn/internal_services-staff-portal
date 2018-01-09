@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Service.Implement
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using Criteria.Announcement;
@@ -99,6 +100,11 @@
             context.Announcements.Remove(announcement);
             var result = context.SaveChanges();
             return result > 0;
+        }
+
+        public IList<Announcement> Pagination(IQueryable<Announcement> originalList, int skipped, int took)
+        {
+            return originalList.OrderByDescending(x => x.Id).Skip(skipped).Take(took).ToList();
         }
     }
 }

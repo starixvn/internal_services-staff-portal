@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Service.Interface
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Criteria.Announcement;
     using Domain.Model;
@@ -15,5 +16,7 @@
         bool UpdateAnnouncement(NewAnnouncementCriteria criteria);
 
         bool DeleteAnnouncement(int id);
+
+        IList<Announcement> Pagination(IQueryable<Announcement> originalList, int skipped, int took);
     }
 }
