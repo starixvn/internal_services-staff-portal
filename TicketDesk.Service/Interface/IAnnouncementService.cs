@@ -15,7 +15,5 @@
         bool UpdateAnnouncement(NewAnnouncementCriteria criteria);
 
         bool DeleteAnnouncement(int id);
-
-        IQueryable<Announcement> Pagination(IQueryable<Announcement> originalList, int skipped, int took);
     }
 }

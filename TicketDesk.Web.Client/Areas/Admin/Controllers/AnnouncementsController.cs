@@ -6,6 +6,7 @@
     using Client.Controllers;
     using Domain.Model;
     using Models.Announcements;
+    using Service.Implement;
     using Service.Interface;
 
     [TdAuthorize]
@@ -31,8 +32,13 @@
 
                 viewModel.TotalItem = announcements.Count();
 
-                viewModel.Announcements =
-                    _announcementService.Pagination(announcements, viewModel.Skipped, viewModel.ItemPerPage);
+                var paginationService = new PaginationService<Announcement, int>();
+
+                viewModel.Announcements = paginationService.Pagination(
+                    announcements,
+                    x => x.Id,
+                    viewModel.Skipped,
+                    viewModel.ItemPerPage);
             }
 
             return View(viewModel);

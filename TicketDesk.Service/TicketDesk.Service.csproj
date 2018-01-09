@@ -119,6 +119,7 @@
     <Compile Include="Implement\PaginationService.cs" />
     <Compile Include="Interface\IAnnouncementService.cs" />
     <Compile Include="Interface\IFileManagerService.cs" />
+    <Compile Include="Interface\IPaginationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

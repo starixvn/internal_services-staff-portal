@@ -1,12 +1,12 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using System.Threading;
     using System.Web.Mvc;
     using Criteria.Announcement;
-    using DelegateDecompiler;
     using Domain;
     using Domain.Infrastructure;
     using Domain.Model;
@@ -15,6 +15,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Models;
     using Models.Home;
+    using Service.Implement;
     using Service.Interface;
 
     ////[RoutePrefix("")]
@@ -83,7 +84,7 @@
 
         private IList<AnnouncementGroup> PopulateHomeAnnouncements()
         {
-            ////var paginationService = new PaginationService<Announcement, DateTime?>();
+            var paginationService = new PaginationService<Announcement, DateTime?>();
             // ANNOUNCEMENTS
 
             var result = new List<AnnouncementGroup>();
@@ -96,13 +97,9 @@
 
             var test = _announcementService.GetAnnouncements(criteria);
 
-            var announcements = _announcementService.Pagination(test, 0, 10)
-                .GroupBy(x => DbFunctions.TruncateTime(x.PublishedDateTime.Value))
+            var announcements = paginationService.Pagination(test, x => x.PublishedDateTime, 0, 10)
+                .GroupBy(x => x.PublishedDateTime?.Date)
                 .OrderByDescending(x => x.Key);
-
-            ////var announcements = GetAnnouncements(0, 10)
-            ////    .GroupBy(x => DbFunctions.TruncateTime(x.PublishedDateTime.Value))
-            ////    .OrderByDescending(x => x.Key);
 
             foreach (var group in announcements)
             {
@@ -122,7 +119,7 @@
 
             return result;
         }
-        
+
         ////private IQueryable<Announcement> GetAnnouncements(int skip, int take)
         ////{
         ////    return Context.Announcements
@@ -225,28 +222,28 @@
                 .Skip(moreannouncementViewModel.Skipped)
                 .Take(moreannouncementViewModel.ItemPerPage)
                 .ToList();
-            
+
             return View(moreannouncementViewModel);
         }
 
-        private IQueryable<Announcement> QueryAnnouncement(MoreAnnouncementViewModel moreAnnouncementViewModel)
-        {
-            IQueryable<Announcement> announcements = Context.Announcements;
+        ////private IQueryable<Announcement> QueryAnnouncement(MoreAnnouncementViewModel moreAnnouncementViewModel)
+        ////{
+        ////    IQueryable<Announcement> announcements = Context.Announcements;
 
-            if (moreAnnouncementViewModel.PublishedFrom != null)
-            {
-                announcements = announcements.Where(x =>
-                    moreAnnouncementViewModel.PublishedFrom <= DbFunctions.TruncateTime(x.PublishedDateTime));
-            }
+        ////    if (moreAnnouncementViewModel.PublishedFrom != null)
+        ////    {
+        ////        announcements = announcements.Where(x =>
+        ////            moreAnnouncementViewModel.PublishedFrom <= DbFunctions.TruncateTime(x.PublishedDateTime));
+        ////    }
 
-            if (moreAnnouncementViewModel.PublishedTo != null)
-            {
-                announcements = announcements.Where(x =>
-                    DbFunctions.TruncateTime(x.PublishedDateTime) <= moreAnnouncementViewModel.PublishedTo);
-            }
+        ////    if (moreAnnouncementViewModel.PublishedTo != null)
+        ////    {
+        ////        announcements = announcements.Where(x =>
+        ////            DbFunctions.TruncateTime(x.PublishedDateTime) <= moreAnnouncementViewModel.PublishedTo);
+        ////    }
 
-            announcements = announcements.Where(x => x.State == AnnouncementState.Published).Decompile();
-            return announcements;
-        }
+        ////    announcements = announcements.Where(x => x.State == AnnouncementState.Published).Decompile();
+        ////    return announcements;
+        ////}
     }
 }

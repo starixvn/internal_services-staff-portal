@@ -1,5 +1,8 @@
 ﻿namespace TicketDesk.Web.Client
 {
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
     using Domain;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
@@ -10,16 +13,12 @@
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin;
     using Owin;
-    using Service;
+    using Service.Implement;
+    using Service.Interface;
     using SimpleInjector;
     using SimpleInjector.Advanced;
     using SimpleInjector.Integration.Web;
     using SimpleInjector.Integration.Web.Mvc;
-    using System;
-    using System.Web;
-    using System.Web.Mvc;
-    using Service.Implement;
-    using Service.Interface;
 
     public partial class Startup
     {
