@@ -52,7 +52,7 @@
             {
                 if (CheckIfDateDuplicate(viewModel.References))
                 {
-                    ModelState.AddModelError("Date Duplicate", "");
+                    ModelState.AddModelError("", "The Date duplicated.");
                 }
                 else
                 {
