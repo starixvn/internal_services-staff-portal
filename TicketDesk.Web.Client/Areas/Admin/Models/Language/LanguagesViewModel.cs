@@ -6,7 +6,7 @@
     using System.Web.Mvc;
     using Localization;
 
-    public class LanguageSettingsViewModel
+    public class LanguagesViewModel
     {
         public List<SelectListItem> SupportedLanguages
         {

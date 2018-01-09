@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using Domain.Model;
 
-    public class CustomFieldSettingViewModel
+    public class CustomFieldsViewModel
     {
         public int SelectedCategoryId { get; set; }
 

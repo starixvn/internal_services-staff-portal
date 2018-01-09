@@ -16,14 +16,14 @@
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            var viewModel = new LanguageSettingsViewModel();
+            var viewModel = new LanguagesViewModel();
 
             return View(viewModel);
         }
         
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        public ActionResult SetLanguage(LanguageSettingsViewModel viewModel)
+        public ActionResult SetLanguage(LanguagesViewModel viewModel)
         {
             CultureHelper.SetCurrentCulture(viewModel.SelectedLanguage);
 

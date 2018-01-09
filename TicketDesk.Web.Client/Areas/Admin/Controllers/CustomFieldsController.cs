@@ -27,7 +27,7 @@
         {
             var categoryIds = _context.TicketCategoryCustomField.Select(x => x.CategoryId);
 
-            var viewModel = new CustomFieldSettingViewModel
+            var viewModel = new CustomFieldsViewModel
             {
                 SelectedCategoryId = id,
                 TicketCategoryWithCustomFields =

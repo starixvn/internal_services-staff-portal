@@ -451,7 +451,7 @@
     <Compile Include="Models\Account\AccountProfileViewModel.cs" />
     <Compile Include="Models\Account\UserAccountInfoViewModel.cs" />
     <Compile Include="Areas\Admin\Models\References\ListReferencesViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\CustomField\CustomFieldSettingViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\CustomField\CustomFieldsViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CustomField\AddCustomFieldViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CustomField\EditCustomFieldViewModel.cs" />
     <Compile Include="Models\Extensions\ClientSettingExtensions.cs" />
@@ -477,7 +477,7 @@
     <Compile Include="Models\IdUploaderViewModel.cs" />
     <Compile Include="Models\NavbarViewModel.cs" />
     <Compile Include="Models\ProjectListViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\Language\LanguageSettingsViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Language\LanguagesViewModel.cs" />
     <Compile Include="Models\SystemInfoViewModel.cs" />
     <Compile Include="Models\TicketCenterListViewModel.cs" />
     <Compile Include="Models\TicketEmail.cs" />
