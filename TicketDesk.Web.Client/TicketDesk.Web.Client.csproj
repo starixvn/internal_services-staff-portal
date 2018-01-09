@@ -478,7 +478,7 @@
     <Compile Include="Models\NavbarViewModel.cs" />
     <Compile Include="Models\ProjectListViewModel.cs" />
     <Compile Include="Models\Reference\NewsLetterReferencesViewModel.cs" />
-    <Compile Include="Models\Settings\LanguageSettingsViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Language\LanguagesViewModel.cs" />
     <Compile Include="Models\SystemInfoViewModel.cs" />
     <Compile Include="Models\TicketCenterListViewModel.cs" />
     <Compile Include="Models\TicketEmail.cs" />
