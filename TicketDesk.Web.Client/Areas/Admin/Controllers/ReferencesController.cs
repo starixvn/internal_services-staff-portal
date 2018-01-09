@@ -2,8 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Net;
     using System.Web;
     using System.Web.Configuration;
     using System.Web.Mvc;
@@ -14,23 +16,26 @@
     using TicketDesk.Domain.Infrastructure;
     using TicketDesk.Domain.Model;
     using TicketDesk.Web.Client.Areas.Admin.Models.References;
+    using TicketDesk.Web.Client.Controllers;
 
-    public class ReferencesController : Controller
+    public class ReferencesController : BaseController
     {
-        private readonly TdDomainContext Context = new TdDomainContext();
         private readonly string webRootPath;
         private readonly int imageSizeLimit = 2 * 1024 * 1024; // 2MB
 
-        public ReferencesController()
+        public ReferencesController(TdDomainContext context)
         {
             string webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
             webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, webPath);
+            Context = context;
 
             if (!Directory.Exists(webRootPath))
             {
                 Directory.CreateDirectory(webRootPath);
             }
         }
+
+        private TdDomainContext Context { get; }
 
         public ActionResult TVSchedules()
         {
@@ -177,7 +182,7 @@
                 DateAppear = referenceType != ReferenceType.NewsLetter ? reference.DateAppear : DateTime.Now,
                 ImageLink = reference.ImageLink,
                 ReferenceType = referenceType,
-                LastUpdateBy = "test",
+                LastUpdateBy = CurrentSession.Username,
                 LastUpdateDate = DateTime.Now
             };
 
@@ -243,6 +248,34 @@
             }
 
             return Json(new { isSuccessful, message = "Upload fail" });
+        }
+
+        [AllowAnonymous]
+        public ActionResult IsValidImageUrl()
+        {
+            var keyQuery = Request.QueryString.GetKey(0);
+            var imageLink = Request.QueryString[keyQuery];
+            bool validUrl = false;
+            if (!string.IsNullOrWhiteSpace(imageLink))
+            {
+                try
+                {
+                    var req = WebRequest.Create(imageLink);
+                    WebResponse response = req.GetResponse();
+                    validUrl = CheckValidImageUrlExtension(response, "jpeg") || CheckValidImageUrlExtension(response, "jpg") || CheckValidImageUrlExtension(response, "png");
+                }
+                catch (Exception e)
+                {
+                    validUrl = false;
+                }
+            }
+            return Json(validUrl, JsonRequestBehavior.AllowGet);
+        }
+
+        private static bool CheckValidImageUrlExtension(WebResponse response, string extension)
+        {
+            return response.ContentType.ToLower(CultureInfo.InvariantCulture)
+                               .StartsWith(string.Format("image/{0}", extension));
         }
 
         private static bool ValidExtention(string fileName)

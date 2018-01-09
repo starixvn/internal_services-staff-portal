@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
     using TicketDesk.Core.Enumerations;
 
     public class ReferenceViewModel
@@ -14,6 +15,7 @@
 
         [Required]
         [StringLength(500, ErrorMessage = "Image URL must under 500 characters")]
+        [Remote("IsValidImageUrl", "References", AdditionalFields = "ImageLink", ErrorMessage = "The request content cannot be loaded. Please try again.")]
         [Display(Name = "Image URL")]
         public string ImageLink { get; set; }
 
