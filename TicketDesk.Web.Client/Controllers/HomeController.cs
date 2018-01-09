@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Linq;
     using System.Threading;
     using System.Web.Mvc;
@@ -84,7 +83,6 @@
 
         private IList<AnnouncementGroup> PopulateHomeAnnouncements()
         {
-            var paginationService = new PaginationService<Announcement, DateTime?>();
             // ANNOUNCEMENTS
 
             var result = new List<AnnouncementGroup>();
@@ -95,9 +93,10 @@
                 State = AnnouncementState.Published
             };
 
-            var test = _announcementService.GetAnnouncements(criteria);
+            var availableAnnouncements = _announcementService.GetAnnouncements(criteria);
 
-            var announcements = paginationService.Pagination(test, x => x.PublishedDateTime, 0, 10)
+            var paginationService = new PaginationService<Announcement, DateTime?>();
+            var announcements = paginationService.Pagination(availableAnnouncements, x => x.PublishedDateTime, 0, 10)
                 .GroupBy(x => x.PublishedDateTime?.Date)
                 .OrderByDescending(x => x.Key);
 
@@ -119,16 +118,6 @@
 
             return result;
         }
-
-        ////private IQueryable<Announcement> GetAnnouncements(int skip, int take)
-        ////{
-        ////    return Context.Announcements
-        ////        .Where(x => x.PublishedDateTime != null && x.State == AnnouncementState.Published)
-        ////        .OrderByDescending(x => x.PublishedDateTime)
-        ////        .Skip(skip)
-        ////        .Take(take)
-        ////        .Decompile();
-        ////}
 
         private IList<TicketGroup> PrepareTicketGroups(IList<TicketCategory> categories, IEnumerable<IGrouping<int, Ticket>> tickets)
         {
@@ -217,33 +206,12 @@
                 _announcementService.GetAnnouncements(moreannouncementViewModel.GetAnnouncementsCriteria());
 
             moreannouncementViewModel.TotalItem = announcements.Count();
-            moreannouncementViewModel.Announcements = announcements
-                .OrderByDescending(x => x.Id)
-                .Skip(moreannouncementViewModel.Skipped)
-                .Take(moreannouncementViewModel.ItemPerPage)
-                .ToList();
+
+            var paginationService = new PaginationService<Announcement, int>();
+            moreannouncementViewModel.Announcements = paginationService.Pagination(announcements, x => x.Id,
+                moreannouncementViewModel.Skipped, moreannouncementViewModel.ItemPerPage).ToList();
 
             return View(moreannouncementViewModel);
         }
-
-        ////private IQueryable<Announcement> QueryAnnouncement(MoreAnnouncementViewModel moreAnnouncementViewModel)
-        ////{
-        ////    IQueryable<Announcement> announcements = Context.Announcements;
-
-        ////    if (moreAnnouncementViewModel.PublishedFrom != null)
-        ////    {
-        ////        announcements = announcements.Where(x =>
-        ////            moreAnnouncementViewModel.PublishedFrom <= DbFunctions.TruncateTime(x.PublishedDateTime));
-        ////    }
-
-        ////    if (moreAnnouncementViewModel.PublishedTo != null)
-        ////    {
-        ////        announcements = announcements.Where(x =>
-        ////            DbFunctions.TruncateTime(x.PublishedDateTime) <= moreAnnouncementViewModel.PublishedTo);
-        ////    }
-
-        ////    announcements = announcements.Where(x => x.State == AnnouncementState.Published).Decompile();
-        ////    return announcements;
-        ////}
     }
 }
