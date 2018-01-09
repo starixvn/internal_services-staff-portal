@@ -12,7 +12,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Models.CustomField;
 
-    [TdAuthorize]
+    [NapAuth(FunctionKey = FunctionKeys.CustomFields, Policy = Constant.Policy.Read)]
     public class CustomFieldsController : BaseController
     {
         private readonly TdDomainContext _context;
@@ -22,7 +22,6 @@
             _context = context;
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Read)]
         public ActionResult Index(int id = 1)
         {
             var categoryIds = _context.TicketCategoryCustomField.Select(x => x.CategoryId);
@@ -47,7 +46,6 @@
             return View(viewModel);
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Read)]
         public ActionResult Add()
         {
             var viewModel = new AddCustomFieldViewModel
@@ -70,7 +68,6 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddCustomFieldViewModel viewModel)
         {
             var customField = new CustomField
@@ -102,7 +99,6 @@
             return RedirectToAction("Index");
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Read)]
         public ActionResult Edit(int id)
         {
             var customField = _context.CustomFields.Find(id);
@@ -138,7 +134,6 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Host)]
         public ActionResult Edit(EditCustomFieldViewModel viewModel)
         {
             var customField = _context.CustomFields.Find(viewModel.Id);
@@ -179,7 +174,6 @@
             return RedirectToAction("Index");
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Host)]
         public ActionResult Delete(int id)
         {
             var customFieldToDelete = new CustomField

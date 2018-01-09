@@ -10,7 +10,7 @@
     using Localization;
     using Models.Language;
 
-    [TdAuthorize]
+    [NapAuth(FunctionKey = FunctionKeys.Languages, Policy = Constant.Policy.Read)]
     public class LanguagesController : BaseController
     {
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
@@ -20,9 +20,8 @@
 
             return View(viewModel);
         }
-        
+
         [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public ActionResult SetLanguage(LanguagesViewModel viewModel)
         {
             CultureHelper.SetCurrentCulture(viewModel.SelectedLanguage);

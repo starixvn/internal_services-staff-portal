@@ -4,12 +4,15 @@
     using System.Net;
     using System.Web.Mvc;
     using Client.Controllers;
+    using Domain.Infrastructure;
     using Domain.Model;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
     using Models.Announcements;
     using Service.Implement;
     using Service.Interface;
 
-    [TdAuthorize]
+    [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
     public class AnnouncementsController : BaseController
     {
         private readonly IAnnouncementService _announcementService;

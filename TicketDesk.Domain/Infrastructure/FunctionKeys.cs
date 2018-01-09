@@ -22,13 +22,15 @@
 
         public const string FileManagement = "FileManagement";
 
-        public const string Announcement = "Announcement";
-
         public const string IdUploader = "IdUploader";
 
-        #region Settings
+        #region Admin
 
-        public const string CustomFieldSettings = "CustomFieldSettings";
+        public const string Administration = "Administration";
+        public const string Announcement = "Announcement";
+        public const string References = "References";
+        public const string Languages = "Languages";
+        public const string CustomFields = "CustomFields";
 
         #endregion
     }

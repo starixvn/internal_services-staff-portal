@@ -3,8 +3,11 @@
     using System.Web.Mvc;
     using Client.Controllers;
     using Client.Models;
+    using Domain.Infrastructure;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
 
-    [TdAuthorize]
+    [NapAuth(FunctionKey = FunctionKeys.Administration, Policy = Constant.Policy.Read)]
     public class HomeController : BaseController
     {
         [ChildActionOnly]
