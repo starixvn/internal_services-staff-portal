@@ -83,8 +83,6 @@
 
         private IList<AnnouncementGroup> PopulateHomeAnnouncements()
         {
-            // ANNOUNCEMENTS
-
             var result = new List<AnnouncementGroup>();
 
             // Get top 10 announcement by published time

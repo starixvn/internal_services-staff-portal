@@ -17,7 +17,7 @@
         {
             var currentRoute = HttpContext.Current.Request.Url.AbsolutePath;
 
-            if (currentRoute == "/" && route == "/")
+            if (currentRoute == "/" && route == "/" || (currentRoute.Contains("Home") && route == "/"))
             {
                 // Home
                 return "active";
