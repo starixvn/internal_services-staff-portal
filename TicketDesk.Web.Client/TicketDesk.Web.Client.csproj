@@ -2116,6 +2116,7 @@
     <Content Include="Views\Ticket\NewNetworkTicket.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Home\MoreAnnouncement.cshtml" />
+    <Content Include="Views\Ticket\NewSoftwareTicket.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -320,6 +320,61 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [Route("new-software")]
+        public ActionResult NewSoftwareTicket()
+        {
+            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Hardware);
+            var viewModel = new NewSoftwareTicketViewModel
+            {
+                TempId = Guid.NewGuid(),
+                Ticket = { Owner = Context.SecurityProvider.CurrentUserId },
+                System = { CustomField = availableCustomField.First(x => x.Name == "System") },
+                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
+            };
+
+            return View("NewSoftwareTicket", viewModel);
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateOnlyIncomingValues]
+        [ValidateInput(false)]
+        [Route("new-software")]
+        public async Task<ActionResult> NewSoftwareTicket(NewSoftwareTicketViewModel viewModel)
+        {
+            if (viewModel.Ticket.IsHtml)
+            {
+                viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
+                if (string.IsNullOrEmpty(viewModel.Ticket.Details))
+                {
+                    ModelState.AddModelError("Details", Strings.RequiredField);
+                }
+            }
+
+            // TODO: Replace with actual project ID represent for shop id here
+            viewModel.Ticket.Project = Context.Projects.Find(1);
+            viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Software;
+
+            if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
+            {
+                AddCustomFieldValue(null, viewModel.System.CustomFieldId, viewModel.System.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.Description.CustomFieldId, viewModel.Description.Value, viewModel.Ticket.TicketId);
+
+                // Save changes to ticket's custom field
+                await Context.SaveChangesAsync().ConfigureAwait(false);
+
+                return Context.SecurityProvider.IsReadTicketCenter
+                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
+                    : RedirectToAction("Index", "Home");
+            }
+
+            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
+
+            return View(viewModel);
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [Route("new-network")]
         public ActionResult NewNetworkTicket()
         {

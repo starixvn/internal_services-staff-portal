@@ -1,0 +1,60 @@
+﻿@using TicketDesk.Localization.Views.Ticket
+@using TicketDesk.Web.Client.Infrastructure.Helpers
+
+@section title { @New.Title }
+
+@model TicketDesk.Web.Client.Models.Ticket.NewSoftwareTicketViewModel
+
+@section css
+{
+    <link href="~/src/libs/dropzone/dropzone.min.css" rel="stylesheet" />
+    <link href="~/src/css/custom-dropzone.css" rel="stylesheet" />
+}
+
+@section scripts
+{
+    @Html.Partial("_DropzoneScripts", Model)
+    <script src="~/src/js/formhandler.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            InitFormHandler("ticket-form", true);
+        });
+    </script>
+}
+
+@using (Html.BeginForm("NewSoftwareTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form filechange", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Ticket.IsHtml)
+    @Html.HiddenFor(model => model.TempId)
+
+    <div class="form-content software-form">
+        <div class="title">SOFTWARE FORM</div>
+        <div class="item-list item">
+            @Html.LabelFor(x => x.Ticket.Title, new { @class = "key fullwidth border" })
+            <div class="fullwidth">
+                @Html.TextBoxFor(x => x.Ticket.Title)
+            </div>
+        </div>
+        <div class="item-list item">
+            @{
+                var guid = Guid.NewGuid().ToString();
+            }
+            @*@Html.CustomFieldIndex("System", guid)*@
+
+            @Html.CustomFieldLabelWithGuidIndexFor(x => x.System, guid, null, new { @class = "key border" })
+            <div class="value border custom-dropdown">
+                @Html.CustomFieldWithGuidIndexFor(x => x.System, guid, null, new { @class = "" })
+            </div>
+        </div>
+        <div class="item-list item">
+            @Html.CustomFieldLabelFor(x => x.Description, new { @class = "key fullwidth" })
+            <div class="fullwidth">
+                @Html.CustomFieldFor(x => x.Description)
+            </div>
+        </div>
+        @Html.Partial("_DropzoneView", Model)
+    </div>
+    <input type="submit" class="btn btn-primary btn-send" value="Send" />
+}
