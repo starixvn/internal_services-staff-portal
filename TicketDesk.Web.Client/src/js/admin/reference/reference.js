@@ -50,8 +50,8 @@ function ReInitDateTimePicker() {
 function InitDateTimePicker() {
     var nowDate = new Date();
     $(".datetimepicker").datetimepicker({
-        format: "DD-MM-YYYY",
-        minDate: new Date(),
+        format: "MM-DD-YYYY",
+        minDate: nowDate.setDate(nowDate.getDate() - 1),
         maxDate: nowDate.setFullYear(nowDate.getFullYear() + 1),
         disabledDates: GetSelectedDates()
     });

@@ -23,6 +23,8 @@
         private readonly string webRootPath;
         private readonly int imageSizeLimit = 2 * 1024 * 1024; // 2MB
 
+        private TdDomainContext Context { get; }
+
         public ReferencesController(TdDomainContext context)
         {
             string webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
@@ -34,8 +36,6 @@
                 Directory.CreateDirectory(webRootPath);
             }
         }
-
-        private TdDomainContext Context { get; }
 
         public ActionResult TVSchedules()
         {
@@ -50,7 +50,14 @@
         {
             if (ModelState.IsValid)
             {
-                InsertListReference(ReferenceType.TvSchedule, viewModel);
+                if (CheckIfDateDuplicate(viewModel.References))
+                {
+                    ModelState.AddModelError("Date Duplicate", "");
+                }
+                else
+                {
+                    InsertListReference(ReferenceType.TvSchedule, viewModel);
+                }
             }
 
             return View(viewModel);
@@ -159,6 +166,11 @@
         private ListReferencesViewModel GetListReferences(ReferenceType referenceType)
         {
             var references = Context.References.Where(x => x.ReferenceType == referenceType).ToList();
+            if (referenceType != ReferenceType.NewsLetter)
+            {
+                references = references.Where(r => DateTime.Compare(r.DateAppear.Date, DateTime.Now.Date) >= 0).ToList();
+            }
+
             var listViewModel = new List<ReferenceViewModel>();
 
             foreach (Reference reference in references)
@@ -254,20 +266,18 @@
         public ActionResult IsValidImageUrl()
         {
             var keyQuery = Request.QueryString.GetKey(0);
-            var imageLink = Request.QueryString[keyQuery];
+            var value = Request.QueryString[keyQuery];
             bool validUrl = false;
-            if (!string.IsNullOrWhiteSpace(imageLink))
+            try
             {
-                try
-                {
-                    var req = WebRequest.Create(imageLink);
-                    WebResponse response = req.GetResponse();
-                    validUrl = CheckValidImageUrlExtension(response, "jpeg") || CheckValidImageUrlExtension(response, "jpg") || CheckValidImageUrlExtension(response, "png");
-                }
-                catch (Exception e)
-                {
-                    validUrl = false;
-                }
+                var imageLink = new Uri(value);
+                var req = WebRequest.Create(imageLink);
+                WebResponse response = req.GetResponse();
+                validUrl = CheckValidImageUrlExtension(response, "jpeg") || CheckValidImageUrlExtension(response, "jpg") || CheckValidImageUrlExtension(response, "png");
+            }
+            catch
+            {
+                validUrl = false;
             }
             return Json(validUrl, JsonRequestBehavior.AllowGet);
         }
@@ -299,6 +309,14 @@
             }
 
             return validPath;
+        }
+
+        private static bool CheckIfDateDuplicate(IList<ReferenceViewModel> references)
+        {
+            var duplicates = references.GroupBy(r => r.DateAppear.Date)
+                                       .Where(g => g.Count() > 1)
+                                       .Select(g => g.Key);
+            return duplicates.Any();
         }
     }
 }

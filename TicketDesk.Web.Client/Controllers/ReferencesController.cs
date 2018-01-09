@@ -1,31 +1,25 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using System.Web.Configuration;
     using System.Web.Mvc;
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using TicketDesk.Core.Enumerations;
+    using TicketDesk.Domain;
+    using TicketDesk.Domain.Model;
+    using TicketDesk.Web.Client.Models.Reference;
 
     [RoutePrefix("References")]
     public class ReferencesController : BaseController
     {
-        private readonly string _webRootPath;
-        private readonly string _webPath;
-
-        public ReferencesController()
+        public ReferencesController(TdDomainContext context)
         {
-            _webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
-            _webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _webPath);
-
-            if (!Directory.Exists(_webRootPath))
-            {
-                Directory.CreateDirectory(_webRootPath);
-            }
+            Context = context;
         }
+
+        private TdDomainContext Context { get; set; }
 
         public ActionResult Index()
         {
@@ -38,66 +32,54 @@
         [Route("bet-of-the-day")]
         public ActionResult BetOfTheDay()
         {
-            ViewBag.FilePath = GetFilePath("BetOfTheDay");
-
-            return View();
+            var reference = GetReferenceSuitable(ReferenceType.BestOfTheDay);
+            return View(reference);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
         [Route("featured-event")]
         public ActionResult FeaturedEvent()
         {
-            ViewBag.FilePath = GetFilePath("FeaturedEvent");
+            var reference = GetReferenceSuitable(ReferenceType.FeaturedEvent);
 
-            return View();
+            return View(reference);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
         [Route("newsletter")]
         public ActionResult Newsletter()
         {
-            ViewBag.FilePath = GetFilePath("Newsletter");
-
-            return View();
+            var viewModel = new NewsLetterReferencesViewModel
+            {
+                References = Context.References.Where(r => r.ReferenceType == ReferenceType.NewsLetter).ToList()
+            };
+            return View(viewModel);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
         [Route("trading-limit")]
         public ActionResult TradingLimit()
         {
-            ViewBag.FilePath = GetFilePath("TradingLimit");
+            var reference = GetReferenceSuitable(ReferenceType.TradingLimits);
 
-            return View();
+            return View(reference);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
         [Route("tv-schedules")]
         public ActionResult TvSchedules()
         {
-            ViewBag.FilePath = GetFilePath("TvSchedules");
-
-            return View();
+            var reference = GetReferenceSuitable(ReferenceType.TvSchedule);
+            return View(reference);
         }
 
-        private string GetFilePath(string folder)
+        private Reference GetReferenceSuitable(ReferenceType referenceType)
         {
-            var filePath = string.Empty;
-            var today = DateTime.Now.Date;
-            var directory = string.Format("{0}/{1}/{2}/{3}/{4}", _webRootPath, folder, today.Year, today.Month, today.Day);
-
-            if (Directory.Exists(directory))
-            {
-                DirectoryInfo dirInfo = new DirectoryInfo(directory);
-                var filters = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-                IEnumerable<FileInfo> files = dirInfo.GetFiles().Where(f => filters.Contains(f.Extension, StringComparer.OrdinalIgnoreCase));
-
-                if (files.Any())
-                {
-                    filePath = string.Format("~/{0}/{1}/{2}/{3}/{4}/{5}", _webPath, folder, today.Year, today.Month, today.Day, files.First().Name);
-                }
-            }
-
-            return filePath;
+            var references = Context.References.Where(t => t.ReferenceType == referenceType)
+                                               .OrderByDescending(r => r.DateAppear)
+                                               .ToList();
+            var reference = references.FirstOrDefault(r => DateTime.Compare(r.DateAppear, DateTime.Now) <= 0);
+            return reference;
         }
     }
 }
