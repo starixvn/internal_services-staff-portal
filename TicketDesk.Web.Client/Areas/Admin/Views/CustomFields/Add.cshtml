@@ -1,14 +1,13 @@
 ﻿@model TicketDesk.Web.Client.Areas.Admin.Models.CustomField.AddCustomFieldViewModel
 
-@section title{@ViewBag.Title}
-
 @{
     ViewBag.Title = "Add new Custom Field";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Add", "CustomFieldSettings", FormMethod.Post, new { @class = "form-group" }))
+@using (Html.BeginForm("Add", "CustomFields", FormMethod.Post, new { @class = "form-group" }))
 {
     @*<div class="input-group">
         @Html.LabelFor(x => x.TicketCategoryId)

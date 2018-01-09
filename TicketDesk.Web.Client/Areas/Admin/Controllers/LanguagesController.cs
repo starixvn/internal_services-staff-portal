@@ -1,28 +1,26 @@
-﻿namespace TicketDesk.Web.Client.Controllers
+﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+    using Client.Controllers;
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Localization;
-    using System;
-    using System.Web;
-    using System.Web.Mvc;
-    using Models.Settings;
+    using Models.Language;
 
-    [RoutePrefix("settings")]
-    [Route("{action=index}")]
-    public class LanguageSettingController : BaseController
+    [TdAuthorize]
+    public class LanguagesController : BaseController
     {
-        [Route("language")]
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            LanguageSettingsViewModel viewModel = new LanguageSettingsViewModel();
+            var viewModel = new LanguageSettingsViewModel();
 
             return View(viewModel);
         }
-
-        [Route("language/set-language")]
+        
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public ActionResult SetLanguage(LanguageSettingsViewModel viewModel)

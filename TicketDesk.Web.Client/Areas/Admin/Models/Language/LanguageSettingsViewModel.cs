@@ -1,10 +1,10 @@
-﻿namespace TicketDesk.Web.Client.Models.Settings
+﻿namespace TicketDesk.Web.Client.Areas.Admin.Models.Language
 {
-    using Localization;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Threading;
     using System.Web.Mvc;
+    using Localization;
 
     public class LanguageSettingsViewModel
     {
@@ -12,14 +12,14 @@
         {
             get
             {
-                List<SelectListItem> items = new List<SelectListItem>();
+                var items = new List<SelectListItem>();
                 var languages = CultureHelper.Cultures;
 
                 var currentCulture = Thread.CurrentThread.CurrentCulture;
 
-                foreach (KeyValuePair<string, string> language in languages)
+                foreach (var language in languages)
                 {
-                    SelectListItem item = new SelectListItem
+                    var item = new SelectListItem
                     {
                         Value = language.Key,
                         Text = language.Value

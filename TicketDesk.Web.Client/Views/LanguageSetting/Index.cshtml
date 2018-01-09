@@ -1,9 +1,0 @@
-﻿@model TicketDesk.Web.Client.Models.Settings.LanguageSettingsViewModel
-
-<h2>Set Language</h2>
-
-@using (Html.BeginForm("SetLanguage", "LanguageSetting", FormMethod.Post))
-{
-    @Html.DropDownListFor(x => x.SelectedLanguage, Model.SupportedLanguages)
-    <button type="submit">Save</button>
-}

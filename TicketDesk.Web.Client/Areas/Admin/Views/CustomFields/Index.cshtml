@@ -11,7 +11,7 @@
 </section>
 
 <section>
-    <a href="@Url.Action("Add","CustomFieldSettings")" class="btn btn-success">Add new</a>
+    <a href="@Url.Action("Add","CustomFields")" class="btn btn-success">Add new</a>
 </section>
 
 <section>
@@ -20,7 +20,7 @@
         {
             var activeClass = ticketCategory.CategoryId == Model.SelectedCategoryId ? "active" : "";
 
-            <li class="@activeClass"><a href="@Url.Action("Index", "CustomFieldSettings", new { id = ticketCategory.CategoryId })">@ticketCategory.Name</a></li>
+            <li class="@activeClass"><a href="@Url.Action("Index", "CustomFields", new { id = ticketCategory.CategoryId })">@ticketCategory.Name</a></li>
         }
     </ul>
 
@@ -97,8 +97,8 @@
                         <p>@item.DisplayOrder</p>
                     </td>
                     <td>
-                        <a href="@Url.Action("Edit", "CustomFieldSettings", new { id = item.Id })">Edit</a>
-                        <a href="@Url.Action("Delete", "CustomFieldSettings", new { id = item.Id })">Delete</a>
+                        <a href="@Url.Action("Edit", "CustomFields", new { id = item.Id })">Edit</a>
+                        <a href="@Url.Action("Delete", "CustomFields", new { id = item.Id })">Delete</a>
                     </td>
                 </tr>
             }

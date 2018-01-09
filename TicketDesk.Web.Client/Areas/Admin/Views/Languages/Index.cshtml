@@ -1,0 +1,18 @@
+﻿@model TicketDesk.Web.Client.Areas.Admin.Models.Language.LanguageSettingsViewModel
+
+@{
+    ViewBag.Title = "Set Language";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section>
+    <h2>@ViewBag.Title</h2>
+</section>
+
+<section>
+    @using (Html.BeginForm("SetLanguage", "Languages", FormMethod.Post))
+    {
+        @Html.DropDownListFor(x => x.SelectedLanguage, Model.SupportedLanguages)
+        <button type="submit">Save</button>
+    }
+</section>

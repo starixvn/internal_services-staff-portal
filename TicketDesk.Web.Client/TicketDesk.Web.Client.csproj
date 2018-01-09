@@ -393,7 +393,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FileManagerController.cs" />
     <Compile Include="Controllers\IdUploaderController.cs" />
-    <Compile Include="Controllers\LanguageSettingController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Controllers\ProjectSettingsController.cs" />
     <Compile Include="Controllers\PushNotificationSettingsController.cs" />
@@ -477,7 +477,7 @@
     <Compile Include="Models\IdUploaderViewModel.cs" />
     <Compile Include="Models\NavbarViewModel.cs" />
     <Compile Include="Models\ProjectListViewModel.cs" />
-    <Compile Include="Models\Settings\LanguageSettingsViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Language\LanguageSettingsViewModel.cs" />
     <Compile Include="Models\SystemInfoViewModel.cs" />
     <Compile Include="Models\TicketCenterListViewModel.cs" />
     <Compile Include="Models\TicketEmail.cs" />
@@ -2111,7 +2111,7 @@
     <Content Include="Views\Ticket\_HardwareTicketDetails.cshtml" />
     <Content Include="Views\Announcement\Index.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
-    <Content Include="Views\LanguageSetting\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Languages\Index.cshtml" />
     <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
     <Content Include="Views\Ticket\NewNetworkTicket.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />

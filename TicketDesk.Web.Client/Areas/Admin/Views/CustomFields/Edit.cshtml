@@ -2,11 +2,12 @@
 
 @{
     ViewBag.Title = "Edit Custom Field";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Edit", "CustomFieldSettings", FormMethod.Post, new { @class = "form-group" }))
+@using (Html.BeginForm("Edit", "CustomFields", FormMethod.Post, new { @class = "form-group" }))
 {
     @Html.HiddenFor(x => x.Id)
 
