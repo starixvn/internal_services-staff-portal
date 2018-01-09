@@ -586,6 +586,7 @@
     <Content Include="Areas\Admin\Views\References\BestOfTheDay.cshtml" />
     <Content Include="Areas\Admin\Views\References\TradingLimits.cshtml" />
     <Content Include="Areas\Admin\Views\References\_ReferenceCommon.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2121,7 +2122,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\Home\" />
     <Folder Include="Scripts\ticketdesk\User\" />
     <Folder Include="src\libs\dropzone\debug\" />
   </ItemGroup>

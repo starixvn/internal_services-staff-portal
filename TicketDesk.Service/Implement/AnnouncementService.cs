@@ -102,9 +102,9 @@
             return result > 0;
         }
 
-        public IList<Announcement> Pagination(IQueryable<Announcement> originalList, int skipped, int took)
+        public IQueryable<Announcement> Pagination(IQueryable<Announcement> originalList, int skipped, int took)
         {
-            return originalList.OrderByDescending(x => x.Id).Skip(skipped).Take(took).ToList();
+            return originalList.OrderByDescending(x => x.Id).Skip(skipped).Take(took);
         }
     }
 }

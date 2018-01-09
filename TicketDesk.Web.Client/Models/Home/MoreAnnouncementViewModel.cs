@@ -7,6 +7,7 @@
     using System.Web.Routing;
     using Common;
     using Core.Enumerations;
+    using Criteria.Announcement;
     using Domain.Model;
 
     public class MoreAnnouncementViewModel : Pagination
@@ -49,6 +50,16 @@
                 RouteTable.Routes,
                 HttpContext.Current.Request.RequestContext,
                 false);
+        }
+
+        public GetAnnouncementsCriteria GetAnnouncementsCriteria()
+        {
+            return new GetAnnouncementsCriteria
+            {
+                PublishedFrom = PublishedFrom,
+                PublishedTo = PublishedTo,
+                State = AnnouncementState.Published
+            };
         }
     }
 }

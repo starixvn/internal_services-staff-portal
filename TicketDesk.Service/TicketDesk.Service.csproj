@@ -116,6 +116,7 @@
     <Compile Include="EntityFrameworkBaseService.cs" />
     <Compile Include="Implement\AnnouncementService.cs" />
     <Compile Include="Implement\FileManagerService.cs" />
+    <Compile Include="Implement\PaginationService.cs" />
     <Compile Include="Interface\IAnnouncementService.cs" />
     <Compile Include="Interface\IFileManagerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

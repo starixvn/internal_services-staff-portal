@@ -18,5 +18,10 @@
 
             return PartialView("~/Areas/Admin/Views/Shared/_AdminNavbar.cshtml", model);
         }
+
+        public ActionResult Index()
+        {
+            return View();
+        }
     }
 }

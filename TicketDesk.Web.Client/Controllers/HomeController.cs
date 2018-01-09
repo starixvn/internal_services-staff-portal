@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading;
     using System.Web.Mvc;
+    using Criteria.Announcement;
     using DelegateDecompiler;
     using Domain;
     using Domain.Infrastructure;
@@ -14,17 +15,21 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Models;
     using Models.Home;
+    using Service.Interface;
 
     ////[RoutePrefix("")]
     ////[Route("{action=index}")]
     public class HomeController : BaseController
     {
-        public HomeController(TdDomainContext context)
+        public HomeController(TdDomainContext context, IAnnouncementService announcementService)
         {
             Context = context;
+            _announcementService = announcementService;
         }
 
         private TdDomainContext Context { get; }
+
+        private readonly IAnnouncementService _announcementService;
 
         ////[Route("about")]
         public ActionResult About()
@@ -78,14 +83,26 @@
 
         private IList<AnnouncementGroup> PopulateHomeAnnouncements()
         {
+            ////var paginationService = new PaginationService<Announcement, DateTime?>();
             // ANNOUNCEMENTS
 
             var result = new List<AnnouncementGroup>();
 
             // Get top 10 announcement by published time
-            var announcements = GetAnnouncements(0, 10)
+            var criteria = new GetAnnouncementsCriteria
+            {
+                State = AnnouncementState.Published
+            };
+
+            var test = _announcementService.GetAnnouncements(criteria);
+
+            var announcements = _announcementService.Pagination(test, 0, 10)
                 .GroupBy(x => DbFunctions.TruncateTime(x.PublishedDateTime.Value))
                 .OrderByDescending(x => x.Key);
+
+            ////var announcements = GetAnnouncements(0, 10)
+            ////    .GroupBy(x => DbFunctions.TruncateTime(x.PublishedDateTime.Value))
+            ////    .OrderByDescending(x => x.Key);
 
             foreach (var group in announcements)
             {
@@ -106,15 +123,15 @@
             return result;
         }
         
-        private IQueryable<Announcement> GetAnnouncements(int skip, int take)
-        {
-            return Context.Announcements
-                .Where(x => x.PublishedDateTime != null && x.State == AnnouncementState.Published)
-                .OrderByDescending(x => x.PublishedDateTime)
-                .Skip(skip)
-                .Take(take)
-                .Decompile();
-        }
+        ////private IQueryable<Announcement> GetAnnouncements(int skip, int take)
+        ////{
+        ////    return Context.Announcements
+        ////        .Where(x => x.PublishedDateTime != null && x.State == AnnouncementState.Published)
+        ////        .OrderByDescending(x => x.PublishedDateTime)
+        ////        .Skip(skip)
+        ////        .Take(take)
+        ////        .Decompile();
+        ////}
 
         private IList<TicketGroup> PrepareTicketGroups(IList<TicketCategory> categories, IEnumerable<IGrouping<int, Ticket>> tickets)
         {
@@ -199,7 +216,8 @@
         {
             var moreannouncementViewModel = viewModel ?? new MoreAnnouncementViewModel();
 
-            var announcements = QueryAnnouncement(moreannouncementViewModel);
+            var announcements =
+                _announcementService.GetAnnouncements(moreannouncementViewModel.GetAnnouncementsCriteria());
 
             moreannouncementViewModel.TotalItem = announcements.Count();
             moreannouncementViewModel.Announcements = announcements
