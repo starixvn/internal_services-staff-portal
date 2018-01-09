@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Web.Client
+﻿namespace TicketDesk.Web.Client.Infrastructure.Extensions
 {
     using System.Web;
     using System.Web.Mvc;
