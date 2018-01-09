@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Web.Client.Models.CustomField
+﻿namespace TicketDesk.Web.Client.Areas.Admin.Models.CustomField
 {
     using System.Collections.Generic;
     using Domain.Model;
@@ -9,6 +9,6 @@
 
         public IEnumerable<TicketCategory> TicketCategoryWithCustomFields { get; set; }
 
-        public IEnumerable<Domain.Model.CustomField> CustomFields { get; set; }
+        public IEnumerable<CustomField> CustomFields { get; set; }
     }
 }

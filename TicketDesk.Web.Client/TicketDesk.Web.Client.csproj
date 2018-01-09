@@ -388,7 +388,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\CustomFieldSettingsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CustomFieldsController.cs" />
     <Compile Include="Controllers\EmailTestController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FileManagerController.cs" />
@@ -451,9 +451,9 @@
     <Compile Include="Models\Account\AccountProfileViewModel.cs" />
     <Compile Include="Models\Account\UserAccountInfoViewModel.cs" />
     <Compile Include="Areas\Admin\Models\References\ListReferencesViewModel.cs" />
-    <Compile Include="Models\CustomField\CustomFieldSettingViewModel.cs" />
-    <Compile Include="Models\CustomField\AddCustomFieldViewModel.cs" />
-    <Compile Include="Models\CustomField\EditCustomFieldViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\CustomField\CustomFieldSettingViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\CustomField\AddCustomFieldViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\CustomField\EditCustomFieldViewModel.cs" />
     <Compile Include="Models\Extensions\ClientSettingExtensions.cs" />
     <Compile Include="Models\Extensions\MenuIconMapper.cs" />
     <Compile Include="Models\Extensions\MenuItem.cs" />
@@ -2058,8 +2058,8 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\FileManager\Index.cshtml" />
-    <Content Include="Views\CustomFieldSettings\Index.cshtml" />
-    <Content Include="Views\CustomFieldSettings\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\CustomFields\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CustomFields\Add.cshtml" />
     <Content Include="Views\Ticket\_TicketDescription.cshtml" />
     <Content Include="Views\Ticket\_TicketAttachedFiles.cshtml" />
     <Content Include="Views\Ticket\NewFacilityTicket.cshtml" />
@@ -2102,7 +2102,7 @@
     <Content Include="Views\Ticket\NewHardwareTicket.cshtml" />
     <Content Include="src\css\_mixins.scss" />
     <Content Include="src\libs\rippler\css\rippler.css.map" />
-    <Content Include="Views\CustomFieldSettings\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\CustomFields\Edit.cshtml" />
     <Content Include="src\libs\forge\forge.min.js.map" />
     <Content Include="src\libs\forge\prime.worker.min.js.map" />
     <Content Include="Web.local.config">

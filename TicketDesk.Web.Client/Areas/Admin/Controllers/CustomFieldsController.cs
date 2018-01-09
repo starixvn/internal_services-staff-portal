@@ -1,24 +1,22 @@
-﻿namespace TicketDesk.Web.Client.Controllers
+﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
+    using System.Collections.Generic;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+    using System.Web.Mvc;
     using Domain;
     using Domain.Infrastructure;
     using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using Models;
     using Models.CustomField;
-    using System.Collections.Generic;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-    using System.Web.Mvc;
 
-    [RoutePrefix("admin/custom-field-settings")]
-    [Route("{action=index}")]
-    public class CustomFieldSettingsController : Controller
+    [TdAuthorize]
+    public class CustomFieldsController : Controller
     {
         private readonly TdDomainContext _domainContext;
 
-        public CustomFieldSettingsController(TdDomainContext domainContext)
+        public CustomFieldsController(TdDomainContext domainContext)
         {
             _domainContext = domainContext;
         }
@@ -40,7 +38,7 @@
 
             viewModel.CustomFields = _domainContext.CustomFields.Where(x => customFieldIds.Contains(x.Id));
 
-            foreach (CustomField customField in viewModel.CustomFields)
+            foreach (var customField in viewModel.CustomFields)
             {
                 customField.CustomFieldType =
                     _domainContext.CustomFieldTypes.First(x => x.Id == customField.CustomFieldTypeId);
@@ -49,11 +47,10 @@
             return View(viewModel);
         }
 
-        [Route("add")]
         [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Read)]
         public ActionResult Add()
         {
-            AddCustomFieldViewModel viewModel = new AddCustomFieldViewModel
+            var viewModel = new AddCustomFieldViewModel
             {
                 TicketCategories = new List<SelectListItem>(_domainContext.TicketCategories.Select(x =>
                     new SelectListItem
@@ -72,12 +69,11 @@
             return View(viewModel);
         }
 
-        [Route("add")]
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddCustomFieldViewModel viewModel)
         {
-            CustomField customField = new CustomField
+            var customField = new CustomField
             {
                 Name = viewModel.Name,
                 Name_vi = viewModel.Name_vi,
@@ -106,16 +102,15 @@
             return RedirectToAction("Index");
         }
 
-        [Route("edit")]
         [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Read)]
         public ActionResult Edit(int id)
         {
-            CustomField customField = _domainContext.CustomFields.First(x => x.Id == id);
+            var customField = _domainContext.CustomFields.First(x => x.Id == id);
 
             var categoriesHaveCustomField = _domainContext.TicketCategoryCustomField.Where(x => x.CustomFieldId == id)
                 .Select(x => x.CategoryId);
 
-            EditCustomFieldViewModel viewModel = new EditCustomFieldViewModel
+            var viewModel = new EditCustomFieldViewModel
             {
                 Id = id,
                 TicketCategories = new List<SelectListItem>(_domainContext.TicketCategories.Select(x =>
@@ -137,7 +132,6 @@
             return View(viewModel);
         }
 
-        [Route("edit")]
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Host)]
         public ActionResult Edit(EditCustomFieldViewModel viewModel)
@@ -177,11 +171,10 @@
             return RedirectToAction("Index");
         }
 
-        [Route("delete")]
         [NapAuth(FunctionKey = FunctionKeys.CustomFieldSettings, Policy = Constant.Policy.Host)]
         public ActionResult Delete(int id)
         {
-            CustomField customFieldToDelete = new CustomField
+            var customFieldToDelete = new CustomField
             {
                 Id = id
             };

@@ -1,12 +1,11 @@
-﻿namespace TicketDesk.Web.Client.Models.CustomField
+﻿namespace TicketDesk.Web.Client.Areas.Admin.Models.CustomField
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
 
-    public class EditCustomFieldViewModel
+    public class AddCustomFieldViewModel
     {
-        public int Id { get; set; }
         [Display(Name = "Apply to categories")]
         public ICollection<int> TicketCategoryIds { get; set; }
 
