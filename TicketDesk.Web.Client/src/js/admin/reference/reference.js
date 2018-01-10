@@ -1,18 +1,18 @@
-﻿ReInitDateTimePicker();
+﻿InitDateTimePicker();
 
-$("#AddImage").click(function () {
+$("#addReferenceEntry").click(function () {
     $.get('/Admin/References/GetReferenceEntity?referenceType=0', function (html) {
         if (checkLimitedImage(31)) {
             $("#ImageZone").append(html);
             UpdateFormFieldsName();
-            ReInitDateTimePicker();
+            InitDateTimePicker();
         } else {
             alert("Limit of images is 31.");
         }
     });
 });
 
-$("#AddImageNewsLetter").click(function () {
+$("#AddNews").click(function () {
     $.get('/Admin/References/GetReferenceEntity?referenceType=4', function (html) {
         if (checkLimitedImage(50)) {
             $("#ImageZone").append(html);
@@ -26,34 +26,50 @@ $("#AddImageNewsLetter").click(function () {
 $("form").on("click", ".remove-entry", function () {
     $(this).parent().parent().remove();
     UpdateFormFieldsName();
-    ReInitDateTimePicker();
+    InitDateTimePicker();
 });
 
-$("form").on("dp.hide", ".datetimepicker", function (e) {
-    ReInitDateTimePicker();
-})
-
-$("form").on("dp.show", ".datetimepicker", function (e) {
-    ReInitDateTimePicker();
-})
-
-$("form").on("dp.change", ".datetimepicker", function (e) {
-    ReInitDateTimePicker();
-})
-
 function ReInitDateTimePicker() {
-    $(".datetimepicker").each(function () {
-        InitDateTimePicker();
+    var count = 0;
+    var length = $(".datetimepicker").length;
+    $(".datetimepicker").each(function (i, e) {
+        $(e).data("DateTimePicker").destroy();
+        count++;
     });
-}
+    if (count == length) {
+        InitDateTimePicker();
+    }
 
-function InitDateTimePicker() {
+};
+$("form").on("dp.change", ".datetimepicker", function () {
+    console.log("Changed!");
+    var selectedDates = GetSelectedDates();
+    console.log(selectedDates);
     var nowDate = new Date();
+
+   // $(".datetimepicker").data("DateTimePicker").destroy();
+    $(".datetimepicker").each(function (i, e) {
+        $(e).data("DateTimePicker").destroy();
+    });
+
     $(".datetimepicker").datetimepicker({
         format: "MM-DD-YYYY",
         minDate: nowDate.setDate(nowDate.getDate() - 1),
         maxDate: nowDate.setFullYear(nowDate.getFullYear() + 1),
-        disabledDates: GetSelectedDates()
+        disabledDates: selectedDates
+    });
+});
+
+function InitDateTimePicker() {
+    var selectedDates = GetSelectedDates();
+    console.log(selectedDates);
+    var nowDate = new Date();
+
+    $(".datetimepicker").datetimepicker({
+        format: "MM-DD-YYYY",
+        minDate: nowDate.setDate(nowDate.getDate() - 1),
+        maxDate: nowDate.setFullYear(nowDate.getFullYear() + 1),
+        disabledDates: selectedDates
     });
 }
 

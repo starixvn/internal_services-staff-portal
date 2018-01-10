@@ -13,14 +13,14 @@
 
 <h2>TVSchedules</h2>
 
-@using (Html.BeginForm(new { @class = "form" }))
+@using (Html.BeginForm())
 {
     @Html.Partial("_ReferenceCommon", Model);
 }
 
 @section scripts {
     <script src="~/src/libs/datetimepicker/moment.js"></script>
-    <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.js"></script>
     <script src="~/src/js/admin/reference/reference.js"></script>
 
 }

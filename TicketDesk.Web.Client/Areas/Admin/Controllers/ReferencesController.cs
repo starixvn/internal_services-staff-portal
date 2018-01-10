@@ -156,7 +156,7 @@
             {
                 foreach (ReferenceViewModel reference in references)
                 {
-                    SaveEachReference(reference, referenceType);
+                    SaveReference(reference, referenceType);
                 }
             }
 
@@ -168,7 +168,7 @@
             var references = Context.References.Where(x => x.ReferenceType == referenceType).ToList();
             if (referenceType != ReferenceType.NewsLetter)
             {
-                references = references.Where(r => DateTime.Compare(r.DateAppear.Date, DateTime.Now.Date) >= 0).ToList();
+                references = references.Where(r => DateTime.Compare(r.DateAppear.Date, DateTime.Now.Date) > 0).ToList();
             }
 
             var listViewModel = new List<ReferenceViewModel>();
@@ -187,7 +187,7 @@
             return new ListReferencesViewModel { References = listViewModel };
         }
 
-        private void SaveEachReference(ReferenceViewModel reference, ReferenceType referenceType)
+        private void SaveReference(ReferenceViewModel reference, ReferenceType referenceType)
         {
             var data = new Reference
             {
