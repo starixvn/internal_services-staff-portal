@@ -26,6 +26,7 @@
             { "/Admin", "icon-admin" },
             { "/Admin/Announcements", "icon-admin" },
             { "/Admin/References", "icon-admin" },
+            { "/Admin/References/TVSchedules", "icon-admin" },
             { "/admin/application-settings", "icon-admin-appsettings" },
             { "/admin/projects", "icon-admin-shop" },
             { "/admin/push-notification-settings", "icon-admin-notificationsettings" },
