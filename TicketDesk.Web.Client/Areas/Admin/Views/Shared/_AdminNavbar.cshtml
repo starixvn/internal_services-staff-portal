@@ -38,13 +38,18 @@
 
             var menuClass = Html.IsActiveRoute(menuLink);
 
-            <li class="@menuClass"><a href="@menuLink" class="menu-item"><i class="@menu.IconClass"></i><span class="text">@menu.Name</span></a></li>
+            <li class="@menuClass">
+                <a href="@menuLink" class="menu-item"><i class="@menu.IconClass"></i><span class="text">@menu.Name</span></a>
+                @if (menu.Children != null && menu.Children.Any())
+                {
+                    <ul>
+                        @foreach (var childMenu in menu.Children)
+                        {
+                            <a href="@childMenu.Url" class="menu-item"><i class="@childMenu.IconClass"></i><span class="text">@childMenu.Name</span></a>
+                        }
+                    </ul>
+                }
+            </li>
         }
-        @*<li>
-            <a href="@Url.Action("Index", "Announcements")">Announcement</a>
-        </li>
-        <li>
-            <a href="@Url.Action("Index", "References")">References</a>
-        </li>*@
     </ul>
 </nav>

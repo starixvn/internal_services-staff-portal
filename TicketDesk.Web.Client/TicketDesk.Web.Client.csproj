@@ -456,7 +456,7 @@
     <Compile Include="Areas\Admin\Models\CustomField\EditCustomFieldViewModel.cs" />
     <Compile Include="Models\Extensions\ClientSettingExtensions.cs" />
     <Compile Include="Models\Extensions\MenuIconMapper.cs" />
-    <Compile Include="Models\Extensions\MenuItem.cs" />
+    <Compile Include="Models\Extensions\SspMenuItem.cs" />
     <Compile Include="Models\Extensions\ProjectExtensions.cs" />
     <Compile Include="Models\Extensions\SelectListExtensions.cs" />
     <Compile Include="Models\Extensions\ApplicationSettingExtensions.cs" />

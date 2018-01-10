@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using Client.Controllers;
     using Client.Models;
+    using Client.Models.Extensions;
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Model;
@@ -31,9 +32,9 @@
             return View();
         }
 
-        private static List<Client.Models.Extensions.MenuItem> PopulateMenus(IEnumerable<MenuItem> menus)
+        private static List<SspMenuItem> PopulateMenus(IEnumerable<MenuItem> menus)
         {
-            var result = new List<Client.Models.Extensions.MenuItem>();
+            var result = new List<SspMenuItem>();
 
             if (menus == null)
             {
@@ -41,10 +42,33 @@
             }
 
             // Filter Administration menus only
-            return menus.Where(x => x.Parent != null && x.Function.Name == FunctionKeys.Administration)
-                .Select(x => (Client.Models.Extensions.MenuItem)x)
-                .OrderBy(x => x.DisplayOrder)
-                .ToList();
+            var test = menus
+                .Where(x => x.Function.Name == FunctionKeys.Administration)
+                .Select(x => (SspMenuItem)x);
+
+            // Add Admin menu
+            var adminMenu = test.First(x => x.Parent == null);
+
+            foreach (var menu in test)
+            {
+                if (menu.Parent?.Id == adminMenu.Id)
+                {
+                    menu.Children = PopulateChildList(menu, test);
+                    result.Add(menu);
+                }
+            }
+
+            return result;
+
+            ////return menus.Where(x => x.Parent != null && x.Function.Name == FunctionKeys.Administration)
+            ////    .Select(x => (SspMenuItem)x)
+            ////    .OrderBy(x => x.DisplayOrder)
+            ////    .ToList();
+        }
+
+        private static List<SspMenuItem> PopulateChildList(SspMenuItem sspMenuItem, IEnumerable<SspMenuItem> menus)
+        {
+            return menus.Where(x => x.Parent != null && x.Parent.Id == sspMenuItem.Id).ToList();
         }
     }
 }

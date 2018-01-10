@@ -166,9 +166,9 @@
             return PartialView("~/Views/Shared/_Navbar.cshtml", model);
         }
 
-        private static List<Models.Extensions.MenuItem> PopulateMenus(IEnumerable<MenuItem> menus)
+        private static List<Models.Extensions.SspMenuItem> PopulateMenus(IEnumerable<MenuItem> menus)
         {
-            var result = new List<Models.Extensions.MenuItem>();
+            var result = new List<Models.Extensions.SspMenuItem>();
 
             if (menus == null)
             {
@@ -189,8 +189,8 @@
             {
                 menuItem.Children = menus
                     .Where(x => x.Parent != null && x.Parent.Id == menuItem.Id)
-                    .Select(x => (Models.Extensions.MenuItem)x)
-                    .OrderBy(x => x.DisplayOrder);
+                    .Select(x => (Models.Extensions.SspMenuItem)x)
+                    .OrderBy(x => x.DisplayOrder).ToList();
             }
 
             return result.OrderBy(x => x.DisplayOrder).ToList();

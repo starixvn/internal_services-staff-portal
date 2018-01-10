@@ -1,10 +1,11 @@
 ﻿namespace TicketDesk.Web.Client.Models
 {
     using System.Collections.Generic;
+    using Extensions;
 
     public class NavbarViewModel
     {
-        public IList<Extensions.MenuItem> MenuItems { get; set; }
+        public IList<SspMenuItem> MenuItems { get; set; }
 
         public bool IsAuthenticated { get; set; }
 

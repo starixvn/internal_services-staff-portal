@@ -12,7 +12,7 @@
 
     <ul class="main-menu">
 
-        @foreach (MenuItem menu in Model.MenuItems)
+        @foreach (var menu in Model.MenuItems)
         {
             var menuLink = "#";
             if (!string.IsNullOrEmpty(menu.Url))
@@ -31,7 +31,7 @@
 </div>
 
 <div class="submenu-section">
-    @foreach (MenuItem menu in Model.MenuItems)
+    @foreach (SspMenuItem menu in Model.MenuItems)
     {
         var menuLink = "#";
         if (!string.IsNullOrEmpty(menu.Url))

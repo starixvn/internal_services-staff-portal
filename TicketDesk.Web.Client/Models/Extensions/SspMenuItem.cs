@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Fanex.NAP.Core.Domain;
 
-    public class MenuItem : IMenuItem
+    public class SspMenuItem : IMenuItem
     {
         public int Id { get; set; }
 
@@ -36,13 +36,16 @@
 
         public int Policy { get; set; }
 
-        public IEnumerable<MenuItem> Children { get; set; }
+        public IList<SspMenuItem> Children { get; set; }
 
         public string IconClass { get; set; }
 
-        public static implicit operator MenuItem(Fanex.NAP.Core.Model.MenuItem napMenuItem)
+        public static implicit operator SspMenuItem(Fanex.NAP.Core.Model.MenuItem napMenuItem)
         {
-            MenuItem newMenuItem = new MenuItem
+            string icon;
+            MenuIconMapper.MenuIconDictionary.TryGetValue(napMenuItem.Url, out icon);
+
+            var newMenuItem = new SspMenuItem
             {
                 Name = napMenuItem.Name,
                 CreatedDate = napMenuItem.CreatedDate,
@@ -59,7 +62,7 @@
                 Modifier = napMenuItem.Modifier,
                 Policy = napMenuItem.Policy,
                 Site = napMenuItem.Site,
-                IconClass = MenuIconMapper.MenuIconDictionary[napMenuItem.Url]
+                IconClass = icon
             };
 
 

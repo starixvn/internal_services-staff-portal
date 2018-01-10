@@ -39,18 +39,18 @@
 
         protected IUserService UserService => NapContextHelper.UserService;
 
-        protected List<MenuItem> GetIndexSubMenuItems()
+        protected List<SspMenuItem> GetIndexSubMenuItems()
         {
             string routeValue = RouteData.Values["controller"].ToString().ToLower(CultureInfo.InvariantCulture);
 
             // Get the correct parent menu id
-            MenuItem parentMenu = CurrentSession.MenuItemList.First(x =>
+            SspMenuItem parentSspMenu = CurrentSession.MenuItemList.First(x =>
                 x.Parent == null && x.Url.Contains(routeValue, StringComparison.OrdinalIgnoreCase));
 
-            var subMenuItems = CurrentSession.MenuItemList.Where(x => x.Parent != null && x.Parent.Id == parentMenu.Id)
+            var subMenuItems = CurrentSession.MenuItemList.Where(x => x.Parent != null && x.Parent.Id == parentSspMenu.Id)
                 .ToList();
 
-            return subMenuItems.Select(menuItem => (MenuItem)menuItem).OrderBy(x => x.DisplayOrder).ToList();
+            return subMenuItems.Select(menuItem => (SspMenuItem)menuItem).OrderBy(x => x.DisplayOrder).ToList();
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
