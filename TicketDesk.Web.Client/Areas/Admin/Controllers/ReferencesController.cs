@@ -270,7 +270,7 @@
         {
             var keyQuery = Request.QueryString.GetKey(0);
             var value = Request.QueryString[keyQuery];
-            bool validUrl = false;
+            bool validUrl = true;
             try
             {
                 var imageLink = new Uri(value);
