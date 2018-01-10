@@ -2,11 +2,14 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Web;
     using System.Web.Mvc;
     using TicketDesk.Core.Enumerations;
 
     public class ReferenceViewModel
     {
+        public int Id { get; set; }
+
         [Required]
         [Display(Name = "Date Appear")]
         [DataType(DataType.DateTime)]
@@ -21,5 +24,7 @@
 
         [Required]
         public ReferenceType ReferenceType { get; set; }
+
+        public HttpPostedFileBase ImageFile { get; set; }
     }
 }

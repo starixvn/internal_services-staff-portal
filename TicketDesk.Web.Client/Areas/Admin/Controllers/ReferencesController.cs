@@ -151,12 +151,18 @@
         private void InsertListReference(ReferenceType referenceType, ListReferencesViewModel listReferences)
         {
             var references = listReferences.References;
-            RemoveOldReference(referenceType);
             if (references.Count > 0)
             {
                 foreach (ReferenceViewModel reference in references)
                 {
-                    SaveEachReference(reference, referenceType);
+                    if (reference.Id > 0)
+                    {
+                        UpdateReference(referenceType, reference);
+                    }
+                    else
+                    {
+                        SaveEachReference(reference, referenceType);
+                    }
                 }
             }
 
@@ -177,6 +183,7 @@
             {
                 var referenceViewModel = new ReferenceViewModel
                 {
+                    Id = reference.Id,
                     DateAppear = reference.DateAppear,
                     ImageLink = reference.ImageLink,
                     ReferenceType = reference.ReferenceType
@@ -201,18 +208,19 @@
             Context.References.Add(data);
         }
 
-        private void RemoveOldReference(ReferenceType referenceType)
+        private void UpdateReference(ReferenceType referenceType, ReferenceViewModel reference)
         {
-            IList<Reference> oldReferences = Context.References.Where(x => x.ReferenceType == referenceType).ToList();
-
-            if (oldReferences != null)
+            var data = new Reference
             {
-                foreach (var reference in oldReferences)
-                {
-                    Context.References.Remove(reference);
-                }
-                Context.SaveChanges();
-            }
+                Id = reference.Id,
+                DateAppear = referenceType != ReferenceType.NewsLetter ? reference.DateAppear : DateTime.Now,
+                ImageLink = reference.ImageLink,
+                ReferenceType = referenceType,
+                LastUpdateBy = CurrentSession.Username,
+                LastUpdateDate = DateTime.Now
+            };
+
+            Context.Entry(data).State = System.Data.Entity.EntityState.Modified;
         }
 
         [HttpPost]
