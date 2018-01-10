@@ -296,23 +296,6 @@
             return ext == ".jpg" || ext == ".png" || ext == ".jpeg";
         }
 
-        private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
-        {
-            var validPath = path.Replace("\\", "/");
-
-            if (addSeperatorToBegin)
-            {
-                validPath = "/" + validPath;
-            }
-
-            if (addSeperatorToLast)
-            {
-                validPath = validPath + "/";
-            }
-
-            return validPath;
-        }
-
         private static bool CheckIfDateDuplicate(IList<ReferenceViewModel> references)
         {
             var duplicates = references.GroupBy(r => r.DateAppear.Date)
