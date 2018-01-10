@@ -21,13 +21,13 @@
     public class ReferencesController : BaseController
     {
         private readonly string webRootPath;
+        private readonly string webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
         private readonly int imageSizeLimit = 2 * 1024 * 1024; // 2MB
 
         private TdDomainContext Context { get; }
 
         public ReferencesController(TdDomainContext context)
         {
-            string webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
             webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, webPath);
             Context = context;
 
@@ -228,10 +228,10 @@
 
             if (file.ContentLength > 0)
             {
-                //var domain = Request.Url.GetLeftPart(UriPartial.Authority);
+                var domain = Request.Url.GetLeftPart(UriPartial.Authority);
                 var today = DateTime.Now.Date;
                 var directory = string.Format("{0}/{1}/{2}/{3}", webRootPath, today.Year, today.Month, today.Day);
-                //var imageLink = string.Format("{0}/{1}/{2}/{3}", domain, today.Year, today.Month, today.Day);
+                var imageLink = string.Format("{0}/{1}/{2}/{3}/{4}", domain, webPath, today.Year, today.Month, today.Day);
                 string fileName = Path.GetFileName(file.FileName);
                 int fileSize = file.ContentLength;
 
@@ -258,8 +258,9 @@
                     file.SaveAs(filePath);
                 }
 
-                //imageLink = string.Format("{0}/{1}", imageLink, fileName);
-                return Json(new { isSuccessful = true, filePath });
+                imageLink = string.Format("{0}/{1}", imageLink, fileName);
+
+                return Json(new { isSuccessful = true, imageLink });
             }
 
             return Json(new { isSuccessful, message = "Upload fail" });
