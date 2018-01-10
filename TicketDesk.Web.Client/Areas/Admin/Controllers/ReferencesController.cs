@@ -151,18 +151,12 @@
         private void InsertListReference(ReferenceType referenceType, ListReferencesViewModel listReferences)
         {
             var references = listReferences.References;
+            RemoveOldReference(referenceType);
             if (references.Count > 0)
             {
                 foreach (ReferenceViewModel reference in references)
                 {
-                    if (reference.Id > 0)
-                    {
-                        UpdateReference(referenceType, reference);
-                    }
-                    else
-                    {
-                        SaveEachReference(reference, referenceType);
-                    }
+                    SaveEachReference(reference, referenceType);
                 }
             }
 
@@ -183,7 +177,6 @@
             {
                 var referenceViewModel = new ReferenceViewModel
                 {
-                    Id = reference.Id,
                     DateAppear = reference.DateAppear,
                     ImageLink = reference.ImageLink,
                     ReferenceType = reference.ReferenceType
@@ -208,19 +201,22 @@
             Context.References.Add(data);
         }
 
-        private void UpdateReference(ReferenceType referenceType, ReferenceViewModel reference)
+        private void RemoveOldReference(ReferenceType referenceType)
         {
-            var data = new Reference
+            IList<Reference> oldReferences = Context.References.Where(x => x.ReferenceType == referenceType).ToList();
+            if (referenceType != ReferenceType.NewsLetter)
             {
-                Id = reference.Id,
-                DateAppear = referenceType != ReferenceType.NewsLetter ? reference.DateAppear : DateTime.Now,
-                ImageLink = reference.ImageLink,
-                ReferenceType = referenceType,
-                LastUpdateBy = CurrentSession.Username,
-                LastUpdateDate = DateTime.Now
-            };
+                oldReferences = oldReferences.Where(r => DateTime.Compare(r.DateAppear.Date, DateTime.Now.Date) >= 0).ToList();
+            }
 
-            Context.Entry(data).State = System.Data.Entity.EntityState.Modified;
+            if (oldReferences != null)
+            {
+                foreach (var reference in oldReferences)
+                {
+                    Context.References.Remove(reference);
+                }
+                Context.SaveChanges();
+            }
         }
 
         [HttpPost]
