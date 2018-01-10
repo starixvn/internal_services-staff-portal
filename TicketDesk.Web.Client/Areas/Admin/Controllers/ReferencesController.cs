@@ -228,8 +228,10 @@
 
             if (file.ContentLength > 0)
             {
+                var domain = Request.Url.GetLeftPart(UriPartial.Authority);
                 var today = DateTime.Now.Date;
                 var directory = string.Format("{0}/{1}/{2}/{3}", webRootPath, today.Year, today.Month, today.Day);
+                var imageLink = string.Format("{0}/{1}/{2}/{3}", domain, today.Year, today.Month, today.Day);
                 string fileName = Path.GetFileName(file.FileName);
                 int fileSize = file.ContentLength;
 
@@ -245,22 +247,18 @@
 
                 var fileExist = System.IO.File.Exists(Path.Combine(directory, file.FileName));
 
-                if (fileExist)
-                {
-                    filePath = MakeWebPath(Path.Combine(directory, file.FileName));
-                }
-                else
+                if (!fileExist)
                 {
                     if (!Directory.Exists(directory))
                     {
                         Directory.CreateDirectory(directory);
                     }
 
-                    filePath = MakeWebPath(Path.Combine(directory, file.FileName));
                     file.SaveAs(filePath);
                 }
 
-                return Json(new { isSuccessful = true, filePath });
+                imageLink = string.Format("{0}/{1}", imageLink, fileName);
+                return Json(new { isSuccessful = true, imageLink });
             }
 
             return Json(new { isSuccessful, message = "Upload fail" });
