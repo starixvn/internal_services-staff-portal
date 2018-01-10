@@ -178,7 +178,7 @@
             // Get parent menu item
             foreach (var rawItem in menus)
             {
-                if (rawItem.Parent == null)
+                if (rawItem.Parent == null && rawItem.Function.Name != FunctionKeys.Administration)
                 {
                     result.Add(rawItem);
                 }

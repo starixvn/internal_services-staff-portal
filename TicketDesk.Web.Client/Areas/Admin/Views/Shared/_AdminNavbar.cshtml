@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Core.Resources
+@using TicketDesk.Web.Client.Infrastructure.Extensions
 @model TicketDesk.Web.Client.Models.NavbarViewModel
 
 <!-- Modal confirm logout -->
@@ -27,11 +28,23 @@
 
 <nav>
     <ul>
-        <li>
+        @foreach (var menu in Model.MenuItems)
+        {
+            var menuLink = "#";
+            if (!string.IsNullOrEmpty(menu.Url))
+            {
+                menuLink = menu.Url;
+            }
+
+            var menuClass = Html.IsActiveRoute(menuLink);
+
+            <li class="@menuClass"><a href="@menuLink" class="menu-item"><i class="@menu.IconClass"></i><span class="text">@menu.Name</span></a></li>
+        }
+        @*<li>
             <a href="@Url.Action("Index", "Announcements")">Announcement</a>
         </li>
         <li>
             <a href="@Url.Action("Index", "References")">References</a>
-        </li>
+        </li>*@
     </ul>
 </nav>
