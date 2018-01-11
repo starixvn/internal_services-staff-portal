@@ -1,108 +1,93 @@
-﻿InitDateTimePicker();
+﻿var reference = {
+
+    InitDateTimePicker: function () {
+        var nowDate = new Date();
+        $(".datetimepicker").datetimepicker({
+            format: "MM-DD-YYYY",
+            minDate: new Date(),
+            maxDate: nowDate.setFullYear(nowDate.getFullYear() + 1),
+            disabledDates: reference.GetSelectedDates()
+        });
+    },
+
+    GetSelectedDates: function () {
+        var choosenDates = [];
+        $(".datetimepicker").each(function (i, e) {
+            var choosenDate = $(this).val();
+            choosenDates.push(choosenDate);
+        });
+        return choosenDates;
+    },
+
+    UpdateDisabledDates: function () {
+        $(".datetimepicker").each(function (i, e) {
+            $(this).data("DateTimePicker").disabledDates(reference.GetSelectedDates());
+            console.log($(e).data("DateTimePicker").disabledDates());
+        });
+        
+    },
+
+    ConvertDate: function(oldDate) {
+       var newDate = oldDate.split("-").reverse().join("-");
+       return newDate;
+    },
+
+    UpdateReferenceIndex: function(index, element) {
+        $(element).find(".datetimepicker").attr("name", "References[" + index + "].DateAppear");
+        $(element).find(".image-url").attr("name", "References[" + index + "].ImageLink");
+    },
+
+    UpdateFormFieldsName: function () {
+        reference.InitDateTimePicker();
+        $(".reference-entry").each(function (i, e) {
+            reference.UpdateReferenceIndex(i, e);
+        });
+    },
+
+    CheckLimitedEntry: function(limitEntry) {
+        var totalEntries = $(".reference-entry").length;
+        if (totalEntries >= limitEntry) return false;
+        return true;
+    },
+
+    AddReferenceEntry: function (referenceType, limitEntry) {
+        var url = "/Admin/References/GetReferenceEntity?referenceType=" + referenceType
+        $.get(url, function (html) {
+            if (reference.CheckLimitedEntry(limitEntry)) {
+                $("#ReferencesZone").append(html);
+                reference.UpdateFormFieldsName();
+                reference.UpdateDisabledDates();
+            } else {
+                alert("Limit of images is 31.");
+            }
+        });
+    },
+
+    RemoveEntry: function (element) {
+        $(element).parent().parent().remove();
+        reference.UpdateFormFieldsName();
+        reference.UpdateDisabledDates();
+    }
+};
+
+$(document).ready(reference.InitDateTimePicker());
 
 $("#addReferenceEntry").click(function () {
-    $.get('/Admin/References/GetReferenceEntity?referenceType=0', function (html) {
-        if (checkLimitedImage(31)) {
-            $("#ImageZone").append(html);
-            UpdateFormFieldsName();
-            InitDateTimePicker();
-        } else {
-            alert("Limit of images is 31.");
-        }
-    });
+    reference.AddReferenceEntry(1, 31);
 });
 
-$("#AddNews").click(function () {
-    $.get('/Admin/References/GetReferenceEntity?referenceType=4', function (html) {
-        if (checkLimitedImage(50)) {
-            $("#ImageZone").append(html);
-            UpdateFormFieldsName();
-        } else {
-            alert("Limit of images is 50.");
-        }
-    });
+$("#addNewsLetterReferenceEntry").click(function () {
+    reference.AddReferenceEntry(0, 51);
 });
 
 $("form").on("click", ".remove-entry", function () {
-    $(this).parent().parent().remove();
-    UpdateFormFieldsName();
-    InitDateTimePicker();
+    reference.RemoveEntry($(this));
 });
 
-function ReInitDateTimePicker() {
-    var count = 0;
-    var length = $(".datetimepicker").length;
-    $(".datetimepicker").each(function (i, e) {
-        $(e).data("DateTimePicker").destroy();
-        count++;
-    });
-    if (count == length) {
-        InitDateTimePicker();
-    }
-
-};
-$("form").on("dp.change", ".datetimepicker", function () {
+$(document).on("dp.change", ".datetimepicker",function () {
     console.log("Changed!");
-    var selectedDates = GetSelectedDates();
-    console.log(selectedDates);
-    var nowDate = new Date();
-
-   // $(".datetimepicker").data("DateTimePicker").destroy();
-    $(".datetimepicker").each(function (i, e) {
-        $(e).data("DateTimePicker").destroy();
-    });
-
-    $(".datetimepicker").datetimepicker({
-        format: "MM-DD-YYYY",
-        minDate: nowDate.setDate(nowDate.getDate() - 1),
-        maxDate: nowDate.setFullYear(nowDate.getFullYear() + 1),
-        disabledDates: selectedDates
-    });
+    reference.UpdateDisabledDates();
 });
-
-function InitDateTimePicker() {
-    var selectedDates = GetSelectedDates();
-    console.log(selectedDates);
-    var nowDate = new Date();
-
-    $(".datetimepicker").datetimepicker({
-        format: "MM-DD-YYYY",
-        minDate: nowDate.setDate(nowDate.getDate() - 1),
-        maxDate: nowDate.setFullYear(nowDate.getFullYear() + 1),
-        disabledDates: selectedDates
-    });
-}
-
-function GetSelectedDates() {
-    var selectedDates = [];
-    $(".datetimepicker").each(function (i, e) {
-        var selectedDate = $(this).val();
-        selectedDates.push(ConvertDate(selectedDate));
-    });
-    return selectedDates;
-}
-
-function checkLimitedImage(limit) {
-    var totalEntries = $(".reference-entry").length;
-    if (totalEntries >= limit) return false;
-    return true;
-}
-
-function UpdateFormFieldsName() {
-    $(".reference-entry").each(function (i, e) {
-        UpdateReferencesIndex(i, e);
-    });
-}
-
-function UpdateReferencesIndex(index, element) {
-    $(element).find(".datetimepicker").attr("name", "References[" + index + "].DateAppear");
-    $(element).find(".image-url").attr("name", "References[" + index + "].ImageLink");
-}
-
-function ConvertDate(date) {
-    var newdate = date.split("-").reverse().join("-");
-    return newdate;
-}
 
 $("#ImageZone").on("change", ".upload-image", function (e) {
     var uploadEntry = $(this).parent().parent();

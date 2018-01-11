@@ -152,7 +152,7 @@
         {
             var references = listReferences.References;
             RemoveOldReference(referenceType);
-            if (references.Count > 0)
+            if (references != null && references.Count > 0)
             {
                 foreach (ReferenceViewModel reference in references)
                 {
@@ -317,10 +317,14 @@
 
         private static bool CheckIfDateDuplicate(IList<ReferenceViewModel> references)
         {
-            var duplicates = references.GroupBy(r => r.DateAppear.Date)
+            if (references != null)
+            {
+                var duplicates = references.GroupBy(r => r.DateAppear.Date)
                                        .Where(g => g.Count() > 1)
                                        .Select(g => g.Key);
-            return duplicates.Any();
+                return duplicates.Any();
+            }
+            return false;
         }
     }
 }
