@@ -57,6 +57,7 @@
                 else
                 {
                     InsertListReference(ReferenceType.TvSchedule, viewModel);
+                    TempData["Success"] = "Update Successfully!";
                 }
             }
 
@@ -96,6 +97,7 @@
             if (ModelState.IsValid)
             {
                 InsertListReference(ReferenceType.BestOfTheDay, viewModel);
+                TempData["Success"] = "Update Successfully!";
             }
 
             return View(viewModel);
@@ -115,6 +117,7 @@
             if (ModelState.IsValid)
             {
                 InsertListReference(ReferenceType.TradingLimits, viewModel);
+                TempData["Success"] = "Update Successfully!";
             }
 
             return View(viewModel);
@@ -134,6 +137,7 @@
             if (ModelState.IsValid)
             {
                 InsertListReference(ReferenceType.NewsLetter, viewModel);
+                TempData["Success"] = "Update Successfully!";
             }
 
             return View(viewModel);

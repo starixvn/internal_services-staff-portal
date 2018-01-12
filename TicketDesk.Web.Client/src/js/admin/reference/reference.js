@@ -22,7 +22,6 @@
     UpdateDisabledDates: function () {
         $(".datetimepicker").each(function (i, e) {
             $(this).data("DateTimePicker").disabledDates(reference.GetSelectedDates());
-            console.log($(e).data("DateTimePicker").disabledDates());
         });
         
     },
@@ -85,7 +84,6 @@ $("form").on("click", ".remove-entry", function () {
 });
 
 $(document).on("dp.change", ".datetimepicker",function () {
-    console.log("Changed!");
     reference.UpdateDisabledDates();
 });
 
