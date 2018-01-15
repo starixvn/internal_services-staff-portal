@@ -2111,6 +2111,7 @@
     <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Home\MoreAnnouncement.cshtml" />
     <Content Include="Views\Ticket\NewSoftwareTicket.cshtml" />
+    <Content Include="src\css\admin\abstracts\_variables.scss" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -2118,6 +2119,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\ticketdesk\User\" />
+    <Folder Include="src\css\admin\base\" />
+    <Folder Include="src\css\admin\layout\" />
+    <Folder Include="src\css\admin\pages\" />
     <Folder Include="src\libs\dropzone\debug\" />
   </ItemGroup>
   <ItemGroup>
