@@ -512,6 +512,8 @@
     <Content Include="Scripts\globalize\relative-time.js" />
     <Content Include="Scripts\jquery.validate.globalize.js" />
     <Content Include="Scripts\jquery.validate.globalize.min.js" />
+    <Content Include="src\contents\images\logo-admin.svg" />
+    <Content Include="src\contents\images\logo-text.svg" />
     <Content Include="src\css\admin\admin-site.css">
       <DependentUpon>admin-site.scss</DependentUpon>
     </Content>
@@ -2118,34 +2120,11 @@
     <Content Include="Views\Home\MoreAnnouncement.cshtml" />
     <Content Include="Views\Ticket\NewSoftwareTicket.cshtml" />
     <Content Include="src\css\admin\abstracts\_variables.scss" />
-    <Content Include="src\css\admin\layout\_navbar.scss" />
     <Content Include="src\css\admin\abstracts\_mixins.scss" />
     <Content Include="src\css\admin\admin-site.scss" />
-    <Content Include="src\css\admin\components\_alerts.scss" />
-    <Content Include="src\css\admin\components\_animation.scss" />
-    <Content Include="src\css\admin\components\_avatar-status.scss" />
-    <Content Include="src\css\admin\components\_blocks.scss" />
-    <Content Include="src\css\admin\components\_button.scss" />
-    <Content Include="src\css\admin\components\_color.scss" />
-    <Content Include="src\css\admin\components\_comment-chat.scss" />
-    <Content Include="src\css\admin\components\_cover-overlay.scss" />
-    <Content Include="src\css\admin\components\_dropdown.scss" />
-    <Content Include="src\css\admin\components\_forms.scss" />
-    <Content Include="src\css\admin\components\_icons.scss" />
-    <Content Include="src\css\admin\components\_labels-badges.scss" />
-    <Content Include="src\css\admin\components\_pagination.scss" />
-    <Content Include="src\css\admin\components\_panel.scss" />
-    <Content Include="src\css\admin\components\_pearl.scss" />
-    <Content Include="src\css\admin\components\_pricing.scss" />
-    <Content Include="src\css\admin\components\_rating-dotnav.scss" />
-    <Content Include="src\css\admin\components\_ribbon.scss" />
-    <Content Include="src\css\admin\components\_sizing.scss" />
-    <Content Include="src\css\admin\components\_spacing.scss" />
-    <Content Include="src\css\admin\components\_step.scss" />
-    <Content Include="src\css\admin\components\_testimonial.scss" />
-    <Content Include="src\css\admin\components\_timeline.scss" />
-    <Content Include="src\css\admin\components\_widget.scss" />
     <Content Include="src\css\admin\base\_common.scss" />
+    <Content Include="src\css\admin\layout\_sidebar.scss" />
+    <Content Include="src\css\admin\layout\_header.scss" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -2153,6 +2132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\ticketdesk\User\" />
+    <Folder Include="src\css\admin\components\" />
     <Folder Include="src\css\admin\pages\" />
     <Folder Include="src\libs\dropzone\debug\" />
   </ItemGroup>

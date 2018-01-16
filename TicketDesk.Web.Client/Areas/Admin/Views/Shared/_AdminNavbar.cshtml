@@ -23,20 +23,52 @@
 
 <nav class="header fixed-top">
     <div class="navbar-brand-wrapper">
-        <a href="#"><img src="~/src/contents/images/logo.svg" class="img-logo"/></a>
+        <a id="logo-container" href="/" class="brand-logo">
+            <span class="logo-img"><img src="/Content/Themes/images/logo_none.svg"> </span>
+            <span class="logo-text"><img src="/Content/Themes/images/logo_text.svg"></span>
+        </a>
     </div>
     <div class="navbar-menu-wrapper">
-        <span class="icon-menu"></span>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="user-info"></li>
-        </ul>
+        <a href="#" class="toggle-sidebar">
+            <span class="lines"></span>
+        </a>
+        <div class="nav navbar-nav navbar-right">
+            @*<div class="user-info">
+                    <div class="dropdown-button" href="#!" data-activates="profile">
+                        <span class="user-name">starix2</span>
+                        <i class="icon mdi mdi-account avatar" aria-hidden="true"></i>
+                    </div>
+                </div>*@
+            <div class="dropdown user-info">
+                <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="icon-account avatar" aria-hidden="true"></i>
+                    <span class="user-name">Alexander Pierce</span>
+                    <i class="icon-arrow-down" aria-hidden="true"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li class="account">
+                        <div class="profile">
+                            <!-- User avatar images
+                            <img class="user-avatar" src="~/Content/Images/TicketDesk-2.5.png" alt="">-->
+                            <!-- Default avatar -->
+                            <span class="avatar-default icon-account"></span>
+                        </div>
+                        <div class="details">
+                            <p class="user-name">Alexander Pierce</p>
+                            <p class="designation">stage-admin</p>
+                        </div>
+                    </li>
+                    <li class="logout"><a href="#"><span class="icon-logout"></span>Logout</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </nav>
 
-<section class="body-content">
-    <nav class="sidebar">
-        <ul>
-            @foreach (var menu in Model.MenuItems)
+
+<nav class="sidebar">
+    <ul>
+        @foreach (var menu in Model.MenuItems)
             {
                 var menuLink = "#";
                 if (!string.IsNullOrEmpty(menu.Url))
@@ -46,20 +78,21 @@
 
                 var menuClass = Html.IsActiveRoute(menuLink);
 
-                <li class="@menuClass">
-                    <a href="@menuLink" class="menu-item"><i class="@menu.IconClass"></i><span class="text">@menu.Name</span></a>
-                    @if (menu.Children != null && menu.Children.Any())
+            <li class="@menuClass">
+                <a href="@menuLink" class="menu-item"><i class="@menu.IconClass"></i><span class="text">@menu.Name</span></a>
+                @if (menu.Children != null && menu.Children.Any())
                 {
-                        <ul>
-                            @foreach (var childMenu in menu.Children)
-                            {
+                    <ul>
+                        @foreach (var childMenu in menu.Children)
+                        {
+                            <li class="sub-menu">
                                 <a href="@childMenu.Url" class="menu-item"><i class="@childMenu.IconClass"></i><span class="text">@childMenu.Name</span></a>
-                            }
-                        </ul>
-                    }
-                </li>
-            }
-        </ul>
-    </nav>
-</section>
+                            </li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+    </ul>
+</nav>
 

@@ -1,7 +1,13 @@
 ﻿@import 'abstracts/variables';
 
+@import 'base/common';
 
+@import 'layout/sidebar';
 @import 'layout/header';
 
-
-
+.page-title {
+    margin: 0;
+    font-size: 16px;
+    line-height: 36px;
+    color: $secondary-color;    
+}
