@@ -21,35 +21,45 @@
     </div>
 </div>
 
-<header class="bg-primary">
-    <div>SSP Portal</div>
-    <div>Howdy, @Model.Username</div>
-</header>
-
-<nav>
-    <ul>
-        @foreach (var menu in Model.MenuItems)
-        {
-            var menuLink = "#";
-            if (!string.IsNullOrEmpty(menu.Url))
-            {
-                menuLink = menu.Url;
-            }
-
-            var menuClass = Html.IsActiveRoute(menuLink);
-
-            <li class="@menuClass">
-                <a href="@menuLink" class="menu-item"><i class="@menu.IconClass"></i><span class="text">@menu.Name</span></a>
-                @if (menu.Children != null && menu.Children.Any())
-                {
-                    <ul>
-                        @foreach (var childMenu in menu.Children)
-                        {
-                            <a href="@childMenu.Url" class="menu-item"><i class="@childMenu.IconClass"></i><span class="text">@childMenu.Name</span></a>
-                        }
-                    </ul>
-                }
-            </li>
-        }
-    </ul>
+<nav class="header fixed-top">
+    <div class="navbar-brand-wrapper">
+        <a href="#"><img src="~/src/contents/images/logo.svg" class="img-logo"/></a>
+    </div>
+    <div class="navbar-menu-wrapper">
+        <span class="icon-menu"></span>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="user-info"></li>
+        </ul>
+    </div>
 </nav>
+
+<section class="body-content">
+    <nav class="sidebar">
+        <ul>
+            @foreach (var menu in Model.MenuItems)
+            {
+                var menuLink = "#";
+                if (!string.IsNullOrEmpty(menu.Url))
+                {
+                    menuLink = menu.Url;
+                }
+
+                var menuClass = Html.IsActiveRoute(menuLink);
+
+                <li class="@menuClass">
+                    <a href="@menuLink" class="menu-item"><i class="@menu.IconClass"></i><span class="text">@menu.Name</span></a>
+                    @if (menu.Children != null && menu.Children.Any())
+                {
+                        <ul>
+                            @foreach (var childMenu in menu.Children)
+                            {
+                                <a href="@childMenu.Url" class="menu-item"><i class="@childMenu.IconClass"></i><span class="text">@childMenu.Name</span></a>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+        </ul>
+    </nav>
+</section>
+

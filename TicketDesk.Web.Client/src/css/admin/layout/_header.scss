@@ -1,0 +1,26 @@
+﻿@import "../abstracts/variables";
+@import "../abstracts/mixins";
+
+.header {
+    display: flex;
+    height: 50px;
+    background: #fff;
+    padding: 0 16px;
+    &.fixed-top {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+    }
+}
+
+.navbar-brand-wrapper {
+    display: flex;
+    align-items: center;
+    width: 206px;
+    .img-logo {
+        width: 150px;
+    }
+}
+
+

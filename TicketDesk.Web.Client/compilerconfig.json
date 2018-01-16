@@ -10,5 +10,9 @@
   {
     "outputFile": "src/css/custom-dropzone.css",
     "inputFile": "src/css/custom-dropzone.scss"
+  },
+  {
+    "outputFile": "src/css/admin/admin-site.css",
+    "inputFile": "src/css/admin/admin-site.scss"
   }
 ]
