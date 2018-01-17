@@ -27,6 +27,7 @@
                 <li class="reference-entry">
                     <div class="col-xs-4">
                         @Html.LabelFor(model => model.References[i].ImageLink)
+                        <span class="text-red">*</span>
                         @Html.TextBoxFor(model => model.References[i].ImageLink, new { @class = "form-control image-url" })
                         @Html.ValidationMessageFor(model => model.References[i].ImageLink)
                     </div>

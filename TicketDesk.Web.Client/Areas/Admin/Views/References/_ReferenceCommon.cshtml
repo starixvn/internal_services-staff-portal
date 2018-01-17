@@ -21,12 +21,15 @@
             <li class="reference-entry">
                 <div class="date form-group">
                     @Html.LabelFor(model => model.References[i].DateAppear)
+                    <span class="text-red">*</span>
                     @Html.TextBoxFor(model => model.References[i].DateAppear, new { @class = "datetimepicker form-control" })
+                    <span class="icon-calendar"></span>
                     @Html.ValidationMessageFor(model => model.References[i].DateAppear)
                 </div>
 
                 <div class="url form-group">
                     @Html.LabelFor(model => model.References[i].ImageLink)
+                    <span class="text-red">*</span>
                     @Html.TextBoxFor(model => model.References[i].ImageLink, new { @class = "form-control image-url" })
                     @Html.ValidationMessageFor(model => model.References[i].ImageLink)
                 </div>

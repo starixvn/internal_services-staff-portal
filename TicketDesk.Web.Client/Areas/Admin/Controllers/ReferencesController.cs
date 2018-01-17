@@ -172,7 +172,7 @@
             var references = Context.References.Where(x => x.ReferenceType == referenceType).ToList();
             if (referenceType != ReferenceType.NewsLetter)
             {
-                references = references.Where(r => DateTime.Compare(r.DateAppear.Date, DateTime.Now.Date) > 0).ToList();
+                references = references.Where(r => DateTime.Compare(r.DateAppear.Date, DateTime.Now.Date) >= 0).ToList();
             }
 
             var listViewModel = new List<ReferenceViewModel>();

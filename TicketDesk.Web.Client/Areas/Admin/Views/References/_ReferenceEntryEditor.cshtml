@@ -5,15 +5,17 @@
 <li class="reference-entry">
     @if (Model.ReferenceType != ReferenceType.NewsLetter)
     {
-        <div class="date form-group">
-            @Html.LabelFor(model => model.DateAppear)
-            @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
-            @Html.ValidationMessageFor(model => model.DateAppear)
-        </div>
+    <div class="date form-group">
+        @Html.LabelFor(model => model.DateAppear)
+        <span class="text-red">*</span>
+        @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
+        @Html.ValidationMessageFor(model => model.DateAppear)
+    </div>
 
     }
     <div class="url form-group">
         @Html.LabelFor(model => model.ImageLink)
+        <span class="text-red">*</span>
         @Html.TextBoxFor(model => model.ImageLink, new { @class = "form-control image-url" })
         @Html.ValidationMessageFor(model => model.ImageLink)
     </div>
