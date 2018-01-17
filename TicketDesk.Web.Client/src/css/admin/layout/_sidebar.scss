@@ -17,28 +17,55 @@
         padding: 0;
     }
 
-    .active {
-        .menu-item {
-            background: #bf141a;
-            color: #fff;
-        }
-    }
-
     .menu-item {
+        position: relative;
         display: block;
-        padding: 0 22px;
+        padding: 0 18px;
         line-height: 44px;
         height: 44px;
         color: #a0a0a0;
         transition: all .2s ease;
 
-        &:hover {
+        &:hover, &:focus {
             color: #fff;
             text-decoration: none;
+        }
+
+        .icon {
+            padding-right: 8px;
+        }
+
+        .icon-arrow {
+            position: absolute;
+            right: 10px;
+            top: 14px;
+        }
+
+        &.active:not(.has-sub) {
+            background: #bf141a;
+        }
+
+        &.active {
+            color: #fff
         }
     }
 
     .sub-menu {
-        padding-left: 20px;
+        .menu-item {
+            padding-left: 42px;
+        }
+    }
+
+    .has-sub {
+        .icon-arrow {
+            transform: rotate(90deg);
+            transition: transform .2s ease;
+        }
+
+        &.collapsed {
+            .icon-arrow {
+                transform: rotate(0);
+            }
+        }
     }
 }

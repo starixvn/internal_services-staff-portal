@@ -77,19 +77,44 @@
 
                 var menuClass = Html.IsActiveRoute(menuLink);
 
-            <li class="@menuClass">
-                <a href="@menuLink" class="menu-item"><i class="@menu.IconClass"></i><span class="text">@menu.Name</span></a>
+            <li>
                 @if (menu.Children != null && menu.Children.Any())
                 {
+                    @*<a href="javascript:;" class="@menuClass menu-item has-sub">
+                        <span class="icon @menu.IconClass"></span>
+                        <span class="text">@menu.Name</span>
+                        <span class="icon-arrow icon-angle-right"></span>
+                    </a>
                     <ul>
                         @foreach (var childMenu in menu.Children)
                         {
                             <li class="sub-menu">
-                                <a href="@childMenu.Url" class="menu-item"><i class="@childMenu.IconClass"></i><span class="text">@childMenu.Name</span></a>
+                                <a href="@childMenu.Url" class="@menuClass menu-item"><i class="@childMenu.IconClass"></i><span class="text">@childMenu.Name</span></a>
                             </li>
                         }
-                    </ul>
+                    </ul>*@
+                    <a class="@menuClass menu-item has-sub" data-toggle="collapse" href="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+                        <span class="icon @menu.IconClass"></span>
+                        <span class="text">@menu.Name</span>
+                        <span class="icon-arrow icon-angle-right"></span>
+                    </a>
+                    <ul class="collapse in" id="collapseExample">
+                        @foreach (var childMenu in menu.Children)
+                        {
+                            <li class="sub-menu">
+                                <a href="@childMenu.Url" class="@menuClass menu-item"><i class="@childMenu.IconClass"></i><span class="text">@childMenu.Name</span></a>
+                            </li>
+                        }
+                    </ul>                    
                 }
+                else
+                {
+                    <a href="@menuLink" class="@menuClass menu-item">
+                        <span class="icon @menu.IconClass"></span>
+                        <span class="text">@menu.Name</span>
+                    </a>
+                }
+
             </li>
         }
     </ul>

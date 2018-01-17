@@ -1,0 +1,27 @@
+﻿.btn {
+    font-family: inherit;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 2px;
+    transition: all .2s ease;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+.btn-submit {
+    background: #2e4592;
+
+    &:hover {
+        background: darken(#2e4592, 10%);
+    }
+}
+
+.btn-create {
+    background: #31a351;
+
+    &:hover {
+        background: darken(#31a351, 10%);
+    }
+}

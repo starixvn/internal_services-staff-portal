@@ -8,7 +8,7 @@ table {
     margin: 0;
     padding: 0;
     width: 100%;
-    
+
     .checkbox-group {
         .label-cbx {
             width: 22px;
@@ -50,7 +50,7 @@ table tr {
 }
 
 table th,
-table td {    
+table td {
     border: 1px solid #c1c1c1;
 }
 
@@ -182,36 +182,48 @@ table td {
         border-color: $secondary-color;
         border-radius: 2px;
 
-
-        .icon-edit, .icon-delete {
+        a {
             padding: 5px;
-            font-size: inherit;
-            color: #666;
-
-            &:before {
-                width: 25px;
-                display: inline-block;
-                text-align: center;
-                vertical-align: middle;
-            }
+            transition: all .2s ease;
         }
 
-        .icon-edit {
-            &:before {                
+
+        .icon-edit, .icon-delete {
+            //padding: 5px;
+            font-size: inherit;
+            color: #666;
+            width: 25px;
+            padding-right: 5px;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            transition: all .2s ease;
+        }
+
+        .edit {
+            .icon-edit {
                 font-size: 18px;
             }
 
             &:hover {
+                .icon-edit {
+                    color: #fd680e;
+                }
+
                 color: #fd680e;
             }
         }
 
-        .icon-delete {
-            &:before {
+        .delete {
+            .icon-delete {
                 font-size: 13px;
             }
 
             &:hover {
+                .icon-delete {
+                    color: $primary-color;
+                }
+
                 color: $primary-color;
             }
         }

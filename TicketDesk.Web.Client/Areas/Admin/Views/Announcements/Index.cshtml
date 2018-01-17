@@ -8,30 +8,35 @@
 <h2 class="page-title">@ViewBag.Title</h2>
 
 <!--Filter-->
-<section>
-    @using (Html.BeginForm("Index", "Announcements", FormMethod.Get, new { @class = "form-inline" }))
+<section class="filter-form">
+    @using (Html.BeginForm("Index", "Announcements", FormMethod.Get, new { @class = "row"}))
     {
-        <div class="input-group">
+        <div class="form-group col-lg-2 col-md-3 col-xs-4 ">
             @Html.LabelFor(x => x.PublishedFrom)
             @Html.TextBoxFor(x => x.PublishedFrom, new { type = "date", @class = "form-control" })
         </div>
-        <div class="input-group">
+        <div class="form-group col-lg-2 col-md-3 col-xs-4 ">
             @Html.LabelFor(x => x.PublishedTo)
             @Html.TextBoxFor(x => x.PublishedTo, new { type = "date", @class = "form-control" })
         </div>
-        <div class="input-group">
+        <div class="form-group col-lg-2  col-md-3col-xs-4 ">
             @Html.LabelFor(x => x.Status)
             @Html.EnumDropDownListFor(x => x.Status, "All", new { @class = "form-control" })
         </div>
-        <div class="input-group">
+        <div class="form-group col-lg-2 col-md-3 col-xs-4 ">
             @Html.LabelFor(x => x.State)
             @Html.EnumDropDownListFor(x => x.State, "All", new { @class = "form-control" })
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="button-filter col-lg-2 col-md-3 col-xs-4 ">
+            <button type="submit" class="btn btn-submit">Submit</button>
+        </div>        
     }
 </section>
-<a class="btn btn-primary" href="@Url.Action("Create","Announcements")">+ Create new Announcement</a>
+
+<div class="button-group">
+    <a class="btn btn-create" href="@Url.Action("Create","Announcements")">+ Create new Announcement</a>
+</div>
 
 <!--Table-->
 <section class="table">
@@ -70,8 +75,12 @@
                                 <span class="icon-arrow-down" aria-hidden="true"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownAction">
-                                <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "icon-edit" })</li>
-                                <li>@Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "icon-delete" })</li>
+                                <li>
+                                    <a class="edit" href="/Admin/Announcements/Edit/@item.Id"><span class="icon-edit"></span><span>Edit</span></a>
+                                </li>
+                                <li>
+                                    <a class="delete" href="/Admin/Announcements/Delete/@item.Id"><span class="icon-delete"></span><span>Delete</span></a>
+                                </li>
                             </ul>
                         </div>                        
                     </td>

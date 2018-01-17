@@ -1,8 +1,13 @@
-﻿html {
+﻿@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
+html {
   font-size: 62.5%; }
 
 body {
-  background: #e5e5e9; }
+  background: #e5e5e9;
+  font-family: Roboto, sans-serif;
+  font-weight: 400; }
 
 main {
   padding-top: 50px;
@@ -35,21 +40,34 @@ main {
     list-style: none;
     margin: 0;
     padding: 0; }
-  .sidebar .active .menu-item {
-    background: #bf141a;
-    color: #fff; }
   .sidebar .menu-item {
+    position: relative;
     display: block;
-    padding: 0 22px;
+    padding: 0 18px;
     line-height: 44px;
     height: 44px;
     color: #a0a0a0;
     transition: all .2s ease; }
-    .sidebar .menu-item:hover {
+    .sidebar .menu-item:hover, .sidebar .menu-item:focus {
       color: #fff;
       text-decoration: none; }
-  .sidebar .sub-menu {
-    padding-left: 20px; }
+    .sidebar .menu-item .icon {
+      padding-right: 8px; }
+    .sidebar .menu-item .icon-arrow {
+      position: absolute;
+      right: 10px;
+      top: 14px; }
+    .sidebar .menu-item.active:not(.has-sub) {
+      background: #bf141a; }
+    .sidebar .menu-item.active {
+      color: #fff; }
+  .sidebar .sub-menu .menu-item {
+    padding-left: 42px; }
+  .sidebar .has-sub .icon-arrow {
+    transform: rotate(90deg);
+    transition: transform .2s ease; }
+  .sidebar .has-sub.collapsed .icon-arrow {
+    transform: rotate(0); }
 
 .header {
   display: flex;
@@ -67,7 +85,7 @@ main {
   display: flex;
   align-items: center;
   width: 230px;
-  border-bottom: 1px solid #bf141a; }
+  border-bottom: 1px solid #131923; }
   .navbar-brand-wrapper .brand-logo {
     color: #ffffff;
     font-size: 1.5rem;
@@ -331,23 +349,30 @@ table td {
     padding: 0;
     border-color: #2e4592;
     border-radius: 2px; }
-    .action-group .dropdown-menu .icon-edit, .action-group .dropdown-menu .icon-delete {
+    .action-group .dropdown-menu a {
       padding: 5px;
+      transition: all .2s ease; }
+    .action-group .dropdown-menu .icon-edit, .action-group .dropdown-menu .icon-delete {
       font-size: inherit;
-      color: #666; }
-      .action-group .dropdown-menu .icon-edit:before, .action-group .dropdown-menu .icon-delete:before {
-        width: 25px;
-        display: inline-block;
-        text-align: center;
-        vertical-align: middle; }
-    .action-group .dropdown-menu .icon-edit:before {
+      color: #666;
+      width: 25px;
+      padding-right: 5px;
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      transition: all .2s ease; }
+    .action-group .dropdown-menu .edit .icon-edit {
       font-size: 18px; }
-    .action-group .dropdown-menu .icon-edit:hover {
+    .action-group .dropdown-menu .edit:hover {
       color: #fd680e; }
-    .action-group .dropdown-menu .icon-delete:before {
+      .action-group .dropdown-menu .edit:hover .icon-edit {
+        color: #fd680e; }
+    .action-group .dropdown-menu .delete .icon-delete {
       font-size: 13px; }
-    .action-group .dropdown-menu .icon-delete:hover {
+    .action-group .dropdown-menu .delete:hover {
       color: #bf141a; }
+      .action-group .dropdown-menu .delete:hover .icon-delete {
+        color: #bf141a; }
 
 .paging {
   display: inline-block;
@@ -359,6 +384,41 @@ table td {
 table + .button-group {
   text-align: right;
   margin-top: 24px; }
+
+.btn {
+  font-family: inherit;
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 2px;
+  transition: all .2s ease; }
+  .btn:hover {
+    color: #fff; }
+
+.btn-submit {
+  background: #2e4592; }
+  .btn-submit:hover {
+    background: #22336b; }
+
+.btn-create {
+  background: #31a351; }
+  .btn-create:hover {
+    background: #257c3e; }
+
+.button-filter {
+  margin-top: 26px; }
+
+.form-group label {
+  font-weight: 500;
+  color: #777777; }
+
+.form-control {
+  font-family: inherit;
+  background: none;
+  box-shadow: none;
+  border-radius: 2px;
+  height: 28px;
+  line-height: 28px;
+  padding: 0 5px; }
 
 .page-title {
   margin: 0;

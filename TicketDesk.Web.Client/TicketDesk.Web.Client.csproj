@@ -2127,6 +2127,8 @@
     <Content Include="src\css\admin\layout\_sidebar.scss" />
     <Content Include="src\css\admin\layout\_header.scss" />
     <Content Include="src\css\admin\components\_table.scss" />
+    <Content Include="src\css\admin\components\_buttons.scss" />
+    <Content Include="src\css\admin\components\_forms.scss" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
