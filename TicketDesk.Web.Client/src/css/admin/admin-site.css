@@ -68,8 +68,20 @@ main {
   align-items: center;
   width: 230px;
   border-bottom: 1px solid #bf141a; }
-  .navbar-brand-wrapper .img-logo {
-    width: 150px; }
+  .navbar-brand-wrapper .brand-logo {
+    color: #ffffff;
+    font-size: 1.5rem;
+    padding-left: 1rem;
+    width: auto;
+    -webkit-transition-duration: 0.8s;
+    -moz-transition-duration: 0.8s;
+    -o-transition-duration: 0.8s;
+    transition-duration: 0.8s;
+    transition-property: width;
+    -webkit-transition-property: width; }
+    .navbar-brand-wrapper .brand-logo img {
+      max-width: 100%;
+      width: 140px; }
 
 .navbar-menu-wrapper {
   -webkit-box-flex: 1;
@@ -187,6 +199,166 @@ main {
       position: absolute;
       left: 0;
       top: -4px; }
+
+.table {
+  margin-top: 10px; }
+
+table {
+  border: 1px solid #c1c1c1;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%; }
+  table .checkbox-group .label-cbx {
+    width: 22px;
+    height: 18px;
+    margin-bottom: 4px;
+    display: inline-block; }
+
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em; }
+
+table tr {
+  background: #fff;
+  padding: .35em;
+  color: #333333;
+  transition: background 0.2s ease; }
+  table tr:nth-child(even) {
+    background: #f2f2f2; }
+  table tr:hover {
+    background: #ffe7db; }
+  table tr.group {
+    background: #9fa7ba;
+    color: #282627;
+    font-weight: 600; }
+  table tr .no-bg-hover {
+    background: #fff; }
+
+table th,
+table td {
+  border: 1px solid #c1c1c1; }
+
+table th {
+  font-size: 14px;
+  text-transform: capitalize;
+  background: #2e4592;
+  color: #e3ebff;
+  text-align: center;
+  padding: 10px 5px;
+  font-weight: 400; }
+  table th.action {
+    width: 65px; }
+  table th.width-150 {
+    width: 150px; }
+  table th .checkbox-table {
+    float: right; }
+    table th .checkbox-table label {
+      border-color: #bacae5;
+      background-color: transparent; }
+  table th.executer {
+    width: 20%; }
+  table th.width-120 {
+    width: 120px; }
+
+table td {
+  border: 1px solid #cccccc;
+  padding: 7px 5px;
+  line-height: 24px; }
+
+.table-info {
+  border: 1px solid #ccc;
+  border-top: 0;
+  background: #f2f2f2;
+  padding: 5px 15px;
+  display: flex; }
+
+.page-size {
+  display: inline-block;
+  margin-right: 10px; }
+  .page-size .label {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 14px;
+    color: #545454;
+    font-weight: 400;
+    vertical-align: middle; }
+  .page-size .value {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    border: 1px solid #b8b8b8;
+    color: #545454;
+    background: #fff;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 10px;
+    padding-bottom: 0; }
+    .page-size .value:after {
+      content: "\e904";
+      font-family: "UpIcon";
+      position: absolute;
+      font-size: 18px;
+      border: 0;
+      top: 0px;
+      right: 0px;
+      transform: scaleX(-1); }
+  .page-size .dropdown__item {
+    padding: 6px 10px; }
+
+.action-group {
+  text-align: center; }
+  .action-group .dropdown-toggle {
+    color: #666;
+    font-size: 15px;
+    cursor: pointer; }
+    .action-group .dropdown-toggle:hover {
+      text-decoration: none; }
+      .action-group .dropdown-toggle:hover .icon-setting {
+        color: #2e4592; }
+    .action-group .dropdown-toggle .icon-setting {
+      display: inline-block;
+      vertical-align: middle; }
+    .action-group .dropdown-toggle .icon-arrow-down {
+      font-size: 10px;
+      display: inline-block;
+      vertical-align: middle; }
+  .action-group .dropdown-menu {
+    right: 0;
+    left: auto;
+    min-width: 100px;
+    text-align: left;
+    padding: 0;
+    border-color: #2e4592;
+    border-radius: 2px; }
+    .action-group .dropdown-menu .icon-edit, .action-group .dropdown-menu .icon-delete {
+      padding: 5px;
+      font-size: inherit;
+      color: #666; }
+      .action-group .dropdown-menu .icon-edit:before, .action-group .dropdown-menu .icon-delete:before {
+        width: 25px;
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle; }
+    .action-group .dropdown-menu .icon-edit:before {
+      font-size: 18px; }
+    .action-group .dropdown-menu .icon-edit:hover {
+      color: #fd680e; }
+    .action-group .dropdown-menu .icon-delete:before {
+      font-size: 13px; }
+    .action-group .dropdown-menu .icon-delete:hover {
+      color: #bf141a; }
+
+.paging {
+  display: inline-block;
+  align-self: center; }
+
+.button-group + table {
+  margin-top: 16px; }
+
+table + .button-group {
+  text-align: right;
+  margin-top: 24px; }
 
 .page-title {
   margin: 0;

@@ -514,6 +514,7 @@
     <Content Include="Scripts\jquery.validate.globalize.min.js" />
     <Content Include="src\contents\images\logo-admin.svg" />
     <Content Include="src\contents\images\logo-text.svg" />
+    <Content Include="src\contents\images\logo_admin.svg" />
     <Content Include="src\css\admin\admin-site.css">
       <DependentUpon>admin-site.scss</DependentUpon>
     </Content>
@@ -2125,6 +2126,7 @@
     <Content Include="src\css\admin\base\_common.scss" />
     <Content Include="src\css\admin\layout\_sidebar.scss" />
     <Content Include="src\css\admin\layout\_header.scss" />
+    <Content Include="src\css\admin\components\_table.scss" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -2132,7 +2134,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\ticketdesk\User\" />
-    <Folder Include="src\css\admin\components\" />
     <Folder Include="src\css\admin\pages\" />
     <Folder Include="src\libs\dropzone\debug\" />
   </ItemGroup>

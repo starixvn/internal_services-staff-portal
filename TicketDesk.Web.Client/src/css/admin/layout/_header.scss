@@ -22,8 +22,22 @@
     width: 230px;
     border-bottom: 1px solid $primary-color;
 
-    .img-logo {
-        width: 150px;
+    .brand-logo {
+        color: #ffffff;
+        font-size: 1.5rem;
+        padding-left: 1rem;
+        width: auto;
+        -webkit-transition-duration: 0.8s;
+        -moz-transition-duration: 0.8s;
+        -o-transition-duration: 0.8s;
+        transition-duration: 0.8s;
+        transition-property: width;
+        -webkit-transition-property: width;
+
+        img {
+            max-width: 100%;
+            width: 140px;
+        }
     }
 }
 
@@ -121,8 +135,8 @@
                 padding: 10px;
 
                 .user-name, .designation {
-                   line-height: 1;
-                   padding: 0;
+                    line-height: 1;
+                    padding: 0;
                 }
 
                 .user-name {

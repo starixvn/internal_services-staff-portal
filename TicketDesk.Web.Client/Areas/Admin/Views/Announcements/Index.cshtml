@@ -7,8 +7,6 @@
 
 <h2 class="page-title">@ViewBag.Title</h2>
 
-<a class="btn btn-primary" href="@Url.Action("Create","Announcements")">+ Create new Announcement</a>
-
 <!--Filter-->
 <section>
     @using (Html.BeginForm("Index", "Announcements", FormMethod.Get, new { @class = "form-inline" }))
@@ -33,20 +31,21 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     }
 </section>
+<a class="btn btn-primary" href="@Url.Action("Create","Announcements")">+ Create new Announcement</a>
 
 <!--Table-->
-<section>
-    <table class="table">
+<section class="table">
+    <table>
         <tr>
             <th>#</th>
-            <th>ID</th>
-            <th>Last Modified</th>
-            <th>Modified By</th>
-            <th>Published Date</th>
+            <th class="width-120">ID</th>
+            <th class="width-150">Last Modified</th>
+            <th class="width-120">Modified By</th>
+            <th class="width-150">Published Date</th>
             <th>Announcement</th>
             <th>Status</th>
-            <th>Publish</th>
-            <th>Action</th>
+            <th class="publish">Publish</th>
+            <th class="action">Action</th>
         </tr>
 
         @if (Model.Announcements != null)
@@ -54,17 +53,27 @@
             foreach (var item in Model.Announcements)
             {
                 <tr>
-                    <td>0</td>
-                    <td>@item.Id</td>
+                    <td class="text-center">0</td>
+                    <td class="text-center">@item.Id</td>
                     <td>@item.LastModified</td>
                     <td>@item.ModifiedBy</td>
                     <td>@item.PublishedDateTime</td>
                     <td>@item.Message</td>
-                    <td>@item.Status</td>
-                    <td>@item.State</td>
+                    <td class="text-center">@item.Status</td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @*@item.State*@
+                    </td>
+                    <td>
+                        <div class="dropdown action-group">
+                            <a class="dropdown-toggle" id="dropdownAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="icon-setting" aria-hidden="true"></span>
+                                <span class="icon-arrow-down" aria-hidden="true"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownAction">
+                                <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "icon-edit" })</li>
+                                <li>@Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "icon-delete" })</li>
+                            </ul>
+                        </div>                        
                     </td>
                 </tr>
             }
