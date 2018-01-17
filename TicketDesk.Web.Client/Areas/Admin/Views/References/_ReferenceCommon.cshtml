@@ -3,49 +3,47 @@
 
 @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Reference</h4>
-    <hr />
+<div class="upload-info">
+    <span>Alowed file type: <strong>jpeg, jpg, png</strong></span> |
+    <span>Maximum file size: <strong>2MB/file</strong></span> |
+    <span>Maximum number of upload files: <strong>31 files</strong></span>
+</div>
+
+<div>
     @if (TempData["Success"] != null)
     {
         <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
     }
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <ul id="ReferencesZone">
+    <ul class="references-zone" id="ReferencesZone">
         @for (var i = 0; i < Model.References.Count(); i++)
         {
             <li class="reference-entry">
-                <div class="col-xs-4">
+                <div class="date form-group">
                     @Html.LabelFor(model => model.References[i].DateAppear)
                     @Html.TextBoxFor(model => model.References[i].DateAppear, new { @class = "datetimepicker form-control" })
                     @Html.ValidationMessageFor(model => model.References[i].DateAppear)
                 </div>
 
-                <div class="col-xs-4">
+                <div class="url form-group">
                     @Html.LabelFor(model => model.References[i].ImageLink)
                     @Html.TextBoxFor(model => model.References[i].ImageLink, new { @class = "form-control image-url" })
                     @Html.ValidationMessageFor(model => model.References[i].ImageLink)
                 </div>
 
-                <div class="col-xs-4" style="margin-top: 25px">
-                    <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" style="display: inline-block">
-                    <input type="button" class="btn btn-danger remove-entry" value="Delete">
+                <div class="browse form-group">
+                    <div class="btn btn-browse">
+                        <span>Browse...</span>
+                        <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="excelFile">
+                    </div>
+                    <input type="button" class="btn btn-delete remove-entry" value="Delete">
                 </div>
             </li>
         }
     </ul>
 
-    <div class="form-group">
-        <div class="col-md-3">
-            <input type="button" id="addReferenceEntry" value="Add Image" class="btn btn-success" />
-        </div>
-        <div class="col-md-3">
-            <input type="submit" value="Submit" class="btn btn-primary" />
-        </div>
-        <div class="col-md-6">
-            <p>Alowed file type: jpeg, jpg, png</p>
-            <p>Maximum file size: 2MB/file</p>
-            <p>Maximum number of upload files: 31 files</p>
-        </div>
+    <div class="button-group">
+        <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" />
+        <input type="submit" value="Submit" class="btn btn-submit" />
     </div>
 </div>

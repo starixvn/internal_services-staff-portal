@@ -5,21 +5,24 @@
 <li class="reference-entry">
     @if (Model.ReferenceType != ReferenceType.NewsLetter)
     {
-        <div class="col-xs-4">
+        <div class="date form-group">
             @Html.LabelFor(model => model.DateAppear)
             @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
             @Html.ValidationMessageFor(model => model.DateAppear)
         </div>
 
     }
-    <div class="col-xs-4">
+    <div class="url form-group">
         @Html.LabelFor(model => model.ImageLink)
         @Html.TextBoxFor(model => model.ImageLink, new { @class = "form-control image-url" })
         @Html.ValidationMessageFor(model => model.ImageLink)
     </div>
 
-    <div class="col-xs-4" style="margin-top: 25px">
-        <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" style="display: inline-block">
-        <input type="button" class="btn btn-danger remove-entry" value="Delete">
+    <div class="browse form-group">        
+        <div class="btn btn-browse">
+            <span>Browse...</span>
+            <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="excelFile">
+        </div>
+        <input type="button" class="btn btn-delete remove-entry" value="Delete">
     </div>
 </li>
