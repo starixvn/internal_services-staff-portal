@@ -8,11 +8,13 @@
         if (dateString !== "") {
             $(".datetimepicker").datetimepicker({
                 format: "MM-DD-YYYY",
-                defaultDate: dateString
+                defaultDate: dateString,
+                minDate: moment()
             });
         } else {
             $(".datetimepicker").datetimepicker({
-                format: "MM-DD-YYYY"
+                format: "MM-DD-YYYY",
+                minDate: moment()
             });
         }
 

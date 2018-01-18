@@ -1,7 +1,7 @@
 ﻿@using TicketDesk.Domain
 @using TicketDesk.Domain.Model
 @using TicketDesk.Web.Client.Areas.Admin.Models.Announcements
-@model TicketDesk.Web.Client.Areas.Admin.Models.Announcements.AnnouncementViewModel
+@model AnnouncementViewModel
 
 @{
     ViewBag.Title = "Announcements Settings";
@@ -88,14 +88,13 @@
 
             @if (Model.Announcements != null)
             {
-
                 var count = Model.Announcements.Count;
                 for (var index = 0; index < count; index++)
                 {
                     var item = Model.Announcements[index];
 
                     <tr>
-                        <td class="text-center">0</td>
+                        <td class="text-center">@(index + 1)</td>
                         <td class="text-center">@item.Id</td>
                         <td>@item.LastModified</td>
                         <td>@item.ModifiedBy</td>
