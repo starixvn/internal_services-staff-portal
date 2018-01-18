@@ -1,30 +1,12 @@
 ﻿@using TicketDesk.Localization.Views.Shared
 @model TicketDesk.Web.Client.Models.NavbarViewModel
 
-@*<li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <i class="fa fa-user"></i><span class="">
-            @(Model.IsAuthenticated ? Model.Username : _Layout.Account)
-        </span>
-        <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu" role="menu">*@
-        @if (Model.IsAuthenticated)
-        {
-            @*<li>
-                @Html.ActionLink(_Layout.MyAccount, "Manage", "Account")
-            </li>*@
-            @*<li>
-                <a href="#" data-toggle="modal" data-target="#logOut">@_Layout.LogOut</a>
-            </li>*@
-            <li><a href="#" class="menu-item" data-toggle="modal" data-target="#logOut"><i class="icon-logout"></i><span class="text">@_Layout.LogOut</span></a></li>
-        }
-        else
-        {
-            @*<li>@Html.ActionLink(_Layout.SignIn, "SignIn", "User", null, new { id = "loginLink" })</li>*@
-            <li><a href="@Url.Action("SignIn", "User")" class="menu-item"><i class="icon-myticket"></i><span class="text">Login</span></a></li>
-        }
-    @*</ul>
 
-</li>*@
-
+@if (Model.IsAuthenticated)
+{
+    <li><a href="#" class="menu-item" data-toggle="modal" data-target="#logOut"><i class="icon-logout"></i><span class="text">@_Layout.LogOut</span></a></li>
+}
+else
+{
+    <li><a href="@Url.Action("SignIn", "User")" class="menu-item"><i class="icon-myticket"></i><span class="text">Login</span></a></li>
+}

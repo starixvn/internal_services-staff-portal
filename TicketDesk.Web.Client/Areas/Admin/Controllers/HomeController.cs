@@ -17,11 +17,14 @@
         [ChildActionOnly]
         public PartialViewResult Menu()
         {
+            var user = UserService.GetById(CurrentSession.UserId);
+
             var model = new NavbarViewModel
             {
                 MenuItems = PopulateMenus(CurrentSession.MenuItemList),
-                Username = CurrentSession.Username,
-                IsAuthenticated = CurrentSession.UserId > 0
+                IsAuthenticated = CurrentSession.UserId > 0,
+                Username = user.Username,
+                FullName = $"{user.FirstName} {user.LastName}".Trim(' ')
             };
 
             return PartialView("~/Areas/Admin/Views/Shared/_AdminNavbar.cshtml", model);

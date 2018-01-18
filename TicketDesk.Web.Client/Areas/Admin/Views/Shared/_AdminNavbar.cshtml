@@ -1,25 +1,8 @@
-﻿@using TicketDesk.Core.Resources
+﻿@using TicketDesk.Localization.Views.Shared
 @using TicketDesk.Web.Client.Infrastructure.Extensions
 @model TicketDesk.Web.Client.Models.NavbarViewModel
 
-<!-- Modal confirm logout -->
-<div class="modal fade" id="logOut" role="dialog">
-    <div class="modal-dialog small-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">@Messages.LogoutConfirmation</h4>
-            </div>
-            <div class="modal-body">
-                <p>@Messages.LogoutModalDescription</p>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary rippler rippler-default" id="confirmLogOut">@Messages.Yes</button>
-                <button type="button" class="btn btn-second rippler rippler-default" data-dismiss="modal">@Messages.No</button>
-            </div>
-        </div>
-    </div>
-</div>
+@Html.Partial("_LogoutModal")
 
 <nav class="header fixed-top">
     <div class="navbar-brand-wrapper">
@@ -32,16 +15,10 @@
             <span class="lines"></span>
         </a>
         <div class="nav navbar-nav navbar-right">
-            @*<div class="user-info">
-                    <div class="dropdown-button" href="#!" data-activates="profile">
-                        <span class="user-name">starix2</span>
-                        <i class="icon mdi mdi-account avatar" aria-hidden="true"></i>
-                    </div>
-                </div>*@
             <div class="dropdown user-info">
                 <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <i class="icon-account avatar" aria-hidden="true"></i>
-                    <span class="user-name">Alexander Pierce</span>
+                    <span class="user-name">@Model.FullName</span>
                     <i class="icon-arrow-down" aria-hidden="true"></i>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -53,11 +30,13 @@
                             <span class="avatar-default icon-account"></span>
                         </div>
                         <div class="details">
-                            <p class="user-name">Alexander Pierce</p>
-                            <p class="designation">stage-admin</p>
+                            <p class="user-name">@Model.FullName</p>
+                            <p class="designation">@Model.Username</p>
                         </div>
                     </li>
-                    <li class="logout"><a href="#"><span class="icon-logout"></span>Logout</a></li>
+                    <li class="logout">
+                        <a href="#" data-toggle="modal" data-target="#logOut"><span class="icon-logout"></span>@_Layout.LogOut</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -80,19 +59,6 @@
             <li>
                 @if (menu.Children != null && menu.Children.Any())
                 {
-                    @*<a href="javascript:;" class="@menuClass menu-item has-sub">
-                        <span class="icon @menu.IconClass"></span>
-                        <span class="text">@menu.Name</span>
-                        <span class="icon-arrow icon-angle-right"></span>
-                    </a>
-                    <ul>
-                        @foreach (var childMenu in menu.Children)
-                        {
-                            <li class="sub-menu">
-                                <a href="@childMenu.Url" class="@menuClass menu-item"><i class="@childMenu.IconClass"></i><span class="text">@childMenu.Name</span></a>
-                            </li>
-                        }
-                    </ul>*@
                     <a class="@menuClass menu-item has-sub" data-toggle="collapse" href="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
                         <span class="icon @menu.IconClass"></span>
                         <span class="text">@menu.Name</span>
@@ -114,9 +80,7 @@
                         <span class="text">@menu.Name</span>
                     </a>
                 }
-
             </li>
         }
     </ul>
 </nav>
-
