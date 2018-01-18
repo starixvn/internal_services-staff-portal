@@ -511,6 +511,11 @@ table + .button-group {
     position: relative;
     flex-basis: 160px;
     max-width: 160px; }
+    .reference-entry .date .icon-calendar {
+      position: absolute;
+      top: 33px;
+      right: 5px;
+      color: #2e4592; }
   .reference-entry .url {
     -webkit-box-flex: 1;
     -ms-flex-positive: 1;

@@ -52,6 +52,13 @@
         position: relative;
         flex-basis: 160px;
         max-width: 160px;
+
+        .icon-calendar {
+            position: absolute;
+            top: 33px;
+            right: 5px;
+            color: $secondary-color;
+        }
     }
 
     .url {
