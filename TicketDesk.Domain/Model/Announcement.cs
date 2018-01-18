@@ -46,6 +46,9 @@
             }
         }
 
+        [NotMapped]
+        public bool IsWaitingToPublish { get; set; }
+
         public DateTime LastModified { get; set; }
 
         public string ModifiedBy { get; set; }

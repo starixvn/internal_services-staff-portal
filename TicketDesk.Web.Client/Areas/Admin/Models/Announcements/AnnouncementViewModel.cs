@@ -19,7 +19,7 @@
             Controller = "Announcements";
         }
 
-        public IEnumerable<Announcement> Announcements { get; set; }
+        public IList<Announcement> Announcements { get; set; }
 
         [Display(Name = "Published From")]
         public DateTime? PublishedFrom { get; set; }

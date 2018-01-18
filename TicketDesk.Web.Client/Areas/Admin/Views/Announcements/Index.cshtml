@@ -1,4 +1,5 @@
-﻿@model TicketDesk.Web.Client.Areas.Admin.Models.Announcements.AnnouncementViewModel
+﻿@using TicketDesk.Domain.Model
+@model TicketDesk.Web.Client.Areas.Admin.Models.Announcements.AnnouncementViewModel
 
 @{
     ViewBag.Title = "Announcements Settings";
@@ -7,17 +8,29 @@
 
 <h2 class="page-title">@ViewBag.Title</h2>
 
+@section css
+{
+    <link href="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+
+@section scripts
+{
+    <script src="~/src/libs/datetimepicker/moment.js"></script>
+    <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.js"></script>
+    <script src="~/src/js/admin/announcement/announcementsindex.js"></script>
+}
+
 <!--Filter-->
 <section class="filter-form">
-    @using (Html.BeginForm("Index", "Announcements", FormMethod.Get, new { @class = "row"}))
+    @using (Html.BeginForm("Index", "Announcements", FormMethod.Get, new { @class = "row" }))
     {
         <div class="form-group col-lg-2 col-md-3 col-xs-4 ">
             @Html.LabelFor(x => x.PublishedFrom)
-            @Html.TextBoxFor(x => x.PublishedFrom, new { type = "date", @class = "form-control" })
+            @Html.TextBoxFor(x => x.PublishedFrom, new { @class = "datetimepicker form-control" })
         </div>
         <div class="form-group col-lg-2 col-md-3 col-xs-4 ">
             @Html.LabelFor(x => x.PublishedTo)
-            @Html.TextBoxFor(x => x.PublishedTo, new { type = "date", @class = "form-control" })
+            @Html.TextBoxFor(x => x.PublishedTo, new { @class = "datetimepicker form-control" })
         </div>
         <div class="form-group col-lg-2  col-md-3col-xs-4 ">
             @Html.LabelFor(x => x.Status)
@@ -30,7 +43,7 @@
 
         <div class="button-filter col-lg-2 col-md-3 col-xs-4 ">
             <button type="submit" class="btn btn-submit">Submit</button>
-        </div>        
+        </div>
     }
 </section>
 
@@ -40,54 +53,79 @@
 
 <!--Table-->
 <section class="table">
-    <table>
-        <tr>
-            <th>#</th>
-            <th class="width-120">ID</th>
-            <th class="width-150">Last Modified</th>
-            <th class="width-120">Modified By</th>
-            <th class="width-150">Published Date</th>
-            <th>Announcement</th>
-            <th>Status</th>
-            <th class="publish">Publish</th>
-            <th class="action">Action</th>
-        </tr>
+    @using (Html.BeginForm())
+    {
+        <table>
+            <tr>
+                <th>#</th>
+                <th class="width-120">ID</th>
+                <th class="width-150">Last Modified</th>
+                <th class="width-120">Modified By</th>
+                <th class="width-150">Published Date</th>
+                <th>Announcement</th>
+                <th>Status</th>
+                <th class="publish">
+                    <button class="btn btn-default" type="submit">Publish</button>
+                </th>
+                <th class="action">Action</th>
+            </tr>
 
-        @if (Model.Announcements != null)
-        {
-            foreach (var item in Model.Announcements)
+            @if (Model.Announcements != null)
             {
-                <tr>
-                    <td class="text-center">0</td>
-                    <td class="text-center">@item.Id</td>
-                    <td>@item.LastModified</td>
-                    <td>@item.ModifiedBy</td>
-                    <td>@item.PublishedDateTime</td>
-                    <td>@item.Message</td>
-                    <td class="text-center">@item.Status</td>
-                    <td>
-                        @*@item.State*@
-                    </td>
-                    <td>
-                        <div class="dropdown action-group">
-                            <a class="dropdown-toggle" id="dropdownAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span class="icon-setting" aria-hidden="true"></span>
-                                <span class="icon-arrow-down" aria-hidden="true"></span>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownAction">
-                                <li>
-                                    <a class="edit" href="/Admin/Announcements/Edit/@item.Id"><span class="icon-edit"></span><span>Edit</span></a>
-                                </li>
-                                <li>
-                                    <a class="delete" href="/Admin/Announcements/Delete/@item.Id"><span class="icon-delete"></span><span>Delete</span></a>
-                                </li>
-                            </ul>
-                        </div>                        
-                    </td>
-                </tr>
+
+                var count = Model.Announcements.Count;
+                for (var index = 0; index < count; index++)
+                {
+                    var item = Model.Announcements[index];
+
+                    <tr>
+                        <td class="text-center">0</td>
+                        <td class="text-center">@item.Id</td>
+                        <td>@item.LastModified</td>
+                        <td>@item.ModifiedBy</td>
+                        <td>@item.PublishedDateTime</td>
+                        <td>@item.Message</td>
+                        <td class="text-center">@item.Status</td>
+                        <td>
+                            @if (item.State == AnnouncementState.Published)
+                            {
+                                <span>V</span>
+                            }
+                            else
+                            {
+                                @Html.CheckBoxFor(x => x.Announcements[index].IsWaitingToPublish)
+                            }
+                        </td>
+                        <td>
+                            @if (item.State == AnnouncementState.Scheduled)
+                            {
+                                <div class="dropdown action-group">
+                                    <a class="dropdown-toggle" id="dropdownAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <span class="icon-setting" aria-hidden="true"></span>
+                                        <span class="icon-arrow-down" aria-hidden="true"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownAction">
+
+                                        <li>
+                                            <a class="edit" href="@Url.Action("Edit", "Announcements", new { id = item.Id })">
+                                            <span class="icon-edit"></span><span>Edit</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="delete" href="@Url.Action("Delete", "Announcements", new { id = item.Id })">
+                                                <span class="icon-delete"></span><span>Delete</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
             }
-        }
-    </table>
-    
-    @Html.Partial("_Pagination", Model)
+        </table>
+
+        @Html.Partial("_Pagination", Model)
+    }
 </section>

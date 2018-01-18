@@ -41,7 +41,8 @@
                     announcements,
                     x => x.Id,
                     viewModel.Skipped,
-                    viewModel.ItemPerPage);
+                    viewModel.ItemPerPage)
+                    .ToList();
             }
 
             return View(viewModel);
