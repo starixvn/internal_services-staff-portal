@@ -16,6 +16,10 @@
 
         public TimeSpan? Time { get; set; }
 
+        public ModalId ModalId { get; set; } = ModalId.CreateAnnouncementModal;
+
+        public ActionType ActionType { get; set; } = ActionType.Create;
+
         public NewAnnouncementCriteria GetNewAnnouncementCriteria(string modifiedBy)
         {
             return new NewAnnouncementCriteria
@@ -27,5 +31,22 @@
                 ModifiedBy = modifiedBy
             };
         }
+    }
+
+    public enum ActionType
+    {
+        Create,
+        [Display(Name = "Sumbit")]
+        Edit,
+        Delete
+    }
+
+    public enum ModalId
+    {
+        [Display(Name = "Create new Announcement")]
+        CreateAnnouncementModal,
+        [Display(Name = "Edit Announcement")]
+        EditAnnouncementModal,
+        DeleteAnnouncementModal
     }
 }

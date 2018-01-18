@@ -1,4 +1,6 @@
-﻿@using TicketDesk.Domain.Model
+﻿@using TicketDesk.Domain
+@using TicketDesk.Domain.Model
+@using TicketDesk.Web.Client.Areas.Admin.Models.Announcements
 @model TicketDesk.Web.Client.Areas.Admin.Models.Announcements.AnnouncementViewModel
 
 @{
@@ -18,7 +20,17 @@
     <script src="~/src/libs/datetimepicker/moment.js"></script>
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.js"></script>
     <script src="~/src/js/admin/announcement/announcementsindex.js"></script>
+
+    @* Popup javascripts *@
+    <script type="text/javascript" src="~/src/js/admin/announcement/newannouncement.js"></script>
 }
+
+<!--Create Modal-->
+@*@Html.Partial("_Create", Model.NewAnnouncementViewModel)*@
+
+<div id="announcement-modal">
+    <!--edit announcement modal place holder-->
+</div>
 
 <!--Filter-->
 <section class="filter-form">
@@ -48,7 +60,11 @@
 </section>
 
 <div class="button-group">
-    <a class="btn btn-create" href="@Url.Action("Create","Announcements")">+ Create new Announcement</a>
+    <a class="btn btn-create  manual-modal-handler"
+       data-toggle="modal"
+       href="#"
+       data-action="@Url.Action("Create", "Announcements")"
+       data-modalid="#@ModalId.CreateAnnouncementModal.ToString()">+ @ModalId.CreateAnnouncementModal.GetDisplayName()</a>
 </div>
 
 <!--Table-->
@@ -105,10 +121,12 @@
                                         <span class="icon-arrow-down" aria-hidden="true"></span>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownAction">
-
                                         <li>
-                                            <a class="edit" href="@Url.Action("Edit", "Announcements", new { id = item.Id })">
-                                            <span class="icon-edit"></span><span>Edit</span>
+                                            <a class="edit manual-modal-handler"
+                                               data-action="@Url.Action("Edit", "Announcements", new { id = item.Id })"
+                                               href="#"
+                                               data-modalid="#@ModalId.EditAnnouncementModal.ToString()">
+                                                <span class="icon-edit"></span><span>Edit</span>
                                             </a>
                                         </li>
                                         <li>
@@ -116,7 +134,6 @@
                                                 <span class="icon-delete"></span><span>Delete</span>
                                             </a>
                                         </li>
-
                                     </ul>
                                 </div>
                             }

@@ -4,8 +4,9 @@
     },
 
     assignButton: function () {
-        $("#set-current-datetime-button").on("click",
-            function () {
+        $("#announcement-modal").on("click",
+            "#set-current-datetime-button",
+            function() {
                 var date = announcement.getCurrentDate();
                 announcement.setCurrentDate(date);
                 var time = announcement.getCurrentTime();
@@ -27,7 +28,7 @@
         var mm = announcement.addMissingZero(today.getMonth() + 1); //January is 0!
         var yyyy = today.getFullYear();
 
-        return yyyy + "-" + mm + "-" + dd;
+        return mm + "-" + dd + "-" + yyyy;
     },
 
     getCurrentTime: function () {

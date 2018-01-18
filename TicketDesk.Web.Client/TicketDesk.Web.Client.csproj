@@ -596,6 +596,7 @@
     <Content Include="Areas\Admin\Views\References\TradingLimits.cshtml" />
     <Content Include="Areas\Admin\Views\References\_ReferenceCommon.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcements\_Create.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

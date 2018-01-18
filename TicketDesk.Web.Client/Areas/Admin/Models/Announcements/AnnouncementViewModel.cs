@@ -17,6 +17,12 @@
         {
             Action = "Index";
             Controller = "Announcements";
+
+            NewAnnouncementViewModel = new NewAnnouncementViewModel
+            {
+                Announcement = new Announcement(),
+                IsImportant = false
+            };
         }
 
         public IList<Announcement> Announcements { get; set; }
@@ -32,6 +38,9 @@
 
         [Display(Name = "State")]
         public AnnouncementState? State { get; set; }
+
+        // Create
+        public NewAnnouncementViewModel NewAnnouncementViewModel { get; set; }
 
         public GetAnnouncementsCriteria GetQueryCriteria()
         {

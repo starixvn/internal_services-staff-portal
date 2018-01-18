@@ -53,10 +53,11 @@
             var viewModel = new NewAnnouncementViewModel
             {
                 Announcement = new Announcement(),
-                IsImportant = false
+                ActionType = ActionType.Create,
+                ModalId = ModalId.CreateAnnouncementModal
             };
 
-            return View(viewModel);
+            return PartialView("_Create", viewModel);
         }
 
         [HttpPost]
@@ -93,10 +94,12 @@
                 Announcement = announcement,
                 IsImportant = announcement.Status == AnnouncementStatus.Important,
                 Date = announcement.PublishedDateTime?.Date,
-                Time = announcement.PublishedDateTime?.TimeOfDay
+                Time = announcement.PublishedDateTime?.TimeOfDay,
+                ModalId = ModalId.EditAnnouncementModal,
+                ActionType = ActionType.Edit
             };
 
-            return View(viewModel);
+            return PartialView("_Create", viewModel);
         }
 
         [HttpPost]
@@ -118,7 +121,10 @@
                 return RedirectToAction("Index");
             }
 
-            return View(viewModel);
+            viewModel.ModalId = ModalId.EditAnnouncementModal;
+            viewModel.ActionType = ActionType.Edit;
+
+            return PartialView("_Create", viewModel);
         }
 
         public ActionResult Delete(int? id)
