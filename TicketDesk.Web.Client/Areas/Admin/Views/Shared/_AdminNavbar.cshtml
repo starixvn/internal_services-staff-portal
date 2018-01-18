@@ -7,7 +7,7 @@
 <nav class="header fixed-top">
     <div class="navbar-brand-wrapper">
         <a id="logo-container" href="/" class="brand-logo">
-            <img src="~/src/contents/images/logo_admin.svg"/>
+            <img src="~/src/contents/images/logo_admin.svg" />
         </a>
     </div>
     <div class="navbar-menu-wrapper">
@@ -47,7 +47,7 @@
 <nav class="sidebar">
     <ul>
         @foreach (var menu in Model.MenuItems)
-            {
+        {
                 var menuLink = "#";
                 if (!string.IsNullOrEmpty(menu.Url))
                 {
@@ -72,7 +72,7 @@
                                 <a href="@childMenu.Url" class="@childMenuClass menu-item"><i class="@childMenu.IconClass"></i><span class="text">@childMenu.Name</span></a>
                             </li>
                         }
-                    </ul>                    
+                    </ul>
                 }
                 else
                 {

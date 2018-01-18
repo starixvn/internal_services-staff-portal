@@ -27,7 +27,7 @@
     <main>
         <div class="body-content">
             @RenderBody()
-        </div>        
+        </div>
     </main>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -41,6 +41,16 @@
     <script src="~/Scripts/globalize.js"></script>
     @Scripts.Render("~/bundles/validate")
     <script src="~/Scripts/ticketdesk/common.js"></script>
+    <script>
+        $(".toggle-sidebar").on("click",
+            function () {
+                if ($("body").hasClass("menu-collapsed")) {
+                    $("body").removeClass("menu-collapsed");
+                } else {
+                    $("body").addClass("menu-collapsed");
+                }
+            });
+    </script>
 
     @RenderSection("scripts", required: false)
 </body>
