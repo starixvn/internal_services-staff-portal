@@ -451,13 +451,16 @@ table + .button-group {
     width: 80px;
     margin: 0;
     padding: 0;
-    font-size: 20px;
+    font-size: 0;
     cursor: pointer;
     opacity: 0;
     filter: alpha(opacity=0); }
 
 .btn-delete {
   background: #ea1118; }
+
+.text-red {
+  color: #ea1118; }
 
 .button-filter {
   margin-top: 26px; }
@@ -526,6 +529,5 @@ table + .button-group {
     padding-right: .5rem;
     padding-left: .5rem; }
   .reference-entry .browse {
-    align-self: flex-end;
-    padding-left: 0; }
+    margin-top: 26px; }
 

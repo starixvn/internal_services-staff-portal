@@ -54,7 +54,7 @@
         width: 80px;
         margin: 0;
         padding: 0;
-        font-size: 20px;
+        font-size: 0;
         cursor: pointer;
         opacity: 0;
         filter: alpha(opacity=0);
@@ -64,4 +64,8 @@
 
 .btn-delete {
     background: #ea1118;
+}
+
+.text-red {
+    color: #ea1118;
 }
