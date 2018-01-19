@@ -1,9 +1,11 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Web.Mvc;
     using Client.Controllers;
+    using Criteria.Announcement;
     using Domain.Infrastructure;
     using Domain.Model;
     using Fanex.NAP.Core.Business;
@@ -163,6 +165,26 @@
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Publish(IList<Announcement> announcements)
+        {
+            var criteria = new PublishAnnouncementsCriteria
+            {
+                Ids = new List<int>(),
+                ModifiedBy = CurrentSession.Username
+            };
+
+            foreach (var announcement in announcements)
+            {
+                criteria.Ids.Add(announcement.Id);
+            }
+
+            _announcementService.PublishAnnouncements(criteria);
+
+            return RedirectToAction("Index", "Announcements");
         }
 
         private ActionResult ReturnInvalidAnnouncement(Announcement announcement)

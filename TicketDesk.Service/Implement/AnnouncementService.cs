@@ -86,6 +86,30 @@
             return result > 0;
         }
 
+        public bool PublishAnnouncements(PublishAnnouncementsCriteria criteria)
+        {
+            foreach (var id in criteria.Ids)
+            {
+                var originalAnnouncement = GetAnnouncement(id);
+
+                if (originalAnnouncement.State == AnnouncementState.Published)
+                {
+                    continue;
+                }
+
+                originalAnnouncement.PublishedDateTime = DateTime.Now;
+                originalAnnouncement.LastModified = DateTime.Now;
+
+                originalAnnouncement.ModifiedBy = criteria.ModifiedBy;
+
+                context.Entry(originalAnnouncement).CurrentValues.SetValues(originalAnnouncement);
+            }
+
+            var result = context.SaveChanges();
+
+            return result > 0;
+        }
+
         public bool DeleteAnnouncement(int id)
         {
             var announcement = GetAnnouncement(id);

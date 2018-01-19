@@ -14,6 +14,8 @@
 
         bool UpdateAnnouncement(NewAnnouncementCriteria criteria);
 
+        bool PublishAnnouncements(PublishAnnouncementsCriteria criteria);
+
         bool DeleteAnnouncement(int id);
     }
 }
