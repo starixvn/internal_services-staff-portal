@@ -22,8 +22,14 @@
                     <div class="form-horizontal">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-2" })
+                        <input type="checkbox"
+                               id="@Html.IdFor(x => x.IsImportant)"
+                               name="@Html.NameFor(x => x.IsImportant)"
+                               value="true" />
+                        @Html.LabelFor(model => model.IsImportant)
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.IsImportant, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.TextBoxFor(model => model.Date, "{0:MM-dd-yyyy hh:mm tt}", new { @class = "datetimepicker", id = "announcement-date" })
                                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
@@ -34,7 +40,7 @@
                             <div class="col-md-offset-2 col-md-10">
                                 <button class="btn btn-default" type="button" id="set-current-datetime-button">Get Current Date/Time</button>
                             </div>
-                        </div>
+                        </div>*@
 
                         <div class="form-group">
                             @Html.RequiredLabelFor(model => model.Announcement.Message, new { @class = "control-label col-md-2" }, true)
