@@ -610,7 +610,6 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Announcements\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminNavbar.cshtml" />
     <Content Include="Areas\Admin\Views\References\TVSchedules.cshtml" />

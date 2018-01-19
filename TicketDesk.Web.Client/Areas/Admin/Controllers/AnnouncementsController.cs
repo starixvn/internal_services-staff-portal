@@ -159,7 +159,10 @@
 
             foreach (var announcement in announcements)
             {
-                criteria.Ids.Add(announcement.Id);
+                if (announcement.IsWaitingToPublish)
+                {
+                    criteria.Ids.Add(announcement.Id);
+                }
             }
 
             _announcementService.PublishAnnouncements(criteria);
