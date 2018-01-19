@@ -154,10 +154,11 @@
                             else
                             {
                                 <div class="checkbox">
+                                    <!--Use Html.NameFor in Id for CSS styling-->
                                     <input type="checkbox"
                                            id="@Html.NameFor(x => x.Announcements[index].IsWaitingToPublish)"
                                            name="@Html.NameFor(x => x.Announcements[index].IsWaitingToPublish)"
-                                           value="true" />
+                                           value="true"/>
                                     <label for="@Html.NameFor(x => x.Announcements[index].IsWaitingToPublish)"></label>
                                     @Html.HiddenFor(x => x.Announcements[index].Id)
                                 </div>                                
