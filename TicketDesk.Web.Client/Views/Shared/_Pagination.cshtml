@@ -5,7 +5,7 @@
     <label class="">@Html.DisplayNameFor(x => x.ItemPerPage)</label>
     <div class="custom-dropdown">
         @*@Html.DropDownListFor(x => x.ItemPerPage, Model.ItemPerPageList, new { id = "itemperpage-select" })*@
-        <ul>
+        <ul class="c-dropdown__list">
             @foreach (var size in Model.PageSizes)
             {
                 var selectedClass = "";
@@ -14,7 +14,7 @@
                     selectedClass = "selected";
                 }
 
-                <li class="@selectedClass">
+                <li class="@selectedClass c-dropdown__item" data-dropdown-value="@size">
                     <a href="@Model.PageSizeLink(size)">@size</a>
                 </li>
             }

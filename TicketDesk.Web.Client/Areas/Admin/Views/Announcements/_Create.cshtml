@@ -46,7 +46,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Time, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextBoxFor(model => model.Time, new { @class = "timepicker", id = "announcement-time" })
+                                @Html.TextBoxFor(model => model.Time, "{0:hh:mm tt}", new { @class = "timepicker", id = "announcement-time" })
                                 @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
                             </div>
                         </div>
