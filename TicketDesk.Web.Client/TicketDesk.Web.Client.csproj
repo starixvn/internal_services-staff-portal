@@ -523,6 +523,7 @@
     </Content>
     <Content Include="src\js\admin\announcement\announcementsindex.js" />
     <Content Include="src\js\admin\announcement\newannouncement.js" />
+    <Content Include="src\js\admin\common.js" />
     <Content Include="src\js\admin\reference\reference.js" />
     <Content Include="src\js\home\home.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -1886,6 +1887,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="src\js\formhandler.js" />
+    <Content Include="src\js\pagination.js" />
     <Content Include="src\js\user\login.js" />
     <Content Include="src\contents\images\bg01.png" />
     <Content Include="src\contents\images\logo.png" />
