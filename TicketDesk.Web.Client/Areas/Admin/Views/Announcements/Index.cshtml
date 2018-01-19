@@ -155,6 +155,7 @@
                             {
                                 @Html.CheckBoxFor(x => x.Announcements[index].IsWaitingToPublish)
                                 @Html.HiddenFor(x => x.Announcements[index].Id)
+                                <label for="@Html.NameFor(x => x.Announcements[index].IsWaitingToPublish)"></label>
                             }
                         </td>
                         <td>
