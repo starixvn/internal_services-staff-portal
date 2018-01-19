@@ -10,13 +10,4 @@
         public AnnouncementStatus? Status { get; set; }
         public AnnouncementState? State { get; set; }
     }
-
-    public class NewAnnouncementCriteria
-    {
-        public Announcement Announcement { get; set; }
-        public bool IsImportant { get; set; }
-        public DateTime? Date { get; set; }
-        public TimeSpan? Time { get; set; }
-        public string ModifiedBy { get; set; }
-    }
 }

@@ -37,7 +37,7 @@
             {
                 var result = AnnouncementState.Published;
 
-                if (PublishedDateTime >= DateTime.Now)
+                if (PublishedDateTime == null || PublishedDateTime >= DateTime.Now)
                 {
                     result = AnnouncementState.Scheduled;
                 }

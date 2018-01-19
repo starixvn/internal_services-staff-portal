@@ -93,8 +93,8 @@
             {
                 Announcement = announcement,
                 IsImportant = announcement.Status == AnnouncementStatus.Important,
-                Date = announcement.PublishedDateTime?.Date,
-                Time = announcement.PublishedDateTime?.TimeOfDay,
+                Date = announcement.PublishedDateTime,
+                ////Time = announcement.PublishedDateTime?.TimeOfDay,
                 ModalId = ModalId.EditAnnouncementModal,
                 ActionType = ActionType.Edit
             };
@@ -118,7 +118,7 @@
             if (ModelState.IsValid)
             {
                 _announcementService.UpdateAnnouncement(viewModel.GetNewAnnouncementCriteria(CurrentSession.Username));
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
             viewModel.ModalId = ModalId.EditAnnouncementModal;

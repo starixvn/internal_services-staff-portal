@@ -7,6 +7,8 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="@Model.ModalId">
     @using (Html.BeginForm(Model.ActionType.ToString(), "Announcements", FormMethod.Post, new { data_return = Url.Action("Index", "Announcements") }))
     {
+        @Html.HiddenFor(x => x.Announcement.Id)
+
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -38,18 +40,18 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextBoxFor(model => model.Date, "{0:MM-dd-yyyy}", new { @class = "datetimepicker", id = "announcement-date" })
+                                @Html.TextBoxFor(model => model.Date, "{0:MM-dd-yyyy hh:mm tt}", new { @class = "datetimepicker", id = "announcement-date" })
                                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        @*<div class="form-group">
                             @Html.LabelFor(model => model.Time, new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.TextBoxFor(model => model.Time, "{0:hh:mm tt}", new { @class = "timepicker", id = "announcement-time" })
                                 @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
                             </div>
-                        </div>
+                        </div>*@
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">

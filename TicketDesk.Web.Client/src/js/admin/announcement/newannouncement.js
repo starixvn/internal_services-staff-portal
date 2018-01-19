@@ -8,18 +8,14 @@
             "#set-current-datetime-button",
             function() {
                 var date = announcement.getCurrentDate();
-                announcement.setCurrentDate(date);
                 var time = announcement.getCurrentTime();
-                announcement.setCurrentTime(time);
+
+                announcement.setCurrentDateTime(date + " " + time);
             });
     },
 
-    setCurrentDate: function (date) {
-        $("#announcement-date").val(date);
-    },
-
-    setCurrentTime: function (time) {
-        $("#announcement-time").val(time);
+    setCurrentDateTime: function(datetime) {
+        $("#announcement-date").val(datetime);
     },
 
     getCurrentDate: function () {

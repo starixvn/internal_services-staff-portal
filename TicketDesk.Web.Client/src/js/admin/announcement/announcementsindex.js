@@ -1,25 +1,28 @@
 ﻿var datetimepicker = {
     init: function () {
         datetimepicker.setupDateTimePicker();
+        datetimepicker.setupDatePicker();
     },
 
     setupDateTimePicker: function () {
         var dateString = $(".datetimepicker").val();
         if (dateString !== "") {
             $(".datetimepicker").datetimepicker({
-                format: "MM-DD-YYYY",
+                format: "MM-DD-YYYY hh:mm A",
                 defaultDate: dateString,
                 minDate: moment()
             });
         } else {
             $(".datetimepicker").datetimepicker({
-                format: "MM-DD-YYYY",
+                format: "MM-DD-YYYY hh:mm A",
                 minDate: moment()
             });
         }
+    },
 
-        $(".timepicker").datetimepicker({
-            format: "LT"
+    setupDatePicker: function() {
+        $(".datepicker").datetimepicker({
+            format: "MM-DD-YYYY"
         });
     }
 }
@@ -56,32 +59,33 @@ var modalhandler = {
     },
 
     manualFormHandle: function (form) {
-        //$(form).on("submit",
-        //    function() {
-        //        e.preventDefault();
-        //        var returnurl = $(form).data("return");
+        $(form).on("submit",
+            function(e) {
+                e.preventDefault();
+                var returnurl = window.location.href;
 
-        //        $(form).validate();
+                $(form).validate();
 
-        //        $.ajax({
-        //            url: $(form).attr("action"),
-        //            method: $(form).attr("method"),
-        //            data: $(form).serialize(),
-        //            success: function(res, status, xhr) {
-        //                window.location.href = returnurl;
-        //            },
-        //            error: function(request, error) {
-        //                $("#notification-modal div.modal-header > h4").text(error);
-        //                $("#notification-modal div.modal-body > p").text("Error status code: " + request.status);
-        //                $("#notification-modal").modal();
-        //            }
-        //        });
-        //    });
-        $(form).validate({
-            submitHandler: function (form) {
-                $(form).ajaxSubmit();
-            }
-        });
+                $.ajax({
+                    url: $(form).attr("action"),
+                    method: $(form).attr("method"),
+                    data: $(form).serialize(),
+                    success: function(res, status, xhr) {
+                        //window.location.href = returnurl;
+                        location.reload();
+                    },
+                    error: function(request, error) {
+                        $("#notification-modal div.modal-header > h4").text(error);
+                        $("#notification-modal div.modal-body > p").text("Error status code: " + request.status);
+                        $("#notification-modal").modal();
+                    }
+                });
+            });
+        //$(form).validate({
+        //    submitHandler: function (form) {
+        //        $(form).ajaxSubmit();
+        //    }
+        //});
     }
 }
 

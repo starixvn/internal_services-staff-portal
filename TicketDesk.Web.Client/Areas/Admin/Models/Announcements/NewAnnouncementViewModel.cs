@@ -14,7 +14,7 @@
 
         public DateTime? Date { get; set; }
 
-        public TimeSpan? Time { get; set; }
+        ////public TimeSpan? Time { get; set; }
 
         public ModalId ModalId { get; set; } = ModalId.CreateAnnouncementModal;
 
@@ -26,7 +26,7 @@
             {
                 Announcement = Announcement,
                 Date = Date,
-                Time = Time,
+                ////Time = Time,
                 IsImportant = IsImportant,
                 ModifiedBy = modifiedBy
             };

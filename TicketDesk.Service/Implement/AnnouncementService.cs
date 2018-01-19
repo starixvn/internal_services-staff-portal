@@ -49,10 +49,9 @@
             criteria.Announcement.LastModified = DateTime.Now;
 
             // Set published date-time
-            if (criteria.Date != null && criteria.Time != null)
+            if (criteria.Date != null)
             {
                 var publishedDateTime = criteria.Date.Value;
-                publishedDateTime = publishedDateTime.AddSeconds(criteria.Time.Value.TotalSeconds);
 
                 criteria.Announcement.PublishedDateTime = publishedDateTime;
             }
