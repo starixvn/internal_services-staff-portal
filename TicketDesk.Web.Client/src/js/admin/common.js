@@ -1,7 +1,8 @@
 ﻿var sidebar = {
     init: function() {
-        $(".toggle-sidebar").on("click",
-            sidebar.toggleMenu());
+        $(".toggle-sidebar").on("click", function() {
+            sidebar.toggleMenu();
+        });
     },
 
     toggleMenu: function() {
