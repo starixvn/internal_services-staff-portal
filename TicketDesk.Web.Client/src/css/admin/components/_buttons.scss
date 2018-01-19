@@ -19,7 +19,7 @@
 .btn {
     font-family: inherit;
     padding: 3px 10px;
-    border-radius: 2px;
+    border-radius: 3px;
     font-size: 13px;
     transition: all .2s ease;
 
@@ -40,6 +40,14 @@
 
 .btn-create {
     @include btn-style(#31a351);
+}
+
+.btn-create-modal {
+    @include btn-style(#2e4592);
+}
+
+.btn-cancel {
+    @include btn-style(#777777);
 }
 
 .btn-browse {
@@ -79,4 +87,6 @@
     @include btn-style(#08a1f9);
     height: 22px;
     line-height: 1;
+    padding-left: 6px;
+    padding-right: 6px;
 }

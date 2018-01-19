@@ -2159,6 +2159,7 @@
     <Content Include="Views\Shared\_LogoutModal.cshtml" />
     <Content Include="src\css\admin\base\_typo.scss" />
     <Content Include="src\css\admin\layout\_content.scss" />
+    <Content Include="src\css\admin\components\_modal.scss" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

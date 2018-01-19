@@ -1,59 +1,61 @@
 ﻿.table {
     margin-top: 10px;
+
+    table {
+        border: 1px solid #c1c1c1;
+        border-collapse: collapse;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    table th {
+        text-transform: capitalize;
+        background: $secondary-color;
+        color: #e3ebff;
+        text-align: center;
+        font-weight: 400;
+        // -------- column sizing --------- //
+        &.action {
+            width: 65px;
+        }
+
+        &.width-150 {
+            width: 150px;
+        }
+
+        &.width-120 {
+            width: 120px;
+        }
+    }
+
+    table tr {
+        background: #fff;
+        padding: .35em;
+        color: #333333;
+        transition: background 0.2s ease;
+
+        &:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        &:hover {
+            background: #ffe7db;
+        }
+
+        td {
+            line-height: 24px;
+        }
+    }
+
+    table th,
+    table td {
+        border: 1px solid #c1c1c1;
+        padding: 4px 5px;
+    }
 }
 
-table {
-    border: 1px solid #c1c1c1;
-    border-collapse: collapse;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
 
-table th {
-    text-transform: capitalize;
-    background: $secondary-color;
-    color: #e3ebff;
-    text-align: center;
-    font-weight: 400;
-    // -------- column sizing --------- //
-    &.action {
-        width: 65px;
-    }
-
-    &.width-150 {
-        width: 150px;
-    }
-
-    &.width-120 {
-        width: 120px;
-    }
-}
-
-table tr {
-    background: #fff;
-    padding: .35em;
-    color: #333333;
-    transition: background 0.2s ease;
-
-    &:nth-child(even) {
-        background: #f2f2f2;
-    }
-
-    &:hover {
-        background: #ffe7db;
-    }
-
-    td {
-        line-height: 24px;
-    }
-}
-
-table th,
-table td {
-    border: 1px solid #c1c1c1;
-    padding: 4px 5px;
-}
 
 // -------------------- Action Group --------------------- //
 
