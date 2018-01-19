@@ -2158,6 +2158,8 @@
     <Content Include="src\css\admin\components\_buttons.scss" />
     <Content Include="src\css\admin\components\_forms.scss" />
     <Content Include="Views\Shared\_LogoutModal.cshtml" />
+    <Content Include="src\css\admin\base\_typo.scss" />
+    <Content Include="src\css\admin\layout\_content.scss" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

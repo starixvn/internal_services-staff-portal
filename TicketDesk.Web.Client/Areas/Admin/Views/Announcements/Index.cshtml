@@ -81,7 +81,7 @@
                 <th>Announcement</th>
                 <th>Status</th>
                 <th class="publish">
-                    <button class="btn btn-default" type="submit">Publish</button>
+                    <button class="btn btn-publish" type="submit">Publish</button>
                 </th>
                 <th class="action">Action</th>
             </tr>
@@ -101,10 +101,10 @@
                         <td>@item.PublishedDateTime</td>
                         <td>@item.Message</td>
                         <td class="text-center">@item.Status</td>
-                        <td>
+                        <td class="text-center">
                             @if (item.State == AnnouncementState.Published)
                             {
-                                <span>V</span>
+                                <span class="icon-check"></span>
                             }
                             else
                             {

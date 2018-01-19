@@ -3,8 +3,11 @@
 
 <div class="page-size">
     <label class="">@Html.DisplayNameFor(x => x.ItemPerPage)</label>
-    <div class="custom-dropdown">
+    <div class="custom-dropdown js-dropdown">
         @*@Html.DropDownListFor(x => x.ItemPerPage, Model.ItemPerPageList, new { id = "itemperpage-select" })*@
+        <input type="hidden" name="Framework" id="Framework" class="js-dropdown__input">
+        <span class="c-button c-button--dropdown js-dropdown__current">20</span>
+
         <ul class="c-dropdown__list">
             @foreach (var size in Model.PageSizes)
             {

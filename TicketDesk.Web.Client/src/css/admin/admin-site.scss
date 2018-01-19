@@ -1,78 +1,12 @@
 ﻿@import 'abstracts/variables';
 
 @import 'base/common';
+@import 'base/typo';
 
 @import 'layout/sidebar';
 @import 'layout/header';
+@import 'layout/content';
 
 @import 'components/table';
 @import 'components/buttons';
 @import 'components/forms';
-
-.page-title {
-    margin: 0;
-    font-size: 16px;
-    line-height: 36px;
-    color: $secondary-color;
-}
-
-.references-zone {
-    padding: 0;
-
-    li {
-        list-style: none;
-    }
-}
-
-.reference-entry {
-    width: 80%;
-    box-sizing: border-box;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-flex: 0;
-    -ms-flex: 0 1 auto;
-    flex: 0 1 auto;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-
-    > div {
-        box-sizing: border-box;
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 auto;
-        flex: 0 0 auto;
-        align-items: flex-end;
-    }
-
-    .date {
-        position: relative;
-        flex-basis: 160px;
-        max-width: 160px;
-
-        .icon-calendar {
-            position: absolute;
-            top: 33px;
-            right: 5px;
-            color: $secondary-color;
-        }
-    }
-
-    .url {
-        -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-        flex-grow: 1;
-        -ms-flex-preferred-size: 0;
-        flex-basis: 0;
-        max-width: 100%;
-        padding-right: .5rem;
-        padding-left: .5rem;
-    }
-
-    .browse {
-        margin-top: 26px;
-    }
-}

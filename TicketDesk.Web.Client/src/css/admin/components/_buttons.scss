@@ -1,8 +1,26 @@
-﻿.btn {
+﻿@mixin btn-style($bg, $color: #fff) {
+    background: $bg;
+    color: $color;
+    border: 1px solid $bg;
+
+    &:hover, &:focus {
+        color: $color;
+        background: darken($bg, 10%);
+        border-color: darken($bg, 10%);
+        outline: none;
+    }
+
+    &[disabled] {
+        opacity: .8;
+        cursor: not-allowed;
+    }
+}
+
+.btn {
     font-family: inherit;
-    color: #fff;
     padding: 3px 10px;
     border-radius: 2px;
+    font-size: 13px;
     transition: all .2s ease;
 
     &:hover {
@@ -17,28 +35,19 @@
 }
 
 .btn-submit {
-    background: #2e4592;
-
-    &:hover {
-        background: darken(#2e4592, 10%);
-    }
+    @include btn-style(#2e4592);
 }
 
 .btn-create {
-    background: #31a351;
-
-    &:hover {
-        background: darken(#31a351, 10%);
-    }
+    @include btn-style(#31a351);
 }
 
 .btn-browse {
+    @include btn-style(#dad7d7,#333);
     position: relative;
-    background: #dad7d7;
     border: 1px solid #999999;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    color: #333;
     cursor: pointer;
 
     span {
@@ -63,9 +72,11 @@
 
 
 .btn-delete {
-    background: #ea1118;
+    @include btn-style(#ea1118);
 }
 
-.text-red {
-    color: #ea1118;
+.btn-publish {
+    @include btn-style(#08a1f9);
+    height: 22px;
+    line-height: 1;
 }
