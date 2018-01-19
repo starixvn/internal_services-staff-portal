@@ -3,22 +3,34 @@
 }
 
 .form-group {
+    margin-bottom: 10px;
+
     label {
         font-weight: 500;
-        color: #777777;
+        color: #777;
     }
 
     .control-label {
         display: block;
+
+        &.text-content {
+            color: #333;
+            font-weight: 600;
+        }
     }
 
     .date-time {
+        position: relative;
         display: inline-block;
         width: 200px;
         vertical-align: middle;
-        .form-control {
-            //width: 200px;
-            //display: inline-block;
+        margin-right: 8px;
+
+        .icon-calendar {
+            position: absolute;
+            top: 8px;
+            right: 5px;
+            color: #2e4592;
         }
     }
 }
@@ -27,9 +39,68 @@
     font-family: inherit;
     background: none;
     box-shadow: none;
-    border-radius: 2px;
+    border-radius: 3px;
+    font-size: 13px;
     height: 28px;
     line-height: 28px;
-    padding: 0 5px;    
+    padding: 0 5px;
 }
 
+
+.checkbox {
+    $size: 14px;
+    $color: #2e4592;
+    $background: #fff;
+
+    input[type="checkbox"] {
+        display: block;
+        opacity: 0;
+        height: $size;
+        position: absolute;
+        width: $size;
+
+        &:checked + label::after {
+            background-color: $color;
+            transform: scale(1);
+        }
+
+        &:disabled + label::after {
+            background-color: $color;
+            transform: scale(1);
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        &:disabled + label {
+            cursor: not-allowed;
+        }
+    }
+
+    label {
+        display: block;
+        padding-left: 25px;
+        position: relative;
+        color: #535353;
+        margin-bottom: 8px;
+        cursor: pointer;
+
+        &:before, &:after {
+            border: 1px solid #737373;
+            content: "";
+            display: block;
+            left: 0;
+            height: $size;
+            position: absolute;
+            width: $size;
+            top: 0;
+            border-radius: 2px;
+        }
+
+        &:after {
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNXG14zYAAABMSURBVAiZfc0xDkAAFIPhd2Kr1WRjcAExuIgzGUTIZ/AkImjSofnbNBAfHvzAHjOKNzhiQ42IDFXCDivaaxAJd0xYshT3QqBxqnxeHvhunpu23xnmAAAAAElFTkSuQmCC") center center no-repeat;
+            border: 0;
+            transform: scale(0);
+            transition: .2s;
+        }
+    }
+}
