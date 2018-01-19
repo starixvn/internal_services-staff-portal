@@ -139,4 +139,10 @@ Bạn có thực sự muốn đăng xuất?</value>
   <data name="Yes" xml:space="preserve">
     <value>Có</value>
   </data>
+  <data name="DuplicatedDay" xml:space="preserve">
+    <value>The Date duplicated.</value>
+  </data>
+  <data name="UpdateReferencesSuccessful" xml:space="preserve">
+    <value>Your upload file(s) has been successfully submitted!</value>
+  </data>
 </root>

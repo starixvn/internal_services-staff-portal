@@ -87,8 +87,8 @@ $(document).on("dp.change", ".datetimepicker",function () {
     reference.UpdateDisabledDates();
 });
 
-$("#ImageZone").on("change", ".upload-image", function (e) {
-    var uploadEntry = $(this).parent().parent();
+$("#ReferencesZone").on("change", ".upload-image", function (e) {
+    var uploadEntry = $(this).closest(".reference-entry");
     var files = e.target.files;
     if (files.length > 0) {
         if (window.FormData !== undefined) {
@@ -102,13 +102,14 @@ $("#ImageZone").on("change", ".upload-image", function (e) {
                 data: data,
                 success: function (result) {
                     if (result.isSuccessful) {
-                        console.log(result);
-                        uploadEntry.find(".image-url").val(result.imageLink);
+                        uploadEntry.find(".image-url").val(result.imageDirectory);
+                        uploadEntry.find(".image-url").removeClass("input-validation-error");
+                        uploadEntry.find(".upload-image-validation").text("");
                     } else {
-                        uploadEntry.find(".image-url").addClass("error");
+                        uploadEntry.find(".image-url").addClass("input-validation-error");
+                        uploadEntry.find(".upload-image-validation").text(result.message);
                         uploadEntry.find(".image-url").val("");
                         uploadEntry.find(".upload-image").val("");
-                        alert(result.message);
                     }
                 },
                 error: function (xhr, status, p3, p4) {

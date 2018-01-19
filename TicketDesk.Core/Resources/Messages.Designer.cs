@@ -61,6 +61,15 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Date duplicated..
+        /// </summary>
+        public static string DuplicatedDay {
+            get {
+                return ResourceManager.GetString("DuplicatedDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A folder name can&apos;t contain any of the following characters: \ / : * ? &quot; &lt; &gt; |.
         /// </summary>
         public static string InvalidFolderName {
@@ -112,6 +121,15 @@ namespace TicketDesk.Core.Resources {
         public static string UnknownRequest {
             get {
                 return ResourceManager.GetString("UnknownRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your upload file(s) has been successfully submitted!.
+        /// </summary>
+        public static string UpdateReferencesSuccessful {
+            get {
+                return ResourceManager.GetString("UpdateReferencesSuccessful", resourceCulture);
             }
         }
         

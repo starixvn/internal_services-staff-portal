@@ -9,14 +9,15 @@
     using System.Web;
     using System.Web.Configuration;
     using System.Web.Mvc;
+    using Client.Controllers;
+    using Core.Enumerations;
+    using Core.Resources;
+    using Domain;
+    using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using TicketDesk.Core.Enumerations;
-    using TicketDesk.Domain;
-    using TicketDesk.Domain.Infrastructure;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.Web.Client.Areas.Admin.Models.References;
-    using TicketDesk.Web.Client.Controllers;
+    using Models.References;
 
     public class ReferencesController : BaseController
     {
@@ -57,7 +58,7 @@
                 else
                 {
                     InsertListReference(ReferenceType.TvSchedule, viewModel);
-                    TempData["Success"] = "Update Successfully!";
+                    TempData["Success"] = Messages.UpdateReferencesSuccessful;
                 }
             }
 
@@ -77,7 +78,15 @@
         {
             if (ModelState.IsValid)
             {
-                InsertListReference(ReferenceType.FeaturedEvent, viewModel);
+                if (CheckIfDateDuplicate(viewModel.References))
+                {
+                    ModelState.AddModelError("", "The Date duplicated.");
+                }
+                else
+                {
+                    InsertListReference(ReferenceType.FeaturedEvent, viewModel);
+                    TempData["Success"] = Messages.UpdateReferencesSuccessful;
+                }
             }
 
             return View(viewModel);
@@ -96,8 +105,15 @@
         {
             if (ModelState.IsValid)
             {
-                InsertListReference(ReferenceType.BestOfTheDay, viewModel);
-                TempData["Success"] = "Update Successfully!";
+                if (CheckIfDateDuplicate(viewModel.References))
+                {
+                    ModelState.AddModelError("", Messages.DuplicatedDay);
+                }
+                else
+                {
+                    InsertListReference(ReferenceType.BestOfTheDay, viewModel);
+                    TempData["Success"] = Messages.UpdateReferencesSuccessful;
+                }
             }
 
             return View(viewModel);
@@ -116,8 +132,15 @@
         {
             if (ModelState.IsValid)
             {
-                InsertListReference(ReferenceType.TradingLimits, viewModel);
-                TempData["Success"] = "Update Successfully!";
+                if (CheckIfDateDuplicate(viewModel.References))
+                {
+                    ModelState.AddModelError("", Messages.DuplicatedDay);
+                }
+                else
+                {
+                    InsertListReference(ReferenceType.TradingLimits, viewModel);
+                    TempData["Success"] = Messages.UpdateReferencesSuccessful;
+                }
             }
 
             return View(viewModel);
@@ -137,7 +160,7 @@
             if (ModelState.IsValid)
             {
                 InsertListReference(ReferenceType.NewsLetter, viewModel);
-                TempData["Success"] = "Update Successfully!";
+                TempData["Success"] = Messages.UpdateReferencesSuccessful;
             }
 
             return View(viewModel);
@@ -235,7 +258,7 @@
                 var domain = Request.Url.GetLeftPart(UriPartial.Authority);
                 var today = DateTime.Now.Date;
                 var directory = string.Format("{0}/{1}/{2}/{3}", webRootPath, today.Year, today.Month, today.Day);
-                var imageLink = string.Format("{0}/{1}/{2}/{3}/{4}", domain, webPath, today.Year, today.Month, today.Day);
+                var imageDirectory = string.Format("{0}/{1}/{2}/{3}/{4}", domain, webPath, today.Year, today.Month, today.Day);
                 string fileName = Path.GetFileName(file.FileName);
                 int fileSize = file.ContentLength;
 
@@ -262,9 +285,9 @@
                     file.SaveAs(filePath);
                 }
 
-                imageLink = string.Format("{0}/{1}", imageLink, fileName);
+                imageDirectory = string.Format("{0}/{1}", imageDirectory, fileName);
 
-                return Json(new { isSuccessful = true, imageLink });
+                return Json(new { isSuccessful = true, imageDirectory });
             }
 
             return Json(new { isSuccessful, message = "Upload fail" });
