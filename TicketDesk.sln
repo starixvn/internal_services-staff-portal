@@ -135,6 +135,7 @@ Global
 		{508F4CF5-960F-4779-A05F-C9B60986D279} = {E274BBA5-344B-4EF3-9085-7DA12E2C24EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35;packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35
 		RESX_PrefixTranslations = False
 	EndGlobalSection
 EndGlobal

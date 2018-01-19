@@ -71,7 +71,7 @@
                 return RedirectToAction("Index");
             }
 
-            return View(viewModel);
+            return PartialView("_Create", viewModel);
         }
 
         public ActionResult Edit(int? id)

@@ -62,7 +62,6 @@ var modalhandler = {
         $(form).on("submit",
             function(e) {
                 e.preventDefault();
-                var returnurl = window.location.href;
 
                 $(form).validate();
 
@@ -71,7 +70,6 @@ var modalhandler = {
                     method: $(form).attr("method"),
                     data: $(form).serialize(),
                     success: function(res, status, xhr) {
-                        //window.location.href = returnurl;
                         location.reload();
                     },
                     error: function(request, error) {
@@ -81,11 +79,6 @@ var modalhandler = {
                     }
                 });
             });
-        //$(form).validate({
-        //    submitHandler: function (form) {
-        //        $(form).ajaxSubmit();
-        //    }
-        //});
     }
 }
 
