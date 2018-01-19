@@ -31,6 +31,7 @@ var modalhandler = {
     init: function () {
         modalhandler.resetModalForm();
         modalhandler.manualModalHandler();
+        modalhandler.assignAnnouncementDelete();
     },
 
     resetModalForm: function () {
@@ -78,6 +79,15 @@ var modalhandler = {
                         $("#notification-modal").modal();
                     }
                 });
+            });
+    },
+
+    assignAnnouncementDelete: function() {
+        $(".delete").on("click",
+            function() {
+                var href = $(this).data("href");
+                $(".announcement-delete").attr("href", href);
+                $("#delete-announcement-confirm-modal").modal();
             });
     }
 }

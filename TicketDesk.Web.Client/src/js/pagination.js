@@ -1,7 +1,4 @@
-﻿/**
- * Author: Kris Olszewski
- * CodePen: https://codepen.io/KrisOlszewski/full/wBQBNX
- */
+﻿// https://codepen.io/KrisOlszewski/full/wBQBNX
 
 ; (function ($, window, document, undefined) {
 
@@ -26,6 +23,10 @@
         var $target = $(e.target);
         if (!$target.parents().hasClass("js-dropdown")) {
             $(".js-dropdown").removeClass("is-open");
+        };
+
+        if (e.target.href !== undefined) {
+            window.location.href = e.target.href;
         }
     });
 

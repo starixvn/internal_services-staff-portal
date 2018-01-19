@@ -129,27 +129,7 @@
             return PartialView("_Create", viewModel);
         }
 
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var announcement = _announcementService.GetAnnouncement(id.Value);
-
-            var invalidAnnouncement = ReturnInvalidAnnouncement(announcement);
-            if (invalidAnnouncement != null)
-            {
-                return invalidAnnouncement;
-            }
-
-            return View(announcement);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
             var announcement = _announcementService.GetAnnouncement(id);
 
