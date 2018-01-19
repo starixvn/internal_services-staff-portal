@@ -7,6 +7,20 @@
         font-weight: 500;
         color: #777777;
     }
+
+    .control-label {
+        display: block;
+    }
+
+    .date-time {
+        display: inline-block;
+        width: 200px;
+        vertical-align: middle;
+        .form-control {
+            //width: 200px;
+            //display: inline-block;
+        }
+    }
 }
 
 .form-control {
@@ -16,5 +30,6 @@
     border-radius: 2px;
     height: 28px;
     line-height: 28px;
-    padding: 0 5px;
+    padding: 0 5px;    
 }
+

@@ -618,12 +618,33 @@ main {
     opacity: .8;
     cursor: not-allowed; }
 
+.btn-getCurrent {
+  background: #586e94;
+  color: #fff;
+  border: 1px solid #586e94; }
+  .btn-getCurrent:hover, .btn-getCurrent:focus {
+    color: #fff;
+    background: #455674;
+    border-color: #455674;
+    outline: none; }
+  .btn-getCurrent[disabled] {
+    opacity: .8;
+    cursor: not-allowed; }
+
 .button-filter {
   margin-top: 26px; }
 
 .form-group label {
   font-weight: 500;
   color: #777777; }
+
+.form-group .control-label {
+  display: block; }
+
+.form-group .date-time {
+  display: inline-block;
+  width: 200px;
+  vertical-align: middle; }
 
 .form-control {
   font-family: inherit;
