@@ -20,8 +20,6 @@
     <script src="~/src/libs/datetimepicker/moment.js"></script>
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.js"></script>
 
-
-
     <script src="~/src/js/admin/announcement/announcementsindex.js"></script>
 
     @* Popup javascripts *@
@@ -162,10 +160,10 @@
                             @if (item.State == AnnouncementState.Scheduled)
                             {
                                 <div class="dropdown action-group">
-                                    <a class="dropdown-toggle" id="dropdownAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <div class="dropdown-toggle" id="dropdownAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="icon-setting" aria-hidden="true"></span>
                                         <span class="icon-arrow-down" aria-hidden="true"></span>
-                                    </a>
+                                    </div>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownAction">
                                         <li>
                                             <a class="edit manual-modal-handler"
