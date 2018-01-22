@@ -1,5 +1,6 @@
 ﻿var sidebar = {
-    init: function() {
+    init: function () {
+        sidebar.hovermenu();
         $(".toggle-sidebar").on("click", function() {
             sidebar.toggleMenu();
         });
@@ -11,6 +12,14 @@
         } else {
             $("body").addClass("menu-collapsed");
         }
+    },
+
+    hovermenu: function() {
+        $(".sidebar>ul>li").hover(function() {
+            $(this).addClass("hover-open");
+        }, function() {
+            $(this).removeClass("hover-open");
+        });
     }
 }
 
