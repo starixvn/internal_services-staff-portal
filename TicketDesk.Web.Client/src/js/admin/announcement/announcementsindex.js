@@ -97,7 +97,37 @@ var modalhandler = {
     }
 }
 
+var publishannouncement = {
+    init: function() {
+        $(".checkbox").on("click",
+            function() {
+                if ($(this).find("input[type='checkbox']").attr("name").indexOf("IsWaitingToPublish") > 0) {
+                    var values = $(".table > form").serialize().split("&");
+                    var count = 0;
+                    for (var i = 0; i < values.length; i++) {
+                        if (values[i].indexOf("IsWaitingToPublish") > 0 && values[i].split("=")[1] === "true") {
+                            count++;
+                        }
+                    }
+
+                    publishannouncement.updatetext(count);
+                }
+            });
+    },
+
+    updatetext: function(count) {
+        if (count > 1) {
+            $("#publish-announcement-confirm-modal .modal-body p")
+                .text("Are you sure you want to public these announcements right away?");
+        } else {
+            $("#publish-announcement-confirm-modal .modal-body p")
+                .text("Are you sure you want to public this announcement right away?");
+        }
+    }
+}
+
 $(document).ready(function () {
     datetimepicker.init();
     modalhandler.init();
+    publishannouncement.init();
 });
