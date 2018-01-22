@@ -48,7 +48,7 @@
         </li>
     }
 
-    @if (Model.CurrentPage == Model.TotalPage)
+    @if (Model.CurrentPage == Model.TotalPage || Model.TotalPage == 0)
     {
         <li>
             <a class="icon-next disabled"></a>
