@@ -72,23 +72,7 @@ main {
                 max-width: unset;
             }
         }
-    }
-
-    .sidebar {
-        width: 60px;
-
-        .text {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 60px;
-            height: 60px;
-            line-height: 60px;
-            text-align: center;
-            opacity: 0;
-            visibility: hidden;
-        }
-    }
+    }    
 
     main {
         padding-left: 60px;

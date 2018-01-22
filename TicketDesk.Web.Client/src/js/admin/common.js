@@ -15,7 +15,7 @@
     },
 
     hovermenu: function() {
-        $(".sidebar>ul>li").hover(function() {
+        $(".menu-section").hover(function() {
             $(this).addClass("hover-open");
         }, function() {
             $(this).removeClass("hover-open");

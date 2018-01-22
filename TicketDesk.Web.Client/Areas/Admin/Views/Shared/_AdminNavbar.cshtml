@@ -56,7 +56,7 @@
 
                 var menuClass = Html.IsActiveRoute(menuLink);
 
-            <li>
+            <li class="menu-section">
                 @if (menu.Children != null && menu.Children.Any())
                 {
                     <a class="@menuClass menu-item has-sub" data-toggle="collapse" href="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
@@ -69,7 +69,7 @@
                         {
                             var childMenuClass = Html.IsActiveRoute(childMenu.Url);
                             <li class="sub-menu">
-                                <a href="@childMenu.Url" class="@childMenuClass menu-item"><i class="@childMenu.IconClass"></i><span class="text">@childMenu.Name</span></a>
+                                <a href="@childMenu.Url" class="@childMenuClass menu-item"><i class="@childMenu.IconClass"></i><span class="sub-menu-text">@childMenu.Name</span></a>
                             </li>
                         }
                     </ul>
