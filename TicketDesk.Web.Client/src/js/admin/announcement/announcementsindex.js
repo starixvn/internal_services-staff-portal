@@ -20,7 +20,7 @@
         }
     },
 
-    setupDatePicker: function() {
+    setupDatePicker: function () {
         $(".datepicker").datetimepicker({
             format: "MM-DD-YYYY"
         });
@@ -61,9 +61,9 @@ var modalhandler = {
 
     manualFormHandle: function (form) {
         $(form).on("submit",
-            function(e) {
+            function (e) {
                 e.preventDefault();
-                
+
                 $.validator.unobtrusive.parse($(form));
                 $(form).validate();
 
@@ -87,9 +87,9 @@ var modalhandler = {
             });
     },
 
-    assignAnnouncementDelete: function() {
+    assignAnnouncementDelete: function () {
         $(".delete").on("click",
-            function() {
+            function () {
                 var href = $(this).data("href");
                 $(".announcement-delete").attr("href", href);
                 $("#delete-announcement-confirm-modal").modal();
@@ -98,9 +98,9 @@ var modalhandler = {
 }
 
 var publishannouncement = {
-    init: function() {
+    init: function () {
         $(".checkbox").on("click",
-            function() {
+            function () {
                 if ($(this).find("input[type='checkbox']").attr("name").indexOf("IsWaitingToPublish") > 0) {
                     var values = $(".table > form").serialize().split("&");
                     var count = 0;
@@ -111,17 +111,26 @@ var publishannouncement = {
                     }
 
                     publishannouncement.updatetext(count);
+                    publishannouncement.handlePublishButton(count);
                 }
             });
     },
 
-    updatetext: function(count) {
+    updatetext: function (count) {
         if (count > 1) {
             $("#publish-announcement-confirm-modal .modal-body p")
                 .text("Are you sure you want to public these announcements right away?");
         } else {
             $("#publish-announcement-confirm-modal .modal-body p")
                 .text("Are you sure you want to public this announcement right away?");
+        }
+    },
+
+    handlePublishButton: function (count) {
+        if (count > 0) {
+            $(".btn-publish").attr("disabled", false);
+        } else {
+            $(".btn-publish").attr("disabled", true);
         }
     }
 }

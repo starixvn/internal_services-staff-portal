@@ -62,7 +62,9 @@
 
     public enum AnnouncementState
     {
+        [Display(Name = "No")]
         Scheduled,
+        [Display(Name = "Yes")]
         Published
     }
 }

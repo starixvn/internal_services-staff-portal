@@ -36,7 +36,7 @@
         [Display(Name = "Status")]
         public AnnouncementStatus? Status { get; set; }
 
-        [Display(Name = "State")]
+        [Display(Name = "Published")]
         public AnnouncementState? State { get; set; }
 
         // Create
