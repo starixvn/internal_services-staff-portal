@@ -139,9 +139,10 @@ main {
   .menu-collapsed .menu-section.hover-open .sub-menu {
     display: block; }
     .menu-collapsed .menu-section.hover-open .sub-menu .menu-item {
-      padding: 0 2rem; }
+      padding: 0 2rem;
+      color: #131923; }
       .menu-collapsed .menu-section.hover-open .sub-menu .menu-item:hover {
-        color: #131923; }
+        background: rgba(0, 0, 0, 0.1); }
   .menu-collapsed .menu-section.hover-open .collapse {
     display: block;
     position: absolute;
@@ -352,7 +353,7 @@ main {
     padding-right: .5rem;
     padding-left: .5rem; }
   .reference-entry .browse {
-    margin-top: 26px; }
+    margin-top: 24px; }
 
 .table {
   margin-top: 10px; }
