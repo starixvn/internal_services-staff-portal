@@ -595,6 +595,9 @@ main {
   .btn-create[disabled] {
     opacity: .8;
     cursor: not-allowed; }
+  .btn-create .icon-add {
+    font-size: 9px;
+    padding-right: 5px; }
 
 .btn-create-modal {
   background: #2e4592;
@@ -708,6 +711,8 @@ main {
     color: #777; }
   .form-group .control-label {
     display: block; }
+    .form-group .control-label .highlight {
+      color: #bf141a; }
     .form-group .control-label.text-content {
       color: #333;
       font-weight: 600; }
@@ -722,6 +727,8 @@ main {
       top: 8px;
       right: 5px;
       color: #2e4592; }
+  .form-group textarea.form-control {
+    width: 100% !important; }
 
 .form-control {
   font-family: inherit;

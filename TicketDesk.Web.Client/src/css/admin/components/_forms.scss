@@ -13,6 +13,10 @@
     .control-label {
         display: block;
 
+        .highlight {
+            color: #bf141a;
+        }
+
         &.text-content {
             color: #333;
             font-weight: 600;
@@ -32,6 +36,10 @@
             right: 5px;
             color: #2e4592;
         }
+    }
+
+    textarea.form-control {
+        width: 100% !important;
     }
 }
 

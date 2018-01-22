@@ -40,6 +40,11 @@
 
 .btn-create {
     @include btn-style(#31a351);
+
+    .icon-add {
+        font-size: 9px;
+        padding-right: 5px;
+    }
 }
 
 .btn-create-modal {
