@@ -27,7 +27,7 @@
             { "/Admin/Announcements", "icon-announcements" },
             { "/Admin/References", "icon-references" },
             { "/Admin/References/TVSchedules", "icon-admin" },
-            { "/Admin/References/BestOfTheDay", "icon-admin" },
+            { "/Admin/References/BetOfTheDay", "icon-admin" },
             { "/Admin/References/TradingLimits", "icon-admin" },
             { "/Admin/References/FeatureEvents", "icon-admin" },
             { "/Admin/References/NewsLetter", "icon-admin" },

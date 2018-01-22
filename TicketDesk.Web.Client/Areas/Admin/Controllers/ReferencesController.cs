@@ -92,16 +92,16 @@
             return View(viewModel);
         }
 
-        public ActionResult BestOfTheDay()
+        public ActionResult BetOfTheDay()
         {
-            var viewModel = GetListReferences(ReferenceType.BestOfTheDay);
+            var viewModel = GetListReferences(ReferenceType.BetOfTheDay);
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult BestOfTheDay(ListReferencesViewModel viewModel)
+        public ActionResult BetOfTheDay(ListReferencesViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -111,7 +111,7 @@
                 }
                 else
                 {
-                    InsertListReference(ReferenceType.BestOfTheDay, viewModel);
+                    InsertListReference(ReferenceType.BetOfTheDay, viewModel);
                     TempData["Success"] = Messages.UpdateReferencesSuccessful;
                 }
             }

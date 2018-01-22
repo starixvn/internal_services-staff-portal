@@ -4,7 +4,7 @@
     {
         TvSchedule,
         FeaturedEvent,
-        BestOfTheDay,
+        BetOfTheDay,
         TradingLimits,
         NewsLetter
     }

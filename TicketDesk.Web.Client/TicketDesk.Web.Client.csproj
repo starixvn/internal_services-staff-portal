@@ -616,7 +616,7 @@
     <Content Include="Areas\Admin\Views\References\_ReferenceEntryEditor.cshtml" />
     <Content Include="Areas\Admin\Views\References\NewsLetter.cshtml" />
     <Content Include="Areas\Admin\Views\References\FeatureEvents.cshtml" />
-    <Content Include="Areas\Admin\Views\References\BestOfTheDay.cshtml" />
+    <Content Include="Areas\Admin\Views\References\BetOfTheDay.cshtml" />
     <Content Include="Areas\Admin\Views\References\TradingLimits.cshtml" />
     <Content Include="Areas\Admin\Views\References\_ReferenceCommon.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />

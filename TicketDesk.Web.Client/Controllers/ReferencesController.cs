@@ -32,7 +32,7 @@
         [Route("bet-of-the-day")]
         public ActionResult BetOfTheDay()
         {
-            var reference = GetReferenceSuitable(ReferenceType.BestOfTheDay);
+            var reference = GetReferenceSuitable(ReferenceType.BetOfTheDay);
             return View(reference);
         }
 
@@ -79,6 +79,10 @@
                                                .OrderByDescending(r => r.DateAppear)
                                                .ToList();
             var reference = references.FirstOrDefault(r => DateTime.Compare(r.DateAppear, DateTime.Now) <= 0);
+            if (reference == null)
+            {
+                reference = new Reference();
+            }
             return reference;
         }
     }
