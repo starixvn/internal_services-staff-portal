@@ -3,7 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
-    using TicketDesk.Core.Enumerations;
+    using Core.Enumerations;
 
     public class ReferenceViewModel
     {

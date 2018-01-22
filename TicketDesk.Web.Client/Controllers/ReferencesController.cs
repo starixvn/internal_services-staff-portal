@@ -3,13 +3,13 @@
     using System;
     using System.Linq;
     using System.Web.Mvc;
+    using Core.Enumerations;
+    using Domain;
     using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using TicketDesk.Core.Enumerations;
-    using TicketDesk.Domain;
-    using TicketDesk.Domain.Model;
-    using TicketDesk.Web.Client.Models.Reference;
+    using Models.Reference;
 
     [RoutePrefix("References")]
     public class ReferencesController : BaseController

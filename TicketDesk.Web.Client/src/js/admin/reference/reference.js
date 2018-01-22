@@ -1,10 +1,9 @@
 ﻿var reference = {
-
     InitDateTimePicker: function () {
         var nowDate = new Date();
         $(".datetimepicker").datetimepicker({
             format: "MM-DD-YYYY",
-            minDate: new Date(),
+            minDate: nowDate.toDateString(),
             maxDate: nowDate.setFullYear(nowDate.getFullYear() + 1),
             disabledDates: reference.GetSelectedDates()
         });
@@ -23,15 +22,14 @@
         $(".datetimepicker").each(function (i, e) {
             $(this).data("DateTimePicker").disabledDates(reference.GetSelectedDates());
         });
-        
     },
 
-    ConvertDate: function(oldDate) {
-       var newDate = oldDate.split("-").reverse().join("-");
-       return newDate;
+    ConvertDate: function (oldDate) {
+        var newDate = oldDate.split("-").reverse().join("-");
+        return newDate;
     },
 
-    UpdateReferenceIndex: function(index, element) {
+    UpdateReferenceIndex: function (index, element) {
         $(element).find(".datetimepicker").attr("name", "References[" + index + "].DateAppear");
         $(element).find(".image-url").attr("name", "References[" + index + "].ImageLink");
     },
@@ -43,7 +41,7 @@
         });
     },
 
-    CheckLimitedEntry: function(limitEntry) {
+    CheckLimitedEntry: function (limitEntry) {
         var totalEntries = $(".reference-entry").length;
         if (totalEntries >= limitEntry) return false;
         return true;
@@ -83,7 +81,7 @@ $("form").on("click", ".remove-entry", function () {
     reference.RemoveEntry($(this));
 });
 
-$(document).on("dp.change", ".datetimepicker",function () {
+$(document).on("dp.change", ".datetimepicker", function () {
     reference.UpdateDisabledDates();
 });
 
@@ -124,3 +122,17 @@ $("#ReferencesZone").on("change", ".upload-image", function (e) {
         }
     }
 });
+
+var sform_clean = $("form").serialize();;
+
+var used_submit = 0;
+$(window).on('beforeunload', function (e) {
+    var sform_dirty = $("form").serialize();
+    if (sform_clean != sform_dirty && used_submit == 0) {
+        e.returnValue = "ABC";
+    }
+});
+
+function CleanLeavePage() {
+    used_submit = 1;
+}
