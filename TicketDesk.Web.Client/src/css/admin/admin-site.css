@@ -50,6 +50,30 @@ main {
 .input-validation-error {
   border-color: #ea1118; }
 
+.menu-collapsed .navbar-brand-wrapper {
+  width: 60px; }
+  .menu-collapsed .navbar-brand-wrapper .brand-logo {
+    overflow: hidden;
+    width: 55px; }
+    .menu-collapsed .navbar-brand-wrapper .brand-logo img {
+      max-width: unset; }
+
+.menu-collapsed .sidebar {
+  width: 60px; }
+  .menu-collapsed .sidebar .text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden; }
+
+.menu-collapsed main {
+  padding-left: 60px; }
+
 .text-red {
   color: #ea1118; }
 
@@ -64,7 +88,10 @@ main {
   background: #131923;
   font-family: Roboto,sans-serif;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); }
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: width 0.2s ease;
+  will-change: width;
+  backface-visibility: hidden; }
   .sidebar ul {
     list-style: none;
     margin: 0;
@@ -76,7 +103,9 @@ main {
     line-height: 44px;
     height: 44px;
     color: #a0a0a0;
-    transition: all .2s ease; }
+    white-space: nowrap;
+    backface-visibility: hidden;
+    transition: all .3s ease; }
     .sidebar .menu-item:hover, .sidebar .menu-item:focus {
       color: #fff;
       text-decoration: none; }
@@ -420,6 +449,11 @@ main {
   .pagination > li:first-child > a, .pagination > li:first-child > span {
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px; }
+  .pagination [class^="icon-"].disabled {
+    background: rgba(232, 232, 232, 0.5);
+    color: rgba(118, 117, 117, 0.5);
+    pointer-events: none;
+    cursor: not-allowed; }
 
 .display-item {
   margin-top: 10px;
@@ -699,14 +733,14 @@ main {
   margin-bottom: 8px;
   cursor: pointer; }
   .checkbox label:before, .checkbox label:after {
-    border: 1px solid #737373;
     content: "";
+    position: absolute;
     display: block;
     left: 0;
+    top: 2px;
     height: 14px;
-    position: absolute;
     width: 14px;
-    top: 0;
+    border: 1px solid #737373;
     border-radius: 2px; }
   .checkbox label:after {
     background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNXG14zYAAABMSURBVAiZfc0xDkAAFIPhd2Kr1WRjcAExuIgzGUTIZ/AkImjSofnbNBAfHvzAHjOKNzhiQ42IDFXCDivaaxAJd0xYshT3QqBxqnxeHvhunpu23xnmAAAAAElFTkSuQmCC") center center no-repeat;

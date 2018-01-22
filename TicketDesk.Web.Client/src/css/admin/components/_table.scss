@@ -58,7 +58,7 @@
         display: flex;
         justify-content: center;
         margin: 0;
-        
+
         label {
             padding-left: 17px;
             margin: 0;
@@ -191,6 +191,13 @@
     > li:first-child > a, > li:first-child > span {
         border-top-left-radius: 2px;
         border-bottom-left-radius: 2px;
+    }
+
+    [class^="icon-"].disabled {        
+        background: rgba(232, 232, 232, 0.5);
+        color: rgba(118, 117, 117, 0.5);
+        pointer-events: none;
+        cursor: not-allowed;
     }
 }
 

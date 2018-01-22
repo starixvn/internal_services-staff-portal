@@ -84,15 +84,15 @@
         margin-bottom: 8px;
         cursor: pointer;
 
-        &:before, &:after {
-            border: 1px solid #737373;
+        &:before, &:after {            
             content: "";
+            position: absolute;
             display: block;
             left: 0;
-            height: $size;
-            position: absolute;
+            top: 2px;
+            height: $size;            
             width: $size;
-            top: 0;
+            border: 1px solid #737373;
             border-radius: 2px;
         }
 
