@@ -73,7 +73,7 @@
                 return RedirectToAction("Index");
             }
 
-            return PartialView("_Create", viewModel);
+            return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
         }
 
         public ActionResult Edit(int? id)

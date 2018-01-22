@@ -63,22 +63,27 @@ var modalhandler = {
         $(form).on("submit",
             function(e) {
                 e.preventDefault();
-
+                
+                $.validator.unobtrusive.parse($(form));
                 $(form).validate();
 
-                $.ajax({
-                    url: $(form).attr("action"),
-                    method: $(form).attr("method"),
-                    data: $(form).serialize(),
-                    success: function(res, status, xhr) {
-                        location.reload();
-                    },
-                    error: function(request, error) {
-                        $("#notification-modal div.modal-header > h4").text(error);
-                        $("#notification-modal div.modal-body > p").text("Error status code: " + request.status);
-                        $("#notification-modal").modal();
-                    }
-                });
+                if ($(form).valid()) {
+                    $.ajax({
+                        url: $(form).attr("action"),
+                        method: $(form).attr("method"),
+                        data: $(form).serialize(),
+                        success: function (res, status, xhr) {
+                            location.reload();
+                        },
+                        error: function (request, error) {
+                            $("#notification-modal div.modal-header > h4").text(error);
+                            $("#notification-modal div.modal-body > p").text("Error status code: " + request.status);
+                            $("#notification-modal").modal();
+                        }
+                    });
+                }
+
+                return false;
             });
     },
 

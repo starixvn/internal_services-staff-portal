@@ -12,8 +12,8 @@
         public int Id { get; set; }
 
         [Display(Name = "Announcement Content")]
-        [StringLength(5000, ErrorMessage = "Message must under 5000 characters")]
-        [Required(ErrorMessage = "Announcement Message is required")]
+        [StringLength(5000, ErrorMessage = "{0} must under {1} characters")]
+        [Required(ErrorMessage = "{0} is required")]
         public string Message { get; set; }
         
         public DateTime CreatedDateTime { get; set; }
@@ -25,7 +25,7 @@
         public int ProjectId { get; set; }
 
         [Display(Name = "Status")]
-        [Required(ErrorMessage = "Announcement status is required")]
+        [Required(ErrorMessage = "{0} is required")]
         public AnnouncementStatus Status { get; set; }
 
         [Display(Name = "State")]

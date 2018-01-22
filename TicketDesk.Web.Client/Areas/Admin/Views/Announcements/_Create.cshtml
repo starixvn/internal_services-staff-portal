@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Domain
+@using TicketDesk.Domain.Model
 @using TicketDesk.Web.Client.Areas.Admin.Models.Announcements
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 @model NewAnnouncementViewModel
@@ -20,7 +21,7 @@
                     @Html.AntiForgeryToken()
 
                     <div class="form">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @*@Html.ValidationSummary(false, "", new { @class = "text-danger" })*@
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Date, new { @class = "control-label" })
@@ -41,10 +42,23 @@
                         </div>
 
                         <div class="form-group checkbox">
-                            <input type="checkbox"
-                                   id="@Html.NameFor(x => x.IsImportant)"
-                                   name="@Html.NameFor(x => x.IsImportant)"
-                                   value="true" />                           
+                            @{
+                                if (Model.Announcement.Status == AnnouncementStatus.Important)
+                                {
+                                    <input type="checkbox"
+                                           id="@Html.NameFor(x => x.IsImportant)"
+                                           name="@Html.NameFor(x => x.IsImportant)"
+                                           value="true"
+                                           checked="checked"/>
+                                }
+                                else
+                                {
+                                    <input type="checkbox"
+                                           id="@Html.NameFor(x => x.IsImportant)"
+                                           name="@Html.NameFor(x => x.IsImportant)"
+                                           value="true"/>
+                                }
+                            }
                             @Html.LabelFor(model => model.IsImportant)
                         </div>
                         @*<div class="form-group">
