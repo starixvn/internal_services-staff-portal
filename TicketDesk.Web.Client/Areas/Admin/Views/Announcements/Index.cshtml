@@ -100,15 +100,7 @@
                         <h4 class="modal-title">Publish Announcement</h4>
                     </div>
                     <div class="modal-body">
-                        @{
-                            var message = "Are you sure you want to public this announcement right away?";
-                            var numberOfAnnouncementWaitingToPublish = Model.Announcements.Count(x => x.IsWaitingToPublish);
-                            if (numberOfAnnouncementWaitingToPublish > 1)
-                            {
-                                message = "Are you sure you want to public these announcements right away?";
-                            }
-                        }
-                        <p>@message</p>
+                        <p>message place holder</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
