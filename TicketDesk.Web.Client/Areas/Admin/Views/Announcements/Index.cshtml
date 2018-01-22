@@ -118,7 +118,17 @@
                 <th>Announcement</th>
                 <th>Status</th>
                 <th class="publish">
-                    <button class="btn btn-publish" type="button" data-toggle="modal" data-target="#publish-announcement-confirm-modal">Publish</button>
+                    @{
+                        var scheduled = Model.Announcements.Count(x => x.State == AnnouncementState.Scheduled);
+                        if (scheduled > 0)
+                        {
+                            <button class="btn btn-publish" type="button" data-toggle="modal" data-target="#publish-announcement-confirm-modal">Publish</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-publish" disabled="disabled" type="button" data-toggle="modal" data-target="#publish-announcement-confirm-modal">Publish</button>
+                        }
+                    }
                 </th>
                 <th class="action">Action</th>
             </tr>
