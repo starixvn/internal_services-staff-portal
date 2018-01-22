@@ -1,5 +1,8 @@
-﻿@{
-    var filePath = ViewBag.FilePath != null ? (string)ViewBag.FilePath : string.Empty;
-}
+﻿@using TicketDesk.Domain.Model
+@model Reference
 
-<img src="@(!string.IsNullOrWhiteSpace(filePath) ? Url.Content(filePath) : string.Empty)" alt="" width="100%" />
+<img src="@(Model.ImageLink)" alt="There is no information" width="100%" />
+<p>
+    <span>@Model.ReferenceType.ToString()</span>|
+    Last update by <span>@Model.LastUpdateBy</span> <span>@Model.LastUpdateDate</span>
+</p>
