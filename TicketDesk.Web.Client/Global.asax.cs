@@ -2,7 +2,7 @@
 {
     using App_Start;
     using Fanex.Data.Configuration;
-    using Microsoft.ApplicationInsights.Extensibility;
+    ////using Microsoft.ApplicationInsights.Extensibility;
     using System;
     using System.Diagnostics;
     using System.Web.Mvc;
@@ -12,18 +12,18 @@
         protected void Application_Start(object sender, EventArgs e)
         {
             AreaRegistration.RegisterAllAreas();
-            DisableApplicationInsightsOnDebug();
+            ////DisableApplicationInsightsOnDebug();
             DbSettingProviderManager.Current.Start();
         }
 
         /// <summary>
         /// Disables the application insights locally.
         /// </summary>
-        [Conditional("DEBUG")]
-        private void DisableApplicationInsightsOnDebug()
-        {
-            TelemetryConfiguration.Active.DisableTelemetry = true;
-        }
+        ////[Conditional("DEBUG")]
+        ////private void DisableApplicationInsightsOnDebug()
+        ////{
+        ////    TelemetryConfiguration.Active.DisableTelemetry = true;
+        ////}
 
         protected void Session_Start(object sender, EventArgs e)
         {
