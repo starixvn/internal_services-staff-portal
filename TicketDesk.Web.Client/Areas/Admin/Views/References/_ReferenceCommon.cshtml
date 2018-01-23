@@ -24,9 +24,11 @@
                     <div class="date form-group">
                         @Html.LabelFor(model => model.References[i].DateAppear)
                         <span class="text-red">*</span>
-                        @Html.TextBoxFor(model => model.References[i].DateAppear, new { @class = "datetimepicker form-control" })
-                        <span class="icon-calendar"></span>
-                        @Html.ValidationMessageFor(model => model.References[i].DateAppear)
+                        <div>
+                            @Html.TextBoxFor(model => model.References[i].DateAppear, new { @class = "datetimepicker form-control" })
+                            <span class="icon-calendar"></span>
+                            @Html.ValidationMessageFor(model => model.References[i].DateAppear)
+                        </div>  
                     </div>
 
                     <div class="url form-group">

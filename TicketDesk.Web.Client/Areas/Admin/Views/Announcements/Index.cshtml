@@ -32,19 +32,25 @@
 <section class="filter-form">
     @using (Html.BeginForm("Index", "Announcements", FormMethod.Get, new { @class = "row" }))
     {
-        <div class="form-group col-lg-2 col-md-3 col-xs-4 ">
+        <div class="form-group col-lg-2 col-md-3 col-xs-4">
             @Html.LabelFor(x => x.PublishedFrom)
-            @Html.TextBoxFor(x => x.PublishedFrom, new { @class = "datepicker form-control" })
+            <div class="date-time">
+                @Html.TextBoxFor(x => x.PublishedFrom, new { @class = "datetimepicker form-control" })
+                <span class="icon-calendar"></span>
+            </div>
         </div>
-        <div class="form-group col-lg-2 col-md-3 col-xs-4 ">
+        <div class="form-group col-lg-2 col-md-3 col-xs-4">
             @Html.LabelFor(x => x.PublishedTo)
-            @Html.TextBoxFor(x => x.PublishedTo, new { @class = "datepicker form-control" })
+            <div class="date-time">
+                @Html.TextBoxFor(x => x.PublishedTo, new { @class = "datetimepicker form-control" })
+                <span class="icon-calendar"></span>
+            </div>
         </div>
-        <div class="form-group col-lg-2  col-md-3col-xs-4 ">
+        <div class="form-group col-lg-2  col-md-3col-xs-4">
             @Html.LabelFor(x => x.Status)
             @Html.EnumDropDownListFor(x => x.Status, "All", new { @class = "form-control" })
         </div>
-        <div class="form-group col-lg-2 col-md-3 col-xs-4 ">
+        <div class="form-group col-lg-2 col-md-3 col-xs-4">
             @Html.LabelFor(x => x.State)
             @Html.EnumDropDownListFor(x => x.State, "All", new { @class = "form-control" })
         </div>

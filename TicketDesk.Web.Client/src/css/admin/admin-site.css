@@ -341,8 +341,9 @@ main {
     .reference-entry .date .icon-calendar {
       position: absolute;
       top: 33px;
-      right: 5px;
-      color: #2e4592; }
+      right: 8px;
+      color: #2e4592;
+      cursor: pointer; }
   .reference-entry .url {
     -webkit-box-flex: 1;
     -ms-flex-positive: 1;
@@ -726,8 +727,9 @@ main {
     .form-group .date-time .icon-calendar {
       position: absolute;
       top: 8px;
-      right: 5px;
-      color: #2e4592; }
+      right: 8px;
+      color: #2e4592;
+      cursor: pointer; }
   .form-group textarea.form-control {
     width: 100% !important; }
 

@@ -1530,8 +1530,14 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         }
 
         .icon-calendar {
+            display: inline-block;
             color: $primary-color;
             font-size: 20px;
+            height: 40px;
+            line-height: 40px;
+            width: 40px;
+            text-align: center;
+            cursor: pointer;
         }
     }
 }

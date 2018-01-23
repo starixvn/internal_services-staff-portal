@@ -8,8 +8,11 @@
     <div class="date form-group">
         @Html.LabelFor(model => model.DateAppear)
         <span class="text-red">*</span>
-        @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
-        @Html.ValidationMessageFor(model => model.DateAppear)
+        <div>
+            @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
+            <span class="icon-calendar"></span>
+            @Html.ValidationMessageFor(model => model.DateAppear)
+        </div>        
     </div>
 
     }
