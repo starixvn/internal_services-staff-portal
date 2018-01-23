@@ -51,7 +51,7 @@
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateInput(false)]
+        //[ValidateInput(false)]
         [ValidateAntiForgeryToken]
         [Route("sign-in")]
         public ActionResult SignIn(UserSignInViewModel model, string returnUrl)
