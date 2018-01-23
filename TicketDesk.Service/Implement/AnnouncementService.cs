@@ -47,15 +47,6 @@
             // Set date-time
             criteria.Announcement.CreatedDateTime = DateTime.Now;
             criteria.Announcement.LastModified = DateTime.Now;
-
-            // Set published date-time
-            ////if (criteria.Date != null)
-            ////{
-            ////    var publishedDateTime = criteria.Date.Value;
-
-            ////    criteria.Announcement.PublishedDateTime = publishedDateTime;
-            ////}
-
             criteria.Announcement.ModifiedBy = criteria.ModifiedBy;
 
             criteria.Announcement.Status = criteria.IsImportant ? AnnouncementStatus.Important : AnnouncementStatus.Normal;

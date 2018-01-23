@@ -52,5 +52,10 @@ $(document).ready(function() {
             $(this)[0].scrollIntoView();
         });
     }
-    
+    $("body").on("click",
+        ".icon-calendar",
+        function() {
+            var datetimepickerElements = $(this).parent().find(".datetimepicker");
+            $(datetimepickerElements).data("DateTimePicker").toggle();
+        });
 });

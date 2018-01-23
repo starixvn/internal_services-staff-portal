@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -18,8 +19,10 @@
             Controller = "Home";
         }
 
+        [Display(Name = "Published Form")]
         public DateTime? PublishedFrom { get; set; }
 
+        [Display(Name = "Published To")]
         public DateTime? PublishedTo { get; set; }
 
         public IList<Announcement> Announcements { get; set; }

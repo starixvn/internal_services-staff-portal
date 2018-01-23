@@ -4,6 +4,12 @@
         $(".toggle-sidebar").on("click", function() {
             sidebar.toggleMenu();
         });
+        $("body").on("click",
+            ".icon-calendar",
+            function () {
+                var datetimepickerElements = $(this).parent().find(".datetimepicker");
+                $(datetimepickerElements).data("DateTimePicker").toggle();
+            });
     },
 
     toggleMenu: function() {

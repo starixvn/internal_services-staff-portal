@@ -7,7 +7,6 @@
     {
         public Announcement Announcement { get; set; }
         public bool IsImportant { get; set; }
-        ////public DateTime? Date { get; set; }
         public string ModifiedBy { get; set; }
     }
 

@@ -1,6 +1,5 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Models.Announcements
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
     using Criteria.Announcement;
     using Domain.Model;
@@ -11,8 +10,6 @@
 
         [Display(Name = "Important")]
         public bool IsImportant { get; set; }
-        
-        ////public DateTime? Date { get; set; }
 
         public ModalId ModalId { get; set; } = ModalId.CreateAnnouncementModal;
 
@@ -23,7 +20,6 @@
             return new NewAnnouncementCriteria
             {
                 Announcement = Announcement,
-                ////Date = Date,
                 IsImportant = IsImportant,
                 ModifiedBy = modifiedBy
             };
@@ -44,6 +40,9 @@
         CreateAnnouncementModal,
         [Display(Name = "Edit Announcement")]
         EditAnnouncementModal,
+        [Display(Name = "Publish Announcement")]
+        PublishAnnouncement,
+        [Display(Name = "Delete Announcement")]
         DeleteAnnouncementModal
     }
 }

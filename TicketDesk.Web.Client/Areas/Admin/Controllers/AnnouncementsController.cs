@@ -139,7 +139,15 @@
 
         public ActionResult Delete(int id)
         {
-            var announcement = _announcementService.GetAnnouncement(id);
+            var viewModel = new Announcement { Id = id };
+            return PartialView("_Delete", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(Announcement viewModel)
+        {
+            var announcement = _announcementService.GetAnnouncement(viewModel.Id);
 
             var invalidAnnouncement = ReturnInvalidAnnouncement(announcement);
             if (invalidAnnouncement != null)
@@ -149,7 +157,7 @@
 
             if (announcement != null)
             {
-                _announcementService.DeleteAnnouncement(id);
+                _announcementService.DeleteAnnouncement(viewModel.Id);
             }
 
             return RedirectToAction("Index");

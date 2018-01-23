@@ -70,18 +70,19 @@ var modalhandler = {
                 $(form).validate();
 
                 if ($(form).valid()) {
-                    $.ajax({
-                        url: $(form).attr("action"),
-                        method: $(form).attr("method"),
-                        data: $(form).serialize(),
-                        success: function (result) {
-                            if (result.success) {
-                                location.reload();
-                            } else {
-                                $("#modal-form").html(result);
-                            }
-                        }
-                    });
+                    modalhandler.sendAjax("#modal-form");
+                    ////$.ajax({
+                    ////    url: $(form).attr("action"),
+                    ////    method: $(form).attr("method"),
+                    ////    data: $(form).serialize(),
+                    ////    success: function (result) {
+                    ////        if (result.success) {
+                    ////            location.reload();
+                    ////        } else {
+                    ////            $("#modal-form").html(result);
+                    ////        }
+                    ////    }
+                    ////});
                 }
 
                 return false;
@@ -90,11 +91,33 @@ var modalhandler = {
 
     assignAnnouncementDelete: function () {
         $(".delete").on("click",
-            function () {
+            function() {
                 var href = $(this).data("href");
-                $(".announcement-delete").attr("href", href);
-                $("#delete-announcement-confirm-modal").modal();
+                ////$(".announcement-delete").attr("href", href);
+                ////$("#delete-announcement-confirm-modal").modal();
+                $.ajax({
+                    url: href,
+                    method: "get",
+                    success: function(result) {
+                        $("#announcement-modal").html(result);
+                    }
+                });
             });
+    },
+
+    sendAjax: function(elementId) {
+        $.ajax({
+            url: $(form).attr("action"),
+            method: $(form).attr("method"),
+            data: $(form).serialize(),
+            success: function (result) {
+                if (result.success) {
+                    location.reload();
+                } else {
+                    $(elementId).html(result);
+                }
+            }
+        });
     }
 }
 

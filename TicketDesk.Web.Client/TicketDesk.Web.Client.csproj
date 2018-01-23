@@ -586,6 +586,7 @@
     <Content Include="Areas\Admin\Views\Announcements\_Create.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\_AnnouncementForm.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\_Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcements\_Publish.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
