@@ -33,7 +33,7 @@ var modalhandler = {
     init: function () {
         modalhandler.resetModalForm();
         modalhandler.manualModalHandler();
-        modalhandler.assignAnnouncementDelete();
+        modalhandler.assignDelete();
     },
 
     resetModalForm: function () {
@@ -70,52 +70,70 @@ var modalhandler = {
                 $(form).validate();
 
                 if ($(form).valid()) {
-                    modalhandler.sendAjax("#modal-form");
-                    ////$.ajax({
-                    ////    url: $(form).attr("action"),
-                    ////    method: $(form).attr("method"),
-                    ////    data: $(form).serialize(),
-                    ////    success: function (result) {
-                    ////        if (result.success) {
-                    ////            location.reload();
-                    ////        } else {
-                    ////            $("#modal-form").html(result);
-                    ////        }
-                    ////    }
-                    ////});
+                    $.ajax({
+                        url: $(form).attr("action"),
+                        method: $(form).attr("method"),
+                        data: $(form).serialize(),
+                        success: function (result) {
+                            if (result.success) {
+                                location.reload();
+                            } else {
+                                $("#modal-form").html(result);
+                            }
+                        }
+                    });
                 }
 
                 return false;
             });
     },
 
-    assignAnnouncementDelete: function () {
-        $(".delete").on("click",
-            function() {
+    assignFunctions: function() {
+        modalhandler.assignCreate();
+        modalhandler.assignEdit();
+        modalhandler.assignDelete();
+        modalhandler.assignPublish();
+    },
+
+    assignEdit: function () {
+        $(".edit").on("click",
+            function () {
                 var href = $(this).data("href");
-                ////$(".announcement-delete").attr("href", href);
-                ////$("#delete-announcement-confirm-modal").modal();
-                $.ajax({
-                    url: href,
-                    method: "get",
-                    success: function(result) {
-                        $("#announcement-modal").html(result);
-                    }
-                });
+                modalhandler.ajaxModal(href);
             });
     },
 
-    sendAjax: function(elementId) {
+    assignPublish: function() {
+        $(".publish").on("click",
+            function () {
+                var href = $(this).data("href");
+                modalhandler.ajaxModal(href);
+            });
+    },
+
+    assignCreate: function() {
+        $(".create").on("click",
+            function () {
+                var href = $(this).data("href");
+                modalhandler.ajaxModal(href);
+            });
+    },
+
+    assignDelete: function() {
+        $(".delete").on("click",
+            function () {
+                var href = $(this).data("href");
+                modalhandler.ajaxModal(href);
+            });
+    },
+
+    ajaxModal: function(href) {
         $.ajax({
-            url: $(form).attr("action"),
-            method: $(form).attr("method"),
-            data: $(form).serialize(),
+            url: href,
+            method: "get",
             success: function (result) {
-                if (result.success) {
-                    location.reload();
-                } else {
-                    $(elementId).html(result);
-                }
+                $("#announcement-modal").html(result);
+                $("#announcement-modal .modal").modal();
             }
         });
     }
