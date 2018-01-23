@@ -21,13 +21,7 @@
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.js"></script>
 
     <script src="~/src/js/admin/announcement/announcementsindex.js"></script>
-
-    @* Popup javascripts *@
-    <script type="text/javascript" src="~/src/js/admin/announcement/newannouncement.js"></script>
 }
-
-<!--Create Modal-->
-@*@Html.Partial("_Create", Model.NewAnnouncementViewModel)*@
 
 <div id="announcement-modal">
     <!--edit announcement modal place holder-->
@@ -78,7 +72,7 @@
 </section>
 
 <div class="button-group">
-    <a class="btn btn-create  manual-modal-handler"
+    <a class="btn btn-create manual-modal-handler"
        data-toggle="modal"
        href="#"
        data-action="@Url.Action("Create", "Announcements")"
@@ -90,7 +84,7 @@
     @using (Html.BeginForm("Publish", "Announcements", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <div class="modal fade" tabindex="-1" role="dialog" id="publish-announcement-confirm-modal">
+        <div class="modal fade" tabindex="-1" role="dialog" id="publish-announcement-confirm-modal" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

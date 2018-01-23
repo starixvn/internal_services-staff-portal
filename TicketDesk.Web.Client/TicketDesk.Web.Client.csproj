@@ -80,11 +80,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
@@ -512,7 +512,6 @@
       <DependentUpon>admin-site.css</DependentUpon>
     </Content>
     <Content Include="src\js\admin\announcement\announcementsindex.js" />
-    <Content Include="src\js\admin\announcement\newannouncement.js" />
     <Content Include="src\js\admin\common.js" />
     <Content Include="src\js\admin\reference\reference.js" />
     <Content Include="src\js\home\home.js" />
@@ -586,6 +585,7 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\_Create.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\_AnnouncementForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcements\_Delete.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

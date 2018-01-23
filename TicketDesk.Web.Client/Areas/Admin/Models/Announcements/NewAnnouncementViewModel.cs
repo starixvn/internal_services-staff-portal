@@ -12,7 +12,7 @@
         [Display(Name = "Important")]
         public bool IsImportant { get; set; }
         
-        public DateTime? Date { get; set; }
+        ////public DateTime? Date { get; set; }
 
         public ModalId ModalId { get; set; } = ModalId.CreateAnnouncementModal;
 
@@ -23,7 +23,7 @@
             return new NewAnnouncementCriteria
             {
                 Announcement = Announcement,
-                Date = Date,
+                ////Date = Date,
                 IsImportant = IsImportant,
                 ModifiedBy = modifiedBy
             };
