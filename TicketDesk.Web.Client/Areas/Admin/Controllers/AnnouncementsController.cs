@@ -103,7 +103,7 @@
             {
                 Announcement = announcement,
                 IsImportant = announcement.Status == AnnouncementStatus.Important,
-                Date = announcement.PublishedDateTime,
+                ////Date = announcement.PublishedDateTime,
                 ////Time = announcement.PublishedDateTime?.TimeOfDay,
                 ModalId = ModalId.EditAnnouncementModal,
                 ActionType = ActionType.Edit
