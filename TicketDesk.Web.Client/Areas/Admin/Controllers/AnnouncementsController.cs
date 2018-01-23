@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -66,14 +67,21 @@
         [ValidateAntiForgeryToken]
         public ActionResult Create(NewAnnouncementViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            // Check datetime
+            if (viewModel.Announcement.PublishedDateTime != null &&
+                (viewModel.Announcement.PublishedDateTime - DateTime.Now) > TimeSpan.FromDays(365))
             {
-                _announcementService.AddAnnouncement(viewModel.GetNewAnnouncementCriteria(CurrentSession.Username));
-
-                return RedirectToAction("Index");
+                ModelState.AddModelError("Announcement.PublishedDateTime", "Date not in range");
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable);
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_AnnouncementForm", viewModel);
+            }
+
+            _announcementService.AddAnnouncement(viewModel.GetNewAnnouncementCriteria(CurrentSession.Username));
+            return Json(new { success = true });
+
         }
 
         public ActionResult Edit(int? id)
@@ -120,13 +128,13 @@
             if (ModelState.IsValid)
             {
                 _announcementService.UpdateAnnouncement(viewModel.GetNewAnnouncementCriteria(CurrentSession.Username));
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                return Json(new { success = true });
             }
 
             viewModel.ModalId = ModalId.EditAnnouncementModal;
             viewModel.ActionType = ActionType.Edit;
 
-            return PartialView("_Create", viewModel);
+            return PartialView("_AnnouncementForm", viewModel);
         }
 
         public ActionResult Delete(int id)

@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Web.Mvc;
     using DelegateDecompiler;
 
     public class Announcement
@@ -14,6 +15,7 @@
         [Display(Name = "Announcement Content")]
         [StringLength(5000, ErrorMessage = "{0} must under {1} characters")]
         [Required(ErrorMessage = "{0} is required")]
+        [AllowHtml]
         public string Message { get; set; }
         
         public DateTime CreatedDateTime { get; set; }

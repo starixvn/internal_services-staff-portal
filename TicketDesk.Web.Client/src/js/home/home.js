@@ -39,10 +39,12 @@ var hiddenText = {
                     '</span><span class="morecontent hide">' +
                     restOfTheText +
                     "</span>";
-                
+
                 $(this).html(html);
 
                 $(this).parent().find(".sign").addClass("expand");
+            } else {
+                $(this).parent().find(".sign").addClass("disabled");
             }
         });
 

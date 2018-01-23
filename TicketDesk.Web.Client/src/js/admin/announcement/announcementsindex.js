@@ -10,12 +10,14 @@
             $(".datetimepicker").datetimepicker({
                 format: "MM-DD-YYYY hh:mm A",
                 defaultDate: dateString,
-                minDate: moment()
+                minDate: moment(),
+                maxDate: moment().add(1, "year")
             });
         } else {
             $(".datetimepicker").datetimepicker({
                 format: "MM-DD-YYYY hh:mm A",
-                minDate: moment()
+                minDate: moment(),
+                maxDate: moment().add(1, "year")
             });
         }
     },
@@ -72,13 +74,12 @@ var modalhandler = {
                         url: $(form).attr("action"),
                         method: $(form).attr("method"),
                         data: $(form).serialize(),
-                        success: function (res, status, xhr) {
-                            location.reload();
-                        },
-                        error: function (request, error) {
-                            $("#notification-modal div.modal-header > h4").text(error);
-                            $("#notification-modal div.modal-body > p").text("Error status code: " + request.status);
-                            $("#notification-modal").modal();
+                        success: function (result) {
+                            if (result.success) {
+                                location.reload();
+                            } else {
+                                $("#modal-form").html(result);
+                            }
                         }
                     });
                 }

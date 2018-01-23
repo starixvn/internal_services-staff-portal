@@ -621,6 +621,7 @@
     <Content Include="Areas\Admin\Views\References\_ReferenceCommon.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\_Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcements\_AnnouncementForm.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
