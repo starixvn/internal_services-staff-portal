@@ -24,11 +24,6 @@
         });
     },
 
-    ConvertDate: function (oldDate) {
-        var newDate = oldDate.split("-").reverse().join("-");
-        return newDate;
-    },
-
     UpdateReferenceIndex: function (index, element) {
         $(element).find(".datetimepicker").attr("name", "References[" + index + "].DateAppear");
         $(element).find(".image-url").attr("name", "References[" + index + "].ImageLink");
@@ -54,8 +49,6 @@
                 $("#ReferencesZone").append(html);
                 reference.UpdateFormFieldsName();
                 reference.UpdateDisabledDates();
-            } else {
-                alert("Limit of images is 31.");
             }
         });
     },
@@ -67,14 +60,17 @@
     }
 };
 
-$(document).ready(reference.InitDateTimePicker());
+$(document).ready(function() {
+    reference.InitDateTimePicker();
+    var sform_clean = $("form").serialize();
+});
 
 $("#addReferenceEntry").click(function () {
     reference.AddReferenceEntry(1, 31);
 });
 
 $("#addNewsLetterReferenceEntry").click(function () {
-    reference.AddReferenceEntry(0, 51);
+    reference.AddReferenceEntry(4, 50);
 });
 
 $("form").on("click", ".remove-entry", function () {
@@ -123,9 +119,7 @@ $("#ReferencesZone").on("change", ".upload-image", function (e) {
     }
 });
 
-var sform_clean = $("form").serialize();;
 
-var used_submit = 0;
 $(window).on('beforeunload', function (e) {
     var sform_dirty = $("form").serialize();
     if (sform_clean != sform_dirty && used_submit == 0) {
@@ -133,6 +127,3 @@ $(window).on('beforeunload', function (e) {
     }
 });
 
-function CleanLeavePage() {
-    used_submit = 1;
-}
