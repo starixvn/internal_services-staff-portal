@@ -72,20 +72,24 @@
             {
                 var tolerateTime = TimeSpan.FromMinutes(5);
 
-                // Published in the past
-                // TOLERATE TIME: 5 MINUTES
-                if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) <= tolerateTime)
-                {
-                    // Show confirm modal: Publish announcement immediately
-
-                    return PartialView("_Publish", viewModel.Announcement);
-                }
-
                 // Too far in the past or more than 1 year in the future
                 if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) > tolerateTime
                     || (viewModel.Announcement.PublishedDateTime - DateTime.Now) > TimeSpan.FromDays(365))
                 {
                     ModelState.AddModelError("Announcement.PublishedDateTime", "Date not in range");
+                }
+                
+                // Published in the past
+                // TOLERATE TIME: 5 MINUTES
+                if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) <= tolerateTime && !viewModel.IsPublishedImmediatly)
+                {
+                    viewModel.IsPublishedImmediatly = true;
+                    // Show confirm modal: Publish announcement immediately
+                    return Json(new
+                    {
+                        success = true,
+                        html = RenderRazorViewToString("_Publish", viewModel)
+                    });
                 }
             }
 
@@ -96,7 +100,6 @@
 
             _announcementService.AddAnnouncement(viewModel.GetNewAnnouncementCriteria(CurrentSession.Username));
             return Json(new { success = true });
-
         }
 
         public ActionResult Edit(int? id)

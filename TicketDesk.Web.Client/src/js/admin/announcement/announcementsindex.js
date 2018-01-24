@@ -34,6 +34,15 @@ var modalhandler = {
         modalhandler.resetModalForm();
         modalhandler.assignFunctions();
         modalhandler.modalFormAjax();
+        modalhandler.dismissAll();
+    },
+
+    dismissAll: function() {
+        $("#announcement-modal").on("click",
+            ".dismiss-all",
+            function() {
+                $("#announcement-modal .modal").modal("hide");
+            });
     },
 
     resetModalForm: function () {
@@ -41,72 +50,35 @@ var modalhandler = {
         $("#announcement-modal").on("hidden.bs.modal",
             ".modal",
             function () {
-                $(this).find("form")[0].reset();
                 $(this).remove();
             });
     },
-
-    ////manualModalHandler: function () {
-    ////    $(".manual-modal-handler").on("click",
-    ////        function () {
-    ////            var action = $(this).data("action");
-    ////            var target = $(this).data("modalid");
-
-    ////            $("#announcement-modal").load(action, function () {
-    ////                datetimepicker.setupDateTimePicker();
-    ////                var form = $("#announcement-modal").find("form");
-    ////                modalhandler.manualFormHandle(form);
-    ////                $(target).modal();
-    ////            });
-    ////        });
-    ////},
-
-    ////manualFormHandle: function (form) {
-    ////    $(form).on("submit",
-    ////        function (e) {
-    ////            e.preventDefault();
-
-    ////            $.validator.unobtrusive.parse($(form));
-    ////            $(form).validate();
-
-    ////            if ($(form).valid()) {
-    ////                $.ajax({
-    ////                    url: $(form).attr("action"),
-    ////                    method: $(form).attr("method"),
-    ////                    data: $(form).serialize(),
-    ////                    success: function (result) {
-    ////                        if (result.success) {
-    ////                            location.reload();
-    ////                        } else {
-    ////                            $("#modal-form").html(result);
-    ////                        }
-    ////                    }
-    ////                });
-    ////            }
-
-    ////            return false;
-    ////        });
-    ////},
     
-    modalFormAjax: function (form) {
+    modalFormAjax: function () {
         // ONLY FOR PUBLISH
         $("#announcement-modal").on("submit",
             "form",
             function (e) {
                 e.preventDefault();
 
-                $.validator.unobtrusive.parse($(form));
-                $(form).validate();
+                $.validator.unobtrusive.parse($(this));
+                $(this).validate();
 
-                if ($(form).valid()) {
+                if ($(this).valid()) {
                     $.ajax({
-                        url: $(form).attr("action"),
-                        method: $(form).attr("method"),
-                        data: $(form).serialize(),
+                        url: $(this).attr("action"),
+                        method: $(this).attr("method"),
+                        data: $(this).serialize(),
                         success: function (result) {
                             if (result.success) {
-                                location.reload();
+                                if (result.html !== undefined) {
+                                    $("#announcement-modal .modal").before(result.html);
+                                    $("#announcement-modal .modal").first().modal();
+                                } else {
+                                    location.reload();
+                                }
                             } else {
+                                // ON VALIDATION ERROR
                                 $("#announcement-modal .modal").html(result);
                             }
                         }

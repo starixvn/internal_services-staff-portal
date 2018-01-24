@@ -1,17 +1,19 @@
-﻿@model TicketDesk.Domain.Model.Announcement
+﻿@model TicketDesk.Web.Client.Areas.Admin.Models.Announcements.NewAnnouncementViewModel
+
+@Html.HiddenFor(x => x.IsPublishedImmediatly)
 
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Publish Announcement</h4>
+                <h4 class="modal-title">Are you sure you want to public this announcement right away?</h4>
             </div>
             <div class="modal-body">
                 <p>message place holder</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default dismiss-all" data-dismiss="modal">Cancel</button>
                 <button type="submit" class="btn btn-primary">Publish</button>
             </div>
         </div>

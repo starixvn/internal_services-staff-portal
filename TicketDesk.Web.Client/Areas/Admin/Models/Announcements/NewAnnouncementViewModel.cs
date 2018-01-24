@@ -15,6 +15,8 @@
 
         public ActionType ActionType { get; set; } = ActionType.Create;
 
+        public bool IsPublishedImmediatly { get; set; }
+
         public NewAnnouncementCriteria GetNewAnnouncementCriteria(string modifiedBy)
         {
             return new NewAnnouncementCriteria
