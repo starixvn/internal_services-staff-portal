@@ -89,6 +89,7 @@ var modalhandler = {
     ////},
     
     modalFormAjax: function (form) {
+        // ONLY FOR PUBLISH
         $("#announcement-modal").on("submit",
             "form",
             function (e) {

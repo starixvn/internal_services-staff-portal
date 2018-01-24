@@ -77,6 +77,7 @@
                 if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) <= tolerateTime)
                 {
                     // Show confirm modal: Publish announcement immediately
+
                     return PartialView("_Publish", viewModel.Announcement);
                 }
 
