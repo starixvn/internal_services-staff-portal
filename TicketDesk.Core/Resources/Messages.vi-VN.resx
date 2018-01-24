@@ -145,4 +145,10 @@ Bạn có thực sự muốn đăng xuất?</value>
   <data name="UpdateReferencesSuccessful" xml:space="preserve">
     <value>Your upload file(s) has been successfully submitted!</value>
   </data>
+  <data name="InvalidImageURL" xml:space="preserve">
+    <value>The request content cannot be loaded. Please try again.</value>
+  </data>
+  <data name="ValidateStringLengthMessage" xml:space="preserve">
+    <value>{0} must under {1} characters.</value>
+  </data>
 </root>

@@ -9,12 +9,18 @@
         });
     },
 
+    ConvertDate: function (oldDate) {
+        var newDate = moment(oldDate, "MM-DD-YYYY").format("YYYY-MM-DD");
+        return newDate;
+    },
+
     GetSelectedDates: function () {
         var choosenDates = [];
         $(".datetimepicker").each(function (i, e) {
             var choosenDate = $(this).val();
-            choosenDates.push(choosenDate);
+            choosenDates.push(reference.ConvertDate(choosenDate));
         });
+        console.log(choosenDates);
         return choosenDates;
     },
 
@@ -60,9 +66,8 @@
     }
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     reference.InitDateTimePicker();
-    var sform_clean = $("form").serialize();
 });
 
 $("#addReferenceEntry").click(function () {
@@ -119,11 +124,9 @@ $("#ReferencesZone").on("change", ".upload-image", function (e) {
     }
 });
 
-
 $(window).on('beforeunload', function (e) {
     var sform_dirty = $("form").serialize();
     if (sform_clean != sform_dirty && used_submit == 0) {
         e.returnValue = "ABC";
     }
 });
-

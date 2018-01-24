@@ -5,15 +5,15 @@
 <li class="reference-entry">
     @if (Model.ReferenceType != ReferenceType.NewsLetter)
     {
-    <div class="date form-group">
-        @Html.LabelFor(model => model.DateAppear)
-        <span class="text-red">*</span>
+        <div class="date form-group">
+            @Html.LabelFor(model => model.DateAppear)
+            <span class="text-red">*</span>
         <div>
             @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
             <span class="icon-calendar"></span>
             @Html.ValidationMessageFor(model => model.DateAppear)
         </div>        
-    </div>
+        </div>
 
     }
     <div class="url form-group">
@@ -24,7 +24,7 @@
         @Html.ValidationMessageFor(model => model.ImageLink)
     </div>
 
-    <div class="browse form-group">        
+    <div class="browse form-group">
         <div class="btn btn-browse">
             <span>Browse...</span>
             <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload">

@@ -79,6 +79,15 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The request content cannot be loaded. Please try again..
+        /// </summary>
+        public static string InvalidImageURL {
+            get {
+                return ResourceManager.GetString("InvalidImageURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid input..
         /// </summary>
         public static string InvalidInputData {
@@ -130,6 +139,15 @@ namespace TicketDesk.Core.Resources {
         public static string UpdateReferencesSuccessful {
             get {
                 return ResourceManager.GetString("UpdateReferencesSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} must under {1} characters..
+        /// </summary>
+        public static string ValidateStringLengthMessage {
+            get {
+                return ResourceManager.GetString("ValidateStringLengthMessage", resourceCulture);
             }
         }
         

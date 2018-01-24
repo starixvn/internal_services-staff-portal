@@ -4,18 +4,17 @@
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
     using Core.Enumerations;
+    using Core.Resources;
 
     public class ReferenceViewModel
     {
         [Required]
         [Display(Name = "Date Appear")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:MM-DD-YYYY}", ApplyFormatInEditMode = true)]
         public DateTime DateAppear { get; set; }
 
         [Required]
-        [StringLength(500, ErrorMessage = "Image URL must under 500 characters")]
-        [Remote("IsValidImageUrl", "References", AdditionalFields = "ImageLink", ErrorMessage = "The request content cannot be loaded. Please try again.")]
+        [StringLength(500, ErrorMessageResourceName = "ValidateStringLengthMessage", ErrorMessageResourceType = typeof(Messages))]
+        [Remote("IsValidImageUrl", "References", AdditionalFields = "ImageLink", ErrorMessageResourceName = "InvalidImageURL", ErrorMessageResourceType = typeof(Messages))]
         [Display(Name = "Image URL")]
         public string ImageLink { get; set; }
 

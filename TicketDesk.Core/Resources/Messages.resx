@@ -123,6 +123,9 @@
   <data name="InvalidFolderName" xml:space="preserve">
     <value>A folder name can't contain any of the following characters: \ / : * ? " &lt; &gt; |</value>
   </data>
+  <data name="InvalidImageURL" xml:space="preserve">
+    <value>The request content cannot be loaded. Please try again.</value>
+  </data>
   <data name="InvalidInputData" xml:space="preserve">
     <value>Invalid input.</value>
   </data>
@@ -141,6 +144,9 @@ Do you really want to log out?</value>
   </data>
   <data name="UpdateReferencesSuccessful" xml:space="preserve">
     <value>Your upload file(s) has been successfully submitted!</value>
+  </data>
+  <data name="ValidateStringLengthMessage" xml:space="preserve">
+    <value>{0} must under {1} characters.</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
