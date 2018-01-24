@@ -18,9 +18,8 @@
         var choosenDates = [];
         $(".datetimepicker").each(function (i, e) {
             var choosenDate = $(this).val();
-            choosenDates.push(reference.ConvertDate(choosenDate));
+            choosenDates.push(choosenDate);
         });
-        console.log(choosenDates);
         return choosenDates;
     },
 
@@ -66,9 +65,7 @@
     }
 };
 
-$(document).ready(function () {
-    reference.InitDateTimePicker();
-});
+$(document).ready(reference.InitDateTimePicker());
 
 $("#addReferenceEntry").click(function () {
     reference.AddReferenceEntry(1, 31);
