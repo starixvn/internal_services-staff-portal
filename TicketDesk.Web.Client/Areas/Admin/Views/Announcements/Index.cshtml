@@ -26,8 +26,6 @@
     <!--edit announcement modal place holder-->
 </div>
 
-@*@Html.Partial("_Delete")*@
-
 <!--Filter-->
 <section class="filter-form">
     @using (Html.BeginForm("Index", "Announcements", FormMethod.Get, new { @class = "row" }))
@@ -62,10 +60,10 @@
 </section>
 
 <div class="button-group">
-    <a class="btn btn-create manual-modal-handler"
+    <a class="btn btn-create create"
        data-toggle="modal"
        href="#"
-       data-action="@Url.Action("Create", "Announcements")"
+       data-href="@Url.Action("Create", "Announcements")"
        data-modalid="#@ModalId.CreateAnnouncementModal.ToString()"><span class="icon-add"></span>@ModalId.CreateAnnouncementModal.GetDisplayName()</a>
 </div>
 
@@ -74,8 +72,8 @@
     @using (Html.BeginForm("Publish", "Announcements", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        
-        @Html.Partial("_Publish")
+
+        @*@Html.Partial("_Publish")*@
 
         <table class="announcement-list">
             <tr>
@@ -109,7 +107,7 @@
                         <td class="text-center">@item.Status</td>
                         <td class="text-center">
                             @if (item.State == AnnouncementState.Published)
-                            {
+                        {
                                 <span class="icon-check"></span>
                             }
                             else
@@ -127,7 +125,7 @@
                         </td>
                         <td>
                             @if (item.State == AnnouncementState.Scheduled)
-                            {
+                        {
                                 <div class="dropdown action-group">
                                     <div class="dropdown-toggle" id="dropdownAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="icon-setting" aria-hidden="true"></span>

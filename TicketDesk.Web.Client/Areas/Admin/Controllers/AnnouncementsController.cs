@@ -68,10 +68,24 @@
         public ActionResult Create(NewAnnouncementViewModel viewModel)
         {
             // Check datetime
-            if (viewModel.Announcement.PublishedDateTime != null &&
-                (viewModel.Announcement.PublishedDateTime - DateTime.Now) > TimeSpan.FromDays(365))
+            if (viewModel.Announcement.PublishedDateTime != null)
             {
-                ModelState.AddModelError("Announcement.PublishedDateTime", "Date not in range");
+                var tolerateTime = TimeSpan.FromMinutes(5);
+
+                // Published in the past
+                // TOLERATE TIME: 5 MINUTES
+                if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) <= tolerateTime)
+                {
+                    // Show confirm modal: Publish announcement immediately
+                    return PartialView("_Publish", viewModel.Announcement);
+                }
+
+                // Too far in the past or more than 1 year in the future
+                if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) > tolerateTime
+                    || (viewModel.Announcement.PublishedDateTime - DateTime.Now) > TimeSpan.FromDays(365))
+                {
+                    ModelState.AddModelError("Announcement.PublishedDateTime", "Date not in range");
+                }
             }
 
             if (!ModelState.IsValid)
@@ -185,6 +199,8 @@
 
             return RedirectToAction("Index", "Announcements");
         }
+
+
 
         private ActionResult ReturnInvalidAnnouncement(Announcement announcement)
         {

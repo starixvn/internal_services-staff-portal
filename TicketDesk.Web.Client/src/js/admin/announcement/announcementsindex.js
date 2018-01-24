@@ -32,8 +32,8 @@
 var modalhandler = {
     init: function () {
         modalhandler.resetModalForm();
-        modalhandler.manualModalHandler();
-        modalhandler.assignDelete();
+        modalhandler.assignFunctions();
+        modalhandler.modalFormAjax();
     },
 
     resetModalForm: function () {
@@ -42,27 +42,55 @@ var modalhandler = {
             ".modal",
             function () {
                 $(this).find("form")[0].reset();
-                $(this).find(".modal").remove();
+                $(this).remove();
             });
     },
 
-    manualModalHandler: function () {
-        $(".manual-modal-handler").on("click",
-            function () {
-                var action = $(this).data("action");
-                var target = $(this).data("modalid");
+    ////manualModalHandler: function () {
+    ////    $(".manual-modal-handler").on("click",
+    ////        function () {
+    ////            var action = $(this).data("action");
+    ////            var target = $(this).data("modalid");
 
-                $("#announcement-modal").load(action, function () {
-                    datetimepicker.setupDateTimePicker();
-                    var form = $("#announcement-modal").find("form");
-                    modalhandler.manualFormHandle(form);
-                    $(target).modal();
-                });
-            });
-    },
+    ////            $("#announcement-modal").load(action, function () {
+    ////                datetimepicker.setupDateTimePicker();
+    ////                var form = $("#announcement-modal").find("form");
+    ////                modalhandler.manualFormHandle(form);
+    ////                $(target).modal();
+    ////            });
+    ////        });
+    ////},
 
-    manualFormHandle: function (form) {
-        $(form).on("submit",
+    ////manualFormHandle: function (form) {
+    ////    $(form).on("submit",
+    ////        function (e) {
+    ////            e.preventDefault();
+
+    ////            $.validator.unobtrusive.parse($(form));
+    ////            $(form).validate();
+
+    ////            if ($(form).valid()) {
+    ////                $.ajax({
+    ////                    url: $(form).attr("action"),
+    ////                    method: $(form).attr("method"),
+    ////                    data: $(form).serialize(),
+    ////                    success: function (result) {
+    ////                        if (result.success) {
+    ////                            location.reload();
+    ////                        } else {
+    ////                            $("#modal-form").html(result);
+    ////                        }
+    ////                    }
+    ////                });
+    ////            }
+
+    ////            return false;
+    ////        });
+    ////},
+    
+    modalFormAjax: function (form) {
+        $("#announcement-modal").on("submit",
+            "form",
             function (e) {
                 e.preventDefault();
 
@@ -78,7 +106,7 @@ var modalhandler = {
                             if (result.success) {
                                 location.reload();
                             } else {
-                                $("#modal-form").html(result);
+                                $("#announcement-modal .modal").html(result);
                             }
                         }
                     });
@@ -88,7 +116,7 @@ var modalhandler = {
             });
     },
 
-    assignFunctions: function() {
+    assignFunctions: function () {
         modalhandler.assignCreate();
         modalhandler.assignEdit();
         modalhandler.assignDelete();
@@ -103,7 +131,7 @@ var modalhandler = {
             });
     },
 
-    assignPublish: function() {
+    assignPublish: function () {
         $(".publish").on("click",
             function () {
                 var href = $(this).data("href");
@@ -111,7 +139,7 @@ var modalhandler = {
             });
     },
 
-    assignCreate: function() {
+    assignCreate: function () {
         $(".create").on("click",
             function () {
                 var href = $(this).data("href");
@@ -119,7 +147,7 @@ var modalhandler = {
             });
     },
 
-    assignDelete: function() {
+    assignDelete: function () {
         $(".delete").on("click",
             function () {
                 var href = $(this).data("href");
@@ -127,12 +155,17 @@ var modalhandler = {
             });
     },
 
-    ajaxModal: function(href) {
+    ajaxModal: function (href, method) {
+        if (method === undefined) {
+            method = "get";
+        }
+
         $.ajax({
             url: href,
-            method: "get",
+            method: method,
             success: function (result) {
                 $("#announcement-modal").html(result);
+                datetimepicker.setupDateTimePicker();
                 $("#announcement-modal .modal").modal();
             }
         });
