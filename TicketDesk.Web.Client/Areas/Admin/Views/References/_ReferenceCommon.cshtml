@@ -16,7 +16,7 @@
     }
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <ul class="references-zone" id="ReferencesZone">
-        @if (Model.References.Count() > 0)
+        @if (Model != null && Model.References.Count() > 0)
         {
             for (var i = 0; i < Model.References.Count(); i++)
             {
@@ -25,10 +25,10 @@
                         @Html.LabelFor(model => model.References[i].DateAppear)
                         <span class="text-red">*</span>
                         <div>
-                            @Html.TextBoxFor(model => model.References[i].DateAppear, new { @class = "datetimepicker form-control" })
+                            @Html.TextBoxFor(model => model.References[i].DateAppear, "{0:MM-dd-yyyy}", new { @class = "datetimepicker form-control" })
                             <span class="icon-calendar"></span>
                             @Html.ValidationMessageFor(model => model.References[i].DateAppear)
-                        </div>  
+                        </div>
                     </div>
 
                     <div class="url form-group">

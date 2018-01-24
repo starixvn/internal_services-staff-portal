@@ -9,11 +9,6 @@
         });
     },
 
-    ConvertDate: function (oldDate) {
-        var newDate = moment(oldDate, "MM-DD-YYYY").format("YYYY-MM-DD");
-        return newDate;
-    },
-
     GetSelectedDates: function () {
         var choosenDates = [];
         $(".datetimepicker").each(function (i, e) {
@@ -65,7 +60,9 @@
     }
 };
 
-$(document).ready(reference.InitDateTimePicker());
+var originForm = JSON.stringify($("form").serializeArray());
+var userSubmit = 0;
+reference.InitDateTimePicker()
 
 $("#addReferenceEntry").click(function () {
     reference.AddReferenceEntry(1, 31);
@@ -83,6 +80,11 @@ $(document).on("dp.change", ".datetimepicker", function () {
     reference.UpdateDisabledDates();
 });
 
+if ($("#successMessage").length) {
+    setTimeout(function () {
+        $("#successMessage").hide();
+    }, 5000);
+}
 $("#ReferencesZone").on("change", ".upload-image", function (e) {
     var uploadEntry = $(this).closest(".reference-entry");
     var files = e.target.files;
@@ -121,9 +123,13 @@ $("#ReferencesZone").on("change", ".upload-image", function (e) {
     }
 });
 
+$("form").submit(function () {
+    userSubmit = 1;
+});
+
 $(window).on('beforeunload', function (e) {
-    var sform_dirty = $("form").serialize();
-    if (sform_clean != sform_dirty && used_submit == 0) {
-        e.returnValue = "ABC";
-    }
+    var formAfterChange = JSON.stringify($("form").serializeArray());
+    if (originForm != formAfterChange && userSubmit == 0) {
+        return true;
+    } 
 });

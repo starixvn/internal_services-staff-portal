@@ -10,6 +10,8 @@
     {
         [Required]
         [Display(Name = "Date Appear")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM-DD-YYYY}", ApplyFormatInEditMode = true)]
         public DateTime DateAppear { get; set; }
 
         [Required]
