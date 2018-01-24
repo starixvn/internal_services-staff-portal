@@ -35,6 +35,19 @@ var modalhandler = {
         modalhandler.assignFunctions();
         modalhandler.modalFormAjax();
         modalhandler.dismissAll();
+        modalhandler.showMessageIfAny();
+    },
+
+    showMessageIfAny: function() {
+        if (localStorage.getItem("Message")) {
+            $(".alert-success").removeClass("hide");
+            window.setTimeout(function () {
+                $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
+                    $(this).remove();
+                });
+            }, 5000);
+            localStorage.clear();
+        }
     },
 
     dismissAll: function() {
@@ -75,6 +88,7 @@ var modalhandler = {
                                     $("#announcement-modal .modal").before(result.html);
                                     $("#announcement-modal .modal").first().modal();
                                 } else {
+                                    localStorage.setItem("Message", true);
                                     location.reload();
                                 }
                             } else {
