@@ -12,10 +12,10 @@
             </div>
             <div class="modal-body">
                 @{
-                    var message = "Are you sure you want to public this announcement right away?";
+                    var message = "Are you sure you want to publish this announcement right away?";
                     if (Model.Announcements.Count(x => x.IsWaitingToPublish) > 1)
                     {
-                        message = "Are you sure you want to public these announcements right away?";
+                        message = "Are you sure you want to publish these announcements right away?";
                     }
                 }
                 <p>@message</p>

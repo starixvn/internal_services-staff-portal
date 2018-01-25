@@ -208,10 +208,10 @@ var publishannouncement = {
     updatetext: function (count) {
         if (count > 1) {
             $("#publish-announcement-confirm-modal .modal-body p")
-                .text("Are you sure you want to public these announcements right away?");
+                .text("Are you sure you want to publish these announcements right away?");
         } else {
             $("#publish-announcement-confirm-modal .modal-body p")
-                .text("Are you sure you want to public this announcement right away?");
+                .text("Are you sure you want to publish this announcement right away?");
         }
     },
 
