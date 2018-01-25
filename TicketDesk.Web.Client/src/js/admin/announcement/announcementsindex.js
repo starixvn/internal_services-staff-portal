@@ -38,15 +38,19 @@ var modalhandler = {
         modalhandler.showMessageIfAny();
     },
 
-    showMessageIfAny: function() {
-        if (localStorage.getItem("Message")) {
+    showMessageIfAny: function () {
+        var message = localStorage.getItem("message");
+        if (message !== null) {
+            $(".alert-success").text(message);
             $(".alert-success").removeClass("hide");
+
             window.setTimeout(function () {
                 $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
-                    $(this).remove();
+                    $(".alert-success").addClass("hide");
                 });
             }, 5000);
-            localStorage.clear();
+
+            localStorage.removeItem("message");
         }
     },
 
@@ -88,7 +92,10 @@ var modalhandler = {
                                     $("#announcement-modal .modal").before(result.html);
                                     $("#announcement-modal .modal").first().modal();
                                 } else {
-                                    localStorage.setItem("Message", true);
+                                    if (result.message !== undefined) {
+                                        localStorage.setItem("message", result.message);
+                                    }
+                                    
                                     location.reload();
                                 }
                             } else {

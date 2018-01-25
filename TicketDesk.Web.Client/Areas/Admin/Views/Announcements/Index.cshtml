@@ -25,7 +25,7 @@
 <div id="alert">
     <div class="alert alert-success hide" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Success!</strong> The announcement has been successfully published.
+        The announcement has been successfully published.
     </div>
 </div>
 
@@ -140,10 +140,9 @@
                                     </div>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownAction">
                                         <li>
-                                            <a class="edit manual-modal-handler"
-                                               data-action="@Url.Action("Edit", "Announcements", new { id = item.Id })"
-                                               href="#"
-                                               data-modalid="#@ModalId.EditAnnouncementModal.ToString()">
+                                            <a class="edit"
+                                               data-href="@Url.Action("Edit", "Announcements", new { id = item.Id })"
+                                               href="#">
                                                 <span class="icon-edit"></span><span>Edit</span>
                                             </a>
                                         </li>

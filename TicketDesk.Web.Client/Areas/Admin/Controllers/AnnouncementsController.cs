@@ -78,7 +78,7 @@
                 {
                     ModelState.AddModelError("Announcement.PublishedDateTime", "Date not in range");
                 }
-                
+
                 // Published in the past
                 // TOLERATE TIME: 5 MINUTES
                 if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) <= tolerateTime && !viewModel.IsPublishedImmediatly)
@@ -99,7 +99,20 @@
             }
 
             _announcementService.AddAnnouncement(viewModel.GetNewAnnouncementCriteria(CurrentSession.Username));
-            return Json(new { success = true });
+
+            if (viewModel.IsPublishedImmediatly)
+            {
+                return Json(new
+                {
+                    success = true,
+                    message = "The announcement has been successfully published."
+                });
+            }
+            
+            return Json(new
+            {
+                success = true
+            });
         }
 
         public ActionResult Edit(int? id)
@@ -121,8 +134,6 @@
             {
                 Announcement = announcement,
                 IsImportant = announcement.Status == AnnouncementStatus.Important,
-                ////Date = announcement.PublishedDateTime,
-                ////Time = announcement.PublishedDateTime?.TimeOfDay,
                 ModalId = ModalId.EditAnnouncementModal,
                 ActionType = ActionType.Edit
             };
@@ -143,16 +154,55 @@
                 return invalidAnnouncement;
             }
 
-            if (ModelState.IsValid)
+            // Check datetime
+            if (viewModel.Announcement.PublishedDateTime != null)
             {
-                _announcementService.UpdateAnnouncement(viewModel.GetNewAnnouncementCriteria(CurrentSession.Username));
-                return Json(new { success = true });
+                var tolerateTime = TimeSpan.FromMinutes(5);
+
+                // Too far in the past or more than 1 year in the future
+                if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) > tolerateTime
+                    || (viewModel.Announcement.PublishedDateTime - DateTime.Now) > TimeSpan.FromDays(365))
+                {
+                    ModelState.AddModelError("Announcement.PublishedDateTime", "Date not in range");
+                }
+
+                // Published in the past
+                // TOLERATE TIME: 5 MINUTES
+                if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) <= tolerateTime && !viewModel.IsPublishedImmediatly)
+                {
+                    viewModel.IsPublishedImmediatly = true;
+                    // Show confirm modal: Publish announcement immediately
+                    return Json(new
+                    {
+                        success = true,
+                        html = RenderRazorViewToString("_Publish", viewModel)
+                    });
+                }
             }
 
-            viewModel.ModalId = ModalId.EditAnnouncementModal;
-            viewModel.ActionType = ActionType.Edit;
+            if (!ModelState.IsValid)
+            {
+                viewModel.ModalId = ModalId.EditAnnouncementModal;
+                viewModel.ActionType = ActionType.Edit;
 
-            return PartialView("_AnnouncementForm", viewModel);
+                return PartialView("_AnnouncementForm", viewModel);
+            }
+
+            _announcementService.UpdateAnnouncement(viewModel.GetNewAnnouncementCriteria(CurrentSession.Username));
+
+            if (viewModel.IsPublishedImmediatly)
+            {
+                return Json(new
+                {
+                    success = true,
+                    message = "The announcement has been successfully published."
+                });
+            }
+
+            return Json(new
+            {
+                success = true
+            });
         }
 
         public ActionResult Delete(int id)
@@ -178,7 +228,10 @@
                 _announcementService.DeleteAnnouncement(viewModel.Id);
             }
 
-            return RedirectToAction("Index");
+            return Json(new
+            {
+                success = true
+            });
         }
 
         [HttpPost]
