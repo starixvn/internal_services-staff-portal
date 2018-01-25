@@ -256,18 +256,14 @@ var announcement = {
     getCurrentTime: function () {
         var today = new Date();
 
-        var tt = "AM";
-
-        var hour = today.getHours();
-        if (hour > 12) {
-            hour = hour - 12;
-            tt = "PM";
-        }
-
-        var hh = announcement.addMissingZero(hour);
-        var mm = announcement.addMissingZero(today.getMinutes());
-
-        return hh + ":" + mm + " " + tt;
+        var hours = today.getHours();
+        var minutes = today.getMinutes();
+        var ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        var strTime = hours + ":" + minutes + " " + ampm;
+        return strTime;
     },
 
     addMissingZero: function (data) {
