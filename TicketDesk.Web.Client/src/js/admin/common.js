@@ -8,7 +8,14 @@
             ".icon-calendar",
             function () {
                 var datetimepickerElements = $(this).parent().find(".datetimepicker");
-                $(datetimepickerElements).data("DateTimePicker").toggle();
+                if (datetimepickerElements.length > 0) {
+                    $(datetimepickerElements).data("DateTimePicker").toggle();
+                }
+                
+                var datepickerElements = $(this).parent().find(".datepicker");
+                if (datepickerElements.length > 0) {
+                    $(datepickerElements).data("DateTimePicker").toggle();
+                }
             });
     },
 
