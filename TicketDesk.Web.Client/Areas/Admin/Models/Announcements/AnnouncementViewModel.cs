@@ -27,6 +27,8 @@
 
         public IList<Announcement> Announcements { get; set; }
 
+        public bool IsPublishImmediately { get; set; }
+
         [Display(Name = "Published From")]
         public DateTime? PublishedFrom { get; set; }
 

@@ -1,0 +1,29 @@
+﻿@using TicketDesk.Web.Client.Areas.Admin.Models.Announcements
+@model AnnouncementViewModel
+
+@Html.HiddenFor(x => x.IsPublishImmediately)
+
+<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Announcement Publish</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    var message = "Are you sure you want to public this announcement right away?";
+                    if (Model.Announcements.Count(x => x.IsWaitingToPublish) > 1)
+                    {
+                        message = "Are you sure you want to public these announcements right away?";
+                    }
+                }
+                <p>@message</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default dismiss-all" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Publish</button>
+            </div>
+        </div>
+    </div>
+</div>

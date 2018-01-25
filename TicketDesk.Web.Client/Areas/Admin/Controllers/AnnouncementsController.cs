@@ -81,9 +81,10 @@
 
                 // Published in the past
                 // TOLERATE TIME: 5 MINUTES
-                if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) <= tolerateTime && !viewModel.IsPublishedImmediatly)
+                if (Math.Abs((DateTime.Now - viewModel.Announcement.PublishedDateTime).Value.TotalMinutes) <=
+                    tolerateTime.Minutes && !viewModel.IsPublishedImmediately)
                 {
-                    viewModel.IsPublishedImmediatly = true;
+                    viewModel.IsPublishedImmediately = true;
                     // Show confirm modal: Publish announcement immediately
                     return Json(new
                     {
@@ -100,7 +101,7 @@
 
             _announcementService.AddAnnouncement(viewModel.GetNewAnnouncementCriteria(CurrentSession.Username));
 
-            if (viewModel.IsPublishedImmediatly)
+            if (viewModel.IsPublishedImmediately)
             {
                 return Json(new
                 {
@@ -168,9 +169,10 @@
 
                 // Published in the past
                 // TOLERATE TIME: 5 MINUTES
-                if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) <= tolerateTime && !viewModel.IsPublishedImmediatly)
+                if (Math.Abs((DateTime.Now - viewModel.Announcement.PublishedDateTime).Value.TotalMinutes) <=
+                    tolerateTime.Minutes && !viewModel.IsPublishedImmediately)
                 {
-                    viewModel.IsPublishedImmediatly = true;
+                    viewModel.IsPublishedImmediately = true;
                     // Show confirm modal: Publish announcement immediately
                     return Json(new
                     {
@@ -190,7 +192,7 @@
 
             _announcementService.UpdateAnnouncement(viewModel.GetNewAnnouncementCriteria(CurrentSession.Username));
 
-            if (viewModel.IsPublishedImmediatly)
+            if (viewModel.IsPublishedImmediately)
             {
                 return Json(new
                 {
@@ -236,15 +238,28 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Publish(IList<Announcement> announcements)
+        public ActionResult Publish(AnnouncementViewModel viewModel)
         {
+            var numberOfAnnouncementsToPublish = viewModel.Announcements.Count(x => x.IsWaitingToPublish);
+
+            if (!viewModel.IsPublishImmediately)
+            {
+                viewModel.IsPublishImmediately = true;
+
+                return Json(new
+                {
+                    success = true,
+                    html = RenderRazorViewToString("_QuickPublish", viewModel)
+                });
+            }
+
             var criteria = new PublishAnnouncementsCriteria
             {
                 Ids = new List<int>(),
                 ModifiedBy = CurrentSession.Username
             };
 
-            foreach (var announcement in announcements)
+            foreach (var announcement in viewModel.Announcements)
             {
                 if (announcement.IsWaitingToPublish)
                 {
@@ -254,11 +269,19 @@
 
             _announcementService.PublishAnnouncements(criteria);
 
-            return RedirectToAction("Index", "Announcements");
+            var message = "The announcement has been successfully published.";
+            if (numberOfAnnouncementsToPublish > 1)
+            {
+                message = "The announcements have been successfully published.";
+            }
+
+            return Json(new
+            {
+                success = true,
+                message
+            });
         }
-
-
-
+        
         private ActionResult ReturnInvalidAnnouncement(Announcement announcement)
         {
             if (announcement == null)

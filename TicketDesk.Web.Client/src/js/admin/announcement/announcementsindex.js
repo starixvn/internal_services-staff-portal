@@ -36,6 +36,16 @@ var modalhandler = {
         modalhandler.modalFormAjax();
         modalhandler.dismissAll();
         modalhandler.showMessageIfAny();
+        modalhandler.quickPublish();
+    },
+
+    quickPublish: function() {
+        $("section.table form").on("submit",
+            function(e) {
+                e.preventDefault();
+                modalhandler.ajaxForm(this, "section.table form", "section.table .modal");
+                return false;
+            });
     },
 
     showMessageIfAny: function () {
@@ -69,6 +79,12 @@ var modalhandler = {
             function () {
                 $(this).remove();
             });
+
+        $("section.table").on("hidden.bs.modal",
+            ".modal",
+            function() {
+                $(this).remove();
+            });
     },
     
     modalFormAjax: function () {
@@ -82,39 +98,43 @@ var modalhandler = {
                 $(this).validate();
 
                 if ($(this).valid()) {
-                    $.ajax({
-                        url: $(this).attr("action"),
-                        method: $(this).attr("method"),
-                        data: $(this).serialize(),
-                        success: function (result) {
-                            if (result.success) {
-                                if (result.html !== undefined) {
-                                    $("#announcement-modal .modal").before(result.html);
-                                    $("#announcement-modal .modal").first().modal();
-                                } else {
-                                    if (result.message !== undefined) {
-                                        localStorage.setItem("message", result.message);
-                                    }
-                                    
-                                    location.reload();
-                                }
-                            } else {
-                                // ON VALIDATION ERROR
-                                $("#announcement-modal .modal").html(result);
-                            }
-                        }
-                    });
+                    modalhandler.ajaxForm(this, "#announcement-modal .modal", "#announcement-modal .modal");
                 }
 
                 return false;
             });
     },
 
+    ajaxForm: function(form, selector, selectorWithModal) {
+        $.ajax({
+            url: $(form).attr("action"),
+            method: $(form).attr("method"),
+            data: $(form).serialize(),
+            success: function (result) {
+                if (result.success) {
+                    if (result.html !== undefined) {
+                        $(selector).before(result.html);
+                        $(selectorWithModal).first().modal();
+                    } else {
+                        if (result.message !== undefined) {
+                            localStorage.setItem("message", result.message);
+                        }
+
+                        location.reload();
+                    }
+                } else {
+                    // ON VALIDATION ERROR
+                    $(selectorWithModal).html(result);
+                }
+            }
+        });
+    },
+
     assignFunctions: function () {
         modalhandler.assignCreate();
         modalhandler.assignEdit();
         modalhandler.assignDelete();
-        modalhandler.assignPublish();
+        //modalhandler.assignPublish();
     },
 
     assignEdit: function () {
@@ -125,13 +145,13 @@ var modalhandler = {
             });
     },
 
-    assignPublish: function () {
-        $(".publish").on("click",
-            function () {
-                var href = $(this).data("href");
-                modalhandler.ajaxModal(href);
-            });
-    },
+    //assignPublish: function () {
+    //    $(".publish").on("click",
+    //        function () {
+    //            var href = $(this).data("href");
+    //            modalhandler.ajaxModal(href);
+    //        });
+    //},
 
     assignCreate: function () {
         $(".create").on("click",

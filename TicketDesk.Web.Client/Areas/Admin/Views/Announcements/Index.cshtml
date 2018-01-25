@@ -80,8 +80,6 @@
     {
         @Html.AntiForgeryToken()
 
-        @*@Html.Partial("_Publish")*@
-
         <table class="announcement-list">
             <tr>
                 <th>#</th>
@@ -92,7 +90,7 @@
                 <th>Announcement</th>
                 <th>Status</th>
                 <th class="publish">
-                    <button class="btn btn-publish" disabled="disabled" type="button" data-toggle="modal" data-target="#publish-announcement-confirm-modal">Publish</button>
+                    <button class="btn btn-publish" disabled="disabled" type="submit">Publish</button>
                 </th>
                 <th class="action">Action</th>
             </tr>
