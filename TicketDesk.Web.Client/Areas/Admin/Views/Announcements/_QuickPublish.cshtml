@@ -1,9 +1,9 @@
 ﻿@using TicketDesk.Web.Client.Areas.Admin.Models.Announcements
 @model AnnouncementViewModel
 
-@Html.HiddenFor(x => x.IsPublishImmediately)
-
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
+    @Html.HiddenFor(x => x.IsPublishImmediately)
+
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

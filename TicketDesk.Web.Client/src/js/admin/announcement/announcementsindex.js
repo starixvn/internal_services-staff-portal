@@ -43,7 +43,7 @@ var modalhandler = {
         $("section.table form").on("submit",
             function(e) {
                 e.preventDefault();
-                modalhandler.ajaxForm(this, "section.table form", "section.table .modal");
+                modalhandler.ajaxForm(this, "#table-modal .modal", "#table-modal .modal");
                 return false;
             });
     },
