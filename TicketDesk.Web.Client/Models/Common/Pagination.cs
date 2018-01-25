@@ -2,11 +2,16 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
+    using System.Linq;
     using Localization.Client;
 
     public abstract class Pagination
     {
+        protected Pagination()
+        {
+            ItemPerPage = PageSizes.First();
+        }
+
         /// <summary>
         /// CurrentPage start with 1
         /// </summary>
@@ -21,40 +26,9 @@
         public int ToItemIndex => CurrentPage != TotalPage ? ItemPerPage * CurrentPage : TotalItem;
 
         [Display(ResourceType = typeof(Resources), Name = "Common_Table_Pagination_PageSize")]
-        public int ItemPerPage { get; set; } = 20;
+        public int ItemPerPage { get; set; }
 
-        public IEnumerable<SelectListItem> ItemPerPageList
-        {
-            get
-            {
-                var selectListItems = new List<SelectListItem>();
-
-                var selectListItem = new SelectListItem
-                {
-                    Text = "20",
-                    Value = "20"
-                };
-                selectListItems.Add(selectListItem);
-
-                selectListItem = new SelectListItem
-                {
-                    Text = "40",
-                    Value = "40"
-                };
-                selectListItems.Add(selectListItem);
-
-                selectListItem = new SelectListItem
-                {
-                    Text = "60",
-                    Value = "60"
-                };
-                selectListItems.Add(selectListItem);
-
-                return selectListItems;
-            }
-        }
-
-        public virtual IList<int> PageSizes => new List<int> { 20, 40, 60 };
+        public IList<int> PageSizes { get; } = new List<int> { 20, 50, 100 };
 
         public int TotalItem { get; set; }
 
