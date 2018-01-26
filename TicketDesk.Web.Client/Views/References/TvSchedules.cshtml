@@ -1,9 +1,14 @@
 ﻿@using TicketDesk.Domain.Model
 @model Reference
 
+<div class="img-content">
+    <div class="img-detail">
+        <img src="@(Model.ImageLink)" alt="There is no information" />
+    </div>
+    <p class="info">
+        <span>@Model.ReferenceType.ToString()</span> |
+        Last update by <span>@Model.LastUpdateBy</span> <span>@Model.LastUpdateDate</span>
+    </p>
+</div>
 
-<img src="@(Model.ImageLink)" alt="There is no information" width="100%" />
-<p>
-    <span>@Model.ReferenceType.ToString()</span>|
-    Last update by <span>@Model.LastUpdateBy</span> <span>@Model.LastUpdateDate</span>
-</p>
+

@@ -1558,3 +1558,109 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         margin-right: 0;
     }
 }
+
+// ---------------- REFERENCES ------------------- //
+.img-content {
+    width: 100%;
+}
+
+.img-detail {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    margin: 3rem auto 0;
+    background: #e0e0e0;
+    border: 8px solid #fff;
+    box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.3);
+
+    img {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: block;
+
+        &:after {
+            content: attr(alt);
+            display: block;
+            font-size: 18px;
+            color: #888;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            text-align: center;
+        }
+
+        &:before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0px;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgb(235, 235, 235);
+        }
+    }
+
+    .carousel, .carousel-inner {
+        height: 100%;
+    }
+
+    .carousel-inner .item {
+        height: 100%;
+
+        img {
+            height: 100%;
+        }
+    }
+
+    .carousel-control {
+        top: 50%;
+        transform: translateY(-50%);
+        background: #fff;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        border-radius: 50%;
+        opacity: 1;
+        box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+        transition: all .2s ease;
+
+        &:hover {
+            //background: #f2f2f2;
+            box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);
+        }
+
+        .glyphicon {
+            position: static;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-size: 20px;
+            line-height: 60px;
+            vertical-align: middle;
+            text-shadow: none;
+            color: #c6c6c6;
+        }
+
+        &.right {
+            right: -9rem;
+        }
+
+        &.left {
+            left: -9rem;
+        }
+    }
+}
+
+.info {
+    flex-basis: 100%;
+    font-size: 17px;
+    font-weight: 600;
+    color: #03285a;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    text-align: center;
+}
