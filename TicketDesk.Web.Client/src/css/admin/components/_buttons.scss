@@ -34,6 +34,10 @@
     }
 }
 
+.btn-primary {
+    @include btn-style(#2e4592);
+}
+
 .btn-submit {
     @include btn-style(#2e4592);
 }

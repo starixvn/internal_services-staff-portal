@@ -65,7 +65,7 @@ main {
   color: #ea1118; }
 
 .sidebar {
-  z-index: 1400;
+  z-index: 1000;
   position: fixed;
   top: 50px;
   width: 230px;
@@ -572,6 +572,19 @@ main {
 .button-group .btn:not(:last-child) {
   margin-right: 6px; }
 
+.btn-primary {
+  background: #2e4592;
+  color: #fff;
+  border: 1px solid #2e4592; }
+  .btn-primary:hover, .btn-primary:focus {
+    color: #fff;
+    background: #22336b;
+    border-color: #22336b;
+    outline: none; }
+  .btn-primary[disabled] {
+    opacity: .8;
+    cursor: not-allowed; }
+
 .btn-submit {
   background: #2e4592;
   color: #fff;
@@ -783,19 +796,69 @@ main {
     transform: scale(0);
     transition: .2s; }
 
+.confirm-modal {
+  margin-top: 60px;
+  width: 500px; }
+  .confirm-modal .modal-body {
+    padding: 40px 20px 0;
+    text-align: center; }
+
 .modal-content {
   border-radius: 0;
-  border: 0; }
+  border: 0;
+  position: relative; }
+  .modal-content .close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 25px;
+    width: 25px;
+    z-index: 1;
+    opacity: 1;
+    transition: all .2s ease; }
+    .modal-content .close:focus {
+      outline: none; }
+    .modal-content .close:hover:before, .modal-content .close:hover:after {
+      background: #444; }
+    .modal-content .close span {
+      visibility: hidden; }
+    .modal-content .close:before, .modal-content .close:after {
+      content: '';
+      position: absolute;
+      display: block;
+      height: 2px;
+      width: 15px;
+      background: #858585;
+      border-radius: 1px;
+      top: 10px;
+      right: 0; }
+    .modal-content .close:before {
+      transform: rotate(45deg); }
+    .modal-content .close:after {
+      transform: rotate(-45deg); }
 
 .modal-header {
   padding: 9px 0;
   margin: 0 10px; }
+  .modal-header .close {
+    margin: 0; }
   .modal-header .modal-title {
     font-size: 16px; }
 
 .modal-body {
-  padding: 10px; }
+  padding: 10px;
+  /*&:before {
+        content: '';
+        display: block;
+        height: 1px;
+        width: 100%;
+        background: #b7b7b7;
+        margin-bottom: 10px;
+    }*/ }
 
 .modal-footer {
   border: 0; }
+  .modal-footer .btn {
+    padding-top: 6px;
+    padding-bottom: 6px; }
 
