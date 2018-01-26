@@ -286,7 +286,7 @@ var announcementSort = {
                 var input = $(".sort-direction." + colName);
 
                 // toggle value
-                if ($(input).val()) {
+                if ($(input).val() === "True") {
                     $(input).val("False");
                 } else {
                     $(input).val("True");
