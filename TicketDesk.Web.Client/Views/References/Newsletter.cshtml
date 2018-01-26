@@ -2,50 +2,41 @@
 @using TicketDesk.Core.Resources
 @model IList<Reference>
 
+@section title{ @ViewLang.NewsLetters }
+@section css
+{
+    <link href="~/src/libs/slick/slick.css" rel="stylesheet" />
+    <link href="~/src/libs/slick/slick-theme.css" rel="stylesheet" />
+
+}
+
 <div class="img-content">
     <div class="img-detail">
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-                @foreach (var reference in Model)
-                {
-                    if (Model.IndexOf(reference) == 0)
-                    {
-                        <div class="item active">
-                            <img src="@reference.ImageLink" alt="There is no information">
-                            <p class="info">
-                                <span>@ViewLang.NewsLetters</span> |
-                                Last update by <span>@reference.LastUpdateBy</span>
-                                <span>@reference.LastUpdateDate</span>
-                            </p>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="item">
-                            <div class="img-detail">
-                                <img src="@reference.ImageLink" alt="There is no information">
-                            </div>
-                            <p class="info">
-                                <span>@reference.ReferenceType.ToString()</span> |
-                                Last update by <span>@reference.LastUpdateBy</span> <span>@reference.LastUpdateDate</span>
-                            </p>
-                        </div>
-                    }
-
-                }
+        @foreach (var reference in Model)
+            {
+            <div class="item active">
+                <img src="@reference.ImageLink" alt="There is no information">
+                <p class="info">
+                    <span>@ViewLang.NewsLetters</span> |
+                    Last update by <span>@reference.LastUpdateBy</span>
+                    <span>@reference.LastUpdateDate</span>
+                </p>
             </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
+        }
     </div>
 </div>
+
+@section scripts {
+    <script src="~/src/libs/slick/slick.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.img-detail').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                fade: true,
+                cssEase: 'linear'
+            });
+        });
+    </script>
+}

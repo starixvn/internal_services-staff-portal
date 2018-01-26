@@ -1,5 +1,6 @@
 ﻿@using TicketDesk.Domain.Model
 @using TicketDesk.Core.Resources
 @model Reference
+@section title{ @ViewLang.TradingLimits }
 
 @Html.Partial("_ReferenceCommon", Model, new ViewDataDictionary(ViewData) { { "name", ViewLang.TradingLimits } })

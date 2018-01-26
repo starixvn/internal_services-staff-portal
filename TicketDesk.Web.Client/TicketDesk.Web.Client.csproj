@@ -502,6 +502,11 @@
     <Content Include="Scripts\globalize\relative-time.js" />
     <Content Include="Scripts\jquery.validate.globalize.js" />
     <Content Include="Scripts\jquery.validate.globalize.min.js" />
+    <Content Include="src\libs\slick\ajax-loader.gif" />
+    <Content Include="src\libs\slick\slick-theme.css" />
+    <Content Include="src\libs\slick\slick.css" />
+    <Content Include="src\libs\slick\slick.js" />
+    <Content Include="src\libs\slick\slick.min.js" />
     <Content Include="src\contents\images\logo-admin.svg" />
     <Content Include="src\contents\images\logo-text.svg" />
     <Content Include="src\contents\images\logo_admin.svg" />
@@ -2126,6 +2131,11 @@
     <Content Include="src\css\admin\layout\_content.scss" />
     <Content Include="src\css\admin\components\_modal.scss" />
     <Content Include="Views\References\_ReferenceCommon.cshtml" />
+    <Content Include="src\libs\slick\config.rb" />
+    <Content Include="src\libs\slick\slick-theme.less" />
+    <Content Include="src\libs\slick\slick-theme.scss" />
+    <Content Include="src\libs\slick\slick.less" />
+    <Content Include="src\libs\slick\slick.scss" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -2135,6 +2145,7 @@
     <Folder Include="Scripts\ticketdesk\User\" />
     <Folder Include="src\css\admin\pages\" />
     <Folder Include="src\libs\dropzone\debug\" />
+    <Folder Include="src\libs\slick\fonts\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\S22.Mail\S22.Mail.csproj">
