@@ -53,7 +53,7 @@
             {
                 if (CheckIfDateDuplicate(viewModel.References))
                 {
-                    ModelState.AddModelError("", "The Date duplicated.");
+                    ModelState.AddModelError("", Messages.DuplicatedDay);
                 }
                 else
                 {
@@ -80,7 +80,7 @@
             {
                 if (CheckIfDateDuplicate(viewModel.References))
                 {
-                    ModelState.AddModelError("", "The Date duplicated.");
+                    ModelState.AddModelError("", Messages.DuplicatedDay);
                 }
                 else
                 {
@@ -264,12 +264,12 @@
 
                 if (!ValidExtention(fileName))
                 {
-                    return Json(new { isSuccessful, message = "Fail to upload image. The format is not supported." });
+                    return Json(new { isSuccessful, message = Messages.InvalidImageFormat });
                 }
 
                 if (fileSize > imageSizeLimit)
                 {
-                    return Json(new { isSuccessful, message = "Fail to upload image. The image you're trying to upload exceeds 2MB limit." });
+                    return Json(new { isSuccessful, message = Messages.ImageExceededCapacity });
                 }
 
                 var fileExist = System.IO.File.Exists(Path.Combine(directory, file.FileName));

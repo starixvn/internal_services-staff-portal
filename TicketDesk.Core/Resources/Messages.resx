@@ -120,8 +120,14 @@
   <data name="DuplicatedDay" xml:space="preserve">
     <value>The Date duplicated.</value>
   </data>
+  <data name="ImageExceededCapacity" xml:space="preserve">
+    <value>Fail to upload image. The image you're trying to upload exceeds 2MB limit.</value>
+  </data>
   <data name="InvalidFolderName" xml:space="preserve">
     <value>A folder name can't contain any of the following characters: \ / : * ? " &lt; &gt; |</value>
+  </data>
+  <data name="InvalidImageFormat" xml:space="preserve">
+    <value>Fail to upload image. The format is not supported.</value>
   </data>
   <data name="InvalidImageURL" xml:space="preserve">
     <value>The request content cannot be loaded. Please try again.</value>

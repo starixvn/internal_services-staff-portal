@@ -151,4 +151,10 @@ Bạn có thực sự muốn đăng xuất?</value>
   <data name="ValidateStringLengthMessage" xml:space="preserve">
     <value>{0} must under {1} characters.</value>
   </data>
+  <data name="ImageExceededCapacity" xml:space="preserve">
+    <value>Fail to upload image. The image you're trying to upload exceeds 2MB limit.</value>
+  </data>
+  <data name="InvalidImageFormat" xml:space="preserve">
+    <value>Fail to upload image. The format is not supported.</value>
+  </data>
 </root>

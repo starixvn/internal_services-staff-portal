@@ -70,11 +70,29 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fail to upload image. The image you&apos;re trying to upload exceeds 2MB limit..
+        /// </summary>
+        public static string ImageExceededCapacity {
+            get {
+                return ResourceManager.GetString("ImageExceededCapacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A folder name can&apos;t contain any of the following characters: \ / : * ? &quot; &lt; &gt; |.
         /// </summary>
         public static string InvalidFolderName {
             get {
                 return ResourceManager.GetString("InvalidFolderName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fail to upload image. The format is not supported..
+        /// </summary>
+        public static string InvalidImageFormat {
+            get {
+                return ResourceManager.GetString("InvalidImageFormat", resourceCulture);
             }
         }
         

@@ -12,19 +12,21 @@
 
 <div class="img-content">
     <div class="img-detail">
-        @foreach (var reference in Model)
+            @foreach (var reference in Model)
             {
-            <div class="item active">
-                <img src="@reference.ImageLink" alt="There is no information">
-                <p class="info">
-                    <span>@ViewLang.NewsLetters</span> |
-                    Last update by <span>@reference.LastUpdateBy</span>
-                    <span>@reference.LastUpdateDate</span>
-                </p>
-            </div>
-        }
+                <div class="item active">
+                    <img src="@reference.ImageLink" alt="There is no information">
+                    <p class="info">
+                        <span>@ViewLang.NewsLetters</span> |
+                        Last update by <span>@reference.LastUpdateBy</span>
+                        <span>@reference.LastUpdateDate</span>
+                    </p>
+                </div>
+            }
+        </div>
     </div>
-</div>
+
+    
 
 @section scripts {
     <script src="~/src/libs/slick/slick.min.js"></script>
