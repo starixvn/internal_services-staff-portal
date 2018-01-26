@@ -112,7 +112,8 @@
             
             return Json(new
             {
-                success = true
+                success = true,
+                message = "The announcement has been successfully created."
             });
         }
 
@@ -203,7 +204,8 @@
 
             return Json(new
             {
-                success = true
+                success = true,
+                message = "The announcement has been successfully edited."
             });
         }
 
@@ -232,7 +234,8 @@
 
             return Json(new
             {
-                success = true
+                success = true,
+                message = "The announcement has been successfully deleted"
             });
         }
 
