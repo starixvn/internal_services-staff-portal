@@ -1173,6 +1173,16 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   width: 100%;
   overflow: hidden; }
 
+.img-error {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  color: #888; }
+
 .img-detail {
   position: relative;
   width: 800px;
@@ -1207,7 +1217,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
       left: 0;
       height: 100%;
       width: 100%;
-      background-color: #ebebeb; }
+      background-color: #e0e0e0; }
   .img-detail .carousel, .img-detail .carousel-inner {
     height: 100%; }
   .img-detail .carousel-inner .item {
