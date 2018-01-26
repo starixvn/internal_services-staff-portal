@@ -275,9 +275,33 @@ var announcement = {
     }
 }
 
+var announcementSort = {
+    init: function() {
+        $(".sort").on("click",
+            function() {
+                // Get column name
+                var colName = $(this).data("col");
+
+                // get list hidden sort direction input
+                var input = $(".sort-direction." + colName);
+
+                // toggle value
+                if ($(input).val()) {
+                    $(input).val("False");
+                } else {
+                    $(input).val("True");
+                }
+
+                // submit form
+                $(input).closest("form").trigger("submit");
+            });
+    }
+}
+
 $(document).ready(function () {
     datetimepicker.init();
     modalhandler.init();
     publishannouncement.init();
     announcement.init();
+    announcementSort.init();
 });

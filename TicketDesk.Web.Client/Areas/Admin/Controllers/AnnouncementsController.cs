@@ -42,7 +42,7 @@
 
                 viewModel.Announcements = paginationService.Pagination(
                     announcements,
-                    x => x.Id,
+                    viewModel.SortDatas,
                     viewModel.Skipped,
                     viewModel.ItemPerPage)
                     .ToList();

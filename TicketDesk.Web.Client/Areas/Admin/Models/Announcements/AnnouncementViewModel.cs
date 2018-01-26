@@ -8,6 +8,7 @@
     using System.Web.Routing;
     using Client.Models.Common;
     using Core.Enumerations;
+    using Core.Model;
     using Criteria.Announcement;
     using Domain.Model;
 
@@ -23,6 +24,36 @@
                 Announcement = new Announcement(),
                 IsImportant = false
             };
+
+            SortDatas = new List<SortData>();
+
+            var sort = new SortData
+            {
+                Column = nameof(Announcement.Id),
+                IsAsc = false
+            };
+            SortDatas.Add(sort);
+
+            sort = new SortData
+            {
+                Column = nameof(Announcement.LastModified),
+                IsAsc = false
+            };
+            SortDatas.Add(sort);
+
+            sort = new SortData
+            {
+                Column = nameof(Announcement.ModifiedBy),
+                IsAsc = true
+            };
+            SortDatas.Add(sort);
+
+            sort = new SortData
+            {
+                Column = nameof(Announcement.PublishedDateTime),
+                IsAsc = false
+            };
+            SortDatas.Add(sort);
         }
 
         public IList<Announcement> Announcements { get; set; }
@@ -44,6 +75,8 @@
         // Create
         public NewAnnouncementViewModel NewAnnouncementViewModel { get; set; }
 
+        public IList<SortData> SortDatas { get; set; }
+
         public GetAnnouncementsCriteria GetQueryCriteria()
         {
             return new GetAnnouncementsCriteria
@@ -64,7 +97,8 @@
                 PublishedFrom = PublishedFrom,
                 PublishedTo = PublishedTo,
                 Status = Status,
-                State = State
+                State = State,
+                SortDatas = SortDatas
             };
 
             var routeValues = new RouteValueDictionary
@@ -74,6 +108,12 @@
                 { nameof(index.PublishedFrom), index.PublishedFrom },
                 { nameof(index.PublishedTo), index.PublishedTo }
             };
+
+            for (var dataIndex = 0; dataIndex < SortDatas.Count; dataIndex++)
+            {
+                routeValues.Add($"{nameof(index.SortDatas)}[{dataIndex}].{nameof(SortData.Column)}", index.SortDatas[dataIndex].Column);
+                routeValues.Add($"{nameof(index.SortDatas)}[{dataIndex}].{nameof(SortData.IsAsc)}", index.SortDatas[dataIndex].IsAsc);
+            }
 
             if (index.Status != null)
             {

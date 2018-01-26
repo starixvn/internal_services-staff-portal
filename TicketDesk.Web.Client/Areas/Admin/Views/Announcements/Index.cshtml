@@ -1,4 +1,5 @@
-﻿@using TicketDesk.Domain
+﻿@using TicketDesk.Core.Model
+@using TicketDesk.Domain
 @using TicketDesk.Domain.Model
 @using TicketDesk.Web.Client.Areas.Admin.Models.Announcements
 @model AnnouncementViewModel
@@ -63,6 +64,15 @@
         <div class="button-filter col-lg-2 col-md-3 col-xs-4 ">
             <button type="submit" class="btn btn-submit">Submit</button>
         </div>
+
+        var sortCount = Model.SortDatas.Count;
+        for (var index = 0; index < sortCount; index++)
+        {
+            var classString = "sort-direction " + Model.SortDatas[index].Column;
+
+            @Html.HiddenFor(x => x.SortDatas[index].Column)
+            @Html.HiddenFor(x => x.SortDatas[index].IsAsc, new { @class = classString })
+        }
     }
 </section>
 
@@ -87,10 +97,30 @@
         <table class="announcement-list">
             <tr>
                 <th>#</th>
-                <th>ID</th>
-                <th class="width-150">Last Modified</th>
-                <th class="width-120">Modified By</th>
-                <th class="width-150">Published Date</th>
+                <th>
+                    ID
+                    <span>
+                        <button class="sort" data-col="@nameof(Announcement.Id)" type="button">sort</button>
+                    </span>
+                </th>
+                <th class="width-150">
+                    Last Modified
+                    <span>
+                        <button class="sort" data-col="@nameof(Announcement.LastModified)" type="button">sort</button>
+                    </span>
+                </th>
+                <th class="width-120">
+                    Modified By
+                    <span>
+                        <button class="sort" data-col="@nameof(Announcement.ModifiedBy)" type="button">sort</button>
+                    </span>
+                </th>
+                <th class="width-150">
+                    Published Date
+                    <span>
+                        <button class="sort" data-col="@nameof(Announcement.PublishedDateTime)" type="button">sort</button>
+                    </span>
+                </th>
                 <th>Announcement</th>
                 <th>Status</th>
                 <th class="publish">
