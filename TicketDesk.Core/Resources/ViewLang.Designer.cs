@@ -79,6 +79,15 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bet Of The Day.
+        /// </summary>
+        public static string BetOfTheDay {
+            get {
+                return ResourceManager.GetString("BetOfTheDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer.
         /// </summary>
         public static string Customer {
@@ -93,6 +102,15 @@ namespace TicketDesk.Core.Resources {
         public static string CustomerName {
             get {
                 return ResourceManager.GetString("CustomerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feature Events.
+        /// </summary>
+        public static string FeaturedEvents {
+            get {
+                return ResourceManager.GetString("FeaturedEvents", resourceCulture);
             }
         }
         
@@ -124,6 +142,15 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to News Letters.
+        /// </summary>
+        public static string NewsLetters {
+            get {
+                return ResourceManager.GetString("NewsLetters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Staff.
         /// </summary>
         public static string Staff {
@@ -138,6 +165,24 @@ namespace TicketDesk.Core.Resources {
         public static string Subject {
             get {
                 return ResourceManager.GetString("Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trading Limits.
+        /// </summary>
+        public static string TradingLimits {
+            get {
+                return ResourceManager.GetString("TradingLimits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TV Schedules.
+        /// </summary>
+        public static string TVSchedules {
+            get {
+                return ResourceManager.GetString("TVSchedules", resourceCulture);
             }
         }
     }

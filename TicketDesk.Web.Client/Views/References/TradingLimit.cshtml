@@ -1,12 +1,5 @@
 ﻿@using TicketDesk.Domain.Model
+@using TicketDesk.Core.Resources
 @model Reference
 
-<div class="img-content">
-    <div class="img-detail">
-        <img src="@(Model.ImageLink)" alt="There is no information" />
-    </div>
-    <p class="info">
-        <span>@Model.ReferenceType.ToString()</span> |
-        Last update by <span>@Model.LastUpdateBy</span> <span>@Model.LastUpdateDate</span>
-    </p>
-</div>
+@Html.Partial("_ReferenceCommon", Model, new ViewDataDictionary(ViewData) { { "name", ViewLang.TradingLimits } })

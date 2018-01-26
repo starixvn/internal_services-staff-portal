@@ -1,20 +1,40 @@
-﻿@{
-    var filePath = ViewBag.FilePath != null ? (string)ViewBag.FilePath : string.Empty;
-}
+﻿@using TicketDesk.Domain.Model
+@using TicketDesk.Core.Resources
+@model IList<Reference>
 
-@*<img src="@(!string.IsNullOrWhiteSpace(filePath) ? Url.Content(filePath) : string.Empty)" alt="" width="100%" />*@
 <div class="img-content">
     <div class="img-detail">
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">            
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <img src="https://ssl.c.com/img-get/I0000YSTPtrO5ZVg/s/750/750/SPI-002-Arsenal-Chelsea-CFB-4384910.jpg" alt="There is no information">                    
-                </div>
-                <div class="item">
-                    <img src="https://ssl.c.photoshelter.com/img-get/I00001mYlKCSv5wI/s/750/750/SPI-047-Arsenal-Chelsea-CFB-4384975.jpg" alt="There is no information">                    
-                </div>               
+                @foreach (var reference in Model)
+                {
+                    if (Model.IndexOf(reference) == 0)
+                    {
+                        <div class="item active">
+                            <img src="@reference.ImageLink" alt="There is no information">
+                            <p class="info">
+                                <span>@ViewLang.NewsLetters</span> |
+                                Last update by <span>@reference.LastUpdateBy</span>
+                                <span>@reference.LastUpdateDate</span>
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item">
+                            <div class="img-detail">
+                                <img src="@reference.ImageLink" alt="There is no information">
+                            </div>
+                            <p class="info">
+                                <span>@reference.ReferenceType.ToString()</span> |
+                                Last update by <span>@reference.LastUpdateBy</span> <span>@reference.LastUpdateDate</span>
+                            </p>
+                        </div>
+                    }
+
+                }
             </div>
 
             <!-- Controls -->
@@ -28,8 +48,4 @@
             </a>
         </div>
     </div>
-    @*<p class="info">
-        <span>@Model.ReferenceType.ToString()</span> |
-        Last update by <span>@Model.LastUpdateBy</span> <span>@Model.LastUpdateDate</span>
-    </p>*@
 </div>

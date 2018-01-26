@@ -2125,6 +2125,7 @@
     <Content Include="src\css\admin\base\_typo.scss" />
     <Content Include="src\css\admin\layout\_content.scss" />
     <Content Include="src\css\admin\components\_modal.scss" />
+    <Content Include="Views\References\_ReferenceCommon.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

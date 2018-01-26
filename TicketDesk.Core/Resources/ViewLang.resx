@@ -123,11 +123,17 @@
   <data name="AttachFiles" xml:space="preserve">
     <value>Attach Files</value>
   </data>
+  <data name="BetOfTheDay" xml:space="preserve">
+    <value>Bet Of The Day</value>
+  </data>
   <data name="Customer" xml:space="preserve">
     <value>Customer</value>
   </data>
   <data name="CustomerName" xml:space="preserve">
     <value>Customer Name</value>
+  </data>
+  <data name="FeaturedEvents" xml:space="preserve">
+    <value>Feature Events</value>
   </data>
   <data name="Feedback" xml:space="preserve">
     <value>Feedback</value>
@@ -138,10 +144,19 @@
   <data name="MaxNoAttachments" xml:space="preserve">
     <value>Max number of attachments: 3 Files</value>
   </data>
+  <data name="NewsLetters" xml:space="preserve">
+    <value>News Letters</value>
+  </data>
   <data name="Staff" xml:space="preserve">
     <value>Staff</value>
   </data>
   <data name="Subject" xml:space="preserve">
     <value>Subject</value>
+  </data>
+  <data name="TradingLimits" xml:space="preserve">
+    <value>Trading Limits</value>
+  </data>
+  <data name="TVSchedules" xml:space="preserve">
+    <value>TV Schedules</value>
   </data>
 </root>

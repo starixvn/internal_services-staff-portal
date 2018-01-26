@@ -9,7 +9,6 @@
     using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using Models.Reference;
 
     [RoutePrefix("References")]
     public class ReferencesController : BaseController
@@ -49,11 +48,8 @@
         [Route("newsletter")]
         public ActionResult Newsletter()
         {
-            var viewModel = new NewsLetterReferencesViewModel
-            {
-                References = Context.References.Where(r => r.ReferenceType == ReferenceType.NewsLetter).ToList()
-            };
-            return View(viewModel);
+            var references = Context.References.Where(r => r.ReferenceType == ReferenceType.NewsLetter).ToList();
+            return View(references);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.FileManagement, Policy = Constant.Policy.Read)]
