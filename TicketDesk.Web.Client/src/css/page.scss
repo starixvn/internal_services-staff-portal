@@ -1562,6 +1562,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 // ---------------- REFERENCES ------------------- //
 .img-content {
     width: 100%;
+    overflow: hidden;
 }
 
 .img-detail {
@@ -1578,6 +1579,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         width: 100%;
         height: 100%;
         display: block;
+        white-space: pre-inline;
 
         &:after {
             content: attr(alt);
@@ -1590,6 +1592,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
             transform: translateY(-50%);
             width: 100%;
             text-align: center;
+            white-space: pre-inline;
         }
 
         &:before {
@@ -1616,7 +1619,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         }
     }
 
-    .carousel-control {
+    .slick-arrow {
         top: 50%;
         transform: translateY(-50%);
         background: #fff;
@@ -1628,39 +1631,57 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
         transition: all .2s ease;
 
-        &:hover {
-            //background: #f2f2f2;
+        &:before {
+            color: #c6c6c6;
+            font-family: icomoon;
+            font-size: 25px;
+        }
+
+        &:hover, &:focus {            
+            background: #fff;
             box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);
         }
 
-        .glyphicon {
-            position: static;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            font-size: 20px;
-            line-height: 60px;
-            vertical-align: middle;
-            text-shadow: none;
-            color: #c6c6c6;
-        }
-
-        &.right {
+        
+        &.slick-next {
             right: -9rem;
+
+            &:before {
+                content: "\e919";
+            }
         }
 
-        &.left {
+        &.slick-prev {
             left: -9rem;
+
+            &:before {
+                content: "\e918";
+            }
         }
     }
 }
 
 .info {
     flex-basis: 100%;
+    max-width: 100%;
     font-size: 17px;
     font-weight: 600;
     color: #03285a;
     margin-top: 1.5rem;
     margin-bottom: 0;
     text-align: center;
+
+    &.newsletter {
+        position: absolute;
+        bottom: -5rem;
+        width: 100%;
+    }
+}
+
+.slick-list, .slick-track {
+    height: 100%;
+}
+
+.slick-list {
+    overflow: visible !important;
 }

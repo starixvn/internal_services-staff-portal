@@ -16,7 +16,7 @@
             {
                 <div class="item active">
                     <img src="@reference.ImageLink" alt="There is no information">
-                    <p class="info">
+                <p class="info newsletter">
                         <span>@ViewLang.NewsLetters</span> |
                         Last update by <span>@reference.LastUpdateBy</span>
                         <span>@reference.LastUpdateDate</span>
@@ -33,7 +33,6 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('.img-detail').slick({
-                dots: true,
                 infinite: true,
                 speed: 500,
                 fade: true,
