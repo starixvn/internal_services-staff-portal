@@ -1254,7 +1254,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     height: 28px;
 }
 
-/*.custom-dropdown::after { 
+/*.custom-dropdown::after {
     content: '\e914';
     font-family: 'icomoon';
     position: absolute;
@@ -1590,7 +1590,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         width: 100%;
         height: 100%;
         display: block;
-        white-space: pre-inline;
+        white-space: pre-line;
 
         &:after {
             content: attr(alt);
@@ -1603,7 +1603,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
             transform: translateY(-50%);
             width: 100%;
             text-align: center;
-            white-space: pre-inline;
+            white-space: pre-line;
         }
 
         &:before {
@@ -1652,7 +1652,6 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
             background: #fff;
             box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);
         }
-
 
         &.slick-next {
             right: -9rem;
