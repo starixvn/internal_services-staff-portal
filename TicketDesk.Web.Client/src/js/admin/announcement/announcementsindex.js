@@ -292,6 +292,10 @@ var announcementSort = {
                     $(input).val("True");
                 }
 
+                // Set input for sort-priority
+                $(".sort-priority").val(1);
+                $(".sort-priority." + colName).val(0);
+
                 // submit form
                 $(input).closest("form").trigger("submit");
             });

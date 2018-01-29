@@ -17,7 +17,7 @@
         [Required(ErrorMessage = "{0} is required")]
         [AllowHtml]
         public string Message { get; set; }
-        
+
         public DateTime CreatedDateTime { get; set; }
 
         [Display(Name = "Publish Date")]

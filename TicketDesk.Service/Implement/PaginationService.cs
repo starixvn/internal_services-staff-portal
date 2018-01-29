@@ -19,8 +19,10 @@
         {
             var result = originalList.AsEnumerable();
 
+            var sortOrder = sortDatas.OrderBy(x => x.Priority);
+
             var orderByString = new StringBuilder();
-            foreach (var sort in sortDatas)
+            foreach (var sort in sortOrder)
             {
                 orderByString.Append(sort.Column);
                 orderByString.Append(sort.IsAsc ? " ascending," : " descending,");

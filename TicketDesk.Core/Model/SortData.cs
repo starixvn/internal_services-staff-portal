@@ -5,5 +5,7 @@
         public string Column { get; set; }
 
         public bool IsAsc { get; set; }
+
+        public int Priority { get; set; }
     }
 }
