@@ -351,8 +351,7 @@ main {
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
     max-width: 100%;
-    padding-right: .5rem;
-    padding-left: .5rem; }
+    padding-right: .5rem; }
   .reference-entry .browse {
     margin-top: 24px; }
 
@@ -621,7 +620,7 @@ main {
 .btn {
   font-family: inherit;
   padding: 4px 10px;
-  border-radius: 3px;
+  border-radius: 2px;
   font-size: 13px;
   transition: all .2s ease; }
   .btn:hover {
@@ -704,6 +703,7 @@ main {
   border: 1px solid #dad7d7;
   position: relative;
   border: 1px solid #999999;
+  margin-right: 2px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   cursor: pointer; }
@@ -808,11 +808,12 @@ main {
   font-family: inherit;
   background: none;
   box-shadow: none;
-  border-radius: 3px;
+  border-radius: 2px;
   font-size: 13px;
   height: 28px;
   line-height: 28px;
-  padding: 0 5px; }
+  padding: 0 5px;
+  border-color: #b7b7b7; }
 
 .checkbox input[type="checkbox"] {
   display: block;

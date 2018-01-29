@@ -19,7 +19,7 @@
 .btn {
     font-family: inherit;
     padding: 4px 10px;
-    border-radius: 3px;
+    border-radius: 2px;
     font-size: 13px;
     transition: all .2s ease;
 
@@ -63,6 +63,7 @@
     @include btn-style(#dad7d7,#333);
     position: relative;
     border: 1px solid #999999;
+    margin-right: 2px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     cursor: pointer;
