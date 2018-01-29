@@ -166,8 +166,9 @@
             return View(viewModel);
         }
 
-        public ActionResult GetReferenceEntity(ReferenceType referenceType)
+        public ActionResult GetReferenceEntity(bool isNewsLetter)
         {
+            var referenceType = isNewsLetter ? ReferenceType.NewsLetter : ReferenceType.TvSchedule;
             var reference = new ReferenceViewModel
             {
                 ReferenceType = referenceType

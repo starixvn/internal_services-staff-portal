@@ -1,15 +1,26 @@
 ﻿var reference = {
-    InitDateTimePicker: function () {
+    initReference: function () {
+        reference.initDateTimePicker();
+        reference.setSubmitButtonState();
+
+        if ($("#successMessage").length) {
+            setTimeout(function () {
+                $("#successMessage").hide();
+            }, 5000);
+        }
+    },
+
+    initDateTimePicker: function () {
         var nowDate = new Date();
         $(".datetimepicker").datetimepicker({
             format: "MM-DD-YYYY",
             minDate: nowDate.toDateString(),
             maxDate: nowDate.setFullYear(nowDate.getFullYear() + 1),
-            disabledDates: reference.GetSelectedDates()
+            disabledDates: reference.getSelectedDates()
         });
     },
 
-    GetSelectedDates: function () {
+    getSelectedDates: function () {
         var choosenDates = [];
         $(".datetimepicker").each(function (i, e) {
             var choosenDate = $(this).val();
@@ -18,73 +29,86 @@
         return choosenDates;
     },
 
-    UpdateDisabledDates: function () {
+    updateDisabledDates: function () {
         $(".datetimepicker").each(function (i, e) {
-            $(this).data("DateTimePicker").disabledDates(reference.GetSelectedDates());
+            $(this).data("DateTimePicker").disabledDates(reference.getSelectedDates());
         });
     },
 
-    UpdateReferenceIndex: function (index, element) {
+    updateReferenceState: function () {
+        reference.updateFormFieldsName();
+        reference.updateDisabledDates();
+        reference.setSubmitButtonState();
+    },
+
+    updateReferenceIndex: function (index, element) {
         $(element).find(".datetimepicker").attr("name", "References[" + index + "].DateAppear");
         $(element).find(".image-url").attr("name", "References[" + index + "].ImageLink");
     },
 
-    UpdateFormFieldsName: function () {
-        reference.InitDateTimePicker();
+    updateFormFieldsName: function () {
+        reference.initDateTimePicker();
         $(".reference-entry").each(function (i, e) {
-            reference.UpdateReferenceIndex(i, e);
+            reference.updateReferenceIndex(i, e);
         });
     },
 
-    CheckLimitedEntry: function (limitEntry) {
+    checkLimitedEntry: function (limitEntry) {
         var totalEntries = $(".reference-entry").length;
         if (totalEntries >= limitEntry) return false;
         return true;
     },
 
-    AddReferenceEntry: function (referenceType, limitEntry) {
-        var url = "/Admin/References/GetReferenceEntity?referenceType=" + referenceType
+    addReferenceEntry: function (isNewsLetter, limitEntry) {
+        var url = "/Admin/References/GetReferenceEntity?isNewsLetter=" + isNewsLetter
         $.get(url, function (html) {
-            if (reference.CheckLimitedEntry(limitEntry)) {
+            if (reference.checkLimitedEntry(limitEntry)) {
                 $("#ReferencesZone").append(html);
-                reference.UpdateFormFieldsName();
-                reference.UpdateDisabledDates();
+                reference.updateReferenceState();
+            } else {
+                var message = "You only can upload " + limitEntry + " files of attachment";
+                $("#limitEntry").text(message);
             }
         });
     },
 
-    RemoveEntry: function (element) {
+    isEmptyReference: function () {
+        if (!$(".reference-entry").length) {
+            return true;
+        }
+        return false;
+    },
+
+    setSubmitButtonState: function () {
+        $("#submit").prop("disabled", reference.isEmptyReference());
+    },
+
+    removeEntry: function (element) {
         $(element).parent().parent().remove();
-        reference.UpdateFormFieldsName();
-        reference.UpdateDisabledDates();
+        reference.updateReferenceState();
     }
 };
 
 var originForm = JSON.stringify($("form").serializeArray());
 var userSubmit = 0;
-reference.InitDateTimePicker()
+reference.initReference();
 
 $("#addReferenceEntry").click(function () {
-    reference.AddReferenceEntry(1, 31);
-});
-
-$("#addNewsLetterReferenceEntry").click(function () {
-    reference.AddReferenceEntry(4, 50);
+    var type = $(this).attr("data-type");
+    var isNewLetter = type == "newsLetter" ? true : false;
+    var limitEntry = isNewLetter ? 50 : 31
+    reference.addReferenceEntry(isNewLetter, limitEntry);
 });
 
 $("form").on("click", ".remove-entry", function () {
-    reference.RemoveEntry($(this));
+    reference.removeEntry($(this));
 });
 
 $(document).on("dp.change", ".datetimepicker", function () {
-    reference.UpdateDisabledDates();
+    reference.updateDisabledDates();
 });
 
-if ($("#successMessage").length) {
-    setTimeout(function () {
-        $("#successMessage").hide();
-    }, 5000);
-}
+
 $("#ReferencesZone").on("change", ".upload-image", function (e) {
     var uploadEntry = $(this).closest(".reference-entry");
     var files = e.target.files;
@@ -131,5 +155,5 @@ $(window).on('beforeunload', function (e) {
     var formAfterChange = JSON.stringify($("form").serializeArray());
     if (originForm != formAfterChange && userSubmit == 0) {
         return true;
-    } 
+    }
 });
