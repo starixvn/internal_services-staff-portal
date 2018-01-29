@@ -6,10 +6,10 @@
 
     setupDateTimePicker: function () {
         var dateString = $(".datetimepicker").val();
-        if (dateString !== "") {
+        if (dateString !== "" && dateString !== NaN) {
             $(".datetimepicker").datetimepicker({
                 format: "MM-DD-YYYY hh:mm A",
-                defaultDate: dateString,
+                defaultDate: moment(dateString, "MM-DD-YYYY hh:mm A"),
                 minDate: moment(),
                 maxDate: moment().add(1, "year")
             });
