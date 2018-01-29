@@ -276,7 +276,9 @@ var announcement = {
 }
 
 var announcementSort = {
-    init: function() {
+    init: function () {
+        announcementSort.assignSortIcon();
+
         $(".sort").on("click",
             function() {
                 // Get column name
@@ -299,6 +301,31 @@ var announcementSort = {
                 // submit form
                 $(input).closest("form").trigger("submit");
             });
+    },
+
+    assignSortIcon: function() {
+        $(".sort").each(function(index, obj) {
+            var colName = $(obj).data("col");
+            announcementSort.removeSortClass($(obj).parent());
+
+            if ($(".sort-priority." + colName).val() === "0") {
+                var input = $(".sort-direction." + colName);
+                announcementSort.insertSortClass($(obj).parent(), $(input).val() === "True");
+            }
+        });
+    },
+
+    removeSortClass: function(element) {
+        $(element).removeClass("increase");
+        $(element).removeClass("decrease");
+    },
+
+    insertSortClass: function (element, isAsc) {
+        if (isAsc) {
+            $(element).addClass("increase");
+        } else {
+            $(element).addClass("decrease");
+        }
     }
 }
 
