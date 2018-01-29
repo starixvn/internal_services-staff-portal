@@ -1,7 +1,7 @@
 ﻿@model TicketDesk.Domain.Model.Reference
 
 <div class="img-content">
-    @if (Model.ImageLink == null)
+    @if (Model == null)
     {
         <div class="img-detail">
             <p class="img-error">There is no information</p>
@@ -10,13 +10,13 @@
     else
     {
         <div class="img-detail">
-            <img src="@(Model.ImageLink)" alt="The request content cannot be loaded. 
+            <img src="@(Model.ImageLink)" alt="The request content cannot be loaded.
                  Please try again." />
         </div>
         <p class="info">
             <span>@ViewData["name"]</span> |
             Last update by <span>@Model.LastUpdateBy</span>
-            <span>@Model.LastUpdateDate</span>
+            <span>@Model.LastUpdateDate.ToString("dd MMM yyyy hh:mm:ss tt")</span>
         </p>
     }
 </div>

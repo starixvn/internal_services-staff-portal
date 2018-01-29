@@ -16,7 +16,7 @@
     }
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <ul class="references-zone" id="ReferencesZone">
-        @if (Model != null && Model.References.Count() > 0)
+        @if (Model.References != null && Model.References.Count() > 0)
         {
             for (var i = 0; i < Model.References.Count(); i++)
             {

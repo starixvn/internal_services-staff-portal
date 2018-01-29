@@ -71,14 +71,9 @@
 
         private Reference GetReferenceSuitable(ReferenceType referenceType)
         {
-            var references = Context.References.Where(t => t.ReferenceType == referenceType)
+            var reference = Context.References.Where(t => t.ReferenceType == referenceType)
                                                .OrderByDescending(r => r.DateAppear)
-                                               .ToList();
-            var reference = references.FirstOrDefault(r => DateTime.Compare(r.DateAppear, DateTime.Now) <= 0);
-            if (reference == null)
-            {
-                reference = new Reference();
-            }
+                                               .FirstOrDefault(r => DateTime.Compare(r.DateAppear, DateTime.Now) <= 0);
             return reference;
         }
     }
