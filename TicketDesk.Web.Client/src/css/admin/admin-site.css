@@ -591,6 +591,8 @@ main {
   border: 0;
   background: none;
   opacity: .5; }
+  .announcement-list .sort:hover {
+    opacity: 1; }
   .announcement-list .sort:focus {
     outline: none; }
   .announcement-list .sort:before, .announcement-list .sort:after {
