@@ -38,21 +38,21 @@
             sort = new SortData
             {
                 Column = nameof(Announcement.LastModified),
-                IsAsc = false
-            };
-            SortDatas.Add(sort);
-
-            sort = new SortData
-            {
-                Column = nameof(Announcement.ModifiedBy),
                 IsAsc = true
             };
             SortDatas.Add(sort);
 
             sort = new SortData
             {
-                Column = nameof(Announcement.PublishedDateTime),
+                Column = nameof(Announcement.ModifiedBy),
                 IsAsc = false
+            };
+            SortDatas.Add(sort);
+
+            sort = new SortData
+            {
+                Column = nameof(Announcement.PublishedDateTime),
+                IsAsc = true
             };
             SortDatas.Add(sort);
         }
