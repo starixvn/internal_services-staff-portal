@@ -572,6 +572,16 @@ main {
   .announcement-list .modified-by span {
     display: inline-block; }
 
+.announcement-list .increase .sort {
+  opacity: 1; }
+  .announcement-list .increase .sort:before {
+    visibility: hidden; }
+
+.announcement-list .decrease .sort {
+  opacity: 1; }
+  .announcement-list .decrease .sort:after {
+    visibility: hidden; }
+
 .announcement-list .sort {
   position: absolute;
   right: 5px;
@@ -579,7 +589,8 @@ main {
   height: 15px;
   padding: 0;
   border: 0;
-  background: none; }
+  background: none;
+  opacity: .5; }
   .announcement-list .sort:focus {
     outline: none; }
   .announcement-list .sort:before, .announcement-list .sort:after {
@@ -594,13 +605,13 @@ main {
     transform: rotate(180deg); }
 
 .announcement-list .id {
-  min-width: 50px; }
+  min-width: 60px; }
 
 .announcement-list .published-date {
-  min-width: 150px; }
+  width: 160px; }
 
 .announcement-list .last-modified {
-  min-width: 150px; }
+  width: 160px; }
 
 .announcement-list .modified-by {
   min-width: 110px; }

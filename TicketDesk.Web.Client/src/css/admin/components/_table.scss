@@ -314,6 +314,26 @@
         }
     }
 
+    .increase {
+        .sort {
+            opacity: 1;
+
+            &:before {
+                visibility:hidden;
+            }
+        }
+    }
+
+    .decrease {
+        .sort {
+            opacity: 1;
+
+            &:after {
+                visibility:hidden;
+            }
+        }
+    }
+
     .sort {
         position: absolute;
         right: 5px;
@@ -322,6 +342,7 @@
         padding: 0;
         border: 0;
         background: none;
+        opacity: .5;
 
         &:focus {
             outline: none;
@@ -345,15 +366,15 @@
     }
 
     .id {
-        min-width: 50px;
+        min-width: 60px;
     }
 
     .published-date {
-        min-width: 150px;
+        width: 160px;
     }
 
     .last-modified {
-        min-width: 150px;
+        width: 160px;
     }
 
     .modified-by {
