@@ -40,12 +40,13 @@
     .date {
         position: relative;
         flex-basis: 160px;
-        max-width: 160px;
+        max-width: 160px;        
+        padding-right: .5rem;
 
         .icon-calendar {
             position: absolute;
             top: 33px;
-            right: 8px;
+            right: 10px;
             color: $secondary-color;
             cursor: pointer;
         }

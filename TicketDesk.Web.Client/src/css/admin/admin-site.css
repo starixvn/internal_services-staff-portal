@@ -47,9 +47,6 @@ main {
 .field-validation-error {
   color: #ea1118; }
 
-.input-validation-error {
-  border-color: #ea1118; }
-
 .menu-collapsed .navbar-brand-wrapper {
   width: 60px; }
   .menu-collapsed .navbar-brand-wrapper .brand-logo {
@@ -337,11 +334,12 @@ main {
   .reference-entry .date {
     position: relative;
     flex-basis: 160px;
-    max-width: 160px; }
+    max-width: 160px;
+    padding-right: .5rem; }
     .reference-entry .date .icon-calendar {
       position: absolute;
       top: 33px;
-      right: 8px;
+      right: 10px;
       color: #2e4592;
       cursor: pointer; }
   .reference-entry .url {
@@ -814,6 +812,8 @@ main {
   line-height: 28px;
   padding: 0 5px;
   border-color: #b7b7b7; }
+  .form-control.input-validation-error {
+    border-color: #ea1118; }
 
 .checkbox input[type="checkbox"] {
   display: block;

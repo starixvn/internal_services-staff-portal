@@ -54,6 +54,10 @@
     line-height: 28px;
     padding: 0 5px;
     border-color: #b7b7b7;
+
+    &.input-validation-error {
+        border-color: #ea1118;
+    }
 }
 
 
@@ -94,13 +98,13 @@
         margin-bottom: 8px;
         cursor: pointer;
 
-        &:before, &:after {            
+        &:before, &:after {
             content: "";
             position: absolute;
             display: block;
             left: 0;
             top: 2px;
-            height: $size;            
+            height: $size;
             width: $size;
             border: 1px solid #737373;
             border-radius: 2px;
