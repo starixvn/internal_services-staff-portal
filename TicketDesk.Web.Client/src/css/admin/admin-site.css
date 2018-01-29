@@ -560,6 +560,51 @@ main {
     border: 4px solid transparent;
     border-top-color: #656a7b; }
 
+.announcement-list .id,
+.announcement-list .published-date,
+.announcement-list .last-modified,
+.announcement-list .modified-by {
+  white-space: nowrap;
+  position: relative; }
+  .announcement-list .id span,
+  .announcement-list .published-date span,
+  .announcement-list .last-modified span,
+  .announcement-list .modified-by span {
+    display: inline-block; }
+
+.announcement-list .sort {
+  position: absolute;
+  right: 5px;
+  width: 18px;
+  height: 15px;
+  padding: 0;
+  border: 0;
+  background: none; }
+  .announcement-list .sort:focus {
+    outline: none; }
+  .announcement-list .sort:before, .announcement-list .sort:after {
+    font-family: 'icomoon' !important;
+    content: "\e914";
+    position: absolute;
+    font-size: 8px; }
+  .announcement-list .sort:before {
+    top: 8px; }
+  .announcement-list .sort:after {
+    top: 3px;
+    transform: rotate(180deg); }
+
+.announcement-list .id {
+  min-width: 50px; }
+
+.announcement-list .published-date {
+  min-width: 150px; }
+
+.announcement-list .last-modified {
+  min-width: 150px; }
+
+.announcement-list .modified-by {
+  min-width: 110px; }
+
 .btn {
   font-family: inherit;
   padding: 4px 10px;

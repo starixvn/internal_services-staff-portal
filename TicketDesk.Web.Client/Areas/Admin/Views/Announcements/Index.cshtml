@@ -69,7 +69,7 @@
         {
             @Html.HiddenFor(x => x.SortDatas[index].Column)
             @Html.HiddenFor(x => x.SortDatas[index].IsAsc, new { @class = "sort-direction " + Model.SortDatas[index].Column })
-            @Html.HiddenFor(x => x.SortDatas[index].Priority, new {@class= "sort-priority " + Model.SortDatas[index].Column })
+            @Html.HiddenFor(x => x.SortDatas[index].Priority, new { @class = "sort-priority " + Model.SortDatas[index].Column })
         }
     }
 </section>
@@ -95,29 +95,21 @@
         <table class="announcement-list">
             <tr>
                 <th>#</th>
-                <th>
-                    ID
-                    <span>
-                        <button class="sort" data-col="@nameof(Announcement.Id)" type="button">sort</button>
-                    </span>
+                <th class="id">
+                    <span>ID</span>
+                    <button class="sort" data-col="@nameof(Announcement.Id)" type="button"></button>
                 </th>
-                <th class="width-150">
-                    Last Modified
-                    <span>
-                        <button class="sort" data-col="@nameof(Announcement.LastModified)" type="button">sort</button>
-                    </span>
+                <th class="last-modified">
+                    <span>Last Modified</span>
+                    <button class="sort" data-col="@nameof(Announcement.LastModified)" type="button"></button>
                 </th>
-                <th class="width-120">
-                    Modified By
-                    <span>
-                        <button class="sort" data-col="@nameof(Announcement.ModifiedBy)" type="button">sort</button>
-                    </span>
+                <th class="modified-by">
+                    <span>Modified By</span>
+                    <button class="sort" data-col="@nameof(Announcement.ModifiedBy)" type="button"></button>
                 </th>
-                <th class="width-150">
-                    Published Date
-                    <span>
-                        <button class="sort" data-col="@nameof(Announcement.PublishedDateTime)" type="button">sort</button>
-                    </span>
+                <th class="published-date">
+                    <span>Published Date</span>
+                    <button class="sort" data-col="@nameof(Announcement.PublishedDateTime)" type="button"></button>
                 </th>
                 <th>Announcement</th>
                 <th>Status</th>
