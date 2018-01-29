@@ -30,7 +30,8 @@
             var sort = new SortData
             {
                 Column = nameof(Announcement.Id),
-                IsAsc = false
+                IsAsc = false,
+                Priority = 0
             };
             SortDatas.Add(sort);
 

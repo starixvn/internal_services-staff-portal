@@ -28,7 +28,9 @@
                 orderByString.Append(sort.IsAsc ? " ascending," : " descending,");
             }
 
-            return result.OrderBy(orderByString.ToString().TrimEnd(',')).Skip(skipped).Take(took);
+            return sortDatas.Any()
+                ? result.OrderBy(orderByString.ToString().TrimEnd(',')).Skip(skipped).Take(took)
+                : result.Skip(skipped).Take(took);
         }
     }
 }
