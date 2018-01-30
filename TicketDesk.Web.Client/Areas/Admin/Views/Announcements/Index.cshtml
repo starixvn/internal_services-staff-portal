@@ -71,6 +71,9 @@
             @Html.HiddenFor(x => x.SortDatas[index].IsAsc, new { @class = "sort-direction " + Model.SortDatas[index].Column })
             @Html.HiddenFor(x => x.SortDatas[index].Priority, new { @class = "sort-priority " + Model.SortDatas[index].Column })
         }
+
+        @*Hidden for pagination*@
+        @Html.HiddenFor(x => x.ItemPerPage)
     }
 </section>
 
