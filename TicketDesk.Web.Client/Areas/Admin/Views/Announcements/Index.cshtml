@@ -144,6 +144,7 @@
                             }
                             else
                             {
+                                var indexName = Html.NameFor(x => x.Announcements) + ".Index";
                                 <div class="checkbox">
                                     <!--Use Html.NameFor in Id for CSS styling-->
                                     <input type="checkbox"
@@ -152,12 +153,13 @@
                                            value="true" />
                                     <label for="@Html.NameFor(x => x.Announcements[index].IsWaitingToPublish)"></label>
                                     @Html.HiddenFor(x => x.Announcements[index].Id)
+                                    <input type="hidden" name="@indexName" value="@index" />
                                 </div>
                             }
                         </td>
                         <td>
                             @if (item.State == AnnouncementState.Scheduled)
-                        {
+                            {
                                 <div class="dropdown action-group">
                                     <div class="dropdown-toggle" id="dropdownAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="icon-setting" aria-hidden="true"></span>
