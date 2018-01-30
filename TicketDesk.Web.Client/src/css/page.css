@@ -216,6 +216,8 @@ body {
 
 .table table, .table tr, .table td, .table th {
   border: none; }
+  .table table.id, .table tr.id, .table td.id, .table th.id {
+    width: 120px; }
 
 .table.table-bordered > thead > tr > th {
   background: #ececec;

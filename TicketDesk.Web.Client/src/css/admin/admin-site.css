@@ -603,8 +603,8 @@ main {
     top: 3px;
     transform: rotate(180deg); }
 
-.announcement-list .id {
-  min-width: 60px; }
+.announcement-list .id, .announcement-list .number {
+  width: 70px; }
 
 .announcement-list .published-date {
   width: 160px; }
@@ -613,7 +613,13 @@ main {
   width: 160px; }
 
 .announcement-list .modified-by {
-  min-width: 110px; }
+  width: 120px; }
+
+.announcement-list .status {
+  width: 80px; }
+
+.announcement-list .publish {
+  width: 70px; }
 
 .btn {
   font-family: inherit;

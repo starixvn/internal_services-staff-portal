@@ -285,6 +285,10 @@ body {
 .table {
     table, tr, td, th {
         border: none;
+
+        &.id {
+            width: 120px;
+        }
     }
 }
 

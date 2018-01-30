@@ -319,7 +319,7 @@
             opacity: 1;
 
             &:before {
-                visibility:hidden;
+                visibility: hidden;
             }
         }
     }
@@ -329,7 +329,7 @@
             opacity: 1;
 
             &:after {
-                visibility:hidden;
+                visibility: hidden;
             }
         }
     }
@@ -359,18 +359,18 @@
             font-size: 8px;
         }
 
-        &:before {            
-            top: 8px;           
+        &:before {
+            top: 8px;
         }
 
-        &:after {           
+        &:after {
             top: 3px;
             transform: rotate(180deg);
         }
     }
 
-    .id {
-        min-width: 60px;
+    .id, .number {
+        width: 70px;
     }
 
     .published-date {
@@ -382,6 +382,14 @@
     }
 
     .modified-by {
-        min-width: 110px;
+        width: 120px;
+    }
+
+    .status {
+        width: 80px;
+    }
+
+    .publish {
+        width: 70px;
     }
 }
