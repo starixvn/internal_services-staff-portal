@@ -91,6 +91,10 @@
 
     @Scripts.Render("~/bundles/validate")
 
+    <script>
+        jQuery.validator.methods["date"] = function (value, element) { return true; }
+    </script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
