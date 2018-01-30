@@ -197,7 +197,7 @@
         <div class="item-list" id="item-list">
             <div class="title item-head border">
                 <span>@Resources.Views_Ticket_NewFacilityTicket_ItemList</span>
-                <button class="btn btn-add rippler rippler-default" data-class="item-list"><span class="icon-add"></span>@Resources.Views_Ticket_NewFacilityTicket_AddItem</button>
+                <button class="btn btn-add" data-class="item-list"><span class="icon-add"></span>@Resources.Views_Ticket_NewFacilityTicket_AddItem</button>
             </div>
 
             @if (Model.Items != null)
@@ -219,7 +219,7 @@
                         @Html.ValidationMessageFor(x => x.Items.ElementAt(i).ItemName, null, new { data_valmsg_for = "Items[" + guid + "].ItemName.Value" })
                         <div class="value border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "" })</div>
                         <div class="border span-2">
-                            <button class="btn btn-delete btn-delete-item rippler rippler-default"><span class="icon-delete"></span>@Resources.Views_Ticket_NewFacilityTicket_DeleteItem</button>
+                            <button class="btn btn-delete btn-delete-item"><span class="icon-delete"></span>@Resources.Views_Ticket_NewFacilityTicket_DeleteItem</button>
                         </div>
 
                         <div class="fullwidth border key">
@@ -237,5 +237,5 @@
 
         @Html.Partial("_DropzoneView", Model)
     </div>
-    <input type="submit" class="btn btn-primary btn-send rippler rippler-default" value="@Resources.Common_Form_Send" />
+    <input type="submit" class="btn btn-primary btn-send" value="@Resources.Common_Form_Send" />
 }
