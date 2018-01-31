@@ -12,7 +12,7 @@
             context.MapRoute(
                 RouteNames.AdminDefault.ToString(),
                 "Admin/{controller}/{action}/{id}",
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                new { controller = "Announcements", action = "Index", id = UrlParameter.Optional },
                 namespaces: new[] { "TicketDesk.Web.Client.Areas.Admin.Controllers" }
             );
         }
