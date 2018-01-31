@@ -77,12 +77,16 @@
     }
 </section>
 
-<div class="button-group">
+<div class="table-actions">
     <a class="btn btn-create create"
        data-toggle="modal"
        href="#"
        data-href="@Url.Action("Create", "Announcements")"
        data-modalid="#@ModalId.CreateAnnouncementModal.ToString()"><span class="icon-add"></span>@ModalId.CreateAnnouncementModal.GetDisplayName()</a>
+    <div class="search-form">
+        <input class="form-control" placeholder="Search" />
+        <span class="icon-search icon-magnify"></span>
+    </div>
 </div>
 
 <!--Table-->

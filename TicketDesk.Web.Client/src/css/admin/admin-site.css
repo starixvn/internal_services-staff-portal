@@ -358,6 +358,20 @@ main {
   .reference-entry .browse {
     margin-top: 21px; }
 
+.table-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  .table-actions .search-form {
+    position: relative;
+    width: 185px; }
+    .table-actions .search-form .icon-search {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      font-size: 18px;
+      color: #666666; }
+
 .table {
   margin-top: 5px; }
   .table table {
@@ -842,6 +856,9 @@ main {
   .filter-row .dropdown-small {
     flex-basis: 95px;
     max-width: 95px; }
+
+.button-filter {
+  margin-left: -1rem; }
 
 .form-group {
   margin-bottom: 10px; }
