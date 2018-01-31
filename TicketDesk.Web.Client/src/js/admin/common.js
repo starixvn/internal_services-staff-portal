@@ -1,5 +1,6 @@
 ﻿var sidebar = {
     init: function () {
+        sidebar.initSizeBarIsExpaned();
         sidebar.hovermenu();
         $(".toggle-sidebar").on("click", function() {
             sidebar.toggleMenu();
@@ -11,12 +12,21 @@
                 if (datetimepickerElements.length > 0) {
                     $(datetimepickerElements).data("DateTimePicker").toggle();
                 }
-                
+
                 var datepickerElements = $(this).parent().find(".datepicker");
                 if (datepickerElements.length > 0) {
                     $(datepickerElements).data("DateTimePicker").toggle();
                 }
             });
+    },
+
+    initSizeBarIsExpaned: function() {
+        var isExpanded = localStorage.getItem("IsSidebarExpanded");
+        if (isExpanded === "true") {
+            sidebar.expandSidebar();
+        } else {
+            sidebar.collapseSidebar();
+        }
     },
 
     toggleMenu: function() {
@@ -30,11 +40,13 @@
     collapseSidebar: function() {
         $("body").addClass("menu-collapsed");
         $(".menu-item.has-sub").attr("href", "#");
+        localStorage.setItem("IsSidebarExpanded", false);
     },
 
     expandSidebar: function() {
         $("body").removeClass("menu-collapsed");
         $(".menu-item.has-sub").attr("href", "#collapseExample");
+        localStorage.setItem("IsSidebarExpanded", true);
     },
 
     hovermenu: function() {
