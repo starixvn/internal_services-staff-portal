@@ -1106,29 +1106,24 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .datepicker .new {
   background: inherit; }
 
-.bootstrap-datetimepicker-widget.dropdown-menu {
-  width: auto !important;
-  min-width: 349px; }
-
-.bootstrap-datetimepicker-widget table tr td {
-  border-radius: 2px; }
-
-.bootstrap-datetimepicker-widget table tr td.day {
-  font-weight: 600;
-  height: 40px;
-  width: 40px; }
-  .bootstrap-datetimepicker-widget table tr td.day.today, .bootstrap-datetimepicker-widget table tr td.day:hover {
-    background: #2e4592;
-    color: #fff; }
-  .bootstrap-datetimepicker-widget table tr td.day.today:before {
-    border-bottom-color: #2e4592; }
-
-.bootstrap-datetimepicker-widget table tr td.active, .bootstrap-datetimepicker-widget table tr td span.active {
-  background: #bf141a; }
-
-.bootstrap-datetimepicker-widget table tr td span:hover {
-  background: #2e4592;
-  color: #fff; }
+.bootstrap-datetimepicker-widget {
+  /*table tr td span:hover {
+        background: $title-form-bg;
+        color: $text-second-color;
+    }*/ }
+  .bootstrap-datetimepicker-widget.dropdown-menu {
+    width: auto !important;
+    min-width: 349px; }
+  .bootstrap-datetimepicker-widget table tr td {
+    border-radius: 2px; }
+  .bootstrap-datetimepicker-widget table tr td.day {
+    font-weight: 600;
+    height: 40px;
+    width: 40px;
+    /*&.today, &:hover {
+            background: $title-form-bg;
+            color: $text-second-color;
+        }*/ }
 
 .bootstrap-datetimepicker-widget table td.disabled, .bootstrap-datetimepicker-widget table td.disabled:hover {
   color: rgba(119, 119, 119, 0.2); }

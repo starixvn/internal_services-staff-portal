@@ -1485,24 +1485,24 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         height: 40px;
         width: 40px;
 
-        &.today, &:hover {
+        /*&.today, &:hover {
             background: $title-form-bg;
             color: $text-second-color;
-        }
+        }*/
 
         &.today:before {
-            border-bottom-color: $title-form-bg;
+            //border-bottom-color: $title-form-bg;
         }
     }
 
     table tr td.active, table tr td span.active {
-        background: $primary-color;
+        //background: $primary-color;
     }
 
-    table tr td span:hover {
+    /*table tr td span:hover {
         background: $title-form-bg;
         color: $text-second-color;
-    }
+    }*/
 }
 
 .bootstrap-datetimepicker-widget table td.disabled, .bootstrap-datetimepicker-widget table td.disabled:hover {
