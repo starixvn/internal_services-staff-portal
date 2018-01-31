@@ -8,13 +8,13 @@
 
     public class ReferenceViewModel
     {
-        [Required]
+        [Required(ErrorMessageResourceName = "DateAppearRequired", ErrorMessageResourceType = typeof(Messages))]
         [Display(Name = "Date Appear")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM-DD-YYYY}", ApplyFormatInEditMode = true)]
         public DateTime DateAppear { get; set; }
 
-        [Required]
+        [Required(ErrorMessageResourceName = "ImageUrlRequired", ErrorMessageResourceType = typeof(Messages))]
         [StringLength(500, ErrorMessageResourceName = "ValidateStringLengthMessage", ErrorMessageResourceType = typeof(Messages))]
         [Remote("IsValidImageUrl", "References", ErrorMessageResourceName = "InvalidImageURL", ErrorMessageResourceType = typeof(Messages))]
         [Display(Name = "Image URL")]
