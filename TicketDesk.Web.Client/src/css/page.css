@@ -201,6 +201,9 @@ body {
   color: #bf141a; }
 
 /******************************************* Table ******************************************/
+.msg-important {
+  color: #bf141a; }
+
 .feature {
   border-radius: 0; }
   .feature .panel-heading {

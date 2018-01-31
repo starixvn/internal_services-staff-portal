@@ -570,7 +570,9 @@ main {
   .announcement-list .published-date span,
   .announcement-list .last-modified span,
   .announcement-list .modified-by span {
-    display: inline-block; }
+    display: inline-block;
+    float: left;
+    padding-left: 2rem; }
 
 .announcement-list .increase .sort {
   opacity: 1; }
