@@ -8,6 +8,33 @@
 {
     <link href="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 }
+
+@section scripts
+{
+    <script src="~/src/libs/datetimepicker/moment.js"></script>
+    <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#from-date').datetimepicker({
+                format: 'MM-DD-YYYY'
+            });
+
+            $('#to-date').datetimepicker({
+                format: 'MM-DD-YYYY'
+            });
+
+            //$("#from-date").on("dp.change", function (e) {
+            //    $('#to-date').data("DateTimePicker").minDate(e.date);
+            //});
+
+            //$("#to-date").on("dp.change", function (e) {
+            //    $('#from-date').data("DateTimePicker").maxDate(e.date);
+            //});
+        });
+    </script>
+}
+
 <div class="announcement-detail">
     <div class="form-content feature">
 
@@ -24,15 +51,15 @@
                     @Html.LabelFor(x => x.PublishedFrom)
                     <div class='input-group date'>
                         @Html.TextBoxFor(x => x.PublishedFrom, new { @class = "form-control datetimepicker", id = "from-date" })
-                        <span class="icon-calendar"></span>                        
+                        <span class="icon-calendar"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(x => x.PublishedTo)
                     <div class='input-group date'>
-                        @Html.TextBoxFor(x => x.PublishedTo, new { @class = "form-control datetimepicker", id = "to-date" })                        
-                            <span class="icon-calendar"></span>                        
+                        @Html.TextBoxFor(x => x.PublishedTo, new { @class = "form-control datetimepicker", id = "to-date" })
+                        <span class="icon-calendar"></span>
                     </div>
                 </div>
 
@@ -80,26 +107,3 @@
         </div>
     </div>
 </div>
-@section scripts
-{
-    <script src="~/src/libs/datetimepicker/moment.js"></script>
-    <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#from-date').datetimepicker({
-                format: 'MM-DD-YYYY'
-            });
-            $('#to-date').datetimepicker({
-                useCurrent: false, //Important! See issue #1075
-                format: 'MM-DD-YYYY'
-            });
-            $("#from-date").on("dp.change", function (e) {
-                $('#to-date').data("DateTimePicker").minDate(e.date);
-            });
-            $("#to-date").on("dp.change", function (e) {
-                $('#from-date').data("DateTimePicker").maxDate(e.date);
-            });
-        });
-    </script>
-}
