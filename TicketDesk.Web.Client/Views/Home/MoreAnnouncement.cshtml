@@ -21,16 +21,17 @@
             });
 
             $('#to-date').datetimepicker({
-                format: 'MM-DD-YYYY'
+                format: 'MM-DD-YYYY',
+                useCurrent: false
             });
 
-            //$("#from-date").on("dp.change", function (e) {
-            //    $('#to-date').data("DateTimePicker").minDate(e.date);
-            //});
+            $("#from-date").on("dp.change", function (e) {
+                $('#to-date').data("DateTimePicker").minDate(e.date);
+            });
 
-            //$("#to-date").on("dp.change", function (e) {
-            //    $('#from-date').data("DateTimePicker").maxDate(e.date);
-            //});
+            $("#to-date").on("dp.change", function (e) {
+                $('#from-date').data("DateTimePicker").maxDate(e.date);
+            });
         });
     </script>
 }
