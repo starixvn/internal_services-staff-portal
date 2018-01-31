@@ -307,7 +307,7 @@
     .last-modified,
     .modified-by {
         white-space: nowrap;
-        position: relative;
+        //position: relative;
 
         span {
             display: inline-block;
@@ -335,7 +335,8 @@
     }
 
     .sort {
-        position: absolute;
+        position: relative;
+        float: right;
         right: 5px;
         width: 18px;
         height: 15px;
