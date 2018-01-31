@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DateAppearRequired" xml:space="preserve">
+    <value>Date Appear is required.</value>
+  </data>
   <data name="DuplicatedDay" xml:space="preserve">
     <value>The Date duplicated.</value>
   </data>
   <data name="ImageExceededCapacity" xml:space="preserve">
     <value>Fail to upload image. The image you're trying to upload exceeds 2MB limit.</value>
+  </data>
+  <data name="ImageUrlRequired" xml:space="preserve">
+    <value>Image URL is required.</value>
   </data>
   <data name="InvalidFolderName" xml:space="preserve">
     <value>A folder name can't contain any of the following characters: \ / : * ? " &lt; &gt; |</value>

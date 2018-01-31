@@ -180,6 +180,7 @@ $("#ReferencesZone").on("change", ".upload-image", function (e) {
 
 $("form").submit(function (e) {
     userSubmit = 1;
+    $(".reference-entry").find(".upload-image-validation").text("");
 });
 
 $(window).on('beforeunload', function (e) {

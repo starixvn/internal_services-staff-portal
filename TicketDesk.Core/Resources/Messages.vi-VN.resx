@@ -157,4 +157,10 @@ Bạn có thực sự muốn đăng xuất?</value>
   <data name="InvalidImageFormat" xml:space="preserve">
     <value>Fail to upload image. The format is not supported.</value>
   </data>
+  <data name="DateAppearRequired" xml:space="preserve">
+    <value>Date Appear is required.</value>
+  </data>
+  <data name="ImageUrlRequired" xml:space="preserve">
+    <value>Image URL is required.</value>
+  </data>
 </root>

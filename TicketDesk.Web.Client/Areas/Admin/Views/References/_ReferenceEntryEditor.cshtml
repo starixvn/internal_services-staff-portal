@@ -20,8 +20,8 @@
         @Html.LabelFor(model => model.ImageLink)
         <span class="text-red">*</span>
         @Html.TextBoxFor(model => model.ImageLink, new { maxLength = 500, @class = "form-control image-url" })
-        <p class="text-red upload-image-validation"></p>
         @Html.ValidationMessageFor(model => model.ImageLink)
+        <p class="text-red upload-image-validation"></p>
     </div>
 
     <div class="browse form-group">

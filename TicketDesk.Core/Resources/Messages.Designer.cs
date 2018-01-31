@@ -61,6 +61,15 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date Appear is required..
+        /// </summary>
+        public static string DateAppearRequired {
+            get {
+                return ResourceManager.GetString("DateAppearRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Date duplicated..
         /// </summary>
         public static string DuplicatedDay {
@@ -75,6 +84,15 @@ namespace TicketDesk.Core.Resources {
         public static string ImageExceededCapacity {
             get {
                 return ResourceManager.GetString("ImageExceededCapacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image URL is required..
+        /// </summary>
+        public static string ImageUrlRequired {
+            get {
+                return ResourceManager.GetString("ImageUrlRequired", resourceCulture);
             }
         }
         
