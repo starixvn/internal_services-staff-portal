@@ -840,8 +840,8 @@ main {
       color: #2e4592;
       cursor: pointer; }
   .filter-row .dropdown-small {
-    flex-basis: 85px;
-    max-width: 85px; }
+    flex-basis: 95px;
+    max-width: 95px; }
 
 .form-group {
   margin-bottom: 10px; }

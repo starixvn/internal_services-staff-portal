@@ -541,6 +541,12 @@ tr.header {
             }
         }
 
+        &.active a:hover {
+            background: $title-form-bg;
+            color: $text-second-color;
+            border: 1px solid $title-form-bg;
+        }
+
         &:first-child, &:last-child {
             a {
                 border-radius: 2px;
@@ -1484,12 +1490,10 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         font-weight: 600;
         height: 40px;
         width: 40px;
-
         /*&.today, &:hover {
             background: $title-form-bg;
             color: $text-second-color;
         }*/
-
         &.today:before {
             //border-bottom-color: $title-form-bg;
         }
@@ -1498,7 +1502,6 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     table tr td.active, table tr td span.active {
         //background: $primary-color;
     }
-
     /*table tr td span:hover {
         background: $title-form-bg;
         color: $text-second-color;
@@ -1601,7 +1604,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         height: 100%;
         display: block;
         white-space: pre-line;
-        
+
         &:after {
             content: " ";
             display: block;

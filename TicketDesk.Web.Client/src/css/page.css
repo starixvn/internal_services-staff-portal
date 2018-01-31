@@ -397,6 +397,10 @@ tr.header {
       background: #2e4592;
       color: #fff;
       border: 1px solid #2e4592; }
+    .pagination > li.active a:hover {
+      background: #2e4592;
+      color: #fff;
+      border: 1px solid #2e4592; }
     .pagination > li:first-child a, .pagination > li:last-child a {
       border-radius: 2px;
       position: relative;
