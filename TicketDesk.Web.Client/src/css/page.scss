@@ -522,12 +522,13 @@ tr.header {
 }
 
 .display-item {
-    float: right;
+    float: left;
 }
 
 .pagination {
     vertical-align: middle;
     margin: 0;
+    float: right;
 
     > li {
         margin: 0 2px;
@@ -580,7 +581,8 @@ tr.header {
 }
 
 .page-size {
-    display: inline-block;
+    float: right;
+    //display: inline-block;
     color: $text-color;
     margin-right: 16px;
     vertical-align: middle;

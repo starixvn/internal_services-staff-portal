@@ -1,27 +1,7 @@
 ﻿@using TicketDesk.Localization.Client
 @model TicketDesk.Web.Client.Models.Common.Pagination
 
-<div class="page-size">
-    <label class="">@Html.DisplayNameFor(x => x.ItemPerPage)</label>
-    <div class="custom-dropdown js-dropdown">
-        <span class="c-button c-button--dropdown js-dropdown__current">@Model.ItemPerPage</span>
-
-        <ul class="c-dropdown__list">
-            @foreach (var size in Model.PageSizes)
-            {
-                var selectedClass = "";
-                if (Model.ItemPerPage == size)
-                {
-                    selectedClass = "selected";
-                }
-
-                <li class="@selectedClass c-dropdown__item" data-dropdown-value="@size">
-                    <a href="@Model.PageSizeLink(size)">@size</a>
-                </li>
-            }
-        </ul>
-    </div>
-</div>
+<p class="display-item">@string.Format(Resources.Common_Table_Pagination_DisplayingText, Model.FromItemIndex, Model.ToItemIndex, Model.TotalItem)</p>
 
 <ul class="pagination">
     @if (Model.CurrentPage == 1)
@@ -62,4 +42,24 @@
     }
 </ul>
 
-<p class="display-item">@string.Format(Resources.Common_Table_Pagination_DisplayingText, Model.FromItemIndex, Model.ToItemIndex, Model.TotalItem)</p>
+<div class="page-size">
+    <label class="">@Html.DisplayNameFor(x => x.ItemPerPage)</label>
+    <div class="custom-dropdown js-dropdown">
+        <span class="c-button c-button--dropdown js-dropdown__current">@Model.ItemPerPage</span>
+
+        <ul class="c-dropdown__list">
+            @foreach (var size in Model.PageSizes)
+            {
+                var selectedClass = "";
+                if (Model.ItemPerPage == size)
+                {
+                    selectedClass = "selected";
+                }
+
+                <li class="@selectedClass c-dropdown__item" data-dropdown-value="@size">
+                    <a href="@Model.PageSizeLink(size)">@size</a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

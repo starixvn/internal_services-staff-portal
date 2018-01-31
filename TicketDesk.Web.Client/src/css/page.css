@@ -385,11 +385,12 @@ tr.header {
   background-color: #ec2a53; }
 
 .display-item {
-  float: right; }
+  float: left; }
 
 .pagination {
   vertical-align: middle;
-  margin: 0; }
+  margin: 0;
+  float: right; }
   .pagination > li {
     margin: 0 2px; }
     .pagination > li.active a, .pagination > li:hover a {
@@ -421,7 +422,7 @@ tr.header {
       font-size: 18px; }
 
 .page-size {
-  display: inline-block;
+  float: right;
   color: #333;
   margin-right: 16px;
   vertical-align: middle; }

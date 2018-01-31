@@ -11,8 +11,53 @@
   font-style: italic;
 }
 
+.filter-row {
+    margin: 0 auto 1rem;
+    width: 100%;
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    max-width: 2400px;
+
+    label {
+        font-weight: 500;
+        color: #777;
+        margin-bottom: 2px;
+    }
+
+    > div:not(.button-filter) {
+        margin-right: 2rem;
+    }
+
+    .text-field {
+        flex-basis: 150px;
+        max-width: 150px;
+    }
+
+    .date-time {
+        position: relative;
+        flex-basis: 110px;
+        max-width: 110px;        
+
+        .icon-calendar {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            color: #2e4592;
+            cursor: pointer;
+        }
+    }
+
+    .dropdown-small {
+        flex-basis: 85px;
+        max-width: 85px;
+    }
+}
+
 .button-filter {
-    margin-top: 24px;
+    //margin-top: 24px;
 }
 
 .form-group {
@@ -88,12 +133,12 @@
         width: $size;
 
         &:checked + label::after {
-            background-color: $color;
+            background-color: $background;
             transform: scale(1);
         }
 
         &:disabled + label::after {
-            background-color: $color;
+            background-color: $background;
             transform: scale(1);
             opacity: 0.7;
             cursor: not-allowed;
@@ -112,21 +157,28 @@
         margin-bottom: 8px;
         cursor: pointer;
 
+        &:before {
+            height: $size;
+            width: $size;
+        }        
+
         &:before, &:after {
             content: "";
             position: absolute;
             display: block;
             left: 0;
             top: 2px;
-            height: $size;
-            width: $size;
             border: 1px solid #737373;
             border-radius: 2px;
         }
 
         &:after {
-            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNXG14zYAAABMSURBVAiZfc0xDkAAFIPhd2Kr1WRjcAExuIgzGUTIZ/AkImjSofnbNBAfHvzAHjOKNzhiQ42IDFXCDivaaxAJd0xYshT3QqBxqnxeHvhunpu23xnmAAAAAElFTkSuQmCC") center center no-repeat;
+            background: url(../../contents/images/check.svg) center center no-repeat;
             border: 0;
+            height: $size - 2;
+            width: $size - 2;
+            margin: 1px;
+            background-size: 14px 12px;
             transform: scale(0);
             transition: .2s;
         }

@@ -1,5 +1,5 @@
 ﻿.table {
-    margin-top: 10px;
+    margin-top: 5px;
 
     table {
         border: 1px solid #c1c1c1;
@@ -157,8 +157,8 @@
 
 // -------------------- Page Size - Pagination ----------------- //
 .page-size {
-    display: inline-block;
-    margin-right: 15px;
+    float: right;
+    margin-right: 10px;
     margin-top: 10px;
     vertical-align: middle;
 
@@ -168,10 +168,14 @@
         text-align: left;
         margin-left: 5px;
     }
+
+    label {
+        font-weight: 400;
+    }
 }
 
 .pagination {
-    margin: 0;
+    float: right;
     margin-top: 10px;
     vertical-align: middle;
     border-radius: 2px;
@@ -179,6 +183,7 @@
     > li > a, > li > span {
         padding: 4px 10px;
         border: 1px solid #cdcdcd;
+        color: #777;
     }
 
     > li:last-child > a, > li:last-child > span {
@@ -191,6 +196,16 @@
         border-bottom-left-radius: 2px;
     }
 
+    > .active > a {
+        background-color: #2e4592;
+        border-color: #2e4592;
+
+        &:hover {
+            background-color: #2e4592;
+            border-color: #2e4592;
+        }
+    }
+
     [class^="icon-"].disabled {
         background: rgba(232, 232, 232, 0.5);
         color: rgba(118, 117, 117, 0.5);
@@ -200,7 +215,8 @@
 }
 
 .display-item {
-    margin-top: 10px;
+    display: inline-block;
+    margin-top: 12px;
     margin-bottom: 0;
 }
 
@@ -275,7 +291,8 @@
 }
 
 .c-button--dropdown {
-    padding: 6px 30px 3px 8px;
+    padding: 6px 20px 3px 5px;
+    width: 50px;
     background-color: #fff;
     border: 1px solid #cdcdcd;
     line-height: 1;
@@ -291,7 +308,7 @@
         content: "";
         position: absolute;
         top: 13px;
-        right: 11px;
+        right: 6px;
         width: 0;
         height: 0;
         border: 4px solid transparent;
@@ -308,11 +325,10 @@
     .modified-by {
         white-space: nowrap;
         //position: relative;
-
         span {
             display: inline-block;
             float: left;
-            padding-left: 2rem;
+            padding-left: 2.2rem;
         }
     }
 
@@ -339,8 +355,7 @@
     .sort {
         position: relative;
         float: right;
-        right: 5px;
-        width: 18px;
+        width: 16px;
         height: 15px;
         padding: 0;
         border: 0;
@@ -367,7 +382,7 @@
         }
 
         &:after {
-            top: 3px;
+            top: 4px;
             transform: rotate(180deg);
         }
     }

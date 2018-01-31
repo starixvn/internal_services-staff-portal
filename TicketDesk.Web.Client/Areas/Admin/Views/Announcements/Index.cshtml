@@ -35,32 +35,32 @@
 
 <!--Filter-->
 <section class="filter-form">
-    @using (Html.BeginForm("Index", "Announcements", FormMethod.Get, new { @class = "row" }))
+    @using (Html.BeginForm("Index", "Announcements", FormMethod.Get, new { @class = "filter-row" }))
     {
-        <div class="form-group col-lg-2 col-md-3 col-xs-4">
+        <div class="date-time">
             @Html.LabelFor(x => x.PublishedFrom)
             <div class="date-time">
                 @Html.TextBoxFor(x => x.PublishedFrom, new { @class = "datepicker start form-control" })
                 <span class="icon-calendar"></span>
             </div>
         </div>
-        <div class="form-group col-lg-2 col-md-3 col-xs-4">
+        <div class="date-time">
             @Html.LabelFor(x => x.PublishedTo)
             <div class="date-time">
                 @Html.TextBoxFor(x => x.PublishedTo, new { @class = "datepicker end form-control" })
                 <span class="icon-calendar"></span>
             </div>
         </div>
-        <div class="form-group col-lg-2  col-md-3col-xs-4">
+        <div class="dropdown-small">
             @Html.LabelFor(x => x.Status)
             @Html.EnumDropDownListFor(x => x.Status, "All", new { @class = "form-control" })
         </div>
-        <div class="form-group col-lg-2 col-md-3 col-xs-4">
+        <div class="dropdown-small">
             @Html.LabelFor(x => x.State)
             @Html.EnumDropDownListFor(x => x.State, "All", new { @class = "form-control" })
         </div>
 
-        <div class="button-filter col-lg-2 col-md-3 col-xs-4 ">
+        <div class="button-filter">
             <button type="submit" class="btn btn-submit">Submit</button>
         </div>
 
