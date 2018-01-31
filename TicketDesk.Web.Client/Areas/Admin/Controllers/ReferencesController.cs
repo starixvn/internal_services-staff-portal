@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -24,6 +25,8 @@
         private readonly string webRootPath;
         private readonly string webPath = WebConfigurationManager.AppSettings["FileManager_RootPath"];
         private readonly int imageSizeLimit = 2 * 1024 * 1024; // 2MB
+        private readonly int limitHeight = 400;
+        private readonly int limitWidth = 600;
 
         private TdDomainContext Context { get; }
 
@@ -273,6 +276,11 @@
                     return Json(new { isSuccessful, message = Messages.ImageExceededCapacity });
                 }
 
+                if (!ValidImageDimension(file))
+                {
+                    return Json(new { isSuccessful, message = Messages.ImageDimensionInvalid });
+                }
+
                 var fileExist = System.IO.File.Exists(Path.Combine(directory, file.FileName));
                 filePath = MakeWebPath(Path.Combine(directory, file.FileName));
 
@@ -323,6 +331,23 @@
         {
             string ext = Path.GetExtension(fileName).ToLowerInvariant();
             return ext == ".jpg" || ext == ".png" || ext == ".jpeg";
+        }
+
+        private bool ValidImageDimension(HttpPostedFileBase file)
+        {
+            var isValid = false;
+            Stream fileStream = file.InputStream;
+            Image image = Image.FromStream(fileStream);
+            int imageHeight = image.Height;
+            int imageWidth = image.Width;
+            image.Dispose();
+
+            if (imageHeight >= limitHeight && imageWidth >= limitWidth)
+            {
+                isValid = true;
+            }
+
+            return isValid;
         }
 
         private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)

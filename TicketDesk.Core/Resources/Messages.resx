@@ -123,6 +123,9 @@
   <data name="DuplicatedDay" xml:space="preserve">
     <value>The Date duplicated.</value>
   </data>
+  <data name="ImageDimensionInvalid" xml:space="preserve">
+    <value>The attachment image size is less than the allowable limits. Please use a bigger size file!</value>
+  </data>
   <data name="ImageExceededCapacity" xml:space="preserve">
     <value>Fail to upload image. The image you're trying to upload exceeds 2MB limit.</value>
   </data>

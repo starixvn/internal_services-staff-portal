@@ -79,6 +79,15 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The attachment image size is less than the allowable limits. Please use a bigger size file!.
+        /// </summary>
+        public static string ImageDimensionInvalid {
+            get {
+                return ResourceManager.GetString("ImageDimensionInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fail to upload image. The image you&apos;re trying to upload exceeds 2MB limit..
         /// </summary>
         public static string ImageExceededCapacity {

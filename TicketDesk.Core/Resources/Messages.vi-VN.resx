@@ -163,4 +163,7 @@ Bạn có thực sự muốn đăng xuất?</value>
   <data name="ImageUrlRequired" xml:space="preserve">
     <value>Image URL is required.</value>
   </data>
+  <data name="ImageDimensionInvalid" xml:space="preserve">
+    <value>The attachment image size is less than the allowable limits. Please use a bigger size file!</value>
+  </data>
 </root>

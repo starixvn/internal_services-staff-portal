@@ -21,7 +21,7 @@
         <span class="text-red">*</span>
         @Html.TextBoxFor(model => model.ImageLink, new { maxLength = 500, @class = "form-control image-url" })
         @Html.ValidationMessageFor(model => model.ImageLink)
-        <p class="text-red upload-image-validation"></p>
+        <span class="field-validation-error upload-image-validation"></span>
     </div>
 
     <div class="browse form-group">
