@@ -1,7 +1,7 @@
 ﻿var datetimepicker = {
     init: function () {
         datetimepicker.setupDateTimePicker();
-        datetimepicker.setupDatePicker();
+        datetimepicker.setupStartEnd();
     },
 
     setupDateTimePicker: function () {
@@ -22,11 +22,32 @@
         }
     },
 
-    setupDatePicker: function () {
-        $(".datepicker").datetimepicker({
+    setupStartEnd: function() {
+        $(".datepicker.start").datetimepicker({
             format: "MM-DD-YYYY"
         });
+
+        $(".datepicker.end").datetimepicker({
+            format: "MM-DD-YYYY",
+            useCurrent: false
+        });
+
+        $(".datepicker.start").on("dp.change",
+            function(e) {
+                $(".datepicker.end").data("DateTimePicker").minDate(e.date);
+            });
+
+        $(".datepicker.end").on("dp.change",
+            function(e) {
+                $(".datepicker.start").data("DateTimePicker").maxDate(e.date);
+            });
     }
+
+    //setupDatePicker: function (useCurrent) {
+    //    $(".datepicker").datetimepicker({
+    //        format: "MM-DD-YYYY"
+    //    });
+    //}
 }
 
 var modalhandler = {
@@ -39,9 +60,9 @@ var modalhandler = {
         modalhandler.quickPublish();
     },
 
-    quickPublish: function() {
+    quickPublish: function () {
         $("section.table form").on("submit",
-            function(e) {
+            function (e) {
                 e.preventDefault();
                 modalhandler.ajaxForm(this, "#table-modal .modal", "#table-modal .modal");
                 return false;
@@ -64,10 +85,10 @@ var modalhandler = {
         }
     },
 
-    dismissAll: function() {
+    dismissAll: function () {
         $("#announcement-modal").on("click",
             ".dismiss-all",
-            function() {
+            function () {
                 $("#announcement-modal .modal").modal("hide");
             });
     },
@@ -82,11 +103,11 @@ var modalhandler = {
 
         $("section.table").on("hidden.bs.modal",
             ".modal",
-            function() {
+            function () {
                 $(this).remove();
             });
     },
-    
+
     modalFormAjax: function () {
         // ONLY FOR PUBLISH
         $("#announcement-modal").on("submit",
@@ -105,7 +126,7 @@ var modalhandler = {
             });
     },
 
-    ajaxForm: function(form, selector, selectorWithModal) {
+    ajaxForm: function (form, selector, selectorWithModal) {
         $.ajax({
             url: $(form).attr("action"),
             method: $(form).attr("method"),
@@ -144,14 +165,6 @@ var modalhandler = {
                 modalhandler.ajaxModal(href);
             });
     },
-
-    //assignPublish: function () {
-    //    $(".publish").on("click",
-    //        function () {
-    //            var href = $(this).data("href");
-    //            modalhandler.ajaxModal(href);
-    //        });
-    //},
 
     assignCreate: function () {
         $(".create").on("click",
@@ -280,7 +293,7 @@ var announcementSort = {
         announcementSort.assignSortIcon();
 
         $(".sort").on("click",
-            function() {
+            function () {
                 // Get column name
                 var colName = $(this).data("col");
 
@@ -303,8 +316,8 @@ var announcementSort = {
             });
     },
 
-    assignSortIcon: function() {
-        $(".sort").each(function(index, obj) {
+    assignSortIcon: function () {
+        $(".sort").each(function (index, obj) {
             var colName = $(obj).data("col");
             announcementSort.removeSortClass($(obj).parent());
 
@@ -315,7 +328,7 @@ var announcementSort = {
         });
     },
 
-    removeSortClass: function(element) {
+    removeSortClass: function (element) {
         $(element).removeClass("increase");
         $(element).removeClass("decrease");
     },

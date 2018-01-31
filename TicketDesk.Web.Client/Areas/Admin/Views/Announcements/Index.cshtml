@@ -40,14 +40,14 @@
         <div class="form-group col-lg-2 col-md-3 col-xs-4">
             @Html.LabelFor(x => x.PublishedFrom)
             <div class="date-time">
-                @Html.TextBoxFor(x => x.PublishedFrom, new { @class = "datepicker form-control" })
+                @Html.TextBoxFor(x => x.PublishedFrom, new { @class = "datepicker start form-control" })
                 <span class="icon-calendar"></span>
             </div>
         </div>
         <div class="form-group col-lg-2 col-md-3 col-xs-4">
             @Html.LabelFor(x => x.PublishedTo)
             <div class="date-time">
-                @Html.TextBoxFor(x => x.PublishedTo, new { @class = "datepicker form-control" })
+                @Html.TextBoxFor(x => x.PublishedTo, new { @class = "datepicker end form-control" })
                 <span class="icon-calendar"></span>
             </div>
         </div>
