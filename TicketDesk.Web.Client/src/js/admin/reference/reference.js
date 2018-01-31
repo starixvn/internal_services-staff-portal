@@ -2,6 +2,15 @@
     initReference: function () {
         reference.initDateTimePicker();
         reference.setSubmitButtonState();
+        
+        $("form").validate({
+            errorClass: "input-validation-error",
+            errorElement: "span",
+            errorPlacement: function (error, element) {
+                error.addClass("text-red")
+                error.insertAfter(element);
+            }
+        });
 
         if ($("#successMessage").length) {
             setTimeout(function () {
@@ -14,6 +23,7 @@
         var nowDate = new Date();
         $(".datetimepicker").datetimepicker({
             format: "MM-DD-YYYY",
+            useCurrent: false,
             minDate: nowDate.toDateString(),
             maxDate: nowDate.setFullYear(nowDate.getFullYear() + 1),
             disabledDates: reference.getSelectedDates()
@@ -43,7 +53,11 @@
 
     updateReferenceIndex: function (index, element) {
         $(element).find(".datetimepicker").attr("name", "References[" + index + "].DateAppear");
+        $(element).find(".datetimepicker").attr("id", "References_" + index + "__DateAppear");
         $(element).find(".image-url").attr("name", "References[" + index + "].ImageLink");
+        $(element).find(".image-url").attr("id", "References_" + index + "__ImageLink");
+        $(element).find(".date span").attr("data-valmsg-for", "References[" + index + "].DateAppear");
+        $(element).find(".url span").attr("data-valmsg-for", "References[" + index + "].ImageLink");
     },
 
     updateFormFieldsName: function () {
@@ -59,12 +73,28 @@
         return true;
     },
 
+    setRulesToLastElement: function () {
+        $(".image-url").each(function (i, e) {
+            $(this).rules("add", {
+                remote: {
+                    type: "get",
+                    url: "/Admin/References/IsValidImageUrl"
+                },
+                messages: {
+                    remote: "The request content cannot be loaded. Please try again."
+                },
+            })
+        });
+        
+    },
+
     addReferenceEntry: function (isNewsLetter, limitEntry) {
         var url = "/Admin/References/GetReferenceEntity?isNewsLetter=" + isNewsLetter
         $.get(url, function (html) {
             if (reference.checkLimitedEntry(limitEntry)) {
                 $("#ReferencesZone").append(html);
                 reference.updateReferenceState();
+                reference.setRulesToLastElement();
             } else {
                 var message = "You only can upload " + limitEntry + " files of attachment";
                 $("#limitEntry").text(message);
@@ -72,7 +102,7 @@
         });
     },
 
-    isEmptyReference: function () {
+   isEmptyReference: function () {
         if (!$(".reference-entry").length) {
             return true;
         }
@@ -85,7 +115,8 @@
 
     removeEntry: function (element) {
         $(element).parent().parent().remove();
-        reference.updateReferenceState();
+        reference.updateFormFieldsName();
+        reference.updateDisabledDates();
     }
 };
 
@@ -108,7 +139,6 @@ $(document).on("dp.change", ".datetimepicker", function () {
     reference.updateDisabledDates();
 });
 
-
 $("#ReferencesZone").on("change", ".upload-image", function (e) {
     var uploadEntry = $(this).closest(".reference-entry");
     var files = e.target.files;
@@ -126,6 +156,7 @@ $("#ReferencesZone").on("change", ".upload-image", function (e) {
                     if (result.isSuccessful) {
                         uploadEntry.find(".image-url").val(result.imageDirectory);
                         uploadEntry.find(".image-url").removeClass("input-validation-error");
+                        uploadEntry.find(".field-validation-error").addClass("hidden");
                         uploadEntry.find(".upload-image-validation").text("");
                     } else {
                         uploadEntry.find(".image-url").addClass("input-validation-error");
@@ -147,7 +178,7 @@ $("#ReferencesZone").on("change", ".upload-image", function (e) {
     }
 });
 
-$("form").submit(function () {
+$("form").submit(function (e) {
     userSubmit = 1;
 });
 

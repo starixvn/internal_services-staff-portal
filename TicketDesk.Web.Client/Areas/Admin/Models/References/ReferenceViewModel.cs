@@ -16,7 +16,7 @@
 
         [Required]
         [StringLength(500, ErrorMessageResourceName = "ValidateStringLengthMessage", ErrorMessageResourceType = typeof(Messages))]
-        [Remote("IsValidImageUrl", "References", AdditionalFields = "ImageLink", ErrorMessageResourceName = "InvalidImageURL", ErrorMessageResourceType = typeof(Messages))]
+        [Remote("IsValidImageUrl", "References", ErrorMessageResourceName = "InvalidImageURL", ErrorMessageResourceType = typeof(Messages))]
         [Display(Name = "Image URL")]
         public string ImageLink { get; set; }
 

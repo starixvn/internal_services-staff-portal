@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Core.Resources;
     using TicketDesk.Core.Enumerations;
 
     public class Reference
@@ -16,7 +17,7 @@
         public DateTime DateAppear { get; set; }
 
         [Required]
-        [StringLength(500, ErrorMessage = "Image URL must under 500 characters")]
+        [StringLength(500, ErrorMessageResourceName = "ValidateStringLengthMessage", ErrorMessageResourceType = typeof(Messages))]
         [Display(Name = "Image URL")]
         public string ImageLink { get; set; }
 

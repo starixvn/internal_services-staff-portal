@@ -14,7 +14,6 @@
     {
         <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
     }
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <ul class="references-zone" id="ReferencesZone">
         @if (Model.References != null && Model.References.Count() > 0)
         {
@@ -34,15 +33,15 @@
                     <div class="url form-group">
                         @Html.LabelFor(model => model.References[i].ImageLink)
                         <span class="text-red">*</span>
-                        @Html.TextBoxFor(model => model.References[i].ImageLink, new { @class = "form-control image-url" })
-                        <span class="text-red upload-image-validation"></span>
+                        @Html.TextBoxFor(model => model.References[i].ImageLink, new { maxLength = 500, @class = "form-control image-url" })
+                        <p class="text-red upload-image-validation"></p>
                         @Html.ValidationMessageFor(model => model.References[i].ImageLink)
                     </div>
 
                     <div class="browse form-group">
                         <div class="btn btn-browse">
                             <span>Browse...</span>
-                            <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="excelFile">
+                            <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload">
                         </div>
                         <input type="button" class="btn btn-delete remove-entry" value="Delete">
                     </div>

@@ -294,7 +294,6 @@
             return Json(new { isSuccessful, message = "Upload fail" });
         }
 
-        [AllowAnonymous]
         public ActionResult IsValidImageUrl()
         {
             var keyQuery = Request.QueryString.GetKey(0);
