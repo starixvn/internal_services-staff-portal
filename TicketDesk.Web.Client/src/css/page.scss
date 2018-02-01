@@ -263,15 +263,7 @@ body {
     }
 }
 
-/******************************************* Table ******************************************/
-.msg-important {
-    color: #bf141a;
-
-    .sign:after {
-        background: #bf141a;
-    }
-}
-
+//-------------------------------- Table ------------------------------------//
 .home-main {
     flex-basis: 100%;
     align-self: flex-start;
@@ -281,12 +273,67 @@ body {
     .table {
         margin-bottom: 15px;
     }
+
+    .table-hover {
+    }
+
+    .sign {
+        position: relative;
+        display: flex;
+        float: left;
+        justify-content: center;
+        align-items: center;
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+        background: #333;
+        text-align: center;
+        border-radius: 2px;
+        cursor: pointer;
+
+        &:before, &:after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 2px;
+            background: #fff;
+            transform: rotate(0);
+            transition: transform .2s ease;
+            transform-origin: center center;
+        }
+    }
+
+    .expand .sign {
+        &:before {
+            transform: rotate(90deg);
+        }
+    }
+
+    .expand.sign:before {
+        transform: rotate(90deg);
+    }
+
+    .expanded.sign:before {
+        transform: rotate(0);
+    }
+
+    .header .sign {
+        background: #2e4592;
+    }
+
+    .msg-important {
+        color: #bf141a;
+        
+        .sign { 
+            background: #bf141a;
+        }        
+    }
 }
 
 .feature {
     border-radius: 0;
 
-    & +.feature {
+    & + .feature {
         margin-top: 5px;
     }
 
@@ -344,27 +391,7 @@ body {
 
     tr.even td {
         background: #f2f2f2;
-    }
-
-    .sign {
-        margin-right: 4px;
-    }
-
-    .sign:after {
-        content: "\2013";
-        display: inline-block;
-        color: $text-second-color;
-        background: #333;
-        text-align: center;
-        vertical-align: middle;
-        width: 18px;
-        height: 18px;
-        line-height: 16px;
-    }
-
-    .expand .sign:after {
-        content: "\002b";
-    }
+    }    
 
     &.tbl-announcement {
         tr.header {
@@ -381,21 +408,6 @@ body {
             font-weight: 700;
         }
 
-        .sign {
-            margin-right: 8px;
-
-            &.expanded:after {
-                content: "\2013";
-            }            
-        }
-
-        .sign:after {
-            content: "\002b";
-        }
-
-        tr.expand .sign:after {
-            content: "\2013";
-        }
 
         tr.error td {
             color: $primary-color;
@@ -766,6 +778,7 @@ tr.header {
 
     input[type="file"], select {
         border-top: none;
+        font-family: inherit;
     }
 
     select {
@@ -873,6 +886,7 @@ tr.header {
     }
 
     input[type="text"], textarea {
+        font-family: inherit;
         font-size: 16px;
         border: 1px solid $border-color;
         -webkit-appearance: none;
