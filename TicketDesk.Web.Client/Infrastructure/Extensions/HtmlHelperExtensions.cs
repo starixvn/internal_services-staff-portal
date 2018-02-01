@@ -23,6 +23,12 @@
                 return "active";
             }
 
+            if (currentRoute == "/Admin" && route == "/Admin/Announcements" || (currentRoute.Contains("Admin") && route == "/Admin/Announcements"))
+            {
+                // Home
+                return "active";
+            }
+
             if (currentRoute.Contains(route) && route != "/")
             {
                 return "active";
