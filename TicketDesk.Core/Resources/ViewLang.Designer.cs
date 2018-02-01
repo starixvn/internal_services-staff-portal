@@ -142,7 +142,7 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to News Letters.
+        ///   Looks up a localized string similar to Newsletters.
         /// </summary>
         public static string NewsLetters {
             get {

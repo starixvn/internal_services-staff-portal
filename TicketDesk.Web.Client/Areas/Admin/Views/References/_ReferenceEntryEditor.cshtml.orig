@@ -1,0 +1,42 @@
+﻿@using TicketDesk.Web.Client.Areas.Admin.Models.References
+@using TicketDesk.Core.Enumerations
+@model ReferenceViewModel
+
+<li class="reference-entry">
+    @if (Model.ReferenceType != ReferenceType.NewsLetter)
+    {
+        <div class="date form-group">
+            @Html.LabelFor(model => model.DateAppear)
+            <span class="text-red">*</span>
+<<<<<<< HEAD
+        <div class="datetime-field">
+            @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
+            <span class="icon-calendar"></span>
+            @Html.ValidationMessageFor(model => model.DateAppear)
+        </div>        
+=======
+            <div>
+                @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
+                <span class="icon-calendar"></span>
+                @Html.ValidationMessageFor(model => model.DateAppear)
+            </div>
+>>>>>>> 90349 - fix bug reference update and remove
+        </div>
+
+    }
+    <div class="url form-group">
+        @Html.LabelFor(model => model.ImageLink)
+        <span class="text-red">*</span>
+        @Html.TextBoxFor(model => model.ImageLink, new { maxLength = 500, @class = "form-control image-url" })
+        @Html.ValidationMessageFor(model => model.ImageLink)
+        <span class="field-validation-error upload-image-validation"></span>
+    </div>
+
+    <div class="browse form-group">
+        <div class="btn btn-browse">
+            <span>Browse...</span>
+            <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload">
+        </div>
+        <input type="button" class="btn btn-delete remove-entry" value="Delete">
+    </div>
+</li>

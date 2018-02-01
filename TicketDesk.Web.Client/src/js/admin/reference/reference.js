@@ -126,7 +126,7 @@ reference.initReference();
 
 $("#addReferenceEntry").click(function () {
     var type = $(this).attr("data-type");
-    var isNewLetter = type == "newsLetter" ? true : false;
+    var isNewLetter = type == "newsLetter";
     var limitEntry = isNewLetter ? 50 : 31
     reference.addReferenceEntry(isNewLetter, limitEntry);
 });

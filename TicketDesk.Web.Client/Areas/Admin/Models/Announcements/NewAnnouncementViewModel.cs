@@ -31,19 +31,24 @@
     public enum ActionType
     {
         Create,
+
         [Display(Name = "Sumbit")]
         Edit,
+
         Delete
     }
 
     public enum ModalId
     {
-        [Display(Name = "Create new Announcement")]
+        [Display(Name = "Create New Announcement")]
         CreateAnnouncementModal,
+
         [Display(Name = "Edit Announcement")]
         EditAnnouncementModal,
+
         [Display(Name = "Publish Announcement")]
         PublishAnnouncement,
+
         [Display(Name = "Delete Announcement")]
         DeleteAnnouncementModal
     }
