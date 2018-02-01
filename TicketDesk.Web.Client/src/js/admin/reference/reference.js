@@ -3,14 +3,14 @@
         reference.initDateTimePicker();
         reference.setSubmitButtonState();
         
-        $("form").validate({
-            errorClass: "input-validation-error",
-            errorElement: "span",
-            errorPlacement: function (error, element) {
-                error.addClass("text-red")
-                error.insertAfter(element);
-            }
-        });
+        //$("form").validate({
+        //    errorClass: "input-validation-error",
+        //    errorElement: "span",
+        //    errorPlacement: function (error, element) {
+        //        error.addClass("text-red")
+        //        error.insertAfter(element);
+        //    }
+        //});
 
         if ($("#successMessage").length) {
             setTimeout(function () {

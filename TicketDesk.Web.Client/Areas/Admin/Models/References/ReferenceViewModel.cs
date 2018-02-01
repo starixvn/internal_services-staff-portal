@@ -8,6 +8,8 @@
 
     public class ReferenceViewModel
     {
+        public int? Id { get; set; }
+
         [Required(ErrorMessageResourceName = "DateAppearRequired", ErrorMessageResourceType = typeof(Messages))]
         [Display(Name = "Date Appear")]
         [DataType(DataType.Date)]

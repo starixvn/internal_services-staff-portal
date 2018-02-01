@@ -37,10 +37,11 @@
                         @Html.LabelFor(model => model.References[i].ImageLink)
                         <span class="text-red">*</span>
                         @Html.TextBoxFor(model => model.References[i].ImageLink, new { @class = "form-control image-url" })
-                        <span class="text-red upload-image-validation"></span>
                         @Html.ValidationMessageFor(model => model.References[i].ImageLink)
+                        <span class="text-red upload-image-validation"></span>
                     </div>
 
+                    @Html.TextBoxFor(model => model.References[i].Id, new { @class = "hidden" })
                     <div class="browse form-group">
                         <div class="btn btn-browse">
                             <span>Browse...</span>

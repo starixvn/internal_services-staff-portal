@@ -7,7 +7,8 @@
     <span>Allowed file type: <strong>jpeg, jpg, png</strong></span> |
     <span>Maximum file size: <strong>2MB/file</strong></span> |
     <span>Maximum number of upload files: <strong>31 files</strong></span> |
-    <span>Minimum image size: <strong>600x400px</strong></span></div>
+    <span>Minimum image size: <strong>600x400px</strong></span>
+</div>
 <div>
     @if (TempData["Success"] != null)
     {
@@ -29,6 +30,7 @@
                         </div>
                     </div>
 
+                    @Html.TextBoxFor(model => model.References[i].Id, new { @class = "hidden" })
                     <div class="url form-group">
                         @Html.LabelFor(model => model.References[i].ImageLink)
                         <span class="text-red">*</span>

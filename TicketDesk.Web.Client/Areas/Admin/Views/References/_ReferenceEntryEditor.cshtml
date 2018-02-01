@@ -9,10 +9,10 @@
             @Html.LabelFor(model => model.DateAppear)
             <span class="text-red">*</span>
         <div class="datetime-field">
-            @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
-            <span class="icon-calendar"></span>
-            @Html.ValidationMessageFor(model => model.DateAppear)
-        </div>        
+                @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
+                <span class="icon-calendar"></span>
+                @Html.ValidationMessageFor(model => model.DateAppear)
+            </div>
         </div>
 
     }

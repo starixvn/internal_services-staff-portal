@@ -60,7 +60,7 @@
                 }
                 else
                 {
-                    InsertListReference(ReferenceType.TvSchedule, viewModel);
+                    HandleListReferenceUploaded(ReferenceType.TvSchedule, viewModel);
                     TempData["Success"] = Messages.UpdateReferencesSuccessful;
                 }
             }
@@ -87,7 +87,7 @@
                 }
                 else
                 {
-                    InsertListReference(ReferenceType.FeaturedEvent, viewModel);
+                    HandleListReferenceUploaded(ReferenceType.FeaturedEvent, viewModel);
                     TempData["Success"] = Messages.UpdateReferencesSuccessful;
                 }
             }
@@ -114,7 +114,7 @@
                 }
                 else
                 {
-                    InsertListReference(ReferenceType.BetOfTheDay, viewModel);
+                    HandleListReferenceUploaded(ReferenceType.BetOfTheDay, viewModel);
                     TempData["Success"] = Messages.UpdateReferencesSuccessful;
                 }
             }
@@ -141,7 +141,7 @@
                 }
                 else
                 {
-                    InsertListReference(ReferenceType.TradingLimits, viewModel);
+                    HandleListReferenceUploaded(ReferenceType.TradingLimits, viewModel);
                     TempData["Success"] = Messages.UpdateReferencesSuccessful;
                 }
             }
@@ -162,7 +162,7 @@
         {
             if (ModelState.IsValid)
             {
-                InsertListReference(ReferenceType.NewsLetter, viewModel);
+                HandleListReferenceUploaded(ReferenceType.NewsLetter, viewModel);
                 TempData["Success"] = Messages.UpdateReferencesSuccessful;
             }
 
@@ -179,19 +179,27 @@
             return PartialView("_ReferenceEntryEditor", reference);
         }
 
-        private void InsertListReference(ReferenceType referenceType, ListReferencesViewModel listReferences)
+        private void HandleListReferenceUploaded(ReferenceType referenceType, ListReferencesViewModel listReferences)
         {
             var references = listReferences.References;
-            RemoveOldReference(referenceType);
+            var originReferences = GetListReferences(referenceType);
+            var oldReferences = references.Where(r => r.Id != null).ToList();
+
             if (references != null && references.Count > 0)
             {
+                RemoveOldReferences(originReferences.References, oldReferences);
                 foreach (ReferenceViewModel reference in references)
                 {
-                    SaveReference(reference, referenceType);
+                    if (reference.Id == null)
+                    {
+                        SaveReference(reference, referenceType);
+                    }
+                    else
+                    {
+                        UpdateReference(reference);
+                    }
                 }
             }
-
-            Context.SaveChanges();
         }
 
         private ListReferencesViewModel GetListReferences(ReferenceType referenceType)
@@ -208,6 +216,7 @@
             {
                 var referenceViewModel = new ReferenceViewModel
                 {
+                    Id = reference.Id,
                     DateAppear = reference.DateAppear,
                     ImageLink = reference.ImageLink,
                     ReferenceType = reference.ReferenceType
@@ -216,6 +225,21 @@
             }
 
             return new ListReferencesViewModel { References = listViewModel };
+        }
+
+        private void RemoveOldReferences(IList<ReferenceViewModel> oldReferences, List<ReferenceViewModel> newReferences)
+        {
+            var excludedIDs = new HashSet<int?>(newReferences.Select(p => p.Id));
+            var listDeletedReferences = oldReferences.Where(p => !excludedIDs.Contains(p.Id)).ToList();
+            foreach (var reference in listDeletedReferences)
+            {
+                var referenceToDelete = Context.References.Where(r => r.Id == reference.Id).FirstOrDefault();
+                if (referenceToDelete != null)
+                {
+                    Context.References.Remove(referenceToDelete);
+                    Context.SaveChanges();
+                }
+            }
         }
 
         private void SaveReference(ReferenceViewModel reference, ReferenceType referenceType)
@@ -230,24 +254,31 @@
             };
 
             Context.References.Add(data);
+            Context.SaveChanges();
         }
 
-        private void RemoveOldReference(ReferenceType referenceType)
+        private void UpdateReference(ReferenceViewModel reference)
         {
-            IList<Reference> oldReferences = Context.References.Where(x => x.ReferenceType == referenceType).ToList();
-            if (referenceType != ReferenceType.NewsLetter)
+            var oldReference = Context.References.Where(x => x.Id == reference.Id).FirstOrDefault();
+            if (IsChangedReference(oldReference, reference))
             {
-                oldReferences = oldReferences.Where(r => DateTime.Compare(r.DateAppear.Date, DateTime.Now.Date) >= 0).ToList();
+                oldReference.ImageLink = reference.ImageLink;
+                oldReference.DateAppear = oldReference.ReferenceType != ReferenceType.NewsLetter ? reference.DateAppear : DateTime.Now;
+                oldReference.LastUpdateDate = DateTime.Now;
+                oldReference.LastUpdateBy = CurrentSession.Username;
             }
+            Context.SaveChanges();
+        }
 
-            if (oldReferences != null)
+        private static bool IsChangedReference(Reference oldReference, ReferenceViewModel newReference)
+        {
+            var isHaveChanged = false;
+            var compareDateAppear = oldReference.ReferenceType == ReferenceType.NewsLetter || DateTime.Compare(oldReference.DateAppear.Date, newReference.DateAppear.Date) != 0;
+            if (!compareDateAppear || !string.Equals(oldReference.ImageLink, newReference.ImageLink))
             {
-                foreach (var reference in oldReferences)
-                {
-                    Context.References.Remove(reference);
-                }
-                Context.SaveChanges();
+                isHaveChanged = true;
             }
+            return isHaveChanged;
         }
 
         [HttpPost]
