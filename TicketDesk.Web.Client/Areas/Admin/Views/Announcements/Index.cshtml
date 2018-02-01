@@ -127,23 +127,28 @@
             </tr>
 
             @if (Model.Announcements != null)
+            {
+                var count = Model.Announcements.Count;
+                for (var index = 0; index < count; index++)
                 {
-                    var count = Model.Announcements.Count;
-                    for (var index = 0; index < count; index++)
-                    {
-                        var item = Model.Announcements[index];
+                    var item = Model.Announcements[index];
 
                     <tr>
                         <td class="text-center">@(index + 1)</td>
                         <td class="text-center">@item.Id</td>
-                        <td>@item.LastModified</td>
+                        <td>@item.LastModified.ToString("g")</td>
                         <td>@item.ModifiedBy</td>
-                        <td>@item.PublishedDateTime</td>
+                        <td>
+                            @if (item.PublishedDateTime != null)
+                            {
+                                @item.PublishedDateTime.Value.ToString("g")
+                            }
+                        </td>
                         <td>@item.Message</td>
                         <td class="text-center">@item.Status</td>
                         <td class="text-center">
                             @if (item.State == AnnouncementState.Published)
-                        {
+                            {
                                 <span class="icon-check"></span>
                             }
                             else

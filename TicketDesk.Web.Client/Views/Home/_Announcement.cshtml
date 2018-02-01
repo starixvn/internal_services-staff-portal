@@ -29,7 +29,7 @@
                 }
 
                 <tr class="@announcementClass">
-                    <td class="width-150"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToShortTimeString()</td>
+                    <td class="width-150"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToString("g")</td>
                     <td class="show-text">@announcement.Message</td>
                 </tr>
             }
