@@ -203,9 +203,21 @@ body {
 /******************************************* Table ******************************************/
 .msg-important {
   color: #bf141a; }
+  .msg-important .sign:after {
+    background: #bf141a; }
+
+.home-main {
+  flex-basis: 100%;
+  align-self: flex-start;
+  background: #fff;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
+  .home-main .table {
+    margin-bottom: 15px; }
 
 .feature {
   border-radius: 0; }
+  .feature + .feature {
+    margin-top: 5px; }
   .feature .panel-heading {
     border-radius: 0;
     background: #2e4592;
@@ -213,7 +225,7 @@ body {
     text-transform: uppercase;
     font-weight: 700; }
   .feature .panel-body {
-    padding: 10px;
+    padding: 12px;
     color: #333;
     width: 100%; }
 
@@ -250,7 +262,7 @@ body {
   content: "\2013";
   display: inline-block;
   color: #fff;
-  background: #2e4592;
+  background: #333;
   text-align: center;
   vertical-align: middle;
   width: 18px;
@@ -275,9 +287,6 @@ body {
   margin-right: 8px; }
   .table.table-bordered.tbl-announcement .sign.expanded:after {
     content: "\2013"; }
-  .table.table-bordered.tbl-announcement .sign.disabled {
-    opacity: .5;
-    cursor: not-allowed; }
 
 .table.table-bordered.tbl-announcement .sign:after {
   content: "\002b"; }
@@ -1051,9 +1060,9 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
       .extend-menu li {
         padding: 30px 0; } }
 
-.feature {
-  flex: 1 100%; }
-
+/*.feature {
+    flex: 1 100%;
+}*/
 .width-80 {
   width: 80px; }
 

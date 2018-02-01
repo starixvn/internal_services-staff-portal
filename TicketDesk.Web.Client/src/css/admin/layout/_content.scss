@@ -38,16 +38,19 @@
         align-items: flex-end;
     }
 
-    .date {
-        position: relative;
+    .date {        
         flex-basis: 160px;
         max-width: 160px;        
         padding-right: 1.5rem;
 
+        .datetime-field {
+            position: relative;
+        }
+
         .icon-calendar {
             position: absolute;
-            top: 29px;
-            right: 10px;
+            top: 8px;
+            right: 6px;
             color: $secondary-color;
             cursor: pointer;
         }

@@ -338,14 +338,15 @@ main {
     flex: 0 0 auto;
     align-items: flex-end; }
   .reference-entry .date {
-    position: relative;
     flex-basis: 160px;
     max-width: 160px;
     padding-right: 1.5rem; }
+    .reference-entry .date .datetime-field {
+      position: relative; }
     .reference-entry .date .icon-calendar {
       position: absolute;
-      top: 29px;
-      right: 10px;
+      top: 8px;
+      right: 6px;
       color: #2e4592;
       cursor: pointer; }
   .reference-entry .url {
