@@ -56,18 +56,18 @@
     &.open {
         .dropdown-toggle {
             background-color: transparent;
-            color: $primary-color;
+            color: #2e4592;
 
             &:hover, &:focus {
                 background-color: transparent;
-                color: $primary-color;
+                color: #2e4592;
             }
         }
     }
 
     .dropdown-toggle {
         cursor: pointer;
-        color: $secondary-color;
+        color: #2e4592;
 
         &:hover {
             text-decoration: none;
@@ -89,7 +89,7 @@
     }
 
     .avatar {
-        color: #000;
+        color: #bf141a;
         display: inline-block;
         width: 25px;
         height: 25px;
@@ -115,6 +115,7 @@
 
             .profile {
                 background: #e6e6ea;
+                color: #bf141a;
                 border-radius: 3px;
                 width: 60px;
                 height: 60px;
@@ -146,6 +147,7 @@
 
                 .designation {
                     color: #666666;
+                    font-size: 13px;
                 }
             }
         }

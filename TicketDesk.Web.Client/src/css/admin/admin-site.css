@@ -196,10 +196,10 @@ main {
 
 .user-info.open .dropdown-toggle {
   background-color: transparent;
-  color: #bf141a; }
+  color: #2e4592; }
   .user-info.open .dropdown-toggle:hover, .user-info.open .dropdown-toggle:focus {
     background-color: transparent;
-    color: #bf141a; }
+    color: #2e4592; }
 
 .user-info .dropdown-toggle {
   cursor: pointer;
@@ -218,7 +218,7 @@ main {
   cursor: pointer; }
 
 .user-info .avatar {
-  color: #000;
+  color: #bf141a;
   display: inline-block;
   width: 25px;
   height: 25px;
@@ -241,6 +241,7 @@ main {
     display: flex; }
     .user-info .dropdown-menu .account .profile {
       background: #e6e6ea;
+      color: #bf141a;
       border-radius: 3px;
       width: 60px;
       height: 60px;
@@ -262,7 +263,8 @@ main {
       .user-info .dropdown-menu .account .details .user-name {
         color: #2e4592; }
       .user-info .dropdown-menu .account .details .designation {
-        color: #666666; }
+        color: #666666;
+        font-size: 13px; }
   .user-info .dropdown-menu .logout {
     border-top: 1px solid #d6d6d6; }
     .user-info .dropdown-menu .logout > a {
@@ -339,7 +341,7 @@ main {
     position: relative;
     flex-basis: 160px;
     max-width: 160px;
-    padding-right: .5rem; }
+    padding-right: 1.5rem; }
     .reference-entry .date .icon-calendar {
       position: absolute;
       top: 29px;
@@ -629,10 +631,14 @@ main {
     position: absolute;
     font-size: 8px; }
   .announcement-list .sort:before {
-    top: 8px; }
+    top: 7px; }
   .announcement-list .sort:after {
-    top: 4px;
+    top: 3px;
     transform: rotate(180deg); }
+
+@-moz-document url-prefix() {
+  .announcement-list .sort:after {
+    top: 4px; } }
 
 .announcement-list .id, .announcement-list .number {
   width: 70px; }
@@ -948,7 +954,7 @@ main {
 
 .confirm-modal {
   margin-top: 60px;
-  width: 500px; }
+  width: 430px; }
   .confirm-modal .modal-body {
     padding: 40px 20px 0;
     text-align: center; }

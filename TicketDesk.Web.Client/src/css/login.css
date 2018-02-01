@@ -13,10 +13,11 @@
     right: 0; }
 
 .content {
-  padding-top: 170px; }
-  @media all and (max-width: 1280px) {
-    .content {
-      padding-top: 120px; } }
+  padding: 0;
+  /*@media all and (max-width: 1280px) {
+        padding-top: 120px;
+    }*/
+  align-items: center; }
 
 .login-form {
   width: 325px;

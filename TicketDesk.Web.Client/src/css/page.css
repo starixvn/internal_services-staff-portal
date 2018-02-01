@@ -1139,15 +1139,21 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .announcement-detail {
   flex: 1 100%; }
 
+.content-announcement .form-group:last-child {
+  margin-left: -15px; }
+
 .filter {
   margin: 8px 0 18px; }
   .filter .form-group {
-    margin-right: 28px; }
+    margin-right: 20px; }
+    .filter .form-group .form-control {
+      font-family: inherit;
+      box-shadow: none; }
     .filter .form-group label {
       font-weight: 600;
       margin-right: 8px; }
   .filter .input-group.date .form-control {
-    width: 150px; }
+    width: 115px; }
   .filter .input-group.date .input-group-addon {
     background: #fff;
     border: none; }

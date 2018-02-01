@@ -1520,11 +1520,22 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     flex: 1 100%;
 }
 
+.content-announcement {
+    .form-group:last-child {
+        margin-left: -15px;
+    }
+}
+
 .filter {
     margin: 8px 0 18px;
 
     .form-group {
-        margin-right: 28px;
+        margin-right: 20px;
+
+        .form-control {
+            font-family: inherit;
+            box-shadow: none;
+        }
 
         label {
             font-weight: 600;
@@ -1534,7 +1545,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 
     .input-group.date {
         .form-control {
-            width: 150px;
+            width: 115px;
         }
 
         .input-group-addon {
