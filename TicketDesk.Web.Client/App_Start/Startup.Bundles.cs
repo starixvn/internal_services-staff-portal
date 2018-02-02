@@ -37,6 +37,10 @@
                     .Include("~/Scripts/filemanager/styles/filemanager.css", new CssRewriteUrlTransform())
                     .Include("~/Scripts/filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css", new CssRewriteUrlTransform()));
 
+            bundles.Add(new StyleBundle("~/content/reference-admin").Include(
+                   "~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css",
+                   "~/src/libs/toastr/toastr.min.css"));
+
             ////
             ////Script bundle
             ////
@@ -47,6 +51,7 @@
             bundles.Add(new ScriptBundle("~/bundles/validate")
                 .Include(
                     "~/src/libs/jquery-validate/1.17.0/jquery.validate.min.js",
+                    "~/Scripts/jquery.unobtrusive-ajax.min.js",
                     "~/src/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/file-manager")
@@ -148,6 +153,12 @@
                     "~/Scripts/ticketdesk/locale_pt-BR.js"));
             bundles.Add(new ScriptBundle("~/bundles/summernote_locale_pt-BR").Include(
                 "~/Scripts/summernote/summernote-pt-BR.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/reference-admin").Include(
+                   "~/src/libs/datetimepicker/moment.js",
+                   "~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js",
+                   "~/src/libs/toastr/toastr.min.js",
+                   "~/src/js/admin/reference/reference.js"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

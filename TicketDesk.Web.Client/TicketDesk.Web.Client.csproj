@@ -410,6 +410,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Attribute\ImageLinkAttribute.cs" />
     <Compile Include="Infrastructure\Attribute\FileSizeAttribute.cs" />
     <Compile Include="Infrastructure\Attribute\FileTypeAttribute.cs" />
     <Compile Include="Infrastructure\Attribute\NumberOfFileAttribute.cs" />
@@ -589,7 +590,7 @@
     <Content Include="Areas\Admin\Views\Shared\_AdminNavbar.cshtml" />
     <Content Include="Areas\Admin\Views\References\TVSchedules.cshtml" />
     <Content Include="Areas\Admin\Views\References\_ReferenceEntryEditor.cshtml" />
-    <Content Include="Areas\Admin\Views\References\NewsLetter.cshtml" />
+    <Content Include="Areas\Admin\Views\References\Newsletters.cshtml" />
     <Content Include="Areas\Admin\Views\References\FeatureEvents.cshtml" />
     <Content Include="Areas\Admin\Views\References\BetOfTheDay.cshtml" />
     <Content Include="Areas\Admin\Views\References\TradingLimits.cshtml" />
@@ -1954,6 +1955,10 @@
     <Content Include="src\libs\rippler\js\jquery.rippler.js" />
     <Content Include="src\libs\rippler\js\jquery.rippler.min.js" />
     <Content Include="src\libs\rippler\svg\circle.svg" />
+    <Content Include="src\libs\toastr\toastr.css" />
+    <Content Include="src\libs\toastr\toastr.js" />
+    <Content Include="src\libs\toastr\toastr.min.css" />
+    <Content Include="src\libs\toastr\toastr.min.js" />
     <Content Include="src\libs\Touch\touche.js" />
     <Content Include="Views\SearchManager\Index.cshtml" />
     <Content Include="Views\DataManagement\Demo.cshtml" />
@@ -2143,6 +2148,8 @@
     <Content Include="src\libs\slick\slick-theme.scss" />
     <Content Include="src\libs\slick\slick.less" />
     <Content Include="src\libs\slick\slick.scss" />
+    <Content Include="src\libs\toastr\toastr.less" />
+    <Content Include="src\libs\toastr\toastr.scss" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

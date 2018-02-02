@@ -3,7 +3,7 @@
 @model ReferenceViewModel
 
 <li class="reference-entry">
-    @if (Model.ReferenceType != ReferenceType.NewsLetter)
+    @if (Model.ReferenceType != ReferenceType.Newsletters)
     {
         <div class="date form-group">
             @Html.LabelFor(model => model.DateAppear)
@@ -21,7 +21,7 @@
         <span class="text-red">*</span>
         @Html.TextBoxFor(model => model.ImageLink, new { maxLength = 500, @class = "form-control image-url" })
         @Html.ValidationMessageFor(model => model.ImageLink)
-        <span class="field-validation-error upload-image-validation"></span>
+        <span class="text-red upload-image-validation"></span>
     </div>
 
     <div class="browse form-group">

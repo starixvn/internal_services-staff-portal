@@ -2,21 +2,34 @@
     initReference: function () {
         reference.initDateTimePicker();
         reference.setSubmitButtonState();
-        
-        //$("form").validate({
-        //    errorClass: "input-validation-error",
-        //    errorElement: "span",
-        //    errorPlacement: function (error, element) {
-        //        error.addClass("text-red")
-        //        error.insertAfter(element);
-        //    }
-        //});
+        reference.initToastr();
+
+        $("form").validate({
+            onKeyup: false
+        });
 
         if ($("#successMessage").length) {
             setTimeout(function () {
                 $("#successMessage").hide();
             }, 5000);
         }
+    },
+
+    initToastr: function () {
+        toastr.options = {
+            "closeButton": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": true,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+        return toastr;
     },
 
     initDateTimePicker: function () {
@@ -73,28 +86,12 @@
         return true;
     },
 
-    setRulesToLastElement: function () {
-        $(".image-url").each(function (i, e) {
-            $(this).rules("add", {
-                remote: {
-                    type: "get",
-                    url: "/Admin/References/IsValidImageUrl"
-                },
-                messages: {
-                    remote: "The request content cannot be loaded. Please try again."
-                },
-            })
-        });
-        
-    },
-
-    addReferenceEntry: function (isNewsLetter, limitEntry) {
-        var url = "/Admin/References/GetReferenceEntity?isNewsLetter=" + isNewsLetter
+    addReferenceEntry: function (isNewsletters, limitEntry) {
+        var url = "/Admin/References/GetReferenceEntity?isNewsletters=" + isNewsletters
         $.get(url, function (html) {
             if (reference.checkLimitedEntry(limitEntry)) {
                 $("#ReferencesZone").append(html);
                 reference.updateReferenceState();
-                reference.setRulesToLastElement();
             } else {
                 var message = "You only can upload " + limitEntry + " files of attachment";
                 $("#limitEntry").text(message);
@@ -102,7 +99,7 @@
         });
     },
 
-   isEmptyReference: function () {
+    isEmptyReference: function () {
         if (!$(".reference-entry").length) {
             return true;
         }
@@ -126,9 +123,9 @@ reference.initReference();
 
 $("#addReferenceEntry").click(function () {
     var type = $(this).attr("data-type");
-    var isNewLetter = type == "newsLetter";
-    var limitEntry = isNewLetter ? 50 : 31
-    reference.addReferenceEntry(isNewLetter, limitEntry);
+    var isNewsletters = type == "newsLetters";
+    var limitEntry = isNewsletters ? 50 : 31
+    reference.addReferenceEntry(isNewsletters, limitEntry);
 });
 
 $("form").on("click", ".remove-entry", function () {
@@ -189,3 +186,33 @@ $(window).on('beforeunload', function (e) {
         return true;
     }
 });
+
+var ajaxSubmitReference = {
+    renderErrorsMessage: function (errors) {
+        errors.forEach(function (error) {
+            $("input[name='" + error.key + "']").addClass("input-validation-error");
+            $('[data-valmsg-for="' + error.key + '"]:last').text(error.errorMessage);
+        });
+    },
+
+    onSuccess: function (response) {
+        if (response.isSuccessful) {
+            toastr.success(response.message);
+            $(".image-url").each(function (i, e) {
+                $(this).removeClass("input-validation-error");
+            })
+        } else {
+            if (response.errors) {
+                ajaxSubmitReference.renderErrorsMessage(response.errors);
+            }
+
+            if (response.message) {
+                toastr.error(response.message);
+            }
+        }
+    },
+
+    onFailure: function (response) {
+        toastr.error("Error");
+    }
+};

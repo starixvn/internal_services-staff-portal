@@ -6,6 +6,6 @@
         FeaturedEvent,
         BetOfTheDay,
         TradingLimits,
-        NewsLetter
+        Newsletters
     }
 }

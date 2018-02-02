@@ -1,7 +1,6 @@
 ﻿@using TicketDesk.Web.Client.Areas.Admin.Models.References
 @model ListReferencesViewModel
 
-@Html.AntiForgeryToken()
 
 <div class="upload-info">
     <span>Allowed file type: <strong>jpeg, jpg, png</strong></span> |
@@ -14,47 +13,48 @@
     {
         <p class="alert alert-success" id="successMessage">@TempData["Success"]</p>
     }
-    <ul class="references-zone" id="ReferencesZone">
-        @if (Model.References != null && Model.References.Count() > 0)
-        {
-            for (var i = 0; i < Model.References.Count(); i++)
+    @Html.AntiForgeryToken()
+        <ul class="references-zone" id="ReferencesZone">
+            @if (Model.References != null && Model.References.Count() > 0)
             {
-                <li class="reference-entry">
-                    <div class="date form-group">
-                        @Html.LabelFor(model => model.References[i].DateAppear)
-                        <span class="text-red">*</span>
-                        <div class="datetime-field">
-                            @Html.TextBoxFor(model => model.References[i].DateAppear, "{0:MM-dd-yyyy}", new { @class = "datetimepicker form-control" })
-                            <span class="icon-calendar"></span>
-                            @Html.ValidationMessageFor(model => model.References[i].DateAppear)
+                for (var i = 0; i < Model.References.Count(); i++)
+                {
+                    <li class="reference-entry">
+                        <div class="date form-group">
+                            @Html.LabelFor(model => model.References[i].DateAppear)
+                            <span class="text-red">*</span>
+                            <div class="datetime-field">
+                                @Html.TextBoxFor(model => model.References[i].DateAppear, "{0:MM-dd-yyyy}", new { @class = "datetimepicker form-control" })
+                                <span class="icon-calendar"></span>
+                                @Html.ValidationMessageFor(model => model.References[i].DateAppear, string.Empty, new { @class = "text-red"})
+                            </div>
                         </div>
-                    </div>
 
-                    @Html.TextBoxFor(model => model.References[i].Id, new { @class = "hidden" })
-                    <div class="url form-group">
-                        @Html.LabelFor(model => model.References[i].ImageLink)
-                        <span class="text-red">*</span>
-                        @Html.TextBoxFor(model => model.References[i].ImageLink, new { maxLength = 500, @class = "form-control image-url" })
-                        @Html.ValidationMessageFor(model => model.References[i].ImageLink)
-                        <span class="field-validation-error upload-image-validation"></span>
-                    </div>
-
-                    <div class="browse form-group">
-                        <div class="btn btn-browse">
-                            <span>Browse...</span>
-                            <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload">
+                        @Html.TextBoxFor(model => model.References[i].Id, new { @class = "hidden" })
+                        <div class="url form-group">
+                            @Html.LabelFor(model => model.References[i].ImageLink)
+                            <span class="text-red">*</span>
+                            @Html.TextBoxFor(model => model.References[i].ImageLink, new { maxLength = 500, @class = "form-control image-url" })
+                            @Html.ValidationMessageFor(model => model.References[i].ImageLink, string.Empty, new { @class = "text-red"})
+                            <span class="text-red upload-image-validation"></span>
                         </div>
-                        <input type="button" class="btn btn-delete remove-entry" value="Delete">
-                    </div>
-                </li>
+
+                        <div class="browse form-group">
+                            <div class="btn btn-browse">
+                                <span>Browse...</span>
+                                <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload">
+                            </div>
+                            <input type="button" class="btn btn-delete remove-entry" value="Delete">
+                        </div>
+                    </li>
+                }
             }
-        }
-    </ul>
+        </ul>
 
-    <p class="text-red" id="limitEntry"></p>
+        <p class="text-red" id="limitEntry"></p>
 
-    <div class="button-group">
-        <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" data-type="normal" />
-        <input type="submit" id="submit" value="Submit" class="btn btn-submit" />
-    </div>
+        <div class="button-group">
+            <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" data-type="normal" />
+            <input type="submit" id="submit" value="Submit" class="btn btn-submit" />
+        </div>
 </div>

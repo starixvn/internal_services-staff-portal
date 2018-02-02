@@ -48,7 +48,7 @@
         [Route("newsletter")]
         public ActionResult Newsletter()
         {
-            var references = Context.References.Where(r => r.ReferenceType == ReferenceType.NewsLetter).ToList();
+            var references = Context.References.Where(r => r.ReferenceType == ReferenceType.Newsletters).ToList();
             return View(references);
         }
 

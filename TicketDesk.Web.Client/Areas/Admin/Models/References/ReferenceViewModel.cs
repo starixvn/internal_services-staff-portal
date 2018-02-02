@@ -2,8 +2,8 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
     using Core.Enumerations;
+    using Core.Model;
     using Core.Resources;
 
     public class ReferenceViewModel
@@ -18,7 +18,8 @@
 
         [Required(ErrorMessageResourceName = "ImageUrlRequired", ErrorMessageResourceType = typeof(Messages))]
         [StringLength(500, ErrorMessageResourceName = "ValidateStringLengthMessage", ErrorMessageResourceType = typeof(Messages))]
-        [Remote("IsValidImageUrl", "References", ErrorMessageResourceName = "InvalidImageURL", ErrorMessageResourceType = typeof(Messages))]
+        //[Remote("IsValidImageUrl", "References", ErrorMessageResourceName = "InvalidImageURL", ErrorMessageResourceType = typeof(Messages))]
+        [ImageLinkAttribute]
         [Display(Name = "Image URL")]
         public string ImageLink { get; set; }
 

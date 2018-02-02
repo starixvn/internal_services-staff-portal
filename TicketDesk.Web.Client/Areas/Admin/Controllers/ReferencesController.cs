@@ -52,20 +52,7 @@
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TVSchedules(ListReferencesViewModel viewModel)
         {
-            if (ModelState.IsValid)
-            {
-                if (CheckIfDateDuplicate(viewModel.References))
-                {
-                    ModelState.AddModelError("", Messages.DuplicatedDay);
-                }
-                else
-                {
-                    HandleListReferenceUploaded(ReferenceType.TvSchedule, viewModel);
-                    TempData["Success"] = Messages.UpdateReferencesSuccessful;
-                }
-            }
-
-            return View(viewModel);
+            return HandlePostReferences(ReferenceType.TvSchedule, viewModel);
         }
 
         public ActionResult FeatureEvents()
@@ -79,20 +66,7 @@
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult FeatureEvents(ListReferencesViewModel viewModel)
         {
-            if (ModelState.IsValid)
-            {
-                if (CheckIfDateDuplicate(viewModel.References))
-                {
-                    ModelState.AddModelError("", Messages.DuplicatedDay);
-                }
-                else
-                {
-                    HandleListReferenceUploaded(ReferenceType.FeaturedEvent, viewModel);
-                    TempData["Success"] = Messages.UpdateReferencesSuccessful;
-                }
-            }
-
-            return View(viewModel);
+            return HandlePostReferences(ReferenceType.FeaturedEvent, viewModel);
         }
 
         public ActionResult BetOfTheDay()
@@ -104,22 +78,9 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult BetOfTheDay(ListReferencesViewModel viewModel)
+        public JsonResult BetOfTheDay(ListReferencesViewModel viewModel)
         {
-            if (ModelState.IsValid)
-            {
-                if (CheckIfDateDuplicate(viewModel.References))
-                {
-                    ModelState.AddModelError("", Messages.DuplicatedDay);
-                }
-                else
-                {
-                    HandleListReferenceUploaded(ReferenceType.BetOfTheDay, viewModel);
-                    TempData["Success"] = Messages.UpdateReferencesSuccessful;
-                }
-            }
-
-            return View(viewModel);
+            return HandlePostReferences(ReferenceType.BetOfTheDay, viewModel);
         }
 
         public ActionResult TradingLimits()
@@ -133,45 +94,56 @@
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TradingLimits(ListReferencesViewModel viewModel)
         {
-            if (ModelState.IsValid)
-            {
-                if (CheckIfDateDuplicate(viewModel.References))
-                {
-                    ModelState.AddModelError("", Messages.DuplicatedDay);
-                }
-                else
-                {
-                    HandleListReferenceUploaded(ReferenceType.TradingLimits, viewModel);
-                    TempData["Success"] = Messages.UpdateReferencesSuccessful;
-                }
-            }
-
-            return View(viewModel);
+            return HandlePostReferences(ReferenceType.TradingLimits, viewModel);
         }
 
-        public ActionResult NewsLetter()
+        public ActionResult Newsletters()
         {
-            var viewModel = GetListReferences(ReferenceType.NewsLetter);
+            var viewModel = GetListReferences(ReferenceType.Newsletters);
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult NewsLetter(ListReferencesViewModel viewModel)
+        public ActionResult Newsletters(ListReferencesViewModel viewModel)
         {
-            if (ModelState.IsValid)
-            {
-                HandleListReferenceUploaded(ReferenceType.NewsLetter, viewModel);
-                TempData["Success"] = Messages.UpdateReferencesSuccessful;
-            }
-
-            return View(viewModel);
+            return HandlePostReferences(ReferenceType.Newsletters, viewModel);
         }
 
-        public ActionResult GetReferenceEntity(bool isNewsLetter)
+        private JsonResult HandlePostReferences(ReferenceType referenceType, ListReferencesViewModel viewModel)
         {
-            var referenceType = isNewsLetter ? ReferenceType.NewsLetter : ReferenceType.TvSchedule;
+            var isSuccessful = true;
+            var message = string.Empty;
+
+            if (ModelState.IsValid)
+            {
+                if (referenceType != ReferenceType.Newsletters && CheckIfDateDuplicate(viewModel.References))
+                {
+                    isSuccessful = false;
+                    message = Messages.DuplicatedDay;
+                }
+                else
+                {
+                    HandleListReferenceUploaded(referenceType, viewModel);
+                    isSuccessful = true;
+                    message = Messages.UpdateReferencesSuccessful;
+                }
+            }
+            else
+            {
+                isSuccessful = false;
+            }
+            var errors = from item in ModelState
+                         where item.Value.Errors.Any()
+                         select new { item.Key, item.Value.Errors.FirstOrDefault().ErrorMessage };
+
+            return Json(new { isSuccessful, message, errors });
+        }
+
+        public ActionResult GetReferenceEntity(bool isNewsletters)
+        {
+            var referenceType = isNewsletters ? ReferenceType.Newsletters : ReferenceType.TvSchedule;
             var reference = new ReferenceViewModel
             {
                 ReferenceType = referenceType
@@ -205,7 +177,7 @@
         private ListReferencesViewModel GetListReferences(ReferenceType referenceType)
         {
             var references = Context.References.Where(x => x.ReferenceType == referenceType).ToList();
-            if (referenceType != ReferenceType.NewsLetter)
+            if (referenceType != ReferenceType.Newsletters)
             {
                 references = references.Where(r => DateTime.Compare(r.DateAppear.Date, DateTime.Now.Date) >= 0).ToList();
             }
@@ -246,7 +218,7 @@
         {
             var data = new Reference
             {
-                DateAppear = referenceType != ReferenceType.NewsLetter ? reference.DateAppear : DateTime.Now,
+                DateAppear = referenceType != ReferenceType.Newsletters ? reference.DateAppear : DateTime.Now,
                 ImageLink = reference.ImageLink,
                 ReferenceType = referenceType,
                 LastUpdateBy = CurrentSession.Username,
@@ -263,7 +235,7 @@
             if (IsChangedReference(oldReference, reference))
             {
                 oldReference.ImageLink = reference.ImageLink;
-                oldReference.DateAppear = oldReference.ReferenceType != ReferenceType.NewsLetter ? reference.DateAppear : DateTime.Now;
+                oldReference.DateAppear = oldReference.ReferenceType != ReferenceType.Newsletters ? reference.DateAppear : DateTime.Now;
                 oldReference.LastUpdateDate = DateTime.Now;
                 oldReference.LastUpdateBy = CurrentSession.Username;
             }
@@ -273,7 +245,7 @@
         private static bool IsChangedReference(Reference oldReference, ReferenceViewModel newReference)
         {
             var isHaveChanged = false;
-            var compareDateAppear = oldReference.ReferenceType == ReferenceType.NewsLetter || DateTime.Compare(oldReference.DateAppear.Date, newReference.DateAppear.Date) != 0;
+            var compareDateAppear = oldReference.ReferenceType == ReferenceType.Newsletters || DateTime.Compare(oldReference.DateAppear.Date, newReference.DateAppear.Date) != 0;
             if (!compareDateAppear || !string.Equals(oldReference.ImageLink, newReference.ImageLink))
             {
                 isHaveChanged = true;
