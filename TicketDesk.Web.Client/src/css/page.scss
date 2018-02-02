@@ -320,13 +320,13 @@ body {
     .header .sign {
         background: #2e4592;
     }
+}
 
-    .msg-important {
-        color: #bf141a;
-        
-        .sign { 
-            background: #bf141a;
-        }        
+.msg-important {
+    color: #bf141a;
+
+    .sign {
+        background: #bf141a;
     }
 }
 
@@ -339,11 +339,37 @@ body {
 
 
     .panel-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         border-radius: 0;
         background: $title-form-bg;
         color: $text-second-color;
         text-transform: uppercase;
         font-weight: 700;
+
+        .btn-unread {
+            font-family: inherit;
+            background: rgba(255,255,255,.7);
+            color: #333;
+            box-shadow: none;
+            transition: all .2s ease;
+
+            &:hover, &:focus {
+                outline: none;
+                background: rgba(255,255,255,.6);
+            }
+
+            &.active {
+                background: rgba(255,255,255,.1);
+                border-color: #fff;
+                color: #fff;
+
+                &:hover {
+                    background: rgba(255,255,255,.3);
+                }
+            }
+        }
     }
 
     .panel-body {
@@ -391,7 +417,7 @@ body {
 
     tr.even td {
         background: #f2f2f2;
-    }    
+    }
 
     &.tbl-announcement {
         tr.header {

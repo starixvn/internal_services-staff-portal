@@ -237,21 +237,40 @@ body {
     transform: rotate(0); }
   .home-main .header .sign {
     background: #2e4592; }
-  .home-main .msg-important {
-    color: #bf141a; }
-    .home-main .msg-important .sign {
-      background: #bf141a; }
+
+.msg-important {
+  color: #bf141a; }
+  .msg-important .sign {
+    background: #bf141a; }
 
 .feature {
   border-radius: 0; }
   .feature + .feature {
     margin-top: 5px; }
   .feature .panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-radius: 0;
     background: #2e4592;
     color: #fff;
     text-transform: uppercase;
     font-weight: 700; }
+    .feature .panel-heading .btn-unread {
+      font-family: inherit;
+      background: rgba(255, 255, 255, 0.7);
+      color: #333;
+      box-shadow: none;
+      transition: all .2s ease; }
+      .feature .panel-heading .btn-unread:hover, .feature .panel-heading .btn-unread:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.6); }
+      .feature .panel-heading .btn-unread.active {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #fff;
+        color: #fff; }
+        .feature .panel-heading .btn-unread.active:hover {
+          background: rgba(255, 255, 255, 0.3); }
   .feature .panel-body {
     padding: 12px;
     color: #333;
