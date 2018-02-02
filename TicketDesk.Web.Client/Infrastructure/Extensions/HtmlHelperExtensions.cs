@@ -13,23 +13,24 @@
             return (controllerName == controller && actionName == action) ? "active" : string.Empty;
         }
 
-        public static string IsActiveRoute(this HtmlHelper html, string route)
+        public static string IsActiveRoute(this HtmlHelper html, string napRoute)
         {
             var currentRoute = HttpContext.Current.Request.Url.AbsolutePath;
 
-            if (currentRoute == "/" && route == "/" || (currentRoute.Contains("Home") && route == "/"))
+            var request = HttpContext.Current.Request;
+            var controller = request.RequestContext.RouteData.Values["controller"].ToString();
+
+            if(napRoute == "/" && controller == "Home")
             {
-                // Home
                 return "active";
             }
 
-            if (currentRoute == "/Admin" && route == "/Admin/Announcements" || (currentRoute.Contains("Admin") && route == "/Admin/Announcements"))
+            if (napRoute == "/Admin/Announcements" && controller == "Announcements")
             {
-                // Home
                 return "active";
             }
 
-            if (currentRoute.Contains(route) && route != "/")
+            if (currentRoute.Contains(napRoute) && napRoute != "/")
             {
                 return "active";
             }
