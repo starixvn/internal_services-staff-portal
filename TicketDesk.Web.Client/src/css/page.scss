@@ -339,8 +339,10 @@ body {
 
 
     .panel-heading {
+        padding: 0 12px;
         display: flex;
         justify-content: space-between;
+        line-height: 48px;
         align-items: center;
         border-radius: 0;
         background: $title-form-bg;
@@ -1670,6 +1672,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         height: 100%;
         display: block;
         white-space: pre-line;
+        object-fit: cover;
 
         &:after {
             content: " ";

@@ -248,8 +248,10 @@ body {
   .feature + .feature {
     margin-top: 5px; }
   .feature .panel-heading {
+    padding: 0 12px;
     display: flex;
     justify-content: space-between;
+    line-height: 48px;
     align-items: center;
     border-radius: 0;
     background: #2e4592;
@@ -1237,7 +1239,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     width: 100%;
     height: 100%;
     display: block;
-    white-space: pre-line; }
+    white-space: pre-line;
+    object-fit: cover; }
     .img-detail img:after {
       content: " ";
       display: block;
