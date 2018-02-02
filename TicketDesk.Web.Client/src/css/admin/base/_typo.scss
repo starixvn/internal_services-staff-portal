@@ -2,3 +2,71 @@
     color: #ff0000;
     font-weight: 600;
 }
+
+.toast-bottom-right {
+    max-height: calc(100% - 70px);
+}
+
+#toast-container > {
+  .toast-info, .toast-error, .toast-success, .toast-warning {
+    background-image: none !important;
+  }
+
+  div {
+      padding-left: 15px;
+      border-radius: 2px;
+      opacity: 1;
+
+      &:hover {
+          box-shadow: 0 0 12px rgba(0,0,0,0.5)
+      }
+  }
+}
+
+.toast-close-button {
+    font-weight: normal;
+    text-shadow: none;
+}
+
+.toast-error {
+    background-color: #fc5448;
+    border: 1px solid #d65350;
+}
+
+.toast-info {
+    background-color: #4bb3ef;
+    border: 1px solid #2b9cde;
+}
+
+.toast-success {
+    background-color: #62d372;
+    border: 1px solid #38be4b;
+}
+
+.toast-warning {
+    background-color: #ff9921;
+    border: 1px solid #f18b12;
+}
+
+.toast-assigned {
+    background-color: #1bc69c;
+    border: 1px solid #0db289;
+}
+
+.toast-removed {
+    background-color: #f44336;
+    border: 1px solid #dc271a;
+}
+
+.toast-cancelled {
+    background-color: #fbe78e;
+    border: 1px solid #c2a000;    
+
+    > div {
+        color: #343434;
+    }
+
+    .toast-close-button {
+        color: #343434;
+    }
+}
