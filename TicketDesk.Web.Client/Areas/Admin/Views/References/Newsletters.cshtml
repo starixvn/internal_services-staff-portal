@@ -23,11 +23,11 @@
 </div>
 
 @using (Ajax.BeginForm("Newsletters", "References",
-                                                                        new AjaxOptions
-                                                                        {
-                                                                            OnSuccess = "ajaxSubmitReference.onSuccess",
-                                                                            OnFailure = "ajaxSubmitReference.onFailure"
-                                                                        }))
+                                    new AjaxOptions
+                                    {
+                                        OnSuccess = "ajaxSubmitReference.onSuccess",
+                                        OnFailure = "ajaxSubmitReference.onFailure"
+                                    }))
 {
     @Html.AntiForgeryToken()
 
@@ -45,7 +45,7 @@
                         @Html.LabelFor(model => model.References[i].ImageLink)
                         <span class="text-red">*</span>
                         @Html.TextBoxFor(model => model.References[i].ImageLink, new { @class = "form-control image-url" })
-                        @Html.ValidationMessageFor(model => model.References[i].ImageLink)
+                        @Html.ValidationMessageFor(model => model.References[i].ImageLink, string.Empty, new { @class = "text-red" })
                         <span class="text-red upload-image-validation"></span>
                     </div>
 

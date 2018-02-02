@@ -4,10 +4,6 @@
         reference.setSubmitButtonState();
         reference.initToastr();
 
-        $("form").validate({
-            onKeyup: false
-        });
-
         if ($("#successMessage").length) {
             setTimeout(function () {
                 $("#successMessage").hide();
@@ -117,7 +113,7 @@
     }
 };
 
-var originForm = JSON.stringify($("form").serializeArray());
+var originForm = $("form").serialize();
 var userSubmit = 0;
 reference.initReference();
 
@@ -180,8 +176,8 @@ $("form").submit(function (e) {
     $(".reference-entry").find(".upload-image-validation").text("");
 });
 
-$(window).on('beforeunload', function (e) {
-    var formAfterChange = JSON.stringify($("form").serializeArray());
+$(window).on('beforeunload', function () {
+    var formAfterChange = $("form").serialize();
     if (originForm != formAfterChange && userSubmit == 0) {
         return true;
     }
@@ -196,11 +192,14 @@ var ajaxSubmitReference = {
     },
 
     onSuccess: function (response) {
+        userSubmit = 0;
         if (response.isSuccessful) {
             toastr.success(response.message);
-            $(".image-url").each(function (i, e) {
-                $(this).removeClass("input-validation-error");
-            })
+            $(".reference-entry").each(function (i, e) {
+                $(this).find(".image-url").removeClass("input-validation-error");
+                $(this).find(".field-validation-valid").text("");
+            });
+            originForm = $("form").serialize();
         } else {
             if (response.errors) {
                 ajaxSubmitReference.renderErrorsMessage(response.errors);
