@@ -20,7 +20,10 @@
     [Route("{action=manage}")]
     public class AccountController : Controller
     {
-        public AccountController(TicketDeskUserManager userManager, TicketDeskSignInManager signInManager, TdPushNotificationContext notificationContext)
+        public AccountController(
+            TicketDeskUserManager userManager,
+            TicketDeskSignInManager signInManager,
+            TdPushNotificationContext notificationContext)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -46,10 +49,11 @@
         public ActionResult Manage(AccountMessageId? message)
         {
             ViewBag.StatusMessage =
-               message == AccountMessageId.ChangePasswordSuccess ? Strings.ChangePasswordSuccess
-               : message == AccountMessageId.Error ? Strings.Error
-               : message == AccountMessageId.ProfileSaveSuccess ? Strings.ProfileSaveSuccess
-               : string.Empty;
+                message == AccountMessageId.ChangePasswordSuccess ? Strings.ChangePasswordSuccess
+                : message == AccountMessageId.Error ? Strings.Error
+                : message == AccountMessageId.ProfileSaveSuccess ? Strings.ProfileSaveSuccess
+                : string.Empty;
+
             return View();
         }
 
@@ -68,14 +72,18 @@
                 return View(model);
             }
 
-            var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false").Equals("true", StringComparison.InvariantCultureIgnoreCase);
+            var demoMode =
+                (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false").Equals("true",
+                    StringComparison.InvariantCultureIgnoreCase);
             if (demoMode)
             {
                 ModelState.AddModelError("Password", Strings.UnableToChangeDemoUser);
             }
             else
             {
-                var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword).ConfigureAwait(false);
+                var result = await UserManager
+                    .ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword)
+                    .ConfigureAwait(false);
                 if (result.Succeeded)
                 {
                     var user = await UserManager.FindByIdAsync(User.Identity.GetUserId()).ConfigureAwait(false);
@@ -96,7 +104,12 @@
         [Route("edit-profile")]
         public ActionResult EditProfile()
         {
-            var model = new AccountProfileViewModel { DisplayName = User.Identity.GetUserDisplayName(), Email = User.Identity.GetUserName() };
+            var model = new AccountProfileViewModel
+            {
+                DisplayName = User.Identity.GetUserDisplayName(),
+                Email = User.Identity.GetUserName()
+            };
+
             return View(model);
         }
 
@@ -113,7 +126,7 @@
             var oldEmail = user.Email;
 
             var demoMode = (ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"] ?? "false")
-                    .Equals("true", StringComparison.InvariantCultureIgnoreCase);
+                .Equals("true", StringComparison.InvariantCultureIgnoreCase);
             if (demoMode && oldEmail.EndsWith("@example.com", StringComparison.InvariantCultureIgnoreCase))
             {
                 ModelState.AddModelError("Email", Strings.UnableToChangeDemoUser);
@@ -141,8 +154,14 @@
 
         private async Task ResetMailEmailDestination(TicketDeskUser user, string oldEmail)
         {
-            var noteSettings = await NotificationContext.SubscriberPushNotificationSettingsManager.GetSettingsForSubscriberAsync(user.Id).ConfigureAwait(false);
-            var dest = noteSettings.PushNotificationDestinations.FirstOrDefault(d => d.DestinationType == "email" && d.DestinationAddress == oldEmail);
+            var noteSettings = await NotificationContext
+                .SubscriberPushNotificationSettingsManager
+                .GetSettingsForSubscriberAsync(user.Id)
+                .ConfigureAwait(false);
+
+            var dest = noteSettings.PushNotificationDestinations.FirstOrDefault(d =>
+                d.DestinationType == "email" && d.DestinationAddress == oldEmail);
+
             if (dest == null)
             {
                 dest = new PushNotificationDestination { SubscriberId = user.Id, DestinationType = "email" };
@@ -156,12 +175,15 @@
 
         private async Task SignInAsync(TicketDeskUser user, bool isPersistent)
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
+            AuthenticationManager.SignOut(
+                DefaultAuthenticationTypes.ExternalCookie,
+                DefaultAuthenticationTypes.TwoFactorCookie);
+
             AuthenticationManager.SignIn(
                 new AuthenticationProperties
                 {
                     IsPersistent = isPersistent
-                }, 
+                },
                 await user.GenerateUserIdentityAsync(UserManager).ConfigureAwait(false));
         }
 

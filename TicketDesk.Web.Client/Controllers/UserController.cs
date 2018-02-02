@@ -41,8 +41,8 @@
 
             if (Request.IsAuthenticated)
             {
-                return string.IsNullOrEmpty(returnUrl) 
-                    ? RedirectToLocal(returnUrl) 
+                return string.IsNullOrEmpty(returnUrl)
+                    ? RedirectToLocal(returnUrl)
                     : RedirectToAction("Index", "Home");
             }
 
@@ -74,7 +74,8 @@
                     var siteLevelList = _siteService.GetSiteLevelByUser(user.Id, NapContextHelper.Environment);
                     var group = user.Group == null ? null : _groupService.GetById(user.Group.Id);
 
-                    if (siteLevelList.Any(x => x.Site.Id == NapContextHelper.SiteId && x.IsActive) && (group == null || group.IsActive))
+                    if (siteLevelList.Any(x => x.Site.Id == NapContextHelper.SiteId && x.IsActive) &&
+                        (group == null || group.IsActive))
                     {
                         CheckInUser(user);
                         return RedirectToLocal(returnUrl);
@@ -132,7 +133,7 @@
             };
 
             var authTicket = new FormsAuthenticationTicket(
-                 1,
+                1,
                 user.Username,
                 DateTime.Now,
                 DateTime.Now.AddMinutes(FormsAuthentication.Timeout.TotalMinutes),
@@ -164,10 +165,10 @@
         private void CreateUserMenu(int userId)
         {
             CurrentSession.MenuItemList = (IList<MenuItem>)_menuItemService.GetByUserAndSiteIncludeGroup(
-                    userId,
-                    NapContextHelper.SiteId,
-                    NapContextHelper.Environment,
-                    true);
+                userId,
+                NapContextHelper.SiteId,
+                NapContextHelper.Environment,
+                true);
         }
 
         private void DoCheckin(User user)
