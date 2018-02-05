@@ -56,9 +56,8 @@
 
     updateReferenceIndex: function (index, element) {
         $(element).find(".datetimepicker").attr("name", "References[" + index + "].DateAppear");
-        $(element).find(".datetimepicker").attr("id", "References_" + index + "__DateAppear");
         $(element).find(".image-url").attr("name", "References[" + index + "].ImageLink");
-        $(element).find(".image-url").attr("id", "References_" + index + "__ImageLink");
+        $(element).find(".reference-id").attr("name", "References[" + index + "].Id");
         $(element).find(".date span").attr("data-valmsg-for", "References[" + index + "].DateAppear");
         $(element).find(".url span").attr("data-valmsg-for", "References[" + index + "].ImageLink");
     },
@@ -194,6 +193,7 @@ var ajaxSubmitReference = {
                 $(this).find(".field-validation-valid").text("");
             });
             originForm = $("form").serialize();
+            setTimeout(function () { location.reload(); }, 5000);
         } else {
             if (response.errors) {
                 ajaxSubmitReference.renderErrorsMessage(response.errors);

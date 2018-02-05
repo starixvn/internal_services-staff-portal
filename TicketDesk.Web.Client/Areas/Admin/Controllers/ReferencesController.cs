@@ -159,7 +159,10 @@
 
             if (references != null && references.Count > 0)
             {
-                RemoveOldReferences(originReferences.References, oldReferences);
+                if (oldReferences != null && oldReferences.Count > 0)
+                {
+                    RemoveOldReferences(originReferences.References, oldReferences);
+                }
                 foreach (ReferenceViewModel reference in references)
                 {
                     if (reference.Id == null)

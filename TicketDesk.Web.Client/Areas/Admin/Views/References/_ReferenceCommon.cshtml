@@ -30,7 +30,7 @@
                             </div>
                         </div>
 
-                        @Html.TextBoxFor(model => model.References[i].Id, new { @class = "hidden" })
+                        @Html.TextBoxFor(model => model.References[i].Id, new { @class = "hidden reference-id" })
                         <div class="url form-group">
                             @Html.LabelFor(model => model.References[i].ImageLink)
                             <span class="text-red">*</span>
