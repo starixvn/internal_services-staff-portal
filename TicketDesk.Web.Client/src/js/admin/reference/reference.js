@@ -3,12 +3,6 @@
         reference.initDateTimePicker();
         reference.setSubmitButtonState();
         reference.initToastr();
-
-        if ($("#successMessage").length) {
-            setTimeout(function () {
-                $("#successMessage").hide();
-            }, 5000);
-        }
     },
 
     initToastr: function () {
