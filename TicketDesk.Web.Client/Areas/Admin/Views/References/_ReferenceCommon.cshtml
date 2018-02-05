@@ -26,7 +26,7 @@
                             <div class="datetime-field">
                                 @Html.TextBoxFor(model => model.References[i].DateAppear, "{0:MM-dd-yyyy}", new { @class = "datetimepicker form-control" })
                                 <span class="icon-calendar"></span>
-                                @Html.ValidationMessageFor(model => model.References[i].DateAppear, string.Empty, new { @class = "text-red"})
+                                @Html.ValidationMessageFor(model => model.References[i].DateAppear, string.Empty, new { @class = "error-message" })
                             </div>
                         </div>
 
@@ -35,7 +35,7 @@
                             @Html.LabelFor(model => model.References[i].ImageLink)
                             <span class="text-red">*</span>
                             @Html.TextBoxFor(model => model.References[i].ImageLink, new { maxLength = 500, @class = "form-control image-url" })
-                            @Html.ValidationMessageFor(model => model.References[i].ImageLink, string.Empty, new { @class = "text-red"})
+                            @Html.ValidationMessageFor(model => model.References[i].ImageLink, string.Empty, new { @class = "error-message" })
                             <span class="text-red upload-image-validation"></span>
                         </div>
 

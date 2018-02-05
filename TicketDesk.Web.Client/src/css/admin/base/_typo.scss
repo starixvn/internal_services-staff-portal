@@ -3,6 +3,10 @@
     font-weight: 600;
 }
 
+.error-message {
+    color: #ff0000;
+}
+
 .toast-bottom-right {
     max-height: calc(100% - 70px);
 }
@@ -13,13 +17,19 @@
   }
 
   div {
-      padding-left: 15px;
+      padding-left: 38px;
       border-radius: 2px;
-      opacity: 1;
+      opacity: .9;
+      min-width: 380px;
 
       &:hover {
           box-shadow: 0 0 12px rgba(0,0,0,0.5)
       }
+  }
+
+  .toast-message {
+      padding: 0;
+      display: inline-block;
   }
 }
 
@@ -41,6 +51,22 @@
 .toast-success {
     background-color: #4da965;
     border: 1px solid #4da965;
+
+    &:before {
+        font-family: 'icomoon' !important;
+        content: "\e91f";
+        position: absolute;
+        left: 10px;
+        top: 16px;
+        display: block;
+        width: 16px;
+        height: 16px;
+        line-height: 1.4;
+        border-radius: 50%;
+        background: #fff;
+        color: #4da965;
+        text-align: center;
+    }
 }
 
 .toast-warning {

@@ -56,8 +56,9 @@
 
     updateReferenceIndex: function (index, element) {
         $(element).find(".datetimepicker").attr("name", "References[" + index + "].DateAppear");
+        $(element).find(".datetimepicker").attr("id", "References_" + index + "__DateAppear");
         $(element).find(".image-url").attr("name", "References[" + index + "].ImageLink");
-        $(element).find(".reference-id").attr("name", "References[" + index + "].Id");
+        $(element).find(".image-url").attr("id", "References_" + index + "__ImageLink");
         $(element).find(".date span").attr("data-valmsg-for", "References[" + index + "].DateAppear");
         $(element).find(".url span").attr("data-valmsg-for", "References[" + index + "].ImageLink");
     },

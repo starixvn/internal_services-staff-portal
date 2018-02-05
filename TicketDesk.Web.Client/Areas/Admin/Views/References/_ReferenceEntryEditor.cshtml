@@ -11,7 +11,7 @@
         <div class="datetime-field">
                 @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
                 <span class="icon-calendar"></span>
-                @Html.ValidationMessageFor(model => model.DateAppear)
+                @Html.ValidationMessageFor(model => model.DateAppear, string.Empty, new { @class = "error-message" })
             </div>
         </div>
 
@@ -21,7 +21,7 @@
         <span class="text-red">*</span>
         @Html.TextBoxFor(model => model.ImageLink, new { maxLength = 500, @class = "form-control image-url" })
         @Html.ValidationMessageFor(model => model.ImageLink)
-        <span class="text-red upload-image-validation"></span>
+        <span class="error-message upload-image-validation"></span>
     </div>
 
     <div class="browse form-group">

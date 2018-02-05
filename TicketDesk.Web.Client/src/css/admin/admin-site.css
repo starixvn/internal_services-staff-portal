@@ -33,6 +33,9 @@ main {
   background-color: #fef3c7;
   border: 1px solid #ffe788;
   font-style: italic; }
+  @media screen and (max-width: 1200px) {
+    .upload-info {
+      width: 100%; } }
 
 .alert {
   width: 80%;
@@ -63,6 +66,9 @@ main {
   color: #ff0000;
   font-weight: 600; }
 
+.error-message {
+  color: #ff0000; }
+
 .toast-bottom-right {
   max-height: calc(100% - 70px); }
 
@@ -70,11 +76,16 @@ main {
   background-image: none !important; }
 
 #toast-container > div {
-  padding-left: 15px;
+  padding-left: 38px;
   border-radius: 2px;
-  opacity: 1; }
+  opacity: .9;
+  min-width: 380px; }
   #toast-container > div:hover {
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.5); }
+
+#toast-container > .toast-message {
+  padding: 0;
+  display: inline-block; }
 
 .toast-close-button {
   font-weight: normal;
@@ -91,6 +102,20 @@ main {
 .toast-success {
   background-color: #4da965;
   border: 1px solid #4da965; }
+  .toast-success:before {
+    font-family: 'icomoon' !important;
+    content: "\e91f";
+    position: absolute;
+    left: 10px;
+    top: 16px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    line-height: 1.4;
+    border-radius: 50%;
+    background: #fff;
+    color: #4da965;
+    text-align: center; }
 
 .toast-warning {
   background-color: #ff9921;
@@ -184,7 +209,7 @@ main {
     width: 230px;
     padding-left: 3rem;
     color: #fff;
-    background: #131923; }
+    background: #2c3039; }
   .menu-collapsed .menu-section.hover-open .sub-menu {
     display: block; }
     .menu-collapsed .menu-section.hover-open .sub-menu .menu-item {
@@ -380,6 +405,9 @@ main {
   flex-direction: row;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap; }
+  @media screen and (max-width: 1200px) {
+    .reference-entry {
+      width: 100%; } }
   .reference-entry > div {
     box-sizing: border-box;
     -webkit-box-flex: 0;
@@ -976,7 +1004,7 @@ main {
 
 .checkbox label {
   display: block;
-  padding-left: 25px;
+  padding-left: 20px;
   position: relative;
   color: #535353;
   margin-bottom: 8px;
@@ -1008,6 +1036,9 @@ main {
   .confirm-modal .modal-body {
     padding: 40px 20px 0;
     text-align: center; }
+
+.small-modal {
+  width: 430px; }
 
 .modal-content {
   border-radius: 0;

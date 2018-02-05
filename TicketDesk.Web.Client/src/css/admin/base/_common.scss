@@ -37,6 +37,10 @@ main {
     background-color: #fef3c7;
     border: 1px solid #ffe788;
     font-style: italic;
+
+    @media screen and (max-width: 1200px) {
+        width: 100%;
+    }
 }
 
 .alert {
