@@ -432,6 +432,7 @@
             var viewModel = new NewCustomerSupportTicketViewModel
             {
                 TempId = Guid.NewGuid(),
+                NationalIdCardNo = { CustomField = availableCustomField.First(x => x.Name == "NationalIdCardNo") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };
 

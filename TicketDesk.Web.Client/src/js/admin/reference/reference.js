@@ -164,7 +164,8 @@ $("#ReferencesZone").on("change", ".upload-image", function (e) {
     }
 });
 
-$("form").submit(function (e) {
+$("#submit").click(function (e) {
+    $("form").submit();
     userSubmit = 1;
     $(".reference-entry").find(".upload-image-validation").text("");
 });
@@ -193,7 +194,7 @@ var ajaxSubmitReference = {
                 $(this).find(".field-validation-valid").text("");
             });
             originForm = $("form").serialize();
-            setTimeout(function () { location.reload(); }, 3000);
+            setTimeout(function () { location.reload(true); }, 3000);
         } else {
             if (response.errors) {
                 ajaxSubmitReference.renderErrorsMessage(response.errors);
