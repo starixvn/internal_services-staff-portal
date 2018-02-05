@@ -193,7 +193,6 @@ var ajaxSubmitReference = {
                 $(this).find(".field-validation-valid").text("");
             });
             originForm = $("form").serialize();
-            setTimeout(function () { location.reload(); }, 5000);
         } else {
             if (response.errors) {
                 ajaxSubmitReference.renderErrorsMessage(response.errors);
