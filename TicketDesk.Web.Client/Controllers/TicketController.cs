@@ -440,6 +440,43 @@
             return View("NewCustomerSupportTicket", viewModel);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateOnlyIncomingValues]
+        [Route("new-customersupport")]
+        public async Task<ActionResult> NewCustomerSupportTicket(NewCustomerSupportTicketViewModel viewModel)
+        {
+            if (viewModel.Ticket.IsHtml)
+            {
+                viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
+                if (string.IsNullOrEmpty(viewModel.Ticket.Details))
+                {
+                    ModelState.AddModelError("Details", Strings.RequiredField);
+                }
+            }
+
+            viewModel.Ticket.Project = Context.Projects.Find(1);
+            viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.CustomerSupport;
+
+            if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
+            {
+                AddCustomFieldValue(null, viewModel.NationalIdCardNo.CustomFieldId, viewModel.NationalIdCardNo.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.TimeOfIncident.CustomFieldId, viewModel.TimeOfIncident.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.Description.CustomFieldId, viewModel.Description.Value, viewModel.Ticket.TicketId);
+
+                await Context.SaveChangesAsync().ConfigureAwait(false);
+
+                return Context.SecurityProvider.IsReadTicketCenter
+                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
+                    : RedirectToAction("Index", "Home");
+            }
+
+            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
+
+            return View(viewModel);
+        }
+
         [Route("ticket-details")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketDetails(int ticketId, int? categoryId)

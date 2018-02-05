@@ -2,9 +2,16 @@
     init: function () {
         sidebar.initSizeBarIsExpaned();
         sidebar.hovermenu();
+        
         $(".toggle-sidebar").on("click", function() {
             sidebar.toggleMenu();
         });
+
+        $("table").floatThead({
+            position: 'fixed',
+            top: 50
+        });
+
         $("body").on("click",
             ".icon-calendar",
             function () {

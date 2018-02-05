@@ -58,15 +58,15 @@
                 </div>*@
         </div>
         <div class="item-list item">
-            @Html.CustomFieldLabelFor(x => x.NationalIdCardNo, new { @class = "key fullwidth" })
+            @Html.CustomFieldLabelFor(x => x.NationalIdCardNo, new { @class = "key" })
             <div class="fullwidth">
                 @Html.CustomFieldFor(x => x.NationalIdCardNo)
             </div>
         </div>
         <div class="item-list item">
-            @Html.CustomFieldLabelFor(x => x.TimeOfIncident, new { @class = "key fullwidth" })
+            @Html.CustomFieldLabelFor(x => x.TimeOfIncident, new { @class = "key" })
             <div class="fullwidth">
-                @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "key fullwidth datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
+                @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "key datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
             </div>
         </div>
         <div class="item-list item">

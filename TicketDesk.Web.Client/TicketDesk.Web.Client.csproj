@@ -510,6 +510,7 @@
     <Content Include="Scripts\jquery.validate.globalize.js" />
     <Content Include="Scripts\jquery.validate.globalize.min.js" />
     <Content Include="src\contents\images\check.svg" />
+    <Content Include="src\libs\jquery.floatThead\jquery.floatThead.js" />
     <Content Include="src\libs\slick\ajax-loader.gif" />
     <Content Include="src\libs\slick\slick-theme.css" />
     <Content Include="src\libs\slick\slick.css" />
