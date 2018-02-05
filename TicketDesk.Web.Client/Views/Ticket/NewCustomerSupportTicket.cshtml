@@ -1,10 +1,9 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
 @using TicketDesk.Web.Client.Infrastructure.Helpers
-@using TicketDesk.Web.Client.Models.Ticket
-
-@model NewIncidentTicketViewModel
 
 @section title { @New.Title }
+
+@model TicketDesk.Web.Client.Models.Ticket.NewCustomerSupportTicketViewModel
 
 @section css
 {
@@ -28,44 +27,40 @@
                 format: 'DD/MM/YYYY hh:mm',
                 defaultDate: new Date(),
                 maxDate: new Date(),
-<<<<<<< HEAD
                 sideBySide: true
-=======
-                debug: true
->>>>>>> #000 - style for announcement detail page
             });
         });
     </script>
 }
 
-@using (Html.BeginForm("NewIncidentTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form filechange", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("NewCustomerSupportTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form filechange", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
     @Html.HiddenFor(model => model.TempId)
-    @Html.HiddenFor(model => model.SelectedReportByValue, new { @class = "required-radio-value" })
 
-    <div class="form-content incident-form">
-        <div class="title">INCIDENT REPORT FORM</div>
-        <div class="key border">Report by</div>
-        <div class="value span-3 border">
-            <div class="radio-group">
-                @Html.HiddenFor(x => x.ReportBy.CustomFieldId, new { Value = Model.ReportBy.CustomField.Id })
-                @foreach (string reporter in Model.ReportByValues)
-                {
-                    var rdId = "rd-" + reporter.Replace(' ', '_');
-
-                    <p>
-                        @Html.RadioButtonFor(x => x.ReportBy.Value, reporter, new { id = rdId, @class = "required-radio" })
-                        <label for="@rdId">@reporter</label>
-                    </p>
-                }
-            </div>
-        </div>
+    <div class="form-content hardware-form">
+        <div class="title">CUSTOMER SUPPORT</div>
         <div class="item-list item">
             @Html.LabelFor(x => x.Ticket.Title, new { @class = "key fullwidth border" })
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.Ticket.Title)
+            </div>
+        </div>
+        <div class="item-list item">
+            @{
+                var guid = Guid.NewGuid().ToString();
+            }
+
+            @*@Html.CustomFieldLabelWithGuidIndexFor(x => x.System, guid, null, new { @class = "key border" })
+                <div class="value border custom-dropdown">
+                    @Html.CustomFieldWithGuidIndexFor(x => x.System, guid, null, new { @class = "" })
+                </div>*@
+        </div>
+        <div class="item-list item">
+            @Html.CustomFieldLabelFor(x => x.NationalIdCardNo, new { @class = "key fullwidth" })
+            <div class="fullwidth">
+                @Html.CustomFieldFor(x => x.NationalIdCardNo)
             </div>
         </div>
         <div class="item-list item">
@@ -83,4 +78,4 @@
         @Html.Partial("_DropzoneView", Model)
     </div>
     <input type="submit" class="btn btn-primary btn-send" value="Send" />
-}
+                }

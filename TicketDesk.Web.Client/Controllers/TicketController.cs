@@ -427,12 +427,13 @@
         [Route("new-customersupport")]
         public ActionResult NewCustomerSupportTicket()
         {
-            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Network);
+            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.CustomerSupport);
 
             var viewModel = new NewCustomerSupportTicketViewModel
             {
                 TempId = Guid.NewGuid(),
-                NationalIdCardNo = { CustomField = availableCustomField.First(x => x.Name == "NationalIdCardNo") },
+                TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
+                NationalIdCardNo = { CustomField = availableCustomField.First(x => x.Name == "National Id Card No") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };
 

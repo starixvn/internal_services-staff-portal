@@ -180,14 +180,8 @@
         private ListReferencesViewModel GetListReferences(ReferenceType referenceType)
         {
             var references = Context.References.Where(x => x.ReferenceType == referenceType).ToList();
-            if (referenceType != ReferenceType.Newsletters)
-            {
-                references = references.Where(r => DateTime.Compare(r.DateAppear.Date, DateTime.Now.Date) >= 0).OrderBy(r => r.DateAppear.Date).ToList();
-            }
-            else
-            {
-                references = references.OrderBy(r => r.LastUpdateDate.Date).ToList();
-            }
+            references = referenceType != ReferenceType.Newsletters ? references.Where(r => DateTime.Compare(r.DateAppear.Date, DateTime.Now.Date) >= 0).OrderBy(r => r.DateAppear.Date).ToList()
+                                                                    : references.OrderBy(r => r.LastUpdateDate.Date).ToList();
 
             var listViewModel = new List<ReferenceViewModel>();
 

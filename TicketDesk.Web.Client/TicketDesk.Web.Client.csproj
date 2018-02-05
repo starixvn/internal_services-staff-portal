@@ -2150,6 +2150,7 @@
     <Content Include="src\libs\slick\slick.scss" />
     <Content Include="src\libs\toastr\toastr.less" />
     <Content Include="src\libs\toastr\toastr.scss" />
+    <Content Include="Views\Ticket\NewCustomerSupportTicket.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
