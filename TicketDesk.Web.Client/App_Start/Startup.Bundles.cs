@@ -38,8 +38,7 @@
                     .Include("~/Scripts/filemanager/scripts/custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new StyleBundle("~/content/reference-admin").Include(
-                   "~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css",
-                   "~/src/libs/toastr/toastr.min.css"));
+                   "~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css"));
 
             ////
             ////Script bundle
@@ -157,7 +156,6 @@
             bundles.Add(new ScriptBundle("~/bundles/reference-admin").Include(
                    "~/src/libs/datetimepicker/moment.js",
                    "~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js",
-                   "~/src/libs/toastr/toastr.min.js",
                    "~/src/js/admin/reference/reference.js"));
 
             // Set EnableOptimizations to false for debugging. For more information,
