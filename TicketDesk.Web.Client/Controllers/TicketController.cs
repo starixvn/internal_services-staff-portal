@@ -1,5 +1,14 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Validation;
+    using System.Globalization;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
     using Core.Enumerations;
     using Domain;
     using Domain.Infrastructure;
@@ -10,15 +19,6 @@
     using Localization.Client;
     using Localization.Controllers;
     using Models.Ticket;
-    using System;
-    using System.Collections.Generic;
-    using System.Data.Entity;
-    using System.Data.Entity.Validation;
-    using System.Globalization;
-    using System.Linq;
-    using System.Net;
-    using System.Threading.Tasks;
-    using System.Web.Mvc;
 
     [RoutePrefix("ticket")]
     [Route("{action=index}")]
@@ -227,12 +227,12 @@
             return View("NewIncidentTicket", viewModel);
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
         [ValidateInput(false)]
         [Route("new-incident")]
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> NewIncidentTicket(NewIncidentTicketViewModel viewModel)
         {
             if (viewModel.Ticket.IsHtml)
@@ -264,8 +264,8 @@
             return View("NewIncidentTicket", viewModel);
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [Route("new-hardware")]
+        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public ActionResult NewHardwareTicket()
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Hardware);
@@ -424,6 +424,20 @@
             return View(viewModel);
         }
 
+        [Route("new-customersupport")]
+        public ActionResult NewCustomerSupportTicket()
+        {
+            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Network);
+
+            var viewModel = new NewCustomerSupportTicketViewModel
+            {
+                TempId = Guid.NewGuid(),
+                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
+            };
+
+            return View("NewCustomerSupportTicket", viewModel);
+        }
+
         [Route("ticket-details")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketDetails(int ticketId, int? categoryId)
@@ -559,7 +573,7 @@
                     }
                 }
             }
-            
+
             return ticket.TicketId != default(int);
         }
 

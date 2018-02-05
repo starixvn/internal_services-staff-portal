@@ -252,8 +252,11 @@
         private static bool IsChangedReference(Reference oldReference, ReferenceViewModel newReference)
         {
             var isHaveChanged = false;
-            var compareDateAppear = oldReference.ReferenceType == ReferenceType.Newsletters || DateTime.Compare(oldReference.DateAppear.Date, newReference.DateAppear.Date) != 0;
-            if (!compareDateAppear || !string.Equals(oldReference.ImageLink, newReference.ImageLink))
+            if (oldReference.ReferenceType != ReferenceType.Newsletters && (DateTime.Compare(oldReference.DateAppear.Date, newReference.DateAppear.Date) != 0 || !string.Equals(oldReference.ImageLink, newReference.ImageLink)))
+            {
+                isHaveChanged = true;
+            }
+            if (oldReference.ReferenceType == ReferenceType.Newsletters && !string.Equals(oldReference.ImageLink, newReference.ImageLink))
             {
                 isHaveChanged = true;
             }
