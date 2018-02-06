@@ -2,14 +2,18 @@
     init: function () {
         sidebar.initSizeBarIsExpaned();
         sidebar.hovermenu();
-        
-        $(".toggle-sidebar").on("click", function() {
+
+        $(".toggle-sidebar").on("click", function () {
             sidebar.toggleMenu();
         });
 
         $("table").floatThead({
             position: 'fixed',
             top: 50
+        });
+
+        $("select").select2({
+            minimumResultsForSearch: Infinity
         });
 
         $("body").on("click",
@@ -27,7 +31,7 @@
             });
     },
 
-    initSizeBarIsExpaned: function() {
+    initSizeBarIsExpaned: function () {
         var isExpanded = localStorage.getItem("IsSidebarExpanded");
         if (isExpanded === "true") {
             sidebar.expandSidebar();
@@ -36,7 +40,7 @@
         }
     },
 
-    toggleMenu: function() {
+    toggleMenu: function () {
         if ($("body").hasClass("menu-collapsed")) {
             sidebar.expandSidebar();
         } else {
@@ -44,43 +48,43 @@
         }
     },
 
-    collapseSidebar: function() {
+    collapseSidebar: function () {
         $("body").addClass("menu-collapsed");
         $(".menu-item.has-sub").attr("href", "#");
         localStorage.setItem("IsSidebarExpanded", false);
     },
 
-    expandSidebar: function() {
+    expandSidebar: function () {
         $("body").removeClass("menu-collapsed");
         $(".menu-item.has-sub").attr("href", "#collapseExample");
         localStorage.setItem("IsSidebarExpanded", true);
     },
 
-    hovermenu: function() {
-        $(".menu-section").hover(function() {
+    hovermenu: function () {
+        $(".menu-section").hover(function () {
             $(this).addClass("hover-open");
-        }, function() {
+        }, function () {
             $(this).removeClass("hover-open");
         });
     }
 }
 
 var bootstrapModalHack = {
-    init: function() {
+    init: function () {
         $(document).on("show.bs.modal",
             ".modal",
-            function() {
+            function () {
                 var zIndex = 1040 + (10 * $(".modal:visible").length);
                 $(this).css("z-index", zIndex);
-                setTimeout(function() {
-                        $(".modal-backdrop").not(".modal-stack").css("z-index", zIndex - 1).addClass("modal-stack");
-                    },
+                setTimeout(function () {
+                    $(".modal-backdrop").not(".modal-stack").css("z-index", zIndex - 1).addClass("modal-stack");
+                },
                     0);
             });
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     sidebar.init();
     bootstrapModalHack.init();
 });
