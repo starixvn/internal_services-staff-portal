@@ -452,6 +452,9 @@ main {
       font-size: 18px;
       color: #666666; }
 
+.floatThead-container {
+  z-index: 9 !important; }
+
 .table {
   margin-top: 5px; }
   .table table {
@@ -984,6 +987,15 @@ main {
   border-color: #b7b7b7; }
   .form-control.input-validation-error {
     border-color: #ea1118; }
+
+.select2-container--default .select2-selection--single {
+  border-radius: 2px;
+  border-color: #b7b7b7; }
+
+.select2-container:focus, .select2-selection:focus {
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  outline: none;
+  border-color: #66afe9; }
 
 .checkbox input[type="checkbox"] {
   display: block;
