@@ -139,6 +139,18 @@ function CheckFormAndTurnSubmitButton(formclassname) {
     $(selector).validate().submitted = formSummittedState;
 }
 
+function CountDownCharacter(element) {
+    var maxLength = 5000;
+    var remainLength = maxLength - element.val().length;
+    if ($(".countdown-character").length) {
+        $(".countdown-character").text(remainLength);
+    }
+}
+
+$(".desciption").keyup(function () {
+    CountDownCharacter($(this));
+})
+
 $.validator.setDefaults({
     ignore: [],
     // any other default options and/or rules

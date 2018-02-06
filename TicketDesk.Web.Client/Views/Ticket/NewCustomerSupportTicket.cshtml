@@ -1,5 +1,6 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
 @using TicketDesk.Web.Client.Infrastructure.Helpers
+@using TicketDesk.Localization.Client
 
 @section title { @New.Title }
 
@@ -70,9 +71,12 @@
             </div>
         </div>
         <div class="item-list item">
-            @Html.CustomFieldLabelFor(x => x.Description, new { @class = "key fullwidth" })
+            <div class="key fullwidth">
+                @Html.CustomFieldLabelFor(x => x.Description)
+                <span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
+            </div>
             <div class="fullwidth">
-                @Html.CustomFieldFor(x => x.Description)
+                @Html.CustomFieldFor(x => x.Description, new { @class = "desciption" })
             </div>
         </div>
         @Html.Partial("_DropzoneView", Model)
