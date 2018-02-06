@@ -10,16 +10,24 @@
 {
     <link href="~/src/libs/dropzone/dropzone.min.css" rel="stylesheet" />
     <link href="~/src/css/custom-dropzone.css" rel="stylesheet" />
+    <link href="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 }
 
 @section scripts
 {
     @Html.Partial("_DropzoneScripts", Model)
     <script src="~/src/js/formhandler.js"></script>
-
+    <script src="~/src/libs/datetimepicker/moment.js"></script>
+    <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
     <script>
         $(document).ready(function () {
             InitFormHandler("ticket-form", true);
+            $('.datetimepicker').datetimepicker({
+                format: 'DD/MM/YYYY hh:mm',
+                defaultDate: new Date(),
+                maxDate: new Date(),
+                sideBySide: true
+            });
         });
     </script>
 }
@@ -50,6 +58,12 @@
             </div>
         </div>
         <div class="item-list item">
+            @Html.CustomFieldLabelFor(x => x.TimeOfIncident, new { @class = "key fullwidth" })
+            <div class="fullwidth">
+                @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "key fullwidth datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
+            </div>
+        </div>
+        <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.Description)
                 <span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
@@ -61,4 +75,4 @@
         @Html.Partial("_DropzoneView", Model)
     </div>
     <input type="submit" class="btn btn-primary btn-send" value="Send" />
-                }
+}

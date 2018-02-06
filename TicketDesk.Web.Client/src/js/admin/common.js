@@ -5,7 +5,7 @@
         sidebar.initFloatThead();
         $(".toggle-sidebar").on("click", function () {
             sidebar.toggleMenu();
-            setTimeout(function () { $("table").floatThead('reflow'); }, 500);
+            setTimeout(function () { $("table").floatThead('reflow'); }, 300);
             
         });
 

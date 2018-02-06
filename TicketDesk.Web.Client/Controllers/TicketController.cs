@@ -325,12 +325,13 @@
         [Route("new-software")]
         public ActionResult NewSoftwareTicket()
         {
-            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Hardware);
+            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Software);
             var viewModel = new NewSoftwareTicketViewModel
             {
                 TempId = Guid.NewGuid(),
                 Ticket = { Owner = Context.SecurityProvider.CurrentUserId },
                 System = { CustomField = availableCustomField.First(x => x.Name == "System") },
+                TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };
 
@@ -361,6 +362,7 @@
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
             {
                 AddCustomFieldValue(null, viewModel.System.CustomFieldId, viewModel.System.Value, viewModel.Ticket.TicketId);
+                AddCustomFieldValue(null, viewModel.TimeOfIncident.CustomFieldId, viewModel.TimeOfIncident.Value, viewModel.Ticket.TicketId);
                 AddCustomFieldValue(null, viewModel.Description.CustomFieldId, viewModel.Description.Value, viewModel.Ticket.TicketId);
 
                 // Save changes to ticket's custom field
