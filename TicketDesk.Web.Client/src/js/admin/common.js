@@ -2,14 +2,11 @@
     init: function () {
         sidebar.initSizeBarIsExpaned();
         sidebar.hovermenu();
-
+        sidebar.initFloatThead();
         $(".toggle-sidebar").on("click", function () {
             sidebar.toggleMenu();
-        });
-
-        $("table").floatThead({
-            position: 'fixed',
-            top: 50
+            setTimeout(function () { $("table").floatThead('reflow'); }, 500);
+            
         });
 
         $("select").select2({
@@ -31,6 +28,13 @@
             });
     },
 
+    initFloatThead: function () {
+        var $table = $("table");
+        $table.floatThead({
+            top: 50,
+        });
+    },
+    
     initSizeBarIsExpaned: function () {
         var isExpanded = localStorage.getItem("IsSidebarExpanded");
         if (isExpanded === "true") {
