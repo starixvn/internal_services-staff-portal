@@ -1,11 +1,10 @@
 ﻿namespace TicketDesk.Web.Client
 {
-    using App_Start;
-    using Fanex.Data.Configuration;
     ////using Microsoft.ApplicationInsights.Extensibility;
     using System;
-    using System.Diagnostics;
     using System.Web.Mvc;
+    using App_Start;
+    using Fanex.Data.Configuration;
 
     public class Global : System.Web.HttpApplication
     {

@@ -59,7 +59,7 @@
             if (CurrentSession.UserId <= 0 && !IsCurrentRouteSignIn())
             {
                 FormsAuthentication.SignOut();
-                var url = Url.Action("SignIn", "User", new { returnUrl = Request.Url?.AbsolutePath });
+                var url = Url.Action("SignIn", "User", new { returnUrl = Request.Url?.AbsolutePath, Area = "" });
 
                 filterContext.Result = Redirect(url);
             }
