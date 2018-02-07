@@ -138,10 +138,9 @@ var modalhandler = {
                         $(selectorWithModal).first().modal();
                     } else {
                         if (result.message !== undefined) {
-                            localStorage.setItem("message", result.message);
+                            toastr.success(result.message);
                         }
-
-                        location.reload();
+                        setTimeout(function () { location.reload(true); }, 3000)
                     }
                 } else {
                     // ON VALIDATION ERROR
