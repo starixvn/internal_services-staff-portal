@@ -50,7 +50,7 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult TVSchedules(ListReferencesViewModel viewModel)
+        public JsonResult TVSchedules(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.TvSchedule, viewModel);
         }
@@ -64,7 +64,7 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult FeatureEvents(ListReferencesViewModel viewModel)
+        public JsonResult FeatureEvents(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.FeaturedEvent, viewModel);
         }
@@ -92,7 +92,7 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult TradingLimits(ListReferencesViewModel viewModel)
+        public JsonResult TradingLimits(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.TradingLimits, viewModel);
         }
@@ -154,15 +154,21 @@
         private void HandleListReferenceUploaded(ReferenceType referenceType, ListReferencesViewModel listReferences)
         {
             var references = listReferences.References;
-            var originReferences = GetListReferences(referenceType);
-            var oldReferences = references.Where(r => r.Id != null).ToList();
 
-            if (references != null && references.Count > 0)
+            if (references == null || references.Count == 0)
             {
+                RemoveAllReferences(referenceType);
+            }
+            else
+            {
+                var originReferences = GetListReferences(referenceType);
+                var oldReferences = references.Where(r => r.Id != null).ToList();
+
                 if (oldReferences != null && oldReferences.Count > 0)
                 {
                     RemoveOldReferences(originReferences.References, oldReferences);
                 }
+
                 foreach (ReferenceViewModel reference in references)
                 {
                     if (reference.Id == null)
@@ -205,6 +211,20 @@
             var excludedIDs = new HashSet<int?>(newReferences.Select(p => p.Id));
             var listDeletedReferences = oldReferences.Where(p => !excludedIDs.Contains(p.Id)).ToList();
             foreach (var reference in listDeletedReferences)
+            {
+                var referenceToDelete = Context.References.Where(r => r.Id == reference.Id).FirstOrDefault();
+                if (referenceToDelete != null)
+                {
+                    Context.References.Remove(referenceToDelete);
+                    Context.SaveChanges();
+                }
+            }
+        }
+
+        private void RemoveAllReferences(ReferenceType referenceType)
+        {
+            var listReferences = GetListReferences(referenceType);
+            foreach (var reference in listReferences.References)
             {
                 var referenceToDelete = Context.References.Where(r => r.Id == reference.Id).FirstOrDefault();
                 if (referenceToDelete != null)
