@@ -106,7 +106,7 @@
                 <span class="highlight">(<span class="countdown-character">@Model.Feedback.CustomField.MaxLength</span> @Resources.Common_Form_Characters)</span>
             </div>           
             <div class="fullwidth">
-                @Html.CustomFieldFor(x => x.Feedback, new { @class = "desciption" })
+                @Html.CustomFieldFor(x => x.Feedback, new { @class = "description" })
                 @Html.ValidationMessageFor(x => x.Feedback.Value)
             </div>
         </div>

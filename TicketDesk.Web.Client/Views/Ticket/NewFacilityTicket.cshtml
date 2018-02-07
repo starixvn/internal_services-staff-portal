@@ -224,11 +224,11 @@
 
                         <div class="fullwidth border key">
                             @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "" })
-                            <span class="highlight">(@Model.Items.ElementAt(i).Reason.CustomField.MaxLength @Resources.Common_Form_Characters)</span>
+                            <span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
                         </div>                       
                         
-                        <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "" })</div>
-                        @Html.ValidationMessageFor(x => x.Items.ElementAt(i).Reason, null, new { data_valmsg_for = "Items[" + guid + "].Reason.Value" })
+                        <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "description" })</div>
+                        @Html.ValidationMessageFor(x => x.Items.ElementAt(i).Reason, null, new { data_valmsg_for = "Items[" + guid + "].Reason.Value"})
                     </div>
                 }
             }

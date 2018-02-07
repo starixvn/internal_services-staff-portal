@@ -147,7 +147,7 @@ function CountDownCharacter(element) {
     }
 }
 
-$(".desciption").keyup(function () {
+$(".description").keyup(function () {
     CountDownCharacter($(this));
 })
 

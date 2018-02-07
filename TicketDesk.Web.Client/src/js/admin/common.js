@@ -2,11 +2,9 @@
     init: function () {
         sidebar.initSizeBarIsExpaned();
         sidebar.hovermenu();
-        sidebar.initFloatThead();
         $(".toggle-sidebar").on("click", function () {
             sidebar.toggleMenu();
-            setTimeout(function () { $("table").floatThead('reflow'); }, 300);
-            
+            floatThead.reflowFloatThead();
         });
 
         $("select").select2({
@@ -28,13 +26,6 @@
             });
     },
 
-    initFloatThead: function () {
-        var $table = $("table");
-        $table.floatThead({
-            top: 50,
-        });
-    },
-    
     initSizeBarIsExpaned: function () {
         var isExpanded = localStorage.getItem("IsSidebarExpanded");
         if (isExpanded === "true") {
@@ -88,7 +79,27 @@ var bootstrapModalHack = {
     }
 }
 
+var floatThead = {
+    init: function () {
+        var $table = $("table");
+        $table.floatThead({
+            top: 50,
+            scrollContainer: true,
+            autoReflow: true
+        });
+        floatThead.reflowFloatThead();
+    },
+
+    reflowFloatThead: function () {
+        var reflowThead = setInterval(function () { $("table").floatThead('reflow'); }, 0);
+        setTimeout(function () {
+            clearInterval(reflowThead);
+        }, 3000);
+    }
+}
+
 $(document).ready(function () {
     sidebar.init();
     bootstrapModalHack.init();
+    floatThead.init();
 });
