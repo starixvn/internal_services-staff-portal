@@ -13,7 +13,6 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Models.Announcements;
-    using Service.Implement;
     using Service.Interface;
 
     [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
@@ -26,31 +25,35 @@
             _announcementService = announcementService;
         }
 
-        public ActionResult Index(AnnouncementViewModel viewModel = null)
+        public ActionResult Index(AnnouncementViewModel viewModel)
         {
-            if (viewModel == null)
+            var today = DateTime.Now;
+            viewModel = new AnnouncementViewModel
             {
-                viewModel = new AnnouncementViewModel();
-            }
+                PublishedFrom = today.AddDays(-7),
+                PublishedTo = today,
+                Status = null,
+                State = null
+            };
 
-            if (viewModel.Announcements == null)
-            {
-                var announcements = _announcementService.GetAnnouncements(viewModel.GetQueryCriteria());
+            //if (viewModel.Announcements == null)
+            //{
+            //    var announcements = _announcementService.GetAnnouncements(viewModel.GetQueryCriteria());
 
-                viewModel.TotalItem = announcements.Count();
+            //    viewModel.TotalItem = announcements.Count();
 
-                var paginationService = new PaginationService<Announcement, int>();
+            //    var paginationService = new PaginationService<Announcement, int>();
 
-                // Sort 1 column only
-                var sortDatas = viewModel.SortDatas.Where(x => x.Priority == 0).ToList();
+            //    // Sort 1 column only
+            //    var sortDatas = viewModel.SortDatas.Where(x => x.Priority == 0).ToList();
 
-                viewModel.Announcements = paginationService.Pagination(
-                    announcements,
-                    sortDatas,
-                    viewModel.Skipped,
-                    viewModel.ItemPerPage)
-                    .ToList();
-            }
+            //    viewModel.Announcements = paginationService.Pagination(
+            //        announcements,
+            //        sortDatas,
+            //        viewModel.Skipped,
+            //        viewModel.ItemPerPage)
+            //        .ToList();
+            //}
 
             return View(viewModel);
         }

@@ -53,7 +53,11 @@
                         }
                         else
                         {
-                            <input type="checkbox" name="publish-checkbox" value="@item.Id" />
+                            var indexName = Model[index] + "checkbox";
+                            <div class="checkbox">
+                                <input type="checkbox" id="indexName" name="publish-checkbox" value="@item.Id" />
+                                <label for="indexName"></label>
+                            </div>
                         }
                     </td>
                     <td>

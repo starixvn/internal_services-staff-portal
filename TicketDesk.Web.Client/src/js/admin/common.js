@@ -4,7 +4,7 @@
         sidebar.hovermenu();
         $(".toggle-sidebar").on("click", function () {
             sidebar.toggleMenu();
-            floatThead.reflowFloatThead();
+           // floatThead.reflowFloatThead();
         });
 
         $("select").select2({

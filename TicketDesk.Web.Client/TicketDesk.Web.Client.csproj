@@ -511,8 +511,10 @@
     <Content Include="Scripts\jquery.validate.globalize.js" />
     <Content Include="Scripts\jquery.validate.globalize.min.js" />
     <Content Include="src\contents\images\check.svg" />
+    <Content Include="src\libs\jquery.DataTable\dataTables.fixedHeader.min.js" />
     <Content Include="src\libs\jquery.DataTable\datatables.min.css" />
     <Content Include="src\libs\jquery.DataTable\datatables.min.js" />
+    <Content Include="src\libs\jquery.DataTable\fixedHeader.dataTables.min.css" />
     <Content Include="src\libs\jquery.floatThead\jquery.floatThead.js" />
     <Content Include="src\libs\select2\select2.min.css" />
     <Content Include="src\libs\select2\select2.min.js" />

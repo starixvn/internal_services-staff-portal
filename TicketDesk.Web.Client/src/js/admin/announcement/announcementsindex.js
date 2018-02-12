@@ -388,7 +388,7 @@ var listAnnouncement = {
             pageLength: 10,
             paging: true,
             searching: true,
-            order: [[8, "asc"]],
+            order: [[0, "asc"]],
             columns: [
                 { sortable: false },
                 { sortable: true },
@@ -400,6 +400,10 @@ var listAnnouncement = {
                 { sortable: false },
                 { sortable: false },
             ],
+            fixedHeader: {
+                headerOffset: 50,
+                header: true
+            },
         });
     },
 
@@ -411,6 +415,7 @@ var listAnnouncement = {
             success: function (response) {
                 $("#announcement-table").html(response);
                 listAnnouncement.initDataTable($("table.announcement-list"));
+                floatThead.reflowFloatThead();
             },
         });
     },
