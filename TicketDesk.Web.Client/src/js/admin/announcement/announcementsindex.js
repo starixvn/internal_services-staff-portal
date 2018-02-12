@@ -180,7 +180,7 @@ var modalhandler = {
                         $(selector).before(result.html);
                         $(selectorWithModal).first().modal();
                     } else {
-                        if (result.message) {
+                        if (result.message !== undefined) {
                             toastr.success(result.message);
                         }
                         setTimeout(function () { location.reload(true); }, 3000)
@@ -388,7 +388,7 @@ var listAnnouncement = {
             pageLength: 10,
             paging: true,
             searching: true,
-            order: [[0, "asc"]],
+            order: [[8, "asc"]],
             columns: [
                 { sortable: false },
                 { sortable: true },
