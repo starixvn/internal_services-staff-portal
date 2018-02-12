@@ -499,6 +499,30 @@ main {
       margin: 0;
       min-height: 14px; }
 
+table.dataTable {
+  box-sizing: border-box; }
+  table.dataTable thead th, table.dataTable thead td {
+    padding: 4px 5px; }
+
+.dataTables_filter {
+  position: relative; }
+  .dataTables_filter input[type=search] {
+    font-family: inherit;
+    border-radius: 2px;
+    font-size: 13px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 5px;
+    border: 1px solid #b7b7b7; }
+  .dataTables_filter:after {
+    font-family: 'icomoon' !important;
+    content: "\e920";
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    font-size: 18px;
+    color: #666666; }
+
 .action-group {
   text-align: center; }
   .action-group .dropdown-toggle {

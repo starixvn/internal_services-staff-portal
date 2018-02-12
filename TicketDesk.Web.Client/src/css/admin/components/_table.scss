@@ -90,6 +90,39 @@
     }
 }
 
+// ---------------------- Custom DataTable ----------- //
+table.dataTable {
+    box-sizing: border-box;
+
+    thead th, thead td {
+        padding: 4px 5px;
+    }
+}
+
+.dataTables_filter {
+    position: relative;
+
+    input[type=search] {
+        font-family: inherit;
+        border-radius: 2px;
+        font-size: 13px;
+        height: 28px;
+        line-height: 28px;
+        padding: 0 5px;
+        border: 1px solid #b7b7b7;
+    }
+
+    &:after {
+        font-family: 'icomoon' !important;
+        content: "\e920";
+        position: absolute;
+        right: 5px;
+        top: 2px;
+        font-size: 18px;
+        color: #666666;
+    }
+}
+
 // -------------------- Action Group --------------------- //
 
 .action-group {
@@ -401,7 +434,7 @@
         }
 
         &:before {
-            top: 7px;            
+            top: 7px;
         }
 
         &:after {
