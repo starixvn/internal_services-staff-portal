@@ -3,6 +3,7 @@
     using System;
     using System.Data.Entity;
     using System.Linq;
+    using Core.Enumerations;
     using Criteria.Announcement;
     using DelegateDecompiler;
     using Domain.Model;

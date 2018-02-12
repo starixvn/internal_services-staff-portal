@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Web.Mvc;
+    using Core.Enumerations;
     using DelegateDecompiler;
 
     public class Announcement
@@ -54,19 +55,5 @@
         public DateTime LastModified { get; set; }
 
         public string ModifiedBy { get; set; }
-    }
-
-    public enum AnnouncementStatus
-    {
-        Normal,
-        Important
-    }
-
-    public enum AnnouncementState
-    {
-        [Display(Name = "No")]
-        Scheduled,
-        [Display(Name = "Yes")]
-        Published
     }
 }

@@ -6,6 +6,7 @@
     using System.Net;
     using System.Web.Mvc;
     using Client.Controllers;
+    using Core.Enumerations;
     using Criteria.Announcement;
     using Domain.Infrastructure;
     using Domain.Model;
@@ -52,6 +53,12 @@
             }
 
             return View(viewModel);
+        }
+
+        public ActionResult AnnouncementList(AnnouncementViewModel viewModel)
+        {
+            var announcements = _announcementService.GetAnnouncements(viewModel.GetQueryCriteria()).ToList();
+            return PartialView("_AnouncementList", announcements);
         }
 
         public ActionResult Create()
@@ -112,7 +119,7 @@
                     message = "The announcement has been successfully published."
                 });
             }
-            
+
             return Json(new
             {
                 success = true,
@@ -212,17 +219,10 @@
             });
         }
 
-        public ActionResult Delete(int id)
-        {
-            var viewModel = new Announcement { Id = id };
-            return PartialView("_Delete", viewModel);
-        }
-
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(Announcement viewModel)
+        public ActionResult Delete(int Id)
         {
-            var announcement = _announcementService.GetAnnouncement(viewModel.Id);
+            var announcement = _announcementService.GetAnnouncement(Id);
 
             var invalidAnnouncement = ReturnInvalidAnnouncement(announcement);
             if (invalidAnnouncement != null)
@@ -232,7 +232,7 @@
 
             if (announcement != null)
             {
-                _announcementService.DeleteAnnouncement(viewModel.Id);
+                _announcementService.DeleteAnnouncement(Id);
             }
 
             return Json(new
@@ -243,40 +243,23 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Publish(AnnouncementViewModel viewModel)
+        public ActionResult Publish(List<int> Ids)
         {
-            var numberOfAnnouncementsToPublish = viewModel.Announcements.Count(x => x.IsWaitingToPublish);
-
-            if (!viewModel.IsPublishImmediately)
-            {
-                viewModel.IsPublishImmediately = true;
-
-                return Json(new
-                {
-                    success = true,
-                    html = RenderRazorViewToString("_QuickPublish", viewModel)
-                });
-            }
-
             var criteria = new PublishAnnouncementsCriteria
             {
                 Ids = new List<int>(),
                 ModifiedBy = CurrentSession.Username
             };
 
-            foreach (var announcement in viewModel.Announcements)
+            foreach (var id in Ids)
             {
-                if (announcement.IsWaitingToPublish)
-                {
-                    criteria.Ids.Add(announcement.Id);
-                }
+                criteria.Ids.Add(id);
             }
 
             _announcementService.PublishAnnouncements(criteria);
 
             var message = "The announcement has been successfully published.";
-            if (numberOfAnnouncementsToPublish > 1)
+            if (Ids.Count > 1)
             {
                 message = "The announcements have been successfully published.";
             }
@@ -287,7 +270,7 @@
                 message
             });
         }
-        
+
         private ActionResult ReturnInvalidAnnouncement(Announcement announcement)
         {
             if (announcement == null)

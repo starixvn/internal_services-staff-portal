@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading;
     using System.Web.Mvc;
+    using Core.Enumerations;
     using Criteria.Announcement;
     using Domain;
     using Domain.Infrastructure;

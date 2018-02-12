@@ -1,7 +1,7 @@
 ﻿namespace TicketDesk.Criteria.Announcement
 {
     using System;
-    using Domain.Model;
+    using Core.Enumerations;
 
     public class GetAnnouncementsCriteria
     {

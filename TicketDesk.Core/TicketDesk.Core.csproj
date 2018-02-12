@@ -105,6 +105,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enumerations\AnnouncementState.cs" />
+    <Compile Include="Enumerations\AnnouncementStatus.cs" />
     <Compile Include="Enumerations\CustomFieldTypeEnum.cs" />
     <Compile Include="Enumerations\ReferenceTypes.cs" />
     <Compile Include="Enumerations\RouteNames.cs" />

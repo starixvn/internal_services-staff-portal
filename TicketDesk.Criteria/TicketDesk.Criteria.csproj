@@ -95,6 +95,10 @@
     <None Include="TicketDesk.Criteria.ruleset" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TicketDesk.Core\TicketDesk.Core.csproj">
+      <Project>{F2DC8FB5-9DA1-4525-9B12-9BB855E7C635}</Project>
+      <Name>TicketDesk.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TicketDesk.Domain\TicketDesk.Domain.csproj">
       <Project>{DBD5279B-9F1C-4915-86A9-6A8F1CF0622D}</Project>
       <Name>TicketDesk.Domain</Name>

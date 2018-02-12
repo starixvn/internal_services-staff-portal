@@ -22,7 +22,7 @@
         }
     },
 
-    setupStartEnd: function() {
+    setupStartEnd: function () {
         $(".datepicker.start").datetimepicker({
             format: "MM-DD-YYYY"
         });
@@ -33,12 +33,12 @@
         });
 
         $(".datepicker.start").on("dp.change",
-            function(e) {
+            function (e) {
                 $(".datepicker.end").data("DateTimePicker").minDate(e.date);
             });
 
         $(".datepicker.end").on("dp.change",
-            function(e) {
+            function (e) {
                 $(".datepicker.start").data("DateTimePicker").maxDate(e.date);
             });
     }
@@ -61,12 +61,55 @@ var modalhandler = {
     },
 
     quickPublish: function () {
-        $("section.table form").on("submit",
-            function (e) {
-                e.preventDefault();
-                modalhandler.ajaxForm(this, "#table-modal .modal", "#table-modal .modal");
-                return false;
+        $("#announcement-table").on("click", ".btn-publish", function () {
+            var title = "Announcement Publish";
+            var Ids = publishAnnouncement.getIdsToPublish();
+            var message = "";
+            if (Ids.length > 1) {
+                message = "Are you sure you want to publish these announcements right away?"
+            } else {
+                message = "Are you sure you want to publish this announcement right away?"
+            }
+            var publish = modalhandler.publishAjax();
+            modalhandler.confirmModal(title, message, publish);
+            ;
+        });
+    },
+
+    publishAjax: function () {
+        var Ids = publishAnnouncement.getIdsToPublish();
+        return function () {
+            $.ajax({
+                url: "/Admin/Announcements/Publish",
+                method: "post",
+                data: { Ids },
+                success: function (response) {
+                    if (response.success) {
+                        $('#confirm-popup').modal("hide");
+                        toastr.success(response.message);
+                        setTimeout(function () { location.reload(true) }, 3000)
+                    } else {
+                        toastr.error("Error");
+                    }
+                },
             });
+        };
+    },
+
+    confirmModal: function (title, message, action) {
+        var popup = $('#confirm-popup');
+        popup.find(".modal-title").text(title);
+        popup.find('.message').text(message);
+        popup.modal("show");
+        var notTrigger = false;
+        $(popup).one('click', '#confirm-btn', function () {
+            if (!notTrigger) {
+                action();
+            }
+        });
+        $(popup).one('click', '.cancel-btn', function () {
+            notTrigger = true;
+        });
     },
 
     showMessageIfAny: function () {
@@ -137,7 +180,7 @@ var modalhandler = {
                         $(selector).before(result.html);
                         $(selectorWithModal).first().modal();
                     } else {
-                        if (result.message !== undefined) {
+                        if (result.message) {
                             toastr.success(result.message);
                         }
                         setTimeout(function () { location.reload(true); }, 3000)
@@ -158,7 +201,7 @@ var modalhandler = {
     },
 
     assignEdit: function () {
-        $(".edit").on("click",
+        $("#announcement-table").on("click", ".edit",
             function () {
                 var href = $(this).data("href");
                 modalhandler.ajaxModal(href);
@@ -174,7 +217,7 @@ var modalhandler = {
     },
 
     assignDelete: function () {
-        $(".delete").on("click",
+        $("#announcement-table").on("click", ".delete",
             function () {
                 var href = $(this).data("href");
                 modalhandler.ajaxModal(href);
@@ -198,23 +241,21 @@ var modalhandler = {
     }
 }
 
-var publishannouncement = {
+var publishAnnouncement = {
     init: function () {
-        $(".checkbox").on("click",
+        $("#announcement-table").on("click", "input[type=checkbox]",
             function () {
-                if ($(this).find("input[type='checkbox']").attr("name").indexOf("IsWaitingToPublish") > 0) {
-                    var values = $(".table > form").serialize().split("&");
-                    var count = 0;
-                    for (var i = 0; i < values.length; i++) {
-                        if (values[i].indexOf("IsWaitingToPublish") > 0 && values[i].split("=")[1] === "true") {
-                            count++;
-                        }
-                    }
-
-                    publishannouncement.updatetext(count);
-                    publishannouncement.handlePublishButton(count);
-                }
+                var listIdsToPublish = publishAnnouncement.getIdsToPublish();
+                publishAnnouncement.handlePublishButton(listIdsToPublish.length);
             });
+    },
+
+    getIdsToPublish: function () {
+        var listIdsToPublish = [];
+        $(".announcement-list input[type=checkbox]:checked").each(function (i, e) {
+            listIdsToPublish.push($(this).val());
+        });
+        return listIdsToPublish
     },
 
     updatetext: function (count) {
@@ -341,10 +382,49 @@ var announcementSort = {
     }
 }
 
+var listAnnouncement = {
+    initDataTable: function ($table) {
+        $table.DataTable({
+            pageLength: 10,
+            paging: true,
+            searching: true,
+            order: [[0, "asc"]],
+            columns: [
+                { sortable: false },
+                { sortable: true },
+                { sortable: true },
+                { sortable: true },
+                { sortable: true },
+                { sortable: true },
+                { sortable: true },
+                { sortable: false },
+                { sortable: false },
+            ],
+        });
+    },
+
+    getListAnnouncement: function () {
+        $.ajax({
+            url: "/Admin/Announcements/AnnouncementList",
+            method: "get",
+            data: $("form.filter-row").serialize(),
+            success: function (response) {
+                $("#announcement-table").html(response);
+                listAnnouncement.initDataTable($("table.announcement-list"));
+            },
+        });
+    },
+}
+
 $(document).ready(function () {
     datetimepicker.init();
     modalhandler.init();
-    publishannouncement.init();
+    publishAnnouncement.init();
     announcement.init();
     announcementSort.init();
+    listAnnouncement.getListAnnouncement();
+    $("form.filter-row").submit(function (e) {
+        listAnnouncement.getListAnnouncement();
+        e.preventDefault();
+    });
 });

@@ -379,6 +379,7 @@
     <Compile Include="Areas\Admin\Controllers\ReferencesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Announcements\ListAnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\NewAnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\References\ReferenceViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -510,6 +511,8 @@
     <Content Include="Scripts\jquery.validate.globalize.js" />
     <Content Include="Scripts\jquery.validate.globalize.min.js" />
     <Content Include="src\contents\images\check.svg" />
+    <Content Include="src\libs\jquery.DataTable\datatables.min.css" />
+    <Content Include="src\libs\jquery.DataTable\datatables.min.js" />
     <Content Include="src\libs\jquery.floatThead\jquery.floatThead.js" />
     <Content Include="src\libs\select2\select2.min.css" />
     <Content Include="src\libs\select2\select2.min.js" />
@@ -604,6 +607,7 @@
     <Content Include="Areas\Admin\Views\Announcements\_Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\_Publish.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\_QuickPublish.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcements\_AnouncementList.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
