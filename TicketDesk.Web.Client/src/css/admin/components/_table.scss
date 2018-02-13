@@ -98,7 +98,7 @@ table.dataTable {
         padding: 4px 0;
         text-transform: capitalize;
         background: $secondary-color;
-        color: #e3ebff;        
+        color: #e3ebff;
         text-align: center;
         border-right: 1px solid #c1c1c1;
         border-bottom: 1px solid #c1c1c1;
@@ -107,7 +107,7 @@ table.dataTable {
 
         &:first-child {
             border-left: 1px solid #c1c1c1;
-        }       
+        }
     }
 
     tbody td {
@@ -116,10 +116,52 @@ table.dataTable {
     }
 }
 
-.dataTables_wrapper .top {
-    position: absolute;
-    right: 0;
-    top: -33px;
+.dataTables_wrapper {
+
+    .top {
+        position: absolute;
+        right: 0;
+        top: -33px;
+    }
+
+    .dataTables_paginate {
+        padding: 0;
+        margin-top: 10px;
+        margin-left: 10px;        
+        border-radius: 2px;
+
+        .paginate_button {
+            padding: 4px 10px;
+            color: #777;
+            margin: 0;
+            border-radius: 0;
+            border-top: 1px solid #cdcdcd;
+            border-bottom: 1px solid #cdcdcd;
+            border-right: 1px solid #cdcdcd;
+
+            &:hover {
+                color: #2e4592 !important;
+                background: none;
+                border-color: inherit;
+            }
+
+            &.previous, &.next {
+                border: 1px solid #cdcdcd;
+            }
+
+            &.current {
+                background: #2e4592;
+                color: #fff !important;
+                border: 0;
+
+                &:hover {
+                    border: 0;
+                    background: lighten(#2e4592, 10%);
+                    color: #fff !important;
+                }
+            }
+        }
+    }
 }
 
 .dataTables_filter {
@@ -156,6 +198,8 @@ table.dataTable {
         border-radius: 2px;
     }
 }
+
+
 
 // -------------------- Action Group --------------------- //
 

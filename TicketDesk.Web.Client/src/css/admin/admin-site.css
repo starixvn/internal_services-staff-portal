@@ -522,6 +522,34 @@ table.dataTable {
   right: 0;
   top: -33px; }
 
+.dataTables_wrapper .dataTables_paginate {
+  padding: 0;
+  margin-top: 10px;
+  margin-left: 10px;
+  border-radius: 2px; }
+  .dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 4px 10px;
+    color: #777;
+    margin: 0;
+    border-radius: 0;
+    border-top: 1px solid #cdcdcd;
+    border-bottom: 1px solid #cdcdcd;
+    border-right: 1px solid #cdcdcd; }
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+      color: #2e4592 !important;
+      background: none;
+      border-color: inherit; }
+    .dataTables_wrapper .dataTables_paginate .paginate_button.previous, .dataTables_wrapper .dataTables_paginate .paginate_button.next {
+      border: 1px solid #cdcdcd; }
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+      background: #2e4592;
+      color: #fff !important;
+      border: 0; }
+      .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+        border: 0;
+        background: #3a57b9;
+        color: #fff !important; }
+
 .dataTables_filter {
   position: relative; }
   .dataTables_filter input[type=search] {
