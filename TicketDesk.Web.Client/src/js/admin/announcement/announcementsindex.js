@@ -181,6 +181,7 @@ var modalhandler = {
                         $(selectorWithModal).first().modal();
                     } else {
                         if (result.message !== undefined) {
+                            $("#CreateAnnouncementModal").modal("hide");
                             toastr.success(result.message);
                         }
                         setTimeout(function () { location.reload(true); }, 3000)
@@ -349,7 +350,8 @@ var listAnnouncement = {
             ],
             fixedHeader: {
                 headerOffset: 50,
-                header: true
+                header: true,
+                bScrollCollapse: true
             },
             lengthMenu: [20, 50, 100],
             info: true,

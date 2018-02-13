@@ -4,6 +4,7 @@
         sidebar.hovermenu();
         $(".toggle-sidebar").on("click", function () {
             sidebar.toggleMenu();
+            dataTableReflow.setIntervalToReinitFixedHeader();
         });
 
         $("select").select2({
@@ -63,6 +64,25 @@
     }
 }
 
+var dataTableReflow = {
+    reInitFixedHeader: function () {
+        if ($("table").length) {
+            var $table = $("table").DataTable();
+            $table.fixedHeader.disable();
+            $table.fixedHeader.enable();
+        }
+    },
+
+    setIntervalToReinitFixedHeader: function () {
+        var reInitFixedHeader = setInterval(function () {
+            dataTableReflow.reInitFixedHeader();
+        }, 0);
+        setTimeout(function () {
+            clearInterval(reInitFixedHeader);
+        }, 1500)
+    }
+}
+
 var bootstrapModalHack = {
     init: function () {
         $(document).on("show.bs.modal",
@@ -81,4 +101,5 @@ var bootstrapModalHack = {
 $(document).ready(function () {
     sidebar.init();
     bootstrapModalHack.init();
+    dataTableReflow.setIntervalToReinitFixedHeader();
 });
