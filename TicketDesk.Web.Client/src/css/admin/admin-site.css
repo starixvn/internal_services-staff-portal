@@ -515,6 +515,11 @@ table.dataTable {
   table.dataTable tbody td {
     padding: 4px 5px; }
 
+.dataTables_wrapper .top {
+  position: absolute;
+  right: 0;
+  top: -33px; }
+
 .dataTables_filter {
   position: relative; }
   .dataTables_filter input[type=search] {

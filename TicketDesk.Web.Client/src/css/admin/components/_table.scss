@@ -114,6 +114,12 @@ table.dataTable {
     }
 }
 
+.dataTables_wrapper .top {
+    position: absolute;
+    right: 0;
+    top: -33px;
+}
+
 .dataTables_filter {
     position: relative;
 
