@@ -336,7 +336,7 @@ var listAnnouncement = {
             paging: true,
             searching: true,
             order: [[0, "asc"]],
-            dom: '<"top"f>rt<".pull-left" l><".pull-right" ip><"clear">',
+            dom: '<"top"f>rt<".pull-left" i><".pull-right" lp><"clear">',
             columns: [
                 { sortable: false },
                 { sortable: true },
