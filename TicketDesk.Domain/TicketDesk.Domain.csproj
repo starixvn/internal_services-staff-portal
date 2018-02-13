@@ -280,10 +280,6 @@
     <Compile Include="Migrations\201801040255588_Nexcel_Reference_Annoucement.Designer.cs">
       <DependentUpon>201801040255588_Nexcel_Reference_Annoucement.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802020911411_Nexcel_Nap_User_Setting.cs" />
-    <Compile Include="Migrations\201802020911411_Nexcel_Nap_User_Setting.Designer.cs">
-      <DependentUpon>201802020911411_Nexcel_Nap_User_Setting.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -318,7 +314,6 @@
     <Compile Include="Model\Extensions\UserTicketListFilterColumnExtensions.cs" />
     <Compile Include="Model\Extensions\UserTicketListSettingsCollectionExtensions.cs" />
     <Compile Include="Model\Extensions\Validation\RequiredIfAttribute.cs" />
-    <Compile Include="Model\NapUserSetting.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\Reference.cs" />
     <Compile Include="Model\TicketCategory.cs" />
@@ -440,9 +435,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801040255588_Nexcel_Reference_Annoucement.resx">
       <DependentUpon>201801040255588_Nexcel_Reference_Annoucement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802020911411_Nexcel_Nap_User_Setting.resx">
-      <DependentUpon>201802020911411_Nexcel_Nap_User_Setting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

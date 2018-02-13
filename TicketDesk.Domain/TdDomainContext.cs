@@ -98,8 +98,6 @@ namespace TicketDesk.Domain
 
         public DbSet<Reference> References { get; set; }
 
-        public DbSet<NapUserSetting> NapUserSettings { get; set; }
-
         public UserSettingsManager UserSettingsManager => _userSettingsManager ?? (_userSettingsManager = new UserSettingsManager(this));
 
         /// <summary>
