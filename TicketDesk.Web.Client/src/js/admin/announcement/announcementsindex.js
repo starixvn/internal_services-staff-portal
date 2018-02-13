@@ -338,15 +338,15 @@ var listAnnouncement = {
             order: [[0, "asc"]],
             dom: '<"top"f>rt<".pull-left" i><".pull-right" lp><"clear">',
             columns: [
-                { sortable: false },
-                { sortable: true },
-                { sortable: true },
-                { sortable: true },
-                { sortable: true },
-                { sortable: true },
-                { sortable: true },
-                { sortable: false },
-                { sortable: false },
+                { width: "70px", sortable: false },
+                { width: "70px", sortable: true },
+                { width: "160px", sortable: true },
+                { width: "120px", sortable: true },
+                { width: "160px", sortable: true },
+                { width: "auto", sortable: true },
+                { width: "80px", sortable: true },
+                { width: "70px", sortable: false },
+                { width: "65px", sortable: false },
             ],
             fixedHeader: {
                 headerOffset: 50,
@@ -363,7 +363,7 @@ var listAnnouncement = {
                     first: 'First',
                     last: 'Last',
                     next: '<i class="icon-next"></i>',
-                    previous: '<i class="icon-back"></i>'
+                    previous: '<i class="icon-previous"></i>'
                 }
             },
             autoWidth: false
