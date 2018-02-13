@@ -502,6 +502,17 @@ main {
 table.dataTable {
   box-sizing: border-box; }
   table.dataTable thead th, table.dataTable thead td {
+    padding: 4px 5px;
+    text-transform: capitalize;
+    background: #2e4592;
+    color: #e3ebff;
+    text-align: center;
+    border-right: 1px solid #c1c1c1;
+    border-bottom: 1px solid #c1c1c1;
+    font-weight: 400; }
+    table.dataTable thead th:first-child, table.dataTable thead td:first-child {
+      border-left: 1px solid #c1c1c1; }
+  table.dataTable tbody td {
     padding: 4px 5px; }
 
 .dataTables_filter {

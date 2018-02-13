@@ -96,6 +96,21 @@ table.dataTable {
 
     thead th, thead td {
         padding: 4px 5px;
+        text-transform: capitalize;
+        background: $secondary-color;
+        color: #e3ebff;        
+        text-align: center;
+        border-right: 1px solid #c1c1c1;
+        border-bottom: 1px solid #c1c1c1;
+        font-weight: 400;
+
+        &:first-child {
+            border-left: 1px solid #c1c1c1;
+        }       
+    }
+
+    tbody td {
+        padding: 4px 5px;
     }
 }
 
