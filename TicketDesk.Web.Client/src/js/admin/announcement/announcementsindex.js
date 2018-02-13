@@ -365,7 +365,8 @@ var listAnnouncement = {
                     next: '<i class="icon-next"></i>',
                     previous: '<i class="icon-back"></i>'
                 }
-            }
+            },
+            autoWidth: false
         });
     },
 

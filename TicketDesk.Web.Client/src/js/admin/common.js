@@ -74,12 +74,9 @@ var dataTableReflow = {
     },
 
     setIntervalToReinitFixedHeader: function () {
-        var reInitFixedHeader = setInterval(function () {
-            dataTableReflow.reInitFixedHeader();
-        }, 0);
         setTimeout(function () {
-            clearInterval(reInitFixedHeader);
-        }, 1500)
+            dataTableReflow.reInitFixedHeader();
+        }, 500)
     }
 }
 
