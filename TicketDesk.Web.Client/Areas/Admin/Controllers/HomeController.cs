@@ -24,7 +24,8 @@
                 MenuItems = PopulateMenus(CurrentSession.MenuItemList),
                 IsAuthenticated = CurrentSession.UserId > 0,
                 Username = user.Username,
-                FullName = $"{user.FirstName} {user.LastName}".Trim(' ')
+                FullName = $"{user.FirstName} {user.LastName}".Trim(' '),
+                IsSidebarExpanded = NapUserSetting.SettingObject.IsSidebarExpanded
             };
 
             return PartialView("~/Areas/Admin/Views/Shared/_AdminNavbar.cshtml", model);

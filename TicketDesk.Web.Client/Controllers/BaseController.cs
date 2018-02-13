@@ -16,9 +16,12 @@
 
     public class BaseController : Controller
     {
+        protected readonly TdDomainContext context;
+        protected NapUserSetting NapUserSetting;
+
         public BaseController()
         {
-            var context = DependencyResolver.Current.GetService<TdDomainContext>();
+            context = DependencyResolver.Current.GetService<TdDomainContext>();
             NapContextHelper = context.SecurityProvider.NapContextHelper;
         }
 
@@ -26,16 +29,14 @@
 
         protected ICurrentSession CurrentSession
         {
-            get { return NapContextHelper.CurrentSession; }
-
-            set { NapContextHelper.CurrentSession = value; }
+            get => NapContextHelper.CurrentSession;
+            set => NapContextHelper.CurrentSession = value;
         }
 
         protected ICurrentContext CurrentContext
         {
-            get { return NapContextHelper.CurrentContext; }
-
-            set { NapContextHelper.CurrentContext = value; }
+            get => NapContextHelper.CurrentContext;
+            set => NapContextHelper.CurrentContext = value;
         }
 
         protected IUserService UserService => NapContextHelper.UserService;
@@ -62,6 +63,16 @@
                 var url = Url.Action("SignIn", "User", new { returnUrl = Request.Url?.AbsolutePath, Area = "" });
 
                 filterContext.Result = Redirect(url);
+            }
+            else
+            {
+                NapUserSetting = context.NapUserSettings.Find(CurrentSession.UserId) ?? new NapUserSetting
+                {
+                    SettingObject = new NapUserSettingObject
+                    {
+                        IsSidebarExpanded = false
+                    }
+                };
             }
         }
 

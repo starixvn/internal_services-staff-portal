@@ -97,7 +97,6 @@
             {
                 Debug.WriteLine(e.Message);
             }
-            
         }
 
         private DirectoryInfo CreateFolder(string folderName)

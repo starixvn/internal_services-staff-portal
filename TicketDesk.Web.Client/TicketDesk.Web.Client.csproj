@@ -391,6 +391,7 @@
     <Compile Include="Controllers\FileManagerController.cs" />
     <Compile Include="Controllers\IdUploaderController.cs" />
     <Compile Include="Areas\Admin\Controllers\LanguagesController.cs" />
+    <Compile Include="Controllers\NapUserSettingController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Controllers\ProjectSettingsController.cs" />
     <Compile Include="Controllers\PushNotificationSettingsController.cs" />

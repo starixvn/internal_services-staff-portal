@@ -2,52 +2,61 @@
 @using TicketDesk.Web.Client.Infrastructure.Extensions
 @model TicketDesk.Web.Client.Models.NavbarViewModel
 
-@Html.Partial("_LogoutModal")
+@{
+    var bodyClass = "";
+    if (!Model.IsSidebarExpanded)
+    {
+        bodyClass = "menu-collapsed";
+    }
+}
 
-<nav class="header fixed-top">
-    <div class="navbar-brand-wrapper">
-        <a id="logo-container" href="/" class="brand-logo">
-            <img src="~/src/contents/images/logo_admin.svg" />
-        </a>
-    </div>
-    <div class="navbar-menu-wrapper">
-        <a href="#" class="toggle-sidebar">
-            <span class="lines"></span>
-        </a>
-        <div class="nav navbar-nav navbar-right">
-            <div class="dropdown user-info">
-                <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <i class="icon-account avatar" aria-hidden="true"></i>
-                    <span class="user-name">@Model.FullName</span>
-                    <i class="icon-arrow-down" aria-hidden="true"></i>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li class="account">
-                        <div class="profile">
-                            <!-- User avatar images
-                            <img class="user-avatar" src="~/Content/Images/TicketDesk-2.5.png" alt="">-->
-                            <!-- Default avatar -->
-                            <span class="avatar-default icon-account"></span>
-                        </div>
-                        <div class="details">
-                            <p class="user-name">@Model.FullName</p>
-                            <p class="designation">@Model.Username</p>
-                        </div>
-                    </li>
-                    <li class="logout">
-                        <a href="#" data-toggle="modal" data-target="#logOut"><span class="icon-logout"></span>@_Layout.LogOut</a>
-                    </li>
-                </ul>
+<body class="@bodyClass">
+
+    @Html.Partial("_LogoutModal")
+
+    <nav class="header fixed-top">
+        <div class="navbar-brand-wrapper">
+            <a id="logo-container" href="/" class="brand-logo">
+                <img src="~/src/contents/images/logo_admin.svg" />
+            </a>
+        </div>
+        <div class="navbar-menu-wrapper">
+            <a href="#" class="toggle-sidebar">
+                <span class="lines"></span>
+            </a>
+            <div class="nav navbar-nav navbar-right">
+                <div class="dropdown user-info">
+                    <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <i class="icon-account avatar" aria-hidden="true"></i>
+                        <span class="user-name">@Model.FullName</span>
+                        <i class="icon-arrow-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li class="account">
+                            <div class="profile">
+                                <!-- User avatar images
+                                <img class="user-avatar" src="~/Content/Images/TicketDesk-2.5.png" alt="">-->
+                                <!-- Default avatar -->
+                                <span class="avatar-default icon-account"></span>
+                            </div>
+                            <div class="details">
+                                <p class="user-name">@Model.FullName</p>
+                                <p class="designation">@Model.Username</p>
+                            </div>
+                        </li>
+                        <li class="logout">
+                            <a href="#" data-toggle="modal" data-target="#logOut"><span class="icon-logout"></span>@_Layout.LogOut</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-
-<nav class="sidebar">
-    <ul>
-        @foreach (var menu in Model.MenuItems)
-        {
+    <nav class="sidebar">
+        <ul>
+            @foreach (var menu in Model.MenuItems)
+            {
                 var menuLink = "#";
                 if (!string.IsNullOrEmpty(menu.Url))
                 {
@@ -56,32 +65,32 @@
 
                 var menuClass = Html.IsActiveRoute(menuLink);
 
-            <li class="menu-section">
-                @if (menu.Children != null && menu.Children.Any())
-                {
-                    <a class="@menuClass menu-item has-sub" data-toggle="collapse" href="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
-                        <span class="icon @menu.IconClass"></span>
-                        <span class="text">@menu.Name</span>
-                        <span class="icon-arrow icon-angle-right"></span>
-                    </a>
-                    <ul class="collapse in" id="collapseExample">
-                        @foreach (var childMenu in menu.Children)
-                        {
-                            var childMenuClass = Html.IsActiveRoute(childMenu.Url);
-                            <li class="sub-menu">
-                                <a href="@childMenu.Url" class="@childMenuClass menu-item"><i class="@childMenu.IconClass"></i><span class="sub-menu-text">@childMenu.Name</span></a>
-                            </li>
-                        }
-                    </ul>
-                }
-                else
-                {
-                    <a href="@menuLink" class="@menuClass menu-item">
-                        <span class="icon @menu.IconClass"></span>
-                        <span class="text">@menu.Name</span>
-                    </a>
-                }
-            </li>
-        }
-    </ul>
-</nav>
+                <li class="menu-section">
+                    @if (menu.Children != null && menu.Children.Any())
+                    {
+                        <a class="@menuClass menu-item has-sub" data-toggle="collapse" href="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+                            <span class="icon @menu.IconClass"></span>
+                            <span class="text">@menu.Name</span>
+                            <span class="icon-arrow icon-angle-right"></span>
+                        </a>
+                        <ul class="collapse in" id="collapseExample">
+                            @foreach (var childMenu in menu.Children)
+                            {
+                                var childMenuClass = Html.IsActiveRoute(childMenu.Url);
+                                <li class="sub-menu">
+                                    <a href="@childMenu.Url" class="@childMenuClass menu-item"><i class="@childMenu.IconClass"></i><span class="sub-menu-text">@childMenu.Name</span></a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <a href="@menuLink" class="@menuClass menu-item">
+                            <span class="icon @menu.IconClass"></span>
+                            <span class="text">@menu.Name</span>
+                        </a>
+                    }
+                </li>
+            }
+        </ul>
+    </nav>
