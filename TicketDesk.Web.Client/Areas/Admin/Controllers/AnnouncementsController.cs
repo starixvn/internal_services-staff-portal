@@ -36,25 +36,6 @@
                 State = null
             };
 
-            ////if (viewModel.Announcements == null)
-            ////{
-            ////    var announcements = _announcementService.GetAnnouncements(viewModel.GetQueryCriteria());
-
-            ////    viewModel.TotalItem = announcements.Count();
-
-            ////    var paginationService = new PaginationService<Announcement, int>();
-
-            ////    // Sort 1 column only
-            ////    var sortDatas = viewModel.SortDatas.Where(x => x.Priority == 0).ToList();
-
-            ////    viewModel.Announcements = paginationService.Pagination(
-            ////        announcements,
-            ////        sortDatas,
-            ////        viewModel.Skipped,
-            ////        viewModel.ItemPerPage)
-            ////        .ToList();
-            ////}
-
             return View(viewModel);
         }
 

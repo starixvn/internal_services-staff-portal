@@ -4,7 +4,6 @@
         sidebar.hovermenu();
         $(".toggle-sidebar").on("click", function () {
             sidebar.toggleMenu();
-           // floatThead.reflowFloatThead();
         });
 
         $("select").select2({
@@ -79,27 +78,7 @@ var bootstrapModalHack = {
     }
 }
 
-var floatThead = {
-    init: function () {
-        var $table = $("table");
-        $table.floatThead({
-            top: 50,
-            scrollContainer: true,
-            autoReflow: true
-        });
-        floatThead.reflowFloatThead();
-    },
-
-    reflowFloatThead: function () {
-        var reflowThead = setInterval(function () { $("table").floatThead('reflow'); }, 0);
-        setTimeout(function () {
-            clearInterval(reflowThead);
-        }, 3000);
-    }
-}
-
 $(document).ready(function () {
     sidebar.init();
     bootstrapModalHack.init();
-    floatThead.init();
 });

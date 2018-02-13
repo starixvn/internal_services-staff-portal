@@ -328,67 +328,14 @@ var announcement = {
     }
 }
 
-var announcementSort = {
-    init: function () {
-        announcementSort.assignSortIcon();
-
-        $(".sort").on("click",
-            function () {
-                // Get column name
-                var colName = $(this).data("col");
-
-                // get list hidden sort direction input
-                var input = $(".sort-direction." + colName);
-
-                // toggle value
-                if ($(input).val() === "True") {
-                    $(input).val("False");
-                } else {
-                    $(input).val("True");
-                }
-
-                // Set input for sort-priority
-                $(".sort-priority").val(1);
-                $(".sort-priority." + colName).val(0);
-
-                // submit form
-                $(input).closest("form").trigger("submit");
-            });
-    },
-
-    assignSortIcon: function () {
-        $(".sort").each(function (index, obj) {
-            var colName = $(obj).data("col");
-            announcementSort.removeSortClass($(obj).parent());
-
-            if ($(".sort-priority." + colName).val() === "0") {
-                var input = $(".sort-direction." + colName);
-                announcementSort.insertSortClass($(obj).parent(), $(input).val() === "True");
-            }
-        });
-    },
-
-    removeSortClass: function (element) {
-        $(element).removeClass("increase");
-        $(element).removeClass("decrease");
-    },
-
-    insertSortClass: function (element, isAsc) {
-        if (isAsc) {
-            $(element).addClass("increase");
-        } else {
-            $(element).addClass("decrease");
-        }
-    }
-}
-
 var listAnnouncement = {
     initDataTable: function ($table) {
         $table.DataTable({
-            pageLength: 10,
+            pageLength: 20,
             paging: true,
             searching: true,
             order: [[0, "asc"]],
+            dom: '<"top"f>rt<".pull-left" l><".pull-right" ip><"clear">',
             columns: [
                 { sortable: false },
                 { sortable: true },
@@ -404,6 +351,19 @@ var listAnnouncement = {
                 headerOffset: 50,
                 header: true
             },
+            lengthMenu: [20, 50, 100],
+            info: true,
+            language: {
+                lengthMenu: 'Page size _MENU_',
+                search: '_INPUT_',
+                searchPlaceholder: 'Search',
+                paginate: {
+                    first: 'First',
+                    last: 'Last',
+                    next: '<i class="icon-next"></i>',
+                    previous: '<i class="icon-back"></i>'
+                }
+            }
         });
     },
 
@@ -415,7 +375,6 @@ var listAnnouncement = {
             success: function (response) {
                 $("#announcement-table").html(response);
                 listAnnouncement.initDataTable($("table.announcement-list"));
-                floatThead.reflowFloatThead();
             },
         });
     },
@@ -426,7 +385,6 @@ $(document).ready(function () {
     modalhandler.init();
     publishAnnouncement.init();
     announcement.init();
-    announcementSort.init();
     listAnnouncement.getListAnnouncement();
     $("form.filter-row").submit(function (e) {
         listAnnouncement.getListAnnouncement();
