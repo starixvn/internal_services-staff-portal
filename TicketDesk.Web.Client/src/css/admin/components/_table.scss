@@ -95,7 +95,7 @@ table.dataTable {
     box-sizing: border-box;
 
     thead th, thead td {
-        padding: 4px 5px;
+        padding: 4px 0;
         text-transform: capitalize;
         background: $secondary-color;
         color: #e3ebff;        
@@ -103,6 +103,7 @@ table.dataTable {
         border-right: 1px solid #c1c1c1;
         border-bottom: 1px solid #c1c1c1;
         font-weight: 400;
+        box-sizing: border-box;
 
         &:first-child {
             border-left: 1px solid #c1c1c1;
@@ -111,6 +112,7 @@ table.dataTable {
 
     tbody td {
         padding: 4px 5px;
+        box-sizing: border-box;
     }
 }
 
@@ -141,6 +143,17 @@ table.dataTable {
         top: 2px;
         font-size: 18px;
         color: #666666;
+    }
+}
+
+.dataTables_length {
+    margin-top: 10px;
+
+    select {
+        padding: 4px;
+        margin-left: 5px;
+        border: 1px solid #cdcdcd;
+        border-radius: 2px;
     }
 }
 

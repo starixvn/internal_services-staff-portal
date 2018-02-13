@@ -502,18 +502,20 @@ main {
 table.dataTable {
   box-sizing: border-box; }
   table.dataTable thead th, table.dataTable thead td {
-    padding: 4px 5px;
+    padding: 4px 0;
     text-transform: capitalize;
     background: #2e4592;
     color: #e3ebff;
     text-align: center;
     border-right: 1px solid #c1c1c1;
     border-bottom: 1px solid #c1c1c1;
-    font-weight: 400; }
+    font-weight: 400;
+    box-sizing: border-box; }
     table.dataTable thead th:first-child, table.dataTable thead td:first-child {
       border-left: 1px solid #c1c1c1; }
   table.dataTable tbody td {
-    padding: 4px 5px; }
+    padding: 4px 5px;
+    box-sizing: border-box; }
 
 .dataTables_wrapper .top {
   position: absolute;
@@ -538,6 +540,14 @@ table.dataTable {
     top: 2px;
     font-size: 18px;
     color: #666666; }
+
+.dataTables_length {
+  margin-top: 10px; }
+  .dataTables_length select {
+    padding: 4px;
+    margin-left: 5px;
+    border: 1px solid #cdcdcd;
+    border-radius: 2px; }
 
 .action-group {
   text-align: center; }
