@@ -203,10 +203,16 @@
             });
         }
 
-        [HttpPost]
-        public ActionResult Delete(int Id)
+        public ActionResult Delete(int id)
         {
-            var announcement = _announcementService.GetAnnouncement(Id);
+            var viewModel = new Announcement { Id = id };
+            return PartialView("_Delete", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Announcement viewModel)
+        {
+            var announcement = _announcementService.GetAnnouncement(viewModel.Id);
 
             var invalidAnnouncement = ReturnInvalidAnnouncement(announcement);
             if (invalidAnnouncement != null)
@@ -216,7 +222,7 @@
 
             if (announcement != null)
             {
-                _announcementService.DeleteAnnouncement(Id);
+                _announcementService.DeleteAnnouncement(viewModel.Id);
             }
 
             return Json(new
