@@ -359,6 +359,7 @@ var listAnnouncement = {
                 lengthMenu: 'Page size _MENU_',
                 search: '_INPUT_',
                 searchPlaceholder: 'Search',
+                emptyTable: 'There is no data',
                 paginate: {
                     first: 'First',
                     last: 'Last',
