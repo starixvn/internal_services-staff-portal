@@ -481,7 +481,7 @@ main {
     .table table tr:hover {
       background: #ffe7db; }
     .table table tr td {
-      line-height: 24px; }
+      line-height: 1.5; }
   .table table th,
   .table table td {
     border: 1px solid #c1c1c1;
@@ -542,12 +542,13 @@ table.dataTable {
       border-color: inherit; }
     .dataTables_wrapper .dataTables_paginate .paginate_button.previous, .dataTables_wrapper .dataTables_paginate .paginate_button.next {
       border: 1px solid #cdcdcd; }
+      .dataTables_wrapper .dataTables_paginate .paginate_button.previous.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.next.disabled:hover {
+        border: 1px solid #cdcdcd;
+        cursor: not-allowed; }
     .dataTables_wrapper .dataTables_paginate .paginate_button.current {
       background: #2e4592;
-      color: #fff !important;
-      border: 0; }
+      color: #fff !important; }
       .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-        border: 0;
         background: #3a57b9;
         color: #fff !important; }
 
@@ -577,6 +578,8 @@ table.dataTable {
     margin-left: 5px;
     border: 1px solid #cdcdcd;
     border-radius: 2px; }
+  .dataTables_length label {
+    font-weight: 500; }
 
 .action-group {
   text-align: center; }
@@ -1098,7 +1101,7 @@ table.dataTable {
       cursor: pointer; }
   .form-group textarea.form-control {
     width: 100% !important;
-    line-height: 1.6; }
+    line-height: 1.5; }
 
 .form-control {
   font-family: inherit;

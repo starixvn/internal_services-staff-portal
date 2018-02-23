@@ -67,7 +67,7 @@
         }
 
         td {
-            line-height: 24px;
+            line-height: 1.5;
         }
     }
 
@@ -161,15 +161,20 @@ table.dataTable {
 
             &.previous, &.next {
                 border: 1px solid #cdcdcd;
+
+                &.disabled:hover {
+                    border: 1px solid #cdcdcd;
+                    cursor: not-allowed;
+                }
             }
 
             &.current {
                 background: #2e4592;
                 color: #fff !important;
-                border: 0;
+                //border: 0;
 
                 &:hover {
-                    border: 0;
+                    //border: 0;
                     background: lighten(#2e4592, 10%);
                     color: #fff !important;
                 }
@@ -210,6 +215,10 @@ table.dataTable {
         margin-left: 5px;
         border: 1px solid #cdcdcd;
         border-radius: 2px;
+    }
+
+    label {
+        font-weight: 500;
     }
 }
 
