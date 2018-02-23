@@ -2,12 +2,19 @@
 {
     using System.Data.Entity.Migrations;
     using System.Web.Mvc;
+    using Domain;
 
     public class NapUserSettingController : BaseController
     {
         public ActionResult SetIsSidebarExpanded(bool isSidebarExpanded)
         {
-            NapUserSetting.SettingObject.IsSidebarExpanded = isSidebarExpanded;
+            var newNapUserSettingObject = new NapUserSettingObject
+            {
+                IsSidebarExpanded = isSidebarExpanded
+                // Copy other properties here
+            };
+
+            NapUserSetting.SettingObject = newNapUserSettingObject;
             if (NapUserSetting.UserId != 0)
             {
                 // Update
