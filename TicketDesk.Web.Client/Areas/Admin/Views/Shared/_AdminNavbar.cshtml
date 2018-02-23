@@ -3,11 +3,7 @@
 @model TicketDesk.Web.Client.Models.NavbarViewModel
 
 @{
-    var bodyClass = "";
-    if (!Model.IsSidebarExpanded)
-    {
-        bodyClass = "menu-collapsed";
-    }
+       var bodyClass = Model.IsSidebarExpanded ? string.Empty : "menu-collapsed";
 }
 
 <body class="@bodyClass">
@@ -94,3 +90,4 @@
             }
         </ul>
     </nav>
+</body>

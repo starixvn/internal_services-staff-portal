@@ -31,13 +31,15 @@
         {
             get => NapContextHelper.CurrentSession;
             set => NapContextHelper.CurrentSession = value;
-        }
+            }
+
 
         protected ICurrentContext CurrentContext
         {
             get => NapContextHelper.CurrentContext;
             set => NapContextHelper.CurrentContext = value;
-        }
+            }
+
 
         protected IUserService UserService => NapContextHelper.UserService;
 
@@ -66,13 +68,17 @@
             }
             else
             {
-                NapUserSetting = context.NapUserSettings.Find(CurrentSession.UserId) ?? new NapUserSetting
+                NapUserSetting = context.NapUserSettings.Find(CurrentSession.UserId);
+                if (NapUserSetting == null)
                 {
-                    SettingObject = new NapUserSettingObject
+                    NapUserSetting = new NapUserSetting
                     {
-                        IsSidebarExpanded = false
-                    }
-                };
+                        SettingObject = new NapUserSettingObject
+                        {
+                            IsSidebarExpanded = false
+                        }
+                    };
+                }
             }
         }
 

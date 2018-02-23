@@ -1,14 +1,10 @@
 ﻿var sidebar = {
     init: function () {
-        sidebar.initSizeBarIsExpaned();
         sidebar.hovermenu();
+        sidebar.initSelect2();
         $(".toggle-sidebar").on("click", function () {
             sidebar.toggleMenu();
             dataTableReflow.setIntervalToReinitFixedHeader();
-        });
-
-        $("select").select2({
-            minimumResultsForSearch: Infinity
         });
 
         $("body").on("click",
@@ -26,13 +22,15 @@
             });
     },
 
-    initSizeBarIsExpaned: function () {
-        var isExpanded = localStorage.getItem("IsSidebarExpanded");
-        if (isExpanded === "true") {
-            sidebar.expandSidebar();
-        } else {
-            sidebar.collapseSidebar();
-        }
+    saveExpandedMenuState: function (isSidebarExpanded) {
+        var url = "/NapUserSetting/SetIsSidebarExpanded?IsSidebarExpanded=" + isSidebarExpanded;
+        $.get(url);
+    },
+
+    initSelect2: function () {
+        $("select").select2({
+            minimumResultsForSearch: Infinity
+        });
     },
 
     toggleMenu: function () {
@@ -46,13 +44,13 @@
     collapseSidebar: function () {
         $("body").addClass("menu-collapsed");
         $(".menu-item.has-sub").attr("href", "#");
-        localStorage.setItem("IsSidebarExpanded", false);
+        sidebar.saveExpandedMenuState(false);
     },
 
     expandSidebar: function () {
         $("body").removeClass("menu-collapsed");
         $(".menu-item.has-sub").attr("href", "#collapseExample");
-        localStorage.setItem("IsSidebarExpanded", true);
+        sidebar.saveExpandedMenuState(true);
     },
 
     hovermenu: function () {

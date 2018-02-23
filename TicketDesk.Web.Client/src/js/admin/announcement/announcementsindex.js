@@ -324,7 +324,6 @@ var announcement = {
         if (data < 10) {
             data = "0" + data;
         }
-
         return data;
     }
 }
@@ -335,7 +334,7 @@ var listAnnouncement = {
             pageLength: 20,
             paging: true,
             searching: true,
-            order: [[0, "asc"]],
+            order: [[1, "asc"]],
             dom: '<"top"f>rt<".pull-left" i><".pull-right" lp><"clear">',
             columns: [
                 { width: "70px", sortable: false },
@@ -371,6 +370,12 @@ var listAnnouncement = {
         });
     },
 
+    initSelect2: function () {
+        $("select").select2({
+            minimumResultsForSearch: Infinity
+        });
+    },
+
     getListAnnouncement: function () {
         $.ajax({
             url: "/Admin/Announcements/AnnouncementList",
@@ -379,6 +384,7 @@ var listAnnouncement = {
             success: function (response) {
                 $("#announcement-table").html(response);
                 listAnnouncement.initDataTable($("table.announcement-list"));
+                listAnnouncement.initSelect2();
             },
         });
     },

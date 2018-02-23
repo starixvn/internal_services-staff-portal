@@ -16,10 +16,12 @@
             else
             {
                 // Add
+                NapUserSetting.UserId = CurrentSession.UserId;
                 context.NapUserSettings.Add(NapUserSetting);
             }
+            context.SaveChanges();
 
-            return Json(true);
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
     }
 }

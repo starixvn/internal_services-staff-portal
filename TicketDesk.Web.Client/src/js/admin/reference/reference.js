@@ -103,11 +103,15 @@
         $(element).parent().parent().remove();
         reference.updateFormFieldsName();
         reference.updateDisabledDates();
+        if (originReference == 0) {
+            reference.setSubmitButtonState();
+        }
     }
 };
 
 var originForm = $("form").serialize();
 var userSubmit = 0;
+var originReference = $(".reference-entry").length;
 reference.initReference();
 
 $("#addReferenceEntry").click(function () {
