@@ -512,6 +512,9 @@
     <Content Include="Scripts\jquery.validate.globalize.js" />
     <Content Include="Scripts\jquery.validate.globalize.min.js" />
     <Content Include="src\contents\images\check.svg" />
+    <Content Include="src\contents\images\sort.png" />
+    <Content Include="src\contents\images\sort_down.png" />
+    <Content Include="src\contents\images\sort_up.png" />
     <Content Include="src\libs\jquery.DataTable\dataTables.fixedHeader.min.js" />
     <Content Include="src\libs\jquery.DataTable\datatables.min.css" />
     <Content Include="src\libs\jquery.DataTable\datatables.min.js" />

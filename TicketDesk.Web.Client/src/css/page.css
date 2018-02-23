@@ -1,5 +1,4 @@
-﻿@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,500,600");
-@font-face {
+﻿@font-face {
   font-family: 'icomoon';
   src: url("../Fonts/iconFont/fonts/icomoon.eot?hant0m");
   src: url("../Fonts/iconFont/fonts/icomoon.eot?hant0m#iefix") format("embedded-opentype"), url("../Fonts/iconFont/fonts/icomoon.ttf?hant0m") format("truetype"), url("../Fonts/iconFont/fonts/icomoon.woff?hant0m") format("woff"), url("../Fonts/iconFont/fonts/icomoon.svg?hant0m#icomoon") format("svg");
@@ -38,8 +37,7 @@ body {
   height: 100vh;
   background: #e6e6ea;
   position: relative;
-  -webkit-box-shadow: 0px 0px 5px #ccc;
-  box-shadow: 0px 0px 5px #ccc;
+  box-shadow: 0 0 5px #ccc;
   /*background-image: url("../contents/images/bg01.png")*/ }
 
 .sticky-header {
@@ -53,6 +51,7 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
+  -moz-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 0 25px;
@@ -63,6 +62,7 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
+  -moz-box-align: center;
   -ms-flex-align: center;
   align-items: center; }
   .logo .img-logo {
@@ -73,6 +73,7 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row;
@@ -474,7 +475,7 @@ tr.header {
   margin-left: 4px;
   border-radius: 2px; }
   .custom-dropdown:after {
-    top: 0px;
+    top: 0;
     padding: 0 10px;
     height: 34px;
     line-height: 34px;

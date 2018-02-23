@@ -3,7 +3,14 @@
     color: $color;
     border: 1px solid $bg;
 
-    &:hover, &:focus {
+    &:focus {
+        color: $color;
+        background: darken($bg, 10%);
+        border-color: darken($bg, 10%);
+        outline: none;
+    }
+
+    &:not(:disabled):hover {
         color: $color;
         background: darken($bg, 10%);
         border-color: darken($bg, 10%);
@@ -11,7 +18,7 @@
     }
 
     &[disabled] {
-        opacity: .8;
+        opacity: .7;
         cursor: not-allowed;
     }
 }

@@ -1,12 +1,9 @@
-﻿@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
-html {
+﻿html {
   font-size: 62.5%; }
 
 body {
   background: #e5e5e9;
-  font-family: Roboto, sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-size: 13px; }
 
@@ -242,8 +239,7 @@ main {
   display: flex;
   align-items: center;
   width: 230px;
-  border-bottom: 1px solid #131923;
-  transition: width 0.3s ease; }
+  border-bottom: 1px solid #131923; }
   .navbar-brand-wrapper .brand-logo {
     color: #ffffff;
     font-size: 1.5rem;
@@ -513,6 +509,12 @@ table.dataTable {
     box-sizing: border-box; }
     table.dataTable thead th:first-child, table.dataTable thead td:first-child {
       border-left: 1px solid #c1c1c1; }
+  table.dataTable thead .sorting {
+    background-image: url(../../contents/images/sort.png); }
+  table.dataTable thead .sorting_desc {
+    background-image: url(../../contents/images/sort_down.png); }
+  table.dataTable thead .sorting_asc {
+    background-image: url(../../contents/images/sort_up.png); }
   table.dataTable tbody td {
     padding: 4px 5px;
     box-sizing: border-box; }
@@ -833,39 +835,54 @@ table.dataTable {
   background: #2e4592;
   color: #fff;
   border: 1px solid #2e4592; }
-  .btn-primary:hover, .btn-primary:focus {
+  .btn-primary:focus {
+    color: #fff;
+    background: #22336b;
+    border-color: #22336b;
+    outline: none; }
+  .btn-primary:not(:disabled):hover {
     color: #fff;
     background: #22336b;
     border-color: #22336b;
     outline: none; }
   .btn-primary[disabled] {
-    opacity: .8;
+    opacity: .7;
     cursor: not-allowed; }
 
 .btn-submit {
   background: #2e4592;
   color: #fff;
   border: 1px solid #2e4592; }
-  .btn-submit:hover, .btn-submit:focus {
+  .btn-submit:focus {
+    color: #fff;
+    background: #22336b;
+    border-color: #22336b;
+    outline: none; }
+  .btn-submit:not(:disabled):hover {
     color: #fff;
     background: #22336b;
     border-color: #22336b;
     outline: none; }
   .btn-submit[disabled] {
-    opacity: .8;
+    opacity: .7;
     cursor: not-allowed; }
 
 .btn-create {
   background: #31a351;
   color: #fff;
   border: 1px solid #31a351; }
-  .btn-create:hover, .btn-create:focus {
+  .btn-create:focus {
+    color: #fff;
+    background: #257c3e;
+    border-color: #257c3e;
+    outline: none; }
+  .btn-create:not(:disabled):hover {
     color: #fff;
     background: #257c3e;
     border-color: #257c3e;
     outline: none; }
   .btn-create[disabled] {
-    opacity: .8;
+    opacity: .7;
     cursor: not-allowed; }
   .btn-create .icon-add {
     font-size: 9px;
@@ -875,26 +892,36 @@ table.dataTable {
   background: #2e4592;
   color: #fff;
   border: 1px solid #2e4592; }
-  .btn-create-modal:hover, .btn-create-modal:focus {
+  .btn-create-modal:focus {
+    color: #fff;
+    background: #22336b;
+    border-color: #22336b;
+    outline: none; }
+  .btn-create-modal:not(:disabled):hover {
     color: #fff;
     background: #22336b;
     border-color: #22336b;
     outline: none; }
   .btn-create-modal[disabled] {
-    opacity: .8;
+    opacity: .7;
     cursor: not-allowed; }
 
 .btn-cancel {
   background: #777777;
   color: #fff;
   border: 1px solid #777777; }
-  .btn-cancel:hover, .btn-cancel:focus {
+  .btn-cancel:focus {
+    color: #fff;
+    background: #5e5e5e;
+    border-color: #5e5e5e;
+    outline: none; }
+  .btn-cancel:not(:disabled):hover {
     color: #fff;
     background: #5e5e5e;
     border-color: #5e5e5e;
     outline: none; }
   .btn-cancel[disabled] {
-    opacity: .8;
+    opacity: .7;
     cursor: not-allowed; }
 
 .btn-browse {
@@ -907,13 +934,18 @@ table.dataTable {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   cursor: pointer; }
-  .btn-browse:hover, .btn-browse:focus {
+  .btn-browse:focus {
+    color: #333;
+    background: #c1bdbd;
+    border-color: #c1bdbd;
+    outline: none; }
+  .btn-browse:not(:disabled):hover {
     color: #333;
     background: #c1bdbd;
     border-color: #c1bdbd;
     outline: none; }
   .btn-browse[disabled] {
-    opacity: .8;
+    opacity: .7;
     cursor: not-allowed; }
   .btn-browse span {
     cursor: pointer; }
@@ -935,13 +967,18 @@ table.dataTable {
   background: #ea1118;
   color: #fff;
   border: 1px solid #ea1118; }
-  .btn-delete:hover, .btn-delete:focus {
+  .btn-delete:focus {
+    color: #fff;
+    background: #ba0e13;
+    border-color: #ba0e13;
+    outline: none; }
+  .btn-delete:not(:disabled):hover {
     color: #fff;
     background: #ba0e13;
     border-color: #ba0e13;
     outline: none; }
   .btn-delete[disabled] {
-    opacity: .8;
+    opacity: .7;
     cursor: not-allowed; }
 
 .btn-publish {
@@ -952,26 +989,36 @@ table.dataTable {
   line-height: 1;
   padding-left: 6px;
   padding-right: 6px; }
-  .btn-publish:hover, .btn-publish:focus {
+  .btn-publish:focus {
+    color: #fff;
+    background: #0581c9;
+    border-color: #0581c9;
+    outline: none; }
+  .btn-publish:not(:disabled):hover {
     color: #fff;
     background: #0581c9;
     border-color: #0581c9;
     outline: none; }
   .btn-publish[disabled] {
-    opacity: .8;
+    opacity: .7;
     cursor: not-allowed; }
 
 .btn-getCurrent {
   background: #586e94;
   color: #fff;
   border: 1px solid #586e94; }
-  .btn-getCurrent:hover, .btn-getCurrent:focus {
+  .btn-getCurrent:focus {
+    color: #fff;
+    background: #455674;
+    border-color: #455674;
+    outline: none; }
+  .btn-getCurrent:not(:disabled):hover {
     color: #fff;
     background: #455674;
     border-color: #455674;
     outline: none; }
   .btn-getCurrent[disabled] {
-    opacity: .8;
+    opacity: .7;
     cursor: not-allowed; }
 
 ::-webkit-input-placeholder {
@@ -1051,7 +1098,8 @@ table.dataTable {
       color: #2e4592;
       cursor: pointer; }
   .form-group textarea.form-control {
-    width: 100% !important; }
+    width: 100% !important;
+    line-height: 1.6; }
 
 .form-control {
   font-family: inherit;

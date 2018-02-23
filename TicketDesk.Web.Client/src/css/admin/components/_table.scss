@@ -94,22 +94,36 @@
 table.dataTable {
     box-sizing: border-box;
 
-    thead th, thead td {
-        padding: 4px 0;
-        text-transform: capitalize;
-        background: $secondary-color;
-        color: #e3ebff;
-        text-align: center;
-        border-right: 1px solid #c1c1c1;
-        border-bottom: 1px solid #c1c1c1;
-        font-weight: 400;
-        box-sizing: border-box;
+    thead {
+        th, td {
+            padding: 4px 0;
+            text-transform: capitalize;
+            background: $secondary-color;
+            color: #e3ebff;
+            text-align: center;
+            border-right: 1px solid #c1c1c1;
+            border-bottom: 1px solid #c1c1c1;
+            font-weight: 400;
+            box-sizing: border-box;
 
-        &:first-child {
-            border-left: 1px solid #c1c1c1;
+            &:first-child {
+                border-left: 1px solid #c1c1c1;
+            }
+        }
+
+        .sorting {
+            background-image: url(../../contents/images/sort.png);
+        }
+
+        .sorting_desc {
+            background-image: url(../../contents/images/sort_down.png);
+        }
+
+        .sorting_asc {
+            background-image: url(../../contents/images/sort_up.png);
         }
     }
-
+    
     tbody td {
         padding: 4px 5px;
         box-sizing: border-box;
@@ -127,7 +141,7 @@ table.dataTable {
     .dataTables_paginate {
         padding: 0;
         margin-top: 10px;
-        margin-left: 10px;        
+        margin-left: 10px;
         border-radius: 2px;
 
         .paginate_button {
@@ -198,8 +212,6 @@ table.dataTable {
         border-radius: 2px;
     }
 }
-
-
 
 // -------------------- Action Group --------------------- //
 
