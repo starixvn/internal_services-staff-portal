@@ -506,7 +506,7 @@ table.dataTable {
     border-right: 1px solid #c1c1c1;
     border-bottom: 1px solid #c1c1c1;
     font-weight: 400;
-    box-sizing: border-box; }
+    box-sizing: content-box; }
     table.dataTable thead th:first-child, table.dataTable thead td:first-child {
       border-left: 1px solid #c1c1c1; }
   table.dataTable thead .sorting {
@@ -516,8 +516,7 @@ table.dataTable {
   table.dataTable thead .sorting_asc {
     background-image: url(../../contents/images/sort_up.png); }
   table.dataTable tbody td {
-    padding: 4px 5px;
-    box-sizing: border-box; }
+    padding: 4px 5px; }
 
 .dataTables_wrapper .top {
   position: absolute;
