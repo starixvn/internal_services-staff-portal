@@ -68,6 +68,7 @@ var dataTableReflow = {
             var $table = $("table").DataTable();
             $table.fixedHeader.disable();
             $table.fixedHeader.enable();
+            $("table>thead").html("");
         }
     },
 
