@@ -348,9 +348,8 @@ var listAnnouncement = {
                 { width: "65px", sortable: false },
             ],
             fixedHeader: {
-                headerOffset: 50,
                 header: true,
-                bScrollCollapse: true
+                headerOffset: 50
             },
             lengthMenu: [20, 50, 100],
             info: true,
@@ -368,6 +367,12 @@ var listAnnouncement = {
             },
             autoWidth: false
         });
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 130 && $('table').length > 2) {
+                $('table:nth(1)').remove();
+            }
+        });
     },
 
     initSelect2: function () {
@@ -382,6 +387,7 @@ var listAnnouncement = {
             method: "get",
             data: $("form.filter-row").serialize(),
             success: function (response) {
+                $("#announcement-table").html('');
                 $("#announcement-table").html(response);
                 listAnnouncement.initDataTable($("table.announcement-list"));
                 listAnnouncement.initSelect2();
