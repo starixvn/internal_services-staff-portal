@@ -68,14 +68,13 @@ var dataTableReflow = {
             var $table = $("table").DataTable();
             $table.fixedHeader.disable();
             $table.fixedHeader.enable();
-            $("table>thead").html("");
         }
     },
 
     setIntervalToReinitFixedHeader: function () {
         setTimeout(function () {
             dataTableReflow.reInitFixedHeader();
-        }, 500)
+        }, 500);
     }
 }
 
