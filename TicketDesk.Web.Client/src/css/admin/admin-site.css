@@ -349,6 +349,7 @@ main {
 .toggle-sidebar {
   display: inline-block;
   padding-left: 10px;
+  padding-right: 20px;
   transition: linear 0.2s; }
   .toggle-sidebar .lines {
     position: relative;
@@ -1113,7 +1114,8 @@ table.dataTable {
       cursor: pointer; }
   .form-group textarea.form-control {
     width: 100% !important;
-    line-height: 1.5; }
+    line-height: 1.5;
+    min-height: 100px; }
 
 .form-control {
   font-family: inherit;
