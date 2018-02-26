@@ -452,7 +452,8 @@ main {
   z-index: 9 !important; }
 
 .table {
-  margin-top: 5px; }
+  margin-top: 5px;
+  margin-bottom: 0; }
   .table table {
     border: 1px solid #c1c1c1;
     border-collapse: collapse;
@@ -535,22 +536,32 @@ table.dataTable {
     border-radius: 0;
     border-top: 1px solid #cdcdcd;
     border-bottom: 1px solid #cdcdcd;
-    border-right: 1px solid #cdcdcd; }
+    border-right: 1px solid #cdcdcd;
+    border-left: 0; }
     .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
       color: #2e4592 !important;
       background: none;
-      border-color: inherit; }
+      border-color: #cdcdcd;
+      border-left: 0; }
+    .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+      box-shadow: none; }
     .dataTables_wrapper .dataTables_paginate .paginate_button.previous, .dataTables_wrapper .dataTables_paginate .paginate_button.next {
       border: 1px solid #cdcdcd; }
       .dataTables_wrapper .dataTables_paginate .paginate_button.previous.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.next.disabled:hover {
         border: 1px solid #cdcdcd;
         cursor: not-allowed; }
+    .dataTables_wrapper .dataTables_paginate .paginate_button.next, .dataTables_wrapper .dataTables_paginate .paginate_button.next:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.next.disabled:hover {
+      border-left: 0; }
     .dataTables_wrapper .dataTables_paginate .paginate_button.current {
       background: #2e4592;
-      color: #fff !important; }
+      color: #fff !important;
+      border-color: #cdcdcd;
+      border-left: 0; }
       .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
         background: #3a57b9;
-        color: #fff !important; }
+        color: #fff !important;
+        border-color: #cdcdcd;
+        border-left: 0; }
 
 .dataTables_filter {
   position: relative; }
@@ -579,7 +590,8 @@ table.dataTable {
     border: 1px solid #cdcdcd;
     border-radius: 2px; }
   .dataTables_length label {
-    font-weight: 500; }
+    font-weight: 500;
+    margin-bottom: 0; }
 
 .action-group {
   text-align: center; }
