@@ -7,7 +7,7 @@
         @foreach (var group in Model)
         {
             <tr class="header">
-                <td colspan="2">@group.Name</td>
+                <td colspan="3">@group.Name</td>
             </tr>
 
             int index = -1;
@@ -38,7 +38,8 @@
                 }
 
                 <tr class="@announcementClass" data-id="@unreadId">
-                    <td class="width-150"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToString("g")</td>
+                    <td class="width-150"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToShortDateString()</td>
+                    <td class="width-150">@announcement.PublishedDateTime.Value.ToShortTimeString()</td>
                     <td class="show-text">@announcement.Message</td>
                 </tr>
             }
