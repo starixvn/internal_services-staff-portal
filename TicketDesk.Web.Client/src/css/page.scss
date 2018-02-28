@@ -14,7 +14,7 @@
 }
 
 .field-validation-error {
-    color: #ea1118;
+    color: #ff3232;
     display: block;
     padding-top: 4px;
 }
@@ -38,7 +38,7 @@ body {
 }
 
 .highlight {
-    color: $primary-color;
+    color: #ff3232;
     text-transform: initial;
 }
 
@@ -1154,7 +1154,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     }
 
     .field-validation-error {
-        color: #ea1118;
+        color: #ff3232;
     }
 
     .input-validation-error, .input-validation-error:focus {
@@ -1428,6 +1428,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
     max-width: 1040px;
     margin: 30px auto auto;
 
@@ -1461,7 +1462,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     li {
         text-align: center;
         padding: 50px 0;
-        width: 260px;
+        width: 30%;
         white-space: nowrap;
 
         @media all and (max-width: 1280px) {

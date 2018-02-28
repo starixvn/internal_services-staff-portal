@@ -9,7 +9,7 @@
   border-color: red; }
 
 .field-validation-error {
-  color: #ea1118;
+  color: #ff3232;
   display: block;
   padding-top: 4px; }
 
@@ -29,7 +29,7 @@ body {
   overflow: hidden; }
 
 .highlight {
-  color: #bf141a;
+  color: #ff3232;
   text-transform: initial; }
 
 .page-container {
@@ -841,7 +841,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   min-height: 40px; }
 
 .attach-file .field-validation-error {
-  color: #ea1118; }
+  color: #ff3232; }
 
 .attach-file .input-validation-error, .attach-file .input-validation-error:focus {
   outline: none; }
@@ -1061,6 +1061,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
   max-width: 1040px;
   margin: 30px auto auto; }
   @media all and (max-width: 1280px) {
@@ -1084,7 +1085,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   .extend-menu li {
     text-align: center;
     padding: 50px 0;
-    width: 260px;
+    width: 30%;
     white-space: nowrap; }
     @media all and (max-width: 1280px) {
       .extend-menu li {
