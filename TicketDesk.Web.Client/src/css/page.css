@@ -9,7 +9,7 @@
   border-color: red; }
 
 .field-validation-error {
-  color: #ff0000;
+  color: #ea1118;
   display: block;
   padding-top: 4px; }
 
@@ -210,39 +210,51 @@ body {
     margin-bottom: 15px; }
   .home-main .sign {
     position: relative;
-    display: flex;
+    display: inline-block;
     float: left;
-    justify-content: center;
-    align-items: center;
     width: 18px;
     height: 18px;
     margin-right: 10px;
-    background: #333;
+    background: #878787;
     text-align: center;
     border-radius: 2px;
-    cursor: pointer; }
+    cursor: pointer;
+    -webkit-transition: -webkit-transform ease .3s;
+    transition: -webkit-transform ease .3s;
+    transition: transform ease .3s;
+    transition: transform ease .3s, -webkit-transform ease .3s; }
     .home-main .sign:before, .home-main .sign:after {
       content: '';
       position: absolute;
+      left: 50%;
+      top: 50%;
+      background: #fff; }
+    .home-main .sign:before {
+      margin-top: -1px;
+      margin-left: -4px;
       width: 8px;
-      height: 2px;
-      background: #fff;
-      transform: rotate(0);
-      transition: transform .2s ease;
-      transform-origin: center center; }
-  .home-main .expand .sign:before {
-    transform: rotate(90deg); }
-  .home-main .expand.sign:before {
-    transform: rotate(90deg); }
-  .home-main .expanded.sign:before {
-    transform: rotate(0); }
+      height: 2px; }
+    .home-main .sign:after {
+      margin-left: -1px;
+      margin-top: -4px;
+      width: 2px;
+      height: 8px;
+      -webkit-transition: -webkit-transform ease .3s;
+      transition: -webkit-transform ease .3s;
+      transition: transform ease .3s;
+      transition: transform ease .3s, -webkit-transform ease .3s; }
+  .home-main .unread .sign {
+    background: #333; }
+  .home-main .expanded.sign:after {
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg); }
   .home-main .header .sign {
     background: #2e4592; }
 
 .msg-important {
   color: #bf141a; }
   .msg-important .sign {
-    background: #bf141a; }
+    background: #bf141a !important; }
 
 .feature {
   border-radius: 0; }
@@ -284,80 +296,66 @@ body {
   .table table.id, .table tr.id, .table td.id, .table th.id {
     width: 120px; }
 
-.table.table-bordered > thead > tr > th {
+.table-bordered > thead > tr > th {
   background: #ececec;
   color: #2e4592; }
 
-.table.table-bordered tr.header td {
+.table-bordered tr.header td {
   background: #d5def7;
   color: #2e4592;
   text-transform: uppercase;
   font-weight: 700; }
-  .table.table-bordered tr.header td .number-ticket {
+  .table-bordered tr.header td .number-ticket {
     color: #bf141a;
     font-weight: 600; }
 
-.table.table-bordered tr td .id-ticket {
+.table-bordered tr td .id-ticket {
   color: #0060ff; }
-  .table.table-bordered tr td .id-ticket:hover {
+  .table-bordered tr td .id-ticket:hover {
     text-decoration: underline; }
 
-.table.table-bordered tr.even td {
-  background: #f2f2f2; }
+.table-bordered.tbl-announcement .date {
+  width: 130px; }
 
-.table.table-bordered.tbl-announcement tr.header {
-  pointer-events: none; }
+.table-bordered.tbl-announcement .time {
+  width: 85px; }
 
-.table.table-bordered.tbl-announcement tr.expand td {
-  font-weight: normal; }
+.table-bordered.tbl-announcement tr {
+  cursor: pointer; }
+  .table-bordered.tbl-announcement tr:nth-child(even) {
+    background: #f2f2f2; }
+  .table-bordered.tbl-announcement tr.header {
+    pointer-events: none; }
+  .table-bordered.tbl-announcement tr.expand td {
+    font-weight: normal; }
 
-.table.table-bordered.tbl-announcement tbody > tr > td {
+.table-bordered.tbl-announcement tbody > tr > td {
   border: none;
-  border-bottom: 1px solid #d3d7db; }
+  border-bottom: 1px solid #d3d7db;
+  border-right: 1px solid #d3d7db; }
 
-.table.table-bordered.tbl-announcement tr.unread {
+.table-bordered.tbl-announcement tr.unread {
   font-weight: 700; }
 
-.table.table-bordered.tbl-announcement tr.error td {
+.table-bordered.tbl-announcement tr.error td {
   color: #bf141a; }
-  .table.table-bordered.tbl-announcement tr.error td .sign:after {
+  .table-bordered.tbl-announcement tr.error td .sign:after {
     background: #bf141a;
     color: #fff; }
 
-.table.table-bordered.tbl-announcement tr.success td {
+.table-bordered.tbl-announcement tr.success td {
   color: #65d26d;
   background: initial; }
-  .table.table-bordered.tbl-announcement tr.success td .sign:after {
+  .table-bordered.tbl-announcement tr.success td .sign:after {
     background: #65d26d;
     color: #fff; }
 
-/*.panel-body {
-    table, tr, td, th {
-        border-collapse: collapse;
-        color: $text-color;
-    }
-}*/
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
   padding: 9px 8px; }
 
 tr.header {
   cursor: pointer; }
 
-/*.header .sign:after {
-    content: "\2013";
-    display: inline-block;
-    color: $text-second-color;
-    background: $title-form-bg;
-    text-align: center;
-    vertical-align: middle;
-    width: 18px;
-    height: 18px;
-    line-height: 16px;
-}
-
-.header.expand .sign:after {
-    content: "\002b";
-}*/
 .tbl-content {
   width: 100%;
   background: #fff;
@@ -538,19 +536,25 @@ tr.header {
     .custom-dropdown .c-button:not(:disabled) {
       cursor: pointer; }
   .custom-dropdown .c-button--dropdown {
-    padding: 10px 40px 10px 8px;
+    padding: 10px 42px 10px 8px;
     background-color: #fff;
     line-height: 1;
     min-height: 34px;
-    border-radius: 2px;
     transition: background-color .2s linear; }
-    .custom-dropdown .c-button--dropdown:hover {
-      background-color: #f2f2f2; }
+    .custom-dropdown .c-button--dropdown:before {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 32px;
+      background: #e8e8e8;
+      border-left: 1px solid #999; }
     .custom-dropdown .c-button--dropdown:after {
       content: "";
       position: absolute;
       top: 15px;
-      right: 11px;
+      right: 10px;
       width: 0;
       height: 0;
       border: 5px solid transparent;
@@ -837,7 +841,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   min-height: 40px; }
 
 .attach-file .field-validation-error {
-  color: #ff0000; }
+  color: #ea1118; }
 
 .attach-file .input-validation-error, .attach-file .input-validation-error:focus {
   outline: none; }

@@ -14,7 +14,7 @@
 }
 
 .field-validation-error {
-    color: #ff0000;
+    color: #ea1118;
     display: block;
     padding-top: 4px;
 }
@@ -281,42 +281,56 @@ body {
 
     .sign {
         position: relative;
-        display: flex;
+        display: inline-block;
         float: left;
-        justify-content: center;
-        align-items: center;
         width: 18px;
         height: 18px;
         margin-right: 10px;
-        background: #333;
+        background: #878787;
         text-align: center;
         border-radius: 2px;
         cursor: pointer;
+        -webkit-transition: -webkit-transform ease .3s;
+        transition: -webkit-transform ease .3s;
+        transition: transform ease .3s;
+        transition: transform ease .3s, -webkit-transform ease .3s;
 
         &:before, &:after {
             content: '';
             position: absolute;
+            left: 50%;
+            top: 50%;
+            background: #fff;
+        }
+
+        &:before {
+            margin-top: -1px;
+            margin-left: -4px;
             width: 8px;
             height: 2px;
-            background: #fff;
-            transform: rotate(0);
-            transition: transform .2s ease;
-            transform-origin: center center;
+        }
+
+        &:after {
+            margin-left: -1px;
+            margin-top: -4px;
+            width: 2px;
+            height: 8px;
+            -webkit-transition: -webkit-transform ease .3s;
+            transition: -webkit-transform ease .3s;
+            transition: transform ease .3s;
+            transition: transform ease .3s, -webkit-transform ease .3s;
         }
     }
 
-    .expand .sign {
-        &:before {
-            transform: rotate(90deg);
+    .unread .sign {
+        background: #333;
+    }
+
+    .expanded.sign {
+        &:after {
+            -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg);
         }
-    }
-
-    .expand.sign:before {
-        transform: rotate(90deg);
-    }
-
-    .expanded.sign:before {
-        transform: rotate(0);
     }
 
     .header .sign {
@@ -328,7 +342,7 @@ body {
     color: #bf141a;
 
     .sign {
-        background: #bf141a;
+        background: #bf141a !important;
     }
 }
 
@@ -393,51 +407,63 @@ body {
     }
 }
 
-.table.table-bordered {
+.table-bordered {
     > thead > tr > th {
         background: #ececec;
         color: $title-form-bg;
     }
 
-    tr.header td {
-        background: #d5def7;
-        color: $title-form-bg;
-        text-transform: uppercase;
-        font-weight: 700;
+    tr {
+        &.header td {
+            background: #d5def7;
+            color: $title-form-bg;
+            text-transform: uppercase;
+            font-weight: 700;
 
-        .number-ticket {
-            color: $primary-color;
-            font-weight: 600;
+            .number-ticket {
+                color: $primary-color;
+                font-weight: 600;
+            }
         }
-    }
 
-    tr td .id-ticket {
-        color: #0060ff;
+        td .id-ticket {
+            color: #0060ff;
 
-        &:hover {
-            text-decoration: underline;
+            &:hover {
+                text-decoration: underline;
+            }
         }
-    }
-
-    tr.even td {
-        background: #f2f2f2;
     }
 
     &.tbl-announcement {
-        tr.header {
-            pointer-events: none;
+        .date {
+            width: 130px;
         }
 
-        tr.expand td {
-            font-weight: normal;
+        .time {
+            width: 85px;
         }
 
+        tr {
+            cursor: pointer;
 
+            &:nth-child(even) {
+                background: #f2f2f2;
+            }
+
+            &.header {
+                pointer-events: none;
+            }
+
+            &.expand td {
+                font-weight: normal;
+            }
+        }
 
         tbody > tr > td {
             border: none;
             border-bottom: 1px solid $border-color;
-            //font-weight: 700;
+            border-right: 1px solid $border-color;
         }
 
         tr.unread {
@@ -465,13 +491,6 @@ body {
     }
 }
 
-/*.panel-body {
-    table, tr, td, th {
-        border-collapse: collapse;
-        color: $text-color;
-    }
-}*/
-
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
     padding: 9px 8px;
 }
@@ -480,21 +499,6 @@ tr.header {
     cursor: pointer;
 }
 
-/*.header .sign:after {
-    content: "\2013";
-    display: inline-block;
-    color: $text-second-color;
-    background: $title-form-bg;
-    text-align: center;
-    vertical-align: middle;
-    width: 18px;
-    height: 18px;
-    line-height: 16px;
-}
-
-.header.expand .sign:after {
-    content: "\002b";
-}*/
 .tbl-content {
     width: 100%;
     background: #fff;
@@ -758,22 +762,33 @@ tr.header {
     }
 
     .c-button--dropdown {
-        padding: 10px 40px 10px 8px;
+        padding: 10px 42px 10px 8px;
         background-color: #fff;
         line-height: 1;
         min-height: 34px;
-        border-radius: 2px;
+        //border-radius: 2px;
         transition: background-color .2s linear;
 
         &:hover {
-            background-color: #f2f2f2;
+            //background-color: #f2f2f2;
+        }
+
+        &:before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 32px;
+            background: #e8e8e8;
+            border-left: 1px solid #999;
         }
 
         &:after {
             content: "";
             position: absolute;
             top: 15px;
-            right: 11px;
+            right: 10px;
             width: 0;
             height: 0;
             border: 5px solid transparent;
@@ -1139,7 +1154,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     }
 
     .field-validation-error {
-        color: #ff0000;
+        color: #ea1118;
     }
 
     .input-validation-error, .input-validation-error:focus {
