@@ -6,39 +6,25 @@
     <tbody>
         @foreach (var group in Model)
         {
-            <tr class="header">
-                <td colspan="3">@group.Name</td>
-            </tr>
-
-            int index = -1;
             foreach (var announcement in group.Announcements)
             {
-                index++;
 
                 bool isImportant = announcement.Status == AnnouncementStatus.Important;
-                bool isEven = index % 2 == 1;
 
-                string announcementClass = "";
+                string announcementClass = "announcement-msg";
                 int unreadId = !announcement.IsRead ? announcement.Id : 0;
                 if (isImportant)
                 {
                     announcementClass += " msg-important";
                 }
-                if (isEven)
-                {
-                    announcementClass += " even";
-                }
+               
                 if (!announcement.IsRead)
                 {
                     announcementClass += " unread";
                 }
-                if (announcement.Message.Length > 50)
-                {
-                    announcementClass += " announcement-detail";
-                }
 
                 <tr class="@announcementClass" data-id="@unreadId">
-                    <td class="width-150"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToShortDateString()</td>
+                    <td class="width-150"><span class="sign expand"></span>@announcement.PublishedDateTime.Value.ToShortDateString()</td>
                     <td class="width-150">@announcement.PublishedDateTime.Value.ToShortTimeString()</td>
                     <td class="show-text">@announcement.Message</td>
                 </tr>

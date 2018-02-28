@@ -27,44 +27,78 @@ var hiddenText = {
 
         $(".show-text").each(function () {
             var content = $(this).html();
-
+            var html = "";
             if (content.length > showChar) {
                 var cont = content.substr(0, showChar);
                 var restOfTheText = content.substr(showChar, content.length - showChar);
 
-                var html = cont +
+                html = cont +
                     '<span class="dots">' +
                     dots +
                     '</span><span class="morecontent hide">' +
                     restOfTheText +
                     "</span>";
 
-                $(this).html(html);
-
-                $(this).parent().find(".sign").addClass("expand");
             } else {
-                $(this).parent().find(".sign").addClass("disabled");
+                html = content +
+                    '<span class="dots">' +
+                    dots +
+                    '</span>';
             }
+            $(this).html(html);
+
+            
         });
 
-        $(".announcement-detail").on("click",
+        function AddRemoveClassFromElement(element, classForElement) {
+            if ($(element).hasClass(classForElement)) {
+                $(element).removeClass(classForElement);
+            } else {
+                $(element).addClass(classForElement);
+            }
+        };
+
+        $(".announcement-msg").on("click",
             function () {
                 var element = $(this).find(".morecontent");
                 var dots = $(this).find(".dots");
-                if ($(element).hasClass("hide")) {
-                    $(element).removeClass("hide");
-                    $(dots).addClass("hide");
-                    $(this).addClass("expanded");
-                } else {
-                    $(element).addClass("hide");
-                    $(dots).removeClass("hide");
-                    $(this).removeClass("expanded");
-                }
+                var sign = $(this).find(".sign");
+
+                AddRemoveClassFromElement(dots, "hide");
+
+                AddRemoveClassFromElement(element, "hide");
+
+                AddRemoveClassFromElement(sign, "expanded");
             });
     }
 }
 
 var readAnnouncement = {
+    btnUnreadFilterHandler: function () {
+        $(".btn-unread").on("click", function () {
+            var btn = $(this);
+            if (!$(btn).hasClass("unread-only")) {
+                $(btn).addClass("unread-only");
+                readAnnouncement.filterUnreadAnnouncements(true);
+            } else {
+                $(btn).removeClass("unread-only");
+                readAnnouncement.filterUnreadAnnouncements(false);
+            }
+        });
+    },
+
+    filterUnreadAnnouncements: function (unreadOnly) {
+        $(".announcement-msg").each(function (i, e) {
+            if (!$(e).hasClass("unread")) {
+                if (unreadOnly) {
+                    $(e).css("display", "none");
+                } else {
+                    $(e).css("display", "table-row");
+                }
+            }
+        });
+    },
+
     setReadAnnouncement: function () {
         $(".unread").on("click", function () {
             var currentAnnouncement = $(this);
@@ -88,4 +122,5 @@ $(document).ready(function () {
     collapseTable.init();
     hiddenText.init();
     readAnnouncement.setReadAnnouncement();
+    readAnnouncement.btnUnreadFilterHandler();
 });
