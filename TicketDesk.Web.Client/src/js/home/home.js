@@ -20,16 +20,15 @@
 };
 
 var hiddenText = {
-    init: function() {
+    init: function () {
         // 250 characters are shown by default
         var showChar = 50;
         var dots = ".... ";
-        
-        $(".show-text").each(function() {
+
+        $(".show-text").each(function () {
             var content = $(this).html();
 
             if (content.length > showChar) {
-
                 var cont = content.substr(0, showChar);
                 var restOfTheText = content.substr(showChar, content.length - showChar);
 
@@ -48,10 +47,10 @@ var hiddenText = {
             }
         });
 
-        $(".expand").on("click",
-            function() {
-                var element = $(this).parent().parent().find(".morecontent");
-                var dots = $(this).parent().parent().find(".dots");
+        $(".announcement-detail").on("click",
+            function () {
+                var element = $(this).find(".morecontent");
+                var dots = $(this).find(".dots");
                 if ($(element).hasClass("hide")) {
                     $(element).removeClass("hide");
                     $(dots).addClass("hide");
@@ -65,7 +64,28 @@ var hiddenText = {
     }
 }
 
-$(document).ready(function() {
+var readAnnouncement = {
+    setReadAnnouncement: function () {
+        $(".unread").on("click", function () {
+            var currentAnnouncement = $(this);
+            var id = currentAnnouncement.data("id");
+            var url = "/NapUserSetting/SaveUnreadAnnouncement/" + id;
+            if (id > 0) {
+                $.get(url, function (response) {
+                    if (response) {
+                        currentAnnouncement.removeClass("unread");
+                        currentAnnouncement.attr("data-id", 0);
+                        var unreadAnnouncement = parseInt($(".unread-announcements").text());
+                        $(".unread-announcements").text(unreadAnnouncement - 1);
+                    }
+                });
+            }
+        });
+    }
+};
+
+$(document).ready(function () {
     collapseTable.init();
     hiddenText.init();
+    readAnnouncement.setReadAnnouncement();
 });

@@ -50,7 +50,7 @@
                 homeViewModel = new HomeViewModel
                 {
                     MyOpenningIssues = new MyOpenningIssues(),
-                    AnnouncementGroups = new List<AnnouncementGroup>()
+                    Annoucements = new AnnouncementViewModel()
                 };
             }
 
@@ -58,7 +58,7 @@
                 Context.Tickets.Count(x => x.CreatedBy == CurrentSession.UserId.ToString());
 
             PopulateHomeTickets(homeViewModel.MyOpenningIssues);
-            homeViewModel.AnnouncementGroups = PopulateHomeAnnouncements();
+            homeViewModel.Annoucements = PopulateHomeAnnouncements();
 
             return View(homeViewModel);
         }
@@ -82,7 +82,7 @@
             myOpenningIssues.TicketGroups = PrepareTicketGroups(categories, tickets);
         }
 
-        private IList<AnnouncementGroup> PopulateHomeAnnouncements()
+        private AnnouncementViewModel PopulateHomeAnnouncements()
         {
             var result = new List<AnnouncementGroup>();
 
@@ -98,12 +98,21 @@
             var announcements = paginationService.Pagination(availableAnnouncements, x => x.PublishedDateTime, 0, 10)
                 .GroupBy(x => x.PublishedDateTime?.Date)
                 .OrderByDescending(x => x.Key);
-
+            var unreadAnnouncementQuantity = 0;
             foreach (var group in announcements)
             {
                 if (group.Key == null)
                 {
                     continue;
+                }
+
+                foreach (var announcement in group)
+                {
+                    SetIsReadAnnouncement(announcement);
+                    if (!announcement.IsRead)
+                    {
+                        unreadAnnouncementQuantity++;
+                    }
                 }
 
                 var announcementGroup = new AnnouncementGroup
@@ -114,8 +123,25 @@
 
                 result.Add(announcementGroup);
             }
+            var anouncementViewModel = new AnnouncementViewModel
+            {
+                UnreadAnnouncementQuatity = unreadAnnouncementQuantity,
+                AnnouncementGroups = result
+            };
 
-            return result;
+            return anouncementViewModel;
+        }
+
+        private void SetIsReadAnnouncement(Announcement announcement)
+        {
+            if (NapUserSetting.SettingObject.ReadAnnouncements != null)
+            {
+                var readAnnouncements = NapUserSetting.SettingObject.ReadAnnouncements.Split(',');
+                if (Array.Exists(readAnnouncements, e => e == announcement.Id.ToString()))
+                {
+                    announcement.IsRead = true;
+                }
+            }
         }
 
         private IList<TicketGroup> PrepareTicketGroups(IList<TicketCategory> categories, IEnumerable<IGrouping<int, Ticket>> tickets)

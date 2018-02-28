@@ -25,10 +25,10 @@
     <div class="feature">
         <div class="panel-heading text-info">
             <span>@Resources.Views_Home_Index_Announcements</span>
-            <button class="btn btn-unread" type="button">Unread<span class="text-red"> (3)</span></button>
+            <button class="btn btn-unread" type="button">Unread<span class="text-red">(<span class="unread-announcements">@Model.Annoucements.UnreadAnnouncementQuatity</span>)</span></button>
         </div>
         <div class="panel-body">
-            @Html.Partial("_Announcement", Model.AnnouncementGroups)
+            @Html.Partial("_Announcement", Model.Annoucements.AnnouncementGroups)
         </div>
     </div>
 </div>

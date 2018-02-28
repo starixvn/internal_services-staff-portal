@@ -55,5 +55,8 @@
         public DateTime LastModified { get; set; }
 
         public string ModifiedBy { get; set; }
+
+        [NotMapped]
+        public bool IsRead { get; set; }
     }
 }

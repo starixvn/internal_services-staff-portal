@@ -1,5 +1,4 @@
-﻿@using TicketDesk.Domain.Model
-@using TicketDesk.Localization.Client
+﻿@using TicketDesk.Localization.Client
 @using TicketDesk.Core.Enumerations
 @model IList<TicketDesk.Web.Client.Models.Home.AnnouncementGroup>
 
@@ -20,6 +19,7 @@
                 bool isEven = index % 2 == 1;
 
                 string announcementClass = "";
+                int unreadId = !announcement.IsRead ? announcement.Id : 0;
                 if (isImportant)
                 {
                     announcementClass += " msg-important";
@@ -28,8 +28,16 @@
                 {
                     announcementClass += " even";
                 }
+                if (!announcement.IsRead)
+                {
+                    announcementClass += " unread";
+                }
+                if (announcement.Message.Length > 50)
+                {
+                    announcementClass += " announcement-detail";
+                }
 
-                <tr class="@announcementClass">
+                <tr class="@announcementClass" data-id="@unreadId">
                     <td class="width-150"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToString("g")</td>
                     <td class="show-text">@announcement.Message</td>
                 </tr>
