@@ -313,7 +313,9 @@ body {
 
 .table.table-bordered.tbl-announcement tbody > tr > td {
   border: none;
-  border-bottom: 1px solid #d3d7db;
+  border-bottom: 1px solid #d3d7db; }
+
+.table.table-bordered.tbl-announcement tr.unread {
   font-weight: 700; }
 
 .table.table-bordered.tbl-announcement tr.error td {

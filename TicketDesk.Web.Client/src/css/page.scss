@@ -432,12 +432,17 @@ body {
             font-weight: normal;
         }
 
+
+
         tbody > tr > td {
             border: none;
             border-bottom: 1px solid $border-color;
-            font-weight: 700;
+            //font-weight: 700;
         }
 
+        tr.unread {
+            font-weight: 700;
+        }
 
         tr.error td {
             color: $primary-color;
