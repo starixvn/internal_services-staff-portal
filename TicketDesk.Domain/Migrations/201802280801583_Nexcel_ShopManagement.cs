@@ -18,6 +18,8 @@ namespace TicketDesk.Domain.Migrations
                         ContactNumber = c.String(maxLength: 20),
                         Email = c.String(maxLength: 254),
                         Address = c.String(maxLength: 500),
+                        LastUpdatedBy = c.String(),
+                        LastUpdatedDate = c.DateTime(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);

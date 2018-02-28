@@ -1,6 +1,6 @@
 ﻿using TicketDesk.Core.Enumerations;
 
-namespace TicketDesk.Web.Client.Areas.Admin.Models.Shop
+namespace TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement
 {
     public class ShopManagementViewModel
     {

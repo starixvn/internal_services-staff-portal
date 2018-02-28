@@ -284,9 +284,9 @@
     <Compile Include="Migrations\201802130412100_Nexcel_NapUserSetting.Designer.cs">
       <DependentUpon>201802130412100_Nexcel_NapUserSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802280744220_Nexcel_ShopManagement.cs" />
-    <Compile Include="Migrations\201802280744220_Nexcel_ShopManagement.Designer.cs">
-      <DependentUpon>201802280744220_Nexcel_ShopManagement.cs</DependentUpon>
+    <Compile Include="Migrations\201802280801583_Nexcel_ShopManagement.cs" />
+    <Compile Include="Migrations\201802280801583_Nexcel_ShopManagement.Designer.cs">
+      <DependentUpon>201802280801583_Nexcel_ShopManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
@@ -449,8 +449,8 @@
     <EmbeddedResource Include="Migrations\201802130412100_Nexcel_NapUserSetting.resx">
       <DependentUpon>201802130412100_Nexcel_NapUserSetting.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802280744220_Nexcel_ShopManagement.resx">
-      <DependentUpon>201802280744220_Nexcel_ShopManagement.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802280801583_Nexcel_ShopManagement.resx">
+      <DependentUpon>201802280801583_Nexcel_ShopManagement.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

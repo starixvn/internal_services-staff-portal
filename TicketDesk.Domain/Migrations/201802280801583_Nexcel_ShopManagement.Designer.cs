@@ -13,7 +13,7 @@ namespace TicketDesk.Domain.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201802280744220_Nexcel_ShopManagement"; }
+            get { return "201802280801583_Nexcel_ShopManagement"; }
         }
         
         string IMigrationMetadata.Source

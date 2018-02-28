@@ -6,10 +6,10 @@
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using Models.Shop;
+    using Models.ShopManagement;
 
     [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Read)]
-    public class ShopController : BaseController
+    public class ShopManagementController : BaseController
     {
         // GET: Admin/Shop
         public ActionResult Index()

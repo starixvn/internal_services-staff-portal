@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Domain.Model
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -33,6 +34,10 @@
         [Display(Name = "Shop Address")]
         [StringLength(500, ErrorMessage = "{0} must under {1} characters")]
         public string Address { get; set; }
+
+        public string LastUpdatedBy { get; set; }
+
+        public DateTime LastUpdatedDate { get; set; }
 
         public bool IsActive { get; set; }
     }
