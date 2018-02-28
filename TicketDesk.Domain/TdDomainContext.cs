@@ -1,6 +1,5 @@
 namespace TicketDesk.Domain
 {
-    using Model;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -9,6 +8,7 @@ namespace TicketDesk.Domain
     using System.Data.Entity.Validation;
     using System.Linq;
     using System.Threading.Tasks;
+    using Model;
     using TicketDesk.Localization.Domain;
 
     public sealed class TdDomainContext : DbContext
@@ -97,6 +97,8 @@ namespace TicketDesk.Domain
         public DbSet<Announcement> Announcements { get; set; }
 
         public DbSet<Reference> References { get; set; }
+
+        public DbSet<ShopManagement> ShopManagement { get; set; }
 
         public DbSet<NapUserSetting> NapUserSettings { get; set; }
 

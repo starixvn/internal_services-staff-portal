@@ -1,0 +1,30 @@
+﻿@model TicketDesk.Web.Client.Areas.Admin.Models.Shop.ShopManagementViewModel
+
+@{
+    ViewBag.Title = "Shop Management";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="page-title">@ViewBag.Title</h2>
+
+<section class="filter-form">
+    @using (Html.BeginForm("Index", "Shop", FormMethod.Get, new { @class = "filter-row" }))
+    {
+        <div class="date-time">
+            @Html.LabelFor(x => x.ShopName)
+            <div class="date-time">
+                @Html.TextBoxFor(x => x.ShopName, new { @class = "datepicker start form-control" })
+                <span class="icon-calendar"></span>
+            </div>
+        </div>
+
+        <div class="dropdown-small">
+            @Html.LabelFor(x => x.IsActive)
+            @Html.EnumDropDownListFor(x => x.IsActive, new { @class = "form-control" })
+        </div>
+
+        <div class="button-filter">
+            <button type="submit" class="btn btn-submit">Submit</button>
+        </div>
+    }
+</section>

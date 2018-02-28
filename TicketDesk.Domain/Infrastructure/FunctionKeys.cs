@@ -31,7 +31,8 @@
         public const string References = "References";
         public const string Languages = "Languages";
         public const string CustomFields = "CustomFields";
+        public const string ShopManagement = "ShopManagement";
 
-        #endregion
+        #endregion Admin
     }
 }

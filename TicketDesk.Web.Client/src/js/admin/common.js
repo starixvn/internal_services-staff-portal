@@ -50,6 +50,7 @@
     expandSidebar: function () {
         $("body").removeClass("menu-collapsed");
         $(".menu-item.has-sub").attr("href", "#collapseExample");
+        $("#collapseExample").css("height", "auto !important");
         sidebar.saveExpandedMenuState(true);
     },
 

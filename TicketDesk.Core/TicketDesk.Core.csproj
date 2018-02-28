@@ -105,6 +105,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enumerations\ActiveState.cs" />
     <Compile Include="Enumerations\AnnouncementState.cs" />
     <Compile Include="Enumerations\AnnouncementStatus.cs" />
     <Compile Include="Enumerations\CustomFieldTypeEnum.cs" />
