@@ -105,10 +105,14 @@ table.dataTable {
             border-right: 1px solid #c1c1c1;
             border-bottom: 1px solid #c1c1c1;
             font-weight: 400;
-            box-sizing: content-box;
+            box-sizing: border-box;
 
             &:first-child {
                 border-left: 1px solid #c1c1c1;
+            }
+
+            &:last-child {
+                border-right: 0;
             }
         }
 
@@ -124,10 +128,10 @@ table.dataTable {
             background-image: url(../../contents/images/sort_up.png);
         }
     }
-    
+
     tbody td {
         padding: 4px 5px;
-        //box-sizing: border-box;
+        box-sizing: border-box;
     }
 }
 
@@ -495,13 +499,44 @@ table.dataTable {
     .last-modified,
     .modified-by {
         white-space: nowrap;
-        //position: relative;
+
         span {
             display: inline-block;
             float: left;
-            padding-left: 2.2rem;
         }
     }
+
+    .id span {
+        padding-left: 2.5rem;
+    }
+
+    .published-date span,
+    .last-modified span {
+        padding-left: 1.8rem;
+    }
+
+    .modified-by span {
+        padding-left: 1rem;
+    }
+
+    /*@media screen and (max-width: 1199px) {
+        .id span {
+            padding-left: 2rem;
+        }
+
+        .published-date span,
+        .last-modified span {
+            padding-left: 1.4rem;
+        }
+
+        .modified-by span {
+            padding-left: .6rem;
+        }
+
+        .announcement {
+            padding-right: 1rem;
+        }
+    }*/
 
     .increase {
         .sort {
@@ -563,23 +598,23 @@ table.dataTable {
     }
 
     .id, .number {
-        width: 70px;
+        width: 65px;
     }
 
     .published-date {
-        width: 160px;
+        width: 140px;
     }
 
     .last-modified {
-        width: 160px;
+        width: 140px;
     }
 
     .modified-by {
-        width: 120px;
+        width: 100px;
     }
 
     .status {
-        width: 80px;
+        width: 70px;
     }
 
     .publish {
