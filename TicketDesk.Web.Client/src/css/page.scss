@@ -46,7 +46,7 @@ body {
     margin: auto;
     height: 100vh;
     background: #e6e6ea;
-    position: relative;    
+    position: relative;
     box-shadow: 0 0 5px #ccc;
     /*background-image: url("../contents/images/bg01.png")*/
 }
@@ -354,8 +354,9 @@ body {
 
         .btn-unread {
             font-family: inherit;
-            background: rgba(255,255,255,.7);
-            color: #333;
+            background: rgba(255,255,255,.1);
+            border-color: #fff;
+            color: #fff;
             box-shadow: none;
             transition: all .2s ease;
 
@@ -364,10 +365,9 @@ body {
                 background: rgba(255,255,255,.6);
             }
 
-            &.active {
-                background: rgba(255,255,255,.1);
-                border-color: #fff;
-                color: #fff;
+            &.unread-only {
+                background: rgba(255,255,255,.7);
+                color: #333;
 
                 &:hover {
                     background: rgba(255,255,255,.3);
