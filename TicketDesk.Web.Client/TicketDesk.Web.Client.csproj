@@ -629,11 +629,8 @@
     <Content Include="Areas\Admin\Views\Announcements\_QuickPublish.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\_AnouncementList.cshtml" />
     <Content Include="Areas\Admin\Views\ShopManagement\Index.cshtml" />
-<<<<<<< HEAD
     <Content Include="Areas\Admin\Views\DataConfiguration\Index.cshtml" />
-=======
     <Content Include="Areas\Admin\Views\ShopManagement\_Create.cshtml" />
->>>>>>> 91260 - create form html
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
