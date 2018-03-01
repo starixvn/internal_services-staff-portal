@@ -284,6 +284,10 @@
     <Compile Include="Migrations\201802130412100_Nexcel_NapUserSetting.Designer.cs">
       <DependentUpon>201802130412100_Nexcel_NapUserSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803010715291_Nexcel_AddCustomFieldListValue.cs" />
+    <Compile Include="Migrations\201803010715291_Nexcel_AddCustomFieldListValue.Designer.cs">
+      <DependentUpon>201803010715291_Nexcel_AddCustomFieldListValue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -308,7 +312,7 @@
     <Compile Include="Model\ApplicaitonSettingsModel\ClientSettings.cs" />
     <Compile Include="Model\ApplicationSettings.cs" />
     <Compile Include="Model\CustomField.cs" />
-    <Compile Include="Model\CustomFieldListValues.cs" />
+    <Compile Include="Model\CustomFieldListValue.cs" />
     <Compile Include="Model\CustomFieldTypes.cs" />
     <Compile Include="Model\CustomFieldValue.cs" />
     <Compile Include="Model\Extensions\ApplicationSettingExtensions.cs" />
@@ -445,6 +449,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802130412100_Nexcel_NapUserSetting.resx">
       <DependentUpon>201802130412100_Nexcel_NapUserSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803010715291_Nexcel_AddCustomFieldListValue.resx">
+      <DependentUpon>201803010715291_Nexcel_AddCustomFieldListValue.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

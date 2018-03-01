@@ -102,6 +102,8 @@ namespace TicketDesk.Domain
 
         public DbSet<NapUserSetting> NapUserSettings { get; set; }
 
+        public DbSet<CustomFieldListValue> CustomFieldListValues { get; set; }
+
         public UserSettingsManager UserSettingsManager => _userSettingsManager ?? (_userSettingsManager = new UserSettingsManager(this));
 
         /// <summary>

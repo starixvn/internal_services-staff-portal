@@ -19,6 +19,8 @@
 
         public string Values_vi { get; set; }
 
+        public int CustomFieldListValueId { get; set; }
+
         public bool IsEnabled { get; set; }
 
         public int DisplayOrder { get; set; }
@@ -34,7 +36,7 @@
         public int MaxLength { get; set; }
 
         [NotMapped]
-        public IList<CustomFieldListValues> ListValues { get; set; }
+        public IList<CustomFieldListValue> ListValues { get; set; }
 
         [NotMapped]
         public CustomFieldType CustomFieldType { get; set; }
