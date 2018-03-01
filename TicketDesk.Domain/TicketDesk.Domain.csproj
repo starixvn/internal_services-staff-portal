@@ -288,6 +288,10 @@
     <Compile Include="Migrations\201803010715291_Nexcel_AddCustomFieldListValue.Designer.cs">
       <DependentUpon>201803010715291_Nexcel_AddCustomFieldListValue.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803010742452_Nexcel_RenameProjectToShop.cs" />
+    <Compile Include="Migrations\201803010742452_Nexcel_RenameProjectToShop.Designer.cs">
+      <DependentUpon>201803010742452_Nexcel_RenameProjectToShop.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -323,7 +327,7 @@
     <Compile Include="Model\Extensions\UserTicketListFilterColumnExtensions.cs" />
     <Compile Include="Model\Extensions\UserTicketListSettingsCollectionExtensions.cs" />
     <Compile Include="Model\Extensions\Validation\RequiredIfAttribute.cs" />
-    <Compile Include="Model\Project.cs" />
+    <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\Reference.cs" />
     <Compile Include="Model\ShopManagement.cs" />
     <Compile Include="Model\TicketCategory.cs" />
@@ -452,6 +456,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803010715291_Nexcel_AddCustomFieldListValue.resx">
       <DependentUpon>201803010715291_Nexcel_AddCustomFieldListValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803010742452_Nexcel_RenameProjectToShop.resx">
+      <DependentUpon>201803010742452_Nexcel_RenameProjectToShop.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

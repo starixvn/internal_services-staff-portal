@@ -135,7 +135,7 @@
         public async Task<ActionResult> NewFacilityTicket(NewFacilityTicketViewModel viewModel)
         {
             // TODO: Replace with actual project ID represent for shop id here
-            viewModel.Ticket.Project = Context.Projects.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
             ReValidateModelState(viewModel);
 
@@ -181,7 +181,7 @@
         public async Task<ActionResult> NewFeedbackTicket(NewFeedbackTicketViewModel viewModel)
         {
             // TODO: Replace with actual project ID represent for shop id here
-            viewModel.Ticket.Project = Context.Projects.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Feedback;
 
             ReValidateModelState(viewModel);
@@ -244,7 +244,7 @@
                 }
             }
 
-            viewModel.Ticket.Project = Context.Projects.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Incident;
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
@@ -299,7 +299,7 @@
             }
 
             // TODO: Replace with actual project ID represent for shop id here
-            viewModel.Ticket.Project = Context.Projects.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Hardware;
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
@@ -356,7 +356,7 @@
             }
 
             // TODO: Replace with actual project ID represent for shop id here
-            viewModel.Ticket.Project = Context.Projects.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Software;
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
@@ -409,7 +409,7 @@
                 }
             }
 
-            viewModel.Ticket.Project = Context.Projects.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Network;
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
@@ -460,7 +460,7 @@
                 }
             }
 
-            viewModel.Ticket.Project = Context.Projects.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.CustomerSupport;
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
@@ -533,7 +533,7 @@
         public ActionResult TicketFeedbackDetails(Ticket ticket)
         {
             // TODO: Set project id as shop id
-            ticket.Project = Context.Projects.First(x => x.ProjectId == 1);
+            ticket.Shop = Context.Shops.First(x => x.ShopId == 1);
 
             var customFieldValues = GetCustomFieldValuesForTicket(ticket);
 
@@ -551,7 +551,7 @@
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketHardwareDetails(Ticket ticket)
         {
-            ticket.Project = Context.Projects.First(x => x.ProjectId == 1);
+            ticket.Shop = Context.Shops.First(x => x.ShopId == 1);
             var customFieldValues = GetCustomFieldValuesForTicket(ticket);
             var viewModel = new NewHardwareTicketViewModel
             {
@@ -640,14 +640,14 @@
         // [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         private async Task SetProjectInfoForModelAsync(Ticket ticket)
         {
-            if (ticket.ProjectId == default(int))
+            if (ticket.ShopId == default(int))
             {
-                var projects = await Context.Projects.Select(s => s.ProjectId).ToListAsync().ConfigureAwait(false);
+                var projects = await Context.Shops.Select(s => s.ShopId).ToListAsync().ConfigureAwait(false);
                 var isMulti = projects.Count > 1;
                 ViewBag.IsMultiProject = isMulti;
 
                 // set to first project if only one project exists, otherwise use user's selected project
-                ticket.ProjectId = isMulti
+                ticket.ShopId = isMulti
                     ? await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context).ConfigureAwait(false)
                     : projects.FirstOrDefault();
             }

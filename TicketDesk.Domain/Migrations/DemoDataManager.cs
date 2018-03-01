@@ -16,7 +16,7 @@
             context.TicketSubscribers.RemoveRange(context.TicketSubscribers);
             context.TicketEvents.RemoveRange(context.TicketEvents);
             context.Tickets.RemoveRange(context.Tickets);
-            context.Projects.RemoveRange(context.Projects.Where(p => p.ProjectName != "Default"));
+            context.Shops.RemoveRange(context.Shops.Where(p => p.ShopName != "Default"));
             context.TicketDeskSettings = new ApplicationSetting();
 
             context.SaveChanges();
@@ -26,13 +26,13 @@
         {
             RemoveAllData(context);
             context.SaveChanges();
-            context.Projects.AddOrUpdate(p => p.ProjectName, new Project { ProjectName = "NullSoft", ProjectDescription = "NullSoft Rocks" });
-            var project = context.Projects.First();
+            context.Shops.AddOrUpdate(p => p.ShopName, new Shop { ShopName = "NullSoft", ShopDescription = "NullSoft Rocks" });
+            var project = context.Shops.First();
             context.Tickets.AddOrUpdate(
                 t => t.Title,
                 new Ticket
                 {
-                    ProjectId = project.ProjectId,
+                    ShopId = project.ShopId,
                     Title = "Test Unassigned Ticket",
                     AffectsCustomer = false,
                     Category = "Hardware",
@@ -83,7 +83,7 @@
                     t => t.Title,
                     new Ticket
                     {
-                        ProjectId = project.ProjectId,
+                        ShopId = project.ShopId,
                         Title = "Test Ticket " + p,
                         AffectsCustomer = false,
                         AssignedTo = "64165817-9cb5-472f-8bfb-6a35ca54be6a",

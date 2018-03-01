@@ -63,7 +63,7 @@ namespace TicketDesk.Domain
 
         public TicketActionManager TicketActions { get; }
 
-        public DbSet<Project> Projects { get; set; }
+        public DbSet<Shop> Shops { get; set; }
 
         public DbSet<TicketEvent> TicketEvents { get; set; }
 
@@ -298,12 +298,12 @@ namespace TicketDesk.Domain
 
         private void ProcessDeletedProjects()
         {
-            var projectChanges = ChangeTracker.Entries<Project>()
+            var projectChanges = ChangeTracker.Entries<Shop>()
                 .Where(t => t.State == EntityState.Deleted)
                 .Select(t => t.Entity);
             foreach (var change in projectChanges)
             {
-                var usersToUpdate = UserSettings.Where(u => u.SelectedProjectId == change.ProjectId);
+                var usersToUpdate = UserSettings.Where(u => u.SelectedProjectId == change.ShopId);
                 foreach (var user in usersToUpdate)
                 {
                     user.SelectedProjectId = 0;

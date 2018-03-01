@@ -46,14 +46,14 @@ namespace TicketDesk.Web.Client.Controllers
             var projectId = await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context).ConfigureAwait(false);
             if (!string.IsNullOrEmpty(term))
             {
-                var model = await TdSearchContext.Current().SearchAsync(Context.Tickets.Include(t => t.Project), term, projectId).ConfigureAwait(false);
+                var model = await TdSearchContext.Current().SearchAsync(Context.Tickets.Include(t => t.Shop), term, projectId).ConfigureAwait(false);
 
-                if (Context.Projects.Count() > 1)
+                if (Context.Shops.Count() > 1)
                 {
                     ViewBag.IsMultiProject = true;
                     ViewBag.SearchProjectName = (projectId == 0)
                         ? Strings.ShowingFromAllProjects
-                        : string.Format(Strings.ShowingFromProject, Context.Projects.First(p => p.ProjectId == projectId).ProjectName);
+                        : string.Format(Strings.ShowingFromProject, Context.Shops.First(p => p.ShopId == projectId).ShopName);
                 }
 
                 return View(model);

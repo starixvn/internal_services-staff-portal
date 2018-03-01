@@ -26,7 +26,7 @@ Content-Type: text/plain; charset=utf-8
 ----------------------------------------------------------------
 @if (Model.IsMultiProject)
 {
-    string.Format(Strings.Project, Model.Ticket.Project.ProjectName);
+    string.Format(Strings.Project, Model.Ticket.Shop.ShopName);
 }
 @string.Format(Strings.Status, Model.Ticket.TicketStatus.GetDisplayName())
 @string.Format(Strings.AssignedTo, Model.Ticket.GetAssignedToInfo().DisplayName)

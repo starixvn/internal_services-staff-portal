@@ -22,7 +22,7 @@
             return tickets.Select(t => new SearchIndexItem
             {
                 Id = t.TicketId,
-                ProjectId = t.ProjectId,
+                ProjectId = t.ShopId,
                 Title = t.Title,
                 Details = t.Details,
                 Status = t.TicketStatus.ToString(),
@@ -93,8 +93,8 @@
         public static SelectList GetProjectList(this Ticket ticket, int? selectedProject)
         {
             var context = DependencyResolver.Current.GetService<TdDomainContext>();
-            return context.Projects.OrderBy(p => p.ProjectName)
-                .ToSelectList(p => p.ProjectId.ToString(), p => p.ProjectName, selectedProject ?? 0);
+            return context.Shops.OrderBy(p => p.ShopName)
+                .ToSelectList(p => p.ShopId.ToString(), p => p.ShopName, selectedProject ?? 0);
         }
 
         public static SelectList GetOwnersList(this Ticket ticket, bool excludeCurrentUser = false, bool excludeCurrentOwner = false)

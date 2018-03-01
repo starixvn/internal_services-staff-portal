@@ -210,14 +210,14 @@
 
         private static void AppendProjectId(int projectId, string projectName, Ticket ticket, StringBuilder sb)
         {
-            if (ticket.ProjectId != projectId)
+            if (ticket.ShopId != projectId)
             {
                 sb.AppendLine(string.Format(
                     "<dd>    " + Strings.Changes_From_To + "</dd>",
-                    PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.ProjectId),
-                    ticket.Project.ProjectName,
+                    PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.ShopId),
+                    ticket.Shop.ShopName,
                     projectName));
-                ticket.ProjectId = projectId;
+                ticket.ShopId = projectId;
             }
         }
 

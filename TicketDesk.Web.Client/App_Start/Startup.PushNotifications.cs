@@ -162,11 +162,11 @@
                         .ToArray();
 
                     var domainContext = DependencyResolver.Current.GetService<TdDomainContext>();
-                    var multiProject = domainContext.Projects.Count() > 1;
+                    var multiProject = domainContext.Shops.Count() > 1;
                     var notes = domainContext.TicketEventNotifications
                         .Include(t => t.TicketEvent)
                         .Include(t => t.TicketEvent.Ticket)
-                        .Include(t => t.TicketEvent.Ticket.Project)
+                        .Include(t => t.TicketEvent.Ticket.Shop)
                         .Where(t => notificationIds.Contains(t.EventId))
                         .ToArray();
 
@@ -203,13 +203,13 @@
 
                     var notificationIds = notifications.Select(n => n.EventId).ToArray();
                     var domainContext = DependencyResolver.Current.GetService<TdDomainContext>();
-                    var multiProject = domainContext.Projects.Count() > 1;
+                    var multiProject = domainContext.Shops.Count() > 1;
 
                     // fetch these back and make sure all dependent entities we need are loaded
                     var notes = domainContext.TicketEventNotifications
                         .Include(t => t.TicketEvent)
                         .Include(t => t.TicketEvent.Ticket)
-                        .Include(t => t.TicketEvent.Ticket.Project)
+                        .Include(t => t.TicketEvent.Ticket.Shop)
                         .Include(t => t.TicketSubscriber)
                         .Where(t => notificationIds.Contains(t.EventId))
                         .ToArray();

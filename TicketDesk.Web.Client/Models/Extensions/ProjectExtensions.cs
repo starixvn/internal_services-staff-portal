@@ -11,13 +11,13 @@
             // Trying to use dependency resolver with a sync caller results in the context being invoked without a security provider.
             // The entire concept of child actions are heavily refactored in MVC 6, so this should not be an issue in future versions.
             var currentUserId = context.SecurityProvider.CurrentUserId;
-            var projects = context.Projects;
+            var projects = context.Shops;
             var settings = await userSettingsManager.GetSettingsForUserAsync(currentUserId).ConfigureAwait(false);
             var projectId = settings.SelectedProjectId ?? 0;
 
             // if user's selected project points to a project that no longer exists, reset
             // normally this wouldn't happen since the dbcontext will update user settings when projects are deleted
-            if (projectId != 0 && await projects.AllAsync(p => p.ProjectId != projectId).ConfigureAwait(false))
+            if (projectId != 0 && await projects.AllAsync(p => p.ShopId != projectId).ConfigureAwait(false))
             {
                 projectId = 0;
                 await UpdateUserSelectedProjectAsync(userSettingsManager, projectId, currentUserId).ConfigureAwait(false);

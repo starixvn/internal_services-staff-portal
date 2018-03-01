@@ -20,16 +20,16 @@
 @if (ViewBag.IsMultiProject)
 {
 <div class="form-group">
-    @Html.LabelFor(model => model.ProjectId, new {@class = "col-sm-2 control-label"})
+    @Html.LabelFor(model => model.ShopId, new {@class = "col-sm-2 control-label"})
     <div class="col-sm-8">
-        @Html.DropDownListFor(model => model.ProjectId, Model.GetProjectList((int)Model.ProjectId), new { @class = "form-control input-sm", tabindex = 0 })
-        @Html.ValidationMessageFor(model => model.ProjectId, "", new {@class = "text-danger"})
+        @Html.DropDownListFor(model => model.ShopId, Model.GetProjectList((int)Model.ShopId), new { @class = "form-control input-sm", tabindex = 0 })
+        @Html.ValidationMessageFor(model => model.ShopId, "", new {@class = "text-danger"})
     </div>
 </div>
 }
 else
 {
-    @Html.HiddenFor(model => model.ProjectId)
+    @Html.HiddenFor(model => model.ShopId)
 }
 
 <div class="form-group">

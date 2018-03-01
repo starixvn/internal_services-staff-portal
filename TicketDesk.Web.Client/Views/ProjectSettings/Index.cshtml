@@ -63,16 +63,16 @@
                                         <td>
                                             @if (isHost)
                                             {
-                                                <a href="@Url.Action("Edit", "ProjectSettings", new { projectId = item.Project.ProjectId })">
-                                                    @item.Project.ProjectName
+                                                <a href="@Url.Action("Edit", "ProjectSettings", new { projectId = item.Shop.ShopId })">
+                                                    @item.Shop.ShopName
                                                 </a>
                                             }
                                             else
                                             {
-                                                @item.Project.ProjectName
+                                                @item.Shop.ShopName
                                             }
                                         </td>
-                                        <td>@item.Project.ProjectDescription</td>
+                                        <td>@item.Shop.ShopDescription</td>
                                         <td>@item.NumberOfTickets</td>
                                     </tr>
                                 }

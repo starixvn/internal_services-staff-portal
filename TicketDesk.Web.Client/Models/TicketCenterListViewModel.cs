@@ -76,7 +76,7 @@
                 filterColumns.Add(new UserTicketListFilterColumn("ProjectId", true, projectId));
             }
 
-            DisplayProjects = context.Projects.Count() > 1;
+            DisplayProjects = context.Shops.Count() > 1;
 
             var sortColumns = CurrentListSetting.SortColumns.ToList();
             var pageSize = CurrentListSetting.ItemsPerPage;

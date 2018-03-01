@@ -53,7 +53,7 @@
 
         private async Task SetProjectInfoForModelAsync()
         {
-            var projectCount = await Context.Projects.CountAsync().ConfigureAwait(false);
+            var projectCount = await Context.Shops.CountAsync().ConfigureAwait(false);
             var isMulti = projectCount > 1;
             ViewBag.IsMultiProject = isMulti;
         }
@@ -119,7 +119,7 @@
             string tagList)
         {
             string detailsWithoutHtmlWhenEmpty = details.StripHtmlWhenEmpty();
-            var projectName = await Context.Projects.Where(p => p.ProjectId == projectId).Select(s => s.ProjectName).FirstOrDefaultAsync().ConfigureAwait(false);
+            var projectName = await Context.Shops.Where(p => p.ShopId == projectId).Select(s => s.ShopName).FirstOrDefaultAsync().ConfigureAwait(false);
             var activityFn = Context.TicketActions.EditTicketInfo(
                 comment,
                 projectId,
@@ -335,10 +335,10 @@
             IList<TicketFeedbackCustomField> customFields)
         {
             ticket.Details = ticket.Details.StripHtmlWhenEmpty();
-            var projectName = await Context.Projects.Where(p => p.ProjectId == ticket.ProjectId).Select(s => s.ProjectName).FirstOrDefaultAsync().ConfigureAwait(false);
+            var projectName = await Context.Shops.Where(p => p.ShopId == ticket.ShopId).Select(s => s.ShopName).FirstOrDefaultAsync().ConfigureAwait(false);
             var activityFn = Context.TicketActions.EditTicketInfo(
                 comment,
-                ticket.ProjectId,
+                ticket.ShopId,
                 projectName,
                 ticket.Title,
                 ticket.Details,

@@ -105,9 +105,9 @@
         protected override void Seed(TdDomainContext context)
         {
             var demoMode = ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"];
-            if (!context.Projects.Any())
+            if (!context.Shops.Any())
             {
-                context.Projects.Add(new Project { ProjectName = "Default", ProjectDescription = "Default project" });
+                context.Shops.Add(new Shop { ShopName = "Default", ShopDescription = "Default project" });
             }
 
             if (!string.IsNullOrEmpty(demoMode) && demoMode.Equals("true", StringComparison.InvariantCultureIgnoreCase))

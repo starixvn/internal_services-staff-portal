@@ -25,7 +25,7 @@
         public DateTime? PublishedDateTime { get; set; }
 
         [Display(Name = "Specific to Shop")]
-        public int ProjectId { get; set; }
+        public int ShopId { get; set; }
 
         [Display(Name = "Status")]
         [Required(ErrorMessage = "{0} is required")]

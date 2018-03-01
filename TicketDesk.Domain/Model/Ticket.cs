@@ -35,7 +35,7 @@ namespace TicketDesk.Domain.Model
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(ResourceType = typeof(Strings), Name = "TicketProject", ShortName = "TicketProjectShort")]
-        public int ProjectId { get; set; }
+        public int ShopId { get; set; }
 
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
         [StringLength(50, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
@@ -137,7 +137,7 @@ namespace TicketDesk.Domain.Model
         [Timestamp]
         public byte[] Version { get; set; }
 
-        public virtual Project Project { get; set; }
+        public virtual Shop Shop { get; set; }
 
         public int CategoryId { get; set; }
 

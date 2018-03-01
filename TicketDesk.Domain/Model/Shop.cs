@@ -6,19 +6,19 @@
     using TicketDesk.Localization;
     using TicketDesk.Localization.Domain;
 
-    public class Project
+    public class Shop
     {
         [Key]
-        public int ProjectId { get; set; }
+        public int ShopId { get; set; }
 
         [StringLength(100, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
         [Display(Name = "Project_Name", ResourceType = typeof(Strings))]
-        public string ProjectName { get; set; }
+        public string ShopName { get; set; }
 
         [StringLength(500, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
         [Display(Name = "Project_Description", ResourceType = typeof(Strings))]
-        public string ProjectDescription { get; set; }
+        public string ShopDescription { get; set; }
 
         [Column(TypeName = "timestamp")]
         [MaxLength(8)]
