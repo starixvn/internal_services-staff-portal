@@ -21,9 +21,9 @@
 <section class="filter-form">
     @using (Html.BeginForm("Index", "ShopManagement", FormMethod.Get, new { @class = "filter-row" }))
     {
-        <div>
+        <div class="text-field">
             @Html.LabelFor(x => x.ShopName)
-            <div>
+            <div class="text-field">
                 @Html.TextBoxFor(x => x.ShopName, new { @class = "form-control" })
                 @Html.HiddenFor(x => x.ShopId, new { @class = "form-control" })
             </div>
@@ -38,6 +38,69 @@
             <button type="submit" class="btn btn-submit">Submit</button>
         </div>
     }
+</section>
+
+<div class="table-actions">
+    <a class="btn btn-create create" data-toggle="modal" href="#" data-href="#" data-modalid="#CreateShopModal"><span class="icon-add"></span>Create New Shop</a>
+</div>
+
+<section class="table">
+    <table class="announcement-list" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th class="number">#</th>
+                <th class="shop-name">
+                    <span>Shop Name</span>
+                </th>
+                <th class="shop-code">
+                    <span>Shop Code</span>
+                </th>
+                <th class="email-address">
+                    <span>Email Address</span>
+                </th>
+                <th class="phone">
+                    <span>Contact Number</span>
+                </th>
+                <th class="shop-address">
+                    <span>Shop Address</span>
+                </th>
+                <th class="active">Active</th>                
+                <th class="action">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Google Ltd</td>
+                <td>345</td>
+                <td>davisryan@gmail.com</td>
+                <td>626-566-4904</td>
+                <td>Los Angeles, CA 90017</td>
+                <td><span class="icon-check"></span></td>
+                <td><span class="icon-edit"></span></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Twitter Ltd</td>
+                <td>276</td>
+                <td>lopez14@gmail.com</td>
+                <td>626-586-2504</td>
+                <td>Denton, NY 10958</td>
+                <td><span class="icon-check"></span></td>
+                <td><span class="icon-edit"></span></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Infosys</td>
+                <td>276</td>
+                <td>calhoun15@gmail.com</td>
+                <td>626-586-2504</td>
+                <td>Orlando, FL 32808</td>
+                <td></td>
+                <td><span class="icon-edit"></span></td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 <div class="table-actions">
     <a class="btn btn-create create"><span class="icon-add"></span>Create New Shop</a>
