@@ -98,7 +98,7 @@ namespace TicketDesk.Domain
 
         public DbSet<Reference> References { get; set; }
 
-        public DbSet<ShopManagement> ShopManagement { get; set; }
+        ////public DbSet<ShopManagement> ShopManagement { get; set; }
 
         public DbSet<NapUserSetting> NapUserSettings { get; set; }
 

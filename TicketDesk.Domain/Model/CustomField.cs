@@ -34,6 +34,9 @@
         public int MaxLength { get; set; }
 
         [NotMapped]
+        public IList<CustomFieldListValues> ListValues { get; set; }
+
+        [NotMapped]
         public CustomFieldType CustomFieldType { get; set; }
 
         [NotMapped]
@@ -41,6 +44,5 @@
 
         [NotMapped]
         public ICollection<CustomFieldValue> CustomFieldValues { get; set; }
-
     }
 }
