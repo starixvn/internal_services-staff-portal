@@ -376,15 +376,16 @@ body {
 
             &:hover, &:focus {
                 outline: none;
-                background: rgba(255,255,255,.6);
+                background: rgba(255,255,255,.3);
             }
 
             &.unread-only {
-                background: rgba(255,255,255,.7);
+                background: rgba(255,255,255,1);
                 color: #333;
+                border-color: transparent;
 
                 &:hover {
-                    background: rgba(255,255,255,.3);
+                    background: rgba(255,255,255,.8);
                 }
             }
         }
@@ -1808,26 +1809,6 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     overflow: visible !important;
 }
 
-.shadow-1 {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-}
-
-.shadow-2 {
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-
-.shadow-3 {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-}
-
-.shadow-4 {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-.shadow-5 {
-    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-}
-
 .user-menu {
     border-left: 1px solid #d3d7db;
     text-align: center;
@@ -1841,17 +1822,17 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     position: relative;
     display: inline-block;
     width: 180px;
-    padding: 20px 0;    
+    padding: 20px 0 10px;    
 
     .lang-en {        
         .flag {
-            background-image: url("http://findicons.com/files/icons/282/flags/48/united_states_of_america_usa.png");
+            background-image: url("/src/contents/images/flag-en.png");
         }
     }
 
-    .lang-pt {        
+    .lang-vn {        
         .flag {
-            background-image: url("http://icons.iconarchive.com/icons/icondrawer/flags/48/Brazil-icon.png");
+            background-image: url("/src/contents/images/flag-vn.png");
         }
     }
 
@@ -1859,7 +1840,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         content: "";
         position: absolute;
         top: 10px;
-        right: 10px;
+        right: 0;
         width: 0;
         height: 0;
         border: 5px solid transparent;
@@ -1868,25 +1849,31 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 
     ul li {
         display: block;
-        width: 150px;
-        height: 38px;
+        width: 180px;
+        height: 60px;
         background: #fff;
-        padding: 0px 6px;
+        padding: 18px 10px;
         cursor: pointer;
+        text-align: left;
+
+        &:hover {
+            background: #f2f2f2;
+        }
     }
 
-    ul.lang-list {
-        @extend .shadow-1;
+    ul.lang-list {        
         position: absolute;
         visibility: hidden;
+        top: 96px;
         opacity: 0;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
         z-index: 1;
     }
 
     label {        
         position: relative;        
         display: block;
-        width: 70px;
+        width: 60px;
         height: 26px;
         margin: 0 auto;
         z-index: 2;
@@ -1899,7 +1886,6 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
             width: 40px;
             height: 26px;
             cursor: pointer;
-            background-size: 35px 35px;
             background-repeat: no-repeat;
             background-position: center;
 
@@ -1911,6 +1897,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         .name {
             display: inline-block;
             color: #2e4592;
+            padding-left: 10px;
+            vertical-align: middle;
         }
     }
 
@@ -1920,8 +1908,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
             opacity: 1;
         }
 
-        label {
-            //@extend .shadow-2;
+        label {            
             border-bottom-left-radius: 0px;
             border-bottom-right-radius: 0px;
         }
