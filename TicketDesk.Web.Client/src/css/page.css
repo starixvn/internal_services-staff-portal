@@ -54,7 +54,7 @@ body {
   -moz-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: 0 25px;
+  padding: 0 0 0 25px;
   z-index: 9999; }
 
 .logo {
@@ -1328,4 +1328,93 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 
 .slick-list {
   overflow: visible !important; }
+
+.shadow-1, .language-dropdown ul.lang-list {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+
+.shadow-2 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+
+.shadow-3 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+
+.shadow-4 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+
+.shadow-5 {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+
+.user-menu {
+  border-left: 1px solid #d3d7db;
+  text-align: center; }
+  .user-menu .user-name {
+    color: #2e4592; }
+
+.language-dropdown {
+  position: relative;
+  display: inline-block;
+  width: 180px;
+  padding: 20px 0; }
+  .language-dropdown .lang-en .flag {
+    background-image: url("http://findicons.com/files/icons/282/flags/48/united_states_of_america_usa.png"); }
+  .language-dropdown .lang-pt .flag {
+    background-image: url("http://icons.iconarchive.com/icons/icondrawer/flags/48/Brazil-icon.png"); }
+  .language-dropdown .arrow:before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-top-color: #858585; }
+  .language-dropdown ul li {
+    display: block;
+    width: 150px;
+    height: 38px;
+    background: #fff;
+    padding: 0px 6px;
+    cursor: pointer; }
+  .language-dropdown ul.lang-list {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1; }
+  .language-dropdown label {
+    position: relative;
+    display: block;
+    width: 70px;
+    height: 26px;
+    margin: 0 auto;
+    z-index: 2;
+    cursor: pointer; }
+  .language-dropdown .lang-flag .flag, .language-dropdown .lang-list .lang .flag {
+    float: left;
+    width: 40px;
+    height: 26px;
+    cursor: pointer;
+    background-size: 35px 35px;
+    background-repeat: no-repeat;
+    background-position: center; }
+  .language-dropdown .lang-flag .name, .language-dropdown .lang-list .lang .name {
+    display: inline-block;
+    color: #2e4592; }
+  .language-dropdown.open ul.lang-list {
+    visibility: visible;
+    opacity: 1; }
+  .language-dropdown.open label {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px; }
+
+.animate, .lang-flag, .lang-list {
+  cursor: pointer;
+  -webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  -ms-transition: all .5s;
+  -ms-transition: all .5s;
+  transition: all .5s;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden; }
 

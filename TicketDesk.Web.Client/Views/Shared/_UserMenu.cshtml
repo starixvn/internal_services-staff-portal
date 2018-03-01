@@ -5,8 +5,24 @@
 @if (Model.IsAuthenticated)
 {
     <li><a href="#" class="menu-item" data-toggle="modal" data-target="#logOut"><i class="icon-logout"></i><span class="text">@_Layout.LogOut</span></a></li>
-    <li>
-        Username
+    <li class="user-menu">
+        <div id="lang_selector" class="language-dropdown">
+            <label for="toggle" class="lang-flag lang-en" title="Click to select the language">
+                <span class="flag"></span>
+                <span class="arrow"></span>
+            </label>
+            <ul class="lang-list">
+                <li class="lang lang-en selected" title="EN">
+                    <span class="flag"></span>
+                    <span class="name">English</span>
+                </li>
+                <li class="lang lang-pt" title="PT">
+                    <span class="flag"></span>
+                    <span class="name">Vietnamese</span>
+                </li>
+            </ul>
+        </div>
+        <div class="user-name">Theresa.Le</div>
     </li>
 }
 else

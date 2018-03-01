@@ -112,5 +112,5 @@ var validation = {
 $(document).ready(function () {
     sidebar.init();
     bootstrapModalHack.init();
-    dataTableReflow.setIntervalToReinitFixedHeader();
+    dataTableReflow.setIntervalToReinitFixedHeader();    
 });
