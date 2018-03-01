@@ -9,11 +9,11 @@
             var $createModalContent = $(domElement.CreateModalContent);
             $.ajax({
                 type: "GET",
-                url: "/Admin/ShopManagement/Create",
+                url: "/Admin/Shops/Create",
                 dataType: "html",
                 success: function (data) {
                     $createModalContent.html(data);
-                    initValidationForm();
+                   // initValidationForm($("#createNewShop"));
                     $(domElement.CreateModal).modal('show');
                 }
             })
@@ -22,7 +22,6 @@
 
     function initValidationForm($form) {
         $.validator.unobtrusive.parse($form);
-        validation.showHideValidationSummary($form.find('.list-message-error').get(0));
 
         var $validator = $form.validate();
         $validator.settings.highlight = function (element, errorClass, validClass) {

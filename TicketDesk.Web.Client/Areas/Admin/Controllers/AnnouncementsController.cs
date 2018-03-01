@@ -41,7 +41,7 @@
 
         public ActionResult AnnouncementList(AnnouncementViewModel viewModel)
         {
-            var announcements = _announcementService.GetAnnouncements(viewModel.GetQueryCriteria()).ToList();
+            var announcements = _announcementService.GetAnnouncements(viewModel.GetQueryCriteria()).OrderByDescending(x => x.LastModified).ToList();
             return PartialView("_AnouncementList", announcements);
         }
 

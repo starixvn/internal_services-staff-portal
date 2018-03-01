@@ -2,7 +2,7 @@
 
 namespace TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement
 {
-    public class ShopManagementViewModel
+    public class ShopFilterViewModel
     {
         public string ShopName { get; set; }
 

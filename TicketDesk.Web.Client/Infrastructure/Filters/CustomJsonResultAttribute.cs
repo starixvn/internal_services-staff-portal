@@ -1,9 +1,9 @@
 ﻿namespace TicketDesk.Web.Client.Infrastructure.Filters
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
     using System;
     using System.Web.Mvc;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class CustomJsonResultAttribute : ActionFilterAttribute

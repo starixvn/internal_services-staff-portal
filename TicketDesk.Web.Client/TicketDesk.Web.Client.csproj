@@ -379,7 +379,7 @@
     <Compile Include="Areas\Admin\Controllers\DataConfigurationController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReferencesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ShopManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ShopsController.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\ListAnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\NewAnnouncementViewModel.cs" />
@@ -630,9 +630,9 @@
     <Content Include="Areas\Admin\Views\Announcements\_Publish.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\_QuickPublish.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\_AnouncementList.cshtml" />
-    <Content Include="Areas\Admin\Views\ShopManagement\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shops\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DataConfiguration\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\ShopManagement\_Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Shops\_Create.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
