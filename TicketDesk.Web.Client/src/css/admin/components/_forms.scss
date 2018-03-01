@@ -80,6 +80,13 @@
             color: #333;
             font-weight: 600;
         }
+
+        &.required {
+            &:after {
+                content: " *";
+                color: #bf141a;
+            }
+        }
     }
 
     .date-time {

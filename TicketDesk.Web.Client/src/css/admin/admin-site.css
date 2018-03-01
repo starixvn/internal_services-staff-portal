@@ -168,7 +168,11 @@ main {
       color: #fff;
       text-decoration: none; }
     .sidebar .menu-item .icon {
-      padding-right: 8px; }
+      display: inline-block;
+      padding-right: 8px;
+      vertical-align: middle; }
+    .sidebar .menu-item .icon-shop {
+      font-size: 16px; }
     .sidebar .menu-item .icon-arrow {
       position: absolute;
       right: 10px;
@@ -1119,6 +1123,9 @@ table.dataTable {
     .form-group .control-label.text-content {
       color: #333;
       font-weight: 600; }
+    .form-group .control-label.required:after {
+      content: " *";
+      color: #bf141a; }
   .form-group .date-time {
     position: relative;
     display: inline-block;
@@ -1278,7 +1285,8 @@ table.dataTable {
     }*/ }
 
 .modal-footer {
-  border: 0; }
+  border: 0;
+  padding-top: 0; }
   .modal-footer .btn {
     padding-top: 6px;
     padding-bottom: 6px; }

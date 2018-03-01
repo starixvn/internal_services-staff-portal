@@ -32,6 +32,7 @@
             { "/Admin/References/FeatureEvents", "icon-admin" },
             { "/Admin/References/NewsLetter", "icon-admin" },
             { "/Admin/ShopManagement", "icon-shop" },
+            { "/Admin/DataConfiguration", "icon-data" },
             { "/admin/application-settings", "icon-admin-appsettings" },
             { "/admin/projects", "icon-admin-shop" },
             { "/admin/push-notification-settings", "icon-admin-notificationsettings" },
