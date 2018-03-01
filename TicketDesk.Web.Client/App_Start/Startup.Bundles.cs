@@ -40,6 +40,11 @@
             bundles.Add(new StyleBundle("~/content/reference-admin").Include(
                    "~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css"));
 
+            bundles.Add(new StyleBundle("~/content/shop-management").Include(
+                   "~/src/libs/jquery.DataTable/datatables.min.css",
+                   "~/src/libs/jquery.DataTable/fixedHeader.dataTables.min.css",
+                   "~/src/libs/jquery-ui/jquery-ui.min.css"));
+
             ////
             ////Script bundle
             ////
@@ -157,6 +162,12 @@
                    "~/src/libs/datetimepicker/moment.js",
                    "~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js",
                    "~/src/js/admin/reference/reference.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/shop-management").Include(
+                   "~/src/libs/jquery.DataTable/datatables.min.js",
+                   "~/src/libs/jquery.DataTable/dataTables.fixedHeader.min.js",
+                   "~/src/libs/jquery-ui/jquery-ui.min.js",
+                   "~/src/js/admin/shop-management/shop-management.js"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

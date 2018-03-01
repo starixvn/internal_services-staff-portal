@@ -1,8 +1,19 @@
-﻿@model TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement.ShopManagementViewModel
+﻿@using System.Web.Optimization
+@model TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement.ShopManagementViewModel
 
 @{
     ViewBag.Title = "Shop Management";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section css
+{
+    @Styles.Render("~/content/shop-management")
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/shop-management")
 }
 
 <h2 class="page-title">@ViewBag.Title</h2>
@@ -10,11 +21,11 @@
 <section class="filter-form">
     @using (Html.BeginForm("Index", "ShopManagement", FormMethod.Get, new { @class = "filter-row" }))
     {
-        <div class="date-time">
+        <div>
             @Html.LabelFor(x => x.ShopName)
-            <div class="date-time">
-                @Html.TextBoxFor(x => x.ShopName, new { @class = "datepicker start form-control" })
-                <span class="icon-calendar"></span>
+            <div>
+                @Html.TextBoxFor(x => x.ShopName, new { @class = "form-control" })
+                @Html.HiddenFor(x => x.ShopId, new { @class = "form-control" })
             </div>
         </div>
 
@@ -28,3 +39,22 @@
         </div>
     }
 </section>
+<div class="table-actions">
+    <a class="btn btn-create create"><span class="icon-add"></span>Create New Shop</a>
+</div>
+
+<!-- Create New Item -->
+<div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" id="createModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content -has-title" id="createModalContent">
+        </div>
+    </div>
+</div>
+
+<!-- Edit Item -->
+<div class="modal fade" role="dialog" aria-labelledby="modalUpdateLabel" data-backdrop="static" id="editItemModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content -has-title" id="editItemModalContent">
+        </div>
+    </div>
+</div>

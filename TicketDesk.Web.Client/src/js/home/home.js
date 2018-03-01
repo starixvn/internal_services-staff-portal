@@ -100,7 +100,7 @@ var readAnnouncement = {
     },
 
     setReadAnnouncement: function () {
-        $(".unread").on("click", function () {
+        $(".unread").one("click", function () {
             var currentAnnouncement = $(this);
             var id = currentAnnouncement.data("id");
             var url = "/NapUserSetting/SaveUnreadAnnouncement/" + id;

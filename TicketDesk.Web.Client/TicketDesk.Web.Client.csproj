@@ -385,7 +385,7 @@
     <Compile Include="Areas\Admin\Models\Announcements\NewAnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DataConfiguration\DataConfigurationViewModel.cs" />
     <Compile Include="Areas\Admin\Models\References\ReferenceViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\ShopManagement\ShopManagementViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ShopManagement\ShopFilterViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -520,6 +520,15 @@
     <Content Include="src\contents\images\sort.png" />
     <Content Include="src\contents\images\sort_down.png" />
     <Content Include="src\contents\images\sort_up.png" />
+    <Content Include="src\js\admin\shop-management\shop-management.js" />
+    <Content Include="src\libs\jquery-ui\jquery-ui.css" />
+    <Content Include="src\libs\jquery-ui\jquery-ui.js" />
+    <Content Include="src\libs\jquery-ui\jquery-ui.min.css" />
+    <Content Include="src\libs\jquery-ui\jquery-ui.min.js" />
+    <Content Include="src\libs\jquery-ui\jquery-ui.structure.css" />
+    <Content Include="src\libs\jquery-ui\jquery-ui.structure.min.css" />
+    <Content Include="src\libs\jquery-ui\jquery-ui.theme.css" />
+    <Content Include="src\libs\jquery-ui\jquery-ui.theme.min.css" />
     <Content Include="src\libs\jquery.DataTable\dataTables.fixedHeader.min.js" />
     <Content Include="src\libs\jquery.DataTable\datatables.min.css" />
     <Content Include="src\libs\jquery.DataTable\datatables.min.js" />
@@ -620,7 +629,11 @@
     <Content Include="Areas\Admin\Views\Announcements\_QuickPublish.cshtml" />
     <Content Include="Areas\Admin\Views\Announcements\_AnouncementList.cshtml" />
     <Content Include="Areas\Admin\Views\ShopManagement\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Areas\Admin\Views\DataConfiguration\Index.cshtml" />
+=======
+    <Content Include="Areas\Admin\Views\ShopManagement\_Create.cshtml" />
+>>>>>>> 91260 - create form html
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

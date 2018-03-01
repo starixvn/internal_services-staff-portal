@@ -49,7 +49,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Host)]
         public JsonResult TVSchedules(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.TvSchedule, viewModel);
@@ -63,7 +63,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Host)]
         public JsonResult FeatureEvents(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.FeaturedEvent, viewModel);
@@ -77,7 +77,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Host)]
         public JsonResult BetOfTheDay(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.BetOfTheDay, viewModel);
@@ -91,7 +91,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Host)]
         public JsonResult TradingLimits(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.TradingLimits, viewModel);
@@ -105,7 +105,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Host)]
         public ActionResult Newsletters(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.Newsletters, viewModel);
