@@ -94,6 +94,21 @@ var bootstrapModalHack = {
     }
 }
 
+var validation = {
+    showHideValidationSummary: function (targetNode) {
+        var callback = function () {
+            if ($('.field-validation-error', targetNode).length > 0) {
+                $(targetNode).removeClass('hidden');
+            } else {
+                $(targetNode).addClass('hidden');
+            }
+        };
+
+        var config = { childList: true, subtree: true };
+        var observer = new MutationObserver(callback);
+        observer.observe(targetNode, config);
+    }
+}
 $(document).ready(function () {
     sidebar.init();
     bootstrapModalHack.init();

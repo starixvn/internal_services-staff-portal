@@ -13,10 +13,27 @@
                 dataType: "html",
                 success: function (data) {
                     $createModalContent.html(data);
+                    initValidationForm();
                     $(domElement.CreateModal).modal('show');
                 }
             })
         });
+    }
+
+    function initValidationForm($form) {
+        $.validator.unobtrusive.parse($form);
+        validation.showHideValidationSummary($form.find('.list-message-error').get(0));
+
+        var $validator = $form.validate();
+        $validator.settings.highlight = function (element, errorClass, validClass) {
+            var $element = $(element);
+            $element.addClass(errorClass).removeClass(validClass);
+        };
+
+        $validator.settings.unhighlight = function (element, errorClass, validClass) {
+            var $element = $(element);
+            $element.removeClass(errorClass).addClass(validClass);
+        };
     }
 
     function initModule() {
