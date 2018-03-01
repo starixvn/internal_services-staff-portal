@@ -62,6 +62,8 @@
                 }
             }
 
+            result = result.OrderBy(x => x.DisplayOrder).ToList();
+
             return result;
 
             ////return menus.Where(x => x.Parent != null && x.Function.Name == FunctionKeys.Administration)
@@ -72,7 +74,7 @@
 
         private static List<SspMenuItem> PopulateChildList(SspMenuItem sspMenuItem, IEnumerable<SspMenuItem> menus)
         {
-            return menus.Where(x => x.Parent != null && x.Parent.Id == sspMenuItem.Id).ToList();
+            return menus.Where(x => x.Parent != null && x.Parent.Id == sspMenuItem.Id).OrderBy(x => x.DisplayOrder).ToList();
         }
     }
 }
