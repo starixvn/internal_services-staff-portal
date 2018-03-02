@@ -8,10 +8,35 @@
 
     public class DataConfigurationService : EntityFrameworkBaseService, IDataConfigurationService
     {
-        public IEnumerable<CustomField> GetEditableCustomFields()
+        public IEnumerable<EditableField> GetEditableCustomFields()
         {
+            var result = new List<EditableField>();
             var editableCustomFieldIds = new List<int> { 1, 5, 1021 };
-            return context.CustomFields.Where(x => editableCustomFieldIds.Contains(x.Id));
+
+            foreach (var id in editableCustomFieldIds)
+            {
+                var categoryId = context.TicketCategoryCustomField
+                    .Where(x => x.CustomFieldId == id)
+                    .Select(x => x.CategoryId)
+                    .First();
+                var categoryName = context.TicketCategories
+                    .Where(x => x.CategoryId == categoryId)
+                    .Select(x => x.Name)
+                    .First();
+                var customFieldName = context.CustomFields
+                    .Where(x => x.Id == id)
+                    .Select(x => x.Name)
+                    .First();
+                var editTableField = new EditableField
+                {
+                    CustomFieldId = id,
+                    Name = $"{categoryName} - {customFieldName}"
+                };
+
+                result.Add(editTableField);
+            }
+
+            return result;
         }
 
         public IEnumerable<CustomFieldListValue> GetEditableListValues(int customFieldId)

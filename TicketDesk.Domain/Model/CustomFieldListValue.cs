@@ -3,6 +3,13 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    public class EditableField
+    {
+        public string Name { get; set; }
+
+        public int CustomFieldId { get; set; }
+    }
+
     public class CustomFieldListValue
     {
         [Key]
