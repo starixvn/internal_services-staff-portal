@@ -36,9 +36,15 @@
             return View(viewModel);
         }
 
-        public ActionResult AddCustomFieldListValue(int customFieldId)
+        public ActionResult AddCustomFieldListValue(int customFieldId, string modalTitle)
         {
-            return PartialView("_AddCustomFieldListValue");
+            var addCustomFieldListValueViewModel = new AddCustomFieldListValueViewModel
+            {
+                CustomFieldId = customFieldId,
+                ModalTitle = modalTitle
+            };
+
+            return PartialView("_AddCustomFieldListValue", addCustomFieldListValueViewModel);
         }
     }
 }

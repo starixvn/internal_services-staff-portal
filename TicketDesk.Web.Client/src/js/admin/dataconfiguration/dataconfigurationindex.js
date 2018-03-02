@@ -9,6 +9,21 @@
             function() {
                 dataconfiguration.ajaxForm($(this));
             });
+
+        $(".create").on("click",
+            function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var href = $(this).attr("href");
+                $.ajax({
+                    url: href,
+                    method: "get",
+                    success: function (result) {
+                        $("#dynamic-modals").html(result);
+                        $("#dynamic-modals .modal").modal();
+                    }
+                });
+            });
     },
 
     ajaxForm: function (form) {
@@ -22,3 +37,7 @@
         });
     }
 }
+
+$(document).ready(function() {
+    dataconfiguration.init();
+});

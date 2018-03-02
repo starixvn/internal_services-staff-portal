@@ -383,6 +383,7 @@
     <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\ListAnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\NewAnnouncementViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\DataConfiguration\AddCustomFieldListValueViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DataConfiguration\DataConfigurationViewModel.cs" />
     <Compile Include="Areas\Admin\Models\References\ReferenceViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopFilterViewModel.cs" />
