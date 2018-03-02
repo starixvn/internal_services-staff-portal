@@ -19,7 +19,7 @@
 <h2 class="page-title">@ViewBag.Title</h2>
 
 <section class="filter-form">
-    @using (Html.BeginForm("Index", "ShopManagement", FormMethod.Get, new { @class = "filter-row" }))
+    @using (Html.BeginForm("Index", "ShopManagement", FormMethod.Get, new { @class = "filter-row", @id = "filterForm" }))
     {
         <div class="text-field">
             @Html.LabelFor(x => x.ShopName)
@@ -44,7 +44,7 @@
     <a class="btn btn-create create"><span class="icon-add"></span>Create New Shop</a>
 </div>
 
-<section class="table">
+<section class="table" id="shopList">
     <table class="announcement-list" cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -64,7 +64,7 @@
                 <th class="shop-address">
                     <span>Shop Address</span>
                 </th>
-                <th class="active">Active</th>                
+                <th class="active">Active</th>
                 <th class="action">Edit</th>
             </tr>
         </thead>
@@ -102,7 +102,6 @@
         </tbody>
     </table>
 </section>
-
 
 <!-- Create New Item -->
 <div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" id="createModal">

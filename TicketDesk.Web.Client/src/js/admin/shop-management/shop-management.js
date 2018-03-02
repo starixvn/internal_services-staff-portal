@@ -1,5 +1,7 @@
 ﻿var shopManagement = (function ($) {
     var domElement = {
+        FilterForm: '#filterForm',
+        TableArea: '#shopList',
         CreateShopForm: '#createShopForm',
         EditShopForm: '#editShopForm',
         CreateModal: '#createModal',
@@ -7,6 +9,60 @@
     };
 
     function getListShop() {
+        var data = $(domElement.FilterForm).serialize();
+        $.ajax({
+            method: "post",
+            url: "/Admin/Shops/GetListShop",
+            data: data,
+            success: function (data) {
+                $(domElement.TableArea).html(data);
+                initDataTable();
+            },
+        })
+    }
+
+    function initDataTable() {
+        $("table").DataTable({
+            pageLength: 20,
+            paging: true,
+            searching: true,
+            dom: '<"top"f>rt<".pull-left" i><".pull-right" lp><"clear">',
+            columns: [
+                { width: "65px", sortable: false },
+                { width: "140px", sortable: true },
+                { width: "140px", sortable: true },
+                { width: "100px", sortable: true },
+                { width: "140px", sortable: true },
+                { width: "auto", sortable: true },
+                { width: "70px", sortable: true },
+                { width: "70px", sortable: false },
+            ],
+            fixedHeader: {
+                header: true,
+                headerOffset: 50
+            },
+            lengthMenu: [20, 50, 100],
+            info: true,
+            language: {
+                lengthMenu: 'Page size _MENU_',
+                search: '_INPUT_',
+                searchPlaceholder: 'Search',
+                emptyTable: 'There is no data',
+                paginate: {
+                    first: 'First',
+                    last: 'Last',
+                    next: '<i class="icon-next"></i>',
+                    previous: '<i class="icon-previous"></i>'
+                }
+            },
+            autoWidth: false
+        });
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 130 && $('table').length > 2) {
+                $('table:nth(1)').remove();
+            }
+        });
     }
 
     function eventClickCreateButtonHandler() {
@@ -87,8 +143,13 @@
     }
 
     function initModule() {
+        getListShop();
         eventClickCreateButtonHandler();
         initToastr();
+        $(domElement.FilterForm).on("submit", function (e) {
+            getListShop();
+            e.preventDefault();
+        })
     }
 
     return {
