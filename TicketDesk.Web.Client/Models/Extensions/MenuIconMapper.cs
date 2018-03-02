@@ -31,7 +31,7 @@
             { "/Admin/References/TradingLimits", "icon-admin" },
             { "/Admin/References/FeatureEvents", "icon-admin" },
             { "/Admin/References/NewsLetter", "icon-admin" },
-            { "/Admin/ShopManagement", "icon-shop" },
+            { "/Admin/Shops", "icon-shop" },
             { "/Admin/DataConfiguration", "icon-data" },
             { "/admin/application-settings", "icon-admin-appsettings" },
             { "/admin/projects", "icon-admin-shop" },

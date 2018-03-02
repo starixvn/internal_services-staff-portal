@@ -1093,6 +1093,9 @@ table.dataTable {
   .filter-row .text-field {
     flex-basis: 150px;
     max-width: 150px; }
+  .filter-row .select-group {
+    flex-basis: 250px;
+    max-width: 250px; }
   .filter-row .date-time {
     position: relative;
     flex-basis: 110px;

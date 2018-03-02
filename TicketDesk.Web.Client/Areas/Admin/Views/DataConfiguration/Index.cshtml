@@ -3,8 +3,90 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2 class="page-title">@ViewBag.Title</h2>
 
-<div>
-    @*@using(Html.BeginForm())*@
+<section class="filter-form">
+    @using (Html.BeginForm("Index", "ShopManagement", FormMethod.Get, new { @class = "filter-row" }))
+    {
+        <div class="select-group">
+            <label>Field</label>
+            <div class="select-group">
+                <select class="form-control" data-val="true" data-val-required="The IsActive field is required." id="IsActive" name="IsActive">
+                    <option selected="selected" value="0">Facility - Item</option>
+                    <option value="1">Hardware - Device</option>
+                    <option value="2">Software - System</option>
+                    <option value="3">Customer Support - Support Type</option>
+                </select>
+
+            </div>
+        </div>
+
+        @*<div class="dropdown-small">
+            @Html.LabelFor(x => x.IsActive)
+            @Html.EnumDropDownListFor(x => x.IsActive, new { @class = "form-control" })
+        </div>*@
+
+        <div class="button-filter">
+            <button type="submit" class="btn btn-submit">Submit</button>
+        </div>
+    }
+</section>
+
+<div class="table-actions">
+    <a class="btn btn-create create"><span class="icon-add"></span>Create New Shop</a>
 </div>
+
+<section class="table">
+    <table class="announcement-list" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th class="number">#</th>
+                <th class="name-vn">
+                    <span>Display Name VI</span>
+                </th>
+                <th class="name-en">
+                    <span>Display Name EN</span>
+                </th>
+                <th class="description">
+                    <span>Description</span>
+                </th>               
+                <th class="active">Active</th>
+                <th class="action">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Cashier's Booth</td>
+                <td>Cashier's Booth</td>
+                <td>Cashier's Booth</td>                
+                <td><span class="icon-check"></span></td>
+                <td><span class="icon-edit"></span></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>SSBT Counter Table</td>
+                <td>SSBT Counter Table</td>
+                <td>Self Service Betting Terminal Counter Table</td>                
+                <td><span class="icon-check"></span></td>
+                <td><span class="icon-edit"></span></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Standing Kiosk</td>
+                <td>Standing Kiosk</td>
+                <td>Standing Kiosk</td>                
+                <td></td>
+                <td><span class="icon-edit"></span></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Lightbox</td>
+                <td>Lightbox</td>
+                <td>Lightbox</td>
+                <td></td>
+                <td><span class="icon-edit"></span></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
