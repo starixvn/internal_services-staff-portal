@@ -33,7 +33,8 @@
 
         public ActionResult GetListShop(ShopFilterViewModel viewModel)
         {
-            return PartialView("_ListShop");
+            var shopList = Context.Shops.OrderByDescending(s => s.LastUpdatedDate.Date).ToList();
+            return PartialView("_ListShop", shopList);
         }
 
         public ActionResult Create()
@@ -47,9 +48,10 @@
         public ActionResult Create(ShopViewModel viewModel)
         {
             bool isSuccessful = false;
+            string message = string.Empty;
             if (IsExistedShopName(viewModel.ShopName))
             {
-                ModelState.AddModelError("ShopName", "Name existed!");
+                ModelState.AddModelError("ShopName", "The Shop Name already exists.");
             }
 
             if (ModelState.IsValid)
@@ -69,9 +71,14 @@
                 context.Shops.Add(newShop);
                 context.SaveChanges();
                 isSuccessful = true;
+                message = "Create new shop successfully!";
             }
 
-            return Json(new { isSuccessful, message = "Successful" });
+            var errors = from item in ModelState
+                         where item.Value.Errors.Any()
+                         select new { item.Key, item.Value.Errors.FirstOrDefault().ErrorMessage };
+
+            return Json(new { isSuccessful, message, errors });
         }
 
         private bool IsExistedShopName(string shopName)
@@ -105,7 +112,7 @@
         public ActionResult Edit(int id, ShopViewModel model)
         {
             bool isSuccessful = false;
-            var message = string.Empty;
+            string message = string.Empty;
             var shop = Context.Shops.Find(id);
             if (shop == null)
             {
@@ -132,7 +139,11 @@
                 isSuccessful = true;
             }
 
-            return Json(new { isSuccessful, message });
+            var errors = from item in ModelState
+                         where item.Value.Errors.Any()
+                         select new { item.Key, item.Value.Errors.FirstOrDefault().ErrorMessage };
+
+            return Json(new { isSuccessful, message, errors });
         }
     }
 }

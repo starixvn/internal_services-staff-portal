@@ -7,7 +7,7 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-@using (Ajax.BeginForm("Create", "Shops", new AjaxOptions { OnSuccess = "", OnFailure = "" }, new { id = "createShopForm" }))
+@using (Ajax.BeginForm("Create", "Shops", new AjaxOptions { OnSuccess = "onCreateSuccessful", OnFailure = "" }, new { id = "createShopForm" }))
 {
     <div class="modal-body">
         @Html.AntiForgeryToken()
