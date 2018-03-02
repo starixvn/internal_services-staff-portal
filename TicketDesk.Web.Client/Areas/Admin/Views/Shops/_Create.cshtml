@@ -1,4 +1,5 @@
-﻿@model TicketDesk.Domain.Model.Shop
+﻿@using TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement
+@model ShopViewModel
 
 <div class="modal-header">
     <h5 class="modal-title">New Shop</h5>
@@ -6,7 +7,7 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-@using (Html.BeginForm("Create", "Shops", FormMethod.Post, new { @id = "createNewShop"}))
+@using (Ajax.BeginForm("Create", "Shops", new AjaxOptions { OnSuccess = "", OnFailure = "" }, new { id = "createShopForm" }))
 {
     <div class="modal-body">
         @Html.AntiForgeryToken()
@@ -61,7 +62,7 @@
             </div>
 
             <div class="form-group checkbox">
-                <input type="checkbox" id="IsActive" name="IsActive"/>
+                <input type="checkbox" id="IsActive" name="IsActive" />
                 <label for="IsActive">Is Active</label>
             </div>
         </div>

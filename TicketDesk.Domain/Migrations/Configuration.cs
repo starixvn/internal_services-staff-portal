@@ -1,10 +1,10 @@
 ﻿namespace TicketDesk.Domain.Migrations
 {
-    using Model;
     using System;
     using System.Configuration;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using Model;
 
     public sealed class Configuration : DbMigrationsConfiguration<TdDomainContext>
     {
@@ -107,7 +107,7 @@
             var demoMode = ConfigurationManager.AppSettings["ticketdesk:DemoModeEnabled"];
             if (!context.Shops.Any())
             {
-                context.Shops.Add(new Shop { ShopName = "Default", ShopDescription = "Default project" });
+                context.Shops.Add(new Shop { ShopName = "Default", ShopDescription = "Default" });
             }
 
             if (!string.IsNullOrEmpty(demoMode) && demoMode.Equals("true", StringComparison.InvariantCultureIgnoreCase))

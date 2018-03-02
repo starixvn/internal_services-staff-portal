@@ -40,6 +40,8 @@
         [StringLength(500, ErrorMessage = "{0} must under {1} characters")]
         public string ShopDescription { get; set; }
 
+        public bool IsActive { get; set; }
+
         public string LastUpdatedBy { get; set; }
 
         public DateTime LastUpdatedDate { get; set; }

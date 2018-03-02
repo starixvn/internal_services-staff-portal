@@ -38,13 +38,13 @@
 
         public ActionResult Create()
         {
-            var viewModel = new Shop();
+            var viewModel = new ShopViewModel();
             return PartialView("_Create", viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Shop viewModel)
+        public ActionResult Create(ShopViewModel viewModel)
         {
             bool isSuccessful = false;
             if (IsExistedShopName(viewModel.ShopName))
@@ -54,9 +54,19 @@
 
             if (ModelState.IsValid)
             {
-                viewModel.LastUpdatedBy = CurrentSession.Username;
-                viewModel.LastUpdatedDate = new DateTime();
-                context.Shops.Add(viewModel);
+                var newShop = new Shop
+                {
+                    ShopName = viewModel.ShopName,
+                    ShopCode = viewModel.ShopCode,
+                    ContactName = viewModel.ContactName,
+                    ContactNumber = viewModel.ContactNumber,
+                    Email = viewModel.Email,
+                    Address = viewModel.Address,
+                    IsActive = viewModel.IsActive,
+                    LastUpdatedBy = CurrentSession.Username,
+                    LastUpdatedDate = new DateTime()
+                };
+                context.Shops.Add(newShop);
                 context.SaveChanges();
                 isSuccessful = true;
             }
@@ -71,9 +81,19 @@
 
         public ActionResult Edit(int id)
         {
-            var viewModel = Context.Shops.Find(id);
-            if (viewModel != null)
+            var shop = Context.Shops.Find(id);
+            if (shop != null)
             {
+                var viewModel = new ShopViewModel
+                {
+                    ShopName = shop.ShopName,
+                    ShopCode = shop.ShopCode,
+                    ContactName = shop.ContactName,
+                    ContactNumber = shop.ContactNumber,
+                    Email = shop.Email,
+                    Address = shop.Address,
+                    IsActive = shop.IsActive
+                };
                 return PartialView("_Edit", viewModel);
             }
 
@@ -82,7 +102,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Shop model)
+        public ActionResult Edit(int id, ShopViewModel model)
         {
             bool isSuccessful = false;
             var message = string.Empty;
@@ -97,11 +117,17 @@
                 ModelState.AddModelError("ShopName", "Name existed!");
             }
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && shop != null)
             {
-                model.LastUpdatedBy = CurrentSession.Username;
-                model.LastUpdatedDate = new DateTime();
-                Context.Entry(shop).CurrentValues.SetValues(model);
+                shop.ShopName = model.ShopName;
+                shop.ShopCode = model.ShopCode;
+                shop.ContactName = model.ContactName;
+                shop.ContactNumber = model.ContactNumber;
+                shop.Email = model.Email;
+                shop.Address = model.Address;
+                shop.IsActive = model.IsActive;
+                shop.LastUpdatedBy = CurrentSession.Username;
+                shop.LastUpdatedDate = new DateTime();
                 Context.SaveChanges();
                 isSuccessful = true;
             }

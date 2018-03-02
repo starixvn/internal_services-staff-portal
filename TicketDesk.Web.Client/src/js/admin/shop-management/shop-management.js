@@ -1,5 +1,6 @@
 ﻿var shopManagement = (function ($) {
     var domElement = {
+        CreateShopForm: '#createShopForm',
         CreateModal: '#createModal',
         CreateModalContent: '#createModalContent'
     };
@@ -13,7 +14,7 @@
                 dataType: "html",
                 success: function (data) {
                     $createModalContent.html(data);
-                   // initValidationForm($("#createNewShop"));
+                    initValidationForm($(domElement.CreateShopForm));
                     $(domElement.CreateModal).modal('show');
                 }
             })
