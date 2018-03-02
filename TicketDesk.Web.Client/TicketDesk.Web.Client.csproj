@@ -637,6 +637,7 @@
     <Content Include="Areas\Admin\Views\DataConfiguration\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shops\_Create.cshtml" />
     <Content Include="Areas\Admin\Views\DataConfiguration\_AddCustomFieldListValue.cshtml" />
+    <Content Include="Areas\Admin\Views\Shops\_Edit.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

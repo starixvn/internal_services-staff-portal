@@ -1,0 +1,51 @@
+﻿@using TicketDesk.Domain.Model
+@model IEnumerable<Shop>
+
+<table class="announcement-list" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th class="number">#</th>
+            <th class="shop-name">
+                <span>Shop Name</span>
+            </th>
+            <th class="shop-code">
+                <span>Shop Code</span>
+            </th>
+            <th class="email-address">
+                <span>Email Address</span>
+            </th>
+            <th class="phone">
+                <span>Contact Number</span>
+            </th>
+            <th class="shop-address">
+                <span>Shop Address</span>
+            </th>
+            <th class="active">Active</th>
+            <th class="action">Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var index = 0;
+        }
+        @foreach (var shop in Model)
+        {
+            index++;
+            <tr>
+                <td>@index</td>
+                <td>@shop.ShopName</td>
+                <td>@shop.ShopCode</td>
+                <td>@shop.Email</td>
+                <td>@shop.ContactNumber</td>
+                <td>@shop.Address</td>
+                <td>
+                    @if (shop.IsActive)
+                    {
+                        <span class="icon-check"></span>
+                    }
+                </td>
+                <td><span class="icon-edit" data-id="@shop.ShopId"></span></td>
+            </tr>
+        }
+    </tbody>
+</table>

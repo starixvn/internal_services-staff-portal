@@ -3,9 +3,11 @@
         FilterForm: '#filterForm',
         TableArea: '#shopList',
         CreateShopForm: '#createShopForm',
-        EditShopForm: '#editShopForm',
         CreateModal: '#createModal',
-        CreateModalContent: '#createModalContent'
+        CreateModalContent: '#createModalContent',
+        EditShopForm: '#editShopForm',
+        EditModal: '#editModal',
+        EditModalContent: '#editModalContent'
     };
 
     function getListShop() {
@@ -17,6 +19,7 @@
             success: function (data) {
                 $(domElement.TableArea).html(data);
                 initDataTable();
+                eventClickEditIconHandler();
             },
         })
     }
@@ -65,6 +68,23 @@
         });
     }
 
+    function eventClickEditIconHandler() {
+        $(".icon-edit").off("click").on("click", function () {
+            var id = $(this).data("id");
+            var editModalContent = $(domElement.EditModalContent);
+            $.ajax({
+                type: "GET",
+                url: "/Admin/Shops/Edit/" + id,
+                dataType: "html",
+                success: function (data) {
+                    $(domElement.EditModal).html(data);
+                    initValidationForm($(editModalContent));
+                    $(domElement.EditModal).modal('show');
+                }
+            })
+        });
+    }
+
     function eventClickCreateButtonHandler() {
         $(".btn-create").on("click", function () {
             var $createModalContent = $(domElement.CreateModalContent);
@@ -103,8 +123,9 @@
         });
     }
 
-    function onAjaxSuccessful(response, $form) {
-        if (response.IsSuccess) {
+    function onAjaxSuccessful(response, $form, $modal) {
+        if (response.isSuccessful) {
+            $($modal).modal("hide");
             toastr.success(response.message);
         } else {
             if (response.errors) {
@@ -117,12 +138,13 @@
 
     function onCreateSuccessful(response) {
         var $form = $(domElement.CreateShopForm);
-        onAjaxSuccessful(response, $form);
+        onAjaxSuccessful(response, $form, domElement.CreateModal);
     }
 
     function onUpdateSuccessful(response) {
         var $form = $(domElement.EditShopForm);
         onAjaxSuccessful(response, $form);
+        //$(domElement.E).modal("hide");
     }
 
     function initToastr() {
@@ -145,6 +167,7 @@
     function initModule() {
         getListShop();
         eventClickCreateButtonHandler();
+        eventClickEditIconHandler();
         initToastr();
 
         $(domElement.FilterForm).on("submit", function (e) {

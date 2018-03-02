@@ -69,7 +69,7 @@
                     Address = viewModel.Address,
                     IsActive = viewModel.IsActive,
                     LastUpdatedBy = CurrentSession.Username,
-                    LastUpdatedDate = new DateTime()
+                    LastUpdatedDate = DateTime.Now
                 };
                 Context.Shops.Add(newShop);
                 Context.SaveChanges();
@@ -96,6 +96,7 @@
             {
                 var viewModel = new ShopViewModel
                 {
+                    ShopId = shop.ShopId,
                     ShopName = shop.ShopName,
                     ShopCode = shop.ShopCode,
                     ContactName = shop.ContactName,
