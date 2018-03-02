@@ -65,7 +65,7 @@ body {
     -moz-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    padding: 0 0 0 25px;    
+    padding: 0 0 0 25px;
     z-index: 9999;
 }
 
@@ -80,6 +80,10 @@ body {
 
     .img-logo {
         width: 200px;
+
+        @media (max-width: 1024px) {
+            width: 150px;
+        }
     }
 }
 
@@ -120,7 +124,7 @@ body {
         color: $menu-color;
         font-weight: 700;
         padding-top: 18px;
-        width: 160px;
+        width: 140px;
         position: relative;
 
         &.my-ticket {
@@ -1822,15 +1826,20 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     position: relative;
     display: inline-block;
     width: 180px;
-    padding: 20px 0 10px;    
+    padding: 20px 0 7px;
 
-    .lang-en {        
+    @media (max-width: 1024px) {
+        width: 120px;
+        padding-bottom: 3px;
+    }
+
+    .lang-en {
         .flag {
             background-image: url("/src/contents/images/flag-en.png");
         }
     }
 
-    .lang-vn {        
+    .lang-vn {
         .flag {
             background-image: url("/src/contents/images/flag-vn.png");
         }
@@ -1861,20 +1870,21 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         }
     }
 
-    ul.lang-list {        
-        position: absolute;
-        visibility: hidden;
+    ul.lang-list {
+        position: absolute;        
         top: 96px;
+        right: 0;
         opacity: 0;
+        visibility: hidden;
         box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
         z-index: 1;
     }
 
-    label {        
-        position: relative;        
+    label {
+        position: relative;
         display: block;
         width: 60px;
-        height: 26px;
+        //height: 26px;
         margin: 0 auto;
         z-index: 2;
         cursor: pointer;
@@ -1888,6 +1898,13 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
             cursor: pointer;
             background-repeat: no-repeat;
             background-position: center;
+            background-size: 40px 26px;
+
+            @media (max-width: 1199px) {
+                width: 30px;
+                height: 20px;
+                background-size: 30px 20px;
+            }
 
             &:hover {
                 // transform: scale(1.1);
@@ -1908,7 +1925,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
             opacity: 1;
         }
 
-        label {            
+        label {
             border-bottom-left-radius: 0px;
             border-bottom-right-radius: 0px;
         }
