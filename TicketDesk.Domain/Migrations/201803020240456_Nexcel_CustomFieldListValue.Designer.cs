@@ -7,13 +7,13 @@ namespace TicketDesk.Domain.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Nexcel_AddCustomFieldListValue : IMigrationMetadata
+    public sealed partial class Nexcel_CustomFieldListValue : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Nexcel_AddCustomFieldListValue));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Nexcel_CustomFieldListValue));
         
         string IMigrationMetadata.Id
         {
-            get { return "201803010715291_Nexcel_AddCustomFieldListValue"; }
+            get { return "201803020240456_Nexcel_CustomFieldListValue"; }
         }
         
         string IMigrationMetadata.Source
