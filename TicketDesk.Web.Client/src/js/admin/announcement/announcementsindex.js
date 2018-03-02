@@ -338,8 +338,8 @@ var listAnnouncement = {
             searching: true,
             dom: '<"top"f>rt<".pull-left" i><".pull-right" lp><"clear">',
             columns: [
-                { width: "65px", sortable: false },
-                { width: "65px", sortable: true },
+                { width: "55px", sortable: false },
+                { width: "55px", sortable: true },
                 { width: "140px", sortable: true },
                 { width: "100px", sortable: true },
                 { width: "140px", sortable: true },

@@ -591,6 +591,10 @@ tr.header {
     flex: 1; }
   .form-content input[type="file"] {
     margin-top: 8px; }
+  .form-content input[type="text"] {
+    height: 40px;
+    width: 100%;
+    padding: 0 12px; }
   .form-content .title, .form-content .key, .form-content .value, .form-content .fullwidth, .form-content textarea {
     padding: 0 12px; }
   .form-content .title {
@@ -658,15 +662,14 @@ tr.header {
   .form-content textarea {
     padding: 6px 12px;
     min-height: 120px;
-    resize: vertical; }
+    resize: vertical;
+    min-height: 100px;
+    width: 100%;
+    margin-bottom: 6px; }
   .form-content .custom-dropdown {
     padding: 0; }
   .form-content input[disabled="disabled"] {
     background: inherit; }
-  .form-content textarea {
-    min-height: 100px;
-    width: 100%;
-    margin-bottom: 6px; }
   .form-content .subject textarea {
     min-height: unset;
     width: auto;
@@ -695,11 +698,6 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .facility-form .item .field-validation-error {
   border-left: 1px solid #d3d7db;
   padding: 0 0 8px 12px; }
-
-.form-content input[type="text"] {
-  height: 40px;
-  width: 100%;
-  padding: 0 12px; }
 
 .feedback-form {
   /*.attach-file .fullwidth {

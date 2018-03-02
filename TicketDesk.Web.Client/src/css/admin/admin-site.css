@@ -511,8 +511,7 @@ table.dataTable {
     text-align: center;
     border-right: 1px solid #c1c1c1;
     border-bottom: 1px solid #c1c1c1;
-    font-weight: 400;
-    box-sizing: border-box; }
+    font-weight: 400; }
     table.dataTable thead th:first-child, table.dataTable thead td:first-child {
       border-left: 1px solid #c1c1c1; }
     table.dataTable thead th:last-child, table.dataTable thead td:last-child {
@@ -524,8 +523,7 @@ table.dataTable {
   table.dataTable thead .sorting_asc {
     background-image: url(../../contents/images/sort_up.png); }
   table.dataTable tbody td {
-    padding: 4px 5px;
-    box-sizing: border-box; }
+    padding: 4px 5px; }
 
 .dataTables_wrapper .top {
   position: absolute;
@@ -845,7 +843,7 @@ table.dataTable {
   .announcement-list .sort:after {
     top: 4px; } }
   .announcement-list .id, .announcement-list .number {
-    width: 65px; }
+    width: 55px; }
   .announcement-list .published-date {
     width: 140px; }
   .announcement-list .last-modified {

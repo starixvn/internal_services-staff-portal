@@ -844,6 +844,12 @@ tr.header {
         margin-top: 8px;
     }
 
+    input[type="text"] {
+        height: 40px;
+        width: 100%;
+        padding: 0 12px;
+    }
+
     .title, .key, .value, .fullwidth, textarea {
         padding: 0 12px;
     }
@@ -952,6 +958,9 @@ tr.header {
         padding: 6px 12px;
         min-height: 120px;
         resize: vertical;
+        min-height: 100px;
+        width: 100%;
+        margin-bottom: 6px;
     }
 
     .custom-dropdown {
@@ -960,13 +969,7 @@ tr.header {
 
     input[disabled="disabled"] {
         background: inherit;
-    }
-
-    textarea {
-        min-height: 100px;
-        width: 100%;
-        margin-bottom: 6px;
-    }
+    }    
 
     .subject textarea {
         min-height: unset;
@@ -1009,14 +1012,6 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     .item .field-validation-error {
         border-left: 1px solid $border-color;
         padding: 0 0 8px 12px;
-    }
-}
-
-.form-content {
-    input[type="text"] {
-        height: 40px;
-        width: 100%;
-        padding: 0 12px;
     }
 }
 
