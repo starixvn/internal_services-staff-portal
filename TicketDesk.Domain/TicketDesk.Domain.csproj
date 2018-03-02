@@ -288,13 +288,13 @@
     <Compile Include="Migrations\201803010742452_Nexcel_RenameProjectToShop.Designer.cs">
       <DependentUpon>201803010742452_Nexcel_RenameProjectToShop.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803011007535_Nexcel_UpdateShops.cs" />
-    <Compile Include="Migrations\201803011007535_Nexcel_UpdateShops.Designer.cs">
-      <DependentUpon>201803011007535_Nexcel_UpdateShops.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201803020240456_Nexcel_CustomFieldListValue.cs" />
     <Compile Include="Migrations\201803020240456_Nexcel_CustomFieldListValue.Designer.cs">
       <DependentUpon>201803020240456_Nexcel_CustomFieldListValue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803020656290_Nexcel_UpdateShops.cs" />
+    <Compile Include="Migrations\201803020656290_Nexcel_UpdateShops.Designer.cs">
+      <DependentUpon>201803020656290_Nexcel_UpdateShops.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
@@ -460,11 +460,11 @@
     <EmbeddedResource Include="Migrations\201803010742452_Nexcel_RenameProjectToShop.resx">
       <DependentUpon>201803010742452_Nexcel_RenameProjectToShop.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803011007535_Nexcel_UpdateShops.resx">
-      <DependentUpon>201803011007535_Nexcel_UpdateShops.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803020240456_Nexcel_CustomFieldListValue.resx">
       <DependentUpon>201803020240456_Nexcel_CustomFieldListValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803020656290_Nexcel_UpdateShops.resx">
+      <DependentUpon>201803020656290_Nexcel_UpdateShops.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

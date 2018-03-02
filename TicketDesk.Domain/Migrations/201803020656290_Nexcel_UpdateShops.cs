@@ -1,15 +1,12 @@
 namespace TicketDesk.Domain.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
 
     public partial class Nexcel_UpdateShops : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.Shops", "ShopCode", c => c.String(maxLength: 50));
-            AddColumn("dbo.Shops", "ContactName", c => c.String(maxLength: 70));
-            AddColumn("dbo.Shops", "ContactNumber", c => c.String(maxLength: 20));
-            AddColumn("dbo.Shops", "Email", c => c.String(maxLength: 254));
             AddColumn("dbo.Shops", "Address", c => c.String(maxLength: 500));
             AddColumn("dbo.Shops", "LastUpdatedBy", c => c.String());
             AddColumn("dbo.Shops", "LastUpdatedDate", c => c.DateTime(nullable: false));
