@@ -31,10 +31,13 @@
             return View(viewModel);
         }
 
+        [HttpPost]
         public ActionResult GetListShop(ShopFilterViewModel viewModel)
         {
-            var shopList = Context.Shops.OrderByDescending(s => s.LastUpdatedDate.Date).ToList();
-            return PartialView("_ListShop", shopList);
+            bool isActive = viewModel.IsActive == ActiveState.Yes;
+            var shopList = viewModel.IsActive == ActiveState.All ? Context.Shops.ToList() : Context.Shops.Where(s => s.IsActive == isActive).ToList();
+
+            return PartialView("_ListShop", shopList.OrderBy(s => s.LastUpdatedDate));
         }
 
         public ActionResult Create()
@@ -68,8 +71,8 @@
                     LastUpdatedBy = CurrentSession.Username,
                     LastUpdatedDate = new DateTime()
                 };
-                context.Shops.Add(newShop);
-                context.SaveChanges();
+                Context.Shops.Add(newShop);
+                Context.SaveChanges();
                 isSuccessful = true;
                 message = "Create new shop successfully!";
             }

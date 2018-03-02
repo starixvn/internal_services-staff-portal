@@ -35,7 +35,7 @@
                 { width: "140px", sortable: true },
                 { width: "auto", sortable: true },
                 { width: "70px", sortable: true },
-                { width: "70px", sortable: false },
+                { width: "70px", sortable: false }
             ],
             fixedHeader: {
                 header: true,
@@ -146,6 +146,7 @@
         getListShop();
         eventClickCreateButtonHandler();
         initToastr();
+
         $(domElement.FilterForm).on("submit", function (e) {
             getListShop();
             e.preventDefault();
