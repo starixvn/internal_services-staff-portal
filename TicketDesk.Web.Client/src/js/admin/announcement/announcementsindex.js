@@ -64,11 +64,11 @@ var modalhandler = {
         $("#announcement-table").on("click", ".btn-publish", function () {
             var title = "Announcement Publish";
             var Ids = publishAnnouncement.getIdsToPublish();
-            var message = "";
+            var message;
             if (Ids.length > 1) {
-                message = "Are you sure you want to publish these announcements right away?"
+                message = "Are you sure you want to publish these announcements right away?";
             } else {
-                message = "Are you sure you want to publish this announcement right away?"
+                message = "Are you sure you want to publish this announcement right away?";
             }
             var publish = modalhandler.publishAjax();
             modalhandler.confirmModal(title, message, publish);
@@ -85,29 +85,29 @@ var modalhandler = {
                 data: { Ids },
                 success: function (response) {
                     if (response.success) {
-                        $('#confirm-popup').modal("hide");
+                        $("#confirm-popup").modal("hide");
                         toastr.success(response.message);
-                        setTimeout(function () { location.reload(true) }, 3000)
+                        setTimeout(function () { location.reload(true) }, 3000);
                     } else {
                         toastr.error("Error");
                     }
-                },
+                }
             });
         };
     },
 
     confirmModal: function (title, message, action) {
-        var popup = $('#confirm-popup');
+        var popup = $("#confirm-popup");
         popup.find(".modal-title").text(title);
-        popup.find('.message').text(message);
+        popup.find(".message").text(message);
         popup.modal("show");
         var notTrigger = false;
-        $(popup).one('click', '#confirm-btn', function () {
+        $(popup).one("click", "#confirm-btn", function () {
             if (!notTrigger) {
                 action();
             }
         });
-        $(popup).one('click', '.cancel-btn', function () {
+        $(popup).one("click", ".cancel-btn", function () {
             notTrigger = true;
         });
     },
@@ -184,7 +184,7 @@ var modalhandler = {
                             $("#CreateAnnouncementModal").modal("hide");
                             toastr.success(result.message);
                         }
-                        setTimeout(function () { location.reload(true); }, 3000)
+                        setTimeout(function () { location.reload(true); }, 3000);
                     }
                 } else {
                     // ON VALIDATION ERROR
@@ -253,10 +253,12 @@ var publishAnnouncement = {
 
     getIdsToPublish: function () {
         var listIdsToPublish = [];
-        $(".announcement-list input[type=checkbox]:checked").each(function (i, e) {
+
+        $(".announcement-list input[type=checkbox]:checked").each(function() {
             listIdsToPublish.push($(this).val());
         });
-        return listIdsToPublish
+
+        return listIdsToPublish;
     },
 
     updatetext: function (count) {
@@ -344,7 +346,7 @@ var listAnnouncement = {
                 { width: "auto", sortable: true },
                 { width: "70px", sortable: true },
                 { width: "70px", sortable: false },
-                { width: "50px", sortable: false },
+                { width: "50px", sortable: false }
             ],
             fixedHeader: {
                 header: true,
@@ -353,13 +355,13 @@ var listAnnouncement = {
             lengthMenu: [20, 50, 100],
             info: true,
             language: {
-                lengthMenu: 'Page size _MENU_',
-                search: '_INPUT_',
-                searchPlaceholder: 'Search',
-                emptyTable: 'There is no data',
+                lengthMenu: "Page size _MENU_",
+                search: "_INPUT_",
+                searchPlaceholder: "Search",
+                emptyTable: "There is no data",
                 paginate: {
-                    first: 'First',
-                    last: 'Last',
+                    first: "First",
+                    last: "Last",
                     next: '<i class="icon-next"></i>',
                     previous: '<i class="icon-previous"></i>'
                 }
@@ -368,8 +370,8 @@ var listAnnouncement = {
         });
 
         $(window).scroll(function () {
-            if ($(this).scrollTop() > 130 && $('table').length > 2) {
-                $('table:nth(1)').remove();
+            if ($(this).scrollTop() > 130 && $("table").length > 2) {
+                $("table:nth(1)").remove();
             }
         });
     },
@@ -386,13 +388,13 @@ var listAnnouncement = {
             method: "get",
             data: $("form.filter-row").serialize(),
             success: function (response) {
-                $("#announcement-table").html('');
+                $("#announcement-table").html("");
                 $("#announcement-table").html(response);
                 listAnnouncement.initDataTable($("table.announcement-list"));
                 listAnnouncement.initSelect2();
-            },
+            }
         });
-    },
+    }
 }
 
 $(document).ready(function () {

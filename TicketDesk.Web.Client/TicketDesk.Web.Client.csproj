@@ -523,6 +523,7 @@
     <Content Include="src\contents\images\sort.png" />
     <Content Include="src\contents\images\sort_down.png" />
     <Content Include="src\contents\images\sort_up.png" />
+    <Content Include="src\js\admin\dataconfiguration\dataconfigurationindex.js" />
     <Content Include="src\js\admin\shop-management\shop-management.js" />
     <Content Include="src\libs\jquery-ui\jquery-ui.css" />
     <Content Include="src\libs\jquery-ui\jquery-ui.js" />
@@ -634,6 +635,7 @@
     <Content Include="Areas\Admin\Views\Shops\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DataConfiguration\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shops\_Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DataConfiguration\_AddCustomFieldListValue.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

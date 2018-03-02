@@ -6,6 +6,13 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
+@section scripts
+{
+    <script src="~/src/js/admin/dataconfiguration/dataconfigurationindex.js" type="text/javascript"></script>
+}
+
+<div id="dynamic-modals"></div>
+
 <h2 class="page-title">@ViewBag.Title</h2>
 
 <section class="filter-form">
@@ -37,7 +44,7 @@
 </section>
 
 <div class="table-actions">
-    <a class="btn btn-create create"><span class="icon-add"></span>+ Create new Item</a>
+    <a class="btn btn-create create"><span class="icon-add"></span>Create new Item</a>
 </div>
 
 <section class="table">

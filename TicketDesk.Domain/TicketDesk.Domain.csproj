@@ -323,6 +323,7 @@
     <Compile Include="Model\CustomFieldListValue.cs" />
     <Compile Include="Model\CustomFieldTypes.cs" />
     <Compile Include="Model\CustomFieldValue.cs" />
+    <Compile Include="Model\EditableField.cs" />
     <Compile Include="Model\Extensions\ApplicationSettingExtensions.cs" />
     <Compile Include="Model\Extensions\SearchManagerExtensions.cs" />
     <Compile Include="Model\Extensions\TicketActivityExtensions.cs" />

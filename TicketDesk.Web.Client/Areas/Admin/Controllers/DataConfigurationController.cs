@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
+    using System.Linq;
     using System.Web.Mvc;
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
@@ -23,13 +24,21 @@
 
             dataConfigurationViewModel.EditableCustomFields = _dataConfigurationService.GetEditableCustomFields();
 
-            if (dataConfigurationViewModel.SelectedFieldId != 0)
+            if (dataConfigurationViewModel.SelectedFieldId == 0)
             {
-                dataConfigurationViewModel.CustomFieldListValues =
-                    _dataConfigurationService.GetEditableListValues(dataConfigurationViewModel.SelectedFieldId);
+                dataConfigurationViewModel.SelectedFieldId =
+                    dataConfigurationViewModel.EditableCustomFields.First().CustomFieldId;
             }
 
+            dataConfigurationViewModel.CustomFieldListValues =
+                _dataConfigurationService.GetEditableListValues(dataConfigurationViewModel.SelectedFieldId);
+
             return View(viewModel);
+        }
+
+        public ActionResult AddCustomFieldListValue(int customFieldId)
+        {
+            return PartialView("_AddCustomFieldListValue");
         }
     }
 }
