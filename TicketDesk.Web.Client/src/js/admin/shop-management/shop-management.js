@@ -1,6 +1,7 @@
 ﻿var shopManagement = (function ($) {
     var domElement = {
         FilterForm: '#filterForm',
+        SearchInput: '#ShopName',
         TableArea: '#shopList',
         CreateShopForm: '#createShopForm',
         CreateModal: '#createModal',
@@ -9,6 +10,49 @@
         EditModal: '#editModal',
         EditModalContent: '#editModalContent'
     };
+
+    function searchShopAutoComplete() {
+        $(domElement.SearchInput).autocomplete({
+            source: function (request, response) {
+                var term = request.term;
+
+                $.ajax({
+                    url: '/Admin/Shops/GetShopSuggestion',
+                    dataType: 'json',
+                    data: {
+                        shopName: term
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data && data.length > 0) {
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.ShopName,
+                                    value: item.ShopId
+                                };
+                            }));
+                        }
+                    }
+                });
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                event.preventDefault();
+                $("#DisplayName").val(ui.item.label);
+                $("#EmployeeId").val(ui.item.value);
+                return false;
+            },
+            focus: function (event, ui) {
+                event.preventDefault();
+                $("#DisplayName").val(ui.item.label);
+                return false;
+            },
+            change: function (event, ui) {
+                var employeeName = $(this).val();
+                if (!employeeName) $("#EmployeeId").val("");
+            }
+        });
+    }
 
     function getListShop() {
         var data = $(domElement.FilterForm).serialize();
@@ -168,6 +212,7 @@
         getListShop();
         eventClickCreateButtonHandler();
         eventClickEditIconHandler();
+        searchShopAutoComplete();
         initToastr();
 
         $(domElement.FilterForm).on("submit", function (e) {

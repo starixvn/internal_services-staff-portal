@@ -37,7 +37,23 @@
             bool isActive = viewModel.IsActive == ActiveState.Yes;
             var shopList = viewModel.IsActive == ActiveState.All ? Context.Shops.ToList() : Context.Shops.Where(s => s.IsActive == isActive).ToList();
 
+            if (viewModel.ShopId != 0)
+            {
+                shopList = shopList.Where(s => s.ShopId == viewModel.ShopId).ToList();
+            }
+
+            if (viewModel.ShopId == 0 && !string.IsNullOrEmpty(viewModel.ShopName))
+            {
+                shopList = shopList.Where(s => s.ShopName.Contains(viewModel.ShopName)).ToList();
+            }
+
             return PartialView("_ListShop", shopList.OrderBy(s => s.LastUpdatedDate));
+        }
+
+        public ActionResult GetShopSuggestion(string shopName)
+        {
+            var shops = Context.Shops.Where(s => s.ShopName.Contains(shopName)).Select(x => new { x.ShopId, x.ShopName }).ToList();
+            return Json(new { shops }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Create()
@@ -123,7 +139,7 @@
                 message = "Shop not exist";
             }
 
-            if (IsExistedShopName(model.ShopName))
+            if (IsExistedShopName(model.ShopName) && shop != null && model.ShopName != shop.ShopName)
             {
                 ModelState.AddModelError("ShopName", "Name existed!");
             }
