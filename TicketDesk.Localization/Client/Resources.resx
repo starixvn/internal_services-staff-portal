@@ -384,4 +384,7 @@
   <data name="Active" xml:space="preserve">
     <value>Active</value>
   </data>
+  <data name="DataConfigurationNewItemTitle" xml:space="preserve">
+    <value>New Item of </value>
+  </data>
 </root>

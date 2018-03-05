@@ -10,7 +10,5 @@
         public int SelectedFieldId { get; set; }
 
         public IEnumerable<EditableField> EditableCustomFields { get; set; }
-
-        public IEnumerable<CustomFieldListValue> CustomFieldListValues { get; set; }
     }
 }

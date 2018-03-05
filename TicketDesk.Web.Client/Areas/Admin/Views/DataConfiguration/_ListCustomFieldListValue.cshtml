@@ -1,0 +1,45 @@
+﻿@using TicketDesk.Domain.Model
+@model TicketDesk.Web.Client.Areas.Admin.Models.DataConfiguration.ListCustomFieldListValueViewModel
+
+<div class="table-actions">
+    <a class="btn btn-create create" href="@Url.Action("AddCustomFieldListValue", "DataConfiguration", new {customFieldId = Model.SelectedFieldId, modalTitle = Model.ModalTitle})">
+        <span class="icon-add"></span>Create new Item
+    </a>
+</div>
+
+<table class="announcement-list" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th class="number">#</th>
+            <th class="name-vn">
+                <span>@nameof(CustomFieldListValue.DisplayName_vi)</span>
+            </th>
+            <th class="name-en">
+                <span>@nameof(CustomFieldListValue.DisplayName)</span>
+            </th>
+            <th class="description">
+                <span>@nameof(CustomFieldListValue.Description)</span>
+            </th>
+            <th class="active">@nameof(CustomFieldListValue.IsActive)</th>
+            <th class="action">Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customFieldListValue in Model.CustomFieldListValues)
+        {
+            <tr>
+                <td>1</td>
+                <td>@customFieldListValue.DisplayName_vi</td>
+                <td>@customFieldListValue.DisplayName</td>
+                <td>@customFieldListValue.Description</td>
+                <td>
+                    @if (customFieldListValue.IsActive)
+                    {
+                        <span class="icon-check"></span>
+                    }
+                </td>
+                <td><span class="icon-edit"></span></td>
+            </tr>
+        }
+    </tbody>
+</table>

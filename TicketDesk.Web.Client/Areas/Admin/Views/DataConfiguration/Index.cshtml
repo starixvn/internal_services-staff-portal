@@ -1,5 +1,4 @@
-﻿@using TicketDesk.Domain.Model
-@model TicketDesk.Web.Client.Areas.Admin.Models.DataConfiguration.DataConfigurationViewModel
+﻿@model TicketDesk.Web.Client.Areas.Admin.Models.DataConfiguration.DataConfigurationViewModel
 
 @{
     ViewBag.Title = "Data Configuration";
@@ -24,7 +23,7 @@
 <h2 class="page-title">@ViewBag.Title</h2>
 
 <section class="filter-form">
-    @using (Html.BeginForm("Index", "DataConfiguration", FormMethod.Get, new { @class = "filter-row" }))
+    @using (Html.BeginForm("ListCustomFieldListValue", "DataConfiguration", FormMethod.Post, new { @class = "filter-row" }))
     {
         <div class="select-group">
             @Html.LabelFor(x => x.SelectedFieldId)
@@ -52,53 +51,4 @@
     }
 </section>
 
-<div class="table-actions">
-    <a class="btn btn-create create"
-       href="@Url.Action(
-                 "AddCustomFieldListValue",
-                 "DataConfiguration",
-                 new
-                 {
-                     customFieldId = Model.SelectedFieldId,
-                     modalTitle = ViewBag.NewCustomFieldListValueTitle
-                 })"><span class="icon-add"></span>Create new Item</a>
-</div>
-
-<section class="table">
-    <table class="announcement-list" cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th class="number">#</th>
-                <th class="name-vn">
-                    <span>@nameof(CustomFieldListValue.DisplayName_vi)</span>
-                </th>
-                <th class="name-en">
-                    <span>@nameof(CustomFieldListValue.DisplayName)</span>
-                </th>
-                <th class="description">
-                    <span>@nameof(CustomFieldListValue.Description)</span>
-                </th>
-                <th class="active">@nameof(CustomFieldListValue.IsActive)</th>
-                <th class="action">Edit</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var customFieldListValue in Model.CustomFieldListValues)
-            {
-                <tr>
-                    <td>1</td>
-                    <td>@customFieldListValue.DisplayName_vi</td>
-                    <td>@customFieldListValue.DisplayName</td>
-                    <td>@customFieldListValue.Description</td>
-                    <td>
-                        @if (customFieldListValue.IsActive)
-                        {
-                            <span class="icon-check"></span>
-                        }
-                    </td>
-                    <td><span class="icon-edit"></span></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</section>
+<section class="table" id="data-list"></section>

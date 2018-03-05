@@ -60,12 +60,12 @@
 
         public bool IsCustomFieldDisplayNameViUnique(int customFieldId, string displayNameVi)
         {
-            return context.CustomFieldListValues.Any(x => x.Id == customFieldId && x.DisplayName_vi != displayNameVi);
+            return !context.CustomFieldListValues.Any(x => x.CustomFieldId == customFieldId && x.DisplayName_vi == displayNameVi);
         }
 
         public bool IsCustomFieldDisplayNameEnUnique(int customFieldId, string displayNameEn)
         {
-            return context.CustomFieldListValues.Any(x => x.Id == customFieldId && x.DisplayName_vi != displayNameEn);
+            return !context.CustomFieldListValues.Any(x => x.CustomFieldId == customFieldId && x.DisplayName_vi == displayNameEn);
         }
     }
 }

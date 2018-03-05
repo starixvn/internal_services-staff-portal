@@ -385,6 +385,7 @@
     <Compile Include="Areas\Admin\Models\Announcements\NewAnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DataConfiguration\AddCustomFieldListValueViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DataConfiguration\DataConfigurationViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\DataConfiguration\ListCustomFieldListValueViewModel.cs" />
     <Compile Include="Areas\Admin\Models\References\ReferenceViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopFilterViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopViewModel.cs" />
@@ -638,6 +639,8 @@
     <Content Include="Areas\Admin\Views\Shops\_Create.cshtml" />
     <Content Include="Areas\Admin\Views\DataConfiguration\_AddCustomFieldListValue.cshtml" />
     <Content Include="Areas\Admin\Views\Shops\_Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Shops\_ListShop.cshtml" />
+    <Content Include="Areas\Admin\Views\DataConfiguration\_ListCustomFieldListValue.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

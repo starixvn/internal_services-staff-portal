@@ -27,5 +27,7 @@
 
         [Display(Name = nameof(Resources.Active), ResourceType = typeof(Resources))]
         public bool IsActive { get; set; }
+
+        public bool IsSuccessful { get; set; }
     }
 }

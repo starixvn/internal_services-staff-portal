@@ -1,8 +1,8 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
-    using System.Linq;
     using System.Web.Mvc;
     using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Models.DataConfiguration;
@@ -18,22 +18,26 @@
             _dataConfigurationService = dataConfirgurationService;
         }
 
-        public ActionResult Index(DataConfigurationViewModel viewModel)
+        public ActionResult Index()
         {
-            var dataConfigurationViewModel = viewModel ?? new DataConfigurationViewModel();
-
-            dataConfigurationViewModel.EditableCustomFields = _dataConfigurationService.GetEditableCustomFields();
-
-            if (dataConfigurationViewModel.SelectedFieldId == 0)
+            var dataConfigurationViewModel = new DataConfigurationViewModel
             {
-                dataConfigurationViewModel.SelectedFieldId =
-                    dataConfigurationViewModel.EditableCustomFields.First().CustomFieldId;
-            }
+                EditableCustomFields = _dataConfigurationService.GetEditableCustomFields()
+            };
 
-            dataConfigurationViewModel.CustomFieldListValues =
-                _dataConfigurationService.GetEditableListValues(dataConfigurationViewModel.SelectedFieldId);
+            return View(dataConfigurationViewModel);
+        }
 
-            return View(viewModel);
+        public ActionResult ListCustomFieldListValue(int selectedFieldId, string modalTitle)
+        {
+            ListCustomFieldListValueViewModel viewModel = new ListCustomFieldListValueViewModel
+            {
+                CustomFieldListValues = _dataConfigurationService.GetEditableListValues(selectedFieldId),
+                SelectedFieldId = selectedFieldId,
+                ModalTitle = modalTitle
+            };
+
+            return PartialView("_ListCustomFieldListValue", viewModel);
         }
 
         public ActionResult AddCustomFieldListValue(int customFieldId, string modalTitle)
@@ -47,18 +51,37 @@
             return PartialView("_AddCustomFieldListValue", addCustomFieldListValueViewModel);
         }
 
-        [AcceptVerbs("Get", "Post")]
-        public ActionResult IsDisplayNameViUnique(int customFieldId, string displayNameVi)
+        [HttpPost]
+        public ActionResult AddCustomFieldListValue(AddCustomFieldListValueViewModel viewModel)
         {
-            var result = _dataConfigurationService.IsCustomFieldDisplayNameViUnique(customFieldId, displayNameVi);
-            return Json(result);
+            if (ModelState.IsValid)
+            {
+                CustomFieldListValue customFieldListValue = new CustomFieldListValue
+                {
+                    CustomFieldId = viewModel.CustomFieldId,
+                    DisplayName_vi = viewModel.DisplayName_vi,
+                    DisplayName = viewModel.DisplayName,
+                    IsActive = viewModel.IsActive
+                };
+
+                viewModel.IsSuccessful = _dataConfigurationService.AddCustomFieldListValue(customFieldListValue);
+            }
+
+            return PartialView("_AddCustomFieldListValue", viewModel);
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        public ActionResult IsDisplayNameViUnique(AddCustomFieldListValueViewModel viewModel)
+        {
+            var result = _dataConfigurationService.IsCustomFieldDisplayNameViUnique(viewModel.CustomFieldId, viewModel.DisplayName_vi);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [AcceptVerbs("Get", "Post")]
         public ActionResult IsDisplayNameEnUnique(int customFieldId, string displayNameEn)
         {
             var result = _dataConfigurationService.IsCustomFieldDisplayNameEnUnique(customFieldId, displayNameEn);
-            return Json(result);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
