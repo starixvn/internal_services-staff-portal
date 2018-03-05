@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement
+@using TicketDesk.Localization.Client
 @model ShopViewModel
 
 <div class="modal-header">
@@ -81,7 +82,7 @@
                            name="@Html.NameFor(x => x.IsActive)"
                            value="true" />
                 }
-                <label for="Active">Is Active</label>
+                <label for="Active">@Resources.Active</label>
             </div>
         </div>
     </div>

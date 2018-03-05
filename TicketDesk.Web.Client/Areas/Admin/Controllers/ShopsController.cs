@@ -53,7 +53,7 @@
 
         public ActionResult GetShopSuggestion(string shopName)
         {
-            var shops = Context.Shops.Where(s => s.ShopName.Contains(shopName)).Select(x => new { x.ShopId, x.ShopName }).ToList();
+            var shops = Context.Shops.Where(s => s.ShopName.Contains(shopName)).Select(x => new { x.ShopId, x.ShopName }).Take(10).ToList();
             return Json(shops, JsonRequestBehavior.AllowGet);
         }
 
