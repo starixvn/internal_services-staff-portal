@@ -167,6 +167,7 @@
                    "~/src/libs/jquery.DataTable/datatables.min.js",
                    "~/src/libs/jquery.DataTable/dataTables.fixedHeader.min.js",
                    "~/src/libs/jquery-ui/jquery-ui.min.js",
+                   "~/src/js/admin/initDataTable.js",
                    "~/src/js/admin/shop-management/shop-management.js"));
 
             // Set EnableOptimizations to false for debugging. For more information,

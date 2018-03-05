@@ -68,47 +68,21 @@
     }
 
     function initDataTable() {
-        $("table").DataTable({
-            pageLength: 20,
-            paging: true,
-            searching: true,
-            dom: '<"top"f>rt<".pull-left" i><".pull-right" lp><"clear">',
-            columns: [
+        var commonDataTable = commonDataTableInit;
+        commonDataTable.columns = 
+            [
                 { width: "70px", sortable: false },
                 { width: "200px", sortable: true },
                 { width: "100px", sortable: true },
-                { width: "140px", sortable: true },
+                { width: "170px", sortable: true },
                 { width: "140px", sortable: true },
                 { width: "auto", sortable: true },
                 { width: "70px", sortable: true },
                 { width: "70px", sortable: false }
-            ],
-            fixedHeader: {
-                header: true,
-                headerOffset: 50
-            },
-            lengthMenu: [20, 50, 100],
-            info: true,
-            language: {
-                lengthMenu: 'Page size _MENU_',
-                search: '_INPUT_',
-                searchPlaceholder: 'Search',
-                emptyTable: 'There is no data',
-                paginate: {
-                    first: 'First',
-                    last: 'Last',
-                    next: '<i class="icon-next"></i>',
-                    previous: '<i class="icon-previous"></i>'
-                }
-            },
-            autoWidth: false
-        });
+            ];
+        $("table").DataTable(commonDataTable);
 
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 130 && $('table').length > 2) {
-                $('table:nth(1)').remove();
-            }
-        });
+        InitFixedHeaderDataTable();
     }
 
     function eventClickEditIconHandler() {

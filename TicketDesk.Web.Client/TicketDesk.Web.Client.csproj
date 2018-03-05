@@ -525,6 +525,7 @@
     <Content Include="src\contents\images\sort_down.png" />
     <Content Include="src\contents\images\sort_up.png" />
     <Content Include="src\js\admin\dataconfiguration\dataconfigurationindex.js" />
+    <Content Include="src\js\admin\initDataTable.js" />
     <Content Include="src\js\admin\shop-management\shop-management.js" />
     <Content Include="src\libs\jquery-ui\jquery-ui.css" />
     <Content Include="src\libs\jquery-ui\jquery-ui.js" />
