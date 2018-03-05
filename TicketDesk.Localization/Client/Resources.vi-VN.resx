@@ -387,4 +387,10 @@
   <data name="DataConfigurationNewItemTitle" xml:space="preserve">
     <value>Vật thể mới của </value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Chỉnh sửa</value>
+  </data>
+  <data name="CreateNewItem" xml:space="preserve">
+    <value>Tạo vật thể mới</value>
+  </data>
 </root>

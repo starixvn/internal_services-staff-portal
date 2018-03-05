@@ -1,9 +1,9 @@
-﻿@using TicketDesk.Domain.Model
+﻿@using TicketDesk.Localization.Client
 @model TicketDesk.Web.Client.Areas.Admin.Models.DataConfiguration.ListCustomFieldListValueViewModel
 
 <div class="table-actions">
     <a class="btn btn-create create" href="@Url.Action("AddCustomFieldListValue", "DataConfiguration", new {customFieldId = Model.SelectedFieldId, modalTitle = Model.ModalTitle})">
-        <span class="icon-add"></span>Create new Item
+        <span class="icon-add"></span>@Resources.CreateNewItem
     </a>
 </div>
 
@@ -12,16 +12,16 @@
         <tr>
             <th class="number">#</th>
             <th class="name-vn">
-                <span>@nameof(CustomFieldListValue.DisplayName_vi)</span>
+                <span>@Resources.DisplayNameVI</span>
             </th>
             <th class="name-en">
-                <span>@nameof(CustomFieldListValue.DisplayName)</span>
+                <span>@Resources.DisplayNameEN</span>
             </th>
             <th class="description">
-                <span>@nameof(CustomFieldListValue.Description)</span>
+                <span>@Resources.Description</span>
             </th>
-            <th class="active">@nameof(CustomFieldListValue.IsActive)</th>
-            <th class="action">Edit</th>
+            <th class="active">@Resources.Active</th>
+            <th class="action">@Resources.Edit</th>
         </tr>
     </thead>
     <tbody>

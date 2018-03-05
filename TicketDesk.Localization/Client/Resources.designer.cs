@@ -124,6 +124,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create new Item.
+        /// </summary>
+        public static string CreateNewItem {
+            get {
+                return ResourceManager.GetString("CreateNewItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  is required.
         /// </summary>
         public static string CustomFieldForHelper_AddUnobtrusiveValidations_IsRequired {
@@ -426,6 +435,15 @@ namespace TicketDesk.Localization.Client {
         public static string Dropzone_Modal_Close {
             get {
                 return ResourceManager.GetString("Dropzone_Modal_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         

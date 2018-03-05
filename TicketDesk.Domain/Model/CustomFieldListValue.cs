@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using TicketDesk.Localization.Client;
 
     public class CustomFieldListValue
     {
@@ -11,20 +12,31 @@
 
         public int CustomFieldId { get; set; }
 
-        [Display(Name = "Display Name EN")]
-        [StringLength(50,ErrorMessage = "{0} must be less than {1} characters")]
+        [Display(Name = nameof(Resources.DisplayNameEN), ResourceType = typeof(Resources))]
+        [StringLength(
+            50,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
         public string DisplayName { get; set; }
 
-        [Display(Name = "Display Name VI")]
-        [StringLength(50, ErrorMessage = "{0} must be less than {1} characters")]
-        [Required(ErrorMessage = "{0} is required!")]
+        [Display(Name = nameof(Resources.DisplayNameVI), ResourceType = typeof(Resources))]
+        [StringLength(
+            50,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
+        [Required(
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage))]
         public string DisplayName_vi { get; set; }
 
-        [Display(Name = "Description")]
-        [StringLength(200, ErrorMessage = "{0} must be less than {1} characters")]
+        [Display(Name = nameof(Resources.Description), ResourceType = typeof(Resources))]
+        [StringLength(
+            200,
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
         public string Description { get; set; }
 
-        [Display(Name = "Active")]
+        [Display(Name = nameof(Resources.Active), ResourceType = typeof(Resources))]
         public bool IsActive { get; set; }
     }
 }

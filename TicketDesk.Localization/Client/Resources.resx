@@ -387,4 +387,10 @@
   <data name="DataConfigurationNewItemTitle" xml:space="preserve">
     <value>New Item of </value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="CreateNewItem" xml:space="preserve">
+    <value>Create new Item</value>
+  </data>
 </root>
