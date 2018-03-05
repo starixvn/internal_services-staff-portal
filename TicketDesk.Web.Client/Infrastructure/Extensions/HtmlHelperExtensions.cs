@@ -25,7 +25,7 @@
                 return "active";
             }
 
-            if (napRoute == "/Admin/Announcement" && controller == "Announcements")
+            if (napRoute == "/Admin/Announcement" && controller == "Announcement")
             {
                 return "active";
             }
