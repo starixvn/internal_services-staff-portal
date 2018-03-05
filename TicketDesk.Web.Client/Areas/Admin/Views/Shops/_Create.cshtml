@@ -62,8 +62,12 @@
             </div>
 
             <div class="form-group checkbox">
-                <input type="checkbox" id="IsActive" name="IsActive" />
-                <label for="IsActive">Is Active</label>
+                <input type="checkbox"
+                       id="@Html.NameFor(x => x.IsActive)"
+                       name="@Html.NameFor(x => x.IsActive)"
+                       value="true"
+                       checked="checked" />
+                @Html.LabelFor(model => model.IsActive)
             </div>
         </div>
     </div>
