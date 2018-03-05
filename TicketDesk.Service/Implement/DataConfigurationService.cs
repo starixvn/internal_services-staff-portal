@@ -41,7 +41,7 @@
 
         public IEnumerable<CustomFieldListValue> GetEditableListValues(int customFieldId)
         {
-            return context.CustomFieldListValues.Where(x => x.CustomFieldId == customFieldId);
+            return context.CustomFieldListValues.Where(x => x.CustomFieldId == customFieldId).OrderBy(x => x.DisplayName_vi);
         }
 
         public bool AddCustomFieldListValue(CustomFieldListValue customFieldListValue)

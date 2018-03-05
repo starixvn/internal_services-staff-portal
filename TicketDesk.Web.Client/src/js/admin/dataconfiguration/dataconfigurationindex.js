@@ -56,13 +56,10 @@
             method: $(form).attr("method"),
             data: $(form).serialize(),
             success: function (result) {
-                $("#dynamic-modals").html(result);
-                var formResult = $("#is-successful").val();
-                if (formResult) {
+                if (result) {
                     toastr.info("New item added");
-                } else {
-                    $("#dynamic-modals .modal").modal();
-                    dataconfiguration.initValidation();
+                    $("#dynamic-modals .modal").modal("hide");
+                    $(".filter-form form").trigger("submit");
                 }
             }
         });
@@ -73,15 +70,18 @@
     },
 
     initDatatable: function () {
-        window.commonDataTableInit.columnDefs = [
+        var datatableConfigs = commonDataTableInit.Init();
+        datatableConfigs.columnDefs = [
             {
                 orderable: false,
-                target: [0]
+                searchable: false,
+                targets: [0, -1]
             }
         ];
+        datatableConfigs.order = [[1, "asc"]];
 
-        $("table").DataTable(window.commonDataTableInit);
-        window.InitFixedHeaderDataTable();
+        $("table").DataTable(datatableConfigs);
+        commonDataTableInit.InitFixedHeaderDataTable();
     }
 }
 

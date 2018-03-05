@@ -54,6 +54,8 @@
         [HttpPost]
         public ActionResult AddCustomFieldListValue(AddCustomFieldListValueViewModel viewModel)
         {
+            var result = false;
+
             if (ModelState.IsValid)
             {
                 CustomFieldListValue customFieldListValue = new CustomFieldListValue
@@ -64,10 +66,10 @@
                     IsActive = viewModel.IsActive
                 };
 
-                viewModel.IsSuccessful = _dataConfigurationService.AddCustomFieldListValue(customFieldListValue);
+                result = _dataConfigurationService.AddCustomFieldListValue(customFieldListValue);
             }
 
-            return PartialView("_AddCustomFieldListValue", viewModel);
+            return Json(result);
         }
 
         [AcceptVerbs("Get", "Post")]

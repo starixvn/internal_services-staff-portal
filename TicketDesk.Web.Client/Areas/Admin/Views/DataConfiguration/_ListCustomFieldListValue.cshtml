@@ -25,21 +25,25 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var customFieldListValue in Model.CustomFieldListValues)
-        {
-            <tr>
-                <td>1</td>
-                <td>@customFieldListValue.DisplayName_vi</td>
-                <td>@customFieldListValue.DisplayName</td>
-                <td>@customFieldListValue.Description</td>
-                <td>
-                    @if (customFieldListValue.IsActive)
-                    {
-                        <span class="icon-check"></span>
-                    }
-                </td>
-                <td><span class="icon-edit"></span></td>
-            </tr>
+        @{
+            var index = 0;
+            foreach (var customFieldListValue in Model.CustomFieldListValues)
+            {
+                index++;
+                <tr>
+                    <td>@index</td>
+                    <td>@customFieldListValue.DisplayName_vi</td>
+                    <td>@customFieldListValue.DisplayName</td>
+                    <td>@customFieldListValue.Description</td>
+                    <td>
+                        @if (customFieldListValue.IsActive)
+                        {
+                            <span class="icon-check"></span>
+                        }
+                    </td>
+                    <td><span class="icon-edit"></span></td>
+                </tr>
+            }
         }
     </tbody>
 </table>

@@ -7,8 +7,6 @@
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(x => x.CustomFieldId)
-            @Html.HiddenFor(x => x.ModalTitle)
-            @Html.HiddenFor(x => x.IsSuccessful, new {id = "is-successfull"})
 
             <div class="modal-content">
                 <div class="modal-header">
