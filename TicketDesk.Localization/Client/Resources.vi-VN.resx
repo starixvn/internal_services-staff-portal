@@ -239,13 +239,13 @@
   </data>
   <data name="Views_Ticket_NewIncidentTicket_Title" xml:space="preserve">
     <value>BÁO CÁO SỰ CỐ</value>
-    </data>
+  </data>
   <data name="Dropzone_Message_Default" xml:space="preserve">
     <value>Thả tập tin vào đây để tải lên</value>
   </data>
   <data name="Views_Ticket_NewNetworkTicket_Title" xml:space="preserve">
     <value>BÁO CÁO SỰ CỐ MẠNG</value>
-    </data>
+  </data>
   <data name="Dropzone_Message_Fallback" xml:space="preserve">
     <value>Trình duyệt của bạn không hỗ trợ kéo và thả tập tin</value>
   </data>
@@ -392,5 +392,20 @@
   </data>
   <data name="CreateNewItem" xml:space="preserve">
     <value>Tạo vật thể mới</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Địa chỉ email</value>
+  </data>
+  <data name="ShopAddress" xml:space="preserve">
+    <value>Địa chỉ shop</value>
+  </data>
+  <data name="ShopCode" xml:space="preserve">
+    <value>Shop Code</value>
+  </data>
+  <data name="ShopName" xml:space="preserve">
+    <value>Tên shop</value>
+  </data>
+  <data name="ContactNumber" xml:space="preserve">
+    <value>Điện thoại liên hệ</value>
   </data>
 </root>

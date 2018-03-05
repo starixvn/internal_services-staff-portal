@@ -1,52 +1,52 @@
 ﻿@using TicketDesk.Domain.Model
-@using TicketDesk.Core.Resources
-@model IEnumerable<Shop>
+@using TicketDesk.Localization.Client
+    @model IEnumerable<Shop>
 
-<table class="announcement-list" cellpadding="0" cellspacing="0">
-    <thead>
-        <tr>
-            <th class="number">#</th>
-            <th class="shop-name">
-                <span>@ViewLang.ShopName</span>
-            </th>
-            <th class="shop-code">
-                <span>@ViewLang.ShopCode</span>
-            </th>
-            <th class="email-address">
-                <span>@ViewLang.Email</span>
-            </th>
-            <th class="phone">
-                <span>@ViewLang.ContactNumber</span>
-            </th>
-            <th class="shop-address">
-                <span>@ViewLang.ShopAddress</span>
-            </th>
-            <th class="active">@ViewLang.Active</th>
-            <th class="action">@ViewLang.Edit</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            var index = 0;
-        }
-        @foreach (var shop in Model)
-        {
-            index++;
+    <table class="announcement-list" cellpadding="0" cellspacing="0">
+        <thead>
             <tr>
-                <td class="text-center">@index</td>
-                <td>@shop.ShopName</td>
-                <td>@shop.ShopCode</td>
-                <td>@shop.Email</td>
-                <td>@shop.ContactNumber</td>
-                <td>@shop.Address</td>
-                <td class="text-center">
-                    @if (shop.IsActive)
-                    {
-                        <span class="icon-check"></span>
-                    }
-                </td>
-                <td class="text-center"><span class="icon-edit action-edit" data-id="@shop.ShopId"></span></td>
+                <th class="number">#</th>
+                <th class="shop-name">
+                    <span>@Resources.ShopName</span>
+                </th>
+                <th class="shop-code">
+                    <span>@Resources.ShopCode</span>
+                </th>
+                <th class="email-address">
+                    <span>@Resources.Email</span>
+                </th>
+                <th class="phone">
+                    <span>@Resources.ContactNumber</span>
+                </th>
+                <th class="shop-address">
+                    <span>@Resources.ShopAddress</span>
+                </th>
+                <th class="active">@Resources.Active</th>
+                <th class="action">@Resources.Edit</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @{
+                var index = 0;
+            }
+            @foreach (var shop in Model)
+            {
+                index++;
+                <tr>
+                    <td class="text-center">@index</td>
+                    <td>@shop.ShopName</td>
+                    <td>@shop.ShopCode</td>
+                    <td>@shop.Email</td>
+                    <td>@shop.ContactNumber</td>
+                    <td>@shop.Address</td>
+                    <td class="text-center">
+                        @if (shop.IsActive)
+                        {
+                            <span class="icon-check"></span>
+                        }
+                    </td>
+                    <td class="text-center"><span class="icon-edit action-edit" data-id="@shop.ShopId"></span></td>
+                </tr>
+            }
+        </tbody>
+    </table>

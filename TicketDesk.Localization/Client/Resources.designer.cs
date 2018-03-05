@@ -19,7 +19,7 @@ namespace TicketDesk.Localization.Client {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -120,6 +120,15 @@ namespace TicketDesk.Localization.Client {
         public static string Common_Table_Pagination_PageSize {
             get {
                 return ResourceManager.GetString("Common_Table_Pagination_PageSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Number.
+        /// </summary>
+        public static string ContactNumber {
+            get {
+                return ResourceManager.GetString("ContactNumber", resourceCulture);
             }
         }
         
@@ -448,6 +457,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email Address.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remark should not than 5000 characters.
         /// </summary>
         public static string IdUploaderViewModel_Remark_Remark_should_not_than_5000_characters {
@@ -462,6 +480,33 @@ namespace TicketDesk.Localization.Client {
         public static string RequiredErrorMessage {
             get {
                 return ResourceManager.GetString("RequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shop Address.
+        /// </summary>
+        public static string ShopAddress {
+            get {
+                return ResourceManager.GetString("ShopAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shop Code.
+        /// </summary>
+        public static string ShopCode {
+            get {
+                return ResourceManager.GetString("ShopCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shop Name.
+        /// </summary>
+        public static string ShopName {
+            get {
+                return ResourceManager.GetString("ShopName", resourceCulture);
             }
         }
         
