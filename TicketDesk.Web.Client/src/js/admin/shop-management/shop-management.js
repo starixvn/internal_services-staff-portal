@@ -68,8 +68,8 @@
     }
 
     function initDataTable() {
-        var commonDataTable = commonDataTableInit;
-        commonDataTable.columns = 
+        var commonDataTable = commonDataTableInit.Init();
+        commonDataTable.columns =
             [
                 { width: "70px", sortable: false },
                 { width: "200px", sortable: true },
@@ -82,7 +82,7 @@
             ];
         $("table").DataTable(commonDataTable);
 
-        InitFixedHeaderDataTable();
+        commonDataTableInit.InitFixedHeaderDataTable();
     }
 
     function eventClickEditIconHandler() {

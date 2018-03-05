@@ -254,7 +254,7 @@ var publishAnnouncement = {
     getIdsToPublish: function () {
         var listIdsToPublish = [];
 
-        $(".announcement-list input[type=checkbox]:checked").each(function() {
+        $(".announcement-list input[type=checkbox]:checked").each(function () {
             listIdsToPublish.push($(this).val());
         });
 
@@ -332,7 +332,7 @@ var announcement = {
 
 var listAnnouncement = {
     initDataTable: function ($table) {
-        var commonDataTable = commonDataTableInit;
+        var commonDataTable = commonDataTableInit.Init();
         commonDataTable.columns =
              [
                 { width: "55px", sortable: false },
@@ -346,8 +346,7 @@ var listAnnouncement = {
                 { width: "50px", sortable: false }
              ];
         $table.DataTable(commonDataTable);
-
-        InitFixedHeaderDataTable();
+        commonDataTableInit.InitFixedHeaderDataTable();
     },
 
     initSelect2: function () {
