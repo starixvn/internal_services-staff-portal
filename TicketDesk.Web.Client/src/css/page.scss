@@ -679,7 +679,7 @@ tr.header {
 .custom-dropdown {
     display: inline-block;
     border: 1px solid #999;
-    margin-left: 4px;
+    //margin-left: 4px;
     border-radius: 2px;
 
     &:after {
@@ -941,10 +941,23 @@ tr.header {
         }
     }
 
+    .fullwidth {
+        width: 100% !important;
+    }
+
     .fullwidth, textarea {
         //grid-column: span 4;
         flex: 1 100%;
     }
+
+    /*.item-list textarea {
+        border: 0;
+        padding: 0;
+
+        &:focus {
+            outline: none;
+        }
+    }*/
 
     input[type="text"], textarea {
         font-family: inherit;
@@ -969,7 +982,7 @@ tr.header {
 
     input[disabled="disabled"] {
         background: inherit;
-    }    
+    }
 
     .subject textarea {
         min-height: unset;
@@ -1006,6 +1019,12 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         textarea {
             height: 100%;
             margin-bottom: 0;
+            border: 0;
+            padding: 0;
+
+            &:focus {
+                outline: none;
+            }
         }
     }
 
@@ -1021,7 +1040,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         padding-top: 0;
 
         ~ .item {
-            padding-top: 12px;
+            padding-top: 5px;
         }
         //grid-template-rows: 40px auto;
         .key.border {
@@ -1138,6 +1157,16 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     .key, .value.span-3 {
         height: auto;
         min-height: 40px;
+    }
+
+    .label-item {
+        flex-basis: 270px;
+        max-width: 270px;
+
+        @media (max-width: 1199px) {
+            flex-basis: 170px;
+            max-width: 170px;
+        }
     }
 
     .key {
@@ -1866,7 +1895,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     }
 
     ul.lang-list {
-        position: absolute;        
+        position: absolute;
         top: 96px;
         right: 0;
         opacity: 0;

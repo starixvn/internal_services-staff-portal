@@ -170,14 +170,14 @@
     <div class="form-content facility-form">
         <div class="title">@Resources.Views_Ticket_NewFacilityTicket_Title</div>
         <div class="item-list height-auto">
-            @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "key border" })
+            @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "key border label-item" })
             <div class="value span-3 border subject">
                 @Html.ValidationMessageFor(x => x.Ticket.Title)
                 @Html.TextBoxFor(model => model.Ticket.Title, new { @class = "ticket-title" , @readonly="readonly" })
             </div>
         </div>
         <div class="height-auto">
-            @Html.CustomFieldLabelFor(x => x.RequestType, new { @class = "key border" })
+            @Html.CustomFieldLabelFor(x => x.RequestType, new { @class = "key border label-item" })
             <div class="value span-3 border">
                 <div class="radio-group">
                     @Html.HiddenFor(x => x.RequestType.CustomFieldId, new { Value = Model.RequestType.CustomField.Id })
@@ -194,7 +194,7 @@
                 @Html.ValidationMessageFor(x => x.SelectedRequestType)
             </div>
         </div>       
-        <div class="item-list" id="item-list">
+        <div class="item-list height-auto" id="item-list">
             <div class="title item-head border">
                 <span>@Resources.Views_Ticket_NewFacilityTicket_ItemList</span>
                 <button class="btn btn-add" data-class="item-list"><span class="icon-add"></span>@Resources.Views_Ticket_NewFacilityTicket_AddItem</button>
@@ -215,7 +215,7 @@
                     <div class="item @evenClass">
                         @Html.CustomFieldIndex("Items", guid)
 
-                        @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border" })
+                        @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border label-item" })
                         @Html.ValidationMessageFor(x => x.Items.ElementAt(i).ItemName, null, new { data_valmsg_for = "Items[" + guid + "].ItemName.Value" })
                         <div class="value border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "" })</div>
                         <div class="border span-2">

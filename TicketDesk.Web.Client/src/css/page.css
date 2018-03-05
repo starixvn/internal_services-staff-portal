@@ -476,7 +476,6 @@ tr.header {
 .custom-dropdown {
   display: inline-block;
   border: 1px solid #999;
-  margin-left: 4px;
   border-radius: 2px; }
   .custom-dropdown:after {
     top: 0;
@@ -577,7 +576,15 @@ tr.header {
   box-shadow: 0 0 6px rgba(102, 102, 102, 0.3);
   display: flex;
   flex-flow: row wrap;
-  color: #333; }
+  color: #333;
+  /*.item-list textarea {
+        border: 0;
+        padding: 0;
+
+        &:focus {
+            outline: none;
+        }
+    }*/ }
   .form-content label {
     margin-bottom: 0; }
   .form-content .border {
@@ -651,6 +658,8 @@ tr.header {
       background: #f2f2f2; }
       .form-content .item.even *:not(.btn-delete) {
         background: inherit; }
+  .form-content .fullwidth {
+    width: 100% !important; }
   .form-content .fullwidth, .form-content textarea {
     flex: 1 100%; }
   .form-content input[type="text"], .form-content textarea {
@@ -693,7 +702,11 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   padding: 12px; }
   .facility-form .fullwidth.input-area textarea {
     height: 100%;
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    border: 0;
+    padding: 0; }
+    .facility-form .fullwidth.input-area textarea:focus {
+      outline: none; }
 
 .facility-form .item .field-validation-error {
   border-left: 1px solid #d3d7db;
@@ -708,7 +721,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     border-left: 1px solid #d3d7db;
     padding-top: 0; }
     .feedback-form .item ~ .item {
-      padding-top: 12px; }
+      padding-top: 5px; }
     .feedback-form .item .key.border {
       border-left: none; }
     .feedback-form .item input[type="text"] {
@@ -833,6 +846,13 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   .height-auto .key, .height-auto .value.span-3 {
     height: auto;
     min-height: 40px; }
+  .height-auto .label-item {
+    flex-basis: 270px;
+    max-width: 270px; }
+    @media (max-width: 1199px) {
+      .height-auto .label-item {
+        flex-basis: 170px;
+        max-width: 170px; } }
   .height-auto .key {
     display: flex;
     align-items: center;
