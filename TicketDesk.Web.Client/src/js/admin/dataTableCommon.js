@@ -7,17 +7,16 @@
         header: true,
         headerOffset: 50
     },
-    columns: [],
     lengthMenu: [20, 50, 100],
     info: true,
     language: {
-        lengthMenu: 'Page size _MENU_',
-        search: '_INPUT_',
-        searchPlaceholder: 'Search',
-        emptyTable: 'There is no data',
+        lengthMenu: "Page size _MENU_",
+        search: "_INPUT_",
+        searchPlaceholder: "Search",
+        emptyTable: "There is no data",
         paginate: {
-            first: 'First',
-            last: 'Last',
+            first: "First",
+            last: "Last",
             next: '<i class="icon-next"></i>',
             previous: '<i class="icon-previous"></i>'
         }
@@ -32,5 +31,3 @@ function InitFixedHeaderDataTable() {
         }
     });
 }
-    
-   

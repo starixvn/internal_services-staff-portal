@@ -72,31 +72,16 @@
         $.validator.unobtrusive.parse($("#dynamic-modals form"));
     },
 
-    initDatatable: function() {
-        $("table").DataTable({
-            pageLength: 20,
-            paging: true,
-            searching: true,
-            lengthMenu: [20, 50, 100],
-            dom: '<"top"f>rt<".pull-left" i><".pull-right" lp><"clear">',
-            language: {
-                lengthMenu: "Page size _MENU_",
-                search: "_INPUT_",
-                searchPlaceholder: "Search",
-                emptyTable: "There is no data",
-                paginate: {
-                    first: "First",
-                    last: "Last",
-                    next: '<i class="icon-next"></i>',
-                    previous: '<i class="icon-previous"></i>'
-                }
-            },
-            columnDefs: [
-                {
-                    orderable: false,
-                    target: [0]
-                }]
-        });
+    initDatatable: function () {
+        window.commonDataTableInit.columnDefs = [
+            {
+                orderable: false,
+                target: [0]
+            }
+        ];
+
+        $("table").DataTable(window.commonDataTableInit);
+        window.InitFixedHeaderDataTable();
     }
 }
 
