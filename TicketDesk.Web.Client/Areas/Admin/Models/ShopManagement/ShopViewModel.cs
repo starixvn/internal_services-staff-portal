@@ -1,34 +1,41 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement
 {
     using System.ComponentModel.DataAnnotations;
+    using Core.Resources;
 
     public class ShopViewModel
     {
         public int? ShopId { get; set; }
 
         [Display(Name = "Shop Name")]
-        [MaxLength(100, ErrorMessage = "{0} must under {1} characters")]
-        [Required(ErrorMessage = "{0} is required")]
+        [StringLength(100)]
+        [MaxLength(100, ErrorMessageResourceName = "ValidateStringLengthMessage", ErrorMessageResourceType = typeof(Messages))]
+        [Required(ErrorMessageResourceName = "ValidateRequiredMessage", ErrorMessageResourceType = typeof(Messages))]
         public string ShopName { get; set; }
 
         [Display(Name = "Shop Code")]
-        [MaxLength(50, ErrorMessage = "{0} must under {1} characters")]
+        [StringLength(50)]
+        [MaxLength(50, ErrorMessageResourceName = "ValidateStringLengthMessage", ErrorMessageResourceType = typeof(Messages))]
         public string ShopCode { get; set; }
 
         [Display(Name = "Contact Name")]
-        [MaxLength(70, ErrorMessage = "{0} must under {1} characters")]
+        [StringLength(70)]
+        [MaxLength(70, ErrorMessageResourceName = "ValidateStringLengthMessage", ErrorMessageResourceType = typeof(Messages))]
         public string ContactName { get; set; }
 
         [Display(Name = "Contact Number")]
-        [MaxLength(20, ErrorMessage = "{0} must under {1} characters")]
+        [StringLength(20)]
+        [MaxLength(20, ErrorMessageResourceName = "ValidateStringLengthMessage", ErrorMessageResourceType = typeof(Messages))]
         public string ContactNumber { get; set; }
 
         [Display(Name = "Email Address")]
-        [MaxLength(254, ErrorMessage = "{0} must under {1} characters")]
+        [StringLength(254)]
+        [MaxLength(254, ErrorMessageResourceName = "ValidateStringLengthMessage", ErrorMessageResourceType = typeof(Messages))]
         public string Email { get; set; }
 
         [Display(Name = "Shop Address")]
-        [MaxLength(500, ErrorMessage = "{0} must under {1} characters")]
+        [StringLength(500)]
+        [MaxLength(500, ErrorMessageResourceName = "ValidateStringLengthMessage", ErrorMessageResourceType = typeof(Messages))]
         public string Address { get; set; }
 
         public bool IsActive { get; set; }

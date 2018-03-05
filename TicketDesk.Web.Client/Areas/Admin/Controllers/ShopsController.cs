@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using Client.Controllers;
     using Core.Enumerations;
+    using Core.Resources;
     using Domain;
     using Domain.Infrastructure;
     using Domain.Model;
@@ -47,13 +48,13 @@
                 shopList = shopList.Where(s => s.ShopName.Contains(viewModel.ShopName)).ToList();
             }
 
-            return PartialView("_ListShop", shopList.OrderBy(s => s.LastUpdatedDate));
+            return PartialView("_ListShop", shopList.OrderByDescending(s => s.LastUpdatedDate));
         }
 
         public ActionResult GetShopSuggestion(string shopName)
         {
             var shops = Context.Shops.Where(s => s.ShopName.Contains(shopName)).Select(x => new { x.ShopId, x.ShopName }).ToList();
-            return Json(new { shops }, JsonRequestBehavior.AllowGet);
+            return Json(shops, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Create()
@@ -70,7 +71,7 @@
             string message = string.Empty;
             if (IsExistedShopName(viewModel.ShopName))
             {
-                ModelState.AddModelError("ShopName", "The Shop Name already exists.");
+                ModelState.AddModelError("ShopName", Messages.ShopExist);
             }
 
             if (ModelState.IsValid)
@@ -90,7 +91,7 @@
                 Context.Shops.Add(newShop);
                 Context.SaveChanges();
                 isSuccessful = true;
-                message = "Create new shop successfully!";
+                message = Messages.CreateShopSuccess;
             }
 
             var errors = from item in ModelState
@@ -154,9 +155,10 @@
                 shop.Address = model.Address;
                 shop.IsActive = model.IsActive;
                 shop.LastUpdatedBy = CurrentSession.Username;
-                shop.LastUpdatedDate = new DateTime();
+                shop.LastUpdatedDate = DateTime.Now;
                 Context.SaveChanges();
                 isSuccessful = true;
+                message = Messages.UpdateShopSuccess;
             }
 
             var errors = from item in ModelState

@@ -166,4 +166,16 @@ Bạn có thực sự muốn đăng xuất?</value>
   <data name="ImageDimensionInvalid" xml:space="preserve">
     <value>The attachment image size is less than the allowable limits. Please use a bigger size file!</value>
   </data>
+  <data name="ValidateRequiredMessage" xml:space="preserve">
+    <value>{0} is required</value>
+  </data>
+  <data name="CreateShopSuccess" xml:space="preserve">
+    <value>Create shop successfully</value>
+  </data>
+  <data name="UpdateShopSuccess" xml:space="preserve">
+    <value>Update shop successfully</value>
+  </data>
+  <data name="ShopExist" xml:space="preserve">
+    <value>The Shop Name already exists.</value>
+  </data>
 </root>

@@ -61,6 +61,15 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create shop successfully.
+        /// </summary>
+        public static string CreateShopSuccess {
+            get {
+                return ResourceManager.GetString("CreateShopSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date Appear is required..
         /// </summary>
         public static string DateAppearRequired {
@@ -170,6 +179,15 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Shop Name already exists..
+        /// </summary>
+        public static string ShopExist {
+            get {
+                return ResourceManager.GetString("ShopExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown Request!.
         /// </summary>
         public static string UnknownRequest {
@@ -184,6 +202,24 @@ namespace TicketDesk.Core.Resources {
         public static string UpdateReferencesSuccessful {
             get {
                 return ResourceManager.GetString("UpdateReferencesSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update shop successfully.
+        /// </summary>
+        public static string UpdateShopSuccess {
+            get {
+                return ResourceManager.GetString("UpdateShopSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is requried.
+        /// </summary>
+        public static string ValidateRequiredMessage {
+            get {
+                return ResourceManager.GetString("ValidateRequiredMessage", resourceCulture);
             }
         }
         

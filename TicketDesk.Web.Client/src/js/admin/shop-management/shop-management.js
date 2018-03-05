@@ -1,7 +1,8 @@
 ﻿var shopManagement = (function ($) {
     var domElement = {
         FilterForm: '#filterForm',
-        SearchInput: '#ShopName',
+        FilterShopName: '#filterForm #ShopName',
+        FilterShopId: '#filterForm #ShopId',
         TableArea: '#shopList',
         CreateShopForm: '#createShopForm',
         CreateModal: '#createModal',
@@ -11,11 +12,10 @@
         EditModalContent: '#editModalContent'
     };
 
-    function searchShopAutoComplete() {
-        $(domElement.SearchInput).autocomplete({
+    function searchShopSuggest() {
+        $(domElement.FilterShopName).autocomplete({
             source: function (request, response) {
                 var term = request.term;
-
                 $.ajax({
                     url: '/Admin/Shops/GetShopSuggestion',
                     dataType: 'json',
@@ -23,12 +23,11 @@
                         shopName: term
                     },
                     success: function (data) {
-                        console.log(data);
                         if (data && data.length > 0) {
                             response($.map(data, function (item) {
                                 return {
-                                    label: item.ShopName,
-                                    value: item.ShopId
+                                    label: item.shopName,
+                                    value: item.shopId
                                 };
                             }));
                         }
@@ -36,20 +35,20 @@
                 });
             },
             minLength: 2,
-            select: function (event, ui) {
-                event.preventDefault();
-                $("#DisplayName").val(ui.item.label);
-                $("#EmployeeId").val(ui.item.value);
-                return false;
-            },
             focus: function (event, ui) {
                 event.preventDefault();
-                $("#DisplayName").val(ui.item.label);
+                $(domElement.FilterShopName).val(ui.item.label);
+                return false;
+            },
+            select: function (event, ui) {
+                event.preventDefault();
+                $(domElement.FilterShopName).val(ui.item.label);
+                $(domElement.FilterShopId).val(ui.item.value);
                 return false;
             },
             change: function (event, ui) {
-                var employeeName = $(this).val();
-                if (!employeeName) $("#EmployeeId").val("");
+                var shopName = $(this).val();
+                if (!shopName) $(domElement.FilterShopId).val("");
             }
         });
     }
@@ -75,10 +74,10 @@
             searching: true,
             dom: '<"top"f>rt<".pull-left" i><".pull-right" lp><"clear">',
             columns: [
-                { width: "65px", sortable: false },
-                { width: "140px", sortable: true },
-                { width: "140px", sortable: true },
+                { width: "70px", sortable: false },
+                { width: "200px", sortable: true },
                 { width: "100px", sortable: true },
+                { width: "140px", sortable: true },
                 { width: "140px", sortable: true },
                 { width: "auto", sortable: true },
                 { width: "70px", sortable: true },
@@ -113,15 +112,16 @@
     }
 
     function eventClickEditIconHandler() {
-        $(".icon-edit").off("click").on("click", function () {
+        $(".icon-edit").on("click", function () {
             var id = $(this).data("id");
             var editModalContent = $(domElement.EditModalContent);
+            $(editModalContent).html('');
             $.ajax({
                 type: "GET",
                 url: "/Admin/Shops/Edit/" + id,
                 dataType: "html",
                 success: function (data) {
-                    $(domElement.EditModal).html(data);
+                    $(editModalContent).html(data);
                     initValidationForm($(editModalContent));
                     $(domElement.EditModal).modal('show');
                 }
@@ -171,6 +171,9 @@
         if (response.isSuccessful) {
             $($modal).modal("hide");
             toastr.success(response.message);
+            setTimeout(function () {
+                location.reload();
+            }, 3000);
         } else {
             if (response.errors) {
                 showErrorMessage($form, response.errors);
@@ -187,8 +190,7 @@
 
     function onUpdateSuccessful(response) {
         var $form = $(domElement.EditShopForm);
-        onAjaxSuccessful(response, $form);
-        //$(domElement.E).modal("hide");
+        onAjaxSuccessful(response, $form, domElement.EditModal);
     }
 
     function initToastr() {
@@ -212,7 +214,7 @@
         getListShop();
         eventClickCreateButtonHandler();
         eventClickEditIconHandler();
-        searchShopAutoComplete();
+        searchShopSuggest();
         initToastr();
 
         $(domElement.FilterForm).on("submit", function (e) {

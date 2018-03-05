@@ -6,6 +6,7 @@ namespace TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement
     public class ShopFilterViewModel
     {
         [Display(Name = "Shop Name")]
+        [StringLength(100)]
         public string ShopName { get; set; }
 
         public int ShopId { get; set; }

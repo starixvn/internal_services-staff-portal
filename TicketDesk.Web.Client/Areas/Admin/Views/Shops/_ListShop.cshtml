@@ -32,19 +32,19 @@
         {
             index++;
             <tr>
-                <td>@index</td>
+                <td class="text-center">@index</td>
                 <td>@shop.ShopName</td>
                 <td>@shop.ShopCode</td>
                 <td>@shop.Email</td>
                 <td>@shop.ContactNumber</td>
                 <td>@shop.Address</td>
-                <td>
+                <td class="text-center">
                     @if (shop.IsActive)
                     {
                         <span class="icon-check"></span>
                     }
                 </td>
-                <td><span class="icon-edit" data-id="@shop.ShopId"></span></td>
+                <td class="text-center"><span class="icon-edit" data-id="@shop.ShopId"></span></td>
             </tr>
         }
     </tbody>
