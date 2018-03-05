@@ -1,6 +1,8 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Models.DataConfiguration
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+    using Localization.Client;
 
     public class AddCustomFieldListValueViewModel
     {
@@ -8,20 +10,22 @@
 
         public int CustomFieldId { get; set; }
 
-        [Display(Name = "Display Name EN")]
-        [StringLength(50, ErrorMessage = "{0} must be less than {1} characters")]
+        [Display(Name = nameof(Resources.DisplayNameEN), ResourceType = typeof(Resources))]
+        [StringLength(50, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
+        [Remote(action: "IsDisplayNameEnUnique", controller: "DataConfiguration", AdditionalFields = nameof(CustomFieldId), ErrorMessage = "The {0} already exists.")]
         public string DisplayName { get; set; }
 
-        [Display(Name = "Display Name VI")]
-        [StringLength(50, ErrorMessage = "{0} must be less than {1} characters")]
-        [Required(ErrorMessage = "{0} is required!")]
+        [Display(Name = nameof(Resources.DisplayNameVI), ResourceType = typeof(Resources))]
+        [StringLength(50, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage))]
+        [Remote(action: "IsDisplayNameViUnique", controller: "DataConfiguration", AdditionalFields = nameof(CustomFieldId), ErrorMessage = "The {0} already exists.")]
         public string DisplayName_vi { get; set; }
 
-        [Display(Name = "Description")]
-        [StringLength(200, ErrorMessage = "{0} must be less than {1} characters")]
+        [Display(Name = nameof(Resources.Description), ResourceType = typeof(Resources))]
+        [StringLength(200, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
         public string Description { get; set; }
 
-        [Display(Name = "Active")]
+        [Display(Name = nameof(Resources.Active), ResourceType = typeof(Resources))]
         public bool IsActive { get; set; }
     }
 }

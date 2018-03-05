@@ -366,4 +366,22 @@
   <data name="IdUploaderViewModel_Remark_Remark_should_not_than_5000_characters" xml:space="preserve">
     <value>Remark should not than 5000 characters</value>
   </data>
+  <data name="StringLengthMaxErrorMessage" xml:space="preserve">
+    <value>{0} must be less than {1} characters</value>
+  </data>
+  <data name="DisplayNameEN" xml:space="preserve">
+    <value>Display Name EN</value>
+  </data>
+  <data name="DisplayNameVI" xml:space="preserve">
+    <value>Display Name VI</value>
+  </data>
+  <data name="RequiredErrorMessage" xml:space="preserve">
+    <value>{0} is required!</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
 </root>

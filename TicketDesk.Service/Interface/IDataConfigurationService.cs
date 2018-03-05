@@ -12,5 +12,9 @@
         bool AddCustomFieldListValue(CustomFieldListValue customFieldListValue);
 
         bool EditCustomFieldListValue(CustomFieldListValue modifiedCustomFieldListValue);
+
+        bool IsCustomFieldDisplayNameViUnique(int customFieldId, string displayNameVi);
+
+        bool IsCustomFieldDisplayNameEnUnique(int customFieldId, string displayNameEn);
     }
 }

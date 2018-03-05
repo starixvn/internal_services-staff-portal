@@ -19,7 +19,7 @@ namespace TicketDesk.Localization.Client {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -57,6 +57,15 @@ namespace TicketDesk.Localization.Client {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
             }
         }
         
@@ -147,6 +156,33 @@ namespace TicketDesk.Localization.Client {
         public static string CustomFieldForHelper_AddUnobtrusiveValidations_ShorterLengthWarning {
             get {
                 return ResourceManager.GetString("CustomFieldForHelper_AddUnobtrusiveValidations_ShorterLengthWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display Name EN.
+        /// </summary>
+        public static string DisplayNameEN {
+            get {
+                return ResourceManager.GetString("DisplayNameEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display Name VI.
+        /// </summary>
+        public static string DisplayNameVI {
+            get {
+                return ResourceManager.GetString("DisplayNameVI", resourceCulture);
             }
         }
         
@@ -390,6 +426,24 @@ namespace TicketDesk.Localization.Client {
         public static string IdUploaderViewModel_Remark_Remark_should_not_than_5000_characters {
             get {
                 return ResourceManager.GetString("IdUploaderViewModel_Remark_Remark_should_not_than_5000_characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is required!.
+        /// </summary>
+        public static string RequiredErrorMessage {
+            get {
+                return ResourceManager.GetString("RequiredErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} must be less than {1} characters.
+        /// </summary>
+        public static string StringLengthMaxErrorMessage {
+            get {
+                return ResourceManager.GetString("StringLengthMaxErrorMessage", resourceCulture);
             }
         }
         

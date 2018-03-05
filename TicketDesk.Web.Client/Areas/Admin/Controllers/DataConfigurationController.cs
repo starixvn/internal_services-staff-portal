@@ -46,5 +46,19 @@
 
             return PartialView("_AddCustomFieldListValue", addCustomFieldListValueViewModel);
         }
+
+        [AcceptVerbs("Get", "Post")]
+        public ActionResult IsDisplayNameViUnique(int customFieldId, string displayNameVi)
+        {
+            var result = _dataConfigurationService.IsCustomFieldDisplayNameViUnique(customFieldId, displayNameVi);
+            return Json(result);
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        public ActionResult IsDisplayNameEnUnique(int customFieldId, string displayNameEn)
+        {
+            var result = _dataConfigurationService.IsCustomFieldDisplayNameEnUnique(customFieldId, displayNameEn);
+            return Json(result);
+        }
     }
 }
