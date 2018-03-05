@@ -390,7 +390,6 @@
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopFilterViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AnnouncementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomFieldsController.cs" />
     <Compile Include="Controllers\EmailTestController.cs" />
@@ -2161,7 +2160,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Ticket\_HardwareTicketDetails.cshtml" />
-    <Content Include="Views\Announcement\Index.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
     <Content Include="Areas\Admin\Views\Languages\Index.cshtml" />
     <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
