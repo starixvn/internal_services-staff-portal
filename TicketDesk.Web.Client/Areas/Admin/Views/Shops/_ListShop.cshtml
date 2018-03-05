@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Domain.Model
+@using TicketDesk.Core.Resources
 @model IEnumerable<Shop>
 
 <table class="announcement-list" cellpadding="0" cellspacing="0">
@@ -6,22 +7,22 @@
         <tr>
             <th class="number">#</th>
             <th class="shop-name">
-                <span>Shop Name</span>
+                <span>@ViewLang.ShopName</span>
             </th>
             <th class="shop-code">
-                <span>Shop Code</span>
+                <span>@ViewLang.ShopCode</span>
             </th>
             <th class="email-address">
-                <span>Email Address</span>
+                <span>@ViewLang.Email</span>
             </th>
             <th class="phone">
-                <span>Contact Number</span>
+                <span>@ViewLang.ContactNumber</span>
             </th>
             <th class="shop-address">
-                <span>Shop Address</span>
+                <span>@ViewLang.ShopAddress</span>
             </th>
-            <th class="active">Active</th>
-            <th class="action">Edit</th>
+            <th class="active">@ViewLang.Active</th>
+            <th class="action">@ViewLang.Edit</th>
         </tr>
     </thead>
     <tbody>

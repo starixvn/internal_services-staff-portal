@@ -61,7 +61,7 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create shop successfully.
+        ///   Looks up a localized string similar to New shop has been successfully created..
         /// </summary>
         public static string CreateShopSuccess {
             get {
@@ -188,7 +188,7 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update shop successfully.
+        ///   Looks up a localized string similar to The shop has been successfully updated..
         /// </summary>
         public static string UpdateShopSuccess {
             get {

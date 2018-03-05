@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CreateShopSuccess" xml:space="preserve">
-    <value>Create shop successfully</value>
+    <value>New shop has been successfully created.</value>
   </data>
   <data name="DuplicatedDay" xml:space="preserve">
     <value>The Date duplicated.</value>
@@ -161,7 +161,7 @@ Do you really want to log out?</value>
     <value>Your upload file(s) has been successfully submitted!</value>
   </data>
   <data name="UpdateShopSuccess" xml:space="preserve">
-    <value>Update shop successfully</value>
+    <value>The shop has been successfully updated.</value>
   </data>
   <data name="ValidateRequiredMessage" xml:space="preserve">
     <value>{0} is requried</value>
