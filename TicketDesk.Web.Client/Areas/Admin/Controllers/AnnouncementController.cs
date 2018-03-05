@@ -32,7 +32,7 @@
             {
                 PublishedFrom = today.AddDays(-7),
                 PublishedTo = today,
-                Status = null,
+                Type = null,
                 State = null
             };
 
@@ -129,7 +129,7 @@
             var viewModel = new NewAnnouncementViewModel
             {
                 Announcement = announcement,
-                IsImportant = announcement.Status == AnnouncementStatus.Important,
+                IsImportant = announcement.Type == AnnouncementType.Important,
                 ModalId = ModalId.EditAnnouncementModal,
                 ActionType = ActionType.Edit
             };

@@ -30,9 +30,9 @@
                 announcements = announcements.Where(x => DbFunctions.TruncateTime(x.PublishedDateTime) <= criteria.PublishedTo);
             }
 
-            if (criteria.Status != null)
+            if (criteria.Type != null)
             {
-                announcements = announcements.Where(x => x.Status == criteria.Status);
+                announcements = announcements.Where(x => x.Type == criteria.Type);
             }
 
             if (criteria.State != null)
@@ -50,7 +50,7 @@
             criteria.Announcement.LastModified = DateTime.Now;
             criteria.Announcement.ModifiedBy = criteria.ModifiedBy;
 
-            criteria.Announcement.Status = criteria.IsImportant ? AnnouncementStatus.Important : AnnouncementStatus.Normal;
+            criteria.Announcement.Type = criteria.IsImportant ? AnnouncementType.Important : AnnouncementType.Normal;
 
             return criteria;
         }

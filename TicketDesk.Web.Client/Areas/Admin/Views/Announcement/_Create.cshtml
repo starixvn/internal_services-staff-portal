@@ -49,7 +49,7 @@
 
                             <div class="form-group checkbox">
                                 @{
-                                    if (Model.Announcement.Status == AnnouncementStatus.Important)
+                                    if (Model.Announcement.Type == AnnouncementType.Important)
                                     {
                                         <input type="checkbox"
                                                id="@Html.NameFor(x => x.IsImportant)"

@@ -29,7 +29,7 @@
         public DateTime? PublishedTo { get; set; }
 
         [Display(Name = "Status")]
-        public AnnouncementStatus? Status { get; set; }
+        public AnnouncementType? Type { get; set; }
 
         [Display(Name = "Published")]
         public AnnouncementState? State { get; set; }
@@ -43,7 +43,7 @@
             {
                 PublishedFrom = PublishedFrom,
                 PublishedTo = PublishedTo,
-                Status = Status,
+                Type = Type,
                 State = State
             };
         }

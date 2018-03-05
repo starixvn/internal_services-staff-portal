@@ -29,7 +29,7 @@
 
         [Display(Name = "Status")]
         [Required(ErrorMessage = "{0} is required")]
-        public AnnouncementStatus Status { get; set; }
+        public AnnouncementType Type { get; set; }
 
         [Display(Name = "State")]
         [NotMapped]

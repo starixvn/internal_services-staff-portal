@@ -9,7 +9,7 @@
             foreach (var announcement in group.Announcements)
             {
 
-                bool isImportant = announcement.Status == AnnouncementStatus.Important;
+                bool isImportant = announcement.Type == AnnouncementType.Important;
 
                 string announcementClass = "announcement-msg";
                 int unreadId = !announcement.IsRead ? announcement.Id : 0;

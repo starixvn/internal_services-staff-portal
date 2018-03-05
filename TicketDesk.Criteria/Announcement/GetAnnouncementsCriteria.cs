@@ -7,7 +7,7 @@
     {
         public DateTime? PublishedFrom { get; set; }
         public DateTime? PublishedTo { get; set; }
-        public AnnouncementStatus? Status { get; set; }
+        public AnnouncementType? Type { get; set; }
         public AnnouncementState? State { get; set; }
     }
 }

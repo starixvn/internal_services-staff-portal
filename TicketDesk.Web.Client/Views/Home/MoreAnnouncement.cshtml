@@ -81,7 +81,7 @@
                 <tbody>
                     @for (var index = 0; index < Model.Announcements.Count; index++)
                     {
-                        bool isImportant = Model.Announcements[index].Status == AnnouncementStatus.Important;
+                        bool isImportant = Model.Announcements[index].Type == AnnouncementType.Important;
                         bool isEven = index % 2 == 1;
 
                         string announcementClass = "";

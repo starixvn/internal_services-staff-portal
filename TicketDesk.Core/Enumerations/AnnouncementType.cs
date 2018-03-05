@@ -1,6 +1,6 @@
 ﻿namespace TicketDesk.Core.Enumerations
 {
-    public enum AnnouncementStatus
+    public enum AnnouncementType
     {
         Normal,
         Important
