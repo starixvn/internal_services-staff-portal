@@ -112,3 +112,14 @@
 .btn-getCurrent {
     @include btn-style(#586e94);
 }
+
+.action-edit {
+    font-size: 16px;
+    line-height: 1;
+    color: #666;
+    cursor: pointer;
+
+    &:hover {
+        color: #fd680e;
+    }
+}

@@ -57,7 +57,7 @@
     <div class="form-content feedback-form">
         <div class="title">@Resources.Views_Ticket_NewFeedbackTicket_Title</div>
         <div class="height-auto">
-            @Html.CustomFieldLabelFor(x => x.FeedbackBy, new { @class = "key border" })
+            @Html.CustomFieldLabelFor(x => x.FeedbackBy, new { @class = "key border label-item" })
             <div class="value span-3 border">
                 <div class="radio-group">
                     @Html.HiddenFor(x => x.FeedbackBy.CustomFieldId, new { Value = Model.FeedbackBy.CustomField.Id })

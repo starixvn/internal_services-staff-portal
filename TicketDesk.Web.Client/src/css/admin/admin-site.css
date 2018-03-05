@@ -1057,6 +1057,14 @@ table.dataTable {
     opacity: .7;
     cursor: not-allowed; }
 
+.action-edit {
+  font-size: 16px;
+  line-height: 1;
+  color: #666;
+  cursor: pointer; }
+  .action-edit:hover {
+    color: #fd680e; }
+
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   font-style: italic; }
@@ -1153,7 +1161,8 @@ table.dataTable {
   height: 28px;
   line-height: 28px;
   padding: 0 5px;
-  border-color: #b7b7b7; }
+  border-color: #b7b7b7;
+  color: #333; }
   .form-control.input-validation-error {
     border-color: #ea1118; }
 
