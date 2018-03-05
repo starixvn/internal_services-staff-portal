@@ -2,7 +2,7 @@
 @model TicketDesk.Domain.Model.Announcement
 
 <div class="modal fade" tabindex="-1" role="dialog" id="@ModalId.DeleteAnnouncementModal.ToString()" data-backdrop="static">
-    @using (Html.BeginForm("Delete", "Announcements", FormMethod.Post))
+    @using (Html.BeginForm("Delete", "Announcement", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(x => x.Id)

@@ -24,7 +24,7 @@
             { "/References/trading-limit", "icon-trading" },
             { "/References/newsletter", "icon-newsletter" },
             { "/Admin", "icon-admin" },
-            { "/Admin/Announcements", "icon-announcements" },
+            { "/Admin/Announcement", "icon-announcements" },
             { "/Admin/References", "icon-references" },
             { "/Admin/References/TVSchedules", "icon-admin" },
             { "/Admin/References/BetOfTheDay", "icon-admin" },

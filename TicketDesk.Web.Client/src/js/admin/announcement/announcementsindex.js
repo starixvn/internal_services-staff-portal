@@ -80,7 +80,7 @@ var modalhandler = {
         var Ids = publishAnnouncement.getIdsToPublish();
         return function () {
             $.ajax({
-                url: "/Admin/Announcements/Publish",
+                url: "/Admin/Announcement/Publish",
                 method: "post",
                 data: { Ids },
                 success: function (response) {
@@ -384,7 +384,7 @@ var listAnnouncement = {
 
     getListAnnouncement: function () {
         $.ajax({
-            url: "/Admin/Announcements/AnnouncementList",
+            url: "/Admin/Announcement/AnnouncementList",
             method: "get",
             data: $("form.filter-row").serialize(),
             success: function (response) {

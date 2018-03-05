@@ -4,7 +4,7 @@
     @using TicketDesk.Web.Client.Infrastructure.Helpers
     @model NewAnnouncementViewModel
 
-    @using (Html.BeginForm(Model.ActionType.ToString(), "Announcements", FormMethod.Post, new { id = "modal-form" }))
+    @using (Html.BeginForm(Model.ActionType.ToString(), "Announcement", FormMethod.Post, new { id = "modal-form" }))
     {
         @Html.HiddenFor(x => x.Announcement.Id)
 

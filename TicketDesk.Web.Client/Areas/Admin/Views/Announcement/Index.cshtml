@@ -51,7 +51,7 @@
 
 <!--Filter-->
 <section class="filter-form">
-    @using (Html.BeginForm("Index", "Announcements", FormMethod.Get, new { @class = "filter-row" }))
+    @using (Html.BeginForm("Index", "Announcement", FormMethod.Get, new { @class = "filter-row" }))
     {
         <div class="date-time">
             @Html.LabelFor(x => x.PublishedFrom)
@@ -86,7 +86,7 @@
     <a class="btn btn-create create"
        data-toggle="modal"
        href="#"
-       data-href="@Url.Action("Create", "Announcements")"
+       data-href="@Url.Action("Create", "Announcement")"
        data-modalid="#@ModalId.CreateAnnouncementModal.ToString()"><span class="icon-add"></span>@ModalId.CreateAnnouncementModal.GetDisplayName()</a>
 </div>
 

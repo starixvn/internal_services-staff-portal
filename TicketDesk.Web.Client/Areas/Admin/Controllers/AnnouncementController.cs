@@ -16,11 +16,11 @@
     using Service.Interface;
 
     [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
-    public class AnnouncementsController : BaseController
+    public class AnnouncementController : BaseController
     {
         private readonly IAnnouncementService _announcementService;
 
-        public AnnouncementsController(IAnnouncementService announcementService)
+        public AnnouncementController(IAnnouncementService announcementService)
         {
             _announcementService = announcementService;
         }

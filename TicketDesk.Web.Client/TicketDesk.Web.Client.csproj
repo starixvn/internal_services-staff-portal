@@ -375,7 +375,7 @@
     <Compile Include="App_Start\Startup.Routes.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\AnnouncementsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AnnouncementController.cs" />
     <Compile Include="Areas\Admin\Controllers\DataConfigurationController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReferencesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
@@ -617,7 +617,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Announcements\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcement\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminNavbar.cshtml" />
     <Content Include="Areas\Admin\Views\References\TVSchedules.cshtml" />
     <Content Include="Areas\Admin\Views\References\_ReferenceEntryEditor.cshtml" />
@@ -627,12 +627,12 @@
     <Content Include="Areas\Admin\Views\References\TradingLimits.cshtml" />
     <Content Include="Areas\Admin\Views\References\_ReferenceCommon.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Announcements\_Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Announcements\_AnnouncementForm.cshtml" />
-    <Content Include="Areas\Admin\Views\Announcements\_Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Announcements\_Publish.cshtml" />
-    <Content Include="Areas\Admin\Views\Announcements\_QuickPublish.cshtml" />
-    <Content Include="Areas\Admin\Views\Announcements\_AnouncementList.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcement\_Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcement\_AnnouncementForm.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcement\_Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcement\_Publish.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcement\_QuickPublish.cshtml" />
+    <Content Include="Areas\Admin\Views\Announcement\_AnouncementList.cshtml" />
     <Content Include="Areas\Admin\Views\Shops\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DataConfiguration\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shops\_Create.cshtml" />
