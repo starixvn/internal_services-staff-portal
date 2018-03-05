@@ -1,9 +1,9 @@
 ﻿var dataconfiguration = {
-    init: function() {
+    init: function () {
         dataconfiguration.transformForm();
     },
 
-    transformForm: function() {
+    transformForm: function () {
         $("#dynamic-modals").on("submit",
             "form",
             function (e) {
@@ -11,16 +11,41 @@
                 dataconfiguration.ajaxForm($(this));
             });
 
+        $("#dynamic-modals").on("click",
+            ".submit-and-continue",
+            function(e) {
+                e.preventDefault();
+                $("#dynamic-modals form").validate();
+                var isFormValid = $("#dynamic-modals form").valid();
+                if (isFormValid) {
+                    $.ajax({
+                        url: $(this).data("action"),
+                        method: $("#dynamic-modals form").attr("method"),
+                        data: $("#dynamic-modals form").serialize(),
+                        success: function(result) {
+                            toastr.info("New item added");
+                            $("#dynamic-modals .modal").modal("hide");
+                            $("body").removeClass("modal-open");
+                            $(".modal-backdrop").remove();
+                            $(".filter-form form").trigger("submit");
+                            $("#dynamic-modals").html(result);
+                            $("#dynamic-modals .modal").modal();
+                            dataconfiguration.initValidation();
+                        }
+                    });
+                }
+            });
+
         $(".table").on("click",
             ".create",
-            function(e) {
+            function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var href = $(this).attr("href");
                 $.ajax({
                     url: href,
                     method: "get",
-                    success: function(result) {
+                    success: function (result) {
                         $("#dynamic-modals").html(result);
                         $("#dynamic-modals .modal").modal();
                         dataconfiguration.initValidation();
@@ -30,7 +55,7 @@
 
         $(".filter-form").on("submit",
             "form",
-            function(e) {
+            function (e) {
                 e.preventDefault();
                 var selectedFieldId = $("#SelectedFieldId").val();
                 var modalTitle = $("#SelectedFieldId option:selected").text();
@@ -65,7 +90,7 @@
         });
     },
 
-    initValidation: function() {
+    initValidation: function () {
         $.validator.unobtrusive.parse($("#dynamic-modals form"));
     },
 
@@ -85,6 +110,6 @@
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     dataconfiguration.init();
 });

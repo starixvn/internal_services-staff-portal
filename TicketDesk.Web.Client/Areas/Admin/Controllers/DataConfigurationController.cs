@@ -52,6 +52,31 @@
         }
 
         [HttpPost]
+        public ActionResult AddAndContinueCustomFieldListValue(AddCustomFieldListValueViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                CustomFieldListValue customFieldListValue = new CustomFieldListValue
+                {
+                    CustomFieldId = viewModel.CustomFieldId,
+                    DisplayName_vi = viewModel.DisplayName_vi,
+                    DisplayName = viewModel.DisplayName,
+                    IsActive = viewModel.IsActive
+                };
+
+                _dataConfigurationService.AddCustomFieldListValue(customFieldListValue);
+            }
+
+            var newViewModel = new AddCustomFieldListValueViewModel
+            {
+                CustomFieldId = viewModel.CustomFieldId,
+                ModalTitle = viewModel.ModalTitle
+            };
+
+            return PartialView("_AddCustomFieldListValue", newViewModel);
+        }
+
+        [HttpPost]
         public ActionResult AddCustomFieldListValue(AddCustomFieldListValueViewModel viewModel)
         {
             var result = false;
