@@ -398,10 +398,9 @@
         {
             if (references != null)
             {
-                var duplicates = references.GroupBy(r => r.DateAppear.Date)
+                return references.GroupBy(r => r.DateAppear.Date)
                                        .Where(g => g.Count() > 1)
-                                       .Select(g => g.Key);
-                return duplicates.Any();
+                                       .Select(g => g.Key).Any();
             }
             return false;
         }
