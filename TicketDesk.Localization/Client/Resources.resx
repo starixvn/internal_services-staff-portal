@@ -408,4 +408,22 @@
   <data name="ShopName" xml:space="preserve">
     <value>Shop Name</value>
   </data>
+  <data name="ItemUpdatedMessage" xml:space="preserve">
+    <value>The item has been successfully updated</value>
+  </data>
+  <data name="ItemCreatedMessage" xml:space="preserve">
+    <value>New item has been successfully created</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveAndContinue" xml:space="preserve">
+    <value>Save &amp; Continue</value>
+  </data>
 </root>

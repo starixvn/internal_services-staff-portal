@@ -3,6 +3,14 @@
         dataconfiguration.transformForm();
     },
 
+    itemCreatedMessage: function() {
+        return $("#item-created-message").text();
+    },
+
+    itemUpdatedMessage: function () {
+        return $("#item-updated-message").text();
+    },
+
     transformForm: function () {
         $("#dynamic-modals").on("submit",
             "form",
@@ -23,7 +31,7 @@
                         method: $("#dynamic-modals form").attr("method"),
                         data: $("#dynamic-modals form").serialize(),
                         success: function(result) {
-                            toastr.info("New item added");
+                            toastr.success(dataconfiguration.itemCreatedMessage());
                             $("#dynamic-modals .modal").modal("hide");
                             $("body").removeClass("modal-open");
                             $(".modal-backdrop").remove();
@@ -90,13 +98,19 @@
     },
 
     ajaxForm: function (form) {
+        var formType = $(form).find(":submit").data("type");
+        var isEditForm = formType === "edit";
         $.ajax({
             url: $(form).attr("action"),
             method: $(form).attr("method"),
             data: $(form).serialize(),
             success: function (result) {
                 if (result) {
-                    toastr.info("New item added");
+                    if (isEditForm) {
+                        toastr.success(dataconfiguration.itemUpdatedMessage);
+                    } else {
+                        toastr.success(dataconfiguration.itemCreatedMessage);
+                    }
                     $("#dynamic-modals .modal").modal("hide");
                     $(".filter-form form").trigger("submit");
                 }

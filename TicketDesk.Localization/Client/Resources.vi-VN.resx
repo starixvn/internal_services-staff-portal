@@ -408,4 +408,22 @@
   <data name="ContactNumber" xml:space="preserve">
     <value>Điện thoại liên hệ</value>
   </data>
+  <data name="ItemUpdatedMessage" xml:space="preserve">
+    <value>Vật thể được sửa thành công</value>
+  </data>
+  <data name="ItemCreatedMessage" xml:space="preserve">
+    <value>Vật thể được thêm thành công</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Gửi</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lưu</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Hủy bỏ</value>
+  </data>
+  <data name="SaveAndContinue" xml:space="preserve">
+    <value>Lưu và tiếp tục</value>
+  </data>
 </root>
