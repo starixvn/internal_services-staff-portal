@@ -11,6 +11,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Models.ShopManagement;
     using Service.Interface;
+    using Service.Interface.Admin;
 
     [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Read)]
     public class ShopsController : BaseController

@@ -273,7 +273,7 @@
             {
                 TempId = Guid.NewGuid(),
                 Ticket = { Owner = Context.SecurityProvider.CurrentUserId },
-                System = { CustomField = availableCustomField.First(x => x.Name == "System") },
+                System = { CustomField = availableCustomField.First(x => x.Name == "Device") },
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };

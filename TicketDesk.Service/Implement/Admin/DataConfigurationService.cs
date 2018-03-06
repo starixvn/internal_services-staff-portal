@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Service.Implement
+﻿namespace TicketDesk.Service.Implement.Admin
 {
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
@@ -6,6 +6,7 @@
     using System.Text;
     using Domain.Model;
     using Interface;
+    using Interface.Admin;
     using Microsoft.Practices.ObjectBuilder2;
 
     public class DataConfigurationService : EntityFrameworkBaseService, IDataConfigurationService
@@ -13,7 +14,7 @@
         public IEnumerable<EditableField> GetEditableCustomFields()
         {
             var result = new List<EditableField>();
-            var editableCustomFieldIds = new List<int> { 1, 5, 1021 };
+            var editableCustomFieldIds = new List<int> { 5, 1021, 1027, 1028 };
 
             foreach (var id in editableCustomFieldIds)
             {
@@ -38,7 +39,7 @@
                 result.Add(editTableField);
             }
 
-            return result;
+            return result.OrderBy(x => x.Name);
         }
 
         public IEnumerable<CustomFieldListValue> GetEditableListValues(int customFieldId)

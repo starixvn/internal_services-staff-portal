@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Service.Implement
+﻿namespace TicketDesk.Service.Implement.Admin
 {
     using System;
     using System.Data.Entity;
@@ -8,6 +8,7 @@
     using DelegateDecompiler;
     using Domain.Model;
     using Interface;
+    using Interface.Admin;
 
     public class AnnouncementService : EntityFrameworkBaseService, IAnnouncementService
     {

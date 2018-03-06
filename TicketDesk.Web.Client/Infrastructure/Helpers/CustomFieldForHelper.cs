@@ -83,7 +83,7 @@
             {
                 label.SetInnerText(innerText);
             }
-            
+
             if (htmlAttributes != null)
             {
                 var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
@@ -130,7 +130,7 @@
                     label.SetInnerText(innerText);
                 }
             }
-            
+
             if (htmlAttributes != null)
             {
                 var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
@@ -170,7 +170,7 @@
             }
 
             var input = BuildInputTag(customFieldValue, fieldName);
-            
+
             TagBuilder id = BuildHiddenTag(
                 fieldName,
                 nameof(customFieldValue.CustomFieldId),
@@ -256,7 +256,7 @@
         {
             RequiredUnobtrusiveValidation(customFieldValue, input);
 
-            if ((input.Attributes.ContainsKey("type") && input.Attributes["type"] == "text") 
+            if ((input.Attributes.ContainsKey("type") && input.Attributes["type"] == "text")
                 || input.TagName == "textarea")
             {
                 RegexPatternUnobtrusiveValidation(customFieldValue, input);

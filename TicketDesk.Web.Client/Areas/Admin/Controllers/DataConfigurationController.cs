@@ -7,6 +7,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Models.DataConfiguration;
     using Service.Interface;
+    using Service.Interface.Admin;
 
     [NapAuth(FunctionKey = FunctionKeys.DataConfiguration, Policy = Constant.Policy.Read)]
     public class DataConfigurationController : Controller

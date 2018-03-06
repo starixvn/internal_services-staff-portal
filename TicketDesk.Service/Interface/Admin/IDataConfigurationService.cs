@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Service.Interface
+﻿namespace TicketDesk.Service.Interface.Admin
 {
     using System.Collections.Generic;
     using Domain.Model;

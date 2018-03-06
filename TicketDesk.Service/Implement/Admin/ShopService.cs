@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Service.Implement
+﻿namespace TicketDesk.Service.Implement.Admin
 {
     using System;
     using System.Linq;
@@ -6,6 +6,7 @@
     using Criteria.Shop;
     using Domain.Model;
     using Interface;
+    using Interface.Admin;
 
     public class ShopService : EntityFrameworkBaseService, IShopService
     {

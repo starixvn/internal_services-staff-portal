@@ -14,7 +14,9 @@
     using Microsoft.Owin;
     using Owin;
     using Service.Implement;
+    using Service.Implement.Admin;
     using Service.Interface;
+    using Service.Interface.Admin;
     using SimpleInjector;
     using SimpleInjector.Advanced;
     using SimpleInjector.Integration.Web;
