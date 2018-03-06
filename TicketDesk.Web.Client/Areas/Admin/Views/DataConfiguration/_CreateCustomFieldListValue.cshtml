@@ -1,9 +1,9 @@
 ﻿@using TicketDesk.Localization.Client
-@model TicketDesk.Web.Client.Areas.Admin.Models.DataConfiguration.AddCustomFieldListValueViewModel
+@model TicketDesk.Web.Client.Areas.Admin.Models.DataConfiguration.CreateCustomFieldListValueViewModel
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
     <div class="modal-dialog small-modal" role="document">
-        @using (Html.BeginForm("AddCustomFieldListValue","DataConfiguration", FormMethod.Post))
+        @using (Html.BeginForm("CreateCustomFieldListValue","DataConfiguration", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(x => x.CustomFieldId)
@@ -55,7 +55,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-cancel" data-dismiss="modal">@Resources.Cancel</button>
                     <button type="submit" class="btn btn-submit">@Resources.Save</button>
-                    <button type="button" class="btn btn-submit submit-and-continue" data-action="@Url.Action("AddAndContinueCustomFieldListValue","DataConfiguration")">@Resources.SaveAndContinue</button>
+                    <button type="button" class="btn btn-submit submit-and-continue" data-action="@Url.Action("CreateAndContinueCustomFieldListValue","DataConfiguration")">@Resources.SaveAndContinue</button>
                 </div>
             </div>
         }

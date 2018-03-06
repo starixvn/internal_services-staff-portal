@@ -11,7 +11,7 @@
 
         CustomFieldListValue GetEditableListValue(int customFieldListValueId);
 
-        bool AddCustomFieldListValue(CustomFieldListValue customFieldListValue);
+        bool CreateCustomFieldListValue(CustomFieldListValue customFieldListValue);
 
         bool EditCustomFieldListValue(CustomFieldListValue modifiedCustomFieldListValue);
 

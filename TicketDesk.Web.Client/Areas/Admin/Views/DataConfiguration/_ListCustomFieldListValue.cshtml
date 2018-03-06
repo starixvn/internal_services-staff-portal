@@ -2,7 +2,7 @@
 @model TicketDesk.Web.Client.Areas.Admin.Models.DataConfiguration.ListCustomFieldListValueViewModel
 
 <div class="table-actions">
-    <a class="btn btn-create create" href="@Url.Action("AddCustomFieldListValue", "DataConfiguration", new {customFieldId = Model.SelectedFieldId, modalTitle = Model.ModalTitle})">
+    <a class="btn btn-create create" href="@Url.Action("CreateCustomFieldListValue", "DataConfiguration", new {customFieldId = Model.SelectedFieldId, modalTitle = Model.ModalTitle})">
         <span class="icon-add"></span>@Resources.CreateNewItem
     </a>
 </div>

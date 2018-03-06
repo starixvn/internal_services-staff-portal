@@ -40,19 +40,19 @@
             return PartialView("_ListCustomFieldListValue", viewModel);
         }
 
-        public ActionResult AddCustomFieldListValue(int customFieldId, string modalTitle)
+        public ActionResult CreateCustomFieldListValue(int customFieldId, string modalTitle)
         {
-            var addCustomFieldListValueViewModel = new AddCustomFieldListValueViewModel
+            var createCustomFieldListValueViewModel = new CreateCustomFieldListValueViewModel
             {
                 CustomFieldId = customFieldId,
                 ModalTitle = modalTitle
             };
 
-            return PartialView("_AddCustomFieldListValue", addCustomFieldListValueViewModel);
+            return PartialView("_CreateCustomFieldListValue", createCustomFieldListValueViewModel);
         }
 
         [HttpPost]
-        public ActionResult AddAndContinueCustomFieldListValue(AddCustomFieldListValueViewModel viewModel)
+        public ActionResult CreateAndContinueCustomFieldListValue(CreateCustomFieldListValueViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -64,20 +64,20 @@
                     IsActive = viewModel.IsActive
                 };
 
-                _dataConfigurationService.AddCustomFieldListValue(customFieldListValue);
+                _dataConfigurationService.CreateCustomFieldListValue(customFieldListValue);
             }
 
-            var newViewModel = new AddCustomFieldListValueViewModel
+            var newViewModel = new CreateCustomFieldListValueViewModel
             {
                 CustomFieldId = viewModel.CustomFieldId,
                 ModalTitle = viewModel.ModalTitle
             };
 
-            return PartialView("_AddCustomFieldListValue", newViewModel);
+            return PartialView("_CreateCustomFieldListValue", newViewModel);
         }
 
         [HttpPost]
-        public ActionResult AddCustomFieldListValue(AddCustomFieldListValueViewModel viewModel)
+        public ActionResult CreateCustomFieldListValue(CreateCustomFieldListValueViewModel viewModel)
         {
             var result = false;
 
@@ -91,7 +91,7 @@
                     IsActive = viewModel.IsActive
                 };
 
-                result = _dataConfigurationService.AddCustomFieldListValue(customFieldListValue);
+                result = _dataConfigurationService.CreateCustomFieldListValue(customFieldListValue);
             }
 
             return Json(result);
@@ -117,7 +117,7 @@
         }
 
         [AcceptVerbs("Get", "Post")]
-        public ActionResult IsDisplayNameViUnique(AddCustomFieldListValueViewModel viewModel)
+        public ActionResult IsDisplayNameViUnique(CreateCustomFieldListValueViewModel viewModel)
         {
             var result = _dataConfigurationService.IsCustomFieldDisplayNameViUnique(viewModel.CustomFieldId, viewModel.DisplayName_vi);
             return Json(result, JsonRequestBehavior.AllowGet);

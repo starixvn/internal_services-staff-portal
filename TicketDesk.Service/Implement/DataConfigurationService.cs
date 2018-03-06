@@ -82,7 +82,7 @@
             }
         }
 
-        public bool AddCustomFieldListValue(CustomFieldListValue customFieldListValue)
+        public bool CreateCustomFieldListValue(CustomFieldListValue customFieldListValue)
         {
             context.CustomFieldListValues.Add(customFieldListValue);
             var result = context.SaveChanges();

@@ -4,7 +4,7 @@
     using System.Web.Mvc;
     using Localization.Client;
 
-    public class AddCustomFieldListValueViewModel
+    public class CreateCustomFieldListValueViewModel
     {
         public string ModalTitle { get; set; }
 
