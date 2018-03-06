@@ -426,4 +426,7 @@
   <data name="SaveAndContinue" xml:space="preserve">
     <value>Lưu và tiếp tục</value>
   </data>
+  <data name="DataConfigurationEditItemTitle" xml:space="preserve">
+    <value>Sửa vật thể </value>
+  </data>
 </root>

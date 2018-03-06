@@ -187,6 +187,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Item .
+        /// </summary>
+        public static string DataConfigurationEditItemTitle {
+            get {
+                return ResourceManager.GetString("DataConfigurationEditItemTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Item of .
         /// </summary>
         public static string DataConfigurationNewItemTitle {
