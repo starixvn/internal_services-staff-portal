@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Localization.Client
+@using TicketDesk.Web.Client.Infrastructure.Helpers
 @model TicketDesk.Domain.Model.CustomFieldListValue
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
@@ -19,7 +20,7 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.DisplayName_vi, new { @class = "control-label" })
+                            @Html.RequiredLabelFor(model => model.DisplayName_vi, new { @class = "control-label" })
                             <div class="text-field">
                                 @Html.EditorFor(model => model.DisplayName_vi, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.DisplayName_vi, "", new { @class = "text-danger" })
