@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Text;
     using Domain.Model;
     using Interface;
     using Microsoft.Practices.ObjectBuilder2;
@@ -54,20 +55,23 @@
         {
             var customFieldActiveListValues =
                 context.CustomFieldListValues.Where(x => x.CustomFieldId == customFieldId && x.IsActive).ToList();
+
             var customField = context.CustomFields.Find(customFieldId);
 
             if (customField != null)
             {
+                StringBuilder displayNameEn = new StringBuilder();
                 foreach (var customFieldActiveListValue in customFieldActiveListValues)
                 {
-                    if (string.IsNullOrEmpty(customFieldActiveListValue.DisplayName))
-                    {
-                        customFieldActiveListValue.DisplayName = customFieldActiveListValue.DisplayName_vi;
-                    }
+                    displayNameEn.Append(string.IsNullOrEmpty(customFieldActiveListValue.DisplayName)
+                        ? customFieldActiveListValue.DisplayName_vi
+                        : customFieldActiveListValue.DisplayName);
+
+                    displayNameEn.Append("\r\n");
                 }
 
                 customField.Values_vi = customFieldActiveListValues.Select(x => x.DisplayName_vi).JoinStrings("\r\n");
-                customField.Values = customFieldActiveListValues.Select(x => x.DisplayName).JoinStrings("\r\n");
+                customField.Values = displayNameEn.ToString().Trim();
 
                 context.CustomFields.Attach(customField);
                 var entry = context.Entry(customField);
@@ -91,7 +95,7 @@
             context.CustomFieldListValues.AddOrUpdate(modifiedCustomFieldListValue);
             var result = context.SaveChanges();
             UpdateCustomFieldValue(modifiedCustomFieldListValue.CustomFieldId);
-            return result > 0;
+            return result >= 0;
         }
 
         public bool IsCustomFieldDisplayNameViUnique(int customFieldId, string displayNameVi)
