@@ -37,13 +37,13 @@
         }
 
         function AssignAddMoreButton() {
-            $(".btn-add").click(function(event) {
+            $(".btn-add").click(function (event) {
                 event.preventDefault();
                 var id = "#" + $(this).data("class");
                 var clone = $(id).children().last().clone();
                 var guid = clone.children().first().val();
                 var regex = new RegExp(guid, "g");
-                var newHtml = clone.html(function(i, oldHtml) {
+                var newHtml = clone.html(function (i, oldHtml) {
                     return oldHtml.replace(regex, GenerateGuid());
                 });
 
@@ -69,7 +69,7 @@
             $(".btn-delete-item:first").hide();
             $("body").on("click",
                 ".btn-delete-item",
-                function() {
+                function () {
                     $(this).parent().parent().remove();
                     ResetFormValidator();
 
@@ -77,7 +77,7 @@
                 });
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             AssignAddMoreButton();
             AssignRemoveButton();
         });
@@ -173,7 +173,7 @@
             @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "key border label-item" })
             <div class="value span-3 border subject">
                 @Html.ValidationMessageFor(x => x.Ticket.Title)
-                @Html.TextBoxFor(model => model.Ticket.Title, new { @class = "ticket-title" , @readonly="readonly" })
+                @Html.TextBoxFor(model => model.Ticket.Title, new { @class = "ticket-title", @readonly = "readonly" })
             </div>
         </div>
         <div class="height-auto">
@@ -183,8 +183,8 @@
                     @Html.HiddenFor(x => x.RequestType.CustomFieldId, new { Value = Model.RequestType.CustomField.Id })
                     @Html.HiddenFor(model => model.SelectedRequestType, new { @class = "required-radio-value" })
                     @foreach (string requestType in Model.RequestTypes)
-                {
-                    var rdId = "rd-" + requestType.Replace(' ', '_');
+                    {
+                        var rdId = "rd-" + requestType.Replace(' ', '_');
                         <p>
                             @Html.RadioButtonFor(x => x.RequestType.Value, requestType, new { id = rdId, @class = "required-radio" })
                             <label for="@rdId">@requestType</label>
@@ -193,7 +193,7 @@
                 </div>
                 @Html.ValidationMessageFor(x => x.SelectedRequestType)
             </div>
-        </div>       
+        </div>
         <div class="item-list height-auto" id="item-list">
             <div class="title item-head border">
                 <span>@Resources.Views_Ticket_NewFacilityTicket_ItemList</span>
@@ -225,10 +225,10 @@
                         <div class="fullwidth border key">
                             @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "" })
                             <span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
-                        </div>                       
-                        
+                        </div>
+
                         <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "description" })</div>
-                        @Html.ValidationMessageFor(x => x.Items.ElementAt(i).Reason, null, new { data_valmsg_for = "Items[" + guid + "].Reason.Value"})
+                        @Html.ValidationMessageFor(x => x.Items.ElementAt(i).Reason, null, new { data_valmsg_for = "Items[" + guid + "].Reason.Value" })
                     </div>
                 }
             }

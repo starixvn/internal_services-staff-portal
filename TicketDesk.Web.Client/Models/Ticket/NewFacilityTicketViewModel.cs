@@ -24,7 +24,7 @@
                 {
                     return _requestTypes;
                 }
-                
+
                 _requestTypes = CustomFieldForHelper.GetMultilingualCustomFieldValuesAsArray(RequestType.CustomField);
                 return _requestTypes;
             }
@@ -40,7 +40,7 @@
             Items = new List<Item>();
         }
     }
-    
+
     public class Item
     {
         public string Index { get; set; }
