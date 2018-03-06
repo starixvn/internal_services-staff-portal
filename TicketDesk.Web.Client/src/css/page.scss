@@ -900,6 +900,18 @@ tr.header {
         display: flex;
     }
 
+    .date-time {
+        position: relative;
+
+        .icon-calendar {
+            position: absolute;
+            top: 12px;
+            right: 22px;
+            font-size: 19px;
+            color: $primary-color;
+        }
+    }
+
     .attach-file {
         .key {
             display: flex;
@@ -948,16 +960,7 @@ tr.header {
     .fullwidth, textarea {
         //grid-column: span 4;
         flex: 1 100%;
-    }
-
-    /*.item-list textarea {
-        border: 0;
-        padding: 0;
-
-        &:focus {
-            outline: none;
-        }
-    }*/
+    }    
 
     input[type="text"], textarea {
         font-family: inherit;
@@ -1034,7 +1037,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     }
 }
 
-.feedback-form {
+.feedback-form, .hardware-form {
     .item {
         border-left: 1px solid $border-color;
         padding-top: 0;

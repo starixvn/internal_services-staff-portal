@@ -576,15 +576,7 @@ tr.header {
   box-shadow: 0 0 6px rgba(102, 102, 102, 0.3);
   display: flex;
   flex-flow: row wrap;
-  color: #333;
-  /*.item-list textarea {
-        border: 0;
-        padding: 0;
-
-        &:focus {
-            outline: none;
-        }
-    }*/ }
+  color: #333; }
   .form-content label {
     margin-bottom: 0; }
   .form-content .border {
@@ -632,6 +624,14 @@ tr.header {
     flex: 1 100%;
     flex-flow: row wrap;
     display: flex; }
+  .form-content .date-time {
+    position: relative; }
+    .form-content .date-time .icon-calendar {
+      position: absolute;
+      top: 12px;
+      right: 22px;
+      font-size: 19px;
+      color: #bf141a; }
   .form-content .attach-file {
     /*.key {
             display: table;
@@ -712,23 +712,23 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   border-left: 1px solid #d3d7db;
   padding: 0 0 8px 12px; }
 
-.feedback-form {
+.feedback-form, .hardware-form {
   /*.attach-file .fullwidth {
         height: 40px;
         line-height: 40px;
     }*/ }
-  .feedback-form .item {
+  .feedback-form .item, .hardware-form .item {
     border-left: 1px solid #d3d7db;
     padding-top: 0; }
-    .feedback-form .item ~ .item {
+    .feedback-form .item ~ .item, .hardware-form .item ~ .item {
       padding-top: 5px; }
-    .feedback-form .item .key.border {
+    .feedback-form .item .key.border, .hardware-form .item .key.border {
       border-left: none; }
-    .feedback-form .item input[type="text"] {
+    .feedback-form .item input[type="text"], .hardware-form .item input[type="text"] {
       height: 40px;
       width: 100%;
       padding: 0 12px; }
-  .feedback-form textarea + .field-validation-error {
+  .feedback-form textarea + .field-validation-error, .hardware-form textarea + .field-validation-error {
     position: relative;
     top: -10px; }
 

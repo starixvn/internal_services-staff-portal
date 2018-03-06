@@ -41,32 +41,63 @@
     <div class="form-content hardware-form">
         <div class="title">HARDWARE ISSUES</div>
         <div class="item-list item">
-            @Html.LabelFor(x => x.Ticket.Title, new { @class = "key fullwidth border" })
+            <div class="key fullwidth">
+                <label for="OutletName">Outlet Name</label>
+            </div>
+
             <div class="fullwidth">
-                @Html.TextBoxFor(x => x.Ticket.Title)
+                <div class="value fullwidth border custom-dropdown">
+                    <select class="valid" id="System.Value" name="System.Value" aria-invalid="false">
+                        <option value="Till/Terminal">Outlet 001 - Quang Trung</option>
+                        <option value="SSBT">SSBT</option>
+                        <option value="Smart Screen/TV">Smart Screen/TV</option>
+                        <option value="Printer Issues">Printer Issues</option>
+                    </select>
+                </div>
             </div>
         </div>
+
         <div class="item-list item">
             @{
                 var guid = Guid.NewGuid().ToString();
             }
-            @*@Html.CustomFieldIndex("System", guid)*@
-
-            @Html.CustomFieldLabelWithGuidIndexFor(x => x.System, guid, null, new { @class = "key border" })
-            <div class="value border custom-dropdown">
-                @Html.CustomFieldWithGuidIndexFor(x => x.System, guid, null, new { @class = "" })
+            <div class="key fullwidth">
+                <label for="device">Device</label>
+            </div>
+            
+            <div class="fullwidth">
+                <div class="value border fullwidth custom-dropdown">
+                    @Html.CustomFieldWithGuidIndexFor(x => x.System, guid, null, new { @class = "" })
+                </div>
             </div>
         </div>
+
         <div class="item-list item">
-            @Html.CustomFieldLabelFor(x => x.TimeOfIncident, new { @class = "key fullwidth" })
+            <div class="key fullwidth">
+                @Html.LabelFor(x => x.Ticket.Title)
+                <span class="highlight">*</span>
+            </div>
+
             <div class="fullwidth">
+                @Html.TextBoxFor(x => x.Ticket.Title)
+            </div>
+        </div>
+
+        <div class="item-list item">
+            <div class="key fullwidth">
+                @Html.CustomFieldLabelFor(x => x.TimeOfIncident)
+                <span class="highlight">*</span>
+            </div>
+            
+            <div class="fullwidth date-time">
                 @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "key fullwidth datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
+                <span class="icon-calendar"></span>
             </div>
         </div>
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.Description)
-                <span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
+                <span class="highlight">* (<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
             </div>
             <div class="fullwidth">
                 @Html.CustomFieldFor(x => x.Description, new { @class = "description" })
