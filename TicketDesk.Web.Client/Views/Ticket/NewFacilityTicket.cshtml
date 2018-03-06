@@ -41,6 +41,7 @@
                 event.preventDefault();
                 var id = "#" + $(this).data("class");
                 var clone = $(id).children().last().clone();
+                clone.find(".countdown-character").text(5000);
                 var guid = clone.children().first().val();
                 var regex = new RegExp(guid, "g");
                 var newHtml = clone.html(function (i, oldHtml) {

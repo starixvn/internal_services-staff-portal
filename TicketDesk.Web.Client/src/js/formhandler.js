@@ -142,12 +142,13 @@ function CheckFormAndTurnSubmitButton(formclassname) {
 function CountDownCharacter(element) {
     var maxLength = 5000;
     var remainLength = maxLength - element.val().length;
+    var parent = $(element).closest(".item");
     if ($(".countdown-character").length) {
-        $(".countdown-character").text(remainLength);
+        $(parent).find(".countdown-character").text(remainLength);
     }
 }
 
-$(".description").keyup(function () {
+$("form").on("keyup", ".description", function () {
     CountDownCharacter($(this));
 })
 

@@ -47,7 +47,8 @@
 
             <div class="fullwidth">
                 <div class="value fullwidth border custom-dropdown">
-                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList, "---Select Shop---")
+                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList)
+                    @Html.ValidationMessageFor(x => x.Ticket.ShopId)
                 </div>
             </div>
         </div>
@@ -75,6 +76,8 @@
 
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.Ticket.Title)
+                @Html.ValidationMessageFor(x => x.Ticket.Title)
+
             </div>
         </div>
 
