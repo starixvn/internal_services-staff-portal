@@ -16,11 +16,6 @@
         @Html.ListBoxFor(x => x.TicketCategoryIds, Model.TicketCategories, new { @class = "form-control" })
     </div>
 
-    @*<div class="input-group">
-        @Html.LabelFor(x => x.CustomFieldTypeId)
-        @Html.DropDownListFor(x => x.CustomFieldTypeId, Model.CustomFieldTypes, new { @class = "form-control" })
-    </div>*@
-
     <div class="input-group">
         @Html.LabelFor(x => x.Name)
         @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
