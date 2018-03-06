@@ -33,5 +33,8 @@
 
         [Display(Name = "Display Order")]
         public int DisplayOrder { get; set; }
+
+        [Display(Name = "Is Allowed to Edit List Value")]
+        public bool IsAllowedToEditListValue { get; set; }
     }
 }

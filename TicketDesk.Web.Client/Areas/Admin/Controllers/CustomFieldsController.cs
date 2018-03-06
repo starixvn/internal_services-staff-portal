@@ -76,7 +76,9 @@
                 Name_vi = viewModel.Name_vi,
                 CustomFieldTypeId = viewModel.CustomFieldTypeId,
                 Values = viewModel.Values,
-                Values_vi = viewModel.Values_vi
+                Values_vi = viewModel.Values_vi,
+                IsEnabled = viewModel.IsEnabled,
+                IsAllowedToEditListValue = viewModel.IsAllowedToEditListValue
             };
 
             _context.CustomFields.Add(customField);
@@ -124,6 +126,7 @@
                     Values_vi = customField.Values_vi,
                     DisplayOrder = customField.DisplayOrder,
                     IsEnabled = customField.IsEnabled,
+                    IsAllowedToEditListValue = customField.IsAllowedToEditListValue,
                     CustomFieldTypeId = customField.CustomFieldTypeId
                 };
 
@@ -146,6 +149,7 @@
                 customField.Values = viewModel.Values;
                 customField.DisplayOrder = viewModel.DisplayOrder;
                 customField.IsEnabled = viewModel.IsEnabled;
+                customField.IsAllowedToEditListValue = viewModel.IsAllowedToEditListValue;
 
                 _context.CustomFields.AddOrUpdate(customField);
 

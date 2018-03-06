@@ -51,6 +51,11 @@
     </div>
 
     <div class="input-group">
+        @Html.LabelFor(x => x.IsAllowedToEditListValue)
+        @Html.CheckBoxFor(x => x.IsAllowedToEditListValue, new { @class = "form-control" })
+    </div>
+
+    <div class="input-group">
         <input type="submit" value="Add" class="btn btn-block btn-success" />
     </div>
 }

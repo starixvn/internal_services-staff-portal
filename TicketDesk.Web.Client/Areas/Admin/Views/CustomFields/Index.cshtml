@@ -37,6 +37,7 @@
                 <th>Value VI</th>
                 <th>Enabled</th>
                 <th>Display Order</th>
+                <th>Is Allowed to Edit List Value</th>
                 <th>Command</th>
             </tr>
             @foreach (var item in Model.CustomFields)
@@ -44,12 +45,12 @@
                 <tr>
                     <td>@item.Id</td>
                     @*<td>
-                        @foreach (var cat in item.TicketCategories)
-                        {
-                            <p>@cat.Name</p>
-                            <br/>
-                        }
-                    </td>*@
+                            @foreach (var cat in item.TicketCategories)
+                            {
+                                <p>@cat.Name</p>
+                                <br/>
+                            }
+                        </td>*@
                     <td>@item.CustomFieldType.Name</td>
                     <td>@item.Name</td>
                     <td>@item.Name_vi</td>
@@ -60,7 +61,7 @@
                             foreach (var val in values)
                             {
                                 <span>@val</span>
-                                <br/>
+                                <br />
                             }
                         }
                         else
@@ -95,6 +96,16 @@
                     </td>
                     <td>
                         <p>@item.DisplayOrder</p>
+                    </td>
+                    <td>
+                        @if (item.IsAllowedToEditListValue)
+                        {
+                            <p>Allowed</p>
+                        }
+                        else
+                        {
+                            <p>Denied</p>
+                        }
                     </td>
                     <td>
                         <a href="@Url.Action("Edit", "CustomFields", new { id = item.Id })">Edit</a>

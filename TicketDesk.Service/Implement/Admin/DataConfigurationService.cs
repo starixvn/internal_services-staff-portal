@@ -4,8 +4,8 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Text;
+    using Core.Enumerations;
     using Domain.Model;
-    using Interface;
     using Interface.Admin;
     using Microsoft.Practices.ObjectBuilder2;
 
@@ -14,7 +14,10 @@
         public IEnumerable<EditableField> GetEditableCustomFields()
         {
             var result = new List<EditableField>();
-            var editableCustomFieldIds = new List<int> { 5, 1021, 1027, 1028 };
+
+            var editableCustomFieldIds = context.CustomFields
+                .Where(x => x.CustomFieldTypeId == (int)CustomFieldTypes.List && x.IsAllowedToEditListValue)
+                .Select(x => x.Id);
 
             foreach (var id in editableCustomFieldIds)
             {
