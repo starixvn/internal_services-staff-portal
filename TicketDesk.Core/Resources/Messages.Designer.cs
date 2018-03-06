@@ -79,6 +79,15 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The attachment image size is less than the allowable limits. Please use a bigger size file!.
         /// </summary>
         public static string ImageDimensionInvalid {

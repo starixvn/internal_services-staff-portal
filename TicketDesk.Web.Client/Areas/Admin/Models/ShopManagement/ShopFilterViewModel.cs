@@ -12,6 +12,6 @@ namespace TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement
         public int ShopId { get; set; }
 
         [Display(Name = "Active")]
-        public ActiveState IsActive { get; set; }
+        public ActiveState ActiveState { get; set; }
     }
 }

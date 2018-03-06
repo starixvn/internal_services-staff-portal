@@ -148,9 +148,6 @@ Bạn có thực sự muốn đăng xuất?</value>
   <data name="InvalidImageURL" xml:space="preserve">
     <value>The request content cannot be loaded. Please try again.</value>
   </data>
-  <data name="ValidateStringLengthMessage" xml:space="preserve">
-    <value>{0} must under {1} characters.</value>
-  </data>
   <data name="ImageExceededCapacity" xml:space="preserve">
     <value>Fail to upload image. The image you're trying to upload exceeds 2MB limit.</value>
   </data>
@@ -160,9 +157,6 @@ Bạn có thực sự muốn đăng xuất?</value>
   <data name="ImageDimensionInvalid" xml:space="preserve">
     <value>The attachment image size is less than the allowable limits. Please use a bigger size file!</value>
   </data>
-  <data name="ValidateRequiredMessage" xml:space="preserve">
-    <value>{0} is required</value>
-  </data>
   <data name="CreateShopSuccess" xml:space="preserve">
     <value>New shop has been successfully created.</value>
   </data>
@@ -171,5 +165,8 @@ Bạn có thực sự muốn đăng xuất?</value>
   </data>
   <data name="ShopExist" xml:space="preserve">
     <value>The Shop Name already exists.</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Có lỗi xảy ra!</value>
   </data>
 </root>
