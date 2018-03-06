@@ -274,9 +274,8 @@
             {
                 TempId = Guid.NewGuid(),
                 Ticket = {
-                
-                        ShopList = GetShopSelectList()
-                        },
+                     ShopList = GetShopSelectList()
+                },
                 System = { CustomField = availableCustomField.First(x => x.Name == "Device") },
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
