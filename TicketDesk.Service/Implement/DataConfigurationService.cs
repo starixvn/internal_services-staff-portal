@@ -5,6 +5,7 @@
     using System.Linq;
     using Domain.Model;
     using Interface;
+    using Microsoft.Practices.ObjectBuilder2;
 
     public class DataConfigurationService : EntityFrameworkBaseService, IDataConfigurationService
     {
@@ -49,10 +50,39 @@
             return context.CustomFieldListValues.Find(customFieldListValueId);
         }
 
+        private void UpdateCustomFieldValue(int customFieldId)
+        {
+            var customFieldActiveListValues =
+                context.CustomFieldListValues.Where(x => x.CustomFieldId == customFieldId && x.IsActive).ToList();
+            var customField = context.CustomFields.Find(customFieldId);
+
+            if (customField != null)
+            {
+                foreach (var customFieldActiveListValue in customFieldActiveListValues)
+                {
+                    if (string.IsNullOrEmpty(customFieldActiveListValue.DisplayName))
+                    {
+                        customFieldActiveListValue.DisplayName = customFieldActiveListValue.DisplayName_vi;
+                    }
+                }
+
+                customField.Values_vi = customFieldActiveListValues.Select(x => x.DisplayName_vi).JoinStrings("\r\n");
+                customField.Values = customFieldActiveListValues.Select(x => x.DisplayName).JoinStrings("\r\n");
+
+                context.CustomFields.Attach(customField);
+                var entry = context.Entry(customField);
+                entry.Property(x => x.Values).IsModified = true;
+                entry.Property(x => x.Values_vi).IsModified = true;
+
+                context.SaveChanges();
+            }
+        }
+
         public bool AddCustomFieldListValue(CustomFieldListValue customFieldListValue)
         {
             context.CustomFieldListValues.Add(customFieldListValue);
             var result = context.SaveChanges();
+            UpdateCustomFieldValue(customFieldListValue.CustomFieldId);
             return result > 0;
         }
 
@@ -60,6 +90,7 @@
         {
             context.CustomFieldListValues.AddOrUpdate(modifiedCustomFieldListValue);
             var result = context.SaveChanges();
+            UpdateCustomFieldValue(modifiedCustomFieldListValue.CustomFieldId);
             return result > 0;
         }
 
