@@ -35,6 +35,8 @@
 
         public int MaxLength { get; set; }
 
+        public bool IsAllowedToEditListValue { get; set; }
+
         [NotMapped]
         public IList<CustomFieldListValue> ListValues { get; set; }
 

@@ -300,6 +300,10 @@
     <Compile Include="Migrations\201803050828374_Nexcel_ChangeAnnouncementStatusToType.Designer.cs">
       <DependentUpon>201803050828374_Nexcel_ChangeAnnouncementStatusToType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803060842299_Nexcel_CustomFieldIsAllowToEditListValue.cs" />
+    <Compile Include="Migrations\201803060842299_Nexcel_CustomFieldIsAllowToEditListValue.Designer.cs">
+      <DependentUpon>201803060842299_Nexcel_CustomFieldIsAllowToEditListValue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -473,6 +477,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803050828374_Nexcel_ChangeAnnouncementStatusToType.resx">
       <DependentUpon>201803050828374_Nexcel_ChangeAnnouncementStatusToType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803060842299_Nexcel_CustomFieldIsAllowToEditListValue.resx">
+      <DependentUpon>201803060842299_Nexcel_CustomFieldIsAllowToEditListValue.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
