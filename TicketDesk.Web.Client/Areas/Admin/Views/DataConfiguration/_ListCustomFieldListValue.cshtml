@@ -31,18 +31,18 @@
             {
                 index++;
                 <tr>
-                    <td>@index</td>
+                    <td class="text-center">@index</td>
                     <td>@customFieldListValue.DisplayName_vi</td>
                     <td>@customFieldListValue.DisplayName</td>
                     <td>@customFieldListValue.Description</td>
-                    <td>
+                    <td class="text-center">
                         @if (customFieldListValue.IsActive)
                         {
                             <span class="icon-check"></span>
                         }
                     </td>
-                    <td class="edit" data-href="@Url.Action("EditCustomFieldListvalue", "DataConfiguration", new { id = customFieldListValue.Id })">
-                        <span class="icon-edit"></span>
+                    <td class="edit text-center" data-href="@Url.Action("EditCustomFieldListvalue", "DataConfiguration", new { id = customFieldListValue.Id })">
+                        <span class="action-edit icon-edit"></span>
                     </td>
                 </tr>
             }

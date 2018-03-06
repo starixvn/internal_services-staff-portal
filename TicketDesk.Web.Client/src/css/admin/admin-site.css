@@ -452,6 +452,8 @@ main {
       top: 5px;
       font-size: 18px;
       color: #666666; }
+  .table .table-actions {
+    margin-bottom: 5px; }
 
 .floatThead-container {
   z-index: 9 !important; }
