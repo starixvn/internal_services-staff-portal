@@ -115,6 +115,10 @@
                 orderable: false,
                 searchable: false,
                 targets: [0, -1]
+            },
+            {
+                width: "70px",
+                targets: [0,-1,-2]
             }
         ];
         datatableConfigs.order = [[1, "asc"]];
