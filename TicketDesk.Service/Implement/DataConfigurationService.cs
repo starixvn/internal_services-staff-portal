@@ -44,6 +44,11 @@
             return context.CustomFieldListValues.Where(x => x.CustomFieldId == customFieldId).OrderBy(x => x.DisplayName_vi);
         }
 
+        public CustomFieldListValue GetEditableListValue(int customFieldListValueId)
+        {
+            return context.CustomFieldListValues.Find(customFieldListValueId);
+        }
+
         public bool AddCustomFieldListValue(CustomFieldListValue customFieldListValue)
         {
             context.CustomFieldListValues.Add(customFieldListValue);

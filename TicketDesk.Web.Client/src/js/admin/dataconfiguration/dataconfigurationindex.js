@@ -73,6 +73,20 @@
                     }
                 });
             });
+
+        $(".table").on("click",
+            ".edit",
+            function() {
+                var href = $(this).data("href");
+                $.ajax({
+                    url: href,
+                    success: function(result) {
+                        $("#dynamic-modals").html(result);
+                        $("#dynamic-modals .modal").modal();
+                        dataconfiguration.initValidation();
+                    }
+                });
+            });
     },
 
     ajaxForm: function (form) {

@@ -9,6 +9,8 @@
 
         IEnumerable<CustomFieldListValue> GetEditableListValues(int customFieldId);
 
+        CustomFieldListValue GetEditableListValue(int customFieldListValueId);
+
         bool AddCustomFieldListValue(CustomFieldListValue customFieldListValue);
 
         bool EditCustomFieldListValue(CustomFieldListValue modifiedCustomFieldListValue);

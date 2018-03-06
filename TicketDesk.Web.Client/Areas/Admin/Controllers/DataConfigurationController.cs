@@ -97,6 +97,25 @@
             return Json(result);
         }
 
+        public ActionResult EditCustomFieldListvalue(int id)
+        {
+            CustomFieldListValue customFieldListValue = _dataConfigurationService.GetEditableListValue(id);
+
+            return PartialView("_EditCustomFieldListValue", customFieldListValue);
+        }
+
+        [HttpPost]
+        public ActionResult EditCustomFieldListValue(CustomFieldListValue customFieldListValue)
+        {
+            var result = false;
+            if (ModelState.IsValid)
+            {
+                result = _dataConfigurationService.EditCustomFieldListValue(customFieldListValue);
+            }
+
+            return Json(result);
+        }
+
         [AcceptVerbs("Get", "Post")]
         public ActionResult IsDisplayNameViUnique(AddCustomFieldListValueViewModel viewModel)
         {

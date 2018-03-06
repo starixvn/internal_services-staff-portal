@@ -41,7 +41,9 @@
                             <span class="icon-check"></span>
                         }
                     </td>
-                    <td><span class="icon-edit"></span></td>
+                    <td class="edit" data-href="@Url.Action("EditCustomFieldListvalue", "DataConfiguration", new { id = customFieldListValue.Id })">
+                        <span class="icon-edit"></span>
+                    </td>
                 </tr>
             }
         }
