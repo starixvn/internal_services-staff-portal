@@ -157,7 +157,6 @@
                 <button type="button" class="btn btn-primary" data-dismiss="modal">@Resources.Dropzone_Modal_Close</button>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -174,6 +173,12 @@
             <div class="value span-3 border subject">
                 @Html.ValidationMessageFor(x => x.Ticket.Title)
                 @Html.TextBoxFor(model => model.Ticket.Title, new { @class = "ticket-title", @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="height-auto">
+            @Html.RequiredLabelFor(x => x.Ticket.ShopId, new { @class = "key border label-item" })
+            <div class="value span-3 border subject">
+                @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList, "---Select Shop---")
             </div>
         </div>
         <div class="height-auto">
@@ -232,7 +237,6 @@
                     </div>
                 }
             }
-
         </div>
 
         @Html.Partial("_DropzoneView", Model)

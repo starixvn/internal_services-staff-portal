@@ -73,9 +73,12 @@ var dataTableReflow = {
     },
 
     setIntervalToReinitFixedHeader: function () {
-        setTimeout(function () {
-            dataTableReflow.reInitFixedHeader();
-        }, 500);
+        if ($(".data-table").length) {
+                setTimeout(function () {
+                dataTableReflow.reInitFixedHeader();
+            }, 500);
+        }
+        
     }
 }
 
@@ -94,8 +97,8 @@ var bootstrapModalHack = {
     }
 }
 
-var toastrPopup =  {
-    initToastr: function() {
+var toastrPopup = {
+    initToastr: function () {
         toastr.options = {
             "closeButton": true,
             "positionClass": "toast-top-right",

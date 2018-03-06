@@ -121,8 +121,9 @@
 
             viewModel.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
             viewModel.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
+            viewModel.Ticket.ShopList = GetShopSelectList();
 
-            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
+            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
             return View("NewFacilityTicket", viewModel);
         }
@@ -134,8 +135,7 @@
         [Route("new-facility")]
         public async Task<ActionResult> NewFacilityTicket(NewFacilityTicketViewModel viewModel)
         {
-            // TODO: Replace with actual project ID represent for shop id here
-            viewModel.Ticket.Shop = Context.Shops.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
             ReValidateModelState(viewModel);
 
@@ -164,11 +164,12 @@
                 Ticket =
                 {
                     Owner = Context.SecurityProvider.CurrentUserId,
-                    IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote"
+                    IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote",
+                    ShopList = GetShopSelectList()
                 }
             };
 
-            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
+            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
             return View("NewFeedbackTicket", viewModel);
         }
@@ -180,8 +181,7 @@
         [Route("new-feedback")]
         public async Task<ActionResult> NewFeedbackTicket(NewFeedbackTicketViewModel viewModel)
         {
-            // TODO: Replace with actual project ID represent for shop id here
-            viewModel.Ticket.Shop = Context.Shops.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Feedback;
 
             ReValidateModelState(viewModel);
@@ -223,6 +223,7 @@
                 var nowDate = DateTime.Now.ToString("yyyy-MM-ddThh:mm");
                 viewModel.TimeOfIncident.Value = nowDate;
             }
+            viewModel.Ticket.ShopList = GetShopSelectList();
 
             return View("NewIncidentTicket", viewModel);
         }
@@ -244,7 +245,7 @@
                 }
             }
 
-            viewModel.Ticket.Shop = Context.Shops.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Incident;
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
@@ -260,7 +261,7 @@
                     : RedirectToAction("Index", "Home");
             }
 
-            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
+            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
             return View("NewIncidentTicket", viewModel);
         }
 
@@ -272,7 +273,10 @@
             var viewModel = new NewHardwareTicketViewModel
             {
                 TempId = Guid.NewGuid(),
-                Ticket = { Owner = Context.SecurityProvider.CurrentUserId },
+                Ticket = {
+                
+                        ShopList = GetShopSelectList()
+                        },
                 System = { CustomField = availableCustomField.First(x => x.Name == "Device") },
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
@@ -299,7 +303,7 @@
             }
 
             // TODO: Replace with actual project ID represent for shop id here
-            viewModel.Ticket.Shop = Context.Shops.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Hardware;
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
@@ -316,7 +320,7 @@
                     : RedirectToAction("Index", "Home");
             }
 
-            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
+            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
             return View(viewModel);
         }
@@ -329,7 +333,10 @@
             var viewModel = new NewSoftwareTicketViewModel
             {
                 TempId = Guid.NewGuid(),
-                Ticket = { Owner = Context.SecurityProvider.CurrentUserId },
+                Ticket = {
+                    Owner = Context.SecurityProvider.CurrentUserId,
+                    ShopList = GetShopSelectList()
+                },
                 System = { CustomField = availableCustomField.First(x => x.Name == "System") },
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
@@ -356,7 +363,7 @@
             }
 
             // TODO: Replace with actual project ID represent for shop id here
-            viewModel.Ticket.Shop = Context.Shops.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Software;
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
@@ -373,7 +380,7 @@
                     : RedirectToAction("Index", "Home");
             }
 
-            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
+            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
             return View(viewModel);
         }
@@ -423,7 +430,7 @@
                     : RedirectToAction("Index", "Home");
             }
 
-            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
+            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
             return View(viewModel);
         }
@@ -436,6 +443,10 @@
             var viewModel = new NewCustomerSupportTicketViewModel
             {
                 TempId = Guid.NewGuid(),
+                Ticket = {
+                    Owner = Context.SecurityProvider.CurrentUserId,
+                    ShopList = GetShopSelectList()
+                },
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
                 NationalIdCardNo = { CustomField = availableCustomField.First(x => x.Name == "National Id Card No") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
@@ -460,7 +471,7 @@
                 }
             }
 
-            viewModel.Ticket.Shop = Context.Shops.Find(1);
+            viewModel.Ticket.Shop = Context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.CustomerSupport;
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
@@ -476,7 +487,7 @@
                     : RedirectToAction("Index", "Home");
             }
 
-            await SetProjectInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
+            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
             return View(viewModel);
         }
@@ -638,19 +649,30 @@
         }
 
         // [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        private async Task SetProjectInfoForModelAsync(Ticket ticket)
+        private async Task SetShopInfoForModelAsync(Ticket ticket)
         {
             if (ticket.ShopId == default(int))
             {
-                var projects = await Context.Shops.Select(s => s.ShopId).ToListAsync().ConfigureAwait(false);
-                var isMulti = projects.Count > 1;
+                var shops = await Context.Shops.Select(s => s.ShopId).ToListAsync().ConfigureAwait(false);
+                var isMulti = shops.Count > 1;
                 ViewBag.IsMultiProject = isMulti;
 
                 // set to first project if only one project exists, otherwise use user's selected project
                 ticket.ShopId = isMulti
                     ? await Context.UserSettingsManager.GetUserSelectedProjectIdAsync(Context).ConfigureAwait(false)
-                    : projects.FirstOrDefault();
+                    : shops.FirstOrDefault();
             }
+        }
+
+        private IEnumerable<SelectListItem> GetShopSelectList()
+        {
+            var shops = Context.Shops.Where(s => s.IsActive).ToList();
+            var selectListItem = shops.Select(s => new SelectListItem
+            {
+                Text = s.ShopName,
+                Value = s.ShopId.ToString()
+            });
+            return selectListItem;
         }
     }
 }

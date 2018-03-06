@@ -64,7 +64,7 @@
             <div class="key fullwidth">
                 <label for="device">Device</label>
             </div>
-            
+
             <div class="fullwidth">
                 <div class="value border fullwidth custom-dropdown">
                     @Html.CustomFieldWithGuidIndexFor(x => x.System, guid, null, new { @class = "" })
@@ -83,12 +83,19 @@
             </div>
         </div>
 
+        <div class="height-auto">
+            @Html.RequiredLabelFor(x => x.Ticket.ShopId, new { @class = "key border label-item" })
+            <div class="value span-3 border subject">
+                @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList, "---Select Shop---")
+            </div>
+        </div>
+
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.TimeOfIncident)
                 <span class="highlight">*</span>
             </div>
-            
+
             <div class="fullwidth date-time">
                 @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "fullwidth datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
                 <span class="icon-calendar"></span>
@@ -106,4 +113,4 @@
         @Html.Partial("_DropzoneView", Model)
     </div>
     <input type="submit" class="btn btn-primary btn-send" value="Send" />
-}
+                }

@@ -59,6 +59,14 @@
                 }
             </div>
         </div>
+
+        <div class="height-auto">
+            @Html.RequiredLabelFor(x => x.Ticket.ShopId, new { @class = "key border label-item" })
+            <div class="value span-3 border subject">
+                @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList, "---Select Shop---")
+            </div>
+        </div>
+
         <div class="item-list item">
             @Html.LabelFor(x => x.Ticket.Title, new { @class = "key fullwidth border" })
             <div class="fullwidth">

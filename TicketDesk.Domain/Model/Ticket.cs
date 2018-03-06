@@ -5,6 +5,7 @@ namespace TicketDesk.Domain.Model
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Web.Mvc;
     using TicketDesk.Localization;
     using TicketDesk.Localization.Domain;
 
@@ -36,6 +37,8 @@ namespace TicketDesk.Domain.Model
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(ResourceType = typeof(Strings), Name = "TicketProject", ShortName = "TicketProjectShort")]
         public int ShopId { get; set; }
+
+        public IEnumerable<SelectListItem> ShopList { get; set; }
 
         [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
         [StringLength(50, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
