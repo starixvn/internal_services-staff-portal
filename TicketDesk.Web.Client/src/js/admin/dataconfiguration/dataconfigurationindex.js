@@ -34,39 +34,6 @@
                 dataconfiguration.ajaxForm($(this));
             });
 
-        //$("#dynamic-modals").on("submit",
-        //    "form",
-        //    function (e) {
-        //        e.preventDefault();
-        //        //if($(this).)
-        //        dataconfiguration.ajaxForm($(this));
-        //    });
-
-        //$("#dynamic-modals").on("click",
-        //    ".submit-and-continue",
-        //    function (e) {
-        //        e.preventDefault();
-        //        $("#dynamic-modals form").validate();
-        //        var isFormValid = $("#dynamic-modals form").valid();
-        //        if (isFormValid) {
-        //            $.ajax({
-        //                url: $(this).data("action"),
-        //                method: $("#dynamic-modals form").attr("method"),
-        //                data: $("#dynamic-modals form").serialize(),
-        //                success: function (result) {
-        //                    toastr.success(dataconfiguration.itemCreatedMessage());
-        //                    $("#dynamic-modals .modal").modal("hide");
-        //                    $("body").removeClass("modal-open");
-        //                    $(".modal-backdrop").remove();
-        //                    $(".filter-form form").trigger("submit");
-        //                    $("#dynamic-modals").html(result);
-        //                    $("#dynamic-modals .modal").modal();
-        //                    dataconfiguration.initValidation();
-        //                }
-        //            });
-        //        }
-        //    });
-
         $(".table").on("click",
             ".create",
             function (e) {
@@ -157,9 +124,9 @@
 
     initDatatable: function () {
         var datatableConfigs = commonDataTableInit.Init();
+        datatableConfigs.ordering = false;
         datatableConfigs.columnDefs = [
             {
-                orderable: false,
                 searchable: false,
                 targets: [0, -1]
             },
