@@ -61,11 +61,29 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Action {
+            get {
+                return ResourceManager.GetString("Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Active.
         /// </summary>
         public static string Active {
             get {
                 return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Announcement.
+        /// </summary>
+        public static string Announcement {
+            get {
+                return ResourceManager.GetString("Announcement", resourceCulture);
             }
         }
         
@@ -201,6 +219,15 @@ namespace TicketDesk.Localization.Client {
         public static string DataConfigurationNewItemTitle {
             get {
                 return ResourceManager.GetString("DataConfigurationNewItemTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
         
@@ -484,6 +511,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID.
+        /// </summary>
+        public static string ID {
+            get {
+                return ResourceManager.GetString("ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remark should not than 5000 characters.
         /// </summary>
         public static string IdUploaderViewModel_Remark_Remark_should_not_than_5000_characters {
@@ -507,6 +543,42 @@ namespace TicketDesk.Localization.Client {
         public static string ItemUpdatedMessage {
             get {
                 return ResourceManager.GetString("ItemUpdatedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Modified.
+        /// </summary>
+        public static string LastModified {
+            get {
+                return ResourceManager.GetString("LastModified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modified By.
+        /// </summary>
+        public static string ModifiedBy {
+            get {
+                return ResourceManager.GetString("ModifiedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publish.
+        /// </summary>
+        public static string Publish {
+            get {
+                return ResourceManager.GetString("Publish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published Date.
+        /// </summary>
+        public static string PublishedDate {
+            get {
+                return ResourceManager.GetString("PublishedDate", resourceCulture);
             }
         }
         
@@ -579,6 +651,15 @@ namespace TicketDesk.Localization.Client {
         public static string Submit {
             get {
                 return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
         

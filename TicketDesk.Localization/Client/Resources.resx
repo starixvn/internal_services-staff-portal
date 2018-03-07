@@ -429,4 +429,31 @@
   <data name="DataConfigurationEditItemTitle" xml:space="preserve">
     <value>Edit Item </value>
   </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="LastModified" xml:space="preserve">
+    <value>Last Modified</value>
+  </data>
+  <data name="ModifiedBy" xml:space="preserve">
+    <value>Modified By</value>
+  </data>
+  <data name="PublishedDate" xml:space="preserve">
+    <value>Published Date</value>
+  </data>
+  <data name="Announcement" xml:space="preserve">
+    <value>Announcement</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Publish" xml:space="preserve">
+    <value>Publish</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
 </root>

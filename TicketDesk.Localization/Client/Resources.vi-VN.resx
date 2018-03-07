@@ -429,4 +429,31 @@
   <data name="DataConfigurationEditItemTitle" xml:space="preserve">
     <value>Sửa vật thể </value>
   </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="LastModified" xml:space="preserve">
+    <value>Chỉnh sửa cuối cùng</value>
+  </data>
+  <data name="ModifiedBy" xml:space="preserve">
+    <value>Chỉnh sửa bởi</value>
+  </data>
+  <data name="PublishedDate" xml:space="preserve">
+    <value>Ngày đăng</value>
+  </data>
+  <data name="Announcement" xml:space="preserve">
+    <value>Thông báo</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Loại</value>
+  </data>
+  <data name="Publish" xml:space="preserve">
+    <value>Đăng</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Hành động</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
 </root>

@@ -14,7 +14,7 @@
     toggleCollapseExpand: function ($this) {
         var groupTicket = $this.attr("data-title");
         var childRows = $('[data-group="' + groupTicket + '"]');
-        $this.toggleClass("expand");
+        $this.find(".sign").toggleClass("expanded");
         childRows.find("td").slideToggle("fast");
     }
 };
@@ -46,8 +46,6 @@ var hiddenText = {
                     '</span>';
             }
             $(this).html(html);
-
-            
         });
 
         function AddRemoveClassFromElement(element, classForElement) {

@@ -1,5 +1,6 @@
 ﻿@using TicketDesk.Domain.Model
 @using TicketDesk.Core.Enumerations
+@using TicketDesk.Localization.Client
 @model IList<Announcement>
 
 <table class="announcement-list data-table" cellpadding="0" cellspacing="0">
@@ -7,23 +8,23 @@
         <tr>
             <th class="number">#</th>
             <th class="id">
-                <span>ID</span>
+                <span>@Resources.ID</span>
             </th>
             <th class="last-modified">
-                <span>Last Modified</span>
+                <span>@Resources.LastModified</span>
             </th>
             <th class="modified-by">
-                <span>Modified By</span>
+                <span>@Resources.ModifiedBy</span>
             </th>
             <th class="published-date">
-                <span>Published Date</span>
+                <span>@Resources.PublishedDate</span>
             </th>
-            <th class="announcement">Announcement</th>
-            <th class="status">Status</th>
+            <th class="announcement">@Resources.Announcement</th>
+            <th class="status">@Resources.Type</th>
             <th class="publish">
-                <button class="btn btn-publish" disabled="disabled" type="button">Publish</button>
+                <button class="btn btn-publish" disabled="disabled" type="button">@Resources.Publish</button>
             </th>
-            <th class="action">Action</th>
+            <th class="action">@Resources.Action</th>
         </tr>
     </thead>
     <tbody>
@@ -71,12 +72,12 @@
                                     <a class="edit"
                                         data-href="@Url.Action("Edit", "Announcement", new { id = item.Id })"
                                         href="#">
-                                        <span class="icon-edit"></span><span>Edit</span>
+                                        <span class="icon-edit"></span><span>@Resources.Edit</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="delete" href="#" data-href="@Url.Action("Delete","Announcement", new { id = item.Id })">
-                                        <span class="icon-delete"></span><span>Delete</span>
+                                        <span class="icon-delete"></span><span>@Resources.Delete</span>
                                     </a>
                                 </li>
                             </ul>
