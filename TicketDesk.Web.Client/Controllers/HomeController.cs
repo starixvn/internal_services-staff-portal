@@ -29,9 +29,9 @@
             _ticketService = ticketService;
         }
 
-        public ActionResult MyOpeningTicket(MyOpenningIssues viewModel)
+        public ActionResult MyOpeningTicket(MyOpenningTicketsViewModel viewModel)
         {
-            var myOpenningIssues = viewModel ?? new MyOpenningIssues();
+            var myOpenningIssues = viewModel ?? new MyOpenningTicketsViewModel();
 
             myOpenningIssues.TicketGroups = _ticketService.GetUserOpeningTicketsInGroups(
                 CurrentSession.UserId,

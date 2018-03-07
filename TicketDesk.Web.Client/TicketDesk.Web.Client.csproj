@@ -478,7 +478,7 @@
     <Compile Include="Models\Home\HomeViewModel.cs" />
     <Compile Include="Models\Common\Pagination.cs" />
     <Compile Include="Models\Home\MoreAnnouncementViewModel.cs" />
-    <Compile Include="Models\Home\MyOpenningIssues.cs" />
+    <Compile Include="Models\Home\MyOpenningTicketsViewModel.cs" />
     <Compile Include="Models\IdUploaderViewModel.cs" />
     <Compile Include="Models\NavbarViewModel.cs" />
     <Compile Include="Models\ProjectListViewModel.cs" />

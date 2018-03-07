@@ -8,9 +8,9 @@
     using Core.Enumerations;
     using Domain.Model;
 
-    public class MyOpenningIssues : Pagination
+    public class MyOpenningTicketsViewModel : Pagination
     {
-        public MyOpenningIssues()
+        public MyOpenningTicketsViewModel()
         {
             Action = "Index";
             Controller = "Home";
@@ -24,7 +24,7 @@
         public override string IndexLink(int i, int itemPerPage)
         {
 
-            var myOpenningIssues = new MyOpenningIssues
+            var myOpenningTicketsViewModel = new MyOpenningTicketsViewModel
             {
                 CurrentPage = i,
                 ItemPerPage = itemPerPage
@@ -32,8 +32,8 @@
 
             var routeValues = new RouteValueDictionary
             {
-                { $"{nameof(myOpenningIssues.CurrentPage)}", myOpenningIssues.CurrentPage },
-                { $"{nameof(myOpenningIssues.ItemPerPage)}", myOpenningIssues.ItemPerPage }
+                { $"{nameof(myOpenningTicketsViewModel.CurrentPage)}", myOpenningTicketsViewModel.CurrentPage },
+                { $"{nameof(myOpenningTicketsViewModel.ItemPerPage)}", myOpenningTicketsViewModel.ItemPerPage }
             };
 
             return UrlHelper.GenerateUrl(
