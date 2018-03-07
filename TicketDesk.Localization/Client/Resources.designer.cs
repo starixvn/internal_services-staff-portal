@@ -79,6 +79,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The {0} already exists..
+        /// </summary>
+        public static string AlreadyExsistedMessage {
+            get {
+                return ResourceManager.GetString("AlreadyExsistedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Announcement.
         /// </summary>
         public static string Announcement {
@@ -507,6 +516,15 @@ namespace TicketDesk.Localization.Client {
         public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field.
+        /// </summary>
+        public static string Field {
+            get {
+                return ResourceManager.GetString("Field", resourceCulture);
             }
         }
         

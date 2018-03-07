@@ -456,4 +456,10 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="Field" xml:space="preserve">
+    <value>Field</value>
+  </data>
+  <data name="AlreadyExsistedMessage" xml:space="preserve">
+    <value>The {0} already exists.</value>
+  </data>
 </root>

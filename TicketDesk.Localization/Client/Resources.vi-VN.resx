@@ -456,4 +456,10 @@
   <data name="Delete" xml:space="preserve">
     <value>Xóa</value>
   </data>
+  <data name="Field" xml:space="preserve">
+    <value>Trường</value>
+  </data>
+  <data name="AlreadyExsistedMessage" xml:space="preserve">
+    <value>{0} đã tồn tại</value>
+  </data>
 </root>
