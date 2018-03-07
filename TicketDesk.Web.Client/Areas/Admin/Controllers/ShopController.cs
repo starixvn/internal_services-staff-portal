@@ -13,11 +13,11 @@
     using Service.Interface.Admin;
 
     [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Read)]
-    public class ShopsController : BaseController
+    public class ShopController : BaseController
     {
         private readonly IShopService _shopService;
 
-        public ShopsController(IShopService shopService)
+        public ShopController(IShopService shopService)
         {
             _shopService = shopService;
         }

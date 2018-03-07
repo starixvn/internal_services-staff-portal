@@ -19,7 +19,7 @@
 <h2 class="page-title">@ViewBag.Title</h2>
 
 <section class="filter-form">
-    @using (Html.BeginForm("GetListShop", "Shops", FormMethod.Post, new { @class = "filter-row", @id = "filterForm" }))
+    @using (Html.BeginForm("GetListShop", "Shop", FormMethod.Post, new { @class = "filter-row", @id = "filterForm" }))
     {
         <div class="text-field">
             @Html.LabelFor(x => x.ShopName)

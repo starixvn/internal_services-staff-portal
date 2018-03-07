@@ -379,7 +379,7 @@
     <Compile Include="Areas\Admin\Controllers\DataConfigurationController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReferencesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ShopsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ShopController.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\ListAnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\NewAnnouncementViewModel.cs" />
@@ -634,12 +634,12 @@
     <Content Include="Areas\Admin\Views\Announcement\_Publish.cshtml" />
     <Content Include="Areas\Admin\Views\Announcement\_QuickPublish.cshtml" />
     <Content Include="Areas\Admin\Views\Announcement\_AnouncementList.cshtml" />
-    <Content Include="Areas\Admin\Views\Shops\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shop\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DataConfiguration\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Shops\_Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Shop\_Create.cshtml" />
     <Content Include="Areas\Admin\Views\DataConfiguration\_CreateCustomFieldListValue.cshtml" />
-    <Content Include="Areas\Admin\Views\Shops\_Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Shops\_ListShop.cshtml" />
+    <Content Include="Areas\Admin\Views\Shop\_Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Shop\_ListShop.cshtml" />
     <Content Include="Areas\Admin\Views\DataConfiguration\_ListCustomFieldListValue.cshtml" />
     <Content Include="Areas\Admin\Views\DataConfiguration\_EditCustomFieldListValue.cshtml" />
     <None Include="compilerconfig.json" />

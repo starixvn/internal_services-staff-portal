@@ -17,7 +17,7 @@
             source: function (request, response) {
                 var term = request.term;
                 $.ajax({
-                    url: '/Admin/Shops/GetShopSuggestion',
+                    url: '/Admin/Shop/GetShopSuggestion',
                     dataType: 'json',
                     data: {
                         shopName: term
@@ -106,7 +106,7 @@
             $(editModalContent).html('');
             $.ajax({
                 type: "GET",
-                url: "/Admin/Shops/Edit/" + id,
+                url: "/Admin/Shop/Edit/" + id,
                 dataType: "html",
                 success: function (data) {
                     $(editModalContent).html(data);
@@ -122,7 +122,7 @@
             var $createModalContent = $(domElement.CreateModalContent);
             $.ajax({
                 type: "GET",
-                url: "/Admin/Shops/Create",
+                url: "/Admin/Shop/Create",
                 dataType: "html",
                 success: function (data) {
                     $createModalContent.html(data);
