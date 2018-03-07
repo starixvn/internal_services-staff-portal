@@ -75,7 +75,7 @@
                 {
                     orderable: false,
                     searchable: false,
-                    targets: [0, -1]
+                    targets: [0, -1, -2]
                 },
             {
                 width: "70px",
