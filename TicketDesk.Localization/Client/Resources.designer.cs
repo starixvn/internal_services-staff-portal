@@ -169,7 +169,7 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create new Item.
+        ///   Looks up a localized string similar to Create New Item.
         /// </summary>
         public static string CreateNewItem {
             get {
