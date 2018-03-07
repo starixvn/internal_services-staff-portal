@@ -15,19 +15,30 @@
 
         [Display(Name = nameof(Resources.DisplayNameEN), ResourceType = typeof(Resources))]
         [StringLength(50, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
-        [Remote(action: "IsDisplayNameEnUnique", controller: "DataConfiguration", AdditionalFields = nameof(CustomFieldId), ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.AlreadyExsistedMessage))]
+        [Remote(
+            action: "IsDisplayNameEnUnique",
+            controller: "DataConfiguration",
+            AdditionalFields = nameof(CustomFieldId) + "," + nameof(Id),
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.AlreadyExsistedMessage))]
         [AllowHtml]
         public string DisplayName { get; set; }
 
         [Display(Name = nameof(Resources.DisplayNameVI), ResourceType = typeof(Resources))]
         [StringLength(50, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
         [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage))]
-        [Remote(action: "IsDisplayNameViUnique", controller: "DataConfiguration", AdditionalFields = nameof(CustomFieldId), ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.AlreadyExsistedMessage))]
+        [Remote(
+            action: "IsDisplayNameViUnique",
+            controller: "DataConfiguration",
+            AdditionalFields = nameof(CustomFieldId) + "," + nameof(Id),
+            ErrorMessageResourceType = typeof(Resources),
+            ErrorMessageResourceName = nameof(Resources.AlreadyExsistedMessage))]
         [AllowHtml]
         public string DisplayName_vi { get; set; }
 
         [Display(Name = nameof(Resources.Description), ResourceType = typeof(Resources))]
         [StringLength(200, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
+        [DataType(DataType.MultilineText)]
         [AllowHtml]
         public string Description { get; set; }
 

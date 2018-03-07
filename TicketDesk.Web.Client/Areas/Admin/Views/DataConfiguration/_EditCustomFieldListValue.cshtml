@@ -4,9 +4,10 @@
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
     <div class="modal-dialog data-modal" role="document">
-        @using (Html.BeginForm("EditCustomFieldListvalue", "DataConfiguration", FormMethod.Post))
+        @using (Html.BeginForm("EditCustomFieldListvalue", "DataConfiguration", FormMethod.Post, new { data_type = "edit" }))
         {
             @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.CustomFieldId)
 
             <div class="modal-content">
@@ -65,7 +66,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-cancel" data-dismiss="modal">@Resources.Cancel</button>
-                    <button type="submit" class="btn btn-submit" data-type="edit">@Resources.Save</button>
+                    <button type="submit" class="btn btn-submit">@Resources.Save</button>
                 </div>
             </div>
         }

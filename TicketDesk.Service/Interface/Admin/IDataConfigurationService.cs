@@ -15,8 +15,8 @@
 
         bool EditCustomFieldListValue(CustomFieldListValue modifiedCustomFieldListValue);
 
-        bool IsCustomFieldDisplayNameViUnique(int customFieldId, string displayNameVi);
+        bool IsCustomFieldDisplayNameViUnique(int customFieldId, string displayNameVi, int customFieldListValueId);
 
-        bool IsCustomFieldDisplayNameEnUnique(int customFieldId, string displayNameEn);
+        bool IsCustomFieldDisplayNameEnUnique(int customFieldId, string displayNameEn, int customFieldListValueId);
     }
 }

@@ -12,6 +12,21 @@
     },
 
     transformForm: function () {
+        $("#dynamic-modals").on("click",
+            ".submit",
+            function (e) {
+                e.preventDefault();
+                var action = $(this).data("action");
+                if (action === undefined) {
+                    $(this).closest("form").trigger("submit");
+                } else {
+                    $(this).closest("form").prop("action", action);
+                    $(this).closest("form").data("type", "create-and-continue");
+
+                    $(this).closest("form").trigger("submit");
+                }
+            });
+
         $("#dynamic-modals").on("submit",
             "form",
             function (e) {
@@ -19,30 +34,38 @@
                 dataconfiguration.ajaxForm($(this));
             });
 
-        $("#dynamic-modals").on("click",
-            ".submit-and-continue",
-            function (e) {
-                e.preventDefault();
-                $("#dynamic-modals form").validate();
-                var isFormValid = $("#dynamic-modals form").valid();
-                if (isFormValid) {
-                    $.ajax({
-                        url: $(this).data("action"),
-                        method: $("#dynamic-modals form").attr("method"),
-                        data: $("#dynamic-modals form").serialize(),
-                        success: function (result) {
-                            toastr.success(dataconfiguration.itemCreatedMessage());
-                            $("#dynamic-modals .modal").modal("hide");
-                            $("body").removeClass("modal-open");
-                            $(".modal-backdrop").remove();
-                            $(".filter-form form").trigger("submit");
-                            $("#dynamic-modals").html(result);
-                            $("#dynamic-modals .modal").modal();
-                            dataconfiguration.initValidation();
-                        }
-                    });
-                }
-            });
+        //$("#dynamic-modals").on("submit",
+        //    "form",
+        //    function (e) {
+        //        e.preventDefault();
+        //        //if($(this).)
+        //        dataconfiguration.ajaxForm($(this));
+        //    });
+
+        //$("#dynamic-modals").on("click",
+        //    ".submit-and-continue",
+        //    function (e) {
+        //        e.preventDefault();
+        //        $("#dynamic-modals form").validate();
+        //        var isFormValid = $("#dynamic-modals form").valid();
+        //        if (isFormValid) {
+        //            $.ajax({
+        //                url: $(this).data("action"),
+        //                method: $("#dynamic-modals form").attr("method"),
+        //                data: $("#dynamic-modals form").serialize(),
+        //                success: function (result) {
+        //                    toastr.success(dataconfiguration.itemCreatedMessage());
+        //                    $("#dynamic-modals .modal").modal("hide");
+        //                    $("body").removeClass("modal-open");
+        //                    $(".modal-backdrop").remove();
+        //                    $(".filter-form form").trigger("submit");
+        //                    $("#dynamic-modals").html(result);
+        //                    $("#dynamic-modals .modal").modal();
+        //                    dataconfiguration.initValidation();
+        //                }
+        //            });
+        //        }
+        //    });
 
         $(".table").on("click",
             ".create",
@@ -89,6 +112,7 @@
                 $.ajax({
                     url: href,
                     success: function (result) {
+                        $("#dynamic-modals").html("");
                         $("#dynamic-modals").html(result);
                         $("#dynamic-modals .modal").modal();
                         dataconfiguration.initValidation();
@@ -98,21 +122,30 @@
     },
 
     ajaxForm: function (form) {
-        var formType = $(form).find(":submit").data("type");
+        var formType = $(form).data("type");
         var isEditForm = formType === "edit";
+        var isCreateAndContinue = formType === "create-and-continue";
         $.ajax({
             url: $(form).attr("action"),
             method: $(form).attr("method"),
             data: $(form).serialize(),
             success: function (result) {
-                if (result) {
-                    if (isEditForm) {
-                        toastr.success(dataconfiguration.itemUpdatedMessage);
-                    } else {
-                        toastr.success(dataconfiguration.itemCreatedMessage);
-                    }
-                    $("#dynamic-modals .modal").modal("hide");
-                    $(".filter-form form").trigger("submit");
+                if (isEditForm) {
+                    toastr.success(dataconfiguration.itemUpdatedMessage);
+                } else {
+                    toastr.success(dataconfiguration.itemCreatedMessage);
+                }
+
+                $("#dynamic-modals .modal").modal("hide");
+                $(".modal-backdrop").remove();
+                $("body").removeClass("modal-open");
+                $(".filter-form form").trigger("submit");
+
+                if (isCreateAndContinue) {
+                    $("#dynamic-modals").html("");
+                    $("#dynamic-modals").html(result);
+                    $("#dynamic-modals .modal").modal();
+                    dataconfiguration.initValidation();
                 }
             }
         });
@@ -136,7 +169,11 @@
             },
             {
                 width: "400px",
-                targets: [1, 2]
+                targets: [2, 3]
+            },
+            {
+                visible: false,
+                targets: [1]
             }
         ];
         datatableConfigs.order = [[1, "asc"]];

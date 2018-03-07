@@ -47,7 +47,7 @@
 
         public IEnumerable<CustomFieldListValue> GetEditableListValues(int customFieldId)
         {
-            return context.CustomFieldListValues.Where(x => x.CustomFieldId == customFieldId).OrderBy(x => x.DisplayName_vi);
+            return context.CustomFieldListValues.Where(x => x.CustomFieldId == customFieldId).OrderBy(x => x.Id);
         }
 
         public CustomFieldListValue GetEditableListValue(int customFieldListValueId)
@@ -102,14 +102,26 @@
             return result >= 0;
         }
 
-        public bool IsCustomFieldDisplayNameViUnique(int customFieldId, string displayNameVi)
+        public bool IsCustomFieldDisplayNameViUnique(int customFieldId, string displayNameVi, int customFieldListValueId)
         {
-            return !context.CustomFieldListValues.Any(x => x.CustomFieldId == customFieldId && x.DisplayName_vi == displayNameVi);
+            // customFieldListValueId = 0 => create new
+            return customFieldListValueId == 0
+                ? !context.CustomFieldListValues.Any(x =>
+                    x.CustomFieldId == customFieldId && x.DisplayName_vi == displayNameVi)
+                : !context.CustomFieldListValues.Any(x =>
+                    x.CustomFieldId == customFieldId && x.DisplayName_vi == displayNameVi &&
+                    x.Id != customFieldListValueId);
         }
 
-        public bool IsCustomFieldDisplayNameEnUnique(int customFieldId, string displayNameEn)
+        public bool IsCustomFieldDisplayNameEnUnique(int customFieldId, string displayNameEn, int customFieldListValueId)
         {
-            return !context.CustomFieldListValues.Any(x => x.CustomFieldId == customFieldId && x.DisplayName_vi == displayNameEn);
+            // customFieldListValueId = 0 => create new
+            return customFieldListValueId == 0
+                ? !context.CustomFieldListValues.Any(x =>
+                    x.CustomFieldId == customFieldId && x.DisplayName == displayNameEn)
+                : !context.CustomFieldListValues.Any(x =>
+                    x.CustomFieldId == customFieldId && x.DisplayName == displayNameEn &&
+                    x.Id != customFieldListValueId);
         }
     }
 }

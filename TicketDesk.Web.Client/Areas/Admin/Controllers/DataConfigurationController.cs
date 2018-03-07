@@ -73,6 +73,8 @@
                 ModalTitle = viewModel.ModalTitle
             };
 
+            ModelState.Clear();
+
             return PartialView("_CreateCustomFieldListValue", newViewModel);
         }
 
@@ -119,14 +121,14 @@
         [AcceptVerbs("Get", "Post")]
         public ActionResult IsDisplayNameViUnique(CreateCustomFieldListValueViewModel viewModel)
         {
-            var result = _dataConfigurationService.IsCustomFieldDisplayNameViUnique(viewModel.CustomFieldId, viewModel.DisplayName_vi);
+            var result = _dataConfigurationService.IsCustomFieldDisplayNameViUnique(viewModel.CustomFieldId, viewModel.DisplayName_vi, viewModel.Id);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [AcceptVerbs("Get", "Post")]
-        public ActionResult IsDisplayNameEnUnique(int customFieldId, string displayNameEn)
+        public ActionResult IsDisplayNameEnUnique(CreateCustomFieldListValueViewModel viewModel)
         {
-            var result = _dataConfigurationService.IsCustomFieldDisplayNameEnUnique(customFieldId, displayNameEn);
+            var result = _dataConfigurationService.IsCustomFieldDisplayNameEnUnique(viewModel.CustomFieldId, viewModel.DisplayName, viewModel.Id);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
