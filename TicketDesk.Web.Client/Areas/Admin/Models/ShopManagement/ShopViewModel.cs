@@ -37,7 +37,6 @@
         [Display(Name = "Email Address")]
         [StringLength(254)]
         [MaxLength(254, ErrorMessageResourceName = "StringLengthMaxErrorMessage", ErrorMessageResourceType = typeof(Resources))]
-        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [AllowHtml]
