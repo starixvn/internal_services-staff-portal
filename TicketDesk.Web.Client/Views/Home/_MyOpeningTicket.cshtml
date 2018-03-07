@@ -1,45 +1,52 @@
 ﻿@using TicketDesk.Localization.Client
 @model TicketDesk.Web.Client.Models.Home.MyOpenningIssues
 
-<table class="table table-bordered table-hover" id="home-myopenning-tickets">
-    <thead>
-    <tr>
-        <th class="text-center width-80">#</th>
-        <th>@Resources.Domain_Model_Ticket_Title</th>
-        <th class="text-center width-150">@Resources.Domain_Model_Ticket_CreatedDate</th>
-        <th class="text-center width-150">@Resources.Domain_Model_Ticket_Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var ticketGroup in Model.TicketGroups)
-    {
-        <tr class="header expand" data-title="@ticketGroup.Name">
-            <td colspan="4"><span class="sign expanded"></span> @ticketGroup.Name <span class="number-ticket">(@ticketGroup.TotalItems)</span></td>
-        </tr>
-
-        int index = -1;
-
-        foreach (var ticket in ticketGroup.Tickets)
-        {
-            index++;
-            string evenClass = "";
-            if (index % 2 == 1)
-            {
-                evenClass = "even";
-            }
-
-            <tr class="@evenClass" data-group="@ticketGroup.Name">
-                <td class="text-center">
-                    <a href="@Url.Action("Index","TicketCenter", new {id = ticket.TicketId})" class="id-ticket">@ticket.TicketId</a>
-                </td>
-                <td>@ticket.Title</td>
-                <td class="text-center">@ticket.CreatedDate.ToString("MMM dd, yyyy")</td>
-                <td class="text-center"><span class="inprogress">@ticket.TicketStatus</span></td>
+@if (Model.TicketGroups.Any())
+{
+    <table class="table table-bordered table-hover" id="home-myopenning-tickets">
+        <thead>
+            <tr>
+                <th class="text-center width-80">#</th>
+                <th>@Resources.Domain_Model_Ticket_Title</th>
+                <th class="text-center width-150">@Resources.Domain_Model_Ticket_CreatedDate</th>
+                <th class="text-center width-150">@Resources.Domain_Model_Ticket_Status</th>
             </tr>
-        }
-    }
-    </tbody>
+        </thead>
+        <tbody>
+            @foreach (var ticketGroup in Model.TicketGroups)
+            {
+                <tr class="header expand" data-title="@ticketGroup.Name">
+                    <td colspan="4"><span class="sign expanded"></span> @ticketGroup.Name <span class="number-ticket">(@ticketGroup.TotalItems)</span></td>
+                </tr>
 
-</table>
+                int index = -1;
 
-@Html.Partial("_Pagination", Model)
+                foreach (var ticket in ticketGroup.Tickets)
+                {
+                    index++;
+                    string evenClass = "";
+                    if (index % 2 == 1)
+                    {
+                        evenClass = "even";
+                    }
+
+                    <tr class="@evenClass" data-group="@ticketGroup.Name">
+                        <td class="text-center">
+                            <a href="@Url.Action("Index","TicketCenter", new {id = ticket.TicketId})" class="id-ticket">@ticket.TicketId</a>
+                        </td>
+                        <td>@ticket.Title</td>
+                        <td class="text-center">@ticket.CreatedDate.ToString("MMM dd, yyyy")</td>
+                        <td class="text-center"><span class="inprogress">@ticket.TicketStatus</span></td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+
+    @Html.Partial("_Pagination", Model)
+}
+else
+{
+    <p>@Resources.Views_Home_Index_NoTicket</p>
+}

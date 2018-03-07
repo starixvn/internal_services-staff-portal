@@ -345,6 +345,7 @@
     <Compile Include="Model\TicketCategory.cs" />
     <Compile Include="Model\TicketCategoryCustomField.cs" />
     <Compile Include="Model\TicketEventNotification.cs" />
+    <Compile Include="Model\TicketGroup.cs" />
     <Compile Include="Model\TicketSubscriber.cs" />
     <Compile Include="Model\UploadedUserId.cs" />
     <Compile Include="NapUserSetting.cs" />

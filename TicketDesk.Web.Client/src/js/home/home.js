@@ -1,4 +1,34 @@
-﻿var collapseTable = {
+﻿var myOpenningTicket = {
+    init: function() {
+        $("#my-opening-tickets").on("click",
+            "a.ajax",
+            function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var action = $(this).attr("href");
+                myOpenningTicket.getMyOpenningTickets(action);
+            });
+
+        myOpenningTicket.getMyOpenningTickets();
+    },
+
+    getMyOpenningTickets: function (action) {
+        if (action === undefined) {
+            action = $("#my-opening-tickets").data("action");
+        }
+
+        $.ajax({
+            url: action,
+            method: "get",
+            success: function (result) {
+                $("#my-opening-tickets").html(result);
+                collapseTable.init();
+            }
+        });
+    }
+}
+
+var collapseTable = {
     init: function () {
         collapseTable.assignCollapseHeader();
     },
@@ -22,7 +52,7 @@
 };
 
 var utility = {
-    AddRemoveClassFromElement: function(element, classForElement) {
+    AddRemoveClassFromElement: function (element, classForElement) {
         if ($(element).hasClass(classForElement)) {
             $(element).removeClass(classForElement);
         } else {
@@ -42,18 +72,18 @@ var hiddenText = {
                 var cont = content.substr(0, showChar);
                 var restOfTheText = content.substr(showChar, content.length - showChar);
 
-               var html = cont +
+                var html = cont +
                     '<span class="dots">' +
                     dots +
                     '</span><span class="morecontent hide">' +
                     restOfTheText +
                     "</span>";
-               $(this).html(html);
-            } 
+                $(this).html(html);
+            }
         });
-        
+
         $(".announcement-msg").on("click",
-            function() {
+            function () {
                 var element = $(this).find(".morecontent");
                 var dots = $(this).find(".dots");
                 var sign = $(this).find(".sign");
@@ -68,7 +98,7 @@ var hiddenText = {
             });
     },
 
-    getShowCharForScreenResolution: function() {
+    getShowCharForScreenResolution: function () {
         var showChar = 85;
         var w = $(window).width();
         if (w >= 1920) showChar = 200;
@@ -126,7 +156,7 @@ var readAnnouncement = {
 };
 
 $(document).ready(function () {
-    collapseTable.init();
+    myOpenningTicket.init();
     hiddenText.init();
     readAnnouncement.setReadAnnouncement();
     readAnnouncement.btnUnreadFilterHandler();

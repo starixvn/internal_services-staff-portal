@@ -6,6 +6,7 @@
     using System.Web.Routing;
     using Common;
     using Core.Enumerations;
+    using Domain.Model;
 
     public class MyOpenningIssues : Pagination
     {
@@ -22,19 +23,17 @@
 
         public override string IndexLink(int i, int itemPerPage)
         {
-            var homeViewModel = new HomeViewModel
+
+            var myOpenningIssues = new MyOpenningIssues
             {
-                MyOpenningIssues = new MyOpenningIssues
-                {
-                    CurrentPage = i,
-                    ItemPerPage = itemPerPage
-                }
+                CurrentPage = i,
+                ItemPerPage = itemPerPage
             };
 
             var routeValues = new RouteValueDictionary
             {
-                { $"{nameof(homeViewModel.MyOpenningIssues)}.{nameof(homeViewModel.MyOpenningIssues.CurrentPage)}", homeViewModel.MyOpenningIssues.CurrentPage },
-                { $"{nameof(homeViewModel.MyOpenningIssues)}.{nameof(homeViewModel.MyOpenningIssues.ItemPerPage)}", homeViewModel.MyOpenningIssues.ItemPerPage }
+                { $"{nameof(myOpenningIssues.CurrentPage)}", myOpenningIssues.CurrentPage },
+                { $"{nameof(myOpenningIssues.ItemPerPage)}", myOpenningIssues.ItemPerPage }
             };
 
             return UrlHelper.GenerateUrl(

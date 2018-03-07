@@ -479,7 +479,6 @@
     <Compile Include="Models\Common\Pagination.cs" />
     <Compile Include="Models\Home\MoreAnnouncementViewModel.cs" />
     <Compile Include="Models\Home\MyOpenningIssues.cs" />
-    <Compile Include="Models\Home\TicketGroup.cs" />
     <Compile Include="Models\IdUploaderViewModel.cs" />
     <Compile Include="Models\NavbarViewModel.cs" />
     <Compile Include="Models\ProjectListViewModel.cs" />
@@ -2041,7 +2040,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_UserMenu.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\TicketCenter\Index.cshtml" />
     <Content Include="Views\TicketCenter\_ListMenu.cshtml" />
     <Content Include="Views\TicketCenter\_FilterBar.cshtml" />

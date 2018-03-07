@@ -131,11 +131,13 @@
     <Compile Include="Implement\FileManagerService.cs" />
     <Compile Include="Implement\PaginationService.cs" />
     <Compile Include="Implement\Admin\ShopService.cs" />
+    <Compile Include="Implement\TicketService.cs" />
     <Compile Include="Interface\Admin\IAnnouncementService.cs" />
     <Compile Include="Interface\Admin\IDataConfigurationService.cs" />
     <Compile Include="Interface\IFileManagerService.cs" />
     <Compile Include="Interface\IPaginationService.cs" />
     <Compile Include="Interface\Admin\IShopService.cs" />
+    <Compile Include="Interface\ITicketService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

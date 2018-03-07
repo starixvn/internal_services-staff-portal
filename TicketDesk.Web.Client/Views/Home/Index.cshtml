@@ -11,15 +11,8 @@
 <div class="home-main">
     <div class="feature">
         <div class="panel-heading text-info">@Resources.Views_Home_Index_MyOpenningIssue</div>
-        <div class="panel-body">
-            @if (Model.MyOpenningIssues.TicketGroups.Any())
-            {
-                @Html.Partial("_MyOpeningTicket", Model.MyOpenningIssues)
-            }
-            else
-            {
-                <p>@Resources.Views_Home_Index_NoTicket</p>
-            }
+        <div class="panel-body" id="my-opening-tickets" data-action="@Url.Action("MyOpeningTicket","Home")">
+            @*@Html.Partial("_MyOpeningTicket", Model.MyOpenningIssues)*@
         </div>
     </div>
     <div class="feature">

@@ -2,8 +2,6 @@
 {
     public class HomeViewModel
     {
-        public MyOpenningIssues MyOpenningIssues { get; set; }
-
         public AnnouncementViewModel Annoucements { get; set; }
     }
 }
