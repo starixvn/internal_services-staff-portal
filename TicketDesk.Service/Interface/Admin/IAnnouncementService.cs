@@ -17,5 +17,7 @@
         bool PublishAnnouncements(PublishAnnouncementsCriteria criteria);
 
         bool DeleteAnnouncement(int id);
+
+        int[] GetAllAnnouncementIds();
     }
 }

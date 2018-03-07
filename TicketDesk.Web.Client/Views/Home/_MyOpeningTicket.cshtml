@@ -13,7 +13,7 @@
     <tbody>
     @foreach (var ticketGroup in Model.TicketGroups)
     {
-        <tr class="header" data-title="@ticketGroup.Name">
+        <tr class="header expand" data-title="@ticketGroup.Name">
             <td colspan="4"><span class="sign expanded"></span> @ticketGroup.Name <span class="number-ticket">(@ticketGroup.TotalItems)</span></td>
         </tr>
 

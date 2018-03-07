@@ -14,6 +14,7 @@
 {
     <script src="~/src/libs/datetimepicker/moment.js"></script>
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/src/js/home/home.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -66,11 +67,19 @@
                 </div>
 
                 <div class="form-group">
+                    @Html.LabelFor(x => x.Type)
+                    <div class='input-group date'>
+                        @Html.EnumDropDownListFor(x => x.Type, "All", new { @class = "form-control" })
+                        <span class="icon-calendar"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <input type="submit" value="@Resources.Views_Announcement_Submit" class="btn btn-primary" />
                 </div>
             }
 
-            <table class="table table-bordered tbl-announcement-detail">
+            <table class="table table-bordered tbl-announcement-detail tbl-announcement">
                 <thead>
                     <tr>
                         <th class="text-center id">#</th>
@@ -85,6 +94,8 @@
                         bool isEven = index % 2 == 1;
 
                         string announcementClass = "";
+                        int unreadId = !Model.Announcements[index].IsRead ? Model.Announcements[index].Id : 0;
+
                         if (isImportant)
                         {
                             announcementClass += " msg-important";
@@ -94,7 +105,12 @@
                             announcementClass += " even";
                         }
 
-                        <tr class="@announcementClass">
+                        if (!Model.Announcements[index].IsRead)
+                        {
+                            announcementClass += " unread";
+                        }
+
+                        <tr class="@announcementClass" data-id="@unreadId">
                             <td class="text-center">@(index + 1)</td>
                             <td>
                                 <span>@Model.Announcements[index].PublishedDateTime.Value.ToString("g") @Model.Announcements[index].Id</span><br>

@@ -16,7 +16,6 @@
     using Models;
     using Models.Home;
     using Service.Implement;
-    using Service.Interface;
     using Service.Interface.Admin;
 
     ////[RoutePrefix("")]
@@ -99,7 +98,6 @@
             var announcements = paginationService.Pagination(availableAnnouncements, x => x.PublishedDateTime, 0, 10)
                 .GroupBy(x => x.PublishedDateTime?.Date)
                 .OrderByDescending(x => x.Key);
-            var unreadAnnouncementQuantity = 0;
             foreach (var group in announcements)
             {
                 if (group.Key == null)
@@ -110,10 +108,6 @@
                 foreach (var announcement in group)
                 {
                     SetIsReadAnnouncement(announcement);
-                    if (!announcement.IsRead)
-                    {
-                        unreadAnnouncementQuantity++;
-                    }
                 }
 
                 var announcementGroup = new AnnouncementGroup
@@ -126,11 +120,30 @@
             }
             var anouncementViewModel = new AnnouncementViewModel
             {
-                UnreadAnnouncementQuatity = unreadAnnouncementQuantity,
+                UnreadAnnouncementQuatity = GetUnreadAnnouncementQuantity(),
                 AnnouncementGroups = result
             };
 
             return anouncementViewModel;
+        }
+
+        private int GetUnreadAnnouncementQuantity()
+        {
+            var allAnnouncementIds = _announcementService.GetAllAnnouncementIds();
+
+            int total = allAnnouncementIds.Length;
+            foreach (int id in allAnnouncementIds)
+            {
+                if (NapUserSetting.SettingObject.ReadAnnouncements != null)
+                {
+                    var readAnnouncements = NapUserSetting.SettingObject.ReadAnnouncements.Split(',');
+                    if (Array.Exists(readAnnouncements, e => e == id.ToString()))
+                    {
+                        total--;
+                    }
+                }
+            }
+            return total;
         }
 
         private void SetIsReadAnnouncement(Announcement announcement)
@@ -236,6 +249,11 @@
             var paginationService = new PaginationService<Announcement, int>();
             moreannouncementViewModel.Announcements = paginationService.Pagination(announcements, x => x.Id,
                 moreannouncementViewModel.Skipped, moreannouncementViewModel.ItemPerPage).ToList();
+
+            foreach (Announcement annoucement in moreannouncementViewModel.Announcements)
+            {
+                SetIsReadAnnouncement(annoucement);
+            }
 
             return View(moreannouncementViewModel);
         }

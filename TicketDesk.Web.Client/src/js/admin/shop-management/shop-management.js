@@ -53,11 +53,11 @@
         });
     }
 
-    function getListShop() {
+    function getListShop($form) {
         var data = $(domElement.FilterForm).serialize();
         $.ajax({
             method: "post",
-            url: "/Admin/Shops/GetListShop",
+            url: $($form).attr("action"),
             data: data,
             success: function (data) {
                 $(domElement.TableArea).html(data);
@@ -70,17 +70,6 @@
     function initDataTable() {
         var shopDataTable = commonDataTableInit.Init();
         shopDataTable.order = [[2, "asc"]];
-        //commonDataTable.columnDefs =
-        //    [
-        //        { width: "70px", sortable: false },
-        //        { width: "200px", sortable: true },
-        //        { width: "100px", sortable: true },
-        //        { width: "170px", sortable: true },
-        //        { width: "140px", sortable: true },
-        //        { width: "auto", sortable: true },
-        //        { width: "70px", sortable: true },
-        //        { width: "70px", sortable: false }
-        //    ];
         shopDataTable.columnDefs =
             [
                 {
@@ -193,13 +182,13 @@
     }
 
     function initModule() {
-        getListShop();
+        getListShop("#filterForm");
         eventClickCreateButtonHandler();
         eventClickEditIconHandler();
         searchShopSuggest();
 
         $(domElement.FilterForm).on("submit", function (e) {
-            getListShop();
+            getListShop($(this));
             e.preventDefault();
         })
     }

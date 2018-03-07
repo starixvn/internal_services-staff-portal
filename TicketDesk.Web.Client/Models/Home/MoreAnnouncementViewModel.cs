@@ -25,6 +25,8 @@
         [Display(Name = "Published To")]
         public DateTime? PublishedTo { get; set; }
 
+        public AnnouncementType? Type { get; set; }
+
         public IList<Announcement> Announcements { get; set; }
 
         public override string IndexLink(int i, int itemPerPage)
@@ -61,7 +63,8 @@
             {
                 PublishedFrom = PublishedFrom,
                 PublishedTo = PublishedTo,
-                State = AnnouncementState.Published
+                State = AnnouncementState.Published,
+                Type = Type
             };
         }
     }

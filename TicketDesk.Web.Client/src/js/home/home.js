@@ -14,60 +14,67 @@
     toggleCollapseExpand: function ($this) {
         var groupTicket = $this.attr("data-title");
         var childRows = $('[data-group="' + groupTicket + '"]');
-        $this.find(".sign").toggleClass("expanded");
         childRows.find("td").slideToggle("fast");
+        var $sign = $($this).find(".sign");
+        utility.AddRemoveClassFromElement($this, "expand");
+        utility.AddRemoveClassFromElement($sign, "expanded");
     }
 };
 
+var utility = {
+    AddRemoveClassFromElement: function(element, classForElement) {
+        if ($(element).hasClass(classForElement)) {
+            $(element).removeClass(classForElement);
+        } else {
+            $(element).addClass(classForElement);
+        }
+    }
+}
+
 var hiddenText = {
     init: function () {
-        // 250 characters are shown by default
-        var showChar = 50;
-        var dots = ".... ";
+        var showChar = hiddenText.getShowCharForScreenResolution();
+        var dots = " ...";
 
         $(".show-text").each(function () {
             var content = $(this).html();
-            var html = "";
             if (content.length > showChar) {
                 var cont = content.substr(0, showChar);
                 var restOfTheText = content.substr(showChar, content.length - showChar);
 
-                html = cont +
+               var html = cont +
                     '<span class="dots">' +
                     dots +
                     '</span><span class="morecontent hide">' +
                     restOfTheText +
                     "</span>";
-
-            } else {
-                html = content +
-                    '<span class="dots">' +
-                    dots +
-                    '</span>';
-            }
-            $(this).html(html);
+               $(this).html(html);
+            } 
         });
-
-        function AddRemoveClassFromElement(element, classForElement) {
-            if ($(element).hasClass(classForElement)) {
-                $(element).removeClass(classForElement);
-            } else {
-                $(element).addClass(classForElement);
-            }
-        };
-
+        
         $(".announcement-msg").on("click",
-            function () {
+            function() {
                 var element = $(this).find(".morecontent");
                 var dots = $(this).find(".dots");
                 var sign = $(this).find(".sign");
-
-                AddRemoveClassFromElement(dots, "hide");
-
-                AddRemoveClassFromElement(element, "hide");
-
-                AddRemoveClassFromElement(sign, "expanded");
+                utility.AddRemoveClassFromElement(sign, "expanded");
+                if ($(element).hasClass("hide")) {
+                    $(element).removeClass("hide");
+                    $(dots).addClass("hide");
+                } else {
+                    $(element).addClass("hide");
+                    $(dots).removeClass("hide");
+                }
             });
+    },
+
+    getShowCharForScreenResolution: function() {
+        var showChar = 85;
+        var w = $(window).width();
+        if (w >= 1920) showChar = 200;
+        if (1280 <= w && w < 1366) showChar = 120;
+        if (1366 <= w && w < 1920) showChar = 130;
+        return showChar;
     }
 }
 
@@ -107,8 +114,10 @@ var readAnnouncement = {
                     if (response) {
                         currentAnnouncement.removeClass("unread");
                         currentAnnouncement.attr("data-id", 0);
-                        var unreadAnnouncement = parseInt($(".unread-announcements").text());
-                        $(".unread-announcements").text(unreadAnnouncement - 1);
+                        if ($(".unread-announcements").length) {
+                            var unreadAnnouncement = parseInt($(".unread-announcements").text());
+                            $(".unread-announcements").text(unreadAnnouncement - 1);
+                        }
                     }
                 });
             }

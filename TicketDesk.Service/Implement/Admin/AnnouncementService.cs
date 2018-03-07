@@ -7,7 +7,6 @@
     using Criteria.Announcement;
     using DelegateDecompiler;
     using Domain.Model;
-    using Interface;
     using Interface.Admin;
 
     public class AnnouncementService : EntityFrameworkBaseService, IAnnouncementService
@@ -115,6 +114,11 @@
             context.Announcements.Remove(announcement);
             var result = context.SaveChanges();
             return result > 0;
+        }
+
+        public int[] GetAllAnnouncementIds()
+        {
+            return context.Announcements.Where(a => a.PublishedDateTime < DateTime.Now).Select(a => a.Id).ToArray();
         }
     }
 }
