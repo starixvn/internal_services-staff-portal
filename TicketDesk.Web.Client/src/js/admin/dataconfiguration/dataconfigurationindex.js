@@ -68,6 +68,7 @@
                     success: function (result) {
                         $("#data-list").html(result);
                         dataconfiguration.initDatatable();
+                        sidebar.initSelect2();
                     }
                 });
             });
