@@ -332,8 +332,9 @@ var announcement = {
 
 var listAnnouncement = {
     initDataTable: function ($table) {
-        var commonDataTable = commonDataTableInit.Init();
-        commonDataTable.columns =
+        var announcementDataTable = commonDataTableInit.Init();
+        announcementDataTable.order = [[2, "desc"]];
+        announcementDataTable.columns =
              [
                 { width: "55px", sortable: false },
                 { width: "55px", sortable: true },
@@ -345,7 +346,7 @@ var listAnnouncement = {
                 { width: "70px", sortable: false },
                 { width: "50px", sortable: false }
              ];
-        $table.DataTable(commonDataTable);
+        $table.DataTable(announcementDataTable);
         commonDataTableInit.InitFixedHeaderDataTable();
     },
 
