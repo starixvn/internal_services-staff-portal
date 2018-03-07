@@ -355,9 +355,10 @@ var listAnnouncement = {
         });
     },
 
-    getListAnnouncement: function () {
+    getListAnnouncement: function (form) {
+        var url = $(form).attr("action");
         $.ajax({
-            url: "/Admin/Announcement/AnnouncementList",
+            url: url,
             method: "get",
             data: $("form.filter-row").serialize(),
             success: function (response) {
@@ -375,9 +376,10 @@ $(document).ready(function () {
     modalhandler.init();
     publishAnnouncement.init();
     announcement.init();
-    listAnnouncement.getListAnnouncement();
-    $("form.filter-row").submit(function (e) {
-        listAnnouncement.getListAnnouncement();
+    listAnnouncement.getListAnnouncement("form.filter-row");
+    
+    $("form.filter-row").on("submit", function (e) {
         e.preventDefault();
-    });
+        listAnnouncement.getListAnnouncement($(this));
+    })
 });

@@ -53,7 +53,7 @@
 
 <!--Filter-->
 <section class="filter-form">
-    @using (Html.BeginForm("Index", "Announcement", FormMethod.Get, new { @class = "filter-row" }))
+    @using (Html.BeginForm("AnnouncementList", "Announcement", FormMethod.Get, new { @class = "filter-row" }))
     {
         <div class="date-time">
             @Html.LabelFor(x => x.PublishedFrom)

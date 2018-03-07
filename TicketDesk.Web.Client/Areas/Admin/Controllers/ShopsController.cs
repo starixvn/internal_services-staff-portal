@@ -10,7 +10,6 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Models.ShopManagement;
-    using Service.Interface;
     using Service.Interface.Admin;
 
     [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Read)]
@@ -43,7 +42,7 @@
             };
 
             var shops = _shopService.GetListShop(criteria);
-            var shopList = shops.OrderByDescending(s => s.LastUpdatedDate).ToList();
+            var shopList = shops.OrderBy(s => s.ShopCode).ToList();
 
             return PartialView("_ListShop", shopList);
         }

@@ -68,19 +68,44 @@
     }
 
     function initDataTable() {
-        var commonDataTable = commonDataTableInit.Init();
-        commonDataTable.columns =
+        var shopDataTable = commonDataTableInit.Init();
+        shopDataTable.order = [[2, "asc"]];
+        //commonDataTable.columnDefs =
+        //    [
+        //        { width: "70px", sortable: false },
+        //        { width: "200px", sortable: true },
+        //        { width: "100px", sortable: true },
+        //        { width: "170px", sortable: true },
+        //        { width: "140px", sortable: true },
+        //        { width: "auto", sortable: true },
+        //        { width: "70px", sortable: true },
+        //        { width: "70px", sortable: false }
+        //    ];
+        shopDataTable.columnDefs =
             [
-                { width: "70px", sortable: false },
-                { width: "200px", sortable: true },
-                { width: "100px", sortable: true },
-                { width: "170px", sortable: true },
-                { width: "140px", sortable: true },
-                { width: "auto", sortable: true },
-                { width: "70px", sortable: true },
-                { width: "70px", sortable: false }
+                {
+                    orderable: false,
+                    searchable: false,
+                    targets: [0, -1]
+                },
+            {
+                width: "70px",
+                targets: [0, -1, -2]
+            },
+            {
+                width: "200px",
+                targets: [1, 3]
+            },
+            {
+                width: "100px",
+                targets: [2]
+            },
+            {
+                width: "140px",
+                targets: [4]
+            }
             ];
-        $("table").DataTable(commonDataTable);
+        $("table").DataTable(shopDataTable);
 
         commonDataTableInit.InitFixedHeaderDataTable();
     }
