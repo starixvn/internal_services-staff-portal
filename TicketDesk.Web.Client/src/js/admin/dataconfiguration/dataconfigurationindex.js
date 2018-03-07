@@ -3,7 +3,7 @@
         dataconfiguration.transformForm();
     },
 
-    itemCreatedMessage: function() {
+    itemCreatedMessage: function () {
         return $("#item-created-message").text();
     },
 
@@ -21,7 +21,7 @@
 
         $("#dynamic-modals").on("click",
             ".submit-and-continue",
-            function(e) {
+            function (e) {
                 e.preventDefault();
                 $("#dynamic-modals form").validate();
                 var isFormValid = $("#dynamic-modals form").valid();
@@ -30,7 +30,7 @@
                         url: $(this).data("action"),
                         method: $("#dynamic-modals form").attr("method"),
                         data: $("#dynamic-modals form").serialize(),
-                        success: function(result) {
+                        success: function (result) {
                             toastr.success(dataconfiguration.itemCreatedMessage());
                             $("#dynamic-modals .modal").modal("hide");
                             $("body").removeClass("modal-open");
@@ -71,10 +71,10 @@
                     url: $(this).attr("action"),
                     method: $(this).attr("method"),
                     data:
-                    {
-                        selectedFieldId: selectedFieldId,
-                        modalTitle: modalTitle
-                    },
+                        {
+                            selectedFieldId: selectedFieldId,
+                            modalTitle: modalTitle
+                        },
                     success: function (result) {
                         $("#data-list").html(result);
                         dataconfiguration.initDatatable();
@@ -84,11 +84,11 @@
 
         $(".table").on("click",
             ".edit",
-            function() {
+            function () {
                 var href = $(this).data("href");
                 $.ajax({
                     url: href,
-                    success: function(result) {
+                    success: function (result) {
                         $("#dynamic-modals").html(result);
                         $("#dynamic-modals .modal").modal();
                         dataconfiguration.initValidation();
@@ -132,7 +132,11 @@
             },
             {
                 width: "70px",
-                targets: [0,-1,-2]
+                targets: [0, -1, -2]
+            },
+            {
+                width: "400px",
+                targets: [1, 2]
             }
         ];
         datatableConfigs.order = [[1, "asc"]];
