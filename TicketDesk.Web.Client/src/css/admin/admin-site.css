@@ -574,13 +574,14 @@ table.dataTable {
 .dataTables_filter {
   position: relative; }
   .dataTables_filter input[type=search] {
-    font-family: inherit;
-    border-radius: 2px;
-    font-size: 13px;
     height: 28px;
     line-height: 28px;
     padding: 0 5px;
-    border: 1px solid #b7b7b7; }
+    border: 1px solid #b7b7b7;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 13px;
+    border-radius: 2px; }
   .dataTables_filter:after {
     font-family: 'icomoon' !important;
     content: "\e920";
