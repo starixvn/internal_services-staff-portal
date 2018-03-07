@@ -1232,6 +1232,9 @@ table.dataTable {
 .small-modal {
   width: 430px; }
 
+.data-modal {
+  width: 500px; }
+
 .modal-content {
   border-radius: 0;
   border: 0;

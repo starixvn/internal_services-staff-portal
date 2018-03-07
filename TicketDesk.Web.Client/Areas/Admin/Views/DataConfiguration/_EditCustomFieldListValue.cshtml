@@ -3,7 +3,7 @@
 @model TicketDesk.Domain.Model.CustomFieldListValue
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
-    <div class="modal-dialog small-modal" role="document">
+    <div class="modal-dialog data-modal" role="document">
         @using (Html.BeginForm("EditCustomFieldListvalue", "DataConfiguration", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
