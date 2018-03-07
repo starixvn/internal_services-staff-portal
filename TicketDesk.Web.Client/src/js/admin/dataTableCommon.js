@@ -10,7 +10,7 @@
                 headerOffset: 50
             },
             lengthMenu: [20, 50, 100],
-            info: true,
+            info: false,
             language: {
                 lengthMenu: "Page size _MENU_",
                 search: "_INPUT_",
