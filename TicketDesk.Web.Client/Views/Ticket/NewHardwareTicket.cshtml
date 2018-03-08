@@ -21,7 +21,7 @@
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
     <script>
         $(document).ready(function () {
-            InitFormHandler("ticket-form", true);
+            InitFormHandler("ticket-form", false);
             $('.datetimepicker').datetimepicker({
                 format: 'DD/MM/YYYY hh:mm',
                 defaultDate: new Date(),
@@ -31,6 +31,8 @@
         });
     </script>
 }
+
+@Html.Partial("_NotificationModal");
 
 @using (Html.BeginForm("NewHardwareTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form filechange", enctype = "multipart/form-data" }))
 {
@@ -77,7 +79,6 @@
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.Ticket.Title)
                 @Html.ValidationMessageFor(x => x.Ticket.Title)
-
             </div>
         </div>
 

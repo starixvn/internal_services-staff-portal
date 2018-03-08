@@ -2160,7 +2160,6 @@
     <Content Include="Views\Shared\_Pagination.cshtml" />
     <Content Include="Areas\Admin\Views\Languages\Index.cshtml" />
     <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
-    <Content Include="Views\Ticket\NewNetworkTicket.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Home\MoreAnnouncement.cshtml" />
     <Content Include="Views\Ticket\NewSoftwareTicket.cshtml" />
@@ -2186,6 +2185,7 @@
     <Content Include="src\libs\toastr\toastr.less" />
     <Content Include="src\libs\toastr\toastr.scss" />
     <Content Include="Views\Ticket\NewCustomerSupportTicket.cshtml" />
+    <Content Include="Views\Ticket\_NotificationModal.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

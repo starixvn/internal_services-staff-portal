@@ -32,6 +32,8 @@
     </script>
 }
 
+@Html.Partial("_NotificationModal");
+
 @using (Html.BeginForm("NewSoftwareTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form filechange", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()

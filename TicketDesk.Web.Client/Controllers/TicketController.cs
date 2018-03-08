@@ -254,9 +254,7 @@
 
                 await Context.SaveChangesAsync().ConfigureAwait(false);
 
-                return Context.SecurityProvider.IsReadTicketCenter
-                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
-                    : RedirectToAction("Index", "Home");
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
             await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
@@ -312,9 +310,7 @@
                 // Save changes to ticket's custom field
                 await Context.SaveChangesAsync().ConfigureAwait(false);
 
-                return Context.SecurityProvider.IsReadTicketCenter
-                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
-                    : RedirectToAction("Index", "Home");
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
             await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
@@ -372,59 +368,7 @@
                 // Save changes to ticket's custom field
                 await Context.SaveChangesAsync().ConfigureAwait(false);
 
-                return Context.SecurityProvider.IsReadTicketCenter
-                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
-                    : RedirectToAction("Index", "Home");
-            }
-
-            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
-
-            return View(viewModel);
-        }
-
-        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        [Route("new-network")]
-        public ActionResult NewNetworkTicket()
-        {
-            var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Network);
-
-            var viewModel = new NewNetworkTicketViewModel
-            {
-                TempId = Guid.NewGuid(),
-                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
-            };
-
-            return View("NewNetworkTicket", viewModel);
-        }
-
-        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [ValidateOnlyIncomingValues]
-        [Route("new-network")]
-        public async Task<ActionResult> NewNetworkTicket(NewNetworkTicketViewModel viewModel)
-        {
-            if (viewModel.Ticket.IsHtml)
-            {
-                viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
-                if (string.IsNullOrEmpty(viewModel.Ticket.Details))
-                {
-                    ModelState.AddModelError("Details", Strings.RequiredField);
-                }
-            }
-
-            viewModel.Ticket.Shop = Context.Shops.Find(1);
-            viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Network;
-
-            if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
-            {
-                AddCustomFieldValue(null, viewModel.Description.CustomFieldId, viewModel.Description.Value, viewModel.Ticket.TicketId);
-
-                await Context.SaveChangesAsync().ConfigureAwait(false);
-
-                return Context.SecurityProvider.IsReadTicketCenter
-                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
-                    : RedirectToAction("Index", "Home");
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
             await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
@@ -479,9 +423,7 @@
 
                 await Context.SaveChangesAsync().ConfigureAwait(false);
 
-                return Context.SecurityProvider.IsReadTicketCenter
-                    ? RedirectToAction("Index", "TicketCenter", new { id = viewModel.Ticket.TicketId })
-                    : RedirectToAction("Index", "Home");
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
             await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);

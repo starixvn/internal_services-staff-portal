@@ -24,7 +24,7 @@
 
     <script>
         $(document).ready(function () {
-            InitFormHandler("ticket-form", true);
+            InitFormHandler("ticket-form", false);
             $('.datetimepicker').datetimepicker({
                 format: 'DD/MM/YYYY hh:mm',
                 defaultDate: new Date(),
@@ -34,6 +34,8 @@
         });
     </script>
 }
+
+@Html.Partial("_NotificationModal");
 
 @using (Html.BeginForm("NewIncidentTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form filechange", enctype = "multipart/form-data" }))
 {
