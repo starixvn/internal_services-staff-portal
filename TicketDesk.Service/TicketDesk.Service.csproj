@@ -126,19 +126,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityFrameworkBaseService.cs" />
-    <Compile Include="Implement\Admin\AnnouncementService.cs" />
-    <Compile Include="Implement\Admin\DataConfigurationService.cs" />
-    <Compile Include="Implement\Admin\ReferenceService.cs" />
+    <Compile Include="Implement\AnnouncementService.cs" />
+    <Compile Include="Implement\DataConfigurationService.cs" />
+    <Compile Include="Implement\ReferenceService.cs" />
     <Compile Include="Implement\FileManagerService.cs" />
     <Compile Include="Implement\PaginationService.cs" />
-    <Compile Include="Implement\Admin\ShopService.cs" />
+    <Compile Include="Implement\ShopService.cs" />
     <Compile Include="Implement\TicketService.cs" />
-    <Compile Include="Interface\Admin\IAnnouncementService.cs" />
-    <Compile Include="Interface\Admin\IDataConfigurationService.cs" />
-    <Compile Include="Interface\Admin\IReferenceService.cs" />
+    <Compile Include="Interface\IAnnouncementService.cs" />
+    <Compile Include="Interface\IDataConfigurationService.cs" />
+    <Compile Include="Interface\IReferenceService.cs" />
     <Compile Include="Interface\IFileManagerService.cs" />
     <Compile Include="Interface\IPaginationService.cs" />
-    <Compile Include="Interface\Admin\IShopService.cs" />
+    <Compile Include="Interface\IShopService.cs" />
     <Compile Include="Interface\ITicketService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Service.Implement.Admin
+﻿namespace TicketDesk.Service.Implement
 {
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
@@ -6,7 +6,7 @@
     using System.Text;
     using Core.Enumerations;
     using Domain.Model;
-    using Interface.Admin;
+    using Interface;
     using Microsoft.Practices.ObjectBuilder2;
 
     public class DataConfigurationService : EntityFrameworkBaseService, IDataConfigurationService

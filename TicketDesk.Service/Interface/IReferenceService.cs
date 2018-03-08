@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Service.Interface.Admin
+﻿namespace TicketDesk.Service.Interface
 {
     using System.Collections.Generic;
     using Core.Enumerations;

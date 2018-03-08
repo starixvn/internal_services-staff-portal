@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.Service.Interface.Admin
+﻿namespace TicketDesk.Service.Interface
 {
     using System.Linq;
     using Criteria.Shop;

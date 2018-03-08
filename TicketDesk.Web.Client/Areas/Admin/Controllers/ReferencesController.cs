@@ -18,7 +18,7 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Models.References;
-    using Service.Interface.Admin;
+    using Service.Interface;
 
     public class ReferencesController : BaseController
     {

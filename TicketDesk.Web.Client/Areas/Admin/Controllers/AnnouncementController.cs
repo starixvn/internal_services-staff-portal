@@ -14,7 +14,6 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Models.Announcements;
     using Service.Interface;
-    using Service.Interface.Admin;
 
     [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
     public class AnnouncementController : BaseController
