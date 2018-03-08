@@ -44,24 +44,22 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.ListAssignedTicket, Policy = Constant.Policy.Read)]
-        public ActionResult Index(HomeViewModel viewModel)
+        public ActionResult Index()
         {
-            var homeViewModel = viewModel;
+            ////if (homeViewModel?.Annoucements == null)
+            ////{
+            ////    homeViewModel = new HomeViewModel
+            ////    {
+            ////        Annoucements = new AnnouncementViewModel()
+            ////    };
+            ////}
 
-            if (homeViewModel?.Annoucements == null)
-            {
-                homeViewModel = new HomeViewModel
-                {
-                    Annoucements = new AnnouncementViewModel()
-                };
-            }
-
-            homeViewModel.Annoucements = PopulateHomeAnnouncements();
+            var homeViewModel = PopulateHomeAnnouncements();
 
             return View(homeViewModel);
         }
 
-        private AnnouncementViewModel PopulateHomeAnnouncements()
+        private HomeViewModel PopulateHomeAnnouncements()
         {
             var result = new List<AnnouncementGroup>();
 
@@ -97,13 +95,18 @@
 
                 result.Add(announcementGroup);
             }
-            var anouncementViewModel = new AnnouncementViewModel
-            {
-                UnreadAnnouncementQuatity = GetUnreadAnnouncementQuantity(),
-                AnnouncementGroups = result
-            };
 
-            return anouncementViewModel;
+            var homeViewModel = new HomeViewModel();
+            homeViewModel.UnreadAnnouncementQuatity = GetUnreadAnnouncementQuantity();
+            homeViewModel.AnnouncementGroups = result;
+
+            ////var anouncementViewModel = new AnnouncementViewModel
+            ////{
+            ////    UnreadAnnouncementQuatity = GetUnreadAnnouncementQuantity(),
+            ////    AnnouncementGroups = result
+            ////};
+
+            return homeViewModel;
         }
 
         private int GetUnreadAnnouncementQuantity()

@@ -1,7 +1,6 @@
-﻿namespace TicketDesk.Web.Client.Models.Home
+﻿namespace TicketDesk.Domain.Model
 {
     using System.Collections.Generic;
-    using Domain.Model;
 
     public class AnnouncementGroup
     {
@@ -11,7 +10,7 @@
         }
 
         public string Name { get; set; }
-        
+
         public IEnumerable<Announcement> Announcements { get; set; }
     }
 }

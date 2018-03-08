@@ -1,4 +1,5 @@
-﻿@using TicketDesk.Localization.Client
+﻿@using TicketDesk.Core.Enumerations
+@using TicketDesk.Localization.Client
 @model TicketDesk.Web.Client.Models.Home.HomeViewModel
 
 @section title{ @Resources.Common_App_Title }
@@ -17,10 +18,43 @@
     <div class="feature">
         <div class="panel-heading text-info">
             <span>@Resources.Views_Home_Index_Announcements</span>
-            <button class="btn btn-unread" type="button">Unread<span class="text-red"> (<span class="unread-announcements">@Model.Annoucements.UnreadAnnouncementQuatity</span>)</span></button>
+            <button class="btn btn-unread" type="button">Unread<span class="text-red"> (<span class="unread-announcements">@Model.UnreadAnnouncementQuatity</span>)</span></button>
         </div>
         <div class="panel-body">
-            @Html.Partial("_Announcement", Model.Annoucements.AnnouncementGroups)
+            <table class="table table-bordered tbl-announcement">
+                <tbody>
+                    @foreach (var group in Model.AnnouncementGroups)
+                    {
+                        foreach (var announcement in group.Announcements)
+                        {
+
+                            bool isImportant = announcement.Type == AnnouncementType.Important;
+
+                            string announcementClass = "announcement-msg";
+                            int unreadId = !announcement.IsRead ? announcement.Id : 0;
+                            if (isImportant)
+                            {
+                                announcementClass += " msg-important";
+                            }
+
+                            if (!announcement.IsRead)
+                            {
+                                announcementClass += " unread";
+                            }
+
+                            if (announcement.PublishedDateTime != null)
+                            {
+                                <tr class="@announcementClass" data-id="@unreadId">
+                                    <td class="date"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToShortDateString()</td>
+                                    <td class="time">@announcement.PublishedDateTime.Value.ToShortTimeString()</td>
+                                    <td class="show-text">@announcement.Message</td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+            <a class="btn btn-default btn-more" href="@Url.Action("MoreAnnouncement","Home")">@Resources.Views_Home_Announcement_More</a>
         </div>
     </div>
 </div>
