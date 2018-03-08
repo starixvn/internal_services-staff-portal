@@ -204,7 +204,7 @@
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [Route("new-incident")]
-        public ActionResult NewIncidentTicket()
+        public async Task<ActionResult> NewIncidentTicket()
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Incident);
 
@@ -212,7 +212,7 @@
             {
                 TempId = Guid.NewGuid(),
                 ReportBy = { CustomField = availableCustomField.First(x => x.Name == "Report By") },
-                TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
+                TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Incident Date/Time") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };
 
@@ -222,6 +222,8 @@
                 viewModel.TimeOfIncident.Value = nowDate;
             }
             viewModel.Ticket.ShopList = GetShopSelectList();
+
+            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
             return View("NewIncidentTicket", viewModel);
         }
@@ -257,13 +259,12 @@
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
-            return View("NewIncidentTicket", viewModel);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         [Route("new-hardware")]
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        public ActionResult NewHardwareTicket()
+        public async Task<ActionResult> NewHardwareTicket()
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Hardware);
             var viewModel = new NewHardwareTicketViewModel
@@ -273,9 +274,11 @@
                      ShopList = GetShopSelectList()
                 },
                 System = { CustomField = availableCustomField.First(x => x.Name == "Device") },
-                TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
+                TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Incident Date/Time") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };
+
+            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
             return View("NewHardwareTicket", viewModel);
         }
@@ -313,14 +316,12 @@
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
-
-            return View(viewModel);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [Route("new-software")]
-        public ActionResult NewSoftwareTicket()
+        public async Task<ActionResult> NewSoftwareTicket()
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Software);
             var viewModel = new NewSoftwareTicketViewModel
@@ -331,9 +332,11 @@
                     ShopList = GetShopSelectList()
                 },
                 System = { CustomField = availableCustomField.First(x => x.Name == "System") },
-                TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
+                TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Incident Date/Time") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };
+
+            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
             return View("NewSoftwareTicket", viewModel);
         }
@@ -371,13 +374,11 @@
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
-
-            return View(viewModel);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         [Route("new-customersupport")]
-        public ActionResult NewCustomerSupportTicket()
+        public async Task<ActionResult> NewCustomerSupportTicket()
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.CustomerSupport);
 
@@ -388,10 +389,12 @@
                     Owner = Context.SecurityProvider.CurrentUserId,
                     ShopList = GetShopSelectList()
                 },
-                TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Time of incident") },
+                TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Incident Date/Time") },
                 NationalIdCardNo = { CustomField = availableCustomField.First(x => x.Name == "National Id Card No") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };
+
+            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
             return View("NewCustomerSupportTicket", viewModel);
         }
@@ -426,9 +429,7 @@
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
-
-            return View(viewModel);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         [Route("ticket-details")]
