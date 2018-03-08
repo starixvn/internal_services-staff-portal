@@ -398,20 +398,14 @@
     <Compile Include="Areas\Admin\Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\NapUserSettingController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
-    <Compile Include="Controllers\ProjectSettingsController.cs" />
     <Compile Include="Controllers\PushNotificationSettingsController.cs" />
     <Compile Include="Controllers\FirstRunSetupController.cs" />
     <Compile Include="Controllers\ReferencesController.cs" />
-    <Compile Include="Controllers\SearchManagerController.cs" />
-    <Compile Include="Controllers\DataManagementController.cs" />
-    <Compile Include="Controllers\AutoCompleteController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TicketActivityController.cs" />
     <Compile Include="Controllers\TicketCenterController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
-    <Compile Include="Controllers\UserAdministrationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1996,8 +1990,6 @@
     <Content Include="src\libs\toastr\toastr.min.css" />
     <Content Include="src\libs\toastr\toastr.min.js" />
     <Content Include="src\libs\Touch\touche.js" />
-    <Content Include="Views\SearchManager\Index.cshtml" />
-    <Content Include="Views\DataManagement\Demo.cshtml" />
     <Compile Include="App_Start\Startup.Database.cs" />
     <Content Include="Properties\webjobs-list.json" />
     <Content Include="Scripts\jquery.clickable-0.1.9.min.js.map">
@@ -2043,7 +2035,6 @@
     <Content Include="Scripts\ticketdesk\ticketcenter.min.js.map">
       <DependentUpon>ticketcenter.min.js</DependentUpon>
     </Content>
-    <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Shared\_QuickSearch.cshtml" />
     <Content Include="Views\Ticket\Index.cshtml" />
     <Content Include="Views\TicketActivity\_AddComment.cshtml" />
@@ -2067,7 +2058,6 @@
     <Content Include="Views\Ticket\_TicketDetails.cshtml" />
     <Content Include="Views\TicketActivity\_ActivityForm.cshtml" />
     <Content Include="Views\TicketActivity\_ChangeAssignment.cshtml" />
-    <Content Include="Views\DataManagement\Index.cshtml" />
     <Content Include="Views\FirstRunSetup\Index.cshtml" />
     <Content Include="Views\FirstRunSetup\_DatabaseInfo.cshtml" />
     <Content Include="Views\FirstRunSetup\_NewDatabase.cshtml" />
@@ -2085,12 +2075,6 @@
     <Content Include="Views\Emails\Ticket.Text.cshtml" />
     <Content Include="Views\Ticket\_TicketFiles.cshtml" />
     <Content Include="Views\User\SignIn.cshtml" />
-    <Content Include="Views\UserAdministration\Index.cshtml" />
-    <Content Include="Views\UserAdministration\Edit.cshtml" />
-    <Content Include="Views\UserAdministration\_UserList.cshtml" />
-    <Content Include="Views\ProjectSettings\Index.cshtml" />
-    <Content Include="Views\ProjectSettings\Edit.cshtml" />
-    <Content Include="Views\ProjectSettings\New.cshtml" />
     <Content Include="Views\Shared\_ProjectMenu.cshtml" />
     <Content Include="Views\FirstRunSetup\CheckUpgradeProgress.cshtml" />
     <Content Include="Scripts\jQueryValidate-locales\jquery.validate_locale_pt-BR.js" />
