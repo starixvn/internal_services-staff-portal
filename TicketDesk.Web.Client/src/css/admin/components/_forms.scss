@@ -137,6 +137,10 @@
 .select2-container--default .select2-selection--single {
     border-radius: 2px;
     border-color: #b7b7b7;
+
+    .select2-selection__rendered {
+        line-height: 25px;
+    }
 }
 
 .select2-container:focus, .select2-selection:focus {
@@ -144,6 +148,7 @@
     outline: none;
     border-color: #66afe9;
 }
+
 
 .checkbox {
     $size: 14px;

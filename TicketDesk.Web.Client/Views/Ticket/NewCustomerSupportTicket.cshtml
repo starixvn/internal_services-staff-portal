@@ -63,12 +63,12 @@
 
         <div class="item-list item">
             <div class="key fullwidth">
-                <label for="OutletName">Outlet Name</label>
+                <label for="OutletName">Shop Name</label>
             </div>
 
             <div class="fullwidth">
-                <div class="value fullwidth border custom-dropdown">
-                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList, "---Select Shop---")
+                <div class="fullwidth no-border custom-dropdown">
+                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList)
                 </div>
             </div>
         </div>
@@ -80,9 +80,13 @@
             </div>
         </div>
         <div class="item-list item">
-            @Html.CustomFieldLabelFor(x => x.TimeOfIncident, new { @class = "key" })
-            <div class="fullwidth">
-                @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "key datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
+            <div class="key fullwidth">
+                @Html.CustomFieldLabelFor(x => x.TimeOfIncident)
+            </div>
+            
+            <div class="fullwidth date-time">
+                @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
+                <span class="icon-calendar"></span>
             </div>
         </div>
         <div class="item-list item">

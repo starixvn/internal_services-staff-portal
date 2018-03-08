@@ -46,44 +46,50 @@
 
     <div class="form-content incident-form">
         <div class="title">@Resources.Views_Ticket_NewIncidentTicket_Title</div>
-        @Html.CustomFieldLabelFor(x => x.ReportBy, new { @class = "key border" })
-        <div class="value span-3 border">
-            <div class="radio-group">
-                @Html.HiddenFor(x => x.ReportBy.CustomFieldId, new { Value = Model.ReportBy.CustomField.Id })
-                @foreach (string reporter in Model.ReportByValues)
+        <div class="height-auto border-bottom">
+            @Html.CustomFieldLabelFor(x => x.ReportBy, new { @class = "key label-item" })
+            <div class="value span-3 border">
+                <div class="radio-group">
+                    @Html.HiddenFor(x => x.ReportBy.CustomFieldId, new { Value = Model.ReportBy.CustomField.Id })
+                    @foreach (string reporter in Model.ReportByValues)
                 {
                     var rdId = "rd-" + reporter.Replace(' ', '_');
 
-                    <p>
-                        @Html.RadioButtonFor(x => x.ReportBy.Value, reporter, new { id = rdId, @class = "required-radio" })
-                        <label for="@rdId">@reporter</label>
-                    </p>
-                }
+                        <p>
+                            @Html.RadioButtonFor(x => x.ReportBy.Value, reporter, new { id = rdId, @class = "required-radio" })
+                            <label for="@rdId">@reporter</label>
+                        </p>
+                    }
+                </div>
             </div>
-        </div>
+        </div> 
 
         <div class="item-list item">
             <div class="key fullwidth">
-                <label for="OutletName">Outlet Name</label>
+                <label for="OutletName">Shop Name</label>
             </div>
 
             <div class="fullwidth">
-                <div class="value fullwidth border custom-dropdown">
-                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList, "---Select Shop---")
+                <div class="fullwidth no-border custom-dropdown">
+                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList)
                 </div>
             </div>
         </div>
 
         <div class="item-list item">
-            @Html.LabelFor(x => x.Ticket.Title, new { @class = "key fullwidth border" })
+            <div class="key fullwidth">
+                @Html.LabelFor(x => x.Ticket.Title)
+            </div>
+            
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.Ticket.Title)
             </div>
         </div>
         <div class="item-list item">
             @Html.CustomFieldLabelFor(x => x.TimeOfIncident, new { @class = "key fullwidth" })
-            <div class="fullwidth">
-                @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "key fullwidth datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
+            <div class="fullwidth date-time">
+                @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "fullwidth datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
+                <span class="icon-calendar"></span>
             </div>
         </div>
         <div class="item-list item">

@@ -583,6 +583,10 @@ tr.header {
     border: 1px solid #d3d7db;
     border-bottom: none;
     border-right: 0; }
+  .form-content .no-border {
+    border: 0; }
+  .form-content .border-bottom {
+    border-bottom: 1px solid #d3d7db; }
   .form-content input[type="file"], .form-content select {
     border-top: none;
     font-family: inherit; }
@@ -712,6 +716,12 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   border-left: 1px solid #d3d7db;
   padding: 0 0 8px 12px; }
 
+.facility-form .select2-container .select2-selection--single {
+  border: 0;
+  background: 0; }
+  .facility-form .select2-container .select2-selection--single .select2-selection__rendered {
+    line-height: 38px; }
+
 .feedback-form, .hardware-form {
   /*.attach-file .fullwidth {
         height: 40px;
@@ -791,6 +801,16 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     .btn.btn-second[disabled] {
       opacity: 0.5;
       color: rgba(51, 51, 51, 0.5); }
+  .btn.btn-submit {
+    background-color: #2e4592;
+    color: #fff;
+    padding: 8px 15px 9px; }
+    .btn.btn-submit:hover:enabled {
+      background: #22336b;
+      transition: all 0.3s ease; }
+    .btn.btn-submit[disabled] {
+      opacity: 0.5;
+      color: rgba(255, 255, 255, 0.5); }
   .btn.btn-send {
     width: 100%;
     margin: 16px 0 32px;
@@ -1440,4 +1460,24 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -ms-backface-visibility: hidden; }
+
+.select2-container .select2-selection--single {
+  border-radius: 0;
+  border-color: #d3d7db;
+  height: 40px; }
+  .select2-container .select2-selection--single:focus {
+    outline: none; }
+  .select2-container .select2-selection--single .select2-selection__rendered {
+    line-height: 40px; }
+  .select2-container .select2-selection--single .select2-selection__arrow {
+    top: 1px;
+    height: 38px;
+    width: 32px; }
+
+.select2-container--open .select2-dropdown--below {
+  border-radius: 0;
+  border-color: #d3d7db; }
+
+.select2-results__option {
+  color: #333; }
 

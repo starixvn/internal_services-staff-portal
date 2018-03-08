@@ -69,13 +69,12 @@
                 <div class="form-group">
                     @Html.LabelFor(x => x.Type)
                     <div class='input-group date'>
-                        @Html.EnumDropDownListFor(x => x.Type, "All", new { @class = "form-control" })
-                        <span class="icon-calendar"></span>
+                        @Html.EnumDropDownListFor(x => x.Type, "All", new { @class = "form-control" })                        
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="@Resources.Views_Announcement_Submit" class="btn btn-primary" />
+                    <input type="submit" value="@Resources.Views_Announcement_Submit" class="btn btn-submit" />
                 </div>
             }
 

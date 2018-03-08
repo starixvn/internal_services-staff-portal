@@ -45,18 +45,23 @@
 
         <div class="item-list item">
             <div class="key fullwidth">
-                <label for="OutletName">Outlet Name</label>
+                <label for="OutletName">Shop Name</label>
             </div>
-
+           
             <div class="fullwidth">
-                <div class="value fullwidth border custom-dropdown">
-                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList, "---Select Shop---")
+                <div class="fullwidth no-border custom-dropdown">
+                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList)
+                    @Html.ValidationMessageFor(x => x.Ticket.ShopId)
                 </div>
             </div>
         </div>
 
         <div class="item-list item">
-            @Html.LabelFor(x => x.Ticket.Title, new { @class = "key fullwidth border" })
+            <div class="key fullwidth">
+                @Html.LabelFor(x => x.Ticket.Title)
+                <span class="highlight">*</span>
+            </div>
+            
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.Ticket.Title)
             </div>
@@ -68,15 +73,25 @@
             }
             @*@Html.CustomFieldIndex("System", guid)*@
 
-            @Html.CustomFieldLabelWithGuidIndexFor(x => x.System, guid, null, new { @class = "key border" })
-            <div class="value border custom-dropdown">
-                @Html.CustomFieldWithGuidIndexFor(x => x.System, guid, null, new { @class = "" })
+            <div class="key fullwidth">
+                @Html.CustomFieldLabelWithGuidIndexFor(x => x.System, guid, null)
             </div>
-        </div>
-        <div class="item-list item">
-            @Html.CustomFieldLabelFor(x => x.TimeOfIncident, new { @class = "key fullwidth" })
+
             <div class="fullwidth">
-                @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "key fullwidth datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
+                <div class="no-border fullwidth custom-dropdown">
+                    @Html.CustomFieldWithGuidIndexFor(x => x.System, guid, null, new { @class = "" })
+                </div>
+            </div>     
+        </div>
+
+        <div class="item-list item">
+            <div class="key fullwidth">
+                @Html.CustomFieldLabelFor(x => x.TimeOfIncident)
+            </div>
+           
+            <div class="fullwidth date-time">
+                @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "fullwidth datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
+                <span class="icon-calendar"></span>
             </div>
         </div>
         <div class="item-list item">

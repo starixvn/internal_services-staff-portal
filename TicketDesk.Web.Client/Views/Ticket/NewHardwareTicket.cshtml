@@ -44,11 +44,11 @@
         <div class="title">HARDWARE ISSUES</div>
         <div class="item-list item">
             <div class="key fullwidth">
-                <label for="OutletName">Outlet Name</label>
+                <label for="OutletName">Shop Name</label>
             </div>
 
             <div class="fullwidth">
-                <div class="value fullwidth border custom-dropdown">
+                <div class="fullwidth no-border custom-dropdown">
                     @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList)
                     @Html.ValidationMessageFor(x => x.Ticket.ShopId)
                 </div>
@@ -64,7 +64,7 @@
             </div>
 
             <div class="fullwidth">
-                <div class="value border fullwidth custom-dropdown">
+                <div class="no-border fullwidth custom-dropdown">
                     @Html.CustomFieldWithGuidIndexFor(x => x.System, guid, null, new { @class = "" })
                 </div>
             </div>
