@@ -59,6 +59,7 @@
         $(".menu-section").hover(function() {
                 if ($(".sidebar").hasClass("menu-collapsed")) {
                     $(this).addClass("hover-open");
+                    $(this).find(".collapse").prop("style", "height: auto;");
                 }
             },
             function() {

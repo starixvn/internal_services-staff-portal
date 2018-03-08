@@ -86,12 +86,6 @@
     }
 }
 
-.hover-open {
-    .sub-menu {
-        background: white;
-    }
-}
-
 .menu-collapsed {
     &.sidebar {
         width: 60px;
@@ -109,7 +103,7 @@
         .collapse {
             display: none;
         }
-        
+
         &.hover-open {
             background: rgba(255,255,255,.1);
 
