@@ -5,10 +5,8 @@
 
     public class HomeViewModel
     {
-        ////public AnnouncementViewModel Annoucements { get; set; }
-
         public int UnreadAnnouncementQuatity { get; set; }
 
-        public IList<AnnouncementGroup> AnnouncementGroups { get; set; }
+        public IEnumerable<Announcement> Announcements { get; set; }
     }
 }

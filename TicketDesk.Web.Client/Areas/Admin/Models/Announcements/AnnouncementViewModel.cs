@@ -28,7 +28,7 @@
         [Display(Name = "Published To")]
         public DateTime? PublishedTo { get; set; }
 
-        [Display(Name = "Status")]
+        [Display(Name = "Type")]
         public AnnouncementType? Type { get; set; }
 
         [Display(Name = "Published")]

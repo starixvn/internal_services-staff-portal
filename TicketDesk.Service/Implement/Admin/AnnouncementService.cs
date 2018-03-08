@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Service.Implement.Admin
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using Core.Enumerations;
@@ -41,6 +42,32 @@
             }
 
             return announcements;
+        }
+
+        public IEnumerable<Announcement> GetHomeAnnouncements()
+        {
+            return context.Announcements
+                .Where(x => x.State == AnnouncementState.Published)
+                .Take(10)
+                .OrderByDescending(x => x.PublishedDateTime).Decompile();
+        }
+
+        public int CountUnreadAnnouncement(string readAnnouncements)
+        {
+            var publishedAnnouncementIds = context.Announcements
+                .Where(x => x.State == AnnouncementState.Published)
+                .Decompile()
+                .Select(x => x.Id.ToString());
+
+            int result = publishedAnnouncementIds.Count();
+
+            if (!string.IsNullOrEmpty(readAnnouncements))
+            {
+                var readAnnouncementIds = readAnnouncements.Split(',');
+                result = result - publishedAnnouncementIds.Intersect(readAnnouncementIds).Count();
+            }
+
+            return result;
         }
 
         private static NewAnnouncementCriteria CommitAnnouncement(NewAnnouncementCriteria criteria)

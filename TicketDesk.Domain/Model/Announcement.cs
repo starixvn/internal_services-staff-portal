@@ -27,7 +27,7 @@
         [Display(Name = "Specific to Shop")]
         public int ShopId { get; set; }
 
-        [Display(Name = "Status")]
+        [Display(Name = "Type")]
         [Required(ErrorMessage = "{0} is required")]
         public AnnouncementType Type { get; set; }
 

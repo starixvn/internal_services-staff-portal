@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Service.Interface.Admin
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Criteria.Announcement;
     using Domain.Model;
@@ -19,5 +20,9 @@
         bool DeleteAnnouncement(int id);
 
         int[] GetAllAnnouncementIds();
+
+        int CountUnreadAnnouncement(string readAnnouncements);
+
+        IEnumerable<Announcement> GetHomeAnnouncements();
     }
 }

@@ -23,33 +23,29 @@
         <div class="panel-body">
             <table class="table table-bordered tbl-announcement">
                 <tbody>
-                    @foreach (var group in Model.AnnouncementGroups)
+                    @foreach (var announcement in Model.Announcements)
                     {
-                        foreach (var announcement in group.Announcements)
+                        bool isImportant = announcement.Type == AnnouncementType.Important;
+
+                        string announcementClass = "announcement-msg";
+                        int unreadId = !announcement.IsRead ? announcement.Id : 0;
+                        if (isImportant)
                         {
+                            announcementClass += " msg-important";
+                        }
 
-                            bool isImportant = announcement.Type == AnnouncementType.Important;
+                        if (!announcement.IsRead)
+                        {
+                            announcementClass += " unread";
+                        }
 
-                            string announcementClass = "announcement-msg";
-                            int unreadId = !announcement.IsRead ? announcement.Id : 0;
-                            if (isImportant)
-                            {
-                                announcementClass += " msg-important";
-                            }
-
-                            if (!announcement.IsRead)
-                            {
-                                announcementClass += " unread";
-                            }
-
-                            if (announcement.PublishedDateTime != null)
-                            {
-                                <tr class="@announcementClass" data-id="@unreadId">
-                                    <td class="date"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToShortDateString()</td>
-                                    <td class="time">@announcement.PublishedDateTime.Value.ToShortTimeString()</td>
-                                    <td class="show-text">@announcement.Message</td>
-                                </tr>
-                            }
+                        if (announcement.PublishedDateTime != null)
+                        {
+                            <tr class="@announcementClass" data-id="@unreadId">
+                                <td class="date"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToShortDateString()</td>
+                                <td class="time">@announcement.PublishedDateTime.Value.ToShortTimeString()</td>
+                                <td class="show-text">@announcement.Message</td>
+                            </tr>
                         }
                     }
                 </tbody>

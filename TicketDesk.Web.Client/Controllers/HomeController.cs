@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-    using Core.Enumerations;
-    using Criteria.Announcement;
     using Domain.Infrastructure;
     using Domain.Model;
     using Fanex.NAP.Core.Business;
@@ -46,86 +44,13 @@
         [NapAuth(FunctionKey = FunctionKeys.ListAssignedTicket, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            ////if (homeViewModel?.Annoucements == null)
-            ////{
-            ////    homeViewModel = new HomeViewModel
-            ////    {
-            ////        Annoucements = new AnnouncementViewModel()
-            ////    };
-            ////}
-
-            var homeViewModel = PopulateHomeAnnouncements();
-
-            return View(homeViewModel);
-        }
-
-        private HomeViewModel PopulateHomeAnnouncements()
-        {
-            var result = new List<AnnouncementGroup>();
-
-            // Get top 10 announcement by published time
-            var criteria = new GetAnnouncementsCriteria
+            var homeViewModel = new HomeViewModel
             {
-                State = AnnouncementState.Published
+                Announcements = _announcementService.GetHomeAnnouncements(),
+                UnreadAnnouncementQuatity = _announcementService.CountUnreadAnnouncement(NapUserSetting.SettingObject.ReadAnnouncements)
             };
 
-            var availableAnnouncements = _announcementService.GetAnnouncements(criteria);
-
-            var paginationService = new PaginationService<Announcement, DateTime?>();
-            var announcements = paginationService.Pagination(availableAnnouncements, x => x.PublishedDateTime, 0, 10)
-                .GroupBy(x => x.PublishedDateTime?.Date)
-                .OrderByDescending(x => x.Key);
-            foreach (var group in announcements)
-            {
-                if (group.Key == null)
-                {
-                    continue;
-                }
-
-                foreach (var announcement in group)
-                {
-                    SetIsReadAnnouncement(announcement);
-                }
-
-                var announcementGroup = new AnnouncementGroup
-                {
-                    Name = group.Key.Value.ToString("d"),
-                    Announcements = group
-                };
-
-                result.Add(announcementGroup);
-            }
-
-            var homeViewModel = new HomeViewModel();
-            homeViewModel.UnreadAnnouncementQuatity = GetUnreadAnnouncementQuantity();
-            homeViewModel.AnnouncementGroups = result;
-
-            ////var anouncementViewModel = new AnnouncementViewModel
-            ////{
-            ////    UnreadAnnouncementQuatity = GetUnreadAnnouncementQuantity(),
-            ////    AnnouncementGroups = result
-            ////};
-
-            return homeViewModel;
-        }
-
-        private int GetUnreadAnnouncementQuantity()
-        {
-            var allAnnouncementIds = _announcementService.GetAllAnnouncementIds();
-
-            int total = allAnnouncementIds.Length;
-            foreach (int id in allAnnouncementIds)
-            {
-                if (NapUserSetting.SettingObject.ReadAnnouncements != null)
-                {
-                    var readAnnouncements = NapUserSetting.SettingObject.ReadAnnouncements.Split(',');
-                    if (Array.Exists(readAnnouncements, e => e == id.ToString()))
-                    {
-                        total--;
-                    }
-                }
-            }
-            return total;
+            return View(homeViewModel);
         }
 
         private void SetIsReadAnnouncement(Announcement announcement)
@@ -193,8 +118,12 @@
             moreannouncementViewModel.TotalItem = announcements.Count();
 
             var paginationService = new PaginationService<Announcement, int>();
-            moreannouncementViewModel.Announcements = paginationService.Pagination(announcements, x => x.Id,
-                moreannouncementViewModel.Skipped, moreannouncementViewModel.ItemPerPage).ToList();
+
+            moreannouncementViewModel.Announcements = paginationService.Pagination(
+                announcements,
+                x => x.Id,
+                moreannouncementViewModel.Skipped,
+                moreannouncementViewModel.ItemPerPage).ToList();
 
             foreach (Announcement annoucement in moreannouncementViewModel.Announcements)
             {
