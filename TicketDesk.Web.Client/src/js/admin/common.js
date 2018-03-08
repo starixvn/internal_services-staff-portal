@@ -34,7 +34,7 @@
     },
 
     toggleMenu: function () {
-        if ($("body").hasClass("menu-collapsed")) {
+        if ($(".header, .sidebar").hasClass("menu-collapsed")) {
             sidebar.expandSidebar();
         } else {
             sidebar.collapseSidebar();
@@ -42,13 +42,13 @@
     },
 
     collapseSidebar: function () {
-        $("body").addClass("menu-collapsed");
+        $(".header, .sidebar").addClass("menu-collapsed");
         $(".menu-item.has-sub").attr("href", "#");
         sidebar.saveExpandedMenuState(false);
     },
 
     expandSidebar: function () {
-        $("body").removeClass("menu-collapsed");
+        $(".header, .sidebar").removeClass("menu-collapsed");
         $(".menu-item.has-sub").attr("href", "#collapseExample");
         $("#collapseExample").css("height", "auto !important");
         sidebar.saveExpandedMenuState(true);
@@ -74,11 +74,10 @@ var dataTableReflow = {
 
     setIntervalToReinitFixedHeader: function () {
         if ($(".data-table").length) {
-                setTimeout(function () {
+            setTimeout(function () {
                 dataTableReflow.reInitFixedHeader();
             }, 500);
         }
-        
     }
 }
 

@@ -87,7 +87,7 @@
 }
 
 .menu-collapsed {
-    .sidebar {
+    &.sidebar {
         width: 60px;
 
         .text {

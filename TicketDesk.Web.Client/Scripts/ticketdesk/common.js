@@ -1,6 +1,11 @@
 ﻿
 var nexcelSSPCommon = (function ($) {
 
+    function removeDateValidate() {
+        // To remove date check
+        jQuery.validator.methods["date"] = function (value, element) { return true; }
+    }
+
     function registerEventLogout() {
         $('#confirmLogOut').on('click', function () {
             window.location.href = "/user/sign-out";
@@ -15,6 +20,7 @@ var nexcelSSPCommon = (function ($) {
     function initialize() {
         registerEventLogout();
         initSelect2();
+        removeDateValidate();
     }
 
     return {
