@@ -955,7 +955,15 @@ tr.header {
         &.even {
             background: #f2f2f2;
 
-            *:not(.btn-delete) {
+            /**:not(.btn-delete) {
+                background: inherit;
+            }
+
+            .select2-selection__rendered {
+                background-color: transparent;
+            }*/
+
+            .description {
                 background: inherit;
             }
         }
@@ -1047,7 +1055,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 
     .select2-container .select2-selection--single {
         border: 0;
-        background: 0;
+        background: transparent;
 
         .select2-selection__rendered {
             line-height: 38px;
