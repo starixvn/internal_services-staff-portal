@@ -13,12 +13,12 @@
     using Client.Controllers;
     using Core.Enumerations;
     using Core.Resources;
-    using Domain;
     using Domain.Infrastructure;
     using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Models.References;
+    using Service.Interface.Admin;
 
     public class ReferencesController : BaseController
     {
@@ -28,12 +28,12 @@
         private readonly int limitHeight = 400;
         private readonly int limitWidth = 600;
 
-        private TdDomainContext Context { get; }
+        private readonly IReferenceService _referenceService;
 
-        public ReferencesController(TdDomainContext context)
+        public ReferencesController(IReferenceService referenceService)
         {
             webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, webPath);
-            Context = context;
+            _referenceService = referenceService;
 
             if (!Directory.Exists(webRootPath))
             {
@@ -43,7 +43,7 @@
 
         public ActionResult TVSchedules()
         {
-            var viewModel = GetListReferences(ReferenceType.TvSchedule);
+            var viewModel = GetListReferenceViewModel(ReferenceType.TvSchedule);
             return View(viewModel);
         }
 
@@ -57,7 +57,7 @@
 
         public ActionResult FeatureEvents()
         {
-            var viewModel = GetListReferences(ReferenceType.FeaturedEvent);
+            var viewModel = GetListReferenceViewModel(ReferenceType.FeaturedEvent);
             return View(viewModel);
         }
 
@@ -71,7 +71,7 @@
 
         public ActionResult BetOfTheDay()
         {
-            var viewModel = GetListReferences(ReferenceType.BetOfTheDay);
+            var viewModel = GetListReferenceViewModel(ReferenceType.BetOfTheDay);
             return View(viewModel);
         }
 
@@ -85,7 +85,7 @@
 
         public ActionResult TradingLimits()
         {
-            var viewModel = GetListReferences(ReferenceType.TradingLimits);
+            var viewModel = GetListReferenceViewModel(ReferenceType.TradingLimits);
             return View(viewModel);
         }
 
@@ -99,7 +99,7 @@
 
         public ActionResult Newsletters()
         {
-            var viewModel = GetListReferences(ReferenceType.Newsletters);
+            var viewModel = GetListReferenceViewModel(ReferenceType.Newsletters);
             return View(viewModel);
         }
 
@@ -113,27 +113,21 @@
 
         private JsonResult HandlePostReferences(ReferenceType referenceType, ListReferencesViewModel viewModel)
         {
-            var isSuccessful = true;
+            var isSuccessful = false;
             var message = string.Empty;
+
+            if (referenceType != ReferenceType.Newsletters && CheckIfDateDuplicate(viewModel.References))
+            {
+                ModelState.AddModelError("", Messages.DuplicatedDay);
+            }
 
             if (ModelState.IsValid)
             {
-                if (referenceType != ReferenceType.Newsletters && CheckIfDateDuplicate(viewModel.References))
-                {
-                    isSuccessful = false;
-                    message = Messages.DuplicatedDay;
-                }
-                else
-                {
-                    HandleListReferenceUploaded(referenceType, viewModel);
-                    isSuccessful = true;
-                    message = Messages.UpdateReferencesSuccessful;
-                }
+                HandleListReferenceUploaded(referenceType, viewModel);
+                isSuccessful = true;
+                message = Messages.UpdateReferencesSuccessful;
             }
-            else
-            {
-                isSuccessful = false;
-            }
+
             var errors = from item in ModelState
                          where item.Value.Errors.Any()
                          select new { item.Key, item.Value.Errors.FirstOrDefault().ErrorMessage };
@@ -153,43 +147,15 @@
 
         private void HandleListReferenceUploaded(ReferenceType referenceType, ListReferencesViewModel listReferences)
         {
-            var references = listReferences.References;
-
-            if (references == null || references.Count == 0)
-            {
-                RemoveAllReferences(referenceType);
-            }
-            else
-            {
-                var originReferences = GetListReferences(referenceType);
-                var oldReferences = references.Where(r => r.Id != null).ToList();
-
-                if (oldReferences != null && oldReferences.Count > 0)
-                {
-                    RemoveOldReferences(originReferences.References, oldReferences);
-                }
-
-                foreach (ReferenceViewModel reference in references)
-                {
-                    if (reference.Id == null)
-                    {
-                        SaveReference(reference, referenceType);
-                    }
-                    else
-                    {
-                        UpdateReference(reference);
-                    }
-                }
-            }
+            var criteriaList = listReferences.GetQueryCriteria();
+            _referenceService.UploadReferences(referenceType, criteriaList, CurrentSession.Username);
         }
 
-        private ListReferencesViewModel GetListReferences(ReferenceType referenceType)
+        private ListReferencesViewModel GetListReferenceViewModel(ReferenceType referenceType)
         {
-            var references = Context.References.Where(x => x.ReferenceType == referenceType).ToList();
-            references = referenceType != ReferenceType.Newsletters ? references.Where(r => DateTime.Compare(r.DateAppear.Date, DateTime.Now.Date) >= 0).OrderBy(r => r.DateAppear.Date).ToList()
-                                                                    : references.OrderBy(r => r.LastUpdateDate.Date).ToList();
+            var references = _referenceService.GetListReference(referenceType);
 
-            var listViewModel = new List<ReferenceViewModel>();
+            var listReference = new List<ReferenceViewModel>();
 
             foreach (Reference reference in references)
             {
@@ -200,81 +166,15 @@
                     ImageLink = reference.ImageLink,
                     ReferenceType = reference.ReferenceType
                 };
-                listViewModel.Add(referenceViewModel);
+                listReference.Add(referenceViewModel);
             }
 
-            return new ListReferencesViewModel { References = listViewModel };
-        }
-
-        private void RemoveOldReferences(IList<ReferenceViewModel> oldReferences, List<ReferenceViewModel> newReferences)
-        {
-            var excludedIDs = new HashSet<int?>(newReferences.Select(p => p.Id));
-            var listDeletedReferences = oldReferences.Where(p => !excludedIDs.Contains(p.Id)).ToList();
-            foreach (var reference in listDeletedReferences)
+            var viewModel = new ListReferencesViewModel
             {
-                var referenceToDelete = Context.References.Where(r => r.Id == reference.Id).FirstOrDefault();
-                if (referenceToDelete != null)
-                {
-                    Context.References.Remove(referenceToDelete);
-                    Context.SaveChanges();
-                }
-            }
-        }
-
-        private void RemoveAllReferences(ReferenceType referenceType)
-        {
-            var listReferences = GetListReferences(referenceType);
-            foreach (var reference in listReferences.References)
-            {
-                var referenceToDelete = Context.References.Where(r => r.Id == reference.Id).FirstOrDefault();
-                if (referenceToDelete != null)
-                {
-                    Context.References.Remove(referenceToDelete);
-                    Context.SaveChanges();
-                }
-            }
-        }
-
-        private void SaveReference(ReferenceViewModel reference, ReferenceType referenceType)
-        {
-            var data = new Reference
-            {
-                DateAppear = referenceType != ReferenceType.Newsletters ? reference.DateAppear : DateTime.Now,
-                ImageLink = reference.ImageLink,
-                ReferenceType = referenceType,
-                LastUpdateBy = CurrentSession.Username,
-                LastUpdateDate = DateTime.Now
+                References = referenceType == ReferenceType.Newsletters ? listReference : listReference.OrderBy(r => r.DateAppear).ToList()
             };
 
-            Context.References.Add(data);
-            Context.SaveChanges();
-        }
-
-        private void UpdateReference(ReferenceViewModel reference)
-        {
-            var oldReference = Context.References.Where(x => x.Id == reference.Id).FirstOrDefault();
-            if (IsChangedReference(oldReference, reference))
-            {
-                oldReference.ImageLink = reference.ImageLink;
-                oldReference.DateAppear = oldReference.ReferenceType != ReferenceType.Newsletters ? reference.DateAppear : DateTime.Now;
-                oldReference.LastUpdateDate = DateTime.Now;
-                oldReference.LastUpdateBy = CurrentSession.Username;
-            }
-            Context.SaveChanges();
-        }
-
-        private static bool IsChangedReference(Reference oldReference, ReferenceViewModel newReference)
-        {
-            var isHaveChanged = false;
-            if (oldReference.ReferenceType != ReferenceType.Newsletters && (DateTime.Compare(oldReference.DateAppear.Date, newReference.DateAppear.Date) != 0 || !string.Equals(oldReference.ImageLink, newReference.ImageLink)))
-            {
-                isHaveChanged = true;
-            }
-            if (oldReference.ReferenceType == ReferenceType.Newsletters && !string.Equals(oldReference.ImageLink, newReference.ImageLink))
-            {
-                isHaveChanged = true;
-            }
-            return isHaveChanged;
+            return viewModel;
         }
 
         [HttpPost]
@@ -293,7 +193,7 @@
                 string fileName = Path.GetFileName(file.FileName);
                 int fileSize = file.ContentLength;
 
-                if (!ValidExtention(fileName))
+                if (!IsValidExtention(fileName))
                 {
                     return Json(new { isSuccessful, message = Messages.InvalidImageFormat });
                 }
@@ -354,7 +254,7 @@
                                .StartsWith(string.Format("image/{0}", extension));
         }
 
-        private static bool ValidExtention(string fileName)
+        private static bool IsValidExtention(string fileName)
         {
             string ext = Path.GetExtension(fileName).ToLowerInvariant();
             return ext == ".jpg" || ext == ".png" || ext == ".jpeg";

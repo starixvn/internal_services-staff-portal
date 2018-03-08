@@ -91,6 +91,7 @@
             container.Register<IFileManagerService>(() => new FileManagerService(), hybridLifestyle);
 
             container.Register<IAnnouncementService>(() => new AnnouncementService(), hybridLifestyle);
+            container.Register<IReferenceService>(() => new ReferenceService(), hybridLifestyle);
             container.Register<IDataConfigurationService>(() => new DataConfigurationService(), hybridLifestyle);
             container.Register<IShopService>(() => new ShopService(), hybridLifestyle);
 
