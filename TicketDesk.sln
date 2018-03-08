@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.Web.Client", "TicketDesk.Web.Client\TicketDesk.Web.Client.csproj", "{4DE41C1E-3E56-480E-9C88-0A4D6BACC798}"
 EndProject
@@ -12,25 +12,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1AB88E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.Domain", "TicketDesk.Domain\TicketDesk.Domain.csproj", "{DBD5279B-9F1C-4915-86A9-6A8F1CF0622D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.Domain.Legacy", "TicketDesk.Domain.Legacy\TicketDesk.Domain.Legacy.csproj", "{A85D9882-1DB3-40EC-A23E-6B4562F48BCF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.Web.Identity", "TicketDesk.Web.Identity\TicketDesk.Web.Identity.csproj", "{BD3617C2-A91E-40F3-A441-B085D2491399}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.IO", "TicketDesk.IO\TicketDesk.IO.csproj", "{D9477C13-68C4-43E0-A30B-F06F444C5358}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Search", "Search", "{399C20E8-85AC-494A-8226-A411528940D2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.Search.Common", "TicketDesk.Search.Common\TicketDesk.Search.Common.csproj", "{F8C97321-F0CC-4AF9-86E6-95E0E4840430}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.Search.Azure", "TicketDesk.Search.Azure\TicketDesk.Search.Azure.csproj", "{BE284CB5-BF8B-4B51-A865-F2AB7BEA2D02}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketDesk.Search.Lucene", "TicketDesk.Search.Lucene\TicketDesk.Search.Lucene.csproj", "{54390F7F-A440-40F7-8B1A-28AB599A5213}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebJobs", "WebJobs", "{E274BBA5-344B-4EF3-9085-7DA12E2C24EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PushNotifications", "PushNotifications", "{8923DF2C-3F0F-4DD8-A40D-16FB3E77040C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Legacy", "Legacy", "{48534875-FDAA-4BDC-ABE7-B58596D785C5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S22.Mail", "S22.Mail\S22.Mail.csproj", "{CA72A1AA-6F1A-4D5F-B98B-FD73F5407563}"
 EndProject
@@ -75,10 +63,6 @@ Global
 		{DBD5279B-9F1C-4915-86A9-6A8F1CF0622D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBD5279B-9F1C-4915-86A9-6A8F1CF0622D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBD5279B-9F1C-4915-86A9-6A8F1CF0622D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A85D9882-1DB3-40EC-A23E-6B4562F48BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A85D9882-1DB3-40EC-A23E-6B4562F48BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A85D9882-1DB3-40EC-A23E-6B4562F48BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A85D9882-1DB3-40EC-A23E-6B4562F48BCF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BD3617C2-A91E-40F3-A441-B085D2491399}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD3617C2-A91E-40F3-A441-B085D2491399}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD3617C2-A91E-40F3-A441-B085D2491399}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -87,18 +71,6 @@ Global
 		{D9477C13-68C4-43E0-A30B-F06F444C5358}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9477C13-68C4-43E0-A30B-F06F444C5358}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9477C13-68C4-43E0-A30B-F06F444C5358}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8C97321-F0CC-4AF9-86E6-95E0E4840430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8C97321-F0CC-4AF9-86E6-95E0E4840430}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8C97321-F0CC-4AF9-86E6-95E0E4840430}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8C97321-F0CC-4AF9-86E6-95E0E4840430}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE284CB5-BF8B-4B51-A865-F2AB7BEA2D02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE284CB5-BF8B-4B51-A865-F2AB7BEA2D02}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE284CB5-BF8B-4B51-A865-F2AB7BEA2D02}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE284CB5-BF8B-4B51-A865-F2AB7BEA2D02}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54390F7F-A440-40F7-8B1A-28AB599A5213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54390F7F-A440-40F7-8B1A-28AB599A5213}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54390F7F-A440-40F7-8B1A-28AB599A5213}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54390F7F-A440-40F7-8B1A-28AB599A5213}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA72A1AA-6F1A-4D5F-B98B-FD73F5407563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA72A1AA-6F1A-4D5F-B98B-FD73F5407563}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA72A1AA-6F1A-4D5F-B98B-FD73F5407563}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -132,16 +104,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A85D9882-1DB3-40EC-A23E-6B4562F48BCF} = {48534875-FDAA-4BDC-ABE7-B58596D785C5}
-		{F8C97321-F0CC-4AF9-86E6-95E0E4840430} = {399C20E8-85AC-494A-8226-A411528940D2}
-		{BE284CB5-BF8B-4B51-A865-F2AB7BEA2D02} = {399C20E8-85AC-494A-8226-A411528940D2}
-		{54390F7F-A440-40F7-8B1A-28AB599A5213} = {399C20E8-85AC-494A-8226-A411528940D2}
 		{CA72A1AA-6F1A-4D5F-B98B-FD73F5407563} = {F2489D49-1B43-486E-A41C-2C6ACA0E60A3}
 		{6E3B1AF8-762D-4B69-84C3-C79E74AA9C82} = {8923DF2C-3F0F-4DD8-A40D-16FB3E77040C}
 		{508F4CF5-960F-4779-A05F-C9B60986D279} = {E274BBA5-344B-4EF3-9085-7DA12E2C24EB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35;packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Data.5.0.505.0\lib\NET35
 		RESX_PrefixTranslations = False
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35;packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Data.5.0.505.0\lib\NET35
+		SolutionGuid = {134D9E74-EF7F-444F-839E-EAC4180A472A}
 	EndGlobalSection
 EndGlobal

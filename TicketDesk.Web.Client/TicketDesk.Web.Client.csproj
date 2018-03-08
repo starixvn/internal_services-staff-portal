@@ -437,8 +437,6 @@
     <Compile Include="Infrastructure\Identity\TicketDeskContextSecurityProvider.cs" />
     <Compile Include="Infrastructure\Identity\TicketDeskSignInManager.cs" />
     <Compile Include="Infrastructure\Identity\TicketDeskUserManagerExtensions.cs" />
-    <Compile Include="Infrastructure\Migration\Legacy\LegacyBackgroundMigrator.cs" />
-    <Compile Include="Infrastructure\Migration\Legacy\LegacyMigrator.cs" />
     <Compile Include="Infrastructure\ModelBinders\CommaSeparatedValuesModelBinder.cs" />
     <Compile Include="Infrastructure\ModelBinders\SummernoteModelBinder.cs" />
     <Compile Include="Infrastructure\PushNotifications\InProcessPushNotificationScheduler.cs" />
@@ -464,7 +462,6 @@
     <Compile Include="Models\Extensions\TicketExtensions.cs" />
     <Compile Include="Models\Extensions\TicketSubscriberExtensions.cs" />
     <Compile Include="Models\FilterBarViewModel.cs" />
-    <Compile Include="Infrastructure\Migration\Legacy\LegacySecurityMigrator.cs" />
     <Compile Include="Models\Home\HomeViewModel.cs" />
     <Compile Include="Models\Common\Pagination.cs" />
     <Compile Include="Models\Home\MoreAnnouncementViewModel.cs" />
@@ -2187,10 +2184,6 @@
     <ProjectReference Include="..\TicketDesk.Criteria\TicketDesk.Criteria.csproj">
       <Project>{e128a22b-91a4-4f5c-b306-4ab4129c9d1d}</Project>
       <Name>TicketDesk.Criteria</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TicketDesk.Domain.Legacy\TicketDesk.Domain.Legacy.csproj">
-      <Project>{a85d9882-1db3-40ec-a23e-6b4562f48bcf}</Project>
-      <Name>TicketDesk.Domain.Legacy</Name>
     </ProjectReference>
     <ProjectReference Include="..\TicketDesk.Domain\TicketDesk.Domain.csproj">
       <Project>{dbd5279b-9f1c-4915-86a9-6a8f1cf0622d}</Project>

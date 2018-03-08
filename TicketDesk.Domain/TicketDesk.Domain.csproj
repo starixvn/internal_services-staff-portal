@@ -493,10 +493,6 @@
       <Project>{be8715f9-e858-473e-a2b6-561c9edca416}</Project>
       <Name>TicketDesk.Localization</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TicketDesk.Search.Common\TicketDesk.Search.Common.csproj">
-      <Project>{F8C97321-F0CC-4AF9-86E6-95E0E4840430}</Project>
-      <Name>TicketDesk.Search.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />
