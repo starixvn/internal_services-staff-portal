@@ -177,18 +177,6 @@
             </div>
         </div>
 
-        <div class="item-list item">
-            <div class="key fullwidth">
-                <label for="OutletName">Outlet Name</label>
-            </div>
-
-            <div class="fullwidth">
-                <div class="value fullwidth border custom-dropdown">
-                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList, "---Select Shop---")
-                </div>
-            </div>
-        </div>
-
         <div class="height-auto">
             @Html.CustomFieldLabelFor(x => x.RequestType, new { @class = "key border label-item" })
             <div class="value span-3 border">

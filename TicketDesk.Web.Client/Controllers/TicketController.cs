@@ -121,7 +121,6 @@
 
             viewModel.Ticket.Owner = Context.SecurityProvider.CurrentUserId;
             viewModel.Ticket.IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote";
-            viewModel.Ticket.ShopList = GetShopSelectList();
 
             await SetShopInfoForModelAsync(viewModel.Ticket).ConfigureAwait(false);
 
@@ -135,7 +134,7 @@
         [Route("new-facility")]
         public async Task<ActionResult> NewFacilityTicket(NewFacilityTicketViewModel viewModel)
         {
-            viewModel.Ticket.Shop = Context.Shops.Find(viewModel.Ticket.ShopId);
+            viewModel.Ticket.Shop = Context.Shops.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
             ReValidateModelState(viewModel);
 
@@ -165,7 +164,6 @@
                 {
                     Owner = Context.SecurityProvider.CurrentUserId,
                     IsHtml = Context.TicketDeskSettings.ClientSettings.GetDefaultTextEditorType() == "summernote",
-                    ShopList = GetShopSelectList()
                 }
             };
 
@@ -181,7 +179,7 @@
         [Route("new-feedback")]
         public async Task<ActionResult> NewFeedbackTicket(NewFeedbackTicketViewModel viewModel)
         {
-            viewModel.Ticket.Shop = Context.Shops.Find(viewModel.Ticket.ShopId);
+            viewModel.Ticket.Shop = Context.Shops.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Feedback;
 
             ReValidateModelState(viewModel);
