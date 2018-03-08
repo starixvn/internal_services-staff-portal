@@ -17,7 +17,7 @@
             return context.Announcements.Find(id);
         }
 
-        public IQueryable<Announcement> GetAnnouncements(GetAnnouncementsCriteria criteria)
+        public IEnumerable<Announcement> GetAnnouncements(GetAnnouncementsCriteria criteria)
         {
             IQueryable<Announcement> announcements = context.Announcements;
 
@@ -49,7 +49,25 @@
             return context.Announcements
                 .Where(x => x.State == AnnouncementState.Published)
                 .Take(10)
-                .OrderByDescending(x => x.PublishedDateTime).Decompile();
+                .OrderByDescending(x => x.PublishedDateTime)
+                .Decompile();
+        }
+
+        public IEnumerable<Announcement> CalculateAnnouncementsReadStatus(
+            IEnumerable<Announcement> announcements,
+            string readAnnouncements)
+        {
+            var readAnnouncementIds = readAnnouncements
+                .Split(',')
+                .Distinct()
+                .Select(int.Parse).ToList();
+
+            foreach (var announcement in announcements)
+            {
+                announcement.IsRead = readAnnouncementIds.Contains(announcement.Id);
+            }
+
+            return announcements;
         }
 
         public int CountUnreadAnnouncement(string readAnnouncements)

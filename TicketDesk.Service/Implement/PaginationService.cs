@@ -10,12 +10,12 @@
 
     public class PaginationService<T, TResult> : IPaginationService<T, TResult>
     {
-        public IEnumerable<T> Pagination(IQueryable<T> originalList, Func<T, TResult> orderBy, int skipped, int took)
+        public IEnumerable<T> Pagination(IEnumerable<T> originalList, Func<T, TResult> orderBy, int skipped, int took)
         {
             return originalList.AsEnumerable().OrderByDescending(orderBy).Skip(skipped).Take(took);
         }
 
-        public IEnumerable<T> Pagination(IQueryable<T> originalList, IList<SortData> sortDatas, int skipped, int took)
+        public IEnumerable<T> Pagination(IEnumerable<T> originalList, IList<SortData> sortDatas, int skipped, int took)
         {
             var result = originalList.AsEnumerable();
 

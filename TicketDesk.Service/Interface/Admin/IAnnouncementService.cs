@@ -1,7 +1,6 @@
 ﻿namespace TicketDesk.Service.Interface.Admin
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Criteria.Announcement;
     using Domain.Model;
 
@@ -9,7 +8,7 @@
     {
         Announcement GetAnnouncement(int id);
 
-        IQueryable<Announcement> GetAnnouncements(GetAnnouncementsCriteria criteria);
+        IEnumerable<Announcement> GetAnnouncements(GetAnnouncementsCriteria criteria);
 
         bool AddAnnouncement(NewAnnouncementCriteria criteria);
 
@@ -24,5 +23,7 @@
         int CountUnreadAnnouncement(string readAnnouncements);
 
         IEnumerable<Announcement> GetHomeAnnouncements();
+
+        IEnumerable<Announcement> CalculateAnnouncementsReadStatus(IEnumerable<Announcement> announcements, string readAnnouncements);
     }
 }

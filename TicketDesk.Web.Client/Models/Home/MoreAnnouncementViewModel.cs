@@ -27,7 +27,7 @@
 
         public AnnouncementType? Type { get; set; }
 
-        public IList<Announcement> Announcements { get; set; }
+        public IEnumerable<Announcement> Announcements { get; set; }
 
         public override string IndexLink(int i, int itemPerPage)
         {
