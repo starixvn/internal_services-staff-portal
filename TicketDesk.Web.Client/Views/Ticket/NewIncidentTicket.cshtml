@@ -99,6 +99,7 @@
             </div>
             <div class="fullwidth">
                 @Html.CustomFieldFor(x => x.Description, new { @class = "description" })
+                @Html.ValidationMessageFor(x => x.Description.Value)
             </div>
         </div>
         @Html.Partial("_DropzoneView", Model)

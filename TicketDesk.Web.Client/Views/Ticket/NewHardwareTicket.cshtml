@@ -85,21 +85,22 @@
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.TimeOfIncident)
-                <span class="highlight">*</span>
             </div>
 
             <div class="fullwidth date-time">
                 @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "fullwidth datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
                 <span class="icon-calendar"></span>
+                @Html.ValidationMessageFor(x => x.TimeOfIncident.Value)
             </div>
         </div>
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.Description)
-                <span class="highlight">* (<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
+                <span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
             </div>
             <div class="fullwidth">
                 @Html.CustomFieldFor(x => x.Description, new { @class = "description" })
+                @Html.ValidationMessageFor(x => x.Description.Value)
             </div>
         </div>
         @Html.Partial("_DropzoneView", Model)
