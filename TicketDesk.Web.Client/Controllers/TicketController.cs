@@ -389,6 +389,7 @@
                     Owner = Context.SecurityProvider.CurrentUserId,
                     ShopList = GetShopSelectList()
                 },
+                SupportType = { CustomField = availableCustomField.First(x => x.Name == "Support Type") },
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Incident Date/Time") },
                 NationalIdCardNo = { CustomField = availableCustomField.First(x => x.Name == "National Id Card No") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }

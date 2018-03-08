@@ -21,7 +21,7 @@
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
     <script>
         $(document).ready(function () {
-            InitFormHandler("ticket-form", true);
+            InitFormHandler("ticket-form", false);
             $('.datetimepicker').datetimepicker({
                 format: 'DD/MM/YYYY hh:mm',
                 defaultDate: new Date(),
@@ -32,7 +32,7 @@
     </script>
 }
 
-@Html.Partial("_NotificationModal");
+@Html.Partial("_NotificationModal")
 
 @using (Html.BeginForm("NewSoftwareTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form filechange", enctype = "multipart/form-data" }))
 {
@@ -41,17 +41,33 @@
     @Html.HiddenFor(model => model.TempId)
 
     <div class="form-content software-form">
-        <div class="title">SOFTWARE FORM</div>
+        <div class="title">SOFTWARE ISSUE</div>
 
         <div class="item-list item">
             <div class="key fullwidth">
-                <label for="OutletName">Shop Name</label>
+                <label for="ShopName">Shop Name</label>
             </div>
            
             <div class="fullwidth">
                 <div class="fullwidth no-border custom-dropdown">
                     @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList)
                     @Html.ValidationMessageFor(x => x.Ticket.ShopId)
+                </div>
+            </div>
+        </div>
+
+        <div class="item-list item">
+            @{
+                var guid = Guid.NewGuid().ToString();
+            }
+
+            <div class="key fullwidth">
+                @Html.CustomFieldLabelWithGuidIndexFor(x => x.System, guid, null)
+            </div>
+
+            <div class="fullwidth">
+                <div class="no-border fullwidth custom-dropdown">
+                    @Html.CustomFieldWithGuidIndexFor(x => x.System, guid, null, new { @class = "" })
                 </div>
             </div>
         </div>
@@ -64,29 +80,14 @@
             
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.Ticket.Title)
+                @Html.ValidationMessageFor(x => x.Ticket.Title)
             </div>
-        </div>
-
-        <div class="item-list item">
-            @{
-                var guid = Guid.NewGuid().ToString();
-            }
-            @*@Html.CustomFieldIndex("System", guid)*@
-
-            <div class="key fullwidth">
-                @Html.CustomFieldLabelWithGuidIndexFor(x => x.System, guid, null)
-            </div>
-
-            <div class="fullwidth">
-                <div class="no-border fullwidth custom-dropdown">
-                    @Html.CustomFieldWithGuidIndexFor(x => x.System, guid, null, new { @class = "" })
-                </div>
-            </div>     
         </div>
 
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.TimeOfIncident)
+                <span class="highlight">*</span>
             </div>
            
             <div class="fullwidth date-time">
@@ -97,6 +98,7 @@
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.Description)
+                <span class="highlight">*</span>
                 <span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
             </div>
             <div class="fullwidth">

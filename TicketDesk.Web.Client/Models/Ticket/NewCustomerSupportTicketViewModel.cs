@@ -6,6 +6,8 @@
     {
         public Ticket Ticket { get; set; }
 
+        public CustomFieldValue SupportType { get; set; }
+
         public CustomFieldValue Description { get; set; }
 
         public CustomFieldValue NationalIdCardNo { get; set; }
@@ -18,6 +20,7 @@
             Description = new CustomFieldValue();
             NationalIdCardNo = new CustomFieldValue();
             TimeOfIncident = new CustomFieldValue();
+            SupportType = new CustomFieldValue();
         }
     }
 }
