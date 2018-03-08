@@ -190,6 +190,9 @@ main {
   .sidebar .has-sub.collapsed .icon-arrow {
     transform: rotate(0); }
 
+.hover-open .sub-menu {
+  background: white; }
+
 .menu-collapsed.sidebar {
   width: 60px; }
   .menu-collapsed.sidebar .text {

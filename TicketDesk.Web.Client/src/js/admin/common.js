@@ -1,15 +1,16 @@
 ﻿var sidebar = {
-    init: function () {
+    init: function() {
         sidebar.hovermenu();
         sidebar.initSelect2();
-        $(".toggle-sidebar").on("click", function () {
-            sidebar.toggleMenu();
-            dataTableReflow.setIntervalToReinitFixedHeader();
-        });
+        $(".toggle-sidebar").on("click",
+            function() {
+                sidebar.toggleMenu();
+                dataTableReflow.setIntervalToReinitFixedHeader();
+            });
 
         $("body").on("click",
             ".icon-calendar",
-            function () {
+            function() {
                 var datetimepickerElements = $(this).parent().find(".datetimepicker");
                 if (datetimepickerElements.length > 0) {
                     $(datetimepickerElements).data("DateTimePicker").toggle();
@@ -22,18 +23,18 @@
             });
     },
 
-    saveExpandedMenuState: function (isSidebarExpanded) {
+    saveExpandedMenuState: function(isSidebarExpanded) {
         var url = "/NapUserSetting/SetIsSidebarExpanded?IsSidebarExpanded=" + isSidebarExpanded;
         $.get(url);
     },
 
-    initSelect2: function () {
+    initSelect2: function() {
         $("select").select2({
             minimumResultsForSearch: Infinity
         });
     },
 
-    toggleMenu: function () {
+    toggleMenu: function() {
         if ($(".header, .sidebar").hasClass("menu-collapsed")) {
             sidebar.expandSidebar();
         } else {
@@ -41,25 +42,28 @@
         }
     },
 
-    collapseSidebar: function () {
+    collapseSidebar: function() {
         $(".header, .sidebar").addClass("menu-collapsed");
         $(".menu-item.has-sub").attr("href", "#");
         sidebar.saveExpandedMenuState(false);
     },
 
-    expandSidebar: function () {
+    expandSidebar: function() {
         $(".header, .sidebar").removeClass("menu-collapsed");
         $(".menu-item.has-sub").attr("href", "#collapseExample");
         $("#collapseExample").css("height", "auto !important");
         sidebar.saveExpandedMenuState(true);
     },
 
-    hovermenu: function () {
-        $(".menu-section").hover(function () {
-            $(this).addClass("hover-open");
-        }, function () {
-            $(this).removeClass("hover-open");
-        });
+    hovermenu: function() {
+        $(".menu-section").hover(function() {
+                if ($(".sidebar").hasClass("menu-collapsed")) {
+                    $(this).addClass("hover-open");
+                }
+            },
+            function() {
+                $(this).removeClass("hover-open");
+            });
     }
 }
 
