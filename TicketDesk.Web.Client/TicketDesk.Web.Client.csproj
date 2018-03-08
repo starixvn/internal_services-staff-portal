@@ -389,7 +389,6 @@
     <Compile Include="Areas\Admin\Models\References\ReferenceViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopFilterViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopViewModel.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomFieldsController.cs" />
     <Compile Include="Controllers\EmailTestController.cs" />
@@ -2088,9 +2087,6 @@
     <Content Include="Views\Emails\Ticket.Text.cshtml" />
     <Content Include="Views\Ticket\_TicketFiles.cshtml" />
     <Content Include="Views\User\SignIn.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\ChangePassword.cshtml" />
-    <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\UserAdministration\Index.cshtml" />
     <Content Include="Views\UserAdministration\Edit.cshtml" />
     <Content Include="Views\UserAdministration\_UserList.cshtml" />
