@@ -2208,18 +2208,6 @@
       <Project>{6e3b1af8-762d-4b69-84c3-c79e74aa9c82}</Project>
       <Name>TicketDesk.PushNotifications</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TicketDesk.Search.Azure\TicketDesk.Search.Azure.csproj">
-      <Project>{be284cb5-bf8b-4b51-a865-f2ab7bea2d02}</Project>
-      <Name>TicketDesk.Search.Azure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TicketDesk.Search.Common\TicketDesk.Search.Common.csproj">
-      <Project>{f8c97321-f0cc-4af9-86e6-95e0e4840430}</Project>
-      <Name>TicketDesk.Search.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TicketDesk.Search.Lucene\TicketDesk.Search.Lucene.csproj">
-      <Project>{54390f7f-a440-40f7-8b1a-28ab599a5213}</Project>
-      <Name>TicketDesk.Search.Lucene</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TicketDesk.Service\TicketDesk.Service.csproj">
       <Project>{00764825-d0eb-4060-a5b3-341cd845605a}</Project>
       <Name>TicketDesk.Service</Name>

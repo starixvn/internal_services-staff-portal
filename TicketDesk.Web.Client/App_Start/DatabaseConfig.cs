@@ -4,7 +4,7 @@
     using Domain;
     using Domain.Migrations;
     using Domain.Model;
-    using Search.Common;
+    ////using Search.Common;
     using System;
     using System.Configuration;
     using System.Data.Entity;
@@ -60,15 +60,15 @@
                         DemoDataManager.SetupDemoData(ctx);
 
                         // TODO: duplicated in FirstRunSetup controller, should refactor extension method or something... just not sure what the most appropriate place is
-                        HostingEnvironment.QueueBackgroundWorkItem(async ct =>
-                        {
-                            using (var dctx = new TdDomainContext(null))
-                            {
-                                await TdSearchContext.Current().IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
-                                var searchItems = dctx.Tickets.Include("TicketEvents").ToSeachIndexItems();
-                                await TdSearchContext.Current().IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
-                            }
-                        });
+                        ////HostingEnvironment.QueueBackgroundWorkItem(async ct =>
+                        ////{
+                        ////    using (var dctx = new TdDomainContext(null))
+                        ////    {
+                        ////        await TdSearchContext.Current().IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
+                        ////        var searchItems = dctx.Tickets.Include("TicketEvents").ToSeachIndexItems();
+                        ////        await TdSearchContext.Current().IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
+                        ////    }
+                        ////});
                     }
                 }
             }

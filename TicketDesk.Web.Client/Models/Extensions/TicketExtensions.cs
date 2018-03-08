@@ -2,7 +2,7 @@
 {
     using Ganss.XSS;
     using IO;
-    using Search.Common;
+    ////using Search.Common;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -17,22 +17,22 @@
 
     public static class TicketExtensions
     {
-        public static IEnumerable<SearchIndexItem> ToSeachIndexItems(this IEnumerable<Ticket> tickets)
-        {
-            return tickets.Select(t => new SearchIndexItem
-            {
-                Id = t.TicketId,
-                ProjectId = t.ShopId,
-                Title = t.Title,
-                Details = t.Details,
-                Status = t.TicketStatus.ToString(),
-                LastUpdateDate = t.LastUpdateDate,
-                Tags = string.IsNullOrEmpty(t.TagList) ? new string[] { } : t.TagList.Split(','),
+        ////public static IEnumerable<SearchIndexItem> ToSeachIndexItems(this IEnumerable<Ticket> tickets)
+        ////{
+        ////    return tickets.Select(t => new SearchIndexItem
+        ////    {
+        ////        Id = t.TicketId,
+        ////        ProjectId = t.ShopId,
+        ////        Title = t.Title,
+        ////        Details = t.Details,
+        ////        Status = t.TicketStatus.ToString(),
+        ////        LastUpdateDate = t.LastUpdateDate,
+        ////        Tags = string.IsNullOrEmpty(t.TagList) ? new string[] { } : t.TagList.Split(','),
 
-                // not null comments only, otherwise we end up indexing empty array item, or blowing up azure required field
-                Events = t.TicketEvents.Where(c => !string.IsNullOrEmpty(c.Comment)).Select(c => c.Comment).ToArray()
-            });
-        }
+        ////        // not null comments only, otherwise we end up indexing empty array item, or blowing up azure required field
+        ////        Events = t.TicketEvents.Where(c => !string.IsNullOrEmpty(c.Comment)).Select(c => c.Comment).ToArray()
+        ////    });
+        ////}
 
         public static UserDisplayInfo GetAssignedToInfo(this Ticket ticket)
         {

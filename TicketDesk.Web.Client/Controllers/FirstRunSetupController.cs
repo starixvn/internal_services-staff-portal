@@ -10,7 +10,7 @@
     using Models;
     using PushNotifications;
     using PushNotifications.Model;
-    using Search.Common;
+    ////using Search.Common;
     using System.Data.Entity;
     using System.Linq;
     using System.Threading.Tasks;
@@ -131,23 +131,23 @@
                 Database.SetInitializer(new TdIdentityDbInitializer());
                 Database.SetInitializer(new TdPushNotificationDbInitializer());
                 Startup.ConfigurePushNotifications();
-                UpdateSearchIndex();
+                ////UpdateSearchIndex();
             }
         }
 
-        private static void UpdateSearchIndex()
-        {
-            // TODO: duplicated in DatabaseConfig.cs, should refactor extension method or something... just not sure what the most appropriate place is
-            HostingEnvironment.QueueBackgroundWorkItem(async (ct) =>
-            {
-                using (var ctx = new TdDomainContext(null))
-                {
-                    await TdSearchContext.Current().IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
-                    var searchItems = ctx.Tickets.Include("TicketEvents").ToSeachIndexItems();
-                    await TdSearchContext.Current().IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
-                }
-            });
-        }
+        ////private static void UpdateSearchIndex()
+        ////{
+        ////    // TODO: duplicated in DatabaseConfig.cs, should refactor extension method or something... just not sure what the most appropriate place is
+        ////    HostingEnvironment.QueueBackgroundWorkItem(async (ct) =>
+        ////    {
+        ////        using (var ctx = new TdDomainContext(null))
+        ////        {
+        ////            await TdSearchContext.Current().IndexManager.RunIndexMaintenanceAsync().ConfigureAwait(false);
+        ////            var searchItems = ctx.Tickets.Include("TicketEvents").ToSeachIndexItems();
+        ////            await TdSearchContext.Current().IndexManager.AddItemsToIndexAsync(searchItems).ConfigureAwait(false);
+        ////        }
+        ////    });
+        ////}
 
         [HttpPost]
         [Route("create-database")]
@@ -214,7 +214,7 @@
                 }
             }
 
-            UpdateSearchIndex();
+            ////UpdateSearchIndex();
             return RedirectToAction("Index");
         }
 

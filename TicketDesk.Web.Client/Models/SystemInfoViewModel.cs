@@ -2,7 +2,7 @@
 {
     using Domain;
     using IO;
-    using Search.Azure;
+    ////using Search.Azure;
     using System;
     using System.Configuration;
     using System.Data.SqlClient;
@@ -138,7 +138,7 @@
                 IsAzureWebSite = !string.IsNullOrEmpty(AzureWebSiteName);
                 IsSqlAzure = databaseEdition != null && databaseEdition.IndexOf("azure", StringComparison.InvariantCultureIgnoreCase) >= 0;
                 AzureSqlService = IsSqlAzure ? databaseName : null;
-                AzureSearchService = GetAzureSearchServiceName();
+                ////AzureSearchService = GetAzureSearchServiceName();
                 AzureStorageService = GetAzureStorageServiceName();
             }
 
@@ -156,17 +156,17 @@
 
             public bool HasAzureServices => IsAzureWebSite || IsSqlAzure || !string.IsNullOrEmpty(AzureSearchService) || !string.IsNullOrEmpty(AzureStorageService);
 
-            private static string GetAzureSearchServiceName()
-            {
-                string svc = null;
-                var azureSearchInfo = AzureSearchConector.TryGetInfoFromConnectionString() ?? AzureSearchConector.TryGetInfoFromAppSettings();
-                if (azureSearchInfo != null)
-                {
-                    svc = azureSearchInfo.ServiceName;
-                }
+            ////private static string GetAzureSearchServiceName()
+            ////{
+            ////    string svc = null;
+            ////    var azureSearchInfo = AzureSearchConector.TryGetInfoFromConnectionString() ?? AzureSearchConector.TryGetInfoFromAppSettings();
+            ////    if (azureSearchInfo != null)
+            ////    {
+            ////        svc = azureSearchInfo.ServiceName;
+            ////    }
 
-                return svc;
-            }
+            ////    return svc;
+            ////}
 
             private static string GetAzureStorageServiceName()
             {
