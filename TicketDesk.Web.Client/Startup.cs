@@ -17,7 +17,7 @@ namespace TicketDesk.Web.Client
             var container = RegisterStructureMap(app);
 
             ConfigureDatabase();
-            ConfigureSearch();
+            ////ConfigureSearch();
             ConfigureAuth(app, container);
             ConfigurePushNotifications();
             ////ConfigureApplicationInsights();
