@@ -44,9 +44,14 @@
         [NapAuth(FunctionKey = FunctionKeys.ListAssignedTicket, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            var announcements = _announcementService.GetHomeAnnouncements();
+            foreach (Announcement announcement in announcements)
+            {
+                SetIsReadAnnouncement(announcement);
+            }
             var homeViewModel = new HomeViewModel
             {
-                Announcements = _announcementService.GetHomeAnnouncements(),
+                Announcements = announcements,
                 UnreadAnnouncementQuatity = _announcementService.CountUnreadAnnouncement(NapUserSetting.SettingObject.ReadAnnouncements)
             };
 
