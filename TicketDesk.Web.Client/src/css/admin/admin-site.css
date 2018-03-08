@@ -56,7 +56,7 @@ main {
     .menu-collapsed .navbar-brand-wrapper .brand-logo img {
       max-width: unset; }
 
-.menu-collapsed main {
+.menu-collapsed + main {
   padding-left: 60px; }
 
 .text-red {
@@ -190,11 +190,11 @@ main {
   .sidebar .has-sub.collapsed .icon-arrow {
     transform: rotate(0); }
 
-.menu-collapsed .sidebar {
+.menu-collapsed.sidebar {
   width: 60px; }
-  .menu-collapsed .sidebar .text {
+  .menu-collapsed.sidebar .text {
     display: none; }
-  .menu-collapsed .sidebar .icon-arrow {
+  .menu-collapsed.sidebar .icon-arrow {
     display: none; }
 
 .menu-collapsed .menu-section .collapse {
