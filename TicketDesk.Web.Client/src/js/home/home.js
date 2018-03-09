@@ -1,8 +1,8 @@
 ﻿var myOpenningTicket = {
-    init: function() {
+    init: function () {
         $("#my-opening-tickets").on("click",
             "a.ajax",
-            function(e) {
+            function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var action = $(this).attr("href");
@@ -108,56 +108,32 @@ var hiddenText = {
     }
 }
 
-var readAnnouncement = {
-    btnUnreadFilterHandler: function () {
+var announcementUnreadBtn = {
+    registerUnreadBtnClickEvent: function () {
         $(".btn-unread").on("click", function () {
             var btn = $(this);
-            if (!$(btn).hasClass("unread-only")) {
-                $(btn).addClass("unread-only");
-                readAnnouncement.filterUnreadAnnouncements(true);
-            } else {
+            if ($(btn).hasClass("unread-only")) {
                 $(btn).removeClass("unread-only");
-                readAnnouncement.filterUnreadAnnouncements(false);
+            } else {
+                $(btn).addClass("unread-only");
             }
+            announcementUnreadBtn.getListAnnouncement();
         });
     },
 
-    filterUnreadAnnouncements: function (unreadOnly) {
-        $(".announcement-msg").each(function (i, e) {
-            if (!$(e).hasClass("unread")) {
-                if (unreadOnly) {
-                    $(e).css("display", "none");
-                } else {
-                    $(e).css("display", "table-row");
-                }
-            }
+    getListAnnouncement: function () {
+        var isUnreadOnly = $(".btn-unread").hasClass("unread-only");
+        var url = "/Home/GetListAnnouncementByReadState?isUnreadOnly=" + isUnreadOnly;
+        $.get(url, function (response) {
+            $("#announcement-list").html(response);
+            announcementReadEvent.registerUnreadClickEvent();
         });
     },
-
-    setReadAnnouncement: function () {
-        $(".unread").one("click", function () {
-            var currentAnnouncement = $(this);
-            var id = currentAnnouncement.data("id");
-            var url = "/NapUserSetting/SaveUnreadAnnouncement/" + id;
-            if (id > 0) {
-                $.get(url, function (response) {
-                    if (response) {
-                        currentAnnouncement.removeClass("unread");
-                        currentAnnouncement.attr("data-id", 0);
-                        if ($(".unread-announcements").length) {
-                            var unreadAnnouncement = parseInt($(".unread-announcements").text());
-                            $(".unread-announcements").text(unreadAnnouncement - 1);
-                        }
-                    }
-                });
-            }
-        });
-    }
-};
+}
 
 $(document).ready(function () {
     myOpenningTicket.init();
     hiddenText.init();
-    readAnnouncement.setReadAnnouncement();
-    readAnnouncement.btnUnreadFilterHandler();
+    announcementUnreadBtn.getListAnnouncement();
+    announcementUnreadBtn.registerUnreadBtnClickEvent();
 });

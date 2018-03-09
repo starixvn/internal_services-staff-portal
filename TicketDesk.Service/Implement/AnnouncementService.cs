@@ -48,7 +48,6 @@
         {
             return context.Announcements
                 .Where(x => x.State == AnnouncementState.Published)
-                .Take(10)
                 .OrderByDescending(x => x.PublishedDateTime)
                 .Decompile();
         }

@@ -243,9 +243,6 @@
   <data name="Dropzone_Message_Default" xml:space="preserve">
     <value>Thả tập tin vào đây để tải lên</value>
   </data>
-  <data name="Views_Ticket_NewNetworkTicket_Title" xml:space="preserve">
-    <value>BÁO CÁO SỰ CỐ MẠNG</value>
-  </data>
   <data name="Dropzone_Message_Fallback" xml:space="preserve">
     <value>Trình duyệt của bạn không hỗ trợ kéo và thả tập tin</value>
   </data>
@@ -400,7 +397,7 @@
     <value>Địa chỉ shop</value>
   </data>
   <data name="ShopCode" xml:space="preserve">
-    <value>Shop Code</value>
+    <value>Mã shop</value>
   </data>
   <data name="ShopName" xml:space="preserve">
     <value>Tên shop</value>
@@ -461,5 +458,14 @@
   </data>
   <data name="AlreadyExsistedMessage" xml:space="preserve">
     <value>{0} đã tồn tại</value>
+  </data>
+  <data name="View_Ticket_NewCustomerSuport" xml:space="preserve">
+    <value>HỖ TRỢ KHÁCH HÀNG</value>
+  </data>
+  <data name="View_Ticket_NewHardwareIssue" xml:space="preserve">
+    <value>SỰ CỐ VỀ PHẦN CỨNG</value>
+  </data>
+  <data name="View_Ticket_NewSoftwareIssue" xml:space="preserve">
+    <value>SỰ CỐ VỀ PHẦN MỀM</value>
   </data>
 </root>

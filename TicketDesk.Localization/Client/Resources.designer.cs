@@ -19,7 +19,7 @@ namespace TicketDesk.Localization.Client {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -682,6 +682,33 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CUSTOMER SUPPORT.
+        /// </summary>
+        public static string View_Ticket_NewCustomerSuport {
+            get {
+                return ResourceManager.GetString("View_Ticket_NewCustomerSuport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HARDWARE ISSUES.
+        /// </summary>
+        public static string View_Ticket_NewHardwareIssue {
+            get {
+                return ResourceManager.GetString("View_Ticket_NewHardwareIssue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SOFTWARE ISSUES.
+        /// </summary>
+        public static string View_Ticket_NewSoftwareIssue {
+            get {
+                return ResourceManager.GetString("View_Ticket_NewSoftwareIssue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back to dashboard.
         /// </summary>
         public static string Views_Announcement_BackToDashboard {
@@ -1069,20 +1096,11 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INCIDENT REPORT FORM.
+        ///   Looks up a localized string similar to INCIDENT REPORTING.
         /// </summary>
         public static string Views_Ticket_NewIncidentTicket_Title {
             get {
                 return ResourceManager.GetString("Views_Ticket_NewIncidentTicket_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NETWORK REPORT FORM.
-        /// </summary>
-        public static string Views_Ticket_NewNetworkTicket_Title {
-            get {
-                return ResourceManager.GetString("Views_Ticket_NewNetworkTicket_Title", resourceCulture);
             }
         }
         

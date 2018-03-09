@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
+@using TicketDesk.Localization.Client
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 @using TicketDesk.Localization.Client
 
@@ -43,11 +44,11 @@
     @Html.HiddenFor(model => model.TempId)
 
     <div class="form-content hardware-form">
-        <div class="title">CUSTOMER SUPPORT</div>
+        <div class="title">@Resources.View_Ticket_NewCustomerSuport</div>
 
         <div class="item-list item">
             <div class="key fullwidth">
-                <label for="OutletName">Shop Name</label>
+                <label for="OutletName">@Resources.ShopName</label>
             </div>
 
             <div class="fullwidth">

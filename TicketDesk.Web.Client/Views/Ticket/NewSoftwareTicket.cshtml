@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
+@using TicketDesk.Localization.Client
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 @using TicketDesk.Localization.Client
 
@@ -41,13 +42,13 @@
     @Html.HiddenFor(model => model.TempId)
 
     <div class="form-content software-form">
-        <div class="title">SOFTWARE ISSUE</div>
+        <div class="title">@Resources.View_Ticket_NewSoftwareIssue</div>
 
         <div class="item-list item">
             <div class="key fullwidth">
-                <label for="ShopName">Shop Name</label>
+                <label for="ShopName">@Resources.ShopName</label>
             </div>
-           
+
             <div class="fullwidth">
                 <div class="fullwidth no-border custom-dropdown">
                     @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList)
@@ -77,7 +78,7 @@
                 @Html.LabelFor(x => x.Ticket.Title)
                 <span class="highlight">*</span>
             </div>
-            
+
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.Ticket.Title)
                 @Html.ValidationMessageFor(x => x.Ticket.Title)
@@ -88,7 +89,7 @@
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.TimeOfIncident)
             </div>
-           
+
             <div class="fullwidth date-time">
                 @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "fullwidth datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
                 <span class="icon-calendar"></span>

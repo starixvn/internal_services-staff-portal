@@ -42,31 +42,13 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
     @Html.HiddenFor(model => model.TempId)
-    @Html.HiddenFor(model => model.SelectedReportByValue, new { @class = "required-radio-value" })
 
     <div class="form-content incident-form">
         <div class="title">@Resources.Views_Ticket_NewIncidentTicket_Title</div>
-        <div class="height-auto border-bottom">
-            @Html.CustomFieldLabelFor(x => x.ReportBy, new { @class = "key label-item" })
-            <div class="value span-3 border">
-                <div class="radio-group">
-                    @Html.HiddenFor(x => x.ReportBy.CustomFieldId, new { Value = Model.ReportBy.CustomField.Id })
-                    @foreach (string reporter in Model.ReportByValues)
-                {
-                    var rdId = "rd-" + reporter.Replace(' ', '_');
-
-                        <p>
-                            @Html.RadioButtonFor(x => x.ReportBy.Value, reporter, new { id = rdId, @class = "required-radio" })
-                            <label for="@rdId">@reporter</label>
-                        </p>
-                    }
-                </div>
-            </div>
-        </div> 
 
         <div class="item-list item">
             <div class="key fullwidth">
-                <label for="OutletName">Shop Name</label>
+                <label for="OutletName">@Resources.ShopName</label>
             </div>
 
             <div class="fullwidth">
@@ -79,10 +61,12 @@
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.LabelFor(x => x.Ticket.Title)
+                <span class="highlight">*</span>
             </div>
-            
+
             <div class="fullwidth">
                 @Html.TextBoxFor(x => x.Ticket.Title)
+                @Html.ValidationMessageFor(x => x.Ticket.Title)
             </div>
         </div>
         <div class="item-list item">

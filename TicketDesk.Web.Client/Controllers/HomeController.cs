@@ -43,18 +43,23 @@
         [NapAuth(FunctionKey = FunctionKeys.ListAssignedTicket, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            var announcements = announcementService.GetHomeAnnouncements();
-            announcements = announcementService.CalculateAnnouncementsReadStatus(
-                    announcements,
-                    NapUserSetting.SettingObject.ReadAnnouncements);
-
             var homeViewModel = new HomeViewModel
             {
-                Announcements = announcements,
                 UnreadAnnouncementQuatity = announcementService.CountUnreadAnnouncement(NapUserSetting.SettingObject.ReadAnnouncements)
             };
 
             return View(homeViewModel);
+        }
+
+        public ActionResult GetListAnnouncementByReadState(bool isUnreadOnly)
+        {
+            var announcements = _announcementService.GetHomeAnnouncements();
+            announcements = _announcementService.CalculateAnnouncementsReadStatus(
+                    announcements,
+                    NapUserSetting.SettingObject.ReadAnnouncements);
+
+            announcements = isUnreadOnly ? announcements.Where(x => !x.IsRead).ToList() : announcements.Take(10).ToList();
+            return PartialView("_AnnouncementListHomePage", announcements);
         }
 
         [ChildActionOnly]

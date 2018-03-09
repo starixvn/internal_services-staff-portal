@@ -6,6 +6,7 @@
 
 @section scripts
 {
+    <script type="text/javascript" src="~/src/js/home/read-announcement.js"></script>
     <script type="text/javascript" src="~/src/js/home/home.js"></script>
 }
 
@@ -21,35 +22,8 @@
             <button class="btn btn-unread" type="button">Unread<span class="text-red"> (<span class="unread-announcements">@Model.UnreadAnnouncementQuatity</span>)</span></button>
         </div>
         <div class="panel-body">
-            <table class="table table-bordered tbl-announcement">
-                <tbody>
-                    @foreach (var announcement in Model.Announcements)
-                    {
-                        bool isImportant = announcement.Type == AnnouncementType.Important;
-
-                        string announcementClass = "announcement-msg";
-                        int unreadId = !announcement.IsRead ? announcement.Id : 0;
-                        if (isImportant)
-                        {
-                            announcementClass += " msg-important";
-                        }
-
-                        if (!announcement.IsRead)
-                        {
-                            announcementClass += " unread";
-                        }
-
-                        if (announcement.PublishedDateTime != null)
-                        {
-                            <tr class="@announcementClass" data-id="@unreadId">
-                                <td class="date"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToShortDateString()</td>
-                                <td class="time">@announcement.PublishedDateTime.Value.ToShortTimeString()</td>
-                                <td class="show-text">@announcement.Message</td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
+            <div id="announcement-list">
+            </div>
             <a class="btn btn-default btn-more" href="@Url.Action("MoreAnnouncement","Home")">@Resources.Views_Home_Announcement_More</a>
         </div>
     </div>

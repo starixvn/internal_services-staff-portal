@@ -211,7 +211,6 @@
             var viewModel = new NewIncidentTicketViewModel
             {
                 TempId = Guid.NewGuid(),
-                ReportBy = { CustomField = availableCustomField.First(x => x.Name == "Report By") },
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Incident Date/Time") },
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };
@@ -250,7 +249,6 @@
 
             if (ModelState.IsValid && await CreateTicketAsync(viewModel.Ticket, viewModel.TempId).ConfigureAwait(false))
             {
-                AddCustomFieldValue(null, viewModel.ReportBy.CustomFieldId, viewModel.ReportBy.Value, viewModel.Ticket.TicketId);
                 AddCustomFieldValue(null, viewModel.TimeOfIncident.CustomFieldId, viewModel.TimeOfIncident.Value, viewModel.Ticket.TicketId);
                 AddCustomFieldValue(null, viewModel.Description.CustomFieldId, viewModel.Description.Value, viewModel.Ticket.TicketId);
 

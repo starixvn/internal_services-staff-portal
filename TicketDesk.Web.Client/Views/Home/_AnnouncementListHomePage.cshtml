@@ -1,0 +1,34 @@
+﻿@using TicketDesk.Core.Enumerations
+@using TicketDesk.Domain.Model
+@using TicketDesk.Localization.Client
+@model IList<Announcement>
+
+    <table class="table table-bordered tbl-announcement">
+        <tbody>
+            @foreach (Announcement announcement in Model)
+            {
+                bool isImportant = announcement.Type == AnnouncementType.Important;
+
+                string announcementClass = "announcement-msg";
+                int unreadId = !announcement.IsRead ? announcement.Id : 0;
+                if (isImportant)
+                {
+                    announcementClass += " msg-important";
+                }
+
+                if (!announcement.IsRead)
+                {
+                    announcementClass += " unread";
+                }
+
+                if (announcement.PublishedDateTime != null)
+                {
+                    <tr class="@announcementClass" data-id="@unreadId">
+                        <td class="date"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToShortDateString()</td>
+                        <td class="time">@announcement.PublishedDateTime.Value.ToShortTimeString()</td>
+                        <td class="show-text">@announcement.Message</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>

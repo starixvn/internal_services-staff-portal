@@ -1,5 +1,4 @@
-﻿@using TicketDesk.Domain.Model
-@using TicketDesk.Localization.Client
+﻿@using TicketDesk.Localization.Client
 @using TicketDesk.Core.Enumerations
 
 @model TicketDesk.Web.Client.Models.Home.MoreAnnouncementViewModel
@@ -14,7 +13,7 @@
 {
     <script src="~/src/libs/datetimepicker/moment.js"></script>
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
-    <script src="~/src/js/home/home.js"></script>
+    <script src="~/src/js/home/read-announcement.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -69,7 +68,7 @@
                 <div class="form-group">
                     @Html.LabelFor(x => x.Type)
                     <div class='input-group date'>
-                        @Html.EnumDropDownListFor(x => x.Type, "All", new { @class = "form-control" })                        
+                        @Html.EnumDropDownListFor(x => x.Type, "All", new { @class = "form-control" })
                     </div>
                 </div>
 

@@ -238,13 +238,10 @@
     <value>FEEDBACK FORM</value>
   </data>
   <data name="Views_Ticket_NewIncidentTicket_Title" xml:space="preserve">
-    <value>INCIDENT REPORT FORM</value>
+    <value>INCIDENT REPORTING</value>
   </data>
   <data name="Dropzone_Message_Default" xml:space="preserve">
     <value>Drop files here to upload</value>
-  </data>
-  <data name="Views_Ticket_NewNetworkTicket_Title" xml:space="preserve">
-    <value>NETWORK REPORT FORM</value>
   </data>
   <data name="Dropzone_Message_Fallback" xml:space="preserve">
     <value>Your browser does not support drag'n'drop file uploads.</value>
@@ -461,5 +458,14 @@
   </data>
   <data name="AlreadyExsistedMessage" xml:space="preserve">
     <value>The {0} already exists.</value>
+  </data>
+  <data name="View_Ticket_NewCustomerSuport" xml:space="preserve">
+    <value>CUSTOMER SUPPORT</value>
+  </data>
+  <data name="View_Ticket_NewHardwareIssue" xml:space="preserve">
+    <value>HARDWARE ISSUES</value>
+  </data>
+  <data name="View_Ticket_NewSoftwareIssue" xml:space="preserve">
+    <value>SOFTWARE ISSUES</value>
   </data>
 </root>

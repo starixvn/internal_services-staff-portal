@@ -492,6 +492,7 @@
     <Content Include="src\js\admin\dataconfiguration\dataconfigurationindex.js" />
     <Content Include="src\js\admin\dataTableCommon.js" />
     <Content Include="src\js\admin\shop-management\shop-management.js" />
+    <Content Include="src\js\home\read-announcement.js" />
     <Content Include="src\libs\jquery-ui\jquery-ui.css" />
     <Content Include="src\libs\jquery-ui\jquery-ui.js" />
     <Content Include="src\libs\jquery-ui\jquery-ui.min.css" />
@@ -2094,6 +2095,7 @@
     <Content Include="src\libs\toastr\toastr.scss" />
     <Content Include="Views\Ticket\NewCustomerSupportTicket.cshtml" />
     <Content Include="Views\Ticket\_NotificationModal.cshtml" />
+    <Content Include="Views\Home\_AnnouncementListHomePage.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
