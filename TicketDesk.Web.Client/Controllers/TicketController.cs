@@ -20,8 +20,6 @@
     using Localization.Controllers;
     using Models.Ticket;
 
-    [RoutePrefix("ticket")]
-    [Route("{action=index}")]
     public class TicketController : BaseController
     {
         public TicketController(TdDomainContext context)
@@ -31,7 +29,7 @@
 
         private TdDomainContext Context { get; }
 
-        [Route("change-ticket-subscription")]
+        ////[Route("change-ticket-subscription")]
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public async Task<JsonResult> ChangeTicketSubscription(int ticketId)
@@ -60,7 +58,7 @@
             return new JsonCamelCaseResult { Data = new { IsSubscribed = isSubscribed } };
         }
 
-        [Route("facility-ticket-details")]
+        ////[Route("facility-ticket-details")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult FacilityTicketDetails(Ticket ticket)
         {
@@ -95,7 +93,7 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        [Route("new-facility")]
+        ////[Route("new-facility")]
         public async Task<ActionResult> NewFacilityTicket()
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Facility);
@@ -131,7 +129,7 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        [Route("new-facility")]
+        ////[Route("new-facility")]
         public async Task<ActionResult> NewFacilityTicket(NewFacilityTicketViewModel viewModel)
         {
             viewModel.Ticket.Shop = Context.Shops.Find(1);
@@ -149,7 +147,7 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        [Route("new-feedback")]
+        ////[Route("new-feedback")]
         public async Task<ActionResult> NewFeedbackTicket()
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Feedback);
@@ -176,7 +174,7 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        [Route("new-feedback")]
+        ////[Route("new-feedback")]
         public async Task<ActionResult> NewFeedbackTicket(NewFeedbackTicketViewModel viewModel)
         {
             viewModel.Ticket.Shop = Context.Shops.Find(1);
@@ -203,7 +201,7 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        [Route("new-incident")]
+        ////[Route("new-incident")]
         public async Task<ActionResult> NewIncidentTicket()
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Incident);
@@ -231,7 +229,7 @@
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
         [ValidateInput(false)]
-        [Route("new-incident")]
+        ////[Route("new-incident")]
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> NewIncidentTicket(NewIncidentTicketViewModel viewModel)
         {
@@ -260,7 +258,7 @@
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        [Route("new-hardware")]
+        ////[Route("new-hardware")]
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> NewHardwareTicket()
         {
@@ -286,7 +284,7 @@
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
         [ValidateInput(false)]
-        [Route("new-hardware")]
+        ////[Route("new-hardware")]
         public async Task<ActionResult> NewHardwareTicket(NewHardwareTicketViewModel viewModel)
         {
             if (viewModel.Ticket.IsHtml)
@@ -318,7 +316,7 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        [Route("new-software")]
+        ////[Route("new-software")]
         public async Task<ActionResult> NewSoftwareTicket()
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.Software);
@@ -344,7 +342,7 @@
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
         [ValidateInput(false)]
-        [Route("new-software")]
+        ////[Route("new-software")]
         public async Task<ActionResult> NewSoftwareTicket(NewSoftwareTicketViewModel viewModel)
         {
             if (viewModel.Ticket.IsHtml)
@@ -375,7 +373,7 @@
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        [Route("new-customersupport")]
+        ////[Route("new-customersupport")]
         public async Task<ActionResult> NewCustomerSupportTicket()
         {
             var availableCustomField = GetCustomFieldsForTicketCategory(TicketCategoryTypes.CustomerSupport);
@@ -402,7 +400,7 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
-        [Route("new-customersupport")]
+        ////[Route("new-customersupport")]
         public async Task<ActionResult> NewCustomerSupportTicket(NewCustomerSupportTicketViewModel viewModel)
         {
             if (viewModel.Ticket.IsHtml)
@@ -431,7 +429,7 @@
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        [Route("ticket-details")]
+        ////[Route("ticket-details")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketDetails(int ticketId, int? categoryId)
         {
@@ -469,7 +467,7 @@
             ////}
         }
 
-        [Route("ticket-events")]
+        ////[Route("ticket-events")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketEvents(int ticketId)
         {
@@ -478,7 +476,7 @@
             return PartialView("_TicketEvents", ticket?.TicketEvents);
         }
 
-        [Route("ticket-feedback-details")]
+        ////[Route("ticket-feedback-details")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketFeedbackDetails(Ticket ticket)
         {
@@ -497,7 +495,7 @@
             return PartialView("_FeedbackTicketDetails", viewModel);
         }
 
-        [Route("ticket-hardware-details")]
+        ////[Route("ticket-hardware-details")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketHardwareDetails(Ticket ticket)
         {
@@ -512,7 +510,7 @@
             return PartialView("_HardwareTicketDetails", viewModel);
         }
 
-        [Route("ticket-files")]
+        ////[Route("ticket-files")]
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketFiles(int ticketId)
         {
