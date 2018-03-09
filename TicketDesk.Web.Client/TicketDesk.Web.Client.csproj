@@ -378,7 +378,7 @@
     <Compile Include="Controllers\NapUserSettingController.cs" />
     <Compile Include="Controllers\PushNotificationSettingsController.cs" />
     <Compile Include="Controllers\FirstRunSetupController.cs" />
-    <Compile Include="Controllers\ReferencesController.cs" />
+    <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TicketActivityController.cs" />
@@ -2038,13 +2038,13 @@
     <Content Include="src\Fonts\iconFont\fonts\icomoon.ttf" />
     <Content Include="src\Fonts\iconFont\fonts\icomoon.woff" />
     <Content Include="src\Fonts\iconFont\selection.json" />
-    <Content Include="Views\References\Index.cshtml" />
+    <Content Include="Views\Reference\Index.cshtml" />
     <Content Include="Views\TicketCenter\SingleTicket.cshtml" />
-    <Content Include="Views\References\BetOfTheDay.cshtml" />
-    <Content Include="Views\References\FeaturedEvent.cshtml" />
-    <Content Include="Views\References\Newsletter.cshtml" />
-    <Content Include="Views\References\TradingLimit.cshtml" />
-    <Content Include="Views\References\TvSchedules.cshtml" />
+    <Content Include="Views\Reference\BetOfTheDay.cshtml" />
+    <Content Include="Views\Reference\FeaturedEvents.cshtml" />
+    <Content Include="Views\Reference\Newsletters.cshtml" />
+    <Content Include="Views\Reference\TradingLimits.cshtml" />
+    <Content Include="Views\Reference\TvSchedules.cshtml" />
     <Content Include="Views\Ticket\NewFeedbackTicket.cshtml" />
     <Content Include="src\css\login.scss" />
     <Content Include="Views\Ticket\_FeedbackTicketDetails.cshtml" />
@@ -2084,7 +2084,7 @@
     <Content Include="src\css\admin\base\_typo.scss" />
     <Content Include="src\css\admin\layout\_content.scss" />
     <Content Include="src\css\admin\components\_modal.scss" />
-    <Content Include="Views\References\_ReferenceCommon.cshtml" />
+    <Content Include="Views\Reference\_ReferenceCommon.cshtml" />
     <Content Include="src\libs\slick\config.rb" />
     <Content Include="src\libs\slick\slick-theme.less" />
     <Content Include="src\libs\slick\slick-theme.scss" />

@@ -125,5 +125,12 @@
                 context.SaveChanges();
             }
         }
+
+        public Reference GetReferenceRelevant(ReferenceType referenceType)
+        {
+            return context.References.Where(t => t.ReferenceType == referenceType)
+                                               .OrderByDescending(r => r.DateAppear)
+                                               .FirstOrDefault(r => DateTime.Compare(r.DateAppear, DateTime.Now) <= 0);
+        }
     }
 }

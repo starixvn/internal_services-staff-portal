@@ -10,5 +10,7 @@
         IList<Reference> GetListReference(ReferenceType referenceType);
 
         void UploadReferences(ReferenceType referenceType, IEnumerable<ReferenceCriteria> references, string modifiedBy);
+
+        Reference GetReferenceRelevant(ReferenceType referenceType);
     }
 }
