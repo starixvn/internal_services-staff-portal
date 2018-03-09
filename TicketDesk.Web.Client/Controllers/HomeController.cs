@@ -53,8 +53,8 @@
 
         public ActionResult GetListAnnouncementByReadState(bool isUnreadOnly)
         {
-            var announcements = _announcementService.GetHomeAnnouncements();
-            announcements = _announcementService.CalculateAnnouncementsReadStatus(
+            var announcements = announcementService.GetHomeAnnouncements();
+            announcements = announcementService.CalculateAnnouncementsReadStatus(
                     announcements,
                     NapUserSetting.SettingObject.ReadAnnouncements);
 
