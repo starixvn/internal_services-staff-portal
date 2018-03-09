@@ -108,7 +108,7 @@
 
             // TODO: Bug can happen here
             // Mapping object from custom field to ViewModel manually
-            var item = new Item
+            var item = new FacilityItem
             {
                 ItemName = { CustomField = availableCustomField.First(x => x.Name == "Item") },
                 Reason =
@@ -538,7 +538,7 @@
             AddCustomFieldValue(null, viewModel.RequestType.CustomFieldId, viewModel.RequestType.Value, viewModel.Ticket.TicketId);
 
             // add item to database
-            foreach (Item item in viewModel.Items)
+            foreach (FacilityItem item in viewModel.Items)
             {
                 AddCustomFieldValue(item.Index, item.ItemName.CustomFieldId, item.ItemName.Value, viewModel.Ticket.TicketId);
                 AddCustomFieldValue(item.Index, item.Reason.CustomFieldId, item.Reason.Value, viewModel.Ticket.TicketId);

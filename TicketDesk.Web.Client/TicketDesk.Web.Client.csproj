@@ -452,13 +452,13 @@
     <Compile Include="Models\SystemInfoViewModel.cs" />
     <Compile Include="Models\TicketCenterListViewModel.cs" />
     <Compile Include="Models\TicketEmail.cs" />
+    <Compile Include="Models\Ticket\FacilityItem.cs" />
     <Compile Include="Models\Ticket\NewCustomerSupportTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewFeedbackTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewHardwareTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewIncidentTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewNetworkTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewSoftwareTicketViewModel.cs" />
-    <Compile Include="Models\Ticket\NewTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewFacilityTicketViewModel.cs" />
     <Compile Include="Models\Ticket\SingleTicketViewModel.cs" />
     <Compile Include="Models\Ticket\TicketFeedbackCustomField.cs" />

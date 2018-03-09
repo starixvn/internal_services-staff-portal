@@ -468,4 +468,7 @@
   <data name="View_Ticket_NewSoftwareIssue" xml:space="preserve">
     <value>SỰ CỐ VỀ PHẦN MỀM</value>
   </data>
+  <data name="RequestType" xml:space="preserve">
+    <value>Loại yêu cầu</value>
+  </data>
 </root>
