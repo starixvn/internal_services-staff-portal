@@ -38,6 +38,7 @@
 
         function AssignAddMoreButton() {
             $(".btn-add").click(function (event) {
+                $("select").select2('destroy');
                 event.preventDefault();
                 var id = "#" + $(this).data("class");
                 var clone = $(id).children().last().clone();
@@ -63,7 +64,14 @@
                 } else {
                     $(last).addClass("even");
                 }
+                if ($("select").length) {
+                    $("select").select2({
+                        minimumResultsForSearch: Infinity
+                    });
+                }
             });
+
+           
         }
 
         function AssignRemoveButton() {

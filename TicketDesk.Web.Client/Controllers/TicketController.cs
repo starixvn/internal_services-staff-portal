@@ -605,7 +605,7 @@
 
         private IEnumerable<SelectListItem> GetShopSelectList()
         {
-            var shops = Context.Shops.Where(s => s.IsActive).ToList();
+            var shops = Context.Shops.Where(s => s.IsActive).OrderBy(s => s.ShopName).ToList();
             var selectListItem = shops.Select(s => new SelectListItem
             {
                 Text = s.ShopName,
