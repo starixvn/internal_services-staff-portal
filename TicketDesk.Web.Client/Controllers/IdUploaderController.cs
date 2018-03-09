@@ -1,25 +1,22 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
-    using Domain;
+    using System;
+    using System.Net;
+    using System.Web.Mvc;
     using Domain.Infrastructure;
     using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Models;
-    using System;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
-    using System.Net;
-    using System.Web.Mvc;
+    using Service.Interface;
 
     public class IdUploaderController : BaseController
     {
-        private TdDomainContext Context { get; }
+        private readonly IIdUploaderService idUploaderService;
 
-        public IdUploaderController(TdDomainContext context)
+        public IdUploaderController(IIdUploaderService idUploaderService)
         {
-            Context = context;
+            this.idUploaderService = idUploaderService;
         }
 
         // GET: IdUploader
@@ -52,57 +49,17 @@
                     Remark = viewModel.Remark
                 };
 
-                Context.UploadedUserIds.Add(uploadedUserId);
+                idUploaderService.CreateCustomer(uploadedUserId);
 
-                Context.SaveChanges();
+                string pendingFolder = Server.MapPath("~/App_Data/filestore/ticketdesk-attachments/pending");
+                string idUploaderFolder = Server.MapPath("~/App_Data/filestore/id-uploaded/" + uploadedUserId.Id);
 
-                MoveFiles(uploadedUserId.Id.ToString(), viewModel.TempId);
+                idUploaderService.MoveFiles(viewModel.TempId, pendingFolder, idUploaderFolder);
 
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        }
-
-        private void MoveFiles(string folderName, Guid tempId)
-        {
-            // Create or open folder with the record id
-            var commitedFolder = CreateFolder(folderName);
-
-            // Get pending folder path
-            var pendingFolder = Server.MapPath("~/App_Data/filestore/ticketdesk-attachments/pending");
-
-            string fileEnding = tempId.ToString();
-
-            try
-            {
-                // Get all file belongs to that record
-                var files = Directory.EnumerateFiles(pendingFolder)
-                    .Where(x => x.EndsWith(fileEnding));
-
-                // Get names of the files
-                var names = files.Select(x => x.Replace(pendingFolder, string.Empty).TrimStart('\\')).ToList();
-
-                // Move the file from pending folder to commited folder
-                foreach (string file in names)
-                {
-                    string fileToMove = file.Replace(fileEnding, string.Empty).TrimEnd('.');
-
-                    Directory.Move(
-                        Path.Combine(pendingFolder, file),
-                        Path.Combine(commitedFolder.FullName, fileToMove));
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-            }
-        }
-
-        private DirectoryInfo CreateFolder(string folderName)
-        {
-            var folder = Server.MapPath("~/App_Data/filestore/id-uploaded/" + folderName);
-            return Directory.CreateDirectory(folder);
         }
     }
 }

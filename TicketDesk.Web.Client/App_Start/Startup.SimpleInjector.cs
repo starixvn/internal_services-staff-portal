@@ -92,6 +92,7 @@
             container.Register<IReferenceService>(() => new ReferenceService(), hybridLifestyle);
             container.Register<IDataConfigurationService>(() => new DataConfigurationService(), hybridLifestyle);
             container.Register<IShopService>(() => new ShopService(), hybridLifestyle);
+            container.Register<IIdUploaderService>(() => new IdUploaderService(), hybridLifestyle);
 
             container.RegisterInitializer<TicketDeskUserManager>(manager => manager.ConfigureDataProtection(app));
             ////container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
