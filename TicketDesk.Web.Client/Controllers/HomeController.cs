@@ -17,25 +17,25 @@
 
     public class HomeController : BaseController
     {
-        private readonly IAnnouncementService _announcementService;
-        private readonly ITicketService _ticketService;
+        private readonly IAnnouncementService announcementService;
+        private readonly ITicketService ticketService;
 
         public HomeController(IAnnouncementService announcementService, ITicketService ticketService)
         {
-            _announcementService = announcementService;
-            _ticketService = ticketService;
+            this.announcementService = announcementService;
+            this.ticketService = ticketService;
         }
 
         public ActionResult MyOpeningTicket(MyOpenningTicketsViewModel viewModel)
         {
             var myOpenningIssues = viewModel ?? new MyOpenningTicketsViewModel();
 
-            myOpenningIssues.TicketGroups = _ticketService.GetUserOpeningTicketsInGroups(
+            myOpenningIssues.TicketGroups = ticketService.GetUserOpeningTicketsInGroups(
                 CurrentSession.UserId,
                 myOpenningIssues.Skipped,
                 myOpenningIssues.ItemPerPage);
 
-            myOpenningIssues.TotalItem = _ticketService.GetUserTotalOpeningTickets(CurrentSession.UserId);
+            myOpenningIssues.TotalItem = ticketService.GetUserTotalOpeningTickets(CurrentSession.UserId);
 
             return PartialView("_MyOpeningTicket", myOpenningIssues);
         }
@@ -43,15 +43,15 @@
         [NapAuth(FunctionKey = FunctionKeys.ListAssignedTicket, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            var announcements = _announcementService.GetHomeAnnouncements();
-            announcements = _announcementService.CalculateAnnouncementsReadStatus(
+            var announcements = announcementService.GetHomeAnnouncements();
+            announcements = announcementService.CalculateAnnouncementsReadStatus(
                     announcements,
                     NapUserSetting.SettingObject.ReadAnnouncements);
 
             var homeViewModel = new HomeViewModel
             {
                 Announcements = announcements,
-                UnreadAnnouncementQuatity = _announcementService.CountUnreadAnnouncement(NapUserSetting.SettingObject.ReadAnnouncements)
+                UnreadAnnouncementQuatity = announcementService.CountUnreadAnnouncement(NapUserSetting.SettingObject.ReadAnnouncements)
             };
 
             return View(homeViewModel);
@@ -104,8 +104,8 @@
         {
             var moreannouncementViewModel = viewModel ?? new MoreAnnouncementViewModel();
 
-            var announcements = _announcementService.GetAnnouncements(moreannouncementViewModel.GetAnnouncementsCriteria());
-            announcements = _announcementService.CalculateAnnouncementsReadStatus(
+            var announcements = announcementService.GetAnnouncements(moreannouncementViewModel.GetAnnouncementsCriteria());
+            announcements = announcementService.CalculateAnnouncementsReadStatus(
                 announcements,
                 NapUserSetting.SettingObject.ReadAnnouncements);
 
