@@ -10,7 +10,7 @@
 
     public class ReferenceService : EntityFrameworkBaseService, IReferenceService
     {
-        public IList<Reference> GetListReference(ReferenceType referenceType)
+        public IEnumerable<Reference> GetListReference(ReferenceType referenceType)
         {
             var references = context.References.Where(x => x.ReferenceType == referenceType).ToList();
             if (referenceType != ReferenceType.Newsletters)

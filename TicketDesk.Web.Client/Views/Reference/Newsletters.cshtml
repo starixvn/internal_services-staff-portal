@@ -1,6 +1,6 @@
 ﻿@using TicketDesk.Domain.Model
 @using TicketDesk.Core.Resources
-@model IList<Reference>
+@model IEnumerable<Reference>
 
 @section title{ @ViewLang.NewsLetters }
 @section css
@@ -10,21 +10,21 @@
 
 }
 
-@if (Model.Count > 0)
+@if (Model.Count() > 0)
 {
     <div class="img-content">
         <div class="img-detail slick-img">
             @foreach (var reference in Model)
             {
-            <div class="item active">
-                <img src="@reference.ImageLink" alt="The request content cannot be loaded.
+                <div class="item active">
+                    <img src="@reference.ImageLink" alt="The request content cannot be loaded.
                                      Please try again.">
-                <p class="info newsletter">
-                    <span>@ViewLang.NewsLetters</span> |
-                    Last update by <span>@reference.LastUpdateBy</span>
-                    <span>@reference.LastUpdateDate.ToString("dd MMM yyyy hh:mm:ss tt")</span>
-                </p>
-            </div>
+                    <p class="info newsletter">
+                        <span>@ViewLang.NewsLetters</span> |
+                        Last update by <span>@reference.LastUpdateBy</span>
+                        <span>@reference.LastUpdateDate.ToString("dd MMM yyyy hh:mm:ss tt")</span>
+                    </p>
+                </div>
             }
         </div>
     </div>
@@ -35,9 +35,6 @@ else
         <p class="img-error">There is no information</p>
     </div>
 }
-
-
-
 
 @section scripts {
     <script src="~/src/libs/slick/slick.min.js"></script>
