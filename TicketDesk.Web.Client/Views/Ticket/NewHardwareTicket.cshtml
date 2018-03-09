@@ -28,6 +28,8 @@
                 maxDate: new Date(),
                 sideBySide: true
             });
+
+            $(".shop-selector").select2();
         });
     </script>
 }
@@ -49,7 +51,7 @@
 
             <div class="fullwidth">
                 <div class="fullwidth no-border custom-dropdown">
-                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList)
+                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList, new { @class="shop-selector"})
                     @Html.ValidationMessageFor(x => x.Ticket.ShopId)
                 </div>
             </div>

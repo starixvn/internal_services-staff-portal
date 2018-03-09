@@ -13,9 +13,11 @@ var nexcelSSPCommon = (function ($) {
     }
 
     function initSelect2() {
-        $("select").select2({
-            minimumResultsForSearch: Infinity
-        });
+        if ($("select").length) {
+            $("select").select2({
+                minimumResultsForSearch: Infinity
+            });
+        }
     }
     function initialize() {
         registerEventLogout();
