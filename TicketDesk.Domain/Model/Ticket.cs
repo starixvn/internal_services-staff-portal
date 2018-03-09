@@ -81,7 +81,7 @@ namespace TicketDesk.Domain.Model
         [Display(ResourceType = typeof(Strings), Name = "TicketOwner", ShortName = "TicketOwnerShort")]
         public string Owner
         {
-            get => _owner;
+            get { return _owner; }
 
             set
             {
@@ -94,7 +94,7 @@ namespace TicketDesk.Domain.Model
         [Display(ResourceType = typeof(Strings), Name = "TicketAssignedTo", ShortName = "TicketAssignedToShort")]
         public string AssignedTo
         {
-            get => _assignedTo;
+            get { return _assignedTo; }
 
             set
             {
