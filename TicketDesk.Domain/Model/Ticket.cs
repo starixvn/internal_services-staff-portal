@@ -7,6 +7,7 @@ namespace TicketDesk.Domain.Model
     using System.Linq;
     using System.Web.Mvc;
     using TicketDesk.Localization;
+    using TicketDesk.Localization.Client;
     using TicketDesk.Localization.Domain;
 
     public class Ticket
@@ -33,29 +34,29 @@ namespace TicketDesk.Domain.Model
         [Display(ResourceType = typeof(Strings), Name = "TicketTicketId", ShortName = "TicketTicketIdShort")]
         public int TicketId { get; set; }
 
-        [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
+        [Required(ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage), ErrorMessageResourceType = typeof(Resources))]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(ResourceType = typeof(Strings), Name = "TicketProject", ShortName = "TicketProjectShort")]
         public int ShopId { get; set; }
 
         public IEnumerable<SelectListItem> ShopList { get; set; }
 
-        [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
+        [Required(ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage), ErrorMessageResourceType = typeof(Resources))]
         [StringLength(50, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
         [Display(ResourceType = typeof(Strings), Name = "TicketTicketType", ShortName = "TicketTicketTypeShort")]
         public string TicketType { get; set; }
 
-        [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
+        [Required(ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage), ErrorMessageResourceType = typeof(Resources))]
         [StringLength(50, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
         [Display(ResourceType = typeof(Strings), Name = "TicketCategory", ShortName = "TicketCategoryShort")]
         public string Category { get; set; }
 
-        [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
+        [Required(ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage), ErrorMessageResourceType = typeof(Resources))]
         [StringLength(500, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
         [Display(ResourceType = typeof(Strings), Name = "TicketTitle", ShortName = "TicketTitleShort")]
         public string Title { get; set; }
 
-        [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
+        [Required(ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage), ErrorMessageResourceType = typeof(Resources))]
         [Display(ResourceType = typeof(Strings), Name = "TicketDetails", ShortName = "TicketDetailsShort")]
         public string Details { get; set; }
 
@@ -66,7 +67,7 @@ namespace TicketDesk.Domain.Model
         [Display(ResourceType = typeof(Strings), Name = "TicketTagList", ShortName = "TicketTagListShort")]
         public string TagList { get; set; }
 
-        [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
+        [Required(ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage), ErrorMessageResourceType = typeof(Resources))]
         [StringLength(256, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
         [Display(ResourceType = typeof(Strings), Name = "TicketCreatedBy", ShortName = "TicketCreatedByShort")]
         public string CreatedBy { get; set; }
@@ -75,15 +76,12 @@ namespace TicketDesk.Domain.Model
         [Display(ResourceType = typeof(Strings), Name = "TicketCreatedDate", ShortName = "TicketCreatedDateShort")]
         public DateTimeOffset CreatedDate { get; set; }
 
-        [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
+        [Required(ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage), ErrorMessageResourceType = typeof(Resources))]
         [StringLength(256, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
         [Display(ResourceType = typeof(Strings), Name = "TicketOwner", ShortName = "TicketOwnerShort")]
         public string Owner
         {
-            get
-            {
-                return _owner;
-            }
+            get => _owner;
 
             set
             {
@@ -96,10 +94,7 @@ namespace TicketDesk.Domain.Model
         [Display(ResourceType = typeof(Strings), Name = "TicketAssignedTo", ShortName = "TicketAssignedToShort")]
         public string AssignedTo
         {
-            get
-            {
-                return _assignedTo;
-            }
+            get => _assignedTo;
 
             set
             {
@@ -108,19 +103,19 @@ namespace TicketDesk.Domain.Model
             }
         }
 
-        [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
+        [Required(ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage), ErrorMessageResourceType = typeof(Resources))]
         [Display(ResourceType = typeof(Strings), Name = "TicketTicketStatus", ShortName = "TicketTicketStatusShort")]
         public TicketStatus TicketStatus { get; set; }
 
         [Display(ResourceType = typeof(Strings), Name = "TicketCurrentStatusDate", ShortName = "TicketCurrentStatusDateShort")]
         public DateTimeOffset CurrentStatusDate { get; set; }
 
-        [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
+        [Required(ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage), ErrorMessageResourceType = typeof(Resources))]
         [StringLength(256, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
         [Display(ResourceType = typeof(Strings), Name = "TicketCurrentStatusSetBy", ShortName = "TicketCurrentStatusSetByShort")]
         public string CurrentStatusSetBy { get; set; }
 
-        [Required(ErrorMessageResourceName = "FieldRequired", ErrorMessageResourceType = typeof(Validation))]
+        [Required(ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage), ErrorMessageResourceType = typeof(Resources))]
         [StringLength(256, ErrorMessageResourceName = "FieldMaximumLength", ErrorMessageResourceType = typeof(Validation))]
         [Display(ResourceType = typeof(Strings), Name = "TicketLastUpdateBy", ShortName = "TicketLastUpdateByShort")]
         public string LastUpdateBy { get; set; }

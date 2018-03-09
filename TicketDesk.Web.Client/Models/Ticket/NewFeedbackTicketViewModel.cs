@@ -12,7 +12,7 @@
         public Ticket Ticket { get; set; }
 
         public CustomFieldValue FeedbackBy { get; set; }
-        
+
         public CustomFieldValue CustomerName { get; set; }
 
         public CustomFieldValue Feedback { get; set; }
