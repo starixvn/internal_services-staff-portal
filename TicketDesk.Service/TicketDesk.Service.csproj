@@ -129,6 +129,7 @@
     <Compile Include="Implement\AnnouncementService.cs" />
     <Compile Include="Implement\DataConfigurationService.cs" />
     <Compile Include="Implement\IdUploaderService.cs" />
+    <Compile Include="Implement\NapUserSettingService.cs" />
     <Compile Include="Implement\ReferenceService.cs" />
     <Compile Include="Implement\FileManagerService.cs" />
     <Compile Include="Implement\PaginationService.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Interface\IAnnouncementService.cs" />
     <Compile Include="Interface\IDataConfigurationService.cs" />
     <Compile Include="Interface\IIdUploaderService.cs" />
+    <Compile Include="Interface\INapUserSettingService.cs" />
     <Compile Include="Interface\IReferenceService.cs" />
     <Compile Include="Interface\IFileManagerService.cs" />
     <Compile Include="Interface\IPaginationService.cs" />

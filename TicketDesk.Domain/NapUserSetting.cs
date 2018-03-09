@@ -10,22 +10,22 @@
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int UserId { get; set; }
 
-        public string JsonSetting { get; set; }
-
-        [NotMapped]
-        public NapUserSettingObject SettingObject
+        public string JsonSetting
         {
             get
             {
-                var jObject = JObject.Parse(JsonSetting);
-                return jObject.ToObject<NapUserSettingObject>();
+                var jObject = JObject.FromObject(SettingObject);
+                return jObject.ToString();
             }
             set
             {
-                var jObject = JObject.FromObject(value);
-                JsonSetting = jObject.ToString();
+                var jObject = JObject.Parse(value);
+                SettingObject = jObject.ToObject<NapUserSettingObject>();
             }
         }
+
+        [NotMapped]
+        public NapUserSettingObject SettingObject { get; set; }
     }
 
     public class NapUserSettingObject
