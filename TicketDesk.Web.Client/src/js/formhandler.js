@@ -13,6 +13,18 @@ var formhandler = {
         formhandler.applyMaxLengh();
         formhandler.handelFormSubmit();
         formhandler.initSelect2();
+        formhandler.initDateTimePicker();
+    },
+
+    initDateTimePicker: function() {
+        if ($.fn.datetimepicker) {
+            $(".datetimepicker").datetimepicker({
+                format: "DD/MM/YYYY hh:mm",
+                defaultDate: new Date(),
+                maxDate: new Date(),
+                sideBySide: true
+            });
+        }
     },
 
     initSelect2: function () {

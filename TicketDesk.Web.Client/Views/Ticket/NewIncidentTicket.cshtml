@@ -18,20 +18,11 @@
 @section scripts
 {
     @Html.Partial("_DropzoneScripts", Model)
-    <script src="~/src/js/formhandler.js"></script>
+
     <script src="~/src/libs/datetimepicker/moment.js"></script>
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('.datetimepicker').datetimepicker({
-                format: 'DD/MM/YYYY hh:mm',
-                defaultDate: new Date(),
-                maxDate: new Date(),
-                sideBySide: true
-            });
-        });
-    </script>
+    <script src="~/src/js/formhandler.js"></script>
 }
 
 @Html.Partial("_NotificationModal")
