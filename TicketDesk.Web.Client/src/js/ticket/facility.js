@@ -78,7 +78,7 @@
         $(".ticket-form").removeData("validator");
         $(".ticket-form").removeData("unobtrusiveValidation");
         $.validator.unobtrusive.parse(".ticket-form");
-        CheckFormAndTurnSubmitButton("ticket-form");
+        formhandler.checkFormAndTurnSubmitButton("ticket-form");
     },
 
     generateGuid: function() {
@@ -143,5 +143,4 @@
 
 $(document).ready(function () {
     facility.init();
-    InitFormHandler("ticket-form", false);
 });
