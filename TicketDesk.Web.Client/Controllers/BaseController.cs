@@ -31,14 +31,14 @@
         {
             get => NapContextHelper.CurrentSession;
             set => NapContextHelper.CurrentSession = value;
-            }
+        }
 
 
         protected ICurrentContext CurrentContext
         {
             get => NapContextHelper.CurrentContext;
             set => NapContextHelper.CurrentContext = value;
-            }
+        }
 
 
         protected IUserService UserService => NapContextHelper.UserService;

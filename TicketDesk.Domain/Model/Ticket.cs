@@ -36,7 +36,7 @@ namespace TicketDesk.Domain.Model
 
         [Required(ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage), ErrorMessageResourceType = typeof(Resources))]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Display(ResourceType = typeof(Strings), Name = "TicketProject", ShortName = "TicketProjectShort")]
+        [Display(ResourceType = typeof(Resources), Name = nameof(Resources.ShopName), ShortName = nameof(Resources.ShopName))]
         public int ShopId { get; set; }
 
         public IEnumerable<SelectListItem> ShopList { get; set; }

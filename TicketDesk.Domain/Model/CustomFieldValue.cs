@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Web.Mvc;
 
     public class CustomFieldValue
     {
@@ -11,6 +12,7 @@
 
         public string GroupId { get; set; }
 
+        [AllowHtml]
         public string Value { get; set; }
 
         public int TicketId { get; set; }
@@ -19,5 +21,11 @@
 
         [NotMapped]
         public virtual CustomField CustomField { get; set; }
+
+        public void AddDetails(string groupId, int ticketId)
+        {
+            GroupId = groupId;
+            TicketId = ticketId;
+        }
     }
 }

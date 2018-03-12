@@ -1,11 +1,12 @@
 ﻿namespace TicketDesk.Web.Client.Models.Ticket
 {
+    using System.Collections.Generic;
     using Domain.Model;
     using Infrastructure.Helpers;
     using System.ComponentModel.DataAnnotations;
     using Localization.Client;
 
-    public class NewFeedbackTicketViewModel : TicketWithFilesBaseViewModel
+    public class NewFeedbackTicketViewModel : TicketWithFilesBaseViewModel, ITicketCustomFieldsProvider
     {
         private string[] _feedbackByValues;
 
@@ -40,6 +41,22 @@
             FeedbackBy = new CustomFieldValue();
             CustomerName = new CustomFieldValue();
             Feedback = new CustomFieldValue();
+        }
+
+        public IList<CustomFieldValue> GetCustomFieldValuesToInsert(int ticketId)
+        {
+            var customFieldValues = new List<CustomFieldValue>();
+
+            FeedbackBy.AddDetails(null, ticketId);
+            customFieldValues.Add(FeedbackBy);
+
+            CustomerName.AddDetails(null, ticketId);
+            customFieldValues.Add(CustomerName);
+
+            Feedback.AddDetails(null, ticketId);
+            customFieldValues.Add(Feedback);
+
+            return customFieldValues;
         }
     }
 }

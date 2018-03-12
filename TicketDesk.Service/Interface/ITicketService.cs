@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Service.Interface
 {
+    using System;
     using System.Collections.Generic;
     using Domain.Model;
 
@@ -10,5 +11,13 @@
         IList<TicketGroup> GetUserOpeningTicketsInGroups(int userId, int skip, int take);
 
         int GetUserTotalOpeningTickets(int userId);
+
+        bool UpdateTicketSubscription(int ticketId, string userId);
+
+        bool CreateTicket(Ticket ticket, Guid tempId);
+
+        IEnumerable<string> CommitPendingAttachments(Ticket ticket, Guid tempId);
+
+
     }
 }

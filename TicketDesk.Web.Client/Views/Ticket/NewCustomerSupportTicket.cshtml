@@ -1,7 +1,6 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
 @using TicketDesk.Localization.Client
 @using TicketDesk.Web.Client.Infrastructure.Helpers
-@using TicketDesk.Localization.Client
 
 @section title { @New.Title }
 
@@ -49,7 +48,7 @@
 
         <div class="item-list item">
             <div class="key fullwidth">
-                <label for="OutletName">@Resources.ShopName</label>
+                @Html.LabelFor(x => x.Ticket.ShopId)
             </div>
 
             <div class="fullwidth">

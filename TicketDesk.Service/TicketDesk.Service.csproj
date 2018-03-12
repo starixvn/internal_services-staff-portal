@@ -117,6 +117,24 @@
       <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -127,6 +145,7 @@
   <ItemGroup>
     <Compile Include="EntityFrameworkBaseService.cs" />
     <Compile Include="Implement\AnnouncementService.cs" />
+    <Compile Include="Implement\CustomFieldService.cs" />
     <Compile Include="Implement\DataConfigurationService.cs" />
     <Compile Include="Implement\IdUploaderService.cs" />
     <Compile Include="Implement\NapUserSettingService.cs" />
@@ -136,6 +155,7 @@
     <Compile Include="Implement\ShopService.cs" />
     <Compile Include="Implement\TicketService.cs" />
     <Compile Include="Interface\IAnnouncementService.cs" />
+    <Compile Include="Interface\ICustomFieldService.cs" />
     <Compile Include="Interface\IDataConfigurationService.cs" />
     <Compile Include="Interface\IIdUploaderService.cs" />
     <Compile Include="Interface\INapUserSettingService.cs" />
@@ -170,6 +190,10 @@
     <ProjectReference Include="..\TicketDesk.Domain\TicketDesk.Domain.csproj">
       <Project>{DBD5279B-9F1C-4915-86A9-6A8F1CF0622D}</Project>
       <Name>TicketDesk.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.IO\TicketDesk.IO.csproj">
+      <Project>{d9477c13-68c4-43e0-a30b-f06f444c5358}</Project>
+      <Name>TicketDesk.IO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,9 @@
 ﻿namespace TicketDesk.Web.Client.Models.Ticket
 {
+    using System.Collections.Generic;
     using Domain.Model;
 
-    public class NewCustomerSupportTicketViewModel : TicketWithFilesBaseViewModel
+    public class NewCustomerSupportTicketViewModel : TicketWithFilesBaseViewModel, ITicketCustomFieldsProvider
     {
         public Ticket Ticket { get; set; }
 
@@ -21,6 +22,25 @@
             NationalIdCardNo = new CustomFieldValue();
             TimeOfIncident = new CustomFieldValue();
             SupportType = new CustomFieldValue();
+        }
+
+        public IList<CustomFieldValue> GetCustomFieldValuesToInsert(int ticketId)
+        {
+            var customFieldValues = new List<CustomFieldValue>();
+
+            SupportType.AddDetails(null, ticketId);
+            customFieldValues.Add(SupportType);
+
+            Description.AddDetails(null, ticketId);
+            customFieldValues.Add(Description);
+
+            NationalIdCardNo.AddDetails(null, ticketId);
+            customFieldValues.Add(NationalIdCardNo);
+
+            TimeOfIncident.AddDetails(null, ticketId);
+            customFieldValues.Add(TimeOfIncident);
+
+            return customFieldValues;
         }
     }
 }

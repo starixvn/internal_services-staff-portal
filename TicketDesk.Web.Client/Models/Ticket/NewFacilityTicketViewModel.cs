@@ -6,7 +6,7 @@
     using System.ComponentModel.DataAnnotations;
     using Localization.Client;
 
-    public class NewFacilityTicketViewModel : TicketWithFilesBaseViewModel
+    public class NewFacilityTicketViewModel : TicketWithFilesBaseViewModel, ITicketCustomFieldsProvider
     {
         private string[] _requestTypes;
 
@@ -39,6 +39,28 @@
             Ticket = new Ticket();
             RequestType = new CustomFieldValue();
             Items = new List<FacilityItem>();
+        }
+
+        public IList<CustomFieldValue> GetCustomFieldValuesToInsert(int ticketId)
+        {
+            var customFieldValues = new List<CustomFieldValue>();
+
+            RequestType.GroupId = null;
+            RequestType.TicketId = ticketId;
+            customFieldValues.Add(RequestType);
+
+            foreach (FacilityItem facilityItem in Items)
+            {
+                facilityItem.ItemName.GroupId = facilityItem.Index;
+                facilityItem.ItemName.TicketId = ticketId;
+                customFieldValues.Add(facilityItem.ItemName);
+
+                facilityItem.Reason.GroupId = facilityItem.Index;
+                facilityItem.Reason.TicketId = ticketId;
+                customFieldValues.Add(facilityItem.Reason);
+            }
+
+            return customFieldValues;
         }
     }
 }

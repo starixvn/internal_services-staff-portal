@@ -11,7 +11,7 @@
     {
         public bool CheckExistShopName(string shopName)
         {
-            return context.Shops.Where(x => x.ShopName == shopName).Any();
+            return context.Shops.Any(x => x.ShopName == shopName);
         }
 
         public bool CreateNewShop(ShopCriteria criteria)

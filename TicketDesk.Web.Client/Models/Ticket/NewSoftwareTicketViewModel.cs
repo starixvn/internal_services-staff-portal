@@ -1,8 +1,9 @@
 ﻿namespace TicketDesk.Web.Client.Models.Ticket
 {
+    using System.Collections.Generic;
     using Domain.Model;
 
-    public class NewSoftwareTicketViewModel : TicketWithFilesBaseViewModel
+    public class NewSoftwareTicketViewModel : TicketWithFilesBaseViewModel, ITicketCustomFieldsProvider
     {
         public NewSoftwareTicketViewModel()
         {
@@ -19,5 +20,20 @@
         public CustomFieldValue TimeOfIncident { get; set; }
 
         public CustomFieldValue Description { get; set; }
+        public IList<CustomFieldValue> GetCustomFieldValuesToInsert(int ticketId)
+        {
+            var customFieldValues = new List<CustomFieldValue>();
+
+            System.AddDetails(null, ticketId);
+            customFieldValues.Add(System);
+
+            Description.AddDetails(null, ticketId);
+            customFieldValues.Add(Description);
+
+            TimeOfIncident.AddDetails(null, ticketId);
+            customFieldValues.Add(TimeOfIncident);
+
+            return customFieldValues;
+        }
     }
 }

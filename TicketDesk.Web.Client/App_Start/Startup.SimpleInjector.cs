@@ -94,6 +94,7 @@
             container.Register<IShopService>(() => new ShopService(), hybridLifestyle);
             container.Register<IIdUploaderService>(() => new IdUploaderService(), hybridLifestyle);
             container.Register<INapUserSettingService>(() => new NapUserSettingService(), hybridLifestyle);
+            container.Register<ICustomFieldService>(() => new CustomFieldService(), hybridLifestyle);
 
             container.RegisterInitializer<TicketDeskUserManager>(manager => manager.ConfigureDataProtection(app));
             ////container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
