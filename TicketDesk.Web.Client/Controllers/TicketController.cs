@@ -217,7 +217,7 @@
                 }
             }
 
-            viewModel.Ticket.Shop = context.Shops.Find(1);
+            viewModel.Ticket.Shop = context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Incident;
 
             if (ModelState.IsValid)
@@ -279,7 +279,7 @@
             }
 
             // TODO: Replace with actual project ID represent for shop id here
-            viewModel.Ticket.Shop = context.Shops.Find(1);
+            viewModel.Ticket.Shop = context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Hardware;
 
             if (ModelState.IsValid)
@@ -344,7 +344,7 @@
             }
 
             // TODO: Replace with actual project ID represent for shop id here
-            viewModel.Ticket.Shop = context.Shops.Find(1);
+            viewModel.Ticket.Shop = context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Software;
 
             if (ModelState.IsValid)
@@ -408,7 +408,7 @@
                 }
             }
 
-            viewModel.Ticket.Shop = context.Shops.Find(1);
+            viewModel.Ticket.Shop = context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.CustomerSupport;
 
             if (ModelState.IsValid)
