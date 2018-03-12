@@ -1,17 +1,18 @@
-﻿@model TicketDesk.Domain.Model.Reference
+﻿@using TicketDesk.Localization.Client
+@model TicketDesk.Domain.Model.Reference
 
 <div class="img-content">
     @if (Model == null)
     {
         <div class="img-detail">
-            <p class="img-error">There is no information</p>
+            <p class="img-error">@Resources.View_Reference_NoInformation</p>
         </div>
     }
     else
     {
         <div class="img-detail">
-            <img src="@(Model.ImageLink)" alt="The request content cannot be loaded.
-                 Please try again." />
+            <img src="@(Model.ImageLink)" alt="@Resources.View_Reference_CannotLoadContent
+                 @Resources.View_Reference_TryAgain" />
         </div>
         <p class="info">
             <span>@ViewData["name"]</span> |

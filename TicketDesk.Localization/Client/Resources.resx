@@ -471,4 +471,13 @@
   <data name="RequestType" xml:space="preserve">
     <value>Request Type</value>
   </data>
+  <data name="View_Reference_CannotLoadContent" xml:space="preserve">
+    <value>The request content cannot be loaded.</value>
+  </data>
+  <data name="View_Reference_NoInformation" xml:space="preserve">
+    <value>There is no information</value>
+  </data>
+  <data name="View_Reference_TryAgain" xml:space="preserve">
+    <value>Please try again.</value>
+  </data>
 </root>

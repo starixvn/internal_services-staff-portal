@@ -471,4 +471,13 @@
   <data name="RequestType" xml:space="preserve">
     <value>Loại yêu cầu</value>
   </data>
+  <data name="View_Reference_CannotLoadContent" xml:space="preserve">
+    <value>Không thể tải được nội dung.</value>
+  </data>
+  <data name="View_Reference_NoInformation" xml:space="preserve">
+    <value>Không có thông tin.</value>
+  </data>
+  <data name="View_Reference_TryAgain" xml:space="preserve">
+    <value>Vui lòng thử lại.</value>
+  </data>
 </root>

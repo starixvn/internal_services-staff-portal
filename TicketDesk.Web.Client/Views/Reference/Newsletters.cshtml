@@ -1,5 +1,6 @@
 ﻿@using TicketDesk.Domain.Model
 @using TicketDesk.Core.Resources
+@using TicketDesk.Localization.Client
 @model IEnumerable<Reference>
 
 @section title{ @ViewLang.NewsLetters }
@@ -17,8 +18,8 @@
             @foreach (var reference in Model)
             {
                 <div class="item active">
-                    <img src="@reference.ImageLink" alt="The request content cannot be loaded.
-                                     Please try again.">
+                    <img src="@reference.ImageLink" alt="@Resources.View_Reference_CannotLoadContent
+                                     @Resources.View_Reference_TryAgain.">
                     <p class="info newsletter">
                         <span>@ViewLang.NewsLetters</span> |
                         Last update by <span>@reference.LastUpdateBy</span>
@@ -32,7 +33,7 @@
 else
 {
     <div class="img-detail">
-        <p class="img-error">There is no information</p>
+        <p class="img-error">@Resources.View_Reference_NoInformation</p>
     </div>
 }
 
