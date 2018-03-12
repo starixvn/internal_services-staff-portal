@@ -36,7 +36,8 @@
                 CurrentPage = i,
                 ItemPerPage = itemPerPage,
                 PublishedFrom = PublishedFrom,
-                PublishedTo = PublishedTo
+                PublishedTo = PublishedTo,
+                Type = Type
             };
 
             var routeValues = new RouteValueDictionary
@@ -44,7 +45,8 @@
                 { nameof(index.CurrentPage), index.CurrentPage },
                 { nameof(index.ItemPerPage), index.ItemPerPage },
                 { nameof(index.PublishedFrom), index.PublishedFrom },
-                { nameof(index.PublishedTo), index.PublishedTo }
+                { nameof(index.PublishedTo), index.PublishedTo },
+                { nameof(index.Type), index.Type }
             };
 
             return UrlHelper.GenerateUrl(
