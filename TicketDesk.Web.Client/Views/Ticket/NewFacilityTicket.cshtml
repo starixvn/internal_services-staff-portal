@@ -158,6 +158,19 @@
 
     <div class="form-content facility-form">
         <div class="title">@Resources.Views_Ticket_NewFacilityTicket_Title</div>
+
+        <div class="item-list item">
+            <div class="key fullwidth">
+                @Html.LabelFor(x => x.Ticket.ShopId)
+            </div>
+
+            <div class="fullwidth">
+                <div class="fullwidth no-border custom-dropdown">
+                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList, new { @class = "shop-selector" })
+                </div>
+            </div>
+        </div>
+
         <div class="item-list height-auto">
             @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "key border label-item" })
             <div class="value span-3 border subject">

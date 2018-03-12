@@ -65,6 +65,9 @@
             var viewModel = new NewFacilityTicketViewModel
             {
                 TempId = Guid.NewGuid(),
+                Ticket = {
+                    ShopList = shopService.GetShopSelectList()
+                },
                 RequestType = { CustomField = availableCustomField.First(x => x.Name == "Request Type") }
             };
 
@@ -92,7 +95,6 @@
         [ValidateInput(false)]
         public ActionResult NewFacilityTicket(NewFacilityTicketViewModel viewModel)
         {
-            ////viewModel.Ticket.Shop = context.Shops.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
             ReValidateModelState(viewModel);
 
@@ -122,7 +124,8 @@
                 Feedback = { CustomField = availableCustomField.First(x => x.Name == "Feedback") },
                 Ticket =
                 {
-                    Owner = CurrentSession.UserId.ToString()
+                    Owner = CurrentSession.UserId.ToString(),
+                    ShopList = shopService.GetShopSelectList()
                 }
             };
 
@@ -135,7 +138,6 @@
         [ValidateInput(false)]
         public ActionResult NewFeedbackTicket(NewFeedbackTicketViewModel viewModel)
         {
-            ////viewModel.Ticket.Shop = context.Shops.Find(1);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Feedback;
 
             ReValidateModelState(viewModel);
