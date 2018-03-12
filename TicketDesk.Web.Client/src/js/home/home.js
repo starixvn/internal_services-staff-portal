@@ -84,6 +84,7 @@ var hiddenText = {
 
         $(".announcement-msg").on("click",
             function () {
+                console.log("Click");
                 var element = $(this).find(".morecontent");
                 var dots = $(this).find(".dots");
                 var sign = $(this).find(".sign");
@@ -126,6 +127,7 @@ var announcementUnreadBtn = {
         var url = "/Home/GetListAnnouncementByReadState?isUnreadOnly=" + isUnreadOnly;
         $.get(url, function (response) {
             $("#announcement-list").html(response);
+            hiddenText.init();
             announcementReadEvent.registerUnreadClickEvent();
         });
     },
@@ -133,7 +135,6 @@ var announcementUnreadBtn = {
 
 $(document).ready(function () {
     myOpenningTicket.init();
-    hiddenText.init();
     announcementUnreadBtn.getListAnnouncement();
     announcementUnreadBtn.registerUnreadBtnClickEvent();
 });
