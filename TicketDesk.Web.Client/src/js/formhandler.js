@@ -5,18 +5,11 @@
     SetValueForRequiredRadioButton(formclassname);
 
     ApplyMaxLengh();
-    
+
     $("body").on("input",
         "input[type='text'], textarea",
         function () {
             CheckFormAndTurnSubmitButton(formclassname);
-            //if ($(this).attr("data-val-length-max") !== undefined && !$(this).hasClass("skip-limit")) {
-                //var maxChar = $(this).attr("data-val-length-max");
-                //if ($(this).val().length > maxChar) {
-                //    var textRemain = $(this).val().substring(0, maxChar);
-                //    $(this).val(textRemain);
-                //}
-            //}
         });
 
     $('#notification-modal').on('hidden.bs.modal',
@@ -25,32 +18,9 @@
             $(selector).validate().resetForm();
             $(selector)[0].reset();
         });
-    
-    //$(selector).on("input",
-    //    "input",
-    //    function() {
-    //        console.log("on input");
-    //        CheckFormAndTurnSubmitButton(formclassname);
-    //    });
-
-    //$(selector).on("input",
-    //    "textarea",
-    //    function () {
-    //        console.log("on input");
-    //        CheckFormAndTurnSubmitButton(formclassname);
-    //    });
-
-    //$(".filechange").on("filechange",
-    //    function () {
-    //        CheckFormAndTurnSubmitButton(formclassname);
-    //    });
 
     $(selector).on("submit",
         function(e) {
-            //if ($(formSubmitSelector).hasClass("disabled")) {
-            //    e.preventDefault();
-            //    return false;
-            //}
             if ($(this).valid()) {
                 if (CheckValidFilesIfDropzoneExisted()) {
 
@@ -76,22 +46,14 @@
                 } else {
                     // Errors in files
                     var englishText = BuildFileErrorText();
-                    //SetErrorTextAndShowModal("Invalid or missing files or total file size exceeded max number", "Files không hợp lệ hoặc không có file nào hoặc tổng dung lượng file vượt quá giới hạn cho phép");
                     SetErrorTextAndShowModal(englishText);
                     e.preventDefault();
                     return false;
                 }
             }
-            //else {
-            //    SetErrorTextAndShowModal("Invalid data in fields", "Không có dữ liệu trong các ô");
-            //    e.preventDefault();
-            //    return false;
-            //}
 
             return true;
         });
-
-    //CheckFormAndTurnSubmitButton(formclassname);
 }
 
 function ApplyMaxLengh() {
@@ -109,7 +71,6 @@ function SetValueForRequiredRadioButton(formclassname) {
         function () {
             $(".required-radio-value").val($(".required-radio:checked").val());
             $(".required-radio-value").valid();
-            //CheckFormAndTurnSubmitButton(formclassname);
         });
 }
 
@@ -129,11 +90,6 @@ function CheckFormAndTurnSubmitButton(formclassname) {
     var formSummittedState = validate.submitted;
     var isValid = validate.checkForm();
     if (isValid && CheckValidFilesIfDropzoneExisted()) {
-        // Enable the button
-        //$(inputSelector).attr("disabled", false);
-    } else {
-        // Disable the button
-        //$(inputSelector).attr("disabled", true);
     }
 
     $(selector).validate().submitted = formSummittedState;
@@ -148,11 +104,13 @@ function CountDownCharacter(element) {
     }
 }
 
-$("form").on("keyup", ".description", function () {
-    CountDownCharacter($(this));
-})
+$("form").on("keyup",
+    ".description",
+    function() {
+        CountDownCharacter($(this));
+    });
 
 $.validator.setDefaults({
-    ignore: [],
+    ignore: []
     // any other default options and/or rules
 });
