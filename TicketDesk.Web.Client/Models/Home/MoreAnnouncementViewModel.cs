@@ -45,9 +45,13 @@
                 { nameof(index.CurrentPage), index.CurrentPage },
                 { nameof(index.ItemPerPage), index.ItemPerPage },
                 { nameof(index.PublishedFrom), index.PublishedFrom },
-                { nameof(index.PublishedTo), index.PublishedTo },
-                { nameof(index.Type), index.Type }
+                { nameof(index.PublishedTo), index.PublishedTo }
             };
+
+            if (index.Type != null)
+            {
+                routeValues.Add(nameof(index.Type), (int)index.Type);
+            }
 
             return UrlHelper.GenerateUrl(
                 RouteNames.Default.ToString(),
