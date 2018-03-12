@@ -166,7 +166,7 @@
                     var notes = domainContext.TicketEventNotifications
                         .Include(t => t.TicketEvent)
                         .Include(t => t.TicketEvent.Ticket)
-                        .Include(t => t.TicketEvent.Ticket.Shop)
+                        ////.Include(t => t.TicketEvent.Ticket.Shop)
                         .Where(t => notificationIds.Contains(t.EventId))
                         .ToArray();
 
@@ -209,7 +209,7 @@
                     var notes = domainContext.TicketEventNotifications
                         .Include(t => t.TicketEvent)
                         .Include(t => t.TicketEvent.Ticket)
-                        .Include(t => t.TicketEvent.Ticket.Shop)
+                        ////.Include(t => t.TicketEvent.Ticket.Shop)
                         .Include(t => t.TicketSubscriber)
                         .Where(t => notificationIds.Contains(t.EventId))
                         .ToArray();

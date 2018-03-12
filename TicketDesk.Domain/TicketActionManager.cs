@@ -215,7 +215,7 @@
                 sb.AppendLine(string.Format(
                     "<dd>    " + Strings.Changes_From_To + "</dd>",
                     PropertyUtility.GetPropertyDisplayString<Ticket>(p => p.ShopId),
-                    ticket.Shop.ShopName,
+                    ticket.ShopId,
                     projectName));
                 ticket.ShopId = projectId;
             }

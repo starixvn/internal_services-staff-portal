@@ -1,6 +1,8 @@
 ﻿namespace TicketDesk.Service.Interface
 {
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Web.Mvc;
     using Criteria.Shop;
     using Domain.Model;
 
@@ -17,5 +19,7 @@
         bool CheckExistShopName(string shopName);
 
         object GetShopSuggestion(string shopName);
+
+        IEnumerable<SelectListItem> GetShopSelectList();
     }
 }

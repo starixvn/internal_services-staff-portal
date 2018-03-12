@@ -1,7 +1,9 @@
 ﻿namespace TicketDesk.Service.Implement
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Web.Mvc;
     using Core.Enumerations;
     using Criteria.Shop;
     using Domain.Model;
@@ -80,6 +82,18 @@
             }
 
             return result;
+        }
+
+        public IEnumerable<SelectListItem> GetShopSelectList()
+        {
+            return context.Shops
+                .Where(s => s.IsActive)
+                .OrderBy(s => s.ShopName)
+                .Select(s => new SelectListItem
+                {
+                    Text = s.ShopName,
+                    Value = s.ShopId.ToString()
+                });
         }
     }
 }
