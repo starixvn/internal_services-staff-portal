@@ -23,14 +23,6 @@
         $(".btn-delete-item:first").hide();
     },
 
-    initSelect2: function() {
-        if ($("select").length) {
-            $("select").select2({
-                minimumResultsForSearch: Infinity
-            });
-        }
-    },
-
     displayEvenItems: function () {
         var items = $("#item-list .item");
         $(items).removeClass("even");
@@ -70,7 +62,7 @@
 
             facility.displayEvenItems();
 
-            facility.initSelect2();
+            formhandler.initSelect2();
         });
     },
 

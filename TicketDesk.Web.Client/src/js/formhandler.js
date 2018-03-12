@@ -12,6 +12,19 @@ var formhandler = {
         formhandler.setValueForRequiredRadioButton();
         formhandler.applyMaxLengh();
         formhandler.handelFormSubmit();
+        formhandler.initSelect2();
+    },
+
+    initSelect2: function () {
+        if ($("select").length) {
+            if ($("select").hasClass("select2-searchable")) {
+                $("select").select2();
+            } else {
+                $("select").select2({
+                    minimumResultsForSearch: Infinity
+                });
+            }
+        }
     },
 
     applyMaxLengh: function () {
@@ -19,7 +32,7 @@ var formhandler = {
         textInput.each(function (object) {
             if ($(this).attr("data-val-length-max") !== undefined && !$(this).hasClass("skip-limit")) {
                 var maxChar = $(this).attr("data-val-length-max");
-                $(this).attr('maxlength', maxChar);
+                $(this).attr("maxlength", maxChar);
             }
         });
     },
@@ -63,7 +76,7 @@ var formhandler = {
     },
 
     resetFormOnModalDismissed: function () {
-        $('#notification-modal').on('hidden.bs.modal',
+        $("#notification-modal").on("hidden.bs.modal",
             function () {
                 location.reload();
                 $(".content form").validate().resetForm();
@@ -85,12 +98,12 @@ var formhandler = {
                 if ($(this).valid()) {
                     if (formhandler.checkValidFilesIfDropzoneExisted()) {
 
-                        $(".content form input[type=submit]").prop('disabled', true);
+                        $(".content form input[type=submit]").prop("disabled", true);
 
                         e.preventDefault();
                         $.ajax({
-                            url: $(this).attr('action'),
-                            method: $(this).attr('method'),
+                            url: $(this).attr("action"),
+                            method: $(this).attr("method"),
                             data: $(this).serialize(),
                             success: function (res, status, xhr) {
                                 $("#notification-modal").modal();
