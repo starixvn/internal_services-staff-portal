@@ -126,7 +126,7 @@
             }
         }
 
-        public Reference GetReferenceRelevant(ReferenceType referenceType)
+        public Reference GetRelevantReference(ReferenceType referenceType)
         {
             return context.References.Where(t => t.ReferenceType == referenceType)
                                                .OrderByDescending(r => r.DateAppear)

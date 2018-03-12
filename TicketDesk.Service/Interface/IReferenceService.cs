@@ -11,6 +11,6 @@
 
         void UploadReferences(ReferenceType referenceType, IEnumerable<ReferenceCriteria> references, string modifiedBy);
 
-        Reference GetReferenceRelevant(ReferenceType referenceType);
+        Reference GetRelevantReference(ReferenceType referenceType);
     }
 }

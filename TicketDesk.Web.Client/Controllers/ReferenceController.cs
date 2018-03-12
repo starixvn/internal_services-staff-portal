@@ -26,13 +26,13 @@
 
         public ActionResult BetOfTheDay()
         {
-            var reference = referenceService.GetReferenceRelevant(ReferenceType.BetOfTheDay);
+            var reference = referenceService.GetRelevantReference(ReferenceType.BetOfTheDay);
             return View(reference);
         }
 
         public ActionResult FeaturedEvents()
         {
-            var reference = referenceService.GetReferenceRelevant(ReferenceType.FeaturedEvent);
+            var reference = referenceService.GetRelevantReference(ReferenceType.FeaturedEvent);
 
             return View(reference);
         }
@@ -45,14 +45,14 @@
 
         public ActionResult TradingLimits()
         {
-            var reference = referenceService.GetReferenceRelevant(ReferenceType.TradingLimits);
+            var reference = referenceService.GetRelevantReference(ReferenceType.TradingLimits);
 
             return View(reference);
         }
 
         public ActionResult TvSchedules()
         {
-            var reference = referenceService.GetReferenceRelevant(ReferenceType.TvSchedule);
+            var reference = referenceService.GetRelevantReference(ReferenceType.TvSchedule);
             return View(reference);
         }
     }
