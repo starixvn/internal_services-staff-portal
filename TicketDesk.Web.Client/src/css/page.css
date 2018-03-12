@@ -1484,6 +1484,10 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .select2-container--open .select2-dropdown--below {
   border-radius: 0;
   border-color: #d3d7db; }
+  .select2-container--open .select2-dropdown--below .select2-search__field {
+    height: 30px;
+    font-family: inherit;
+    color: #333; }
 
 .select2-results__option {
   color: #333; }
