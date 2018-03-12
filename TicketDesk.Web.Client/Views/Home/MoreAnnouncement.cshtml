@@ -86,7 +86,8 @@
                 </thead>
 
                 <tbody>
-                    @{
+                    @if (Model.Announcements != null && Model.Announcements.Count() > 0)
+                    {
                         int index = 0;
                         foreach (var announcement in Model.Announcements)
                         {
@@ -120,6 +121,14 @@
 
                             index++;
                         }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                There is no data
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
