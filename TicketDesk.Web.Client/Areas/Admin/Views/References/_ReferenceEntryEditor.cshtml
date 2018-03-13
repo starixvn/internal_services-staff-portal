@@ -8,10 +8,10 @@
         <div class="date form-group">
             @Html.LabelFor(model => model.DateAppear)
             <span class="text-red">*</span>
-        <div class="datetime-field">
+            <div class="datetime-field">
                 @Html.TextBoxFor(model => model.DateAppear, new { @class = "datetimepicker form-control" })
                 <span class="icon-calendar"></span>
-                @Html.ValidationMessageFor(model => model.DateAppear, string.Empty, new { @class = "error-message" })
+                @Html.ValidationMessageFor(model => model.DateAppear, string.Empty, new { @class = "text-red" })
             </div>
         </div>
 
@@ -20,8 +20,8 @@
         @Html.LabelFor(model => model.ImageLink)
         <span class="text-red">*</span>
         @Html.TextBoxFor(model => model.ImageLink, new { maxLength = 500, @class = "form-control image-url" })
-        @Html.ValidationMessageFor(model => model.ImageLink)
-        <span class="error-message upload-image-validation"></span>
+        @Html.ValidationMessageFor(model => model.ImageLink, string.Empty, new { @class = "text-red" })
+        <span class="text-red upload-image-validation"></span>
     </div>
 
     <div class="browse form-group">

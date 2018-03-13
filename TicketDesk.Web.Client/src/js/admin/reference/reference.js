@@ -156,7 +156,7 @@ $("#submit").click(function (e) {
     $(".reference-entry").find(".upload-image-validation").text("");
 });
 
-$(window).on('beforeunload', function () {
+$(window).on("beforeunload", function () {
     var formAfterChange = $("form").serialize();
     if (originForm != formAfterChange && userSubmit == 0) {
         return true;
@@ -165,6 +165,7 @@ $(window).on('beforeunload', function () {
 
 var ajaxSubmitReference = {
     renderErrorsMessage: function (errors) {
+        console.log(errors);
         errors.forEach(function (error) {
             $("input[name='" + error.key + "']").addClass("input-validation-error");
             $('[data-valmsg-for="' + error.key + '"]:last').text(error.errorMessage);
