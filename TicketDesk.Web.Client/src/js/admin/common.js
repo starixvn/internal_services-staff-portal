@@ -120,7 +120,20 @@ var toastrPopup = {
     }
 }
 
+var ajaxSetup = {
+    init: function() {
+        $.ajaxSetup({
+            error: function(x, status, error) {
+                if (x.status === 403) {
+                    window.location.reload();
+                }
+            }
+        });
+    }
+}
+
 $(document).ready(function () {
+    ajaxSetup.init();
     sidebar.init();
     bootstrapModalHack.init();
     toastrPopup.initToastr();
