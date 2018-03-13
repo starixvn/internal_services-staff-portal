@@ -480,4 +480,10 @@
   <data name="View_Reference_TryAgain" xml:space="preserve">
     <value>Vui lòng thử lại.</value>
   </data>
+  <data name="AnnouncementSettings" xml:space="preserve">
+    <value>Thiết lập Thông báo</value>
+  </data>
+  <data name="DataConfiguration" xml:space="preserve">
+    <value>Thiết lập Dữ liệu</value>
+  </data>
 </root>

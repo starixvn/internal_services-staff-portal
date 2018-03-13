@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
     using System.Web.Mvc;
+    using Client.Controllers;
     using Domain.Infrastructure;
     using Domain.Model;
     using Fanex.NAP.Core.Business;
@@ -8,8 +9,7 @@
     using Models.DataConfiguration;
     using Service.Interface;
 
-    [NapAuth(FunctionKey = FunctionKeys.DataConfiguration, Policy = Constant.Policy.Read)]
-    public class DataConfigurationController : Controller
+    public class DataConfigurationController : BaseController
     {
         private readonly IDataConfigurationService _dataConfigurationService;
 
@@ -18,6 +18,7 @@
             _dataConfigurationService = dataConfirgurationService;
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.DataConfiguration, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var dataConfigurationViewModel = new DataConfigurationViewModel
@@ -28,18 +29,21 @@
             return View(dataConfigurationViewModel);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.DataConfiguration, Policy = Constant.Policy.Read)]
         public ActionResult ListCustomFieldListValue(int selectedFieldId, string modalTitle)
         {
             ListCustomFieldListValueViewModel viewModel = new ListCustomFieldListValueViewModel
             {
                 CustomFieldListValues = _dataConfigurationService.GetEditableListValues(selectedFieldId),
                 SelectedFieldId = selectedFieldId,
-                ModalTitle = modalTitle
+                ModalTitle = modalTitle,
+                HaveHostPermission = IsHaveHostPermission(FunctionKeys.DataConfiguration, Constant.Policy.Host)
             };
 
             return PartialView("_ListCustomFieldListValue", viewModel);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.DataConfiguration, Policy = Constant.Policy.Host)]
         public ActionResult CreateCustomFieldListValue(int customFieldId, string modalTitle)
         {
             var createCustomFieldListValueViewModel = new CreateCustomFieldListValueViewModel
@@ -52,6 +56,7 @@
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.DataConfiguration, Policy = Constant.Policy.Host)]
         public ActionResult CreateAndContinueCustomFieldListValue(CreateCustomFieldListValueViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -79,6 +84,7 @@
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.DataConfiguration, Policy = Constant.Policy.Host)]
         public ActionResult CreateCustomFieldListValue(CreateCustomFieldListValueViewModel viewModel)
         {
             var result = false;
@@ -99,6 +105,7 @@
             return Json(result);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.DataConfiguration, Policy = Constant.Policy.Host)]
         public ActionResult EditCustomFieldListvalue(int id)
         {
             CustomFieldListValue customFieldListValue = _dataConfigurationService.GetEditableListValue(id);
@@ -107,6 +114,7 @@
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.DataConfiguration, Policy = Constant.Policy.Host)]
         public ActionResult EditCustomFieldListValue(CustomFieldListValue customFieldListValue)
         {
             var result = false;

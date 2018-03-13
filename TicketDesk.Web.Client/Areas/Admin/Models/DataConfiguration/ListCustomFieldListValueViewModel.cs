@@ -10,5 +10,7 @@
         public string ModalTitle { get; set; }
 
         public IEnumerable<CustomFieldListValue> CustomFieldListValues { get; set; }
+
+        public bool HaveHostPermission { get; set; }
     }
 }

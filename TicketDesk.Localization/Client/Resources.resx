@@ -483,4 +483,7 @@
   <data name="AnnouncementSettings" xml:space="preserve">
     <value>Announcement Settings</value>
   </data>
+  <data name="DataConfiguration" xml:space="preserve">
+    <value>Data Configuration</value>
+  </data>
 </root>
