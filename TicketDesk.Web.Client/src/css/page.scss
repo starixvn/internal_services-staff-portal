@@ -1076,7 +1076,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     .item {
         border-left: 1px solid $border-color;
         padding-top: 0;
-       
+
         .key.border {
             border-left: none;
         }
@@ -1819,6 +1819,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         text-align: center;
         border-radius: 50%;
         opacity: 1;
+        z-index: 1;
         box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
         transition: all .2s ease;
 
@@ -1846,6 +1847,16 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 
             &:before {
                 content: "\e918";
+            }
+        }
+
+        @media screen and (max-width: 1199px) {
+            &.slick-next {
+                right: -2rem;
+            }
+
+            &.slick-prev {
+                left: -2rem;
             }
         }
     }

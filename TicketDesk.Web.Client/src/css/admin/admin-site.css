@@ -1153,7 +1153,7 @@ table.dataTable {
   .form-group textarea.form-control {
     width: 100% !important;
     line-height: 1.5;
-    min-height: 100px; }
+    min-height: 5rem; }
 
 .form-control {
   font-family: inherit;
