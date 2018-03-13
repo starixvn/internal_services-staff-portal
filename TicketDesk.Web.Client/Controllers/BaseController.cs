@@ -2,12 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Web.Mvc;
     using System.Web.Security;
     using Domain;
+    using Domain.Infrastructure;
+    using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
@@ -40,6 +43,11 @@
             set => NapContextHelper.CurrentContext = value;
         }
 
+        public bool IsHaveHostPermission(string functionKey, Constant.Policy policy)
+        {
+            var siteId = int.Parse(ConfigurationManager.AppSettings["SiteId"]);
+            return UserService.HasPermissionUserSiteFunctionKey(CurrentSession.UserId, siteId, functionKey, policy);
+        }
 
         protected IUserService UserService => NapContextHelper.UserService;
 

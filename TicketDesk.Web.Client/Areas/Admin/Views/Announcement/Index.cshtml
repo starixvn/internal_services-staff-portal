@@ -1,11 +1,10 @@
 ﻿@using TicketDesk.Domain
-@using TicketDesk.Domain.Model
 @using TicketDesk.Web.Client.Areas.Admin.Models.Announcements
-@using TicketDesk.Core.Enumerations
+@using TicketDesk.Localization.Client
 @model AnnouncementViewModel
 
 @{
-    ViewBag.Title = "Announcement Settings";
+    ViewBag.Title = Resources.AnnouncementSettings;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -84,13 +83,16 @@
     }
 </section>
 
-<div class="table-actions">
-    <a class="btn btn-create create"
-       data-toggle="modal"
-       href="#"
-       data-href="@Url.Action("Create", "Announcement")"
-       data-modalid="#@ModalId.CreateAnnouncementModal.ToString()"><span class="icon-add"></span>@ModalId.CreateAnnouncementModal.GetDisplayName()</a>
-</div>
+@if (Model.HaveHostPermission)
+{
+    <div class="table-actions">
+        <a class="btn btn-create create"
+           data-toggle="modal"
+           href="#"
+           data-href="@Url.Action("Create", "Announcement")"
+           data-modalid="#@ModalId.CreateAnnouncementModal.ToString()"><span class="icon-add"></span>@ModalId.CreateAnnouncementModal.GetDisplayName()</a>
+    </div>
+}
 
 <!--Table-->
 <section class="table" id="announcement-table"></section>

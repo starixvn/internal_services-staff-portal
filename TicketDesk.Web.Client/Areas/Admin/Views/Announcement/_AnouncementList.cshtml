@@ -1,7 +1,6 @@
-﻿@using TicketDesk.Domain.Model
-@using TicketDesk.Core.Enumerations
+﻿@using TicketDesk.Core.Enumerations
 @using TicketDesk.Localization.Client
-@model IList<Announcement>
+@model TicketDesk.Web.Client.Areas.Admin.Models.Announcements.ListAnnouncementViewModel
 
 <table class="announcement-list data-table" cellpadding="0" cellspacing="0">
     <thead>
@@ -21,71 +20,88 @@
             </th>
             <th class="announcement">@Resources.Announcement</th>
             <th class="status">@Resources.Type</th>
-            <th class="publish">
-                <button class="btn btn-publish" disabled="disabled" type="button">@Resources.Publish</button>
-            </th>
-            <th class="action">@Resources.Action</th>
+            @if (Model.HaveHostPermission)
+            {
+                <th class="publish">
+                    <button class="btn btn-publish" disabled="disabled" type="button">@Resources.Publish</button>
+                </th>
+                <th class="action">@Resources.Action</th>
+            }
+            else
+            {
+                <th class="publish">
+                    <span>@Resources.Publish</span>
+                </th>
+            }
         </tr>
     </thead>
     <tbody>
-        @for (var index = 0; index < Model.Count; index++)
-        {
-            var item = Model[index];
+        @{
+            var count = Model.Announcements.Count;
+            for (var index = 0; index < count; index++)
+            {
+                var item = Model.Announcements[index];
 
-            <tr>
-                <td class="text-center">@(index + 1)</td>
-                <td class="text-center">@item.Id</td>
-                <td>@item.LastModified.ToString("g")</td>
-                <td>@item.ModifiedBy</td>
-                <td>
-                    @if (item.PublishedDateTime != null)
+                <tr>
+                    <td class="text-center">@(index + 1)</td>
+                    <td class="text-center">@item.Id</td>
+                    <td>@item.LastModified.ToString("g")</td>
+                    <td>@item.ModifiedBy</td>
+                    <td>
+                        @if (item.PublishedDateTime != null)
+                        {
+                            @item.PublishedDateTime.Value.ToString("g")
+                        }
+                    </td>
+                    <td>@item.Message</td>
+                    <td class="text-center">@item.Type</td>
+                    <td class="text-center">
+                        @if (item.State == AnnouncementState.Published)
+                        {
+                            <span class="icon-check"></span>
+                        }
+                        else
+                        {
+                            if (Model.HaveHostPermission)
+                            {
+                                <div class="checkbox">
+                                    <input type="checkbox" id="@index" name="publish-checkbox" value="@item.Id" />
+                                    <label for="@index"></label>
+                                </div>
+                            }
+                        }
+                    </td>
+
+                    @if (Model.HaveHostPermission)
                     {
-                        @item.PublishedDateTime.Value.ToString("g")
+                        <td>
+                            @if (item.State == AnnouncementState.Scheduled)
+                            {
+                                <div class="dropdown action-group">
+                                    <div class="dropdown-toggle" id="dropdownAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <span class="icon-setting" aria-hidden="true"></span>
+                                        <span class="icon-arrow-down" aria-hidden="true"></span>
+                                    </div>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownAction">
+                                        <li>
+                                            <a class="edit"
+                                               data-href="@Url.Action("Edit", "Announcement", new { id = item.Id })"
+                                               href="#">
+                                                <span class="icon-edit"></span><span>@Resources.Edit</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="delete" href="#" data-href="@Url.Action("Delete", "Announcement", new { id = item.Id })">
+                                                <span class="icon-delete"></span><span>@Resources.Delete</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                        </td>
                     }
-                </td>
-                <td>@item.Message</td>
-                <td class="text-center">@item.Type</td>
-                <td class="text-center">
-                    @if (item.State == AnnouncementState.Published)
-                    {
-                        <span class="icon-check"></span>
-                    }
-                    else
-                    {
-                        var indexName = Model[index] + "checkbox";
-                        <div class="checkbox">
-                            <input type="checkbox" id="@index" name="publish-checkbox" value="@item.Id" />
-                            <label for="@index"></label>
-                        </div>
-                    }
-                </td>
-                <td>
-                    @if (item.State == AnnouncementState.Scheduled)
-                    {
-                        <div class="dropdown action-group">
-                            <div class="dropdown-toggle" id="dropdownAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span class="icon-setting" aria-hidden="true"></span>
-                                <span class="icon-arrow-down" aria-hidden="true"></span>
-                            </div>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownAction">
-                                <li>
-                                    <a class="edit"
-                                        data-href="@Url.Action("Edit", "Announcement", new { id = item.Id })"
-                                        href="#">
-                                        <span class="icon-edit"></span><span>@Resources.Edit</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="delete" href="#" data-href="@Url.Action("Delete","Announcement", new { id = item.Id })">
-                                        <span class="icon-delete"></span><span>@Resources.Delete</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    }
-                </td>
-            </tr>
+                </tr>
+            }
         }
-       
     </tbody>
 </table>

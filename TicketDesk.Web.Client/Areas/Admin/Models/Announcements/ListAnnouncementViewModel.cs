@@ -7,6 +7,6 @@
     {
         public IList<Announcement> Announcements { get; set; }
 
-        public bool IsPublishImmediately { get; set; }
+        public bool HaveHostPermission { get; set; }
     }
 }

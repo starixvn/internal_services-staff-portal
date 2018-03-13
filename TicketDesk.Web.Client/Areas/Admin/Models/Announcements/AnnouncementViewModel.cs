@@ -34,6 +34,8 @@
         [Display(Name = "Published")]
         public AnnouncementState? State { get; set; }
 
+        public bool HaveHostPermission { get; set; }
+
         // Create
         public NewAnnouncementViewModel NewAnnouncementViewModel { get; set; }
 

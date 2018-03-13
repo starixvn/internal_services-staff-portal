@@ -480,4 +480,7 @@
   <data name="View_Reference_TryAgain" xml:space="preserve">
     <value>Please try again.</value>
   </data>
+  <data name="AnnouncementSettings" xml:space="preserve">
+    <value>Announcement Settings</value>
+  </data>
 </root>

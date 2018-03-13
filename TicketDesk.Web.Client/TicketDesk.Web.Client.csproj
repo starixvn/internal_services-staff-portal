@@ -529,10 +529,6 @@
     <Content Include="src\js\admin\common.js" />
     <Content Include="src\js\admin\reference\reference.js" />
     <Content Include="src\js\home\home.js" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="favicon.png" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />

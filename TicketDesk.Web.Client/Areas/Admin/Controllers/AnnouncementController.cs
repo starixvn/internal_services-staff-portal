@@ -33,7 +33,8 @@
                 PublishedFrom = today.AddDays(-7),
                 PublishedTo = today,
                 Type = null,
-                State = null
+                State = null,
+                HaveHostPermission = IsHaveHostPermission(FunctionKeys.Announcement, Constant.Policy.Host)
             };
 
             return View(viewModel);
@@ -42,8 +43,16 @@
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
         public ActionResult AnnouncementList(AnnouncementViewModel viewModel)
         {
-            var announcements = _announcementService.GetAnnouncements(viewModel.GetQueryCriteria()).OrderByDescending(x => x.LastModified).ToList();
-            return PartialView("_AnouncementList", announcements);
+            var listAnnouncementViewModel = new ListAnnouncementViewModel
+            {
+                Announcements = _announcementService.GetAnnouncements(viewModel.GetQueryCriteria())
+                    .OrderByDescending(x => x.LastModified)
+                    .ToList(),
+                HaveHostPermission = IsHaveHostPermission(FunctionKeys.Announcement, Constant.Policy.Host)
+            };
+
+
+            return PartialView("_AnouncementList", listAnnouncementViewModel);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
