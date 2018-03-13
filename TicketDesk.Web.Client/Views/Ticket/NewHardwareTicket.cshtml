@@ -15,7 +15,9 @@
 
 @section scripts
 {
-    @Html.Partial("_DropzoneScripts", Model)
+    @*@Html.Partial("_DropzoneScripts", Model)*@
+    <script src="~/src/libs/dropzone/dropzone.min.js"></script>
+    <script src="~/src/js/ticket-dropzone.js"></script>
 
     <script src="~/src/libs/datetimepicker/moment.js"></script>
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>

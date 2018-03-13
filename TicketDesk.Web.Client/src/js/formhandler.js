@@ -58,8 +58,8 @@ var formhandler = {
     },
 
     checkValidFilesIfDropzoneExisted: function () {
-        if (typeof ticketDeskDropzone !== "undefined") {
-            return CheckValidFiles();
+        if (typeof dropzoneobject !== "undefined") {
+            return tdz.CheckValidFiles();
         } else {
             return true;
         }
@@ -129,8 +129,8 @@ var formhandler = {
                         });
                     } else {
                         // Errors in files
-                        var englishText = BuildFileErrorText();
-                        SetErrorTextAndShowModal(englishText);
+                        var englishText = tdz.BuildFileErrorText();
+                        tdz.SetErrorTextAndShowModal(englishText);
                         e.preventDefault();
                         return false;
                     }

@@ -1,10 +1,9 @@
 ﻿@using TicketDesk.Localization.Views.Ticket
 @using TicketDesk.Localization.Client
 @using TicketDesk.Web.Client.Infrastructure.Helpers
+@model TicketDesk.Web.Client.Models.Ticket.NewCustomerSupportTicketViewModel
 
 @section title { @New.Title }
-
-@model TicketDesk.Web.Client.Models.Ticket.NewCustomerSupportTicketViewModel
 
 @section css
 {
@@ -16,7 +15,10 @@
 
 @section scripts
 {
-    @Html.Partial("_DropzoneScripts", Model)
+    @*@Html.Partial("_DropzoneScripts", Model)*@
+    <script src="~/src/libs/dropzone/dropzone.min.js"></script>
+    <script src="~/src/js/ticket-dropzone.js"></script>
+
     <script src="~/src/libs/datetimepicker/moment.js"></script>
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 
@@ -25,7 +27,7 @@
 
 @Html.Partial("_NotificationModal")
 
-@using (Html.BeginForm("NewCustomerSupportTicket", "Ticket", null, FormMethod.Post, new { @class = "form-horizontal ticket-form filechange", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("NewCustomerSupportTicket", "Ticket", FormMethod.Post, new { @class = "form-horizontal ticket-form filechange", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Ticket.IsHtml)
@@ -107,4 +109,4 @@
         @Html.Partial("_DropzoneView", Model)
     </div>
     <input type="submit" class="btn btn-primary btn-send" value="Send" />
-                }
+}
