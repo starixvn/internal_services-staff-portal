@@ -729,6 +729,12 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   .facility-form .select2-container .select2-selection--single .select2-selection__rendered {
     line-height: 38px; }
 
+.facility-form .shop-item, .feedback-form .shop-item {
+  padding-bottom: 1rem;
+  border-left: 1px solid #d3d7db; }
+  .facility-form .shop-item .select2-selection--single, .feedback-form .shop-item .select2-selection--single {
+    border: 1px solid #d3d7db; }
+
 .feedback-form, .hardware-form {
   /*.attach-file .fullwidth {
         height: 40px;
@@ -737,8 +743,6 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   .feedback-form .item, .hardware-form .item {
     border-left: 1px solid #d3d7db;
     padding-top: 0; }
-    .feedback-form .item ~ .item, .hardware-form .item ~ .item {
-      padding-top: 5px; }
     .feedback-form .item .key.border, .hardware-form .item .key.border {
       border-left: none; }
     .feedback-form .item input[type="text"], .hardware-form .item input[type="text"] {

@@ -954,7 +954,6 @@ tr.header {
 
         &.even {
             background: #f2f2f2;
-
             /**:not(.btn-delete) {
                 background: inherit;
             }
@@ -962,7 +961,6 @@ tr.header {
             .select2-selection__rendered {
                 background-color: transparent;
             }*/
-
             .description {
                 background: inherit;
             }
@@ -1060,18 +1058,25 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         .select2-selection__rendered {
             line-height: 38px;
         }
-    }    
+    }
+}
+
+.facility-form, .feedback-form {
+    .shop-item {
+        padding-bottom: 1rem;
+        border-left: 1px solid #d3d7db;
+
+        .select2-selection--single {
+            border: 1px solid #d3d7db;
+        }
+    }
 }
 
 .feedback-form, .hardware-form {
     .item {
         border-left: 1px solid $border-color;
         padding-top: 0;
-
-        ~ .item {
-            padding-top: 5px;
-        }
-        //grid-template-rows: 40px auto;
+       
         .key.border {
             border-left: none;
         }
@@ -2009,8 +2014,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 
 // --------------------- Customize Select2 --------------------- //
 .select2-container {
-   // width: 150px !important;
-
+    // width: 150px !important;
     .select2-selection--single {
         border-radius: 0;
         border-color: #d3d7db;
