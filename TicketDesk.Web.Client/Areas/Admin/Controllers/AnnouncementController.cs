@@ -15,7 +15,6 @@
     using Models.Announcements;
     using Service.Interface;
 
-    [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
     public class AnnouncementController : BaseController
     {
         private readonly IAnnouncementService _announcementService;
@@ -25,6 +24,7 @@
             _announcementService = announcementService;
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var today = DateTime.Now;
@@ -39,12 +39,14 @@
             return View(viewModel);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
         public ActionResult AnnouncementList(AnnouncementViewModel viewModel)
         {
             var announcements = _announcementService.GetAnnouncements(viewModel.GetQueryCriteria()).OrderByDescending(x => x.LastModified).ToList();
             return PartialView("_AnouncementList", announcements);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Create()
         {
             var viewModel = new NewAnnouncementViewModel
@@ -59,6 +61,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Create(NewAnnouncementViewModel viewModel)
         {
             // Check datetime
@@ -111,6 +114,7 @@
             });
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -139,6 +143,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(NewAnnouncementViewModel viewModel)
         {
             // Prevent edit published Announcement
@@ -203,6 +208,7 @@
             });
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Delete(int id)
         {
             var viewModel = new Announcement { Id = id };
@@ -210,6 +216,7 @@
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Delete(Announcement viewModel)
         {
             var announcement = _announcementService.GetAnnouncement(viewModel.Id);
@@ -233,6 +240,7 @@
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Publish(List<int> Ids)
         {
             var criteria = new PublishAnnouncementsCriteria
