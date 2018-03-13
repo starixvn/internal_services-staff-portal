@@ -56,14 +56,24 @@
             IEnumerable<Announcement> announcements,
             string readAnnouncements)
         {
-            var readAnnouncementIds = readAnnouncements
+            if (!string.IsNullOrEmpty(readAnnouncements))
+            {
+                var readAnnouncementIds = readAnnouncements
                 .Split(',')
                 .Distinct()
                 .Select(int.Parse).ToList();
 
-            foreach (var announcement in announcements)
+                foreach (var announcement in announcements)
+                {
+                    announcement.IsRead = readAnnouncementIds.Contains(announcement.Id);
+                }
+            }
+            else
             {
-                announcement.IsRead = readAnnouncementIds.Contains(announcement.Id);
+                foreach (var announcement in announcements)
+                {
+                    announcement.IsRead = false;
+                }
             }
 
             return announcements;
