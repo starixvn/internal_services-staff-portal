@@ -151,10 +151,10 @@
     <value>Max total size of attachments: </value>
   </data>
   <data name="Dropzone_Info_MultipleFilesSelected" xml:space="preserve">
-    <value>files were selected</value>
+    <value>files selected</value>
   </data>
   <data name="Dropzone_Info_SingleFileSelected" xml:space="preserve">
-    <value>file were selected</value>
+    <value>file selected</value>
   </data>
   <data name="Dropzone_Modal_Close" xml:space="preserve">
     <value>Close</value>
