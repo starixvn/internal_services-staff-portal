@@ -47,9 +47,12 @@
             </div>
         </div>
 
-        <div class="item-list height-auto">
-            @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "key border label-item" })
-            <div class="value span-3 border subject">
+        <div class="item-list shop-item">
+            <div class="key fullwidth">
+                @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "" })
+            </div>
+           
+            <div class="fullwidth value">
                 @Html.ValidationMessageFor(x => x.Ticket.Title)
                 @Html.TextBoxFor(model => model.Ticket.Title, new { @class = "ticket-title", @readonly = "readonly" })
             </div>
