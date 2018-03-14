@@ -90,7 +90,7 @@ var tdz = {
         }
     },
 
-    BuildFileErrorText: function() {
+    BuildFileErrorText: function () {
         var text = "";
 
         var filerequired = $("#dz-error-filerequired").text();
@@ -103,13 +103,13 @@ var tdz = {
             text = filerequired;
         }
         if (tdz.isMaxFilesViolated) {
-            text = text + maxfilesviolated;
+            text = text + "\n" + maxfilesviolated;
         }
         if (tdz.isTotalSizeViolated) {
-            text = text + totalsizeviolated;
+            text = text + "\n" + totalsizeviolated;
         }
         if (tdz.isFileTypeViolated) {
-            text = filetypeviolated;
+            text = text + "\n" + filetypeviolated;
         }
 
         return text;

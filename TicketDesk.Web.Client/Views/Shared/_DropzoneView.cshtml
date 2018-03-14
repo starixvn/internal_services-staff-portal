@@ -7,11 +7,11 @@
     <p id="dz-maxbytes">@Model.MaxBytes</p>
     <p id="dz-acceptedextensions">@string.Join(",", Model.AcceptedExtensions)</p>
 
-    <p id="dz-error-filerequired">Attached file is required!\n</p>
-    <p id="dz-error-maxfilesviolated">@Html.Raw(string.Format("Max number of attachments exceeded {0}\n", Model.MaxNumberOfFile))</p>
-    <p id="dz-error-totalsizeviolated"> @Html.Raw(string.Format("Total size of attachments exceeded {0} MB\n", Model.MaxBytes / 1048576))</p>
-    <p id="dz-error-filetypeviolated"> @Html.Raw(string.Format("Attachments must be {0}\n", string.Join(",", Model.AcceptedExtensions)))</p>
-    <p id="dz-error-duplicatedfile">@Html.Raw(Resources.Dropzone_Error_DuplicateFile)</p>
+    <p id="dz-error-filerequired">Attached file is required!</p>
+    <p id="dz-error-maxfilesviolated">@string.Format("Max number of attachments exceeded {0}", Model.MaxNumberOfFile)</p>
+    <p id="dz-error-totalsizeviolated">@string.Format("Total size of attachments exceeded {0} MB", Model.MaxBytes / 1048576)</p>
+    <p id="dz-error-filetypeviolated">@string.Format("Attachments must be {0}", string.Join(",", Model.AcceptedExtensions))</p>
+    <p id="dz-error-duplicatedfile">@Resources.Dropzone_Error_DuplicateFile</p>
 
     <p id="dz-info-multiplefileselected">@Html.Raw(Resources.Dropzone_Info_MultipleFilesSelected)</p>
     <p id="dz-info-singlefileselected">@Html.Raw(Resources.Dropzone_Info_SingleFileSelected)</p>
