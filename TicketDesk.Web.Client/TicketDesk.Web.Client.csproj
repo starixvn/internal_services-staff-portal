@@ -496,6 +496,7 @@
     <Content Include="src\js\admin\shop-management\shop-management.js" />
     <Content Include="src\js\home\read-announcement.js" />
     <Content Include="src\js\ticket-dropzone.js" />
+    <Content Include="src\js\ticket\customer-support.js" />
     <Content Include="src\js\ticket\facility.js" />
     <Content Include="src\libs\jquery-ui\jquery-ui.css" />
     <Content Include="src\libs\jquery-ui\jquery-ui.js" />
@@ -2096,6 +2097,7 @@
     <Content Include="Views\Ticket\NewCustomerSupportTicket.cshtml" />
     <Content Include="Views\Ticket\_NotificationModal.cshtml" />
     <Content Include="Views\Home\_AnnouncementListHomePage.cshtml" />
+    <Content Include="Views\Ticket\_FecilityItem.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

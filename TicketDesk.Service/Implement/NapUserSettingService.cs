@@ -56,7 +56,7 @@
             var currentSetting = CreateNapUserSetting(userId);
 
             var readAnnouncementIds = new List<int>();
-            if (currentSetting.SettingObject.ReadAnnouncements != null)
+            if (!string.IsNullOrEmpty(currentSetting.SettingObject.ReadAnnouncements))
             {
                 readAnnouncementIds = currentSetting.SettingObject.ReadAnnouncements
                     .Split(',')
