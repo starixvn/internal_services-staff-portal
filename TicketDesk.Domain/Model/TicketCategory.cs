@@ -10,5 +10,11 @@
         public string Name { get; set; }
 
         public string Name_vi { get; set; }
+
+        public string MailTo { get; set; }
+
+        public string MailCcTo { get; set; }
+
+        public string MailBccTo { get; set; }
     }
 }

@@ -304,6 +304,10 @@
     <Compile Include="Migrations\201803060842299_Nexcel_CustomFieldIsAllowToEditListValue.Designer.cs">
       <DependentUpon>201803060842299_Nexcel_CustomFieldIsAllowToEditListValue.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803140408191_Nexcel_AddMailToTicketCategory.cs" />
+    <Compile Include="Migrations\201803140408191_Nexcel_AddMailToTicketCategory.Designer.cs">
+      <DependentUpon>201803140408191_Nexcel_AddMailToTicketCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -482,6 +486,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803060842299_Nexcel_CustomFieldIsAllowToEditListValue.resx">
       <DependentUpon>201803060842299_Nexcel_CustomFieldIsAllowToEditListValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803140408191_Nexcel_AddMailToTicketCategory.resx">
+      <DependentUpon>201803140408191_Nexcel_AddMailToTicketCategory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
