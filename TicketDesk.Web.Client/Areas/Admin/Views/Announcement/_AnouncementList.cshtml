@@ -37,13 +37,12 @@
     </thead>
     <tbody>
         @{
-            var count = Model.Announcements.Count;
-            for (var index = 0; index < count; index++)
+            var index = 0;
+            foreach (var item in Model.Announcements)
             {
-                var item = Model.Announcements[index];
-
+                index++;
                 <tr>
-                    <td class="text-center">@(index + 1)</td>
+                    <td class="text-center">@index</td>
                     <td class="text-center">@item.Id</td>
                     <td>@item.LastModified.ToString("g")</td>
                     <td>@item.ModifiedBy</td>

@@ -183,9 +183,11 @@ var modalhandler = {
                         if (result.message !== undefined) {
                             $(".modal").modal("hide");
                             toastr.success(result.message);
-                            setTimeout(function () {
-                                location.reload();
-                            }, 3000)
+                            //setTimeout(function() {
+                            //        location.reload();
+                            //    },
+                            //    3000);
+                            $(".filter-row").trigger("submit");
                         }
                     }
                 } else {

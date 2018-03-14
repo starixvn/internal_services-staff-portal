@@ -46,11 +46,9 @@
             var listAnnouncementViewModel = new ListAnnouncementViewModel
             {
                 Announcements = _announcementService.GetAnnouncements(viewModel.GetQueryCriteria())
-                    .OrderByDescending(x => x.LastModified)
-                    .ToList(),
+                    .OrderByDescending(x => x.LastModified),
                 HaveHostPermission = IsHaveHostPermission(FunctionKeys.Announcement, Constant.Policy.Host)
             };
-
 
             return PartialView("_AnouncementList", listAnnouncementViewModel);
         }

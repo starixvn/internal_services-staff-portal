@@ -5,7 +5,7 @@
 
     public class ListAnnouncementViewModel
     {
-        public IList<Announcement> Announcements { get; set; }
+        public IEnumerable<Announcement> Announcements { get; set; }
 
         public bool HaveHostPermission { get; set; }
     }

@@ -1,5 +1,5 @@
-﻿@using TicketDesk.Domain
-@using TicketDesk.Domain.Model
+﻿@using TicketDesk.Core.Enumerations
+@using TicketDesk.Domain
 @using TicketDesk.Web.Client.Areas.Admin.Models.Announcements
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 @model NewAnnouncementViewModel
@@ -26,8 +26,6 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form">
-                    @*@Html.ValidationSummary(false, "", new { @class = "text-danger" })*@
-
                     <div class="form-group">
                         @Html.LabelFor(model => model.Announcement.PublishedDateTime, new { @class = "control-label" })
                         <div class="date-time">
@@ -48,7 +46,7 @@
 
                     <div class="form-group checkbox">
                         @{
-                            if (Model.Announcement.Type == AnnouncementStatus.Important)
+                            if (Model.Announcement.Type == AnnouncementType.Important)
                             {
                                 <input type="checkbox"
                                        id="@Html.NameFor(x => x.IsImportant)"
@@ -66,12 +64,6 @@
                         }
                         @Html.LabelFor(model => model.IsImportant)
                     </div>
-                    @*<div class="form-group">
-                            @Html.LabelFor(model => model.IsImportant, new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.CheckBoxFor(model => model.IsImportant, new { @class = "form-control" })
-                            </div>
-                        </div>*@
                 </div>
             </div>
 
