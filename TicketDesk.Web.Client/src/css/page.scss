@@ -2052,6 +2052,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .select2-container--open .select2-dropdown--below {
     border-radius: 0;
     border-color: #d3d7db;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 
     .select2-search__field {
         height: 30px;
