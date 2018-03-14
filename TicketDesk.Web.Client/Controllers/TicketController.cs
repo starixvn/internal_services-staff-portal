@@ -351,6 +351,8 @@
 
             if (ModelState.IsValid)
             {
+                var ticketTitle = viewModel.SupportType.Value + " " + viewModel.Ticket.Title;
+                viewModel.Ticket.Title = ticketTitle;
                 ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
                 customFieldService.AddCustomFieldValues(
                     viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
