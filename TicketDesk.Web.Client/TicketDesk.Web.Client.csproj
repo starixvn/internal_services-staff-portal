@@ -356,6 +356,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AnnouncementController.cs" />
     <Compile Include="Areas\Admin\Controllers\DataConfigurationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MailController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReferencesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShopController.cs" />
@@ -566,6 +567,7 @@
     <Content Include="Areas\Admin\Views\Shop\_ListShop.cshtml" />
     <Content Include="Areas\Admin\Views\DataConfiguration\_ListCustomFieldListValue.cshtml" />
     <Content Include="Areas\Admin\Views\DataConfiguration\_EditCustomFieldListValue.cshtml" />
+    <Content Include="Areas\Admin\Views\Mail\Index.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

@@ -33,6 +33,7 @@
             { "/Admin/References/NewsLetter", "icon-admin" },
             { "/Admin/Shop", "icon-shop" },
             { "/Admin/DataConfiguration", "icon-data" },
+            { "/Admin/Mail", "icon-data" },
             { "/admin/application-settings", "icon-admin-appsettings" },
             { "/admin/projects", "icon-admin-shop" },
             { "/admin/push-notification-settings", "icon-admin-notificationsettings" },

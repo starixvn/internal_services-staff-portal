@@ -24,6 +24,7 @@
         public const string CustomFields = "CustomFields";
         public const string ShopManagement = "ShopManagement";
         public const string DataConfiguration = "DataConfiguration";
+        public const string MailManagement = "MailManagement";
 
         #endregion Admin
     }
