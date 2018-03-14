@@ -14,7 +14,6 @@
 
 @section scripts
 {
-    @*@Html.Partial("_DropzoneScripts", Model)*@
     <script src="~/src/libs/dropzone/dropzone.min.js"></script>
     <script src="~/src/js/ticket-dropzone.js"></script>
 
@@ -42,7 +41,7 @@
 
             <div class="fullwidth">
                 <div class="fullwidth no-border custom-dropdown">
-                    @Html.DropDownListFor(x => x.Ticket.ShopId, @Model.Ticket.ShopList, new { @class = "shop-selector select2-searchable" })
+                    @Html.DropDownListFor(x => x.Ticket.ShopId, Model.Ticket.ShopList, new { @class = "shop-selector select2-searchable" })
                 </div>
             </div>
         </div>
@@ -121,3 +120,28 @@
     </div>
     <input type="submit" class="btn btn-primary btn-send" value="@Resources.Common_Form_Send" />
 }
+
+<div class="hidden" id="sample-item">
+    @{
+        var sampleGuid = Guid.NewGuid().ToString();
+    }
+
+    <div class="item" data-guid="@sampleGuid">
+        @Html.CustomFieldIndex("Items", sampleGuid)
+
+        @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(0).ItemName, sampleGuid, "Items", new { @class = "key border label-item" })
+        @Html.ValidationMessageFor(x => x.Items.ElementAt(0).ItemName, null, new { data_valmsg_for = "Items[" + sampleGuid + "].ItemName.Value" })
+        <div class="value border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(0).ItemName, sampleGuid, "Items", new { @class = "not-select2" })</div>
+        <div class="border span-2">
+            <button class="btn btn-delete btn-delete-item"><span class="icon-delete"></span>@Resources.Views_Ticket_NewFacilityTicket_DeleteItem</button>
+        </div>
+
+        <div class="fullwidth border key">
+            @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(0).Reason, sampleGuid, "Items", new { @class = "" })
+            <span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
+        </div>
+
+        <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(0).Reason, sampleGuid, "Items", new { @class = "description" })</div>
+        @Html.ValidationMessageFor(x => x.Items.ElementAt(0).Reason, null, new { data_valmsg_for = "Items[" + sampleGuid + "].Reason.Value" })
+    </div>
+</div>

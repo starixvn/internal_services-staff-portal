@@ -12,7 +12,7 @@ var formhandler = {
         formhandler.setValueForRequiredRadioButton();
         formhandler.applyMaxLengh();
         formhandler.handelFormSubmit();
-        formhandler.initSelect2();
+        //formhandler.initSelect2();
         formhandler.initDateTimePicker();
     },
 
@@ -27,17 +27,17 @@ var formhandler = {
         }
     },
 
-    initSelect2: function () {
-        if ($("select").length) {
-            if ($("select").hasClass("select2-searchable")) {
-                $("select").select2();
-            } else {
-                $("select").select2({
-                    minimumResultsForSearch: Infinity
-                });
-            }
-        }
-    },
+    //initSelect2: function () {
+        //if ($.fn.select2) {
+        //    if ($("select").hasClass("select2-searchable")) {
+        //        $("select").not(".not-select2").select2();
+        //    } else {
+        //        $("select").not(".not-select2").select2({
+        //            minimumResultsForSearch: Infinity
+        //        });
+        //    }
+        //}
+    //},
 
     applyMaxLengh: function () {
         var textInput = $("input[type='text'], textarea");

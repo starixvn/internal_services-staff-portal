@@ -1840,7 +1840,7 @@
     <Content Include="Scripts\ticketdesk\admin-edit-user.js" />
     <Content Include="Scripts\ticketdesk\locale_pt-BR.js" />
     <Content Include="Scripts\ticketdesk\locale_en-US.js" />
-    <Content Include="Scripts\ticketdesk\common.js" />
+    <Content Include="src\js\common.js" />
     <Content Include="Scripts\ticketdesk\search.js" />
     <Content Include="Scripts\ticketdesk\admin-users.js" />
     <Content Include="Scripts\ticketdesk\application-settings.js" />
@@ -2098,7 +2098,6 @@
     <Content Include="Views\Ticket\NewCustomerSupportTicket.cshtml" />
     <Content Include="Views\Ticket\_NotificationModal.cshtml" />
     <Content Include="Views\Home\_AnnouncementListHomePage.cshtml" />
-    <Content Include="Views\Ticket\_FecilityItem.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

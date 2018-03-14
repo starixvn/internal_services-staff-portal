@@ -33,17 +33,29 @@
         });
     },
 
+    removeSelect2: function() {
+        if ($.fn.select2) {
+            $("select").select2("destroy");
+        }
+    },
+
     cloneFacilityItem: function(id) {
-        $("select").select2("destroy");
-        var clone = $(id).children().last().clone();
+        //facility.removeSelect2();
+        var clone = $("#sample-item").children().clone();
         clone.find(".countdown-character").text(5000);
-        var guid = clone.children().first().val();
+        var guid = clone.data("guid");
         var regex = new RegExp(guid, "g");
         var newHtml = clone.html(function (i, oldHtml) {
             return oldHtml.replace(regex, facility.generateGuid());
         });
 
         $(id).append(newHtml);
+
+        $(".item-list select").removeClass("not-select2");
+
+        facility.resetFormValidator();
+
+        nexcelSSPCommon.initSelect2();
     },
 
     assignAddMoreButton: function() {
@@ -54,15 +66,11 @@
 
             facility.cloneFacilityItem(id);
 
-            facility.resetFormValidator();
-
             facility.displayDeleteButton();
 
             $(".ticket-form").trigger("change");
 
             facility.displayEvenItems();
-
-            formhandler.initSelect2();
         });
     },
 

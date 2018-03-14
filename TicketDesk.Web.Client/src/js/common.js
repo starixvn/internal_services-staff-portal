@@ -13,12 +13,17 @@ var nexcelSSPCommon = (function ($) {
     }
 
     function initSelect2() {
-        if ($("select").length) {
-            $("select").select2({
-                minimumResultsForSearch: Infinity
-            });
+        if ($.fn.select2) {
+            if ($("select").hasClass("select2-searchable")) {
+                $("select").not(".not-select2").select2();
+            } else {
+                $("select").not(".not-select2").select2({
+                    minimumResultsForSearch: Infinity
+                });
+            }
         }
     }
+
     function initialize() {
         registerEventLogout();
         initSelect2();
@@ -26,7 +31,8 @@ var nexcelSSPCommon = (function ($) {
     }
 
     return {
-        Initialize: initialize
+        Initialize: initialize,
+        initSelect2: initSelect2
     };
 
 })(jQuery);
