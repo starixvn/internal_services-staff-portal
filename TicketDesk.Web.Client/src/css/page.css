@@ -618,7 +618,7 @@ tr.header {
     font-weight: 700;
     margin-bottom: 0; }
   .form-content .value, .form-content .key {
-    height: 40px;
+    height: 36px;
     line-height: 40px;
     flex: 1; }
   .form-content .value.span-3 {
@@ -713,7 +713,8 @@ tr.header {
     flex: 0 0 auto;
     width: auto;
     max-width: none;
-    padding-left: 1rem; }
+    padding-left: 1rem;
+    font-size: 16px; }
 
 .attach-file .fullwidth {
   padding: 9px 12px; }
@@ -1509,7 +1510,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   .select2-container .select2-selection--single:focus {
     outline: none; }
   .select2-container .select2-selection--single .select2-selection__rendered {
-    line-height: 40px; }
+    line-height: 40px;
+    font-size: 16px; }
   .select2-container .select2-selection--single .select2-selection__arrow {
     top: 1px;
     height: 38px;
@@ -1526,7 +1528,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 
 .select2-results__option {
   color: #333;
-  padding: 8px 10px; }
+  padding: 7px 10px;
+  font-size: 16px; }
 
 .select2-search--dropdown {
   padding: 1rem; }
