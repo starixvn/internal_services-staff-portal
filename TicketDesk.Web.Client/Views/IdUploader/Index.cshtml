@@ -12,16 +12,10 @@
 
 @section scripts
 {
-    @Html.Partial("_DropzoneScripts", Model)
+    <script src="~/src/libs/dropzone/dropzone.min.js"></script>
+    <script src="~/src/js/ticket-dropzone.js"></script>
 
     <script src="~/src/js/formhandler.js"></script>
-
-    <script>
-        $('#notification-modal').on('hidden.bs.modal',
-            function () {
-                location.reload();
-            });
-    </script>
 }
 
 <!-- Modal -->
