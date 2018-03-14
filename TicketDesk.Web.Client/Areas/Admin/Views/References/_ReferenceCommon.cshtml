@@ -11,15 +11,22 @@
     @Html.AntiForgeryToken()
     <ul class="references-zone" id="ReferencesZone">
         @if (Model.References != null && Model.References.Count() > 0)
+        {
+            for (var i = 0; i < Model.References.Count(); i++)
             {
-                for (var i = 0; i < Model.References.Count(); i++)
-                {
                 <li class="reference-entry">
                     <div class="date form-group">
                         @Html.LabelFor(model => model.References[i].DateAppear)
                         <span class="text-red">*</span>
                         <div class="datetime-field">
-                            @Html.TextBoxFor(model => model.References[i].DateAppear, "{0:MM-dd-yyyy}", new { @class = "datetimepicker form-control" })
+                            @if (Model.IsHostPermission)
+                            {
+                                @Html.TextBoxFor(model => model.References[i].DateAppear, "{0:MM-dd-yyyy}", new { @class = "datetimepicker form-control" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(model => model.References[i].DateAppear, "{0:MM-dd-yyyy}", new { @class = "datetimepicker form-control", @readonly = "readonly" })
+                            }
                             <span class="icon-calendar"></span>
                             @Html.ValidationMessageFor(model => model.References[i].DateAppear, string.Empty, new { @class = "text-red" })
                         </div>
@@ -29,27 +36,38 @@
                     <div class="url form-group">
                         @Html.LabelFor(model => model.References[i].ImageLink)
                         <span class="text-red">*</span>
-                        @Html.TextBoxFor(model => model.References[i].ImageLink, new { maxLength = 500, @class = "form-control image-url" })
+                        @if (Model.IsHostPermission)
+                        {
+                            @Html.TextBoxFor(model => model.References[i].ImageLink, new { maxLength = 500, @class = "form-control image-url" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.References[i].ImageLink, new { maxLength = 500, @class = "form-control image-url", @readonly = "readonly" })
+                        }
                         @Html.ValidationMessageFor(model => model.References[i].ImageLink, string.Empty, new { @class = "text-red" })
                         <span class="text-red upload-image-validation"></span>
                     </div>
-
-                    <div class="browse form-group">
-                        <div class="btn btn-browse">
-                            <span>Browse...</span>
-                            <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload">
+                    @if (Model.IsHostPermission)
+                    {
+                        <div class="browse form-group">
+                            <div class="btn btn-browse">
+                                <span>Browse...</span>
+                                <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload">
+                            </div>
+                            <input type="button" class="btn btn-delete remove-entry" value="Delete">
                         </div>
-                        <input type="button" class="btn btn-delete remove-entry" value="Delete">
-                    </div>
+                    }
                 </li>
             }
         }
     </ul>
 
     <p class="text-red" id="limitEntry"></p>
-
-    <div class="button-group">
-        <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" data-type="normal" />
-        <input type="button" id="submit" value="Submit" class="btn btn-submit" />
-    </div>
+    @if (Model.IsHostPermission)
+    {
+        <div class="button-group">
+            <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" data-type="normal" />
+            <input type="button" id="submit" value="Submit" class="btn btn-submit" />
+        </div>
+    }
 </div>

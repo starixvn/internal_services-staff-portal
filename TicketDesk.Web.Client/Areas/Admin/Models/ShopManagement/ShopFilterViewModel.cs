@@ -13,5 +13,7 @@ namespace TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement
 
         [Display(Name = "Active")]
         public ActiveState ActiveState { get; set; }
+
+        public bool IsHostPermission { get; set; }
     }
 }

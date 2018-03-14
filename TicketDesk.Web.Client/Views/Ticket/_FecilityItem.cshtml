@@ -1,28 +1,37 @@
 ﻿@using TicketDesk.Web.Client.Models.Ticket
 @using TicketDesk.Localization.Client
 @using TicketDesk.Web.Client.Infrastructure.Helpers
-@model FacilityItem
-@{
-    var guid = Guid.NewGuid().ToString();
+@model NewFacilityTicketViewModel
 
-    var evenClass = "";
+@if (Model.Items != null)
+            {
+                for (int i = 0; i < Model.Items.Count; i++)
+                {
+                    var guid = Guid.NewGuid().ToString();
 
-    <div class="item @evenClass">
-        @Html.CustomFieldIndex("Items", guid)
+                    var evenClass = "";
+                    if ((i % 2) != 0)
+                    {
+                        evenClass = "even";
+                    }
 
-        @Html.CustomFieldLabelWithGuidIndexFor(x => x.ItemName, guid, "Items", new { @class = "key border label-item" })
-        @Html.ValidationMessageFor(x => x.ItemName, null, new { data_valmsg_for = "Items[" + guid + "].ItemName.Value" })
-        <div class="value border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.ItemName, guid, "Items", new { @class = "" })</div>
-        <div class="border span-2">
-            <button class="btn btn-delete btn-delete-item"><span class="icon-delete"></span>@Resources.Views_Ticket_NewFacilityTicket_DeleteItem</button>
-        </div>
+                    <div class="item @evenClass">
+                        @Html.CustomFieldIndex("Items", guid)
 
-        <div class="fullwidth border key">
-            @Html.CustomFieldLabelWithGuidIndexFor(x => x.Reason, guid, "Items", new { @class = "" })
-            <span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
-        </div>
+                        @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border label-item" })
+                        @Html.ValidationMessageFor(x => x.Items.ElementAt(i).ItemName, null, new { data_valmsg_for = "Items[" + guid + "].ItemName.Value" })
+                        <div class="value border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "" })</div>
+                        <div class="border span-2">
+                            <button class="btn btn-delete btn-delete-item"><span class="icon-delete"></span>@Resources.Views_Ticket_NewFacilityTicket_DeleteItem</button>
+                        </div>
 
-        <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Reason, guid, "Items", new { @class = "description" })</div>
-        @Html.ValidationMessageFor(x => x.Reason, null, new { data_valmsg_for = "Items[" + guid + "].Reason.Value" })
-    </div>
+                        <div class="fullwidth border key">
+                            @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "" })
+                            <span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
+                        </div>
+
+                        <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "description" })</div>
+                        @Html.ValidationMessageFor(x => x.Items.ElementAt(i).Reason, null, new { data_valmsg_for = "Items[" + guid + "].Reason.Value" })
+                    </div>
+    }
 }

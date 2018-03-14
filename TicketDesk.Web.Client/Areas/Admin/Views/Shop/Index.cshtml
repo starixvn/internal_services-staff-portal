@@ -40,9 +40,12 @@
     }
 </section>
 
-<div class="table-actions">
-    <a class="btn btn-create create"><span class="icon-add"></span>Create New Shop</a>
-</div>
+@if (Model.IsHostPermission)
+{
+    <div class="table-actions">
+        <a class="btn btn-create create"><span class="icon-add"></span>Create New Shop</a>
+    </div>
+}
 
 <section class="table" id="shopList"></section>
 

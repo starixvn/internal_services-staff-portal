@@ -49,7 +49,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
         public JsonResult TVSchedules(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.TvSchedule, viewModel);
@@ -63,7 +63,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
         public JsonResult FeatureEvents(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.FeaturedEvent, viewModel);
@@ -77,7 +77,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
         public JsonResult BetOfTheDay(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.BetOfTheDay, viewModel);
@@ -91,7 +91,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
         public JsonResult TradingLimits(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.TradingLimits, viewModel);
@@ -105,7 +105,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
         public ActionResult Newsletters(ListReferencesViewModel viewModel)
         {
             return HandlePostReferences(ReferenceType.Newsletters, viewModel);
@@ -135,6 +135,7 @@
             return Json(new { isSuccessful, message, errors });
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
         public ActionResult GetReferenceEntity(bool isNewsletters)
         {
             var referenceType = isNewsletters ? ReferenceType.Newsletters : ReferenceType.TvSchedule;
@@ -171,6 +172,7 @@
 
             var viewModel = new ListReferencesViewModel
             {
+                IsHostPermission = IsHaveHostPermission(FunctionKeys.References, Constant.Policy.Host),
                 References = referenceType == ReferenceType.Newsletters ? listReference : listReference.OrderBy(r => r.DateAppear).ToList()
             };
 

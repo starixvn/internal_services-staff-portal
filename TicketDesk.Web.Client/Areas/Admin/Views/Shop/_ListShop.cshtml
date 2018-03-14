@@ -1,52 +1,58 @@
-﻿@using TicketDesk.Domain.Model
+﻿@using TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement
 @using TicketDesk.Localization.Client
-    @model IEnumerable<Shop>
+@model ShopListViewModel
 
-    <table class="data-table" cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th class="number">#</th>
-                <th class="shop-name">
-                    <span>@Resources.ShopName</span>
-                </th>
-                <th class="shop-code">
-                    <span>@Resources.ShopCode</span>
-                </th>
-                <th class="email-address">
-                    <span>@Resources.Email</span>
-                </th>
-                <th class="phone">
-                    <span>@Resources.ContactNumber</span>
-                </th>
-                <th class="shop-address">
-                    <span>@Resources.ShopAddress</span>
-                </th>
-                <th class="active">@Resources.Active</th>
+<table class="data-table" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th class="number">#</th>
+            <th class="shop-name">
+                <span>@Resources.ShopName</span>
+            </th>
+            <th class="shop-code">
+                <span>@Resources.ShopCode</span>
+            </th>
+            <th class="email-address">
+                <span>@Resources.Email</span>
+            </th>
+            <th class="phone">
+                <span>@Resources.ContactNumber</span>
+            </th>
+            <th class="shop-address">
+                <span>@Resources.ShopAddress</span>
+            </th>
+            <th class="active">@Resources.Active</th>
+            @if (Model.IsHostPermission)
+            {
                 <th class="action">@Resources.Edit</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                var index = 0;
             }
-            @foreach (var shop in Model)
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var index = 0;
+        }
+        @foreach (var shop in Model.Shops)
             {
                 index++;
-                <tr>
-                    <td class="text-center">@index</td>
-                    <td>@shop.ShopName</td>
-                    <td>@shop.ShopCode</td>
-                    <td>@shop.Email</td>
-                    <td>@shop.ContactNumber</td>
-                    <td>@shop.Address</td>
-                    <td class="text-center">
-                        @if (shop.IsActive)
-                        {
-                            <span class="icon-check"></span>
-                        }
-                    </td>
+            <tr>
+                <td class="text-center">@index</td>
+                <td>@shop.ShopName</td>
+                <td>@shop.ShopCode</td>
+                <td>@shop.Email</td>
+                <td>@shop.ContactNumber</td>
+                <td>@shop.Address</td>
+                <td class="text-center">
+                    @if (shop.IsActive)
+                    {
+                        <span class="icon-check"></span>
+                    }
+                </td>
+                @if (Model.IsHostPermission)
+                {
                     <td class="text-center"><span class="icon-edit action-edit" data-id="@shop.ShopId"></span></td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

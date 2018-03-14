@@ -5,6 +5,8 @@
 
     public class ListReferencesViewModel
     {
+        public bool IsHostPermission { get; set; }
+
         public IList<ReferenceViewModel> References { get; set; }
 
         public IList<ReferenceCriteria> GetQueryCriteria()

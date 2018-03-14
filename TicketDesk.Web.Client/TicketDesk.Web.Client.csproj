@@ -368,6 +368,7 @@
     <Compile Include="Areas\Admin\Models\DataConfiguration\ListCustomFieldListValueViewModel.cs" />
     <Compile Include="Areas\Admin\Models\References\ReferenceViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopFilterViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ShopManagement\ShopListViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopViewModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomFieldsController.cs" />

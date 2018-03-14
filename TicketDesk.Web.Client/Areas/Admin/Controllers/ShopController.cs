@@ -26,25 +26,30 @@
         {
             var viewModel = new ShopFilterViewModel
             {
-                ActiveState = ActiveState.All
+                ActiveState = ActiveState.All,
+                IsHostPermission = IsHaveHostPermission(FunctionKeys.ShopManagement, Constant.Policy.Host)
             };
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult GetListShop(ShopFilterViewModel viewModel)
+        public ActionResult GetListShop(ShopFilterViewModel model)
         {
             var criteria = new ShopFilterCrietria
             {
-                ShopId = viewModel.ShopId,
-                ShopName = viewModel.ShopName,
-                ActiveState = viewModel.ActiveState
+                ShopId = model.ShopId,
+                ShopName = model.ShopName,
+                ActiveState = model.ActiveState
             };
 
             var shops = _shopService.GetListShop(criteria);
-            var shopList = shops.OrderBy(s => s.ShopCode).ToList();
 
-            return PartialView("_ListShop", shopList);
+            var viewModel = new ShopListViewModel
+            {
+                IsHostPermission = IsHaveHostPermission(FunctionKeys.ShopManagement, Constant.Policy.Host),
+                Shops = shops.OrderBy(s => s.ShopCode).ToList()
+            };
+            return PartialView("_ListShop", viewModel);
         }
 
         public ActionResult GetShopSuggestion(string shopName)
@@ -53,6 +58,7 @@
             return Json(shops, JsonRequestBehavior.AllowGet);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Host)]
         public ActionResult Create()
         {
             var viewModel = new ShopViewModel();
@@ -61,6 +67,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Host)]
         public ActionResult Create(ShopViewModel viewModel)
         {
             bool isSuccessful = false;
@@ -85,6 +92,7 @@
             return Json(new { isSuccessful, message, errors });
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id)
         {
             var shop = _shopService.GetShopById(id);
@@ -109,6 +117,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id, ShopViewModel viewModel)
         {
             bool isSuccessful = false;
