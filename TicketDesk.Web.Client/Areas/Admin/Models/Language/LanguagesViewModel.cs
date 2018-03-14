@@ -5,6 +5,7 @@
     using System.Threading;
     using System.Web.Mvc;
     using Localization;
+    using Localization.Client;
 
     public class LanguagesViewModel
     {
@@ -37,7 +38,7 @@
             }
         }
 
-        [Display(Name = "Select language")]
+        [Display(Name = nameof(Resources.SelectLanguage), ResourceType = typeof(Resources))]
         public string SelectedLanguage { get; set; }
     }
 }

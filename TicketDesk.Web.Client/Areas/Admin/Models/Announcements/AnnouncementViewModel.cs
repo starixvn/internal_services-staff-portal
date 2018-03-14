@@ -6,6 +6,7 @@
     using Core.Enumerations;
     using Criteria.Announcement;
     using Domain.Model;
+    using Localization.Client;
 
     public class AnnouncementViewModel
     {
@@ -22,16 +23,16 @@
 
         public bool IsPublishImmediately { get; set; }
 
-        [Display(Name = "Published From")]
+        [Display(Name = nameof(Resources.PublishedFrom), ResourceType = typeof(Resources))]
         public DateTime? PublishedFrom { get; set; }
 
-        [Display(Name = "Published To")]
+        [Display(Name = nameof(Resources.PublishedTo), ResourceType = typeof(Resources))]
         public DateTime? PublishedTo { get; set; }
 
-        [Display(Name = "Type")]
+        [Display(Name = nameof(Resources.Type), ResourceType = typeof(Resources))]
         public AnnouncementType? Type { get; set; }
 
-        [Display(Name = "Published")]
+        [Display(Name = nameof(Resources.Published), ResourceType = typeof(Resources))]
         public AnnouncementState? State { get; set; }
 
         public bool HaveHostPermission { get; set; }

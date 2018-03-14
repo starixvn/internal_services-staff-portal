@@ -3,39 +3,40 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
+    using Localization.Client;
 
     public class EditCustomFieldViewModel
     {
         public int Id { get; set; }
-        [Display(Name = "Apply to categories")]
+        [Display(Name = nameof(Resources.ApplyToCategories), ResourceType = typeof(Resources))]
         public ICollection<int> TicketCategoryIds { get; set; }
 
         public IEnumerable<SelectListItem> TicketCategories { get; set; }
 
-        [Display(Name = "Type")]
+        [Display(Name = nameof(Resources.Type), ResourceType = typeof(Resources))]
         public int CustomFieldTypeId { get; set; }
 
         public IEnumerable<SelectListItem> CustomFieldTypes { get; set; }
 
-        [Display(Name = "Name")]
+        [Display(Name = nameof(Resources.Name), ResourceType = typeof(Resources))]
         public string Name { get; set; }
 
-        [Display(Name = "Name VI")]
+        [Display(Name = nameof(Resources.NameVI), ResourceType = typeof(Resources))]
         public string Name_vi { get; set; }
 
-        [Display(Name = "Values")]
+        [Display(Name = nameof(Resources.Values), ResourceType = typeof(Resources))]
         public string Values { get; set; }
 
-        [Display(Name = "Values_vi")]
+        [Display(Name = nameof(Resources.Values_vi), ResourceType = typeof(Resources))]
         public string Values_vi { get; set; }
 
-        [Display(Name = "Is Enabled")]
+        [Display(Name = nameof(Resources.IsEnabled), ResourceType = typeof(Resources))]
         public bool IsEnabled { get; set; }
 
-        [Display(Name = "Display Order")]
+        [Display(Name = nameof(Resources.DisplayOrder), ResourceType = typeof(Resources))]
         public int DisplayOrder { get; set; }
 
-        [Display(Name = "Is Allowed to Edit List Value")]
+        [Display(Name = nameof(Resources.IsAllowedToEditListValue), ResourceType = typeof(Resources))]
         public bool IsAllowedToEditListValue { get; set; }
     }
 }

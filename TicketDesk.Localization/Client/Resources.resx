@@ -486,4 +486,58 @@
   <data name="DataConfiguration" xml:space="preserve">
     <value>Data Configuration</value>
   </data>
+  <data name="PublishedFrom" xml:space="preserve">
+    <value>Published From</value>
+  </data>
+  <data name="PublishedTo" xml:space="preserve">
+    <value>Published To</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="Important" xml:space="preserve">
+    <value>Important</value>
+  </data>
+  <data name="Sumbit" xml:space="preserve">
+    <value>Sumbit</value>
+  </data>
+  <data name="CreateNewAnnouncement" xml:space="preserve">
+    <value>Create New Announcement</value>
+  </data>
+  <data name="EditAnnouncement" xml:space="preserve">
+    <value>Edit Announcement</value>
+  </data>
+  <data name="PublishAnnouncement" xml:space="preserve">
+    <value>Publish Announcement</value>
+  </data>
+  <data name="DeleteAnnouncement" xml:space="preserve">
+    <value>Delete Announcement</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NameVI" xml:space="preserve">
+    <value>Name VI</value>
+  </data>
+  <data name="Values" xml:space="preserve">
+    <value>Values</value>
+  </data>
+  <data name="Values_vi" xml:space="preserve">
+    <value>Values_vi</value>
+  </data>
+  <data name="IsEnabled" xml:space="preserve">
+    <value>Is Enabled</value>
+  </data>
+  <data name="DisplayOrder" xml:space="preserve">
+    <value>Display Order</value>
+  </data>
+  <data name="IsAllowedToEditListValue" xml:space="preserve">
+    <value>Is Allowed to Edit List Value</value>
+  </data>
+  <data name="ApplyToCategories" xml:space="preserve">
+    <value>Apply to categories</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Select language</value>
+  </data>
 </root>

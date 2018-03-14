@@ -3,12 +3,13 @@
     using System.ComponentModel.DataAnnotations;
     using Criteria.Announcement;
     using Domain.Model;
+    using Localization.Client;
 
     public class NewAnnouncementViewModel
     {
         public Announcement Announcement { get; set; }
 
-        [Display(Name = "Important")]
+        [Display(Name = nameof(Resources.Important), ResourceType = typeof(Resources))]
         public bool IsImportant { get; set; }
 
         public ModalId ModalId { get; set; } = ModalId.CreateAnnouncementModal;
@@ -32,7 +33,7 @@
     {
         Create,
 
-        [Display(Name = "Sumbit")]
+        [Display(Name = nameof(Resources.Sumbit), ResourceType = typeof(Resources))]
         Edit,
 
         Delete
@@ -40,16 +41,16 @@
 
     public enum ModalId
     {
-        [Display(Name = "Create New Announcement")]
+        [Display(Name = nameof(Resources.CreateNewAnnouncement), ResourceType = typeof(Resources))]
         CreateAnnouncementModal,
 
-        [Display(Name = "Edit Announcement")]
+        [Display(Name = nameof(Resources.EditAnnouncement), ResourceType = typeof(Resources))]
         EditAnnouncementModal,
 
-        [Display(Name = "Publish Announcement")]
+        [Display(Name = nameof(Resources.PublishAnnouncement), ResourceType = typeof(Resources))]
         PublishAnnouncement,
 
-        [Display(Name = "Delete Announcement")]
+        [Display(Name = nameof(Resources.DeleteAnnouncement), ResourceType = typeof(Resources))]
         DeleteAnnouncementModal
     }
 }

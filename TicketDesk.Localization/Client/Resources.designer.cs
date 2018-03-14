@@ -106,6 +106,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply to categories.
+        /// </summary>
+        public static string ApplyToCategories {
+            get {
+                return ResourceManager.GetString("ApplyToCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -174,6 +183,15 @@ namespace TicketDesk.Localization.Client {
         public static string ContactNumber {
             get {
                 return ResourceManager.GetString("ContactNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Announcement.
+        /// </summary>
+        public static string CreateNewAnnouncement {
+            get {
+                return ResourceManager.GetString("CreateNewAnnouncement", resourceCulture);
             }
         }
         
@@ -259,6 +277,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Announcement.
+        /// </summary>
+        public static string DeleteAnnouncement {
+            get {
+                return ResourceManager.GetString("DeleteAnnouncement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -282,6 +309,15 @@ namespace TicketDesk.Localization.Client {
         public static string DisplayNameVI {
             get {
                 return ResourceManager.GetString("DisplayNameVI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display Order.
+        /// </summary>
+        public static string DisplayOrder {
+            get {
+                return ResourceManager.GetString("DisplayOrder", resourceCulture);
             }
         }
         
@@ -403,7 +439,7 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to files were selected.
+        ///   Looks up a localized string similar to files selected.
         /// </summary>
         public static string Dropzone_Info_MultipleFilesSelected {
             get {
@@ -412,7 +448,7 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to file were selected.
+        ///   Looks up a localized string similar to file selected.
         /// </summary>
         public static string Dropzone_Info_SingleFileSelected {
             get {
@@ -529,6 +565,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Announcement.
+        /// </summary>
+        public static string EditAnnouncement {
+            get {
+                return ResourceManager.GetString("EditAnnouncement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email Address.
         /// </summary>
         public static string Email {
@@ -561,6 +606,33 @@ namespace TicketDesk.Localization.Client {
         public static string IdUploaderViewModel_Remark_Remark_should_not_than_5000_characters {
             get {
                 return ResourceManager.GetString("IdUploaderViewModel_Remark_Remark_should_not_than_5000_characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Important.
+        /// </summary>
+        public static string Important {
+            get {
+                return ResourceManager.GetString("Important", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Allowed to Edit List Value.
+        /// </summary>
+        public static string IsAllowedToEditListValue {
+            get {
+                return ResourceManager.GetString("IsAllowedToEditListValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Enabled.
+        /// </summary>
+        public static string IsEnabled {
+            get {
+                return ResourceManager.GetString("IsEnabled", resourceCulture);
             }
         }
         
@@ -601,6 +673,24 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name VI.
+        /// </summary>
+        public static string NameVI {
+            get {
+                return ResourceManager.GetString("NameVI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Publish.
         /// </summary>
         public static string Publish {
@@ -610,11 +700,47 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Publish Announcement.
+        /// </summary>
+        public static string PublishAnnouncement {
+            get {
+                return ResourceManager.GetString("PublishAnnouncement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published.
+        /// </summary>
+        public static string Published {
+            get {
+                return ResourceManager.GetString("Published", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Published Date.
         /// </summary>
         public static string PublishedDate {
             get {
                 return ResourceManager.GetString("PublishedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published From.
+        /// </summary>
+        public static string PublishedFrom {
+            get {
+                return ResourceManager.GetString("PublishedFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published To.
+        /// </summary>
+        public static string PublishedTo {
+            get {
+                return ResourceManager.GetString("PublishedTo", resourceCulture);
             }
         }
         
@@ -651,6 +777,15 @@ namespace TicketDesk.Localization.Client {
         public static string SaveAndContinue {
             get {
                 return ResourceManager.GetString("SaveAndContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select language.
+        /// </summary>
+        public static string SelectLanguage {
+            get {
+                return ResourceManager.GetString("SelectLanguage", resourceCulture);
             }
         }
         
@@ -700,11 +835,38 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sumbit.
+        /// </summary>
+        public static string Sumbit {
+            get {
+                return ResourceManager.GetString("Sumbit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Values.
+        /// </summary>
+        public static string Values {
+            get {
+                return ResourceManager.GetString("Values", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Values_vi.
+        /// </summary>
+        public static string Values_vi {
+            get {
+                return ResourceManager.GetString("Values_vi", resourceCulture);
             }
         }
         

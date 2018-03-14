@@ -486,4 +486,58 @@
   <data name="DataConfiguration" xml:space="preserve">
     <value>Thiết lập Dữ liệu</value>
   </data>
+  <data name="PublishedFrom" xml:space="preserve">
+    <value>Đăng từ</value>
+  </data>
+  <data name="PublishedTo" xml:space="preserve">
+    <value>Đăng tới</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Đã đăng</value>
+  </data>
+  <data name="Important" xml:space="preserve">
+    <value>Quan trọng</value>
+  </data>
+  <data name="Sumbit" xml:space="preserve">
+    <value>Gửi</value>
+  </data>
+  <data name="CreateNewAnnouncement" xml:space="preserve">
+    <value>Tạo thông báo</value>
+  </data>
+  <data name="EditAnnouncement" xml:space="preserve">
+    <value>Sửa thông báo</value>
+  </data>
+  <data name="PublishAnnouncement" xml:space="preserve">
+    <value>Đăng thông báo</value>
+  </data>
+  <data name="DeleteAnnouncement" xml:space="preserve">
+    <value>Xóa thông báo</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="NameVI" xml:space="preserve">
+    <value>Tên VI</value>
+  </data>
+  <data name="Values" xml:space="preserve">
+    <value>Giá trị</value>
+  </data>
+  <data name="Values_vi" xml:space="preserve">
+    <value>Giá trị VI</value>
+  </data>
+  <data name="IsEnabled" xml:space="preserve">
+    <value>Được kích hoạt</value>
+  </data>
+  <data name="DisplayOrder" xml:space="preserve">
+    <value>Thứ tự hiển thị</value>
+  </data>
+  <data name="IsAllowedToEditListValue" xml:space="preserve">
+    <value>Cho phép chỉnh sửa giá trị</value>
+  </data>
+  <data name="ApplyToCategories" xml:space="preserve">
+    <value>Áp dụng cho các loại</value>
+  </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Chọn ngôn ngữ</value>
+  </data>
 </root>
