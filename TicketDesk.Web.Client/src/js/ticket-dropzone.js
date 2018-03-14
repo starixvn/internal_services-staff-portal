@@ -3,7 +3,7 @@
 
 var tdz = {
     isFileRequired: function () {
-        return $("#dz-isfilerequired").text();
+        return $("#dz-isfilerequired").text().toLowerCase() === "true";
     },
 
     isMaxFilesViolated: false,

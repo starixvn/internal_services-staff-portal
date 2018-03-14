@@ -108,7 +108,7 @@
                 if (itemNames === "") {
                     itemNames = values[j].value;
                 } else {
-                    itemNames = itemNames + "...";
+                    itemNames = itemNames + ",...";
                     break;
                 }
             }
