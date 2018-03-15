@@ -161,7 +161,7 @@
             bundles.Add(new ScriptBundle("~/bundles/reference-admin").Include(
                    "~/src/libs/datetimepicker/moment.js",
                    "~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js",
-                   "~/src/js/admin/reference/reference.js"
+                   "~/src/js/admin/reference/reference-admin.js"
                    ));
 
             bundles.Add(new ScriptBundle("~/bundles/shop-management").Include(
