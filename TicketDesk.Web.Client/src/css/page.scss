@@ -983,7 +983,6 @@ tr.header {
         border: 1px solid $border-color;
         -webkit-appearance: none;
         -webkit-border-radius: 0;
-        border-radius: 0;
     }
 
     textarea {
@@ -1511,6 +1510,9 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
+}
+
+.hovicon {
     background: #fff;
     border: 2px solid $primary-color;
     -webkit-transition: -webkit-transform ease-out 0.1s, background 0.2s;

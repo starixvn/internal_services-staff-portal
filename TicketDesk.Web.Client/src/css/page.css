@@ -679,8 +679,7 @@ tr.header {
     font-size: 16px;
     border: 1px solid #d3d7db;
     -webkit-appearance: none;
-    -webkit-border-radius: 0;
-    border-radius: 0; }
+    -webkit-border-radius: 0; }
   .form-content textarea {
     padding: 6px 12px;
     min-height: 120px;
@@ -1115,7 +1114,9 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   content: '';
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
-  box-sizing: content-box;
+  box-sizing: content-box; }
+
+.hovicon {
   background: #fff;
   border: 2px solid #bf141a;
   -webkit-transition: -webkit-transform ease-out 0.1s, background 0.2s;
