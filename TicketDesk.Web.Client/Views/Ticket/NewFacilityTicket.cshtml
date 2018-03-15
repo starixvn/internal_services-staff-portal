@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <div class="item-list shop-item">
+        <div class="item-list subject">
             <div class="key fullwidth">
                 @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "" })
             </div>
@@ -99,7 +99,7 @@
 
                         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "key border label-item" })
                         @Html.ValidationMessageFor(x => x.Items.ElementAt(i).ItemName, null, new { data_valmsg_for = "Items[" + guid + "].ItemName.Value" })
-                        <div class="value border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "" })</div>
+                        <div class="border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).ItemName, guid, "Items", new { @class = "" })</div>
                         <div class="border span-2">
                             <button class="btn btn-delete btn-delete-item"><span class="icon-delete"></span>@Resources.Views_Ticket_NewFacilityTicket_DeleteItem</button>
                         </div>
@@ -131,7 +131,7 @@
 
         @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(0).ItemName, sampleGuid, "Items", new { @class = "key border label-item" })
         @Html.ValidationMessageFor(x => x.Items.ElementAt(0).ItemName, null, new { data_valmsg_for = "Items[" + sampleGuid + "].ItemName.Value" })
-        <div class="value border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(0).ItemName, sampleGuid, "Items", new { @class = "not-select2" })</div>
+        <div class="border custom-dropdown">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(0).ItemName, sampleGuid, "Items", new { @class = "not-select2" })</div>
         <div class="border span-2">
             <button class="btn btn-delete btn-delete-item"><span class="icon-delete"></span>@Resources.Views_Ticket_NewFacilityTicket_DeleteItem</button>
         </div>

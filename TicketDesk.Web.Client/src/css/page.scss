@@ -1053,7 +1053,16 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 
 .facility-form {
     .subject {
-        //padding: 0;
+        padding-bottom: 1.5rem;
+        border-left: 1px solid $border-color;
+
+        input[type="text"] {
+            height: 40px;
+        }
+    }
+
+    .shop-item {
+        padding-bottom: 0 !important;
     }
 
     input[type="text"] {
@@ -1093,9 +1102,14 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
             line-height: 38px;
         }
     }
+
+    .custom-dropdown {
+        min-width: 300px;
+        border-radius: 0;
+    }
 }
 
-.facility-form, .feedback-form {
+.feedback-form, .facility-form {
     .shop-item {
         padding-bottom: 1rem;
         border-left: 1px solid #d3d7db;
@@ -2101,6 +2115,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         height: 3.6rem;
         font-family: inherit;
         color: #333;
+        border-radius: 0;
     }
 }
 
