@@ -8,6 +8,7 @@ var nexcelSSPCommon = (function ($) {
 
     function registerEventLogout() {
         $('#confirmLogOut').on('click', function () {
+            console.log("Clicked!");
             window.location.href = "/user/sign-out";
         });
     }

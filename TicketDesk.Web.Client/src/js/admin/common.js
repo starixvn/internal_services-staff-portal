@@ -132,10 +132,18 @@ var ajaxSetup = {
     }
 }
 
+var logoutConfirm = {
+    init: function () {
+        $('#confirmLogOut').on('click', function () {
+            window.location.href = "/user/sign-out";
+        });
+    }
+}
 $(document).ready(function () {
     ajaxSetup.init();
     sidebar.init();
     bootstrapModalHack.init();
     toastrPopup.initToastr();
+    logoutConfirm.init();
     dataTableReflow.setIntervalToReinitFixedHeader();
 });
