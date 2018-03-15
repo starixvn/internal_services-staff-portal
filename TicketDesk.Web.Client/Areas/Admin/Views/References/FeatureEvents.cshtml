@@ -15,12 +15,7 @@
 }
 
 <h2 class="page-title">Feature Events</h2>
-@using (Ajax.BeginForm("FeatureEvents", "References",
-                new AjaxOptions
-                {
-                    OnSuccess = "ajaxSubmitReference.onSuccess",
-                    OnFailure = "ajaxSubmitReference.onFailure"
-                }))
+@using (Html.BeginForm("FeatureEvents", "References",FormMethod.Post))
 {
     @Html.Partial("_ReferenceCommon", Model)
 }

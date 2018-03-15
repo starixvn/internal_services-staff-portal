@@ -23,12 +23,7 @@
     <span>Minimum image size: <strong>600x400px</strong></span>
 </div>
 
-@using (Ajax.BeginForm("Newsletters", "References",
-                                    new AjaxOptions
-                                    {
-                                        OnSuccess = "ajaxSubmitReference.onSuccess",
-                                        OnFailure = "ajaxSubmitReference.onFailure"
-                                    }))
+@using (Html.BeginForm("Newsletters", "References", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -72,7 +67,7 @@
         {
             <div class="button-group">
                 <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" data-type="newsLetters" />
-                <input type="button" id="submit" value="Submit" class="btn btn-submit" />
+                <input type="submit" id="submit" value="Submit" class="btn btn-submit" />
             </div>
         }
     </div>

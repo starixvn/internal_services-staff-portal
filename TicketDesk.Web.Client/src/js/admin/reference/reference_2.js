@@ -138,6 +138,7 @@ var reference = (function ($) {
         registerUploadImageButtonEvent();
         updateDisabledDates();
         registerChangeDateEvent();
+        initValidationForm(domElement.Form);
     }
 
     function registerRemoveReferenceButtonEvent() {
@@ -152,12 +153,25 @@ var reference = (function ($) {
     }
 
     function eventClickSubmitButton() {
-        $("#submit").on("click", function () {
+        $(domElement.Form).on("submit", function (e) {
             userSubmit++;
-            $form = $("form");
-            $form.find(".text-red").text("");
-            $form.submit();
+            $form = $(this);
+            e.preventDefault();
+            $.ajax({
+                url: $($form).attr("action"),
+                data: $($form).serialize(),
+                method: "post",
+                success: function (response) {
+                    onSuccess(response);
+                }
+            });
         });
+    }
+
+    function initValidationForm($form) {
+        $($form).removeData("validator");
+        $($form).removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse($form);
     }
 
     function showErrorMessage($form, errors) {
@@ -169,7 +183,7 @@ var reference = (function ($) {
 
     function eventLeavePage() {
         $(window).on("beforeunload", function () {
-            var formAfterChange = $("form").serialize();
+            var formAfterChange = $(domElement.Form).serialize();
             if (originForm != formAfterChange && userSubmit == 0) {
                 return true;
             }
@@ -186,7 +200,7 @@ var reference = (function ($) {
             setTimeout(function () { location.reload(true); }, 2000);
         } else {
             if (response.errors) {
-                showErrorMessage("form", response.errors);
+                showErrorMessage(domElement.Form, response.errors);
             }
 
             if (response.message) {
@@ -210,9 +224,8 @@ var reference = (function ($) {
     }
 
     return {
-        initModule: initModule,
-        onSuccessful: onSuccess,
-        onFailure: onFailure
+        initModule: initModule
+        
     }
 })(jQuery);
 

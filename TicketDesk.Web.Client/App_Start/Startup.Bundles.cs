@@ -55,8 +55,8 @@
             bundles.Add(new ScriptBundle("~/bundles/validate")
                 .Include(
                     "~/src/libs/jquery-validate/1.17.0/jquery.validate.min.js",
-                    "~/Scripts/jquery.unobtrusive-ajax.min.js",
-                    "~/src/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"));
+                    "~/src/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"
+                    ));
 
             bundles.Add(new ScriptBundle("~/bundles/file-manager")
                 .Include(
@@ -161,7 +161,9 @@
             bundles.Add(new ScriptBundle("~/bundles/reference-admin").Include(
                    "~/src/libs/datetimepicker/moment.js",
                    "~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js",
-                   "~/src/js/admin/reference/reference.js"));
+                   "~/src/js/admin/reference/reference_2.js"
+                   //"~/src/js/admin/reference/reference.js"
+                   ));
 
             bundles.Add(new ScriptBundle("~/bundles/shop-management").Include(
                    "~/src/libs/jquery.DataTable/datatables.min.js",

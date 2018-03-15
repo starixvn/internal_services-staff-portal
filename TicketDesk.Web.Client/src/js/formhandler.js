@@ -16,12 +16,12 @@ var formhandler = {
         formhandler.initDateTimePicker();
     },
 
-    initDateTimePicker: function() {
+    initDateTimePicker: function () {
         if ($.fn.datetimepicker) {
             $(".datetimepicker").datetimepicker({
                 format: "DD/MM/YYYY hh:mm",
                 useCurrent: false,
-                maxDate: new Date(),
+                maxDate: moment().endOf('d'),
                 sideBySide: true
             });
         }

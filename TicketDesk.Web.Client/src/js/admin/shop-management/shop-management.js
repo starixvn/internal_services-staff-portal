@@ -67,6 +67,24 @@
         })
     }
 
+    function registerFormSubmitEvent($form, $modal) {
+        $($form).on("submit", function (e) {
+            e.preventDefault();
+            $form = $(this);
+            $.ajax({
+                url: $($form).attr("action"),
+                method: "post",
+                data: $($form).serialize(),
+                success: function (response) {
+                    onAjaxSuccessful(response, $form, $modal);
+                },
+                error: function (response) {
+                    toasrt.error(response);
+                }
+            });
+        });
+    }
+
     function initDataTable() {
         var shopDataTable = commonDataTableInit.Init();
         shopDataTable.order = [[2, "asc"]];
@@ -111,6 +129,7 @@
                 success: function (data) {
                     $(editModalContent).html(data);
                     initValidationForm($(editModalContent));
+                    registerFormSubmitEvent(domElement.EditShopForm, domElement.EditModal);
                     $(domElement.EditModal).modal('show');
                 }
             })
@@ -127,6 +146,7 @@
                 success: function (data) {
                     $createModalContent.html(data);
                     initValidationForm($(domElement.CreateShopForm));
+                    registerFormSubmitEvent(domElement.CreateShopForm, domElement.CreateModal);
                     $(domElement.CreateModal).modal('show');
                 }
             })
@@ -159,9 +179,7 @@
         if (response.isSuccessful) {
             $($modal).modal("hide");
             toastr.success(response.message);
-            setTimeout(function () {
-                location.reload();
-            }, 3000);
+            setTimeout(function () { location.reload(true); }, 3000)
         } else {
             if (response.errors) {
                 showErrorMessage($form, response.errors);
@@ -171,18 +189,8 @@
         }
     }
 
-    function onCreateSuccessful(response) {
-        var $form = $(domElement.CreateShopForm);
-        onAjaxSuccessful(response, $form, domElement.CreateModal);
-    }
-
-    function onUpdateSuccessful(response) {
-        var $form = $(domElement.EditShopForm);
-        onAjaxSuccessful(response, $form, domElement.EditModal);
-    }
-
     function initModule() {
-        getListShop("#filterForm");
+        getListShop(domElement.FilterForm);
         eventClickCreateButtonHandler();
         eventClickEditIconHandler();
         searchShopSuggest();
@@ -194,9 +202,7 @@
     }
 
     return {
-        initModule: initModule,
-        onCreateSuccessful: onCreateSuccessful,
-        onUpdateSuccessful: onUpdateSuccessful
+        initModule: initModule
     }
 }(jQuery));
 

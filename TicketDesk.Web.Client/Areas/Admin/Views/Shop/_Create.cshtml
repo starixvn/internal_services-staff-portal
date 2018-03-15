@@ -8,7 +8,7 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-@using (Ajax.BeginForm("Create", "Shop", new AjaxOptions { OnSuccess = "shopManagement.onCreateSuccessful", OnFailure = "" }, new { id = "createShopForm" }))
+@using (Html.BeginForm("Create", "Shop", FormMethod.Post, new { id = "createShopForm" }))
 {
     <div class="modal-body">
         @Html.AntiForgeryToken()

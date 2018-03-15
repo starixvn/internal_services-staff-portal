@@ -34,6 +34,7 @@
         reference.updateFormFieldsName();
         reference.updateDisabledDates();
         reference.setSubmitButtonState();
+        reference.resetFormValidator();
     },
 
     updateReferenceIndex: function (index, element) {
@@ -89,7 +90,13 @@
         if (originReference == 0) {
             reference.setSubmitButtonState();
         }
-    }
+    },
+
+    resetFormValidator: function() {
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse("form");
+    },
 };
 
 var originForm = $("form").serialize();

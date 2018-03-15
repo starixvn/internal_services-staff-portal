@@ -15,12 +15,7 @@
 }
 
 <h2 class="page-title">Bet Of The Day</h2>
-@using (Ajax.BeginForm("BetOfTheDay", "References",
-                        new AjaxOptions
-                        {
-                            OnSuccess = "ajaxSubmitReference.onSuccess",
-                            OnFailure = "ajaxSubmitReference.onFailure"
-                        }))
+@using (Html.BeginForm("BetOfTheDay", "References", FormMethod.Post))
 {
 @Html.Partial("_ReferenceCommon", Model)
 }

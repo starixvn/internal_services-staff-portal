@@ -14,12 +14,7 @@
 }
 
 <h2 class="page-title">TV Schedules</h2>
-@using (Ajax.BeginForm("TVSchedules", "References",
-                                    new AjaxOptions
-                                    {
-                                        OnSuccess = "ajaxSubmitReference.onSuccess",
-                                        OnFailure = "ajaxSubmitReference.onFailure"
-                                    }))
+@using (Html.BeginForm("TVSchedules", "References", FormMethod.Post))
 {
     @Html.Partial("_ReferenceCommon", Model)
 }

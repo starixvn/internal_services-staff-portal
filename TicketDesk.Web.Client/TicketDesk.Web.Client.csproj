@@ -507,6 +507,7 @@
     <Content Include="src\libs\jquery-ui\jquery-ui.structure.min.css" />
     <Content Include="src\libs\jquery-ui\jquery-ui.theme.css" />
     <Content Include="src\libs\jquery-ui\jquery-ui.theme.min.css" />
+    <Content Include="src\libs\jquery-unobtrusive-ajax\jquery.unobtrusive-ajax.min.js" />
     <Content Include="src\libs\jquery.DataTable\dataTables.fixedHeader.min.js" />
     <Content Include="src\libs\jquery.DataTable\datatables.min.css" />
     <Content Include="src\libs\jquery.DataTable\datatables.min.js" />

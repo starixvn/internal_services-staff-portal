@@ -15,12 +15,7 @@
 }
 
 <h2 class="page-title">Trading Limits</h2>
-@using (Ajax.BeginForm("TradingLimits", "References",
-                                                new AjaxOptions
-                                                {
-                                                    OnSuccess = "ajaxSubmitReference.onSuccess",
-                                                    OnFailure = "ajaxSubmitReference.onFailure"
-                                                }))
+@using (Html.BeginForm("TradingLimits", "References", FormMethod.Post))
 {
     @Html.Partial("_ReferenceCommon", Model)
 }
