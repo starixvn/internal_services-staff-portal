@@ -493,7 +493,7 @@
     <Content Include="src\contents\images\sort_up.png" />
     <Content Include="src\js\admin\dataconfiguration\dataconfigurationindex.js" />
     <Content Include="src\js\admin\dataTableCommon.js" />
-    <Content Include="src\js\admin\reference\reference_2.js" />
+    <Content Include="src\js\admin\reference\reference.js" />
     <Content Include="src\js\admin\shop-management\shop-management.js" />
     <Content Include="src\js\home\read-announcement.js" />
     <Content Include="src\js\ticket-dropzone.js" />
@@ -531,7 +531,6 @@
     </Content>
     <Content Include="src\js\admin\announcement\announcementsindex.js" />
     <Content Include="src\js\admin\common.js" />
-    <Content Include="src\js\admin\reference\reference.js" />
     <Content Include="src\js\home\home.js" />
     <Content Include="favicon.png" />
     <Content Include="fonts\fontawesome-webfont.svg" />

@@ -1,186 +1,196 @@
-﻿var reference = {
-    initReference: function () {
-        reference.initDateTimePicker();
-        reference.setSubmitButtonState();
-    },
+﻿var originForm = $("form").serialize();
+var userSubmit = 0;
+var originReference = $(".reference-entry").length;
 
-    initDateTimePicker: function () {
+var reference = (function ($) {
+    var domElement = {
+        DateTimePicker: ".datetimepicker",
+        ImageUrl: ".image-url",
+        ReferenceEntry: ".reference-entry",
+        ReferenceZone: "#ReferencesZone",
+        LimitMessagePlace: "#limitEntry",
+        AddReferenceButton: "#addReferenceEntry",
+        RemoveReferenceButton: ".remove-entry",
+        InputValidationError: "input-validation-error",
+        UploadImageValidation: ".upload-image-validation",
+        FieldValidationError: ".field-validation-error",
+        SubmitButtion: "#submit",
+        UploadImageButton: ".upload-image",
+        Form: "form"
+    }
+
+    function initDateTimePicker() {
         var nowDate = new Date();
-        $(".datetimepicker").datetimepicker({
+        $(domElement.DateTimePicker).datetimepicker({
             format: "MM-DD-YYYY",
             useCurrent: false,
             minDate: nowDate.toDateString(),
             maxDate: nowDate.setFullYear(nowDate.getFullYear() + 1),
-            disabledDates: reference.getSelectedDates()
+            disabledDates: getSelectedDates()
         });
-    },
+    }
 
-    getSelectedDates: function () {
+    function getSelectedDates() {
         var choosenDates = [];
-        $(".datetimepicker").each(function (i, e) {
+        $(domElement.DateTimePicker).each(function (i, e) {
             var choosenDate = $(this).val();
             choosenDates.push(choosenDate);
         });
         return choosenDates;
-    },
+    }
 
-    updateDisabledDates: function () {
-        $(".datetimepicker").each(function (i, e) {
-            $(this).data("DateTimePicker").disabledDates(reference.getSelectedDates());
+    function updateDisabledDates() {
+        $(domElement.DateTimePicker).each(function (i, e) {
+            $(this).data("DateTimePicker").disabledDates(getSelectedDates());
         });
-    },
+    }
 
-    updateReferenceState: function () {
-        reference.updateFormFieldsName();
-        reference.updateDisabledDates();
-        reference.setSubmitButtonState();
-        reference.resetFormValidator();
-    },
-
-    updateReferenceIndex: function (index, element) {
-        $(element).find(".datetimepicker").attr("name", "References[" + index + "].DateAppear");
-        $(element).find(".datetimepicker").attr("id", "References_" + index + "__DateAppear");
-        $(element).find(".image-url").attr("name", "References[" + index + "].ImageLink");
-        $(element).find(".reference-id").attr("name", "References[" + index + "].Id");
-        $(element).find(".date span").attr("data-valmsg-for", "References[" + index + "].DateAppear");
-        $(element).find(".url span").attr("data-valmsg-for", "References[" + index + "].ImageLink");
-    },
-
-    updateFormFieldsName: function () {
-        reference.initDateTimePicker();
-        $(".reference-entry").each(function (i, e) {
-            reference.updateReferenceIndex(i, e);
+    function registerChangeDateEvent() {
+        $(domElement.DateTimePicker).on("dp.change", function () {
+            updateDisabledDates();
         });
-    },
+    }
 
-    checkLimitedEntry: function (limitEntry) {
-        var totalEntries = $(".reference-entry").length;
-        if (totalEntries >= limitEntry) return false;
-        return true;
-    },
-
-    addReferenceEntry: function (isNewsletters, limitEntry) {
-        var url = "/Admin/References/GetReferenceEntity?isNewsletters=" + isNewsletters
-        $.get(url, function (html) {
-            if (reference.checkLimitedEntry(limitEntry)) {
-                $("#ReferencesZone").append(html);
-                reference.updateReferenceState();
-            } else {
-                var message = "You only can upload " + limitEntry + " files of attachment";
-                $("#limitEntry").text(message);
+    function registerUploadImageButtonEvent() {
+        $(domElement.UploadImageButton).on("change", function (e) {
+            var parent = $(this).closest(domElement.ReferenceEntry);
+            var files = e.target.files;
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    data.append("file", files[0]);
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/References/UploadImage",
+                        contentType: false,
+                        processData: false,
+                        data: data,
+                        success: function (result) {
+                            console.log(result);
+                            if (result.isSuccessful) {
+                                parent.find(domElement.ImageUrl).val(result.imageDirectory);
+                                parent.find(domElement.ImageUrl).removeClass(domElement.InputValidationError);
+                                parent.find(domElement.FieldValidationError).addClass("hidden");
+                                parent.find(domElement.UploadImageValidation).text("");
+                            } else {
+                                parent.find(domElement.ImageUrl).addClass(domElement.InputValidationError);
+                                parent.find(domElement.UploadImageValidation).text(result.message);
+                                parent.find(domElement.ImageUrl).val("");
+                                parent.find(domElement.UploadImageButton).val("");
+                            }
+                        },
+                        error: function (xhr, status, p3, p4) {
+                            var err = "Error " + " " + status + " " + p3 + " " + p4;
+                            if (xhr.responseText && xhr.responseText[0] === "{")
+                                err = JSON.parse(xhr.responseText).Message;
+                            alert(err);
+                        }
+                    });
+                } else {
+                    alert("This browser doesn't support HTML5 file uploads!");
+                }
             }
+        })
+    }
+
+    function updateFormFieldsName() {
+        initDateTimePicker();
+        $(domElement.ReferenceEntry).each(function (index, element) {
+            $(element).find(domElement.DateTimePicker).attr("name", "References[" + index + "].DateAppear");
+            $(element).find(domElement.ImageUrl).attr("name", "References[" + index + "].ImageLink");
+            $(element).find(".reference-id").attr("name", "References[" + index + "].Id");
+            $(element).find(".date span").attr("data-valmsg-for", "References[" + index + "].DateAppear");
+            $(element).find(".url span").attr("data-valmsg-for", "References[" + index + "].ImageLink");
         });
-    },
+    }
 
-    isEmptyReference: function () {
-        if (!$(".reference-entry").length) {
-            return true;
-        }
-        return false;
-    },
+    function setSubmitButtonState() {
+        var isEmptyReference = $(domElement.ReferenceEntry).length == 0;
+        $(domElement.SubmitButtion).prop("disabled", isEmptyReference);
+    }
 
-    setSubmitButtonState: function () {
-        $("#submit").prop("disabled", reference.isEmptyReference());
-    },
+    function isLimitedReference(limitNumber) {
+        var totalEntries = $(domElement.ReferenceEntry).length;
+        return totalEntries >= limitNumber;
+    }
 
-    removeEntry: function (element) {
-        $(element).parent().parent().remove();
-        reference.updateFormFieldsName();
-        reference.updateDisabledDates();
-        if (originReference == 0) {
-            reference.setSubmitButtonState();
-        }
-    },
-
-    resetFormValidator: function() {
-        $("form").removeData("validator");
-        $("form").removeData("unobtrusiveValidation");
-        $.validator.unobtrusive.parse("form");
-    },
-};
-
-var originForm = $("form").serialize();
-var userSubmit = 0;
-var originReference = $(".reference-entry").length;
-reference.initReference();
-
-$("#addReferenceEntry").click(function () {
-    var type = $(this).attr("data-type");
-    var isNewsletters = type == "newsLetters";
-    var limitEntry = isNewsletters ? 50 : 31
-    reference.addReferenceEntry(isNewsletters, limitEntry);
-});
-
-$("form").on("click", ".remove-entry", function () {
-    reference.removeEntry($(this));
-});
-
-$(document).on("dp.change", ".datetimepicker", function () {
-    reference.updateDisabledDates();
-});
-
-$("#ReferencesZone").on("change", ".upload-image", function (e) {
-    var uploadEntry = $(this).closest(".reference-entry");
-    var files = e.target.files;
-    if (files.length > 0) {
-        if (window.FormData !== undefined) {
-            var data = new FormData();
-            data.append("file", files[0]);
-            $.ajax({
-                type: "POST",
-                url: "/Admin/References/UploadImage",
-                contentType: false,
-                processData: false,
-                data: data,
-                success: function (result) {
-                    if (result.isSuccessful) {
-                        uploadEntry.find(".image-url").val(result.imageDirectory);
-                        uploadEntry.find(".image-url").removeClass("input-validation-error");
-                        uploadEntry.find(".field-validation-error").addClass("hidden");
-                        uploadEntry.find(".upload-image-validation").text("");
-                    } else {
-                        uploadEntry.find(".image-url").addClass("input-validation-error");
-                        uploadEntry.find(".upload-image-validation").text(result.message);
-                        uploadEntry.find(".image-url").val("");
-                        uploadEntry.find(".upload-image").val("");
-                    }
-                },
-                error: function (xhr, status, p3, p4) {
-                    var err = "Error " + " " + status + " " + p3 + " " + p4;
-                    if (xhr.responseText && xhr.responseText[0] === "{")
-                        err = JSON.parse(xhr.responseText).Message;
-                    alert(err);
+    function eventClickAddNewReference() {
+        $(domElement.AddReferenceButton).click(function () {
+            var type = $(this).attr("data-type");
+            var isNewsletters = type == "newsLetters";
+            var limitEntry = isNewsletters ? 50 : 31;
+            var url = "/Admin/References/GetReferenceEntity?isNewsletters=" + isNewsletters;
+            $.get(url, function (html) {
+                if (!isLimitedReference(limitEntry)) {
+                    $(domElement.ReferenceZone).append(html);
+                    onAddNewReferenceSuccessful();
+                } else {
+                    var message = "You only can upload " + limitEntry + " files of attachment";
+                    $(domElement.LimitMessagePlace).text(message);
                 }
             });
-        } else {
-            alert("This browser doesn't support HTML5 file uploads!");
-        }
-    }
-});
-
-$("#submit").click(function (e) {
-    $("form").submit();
-    userSubmit = 1;
-    $(".reference-entry").find(".upload-image-validation").text("");
-});
-
-$(window).on("beforeunload", function () {
-    var formAfterChange = $("form").serialize();
-    if (originForm != formAfterChange && userSubmit == 0) {
-        return true;
-    }
-});
-
-var ajaxSubmitReference = {
-    renderErrorsMessage: function (errors) {
-        console.log(errors);
-        errors.forEach(function (error) {
-            $("input[name='" + error.key + "']").addClass("input-validation-error");
-            $('[data-valmsg-for="' + error.key + '"]:last').text(error.errorMessage);
         });
-    },
+    }
 
-    onSuccess: function (response) {
+    function onAddNewReferenceSuccessful() {
+        updateFormFieldsName();
+        registerRemoveReferenceButtonEvent();
+        registerUploadImageButtonEvent();
+        updateDisabledDates();
+        registerChangeDateEvent();
+        initValidationForm(domElement.Form);
+    }
+
+    function registerRemoveReferenceButtonEvent() {
+        $(domElement.RemoveReferenceButton).on("click", function () {
+            $(this).parent().parent().remove();
+            updateFormFieldsName();
+            updateDisabledDates();
+            if (originReference == 0) {
+                setSubmitButtonState();
+            }
+        });
+    }
+
+    function eventClickSubmitButton() {
+        $(domElement.Form).on("submit", function (e) {
+            userSubmit++;
+            $form = $(this);
+            e.preventDefault();
+            $.ajax({
+                url: $($form).attr("action"),
+                data: $($form).serialize(),
+                method: "post",
+                success: function (response) {
+                    onSuccess(response);
+                }
+            });
+        });
+    }
+
+    function initValidationForm($form) {
+        $($form).removeData("validator");
+        $($form).removeData("unobtrusiveValidation");
+        $.validator.unobtrusive.parse($form);
+    }
+
+    function showErrorMessage($form, errors) {
+        errors.forEach(function (error) {
+            $($form).find("input[name='" + error.key + "']").addClass("input-validation-error");
+            $($form).find('[data-valmsg-for="' + error.key + '"]:last').text(error.errorMessage);
+        });
+    }
+
+    function eventLeavePage() {
+        $(window).on("beforeunload", function () {
+            var formAfterChange = $(domElement.Form).serialize();
+            if (originForm != formAfterChange && userSubmit == 0) {
+                return true;
+            }
+        });
+    }
+
+    function onSuccess(response) {
         userSubmit = 0;
         if (response.isSuccessful) {
             toastr.success(response.message);
@@ -188,20 +198,38 @@ var ajaxSubmitReference = {
                 $(this).find(".image-url").removeClass("input-validation-error");
                 $(this).find(".field-validation-valid").text("");
             });
-            originForm = $("form").serialize();
-            setTimeout(function () { location.reload(true); }, 3000);
+            setTimeout(function () { location.reload(true); }, 2000);
         } else {
             if (response.errors) {
-                ajaxSubmitReference.renderErrorsMessage(response.errors);
+                showErrorMessage(domElement.Form, response.errors);
             }
 
             if (response.message) {
                 toastr.error(response.message);
             }
         }
-    },
-
-    onFailure: function (response) {
-        toastr.error("Error");
     }
-};
+
+    function onFailure(response) {
+        userSubmit = 0;
+        toastr.error("500 Internal Server Error");
+    }
+
+    function initModule() {
+        initDateTimePicker();
+        eventClickAddNewReference();
+        registerRemoveReferenceButtonEvent();
+        registerUploadImageButtonEvent();
+        eventClickSubmitButton();
+        eventLeavePage();
+    }
+
+    return {
+        initModule: initModule
+        
+    }
+})(jQuery);
+
+$(document).ready(function () {
+    reference.initModule();
+})
