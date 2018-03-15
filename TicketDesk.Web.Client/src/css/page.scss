@@ -983,6 +983,7 @@ tr.header {
         border: 1px solid $border-color;
         -webkit-appearance: none;
         -webkit-border-radius: 0;
+        border-radius: 0;
     }
 
     textarea {
@@ -1510,9 +1511,6 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
-}
-
-.hovicon {
     background: #fff;
     border: 2px solid $primary-color;
     -webkit-transition: -webkit-transform ease-out 0.1s, background 0.2s;
@@ -1624,6 +1622,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     100% {
         box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px $primary-color, 0 0 0 10px rgba(255,255,255,0.5);
         -webkit-transform: scale(1.2);
+        transform: scale(1.2);
         opacity: 0;
     }
 }
@@ -1641,6 +1640,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     100% {
         box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px $primary-color, 0 0 0 10px rgba(255,255,255,0.5);
         -moz-transform: scale(1.2);
+        transform: scale(1.2);
         opacity: 0;
     }
 }
@@ -2035,10 +2035,6 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
                 height: 20px;
                 background-size: 30px 20px;
             }
-
-            &:hover {
-                // transform: scale(1.1);
-            }
         }
 
         .name {
@@ -2066,13 +2062,10 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     cursor: pointer;
     -webkit-transition: all .5s;
     -moz-transition: all .5s;
-    -ms-transition: all .5s;
-    -ms-transition: all .5s;
-    transition: all .5s;
-    backface-visibility: hidden;
+    transition: all .5s;    
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .lang-flag, .lang-list {

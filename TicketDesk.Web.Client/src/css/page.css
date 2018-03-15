@@ -679,7 +679,8 @@ tr.header {
     font-size: 16px;
     border: 1px solid #d3d7db;
     -webkit-appearance: none;
-    -webkit-border-radius: 0; }
+    -webkit-border-radius: 0;
+    border-radius: 0; }
   .form-content textarea {
     padding: 6px 12px;
     min-height: 120px;
@@ -1114,9 +1115,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   content: '';
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
-  box-sizing: content-box; }
-
-.hovicon {
+  box-sizing: content-box;
   background: #fff;
   border: 2px solid #bf141a;
   -webkit-transition: -webkit-transform ease-out 0.1s, background 0.2s;
@@ -1203,6 +1202,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   100% {
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 0 10px 10px #bf141a, 0 0 0 10px rgba(255, 255, 255, 0.5);
     -webkit-transform: scale(1.2);
+    transform: scale(1.2);
     opacity: 0; } }
 
 @-moz-keyframes sonarEffect {
@@ -1214,6 +1214,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   100% {
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 0 10px 10px #bf141a, 0 0 0 10px rgba(255, 255, 255, 0.5);
     -moz-transform: scale(1.2);
+    transform: scale(1.2);
     opacity: 0; } }
 
 @keyframes sonarEffect {
@@ -1508,13 +1509,10 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   cursor: pointer;
   -webkit-transition: all .5s;
   -moz-transition: all .5s;
-  -ms-transition: all .5s;
-  -ms-transition: all .5s;
   transition: all .5s;
-  backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden; }
+  backface-visibility: hidden; }
 
 .select2-container .select2-selection--single {
   border-radius: 0;
