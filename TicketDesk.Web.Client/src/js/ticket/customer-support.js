@@ -1,7 +1,8 @@
 ﻿var customerSupport = (function ($) {
     function getSupportType() {
         var supportType = $("#select2-SupportTypeValue-container").attr("title");
-        return supportType;
+        var supportTypeTitle = "[" + supportType + "] -";
+        return supportTypeTitle;
     }
 
     function setSubjectPrefix() {
