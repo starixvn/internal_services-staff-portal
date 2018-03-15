@@ -1816,7 +1816,6 @@
     <Content Include="Scripts\Select2-locales\select2_locale_nb.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_nl.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_pl.js" />
-    <Content Include="Scripts\Select2-locales\select2_locale_pt-BR.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_pt-PT.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_ro.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_rs.js" />
@@ -1833,12 +1832,10 @@
     <Content Include="Scripts\Select2-locales\select2_locale_zh-TW.js" />
     <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\select2.min.js" />
-    <Content Include="Scripts\summernote\summernote-pt-BR.js" />
     <Content Include="Scripts\summernote\summernote.css" />
     <Content Include="Scripts\summernote\summernote.js" />
     <Content Include="Scripts\summernote\summernote.min.js" />
     <Content Include="Scripts\ticketdesk\admin-edit-user.js" />
-    <Content Include="Scripts\ticketdesk\locale_pt-BR.js" />
     <Content Include="Scripts\ticketdesk\locale_en-US.js" />
     <Content Include="src\js\common.js" />
     <Content Include="Scripts\ticketdesk\search.js" />
@@ -2011,7 +2008,6 @@
     <Content Include="Views\User\SignIn.cshtml" />
     <Content Include="Views\Shared\_ProjectMenu.cshtml" />
     <Content Include="Views\FirstRunSetup\CheckUpgradeProgress.cshtml" />
-    <Content Include="Scripts\jQueryValidate-locales\jquery.validate_locale_pt-BR.js" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
@@ -2104,6 +2100,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Scripts\jQueryValidate-locales\" />
     <Folder Include="Scripts\ticketdesk\User\" />
     <Folder Include="src\css\admin\pages\" />
     <Folder Include="src\libs\dropzone\debug\" />
