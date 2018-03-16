@@ -140,7 +140,6 @@
             var viewModel = new NewAnnouncementViewModel
             {
                 Announcement = announcement,
-                IsImportant = announcement.Type == AnnouncementType.Important,
                 ModalId = ModalId.EditAnnouncementModal,
                 ActionType = ActionType.Edit
             };

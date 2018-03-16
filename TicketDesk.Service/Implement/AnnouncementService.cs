@@ -106,8 +106,6 @@
             criteria.Announcement.LastModified = DateTime.Now;
             criteria.Announcement.ModifiedBy = CurrentUsername;
 
-            criteria.Announcement.Type = criteria.IsImportant ? AnnouncementType.Important : AnnouncementType.Normal;
-
             return criteria;
         }
 

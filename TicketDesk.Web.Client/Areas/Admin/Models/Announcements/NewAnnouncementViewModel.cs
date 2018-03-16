@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Models.Announcements
 {
     using System.ComponentModel.DataAnnotations;
+    using Core.Enumerations;
     using Criteria.Announcement;
     using Domain.Model;
     using Localization.Client;
@@ -10,7 +11,11 @@
         public Announcement Announcement { get; set; }
 
         [Display(Name = nameof(Resources.Important), ResourceType = typeof(Resources))]
-        public bool IsImportant { get; set; }
+        public bool IsImportant
+        {
+            get => Announcement.Type == AnnouncementType.Important;
+            set => Announcement.Type = value ? AnnouncementType.Important : AnnouncementType.Normal;
+        }
 
         public ModalId ModalId { get; set; } = ModalId.CreateAnnouncementModal;
 
@@ -22,8 +27,7 @@
         {
             return new NewAnnouncementCriteria
             {
-                Announcement = Announcement,
-                IsImportant = IsImportant
+                Announcement = Announcement
             };
         }
     }

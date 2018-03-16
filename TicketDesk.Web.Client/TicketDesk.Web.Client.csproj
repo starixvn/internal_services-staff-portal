@@ -361,6 +361,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShopController.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Announcements\EditAnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\ListAnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\NewAnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CustomField\ListCustomFieldViewModel.cs" />

@@ -5,6 +5,5 @@
     public class NewAnnouncementCriteria
     {
         public Announcement Announcement { get; set; }
-        public bool IsImportant { get; set; }
     }
 }
