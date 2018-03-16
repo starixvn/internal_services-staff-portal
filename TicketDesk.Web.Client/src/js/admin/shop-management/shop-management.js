@@ -52,13 +52,13 @@
         });
     }
 
-    function getListShop($form) {
+    function getListShop(form) {
         var data = $(domElement.FilterForm).serialize();
         $.ajax({
-            method: "post",
-            url: $($form).attr("action"),
+            method: $(form).attr("method"),
+            url: $(form).attr("action"),
             data: data,
-            success: function(data) {
+            success: function (data) {
                 $(domElement.TableArea).html(data);
                 initDataTable();
                 sidebar.initSelect2();
@@ -67,16 +67,15 @@
         });
     }
 
-    function registerFormSubmitEvent($form, $modal) {
-        $($form).on("submit", function (e) {
+    function registerFormSubmitEvent(form, modal) {
+        $(form).on("submit", function (e) {
             e.preventDefault();
-            $form = $(this);
             $.ajax({
-                url: $($form).attr("action"),
-                method: "post",
-                data: $($form).serialize(),
+                url: $(form).attr("action"),
+                method: $(form).attr("method"),
+                data: $(form).serialize(),
                 success: function (response) {
-                    onAjaxSuccessful(response, $form, $modal);
+                    onAjaxSuccessful(response, form, modal);
                 },
                 error: function (response) {
                     toastr.error(response);
@@ -142,7 +141,7 @@
                 type: "GET",
                 url: $(this).data("href"),
                 dataType: "html",
-                success: function(data) {
+                success: function (data) {
                     $createModalContent.html(data);
                     initValidationForm($(domElement.CreateShopForm));
                     registerFormSubmitEvent(domElement.CreateShopForm, domElement.CreateModal);
@@ -178,7 +177,9 @@
         if (response.isSuccessful) {
             $($modal).modal("hide");
             toastr.success(response.message);
-            setTimeout(function () { location.reload(true); }, 3000)
+            $(domElement.FilterForm).trigger("submit");
+            $(domElement.CreateModalContent).html("");
+            $(domElement.EditModalContent).html("");
         } else {
             if (response.errors) {
                 showErrorMessage($form, response.errors);
@@ -195,7 +196,7 @@
         searchShopSuggest();
 
         $(domElement.FilterForm).on("submit",
-            function(e) {
+            function (e) {
                 getListShop($(this));
                 e.preventDefault();
             });
