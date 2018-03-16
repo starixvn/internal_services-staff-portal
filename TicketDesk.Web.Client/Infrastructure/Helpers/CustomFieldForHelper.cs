@@ -72,24 +72,11 @@
             var htmlFieldName = ExpressionHelper.GetExpressionText(propertyExpression);
 
             TagBuilder label = new TagBuilder("label");
-            label.Attributes.Add("for", htmlFieldName + ".Value");
+            label.Attributes.Add("for", $"{htmlFieldName}.Value");
 
             if (customFieldValue != null)
             {
-                string labelText = GetMultiligualStringOfCustomField(customFieldValue);
-
-                if (customFieldValue.CustomField.IsRequired)
-                {
-                    labelText = labelText + "<span class=\"highlight\">&nbsp;*</span>";
-                }
-
-                if (isIncludeMaxlength)
-                {
-                    var maxLength = customFieldValue.CustomField.MaxLength;
-                    labelText += $"&nbsp;<span class=\"highlight\">(<span class=\"countdown-character\">{maxLength}</span> {Resources.Common_Form_Characters})</span>";
-                }
-
-                label.InnerHtml = labelText;
+                label.InnerHtml = label.InnerHtml = BuildCustomFieldLabelInnerHtml(isIncludeMaxlength, customFieldValue);
             }
 
             if (htmlAttributes != null)
@@ -125,23 +112,10 @@
             var htmlFieldName = ExpressionHelper.GetExpressionText(propertyExpression);
 
             TagBuilder label = new TagBuilder("label");
-            label.Attributes.Add("for", parentName + "[" + guid + "]." + htmlFieldName);
+            label.Attributes.Add("for", $"{parentName}[{guid}].{htmlFieldName}");
             if (customFieldValue != null)
             {
-                string labelText = GetMultiligualStringOfCustomField(customFieldValue);
-
-                if (customFieldValue.CustomField.IsRequired)
-                {
-                    labelText = labelText + "<span class=\"highlight\">&nbsp;*</span>";
-                }
-
-                if (isIncludeMaxlength)
-                {
-                    var maxLength = customFieldValue.CustomField.MaxLength;
-                    labelText += $"&nbsp;<span class=\"highlight\">(<span class=\"countdown-character\">{maxLength}</span> {Resources.Common_Form_Characters})</span>";
-                }
-
-                label.InnerHtml = labelText;
+                label.InnerHtml = BuildCustomFieldLabelInnerHtml(isIncludeMaxlength, customFieldValue);
             }
 
             if (htmlAttributes != null)
@@ -151,6 +125,25 @@
             }
 
             return new MvcHtmlString(label.ToString());
+        }
+
+        private static string BuildCustomFieldLabelInnerHtml(bool isIncludeMaxlength, CustomFieldValue customFieldValue)
+        {
+            StringBuilder labelText = new StringBuilder(GetMultiligualStringOfCustomField(customFieldValue));
+
+            if (customFieldValue.CustomField.IsRequired)
+            {
+                labelText.Append("<span class=\"highlight\">&nbsp;*</span>");
+            }
+
+            if (isIncludeMaxlength)
+            {
+                var maxLength = customFieldValue.CustomField.MaxLength;
+                labelText.AppendFormat(
+                    "&nbsp;<span class=\"highlight\">(<span class=\"countdown-character\">{0}</span> {1})</span>", maxLength, Resources.Common_Form_Characters);
+            }
+
+            return labelText.ToString();
         }
 
         public static MvcHtmlString CustomFieldWithGuidIndexFor<TModel, TValue>(
@@ -213,26 +206,26 @@
                 case (int)CustomFieldTypes.Bool:
                     input = new TagBuilder("input");
                     input.Attributes.Add("type", "checkbox");
-                    input.Attributes.Add("id", fieldName + ".Value");
-                    input.Attributes.Add("name", fieldName + ".Value");
+                    input.Attributes.Add("id", $"{fieldName}.Value");
+                    input.Attributes.Add("name", $"{fieldName}.Value");
                     break;
                 case (int)CustomFieldTypes.DateTime:
                     input = new TagBuilder("input");
                     input.Attributes.Add("type", "datetime-local");
-                    input.Attributes.Add("id", fieldName + ".Value");
-                    input.Attributes.Add("name", fieldName + ".Value");
+                    input.Attributes.Add("id", $"{fieldName}.Value");
+                    input.Attributes.Add("name", $"{fieldName}.Value");
                     break;
                 case (int)CustomFieldTypes.Int:
                     input = new TagBuilder("input");
                     input.Attributes.Add("type", "number");
-                    input.Attributes.Add("id", fieldName + ".Value");
-                    input.Attributes.Add("name", fieldName + ".Value");
+                    input.Attributes.Add("id", $"{fieldName}.Value");
+                    input.Attributes.Add("name", $"{fieldName}.Value");
                     break;
                 case (int)CustomFieldTypes.List:
                     string[] values = GetMultilingualCustomFieldValuesAsArray(customFieldValue.CustomField);
                     input = new TagBuilder("select");
-                    input.Attributes.Add("id", fieldName + ".Value");
-                    input.Attributes.Add("name", fieldName + ".Value");
+                    input.Attributes.Add("id", $"{fieldName}.Value");
+                    input.Attributes.Add("name", $"{fieldName}.Value");
                     StringBuilder stringBuilder = new StringBuilder();
                     foreach (string s in values)
                     {
@@ -245,16 +238,16 @@
                     break;
                 case (int)CustomFieldTypes.TextArea:
                     input = new TagBuilder("textarea");
-                    input.Attributes.Add("id", fieldName + ".Value");
-                    input.Attributes.Add("name", fieldName + ".Value");
+                    input.Attributes.Add("id", $"{fieldName}.Value");
+                    input.Attributes.Add("name", $"{fieldName}.Value");
                     input.Attributes.Add("placeholder", GetMultilingualCustomFieldValuesAsString(customFieldValue.CustomField));
                     break;
                 //// case (int)CustomFieldTypes.String:
                 default:
                     input = new TagBuilder("input");
                     input.Attributes.Add("type", "text");
-                    input.Attributes.Add("id", fieldName + ".Value");
-                    input.Attributes.Add("name", fieldName + ".Value");
+                    input.Attributes.Add("id", $"{fieldName}.Value");
+                    input.Attributes.Add("name", $"{fieldName}.Value");
                     input.Attributes.Add("placeholder", GetMultilingualCustomFieldValuesAsString(customFieldValue.CustomField));
                     break;
             }
@@ -268,7 +261,8 @@
         {
             RequiredUnobtrusiveValidation(customFieldValue, input);
 
-            if ((input.Attributes.ContainsKey("type") && input.Attributes["type"] == "text")
+            if ((input.Attributes.ContainsKey("type")
+                 && input.Attributes["type"] == "text")
                 || input.TagName == "textarea")
             {
                 RegexPatternUnobtrusiveValidation(customFieldValue, input);
@@ -362,7 +356,7 @@
             string languageSuffix = Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
             if (languageSuffix != "en")
             {
-                PropertyInfo propertyInfo = typeof(CustomField).GetProperty("Values_" + languageSuffix);
+                PropertyInfo propertyInfo = typeof(CustomField).GetProperty($"Values_{languageSuffix}");
                 return propertyInfo?.GetValue(customField, null)?.ToString();
             }
 

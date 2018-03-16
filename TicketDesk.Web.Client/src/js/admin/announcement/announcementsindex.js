@@ -287,7 +287,7 @@ var announcement = {
         $("#announcement-modal").on("click",
             "#set-current-datetime-button",
             function () {
-                $("#announcement-date").val(moment().format('MM-DD-YYYY hh:mm A'));
+                $("#announcement-date").val(moment().format("MM-DD-YYYY hh:mm A"));
             });
     }
 }
