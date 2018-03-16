@@ -63,7 +63,7 @@
         <div class="item-list item">
             @Html.CustomFieldLabelFor(x => x.TimeOfIncident, new { @class = "key fullwidth" })
             <div class="fullwidth date-time">
-                @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "fullwidth datetimepicker input-append date", Style = "width: 100%", Value = @Model.TimeOfIncident.Value, Type = "text" })
+                @Html.CustomFieldFor(x => x.TimeOfIncident, new { @class = "fullwidth datetimepicker input-append date", Value = @Model.TimeOfIncident.Value, Type = "text" })
                 <span class="icon-calendar"></span>
                 @Html.ValidationMessageFor(x => x.TimeOfIncident.Value)
             </div>
