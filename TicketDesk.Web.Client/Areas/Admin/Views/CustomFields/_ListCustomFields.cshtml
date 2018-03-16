@@ -1,0 +1,119 @@
+﻿@using System.Text.RegularExpressions
+@using TicketDesk.Localization.Client
+@model TicketDesk.Web.Client.Areas.Admin.Models.CustomField.ListCustomFieldViewModel
+
+<div class="table-actions">
+    <a class="btn btn-create create" href="@Url.Action("CreateCustomField", "CustomFields")">
+        <span class="icon-add"></span>@Resources.CreateNewItem
+    </a>
+</div>
+
+<table class="announcement-list data-table" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th>@Resources.ID</th>
+            <th class="name-vn">
+                <span>Type</span>
+            </th>
+            <th class="name-en">
+                <span>@Resources.DisplayNameEN</span>
+            </th>
+            <th class="name-en">
+                <span>@Resources.DisplayNameVI</span>
+            </th>
+            <th class="description">
+                <span>@Resources.Values</span>
+            </th>
+            <th class="description">
+                <span>@Resources.Values_vi</span>
+            </th>
+            <th class="description">
+                <span>@Resources.IsAllowedToEditListValue</span>
+            </th>
+            <th class="description">
+                <span>Is Required</span>
+            </th>
+            <th class="description">
+                <span>Rexgex</span>
+            </th>
+            <th class="description">
+                <span>Rexgex Error Message</span>
+            </th>
+            <th class="description">
+                <span>Min Length</span>
+            </th>
+            <th class="description">
+                <span>Max Length</span>
+            </th>
+            <th class="active">@Resources.Active</th>
+
+            <th class="action">@Resources.Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var customField in Model.CustomFields)
+            {
+                <tr>
+                    <td>@customField.Id</td>
+                    <td>@customField.CustomFieldType.Name</td>
+                    <td>@customField.Name</td>
+                    <td>@customField.Name_vi</td>
+                    <td>
+                        @if (customField.Values != null && customField.Values.Contains("\r\n"))
+                        {
+                            var values = Regex.Split(customField.Values, "\r\n");
+                            foreach (var val in values)
+                            {
+                                <span>@val</span>
+                                <br />
+                            }
+                        }
+                        else
+                        {
+                            @customField.Values
+                        }
+                    </td>
+                    <td>@if (customField.Values_vi != null && customField.Values_vi.Contains("\r\n"))
+                        {
+                            var values = Regex.Split(customField.Values_vi, "\r\n");
+                            foreach (var val in values)
+                            {
+                                <span>@val</span>
+                                <br />
+                            }
+                        }
+                        else
+                        {
+                            @customField.Values_vi
+                        }</td>
+                    <td class="text-center">
+                        @if (customField.IsAllowedToEditListValue)
+                        {
+                            <span class="icon-check"></span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        @if (customField.IsRequired)
+                        {
+                            <span class="icon-check"></span>
+                        }
+                    </td>
+                    <td>@customField.Regex</td>
+                    <td>@customField.RegexValidationErrorMessage</td>
+                    <td>@customField.MinLength</td>
+                    <td>@customField.MaxLength</td>
+                    <td class="text-center">
+                        @if (customField.IsEnabled)
+                        {
+                            <span class="icon-check"></span>
+                        }
+                    </td>
+                    <td class="edit text-center" data-href="@Url.Action("EditCustomFieldListvalue", "DataConfiguration", new { id = customField.Id })">
+                        <span class="action-edit icon-edit"></span>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

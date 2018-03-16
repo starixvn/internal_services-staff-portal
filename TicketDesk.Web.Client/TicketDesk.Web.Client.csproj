@@ -363,6 +363,7 @@
     <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\ListAnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\NewAnnouncementViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\CustomField\ListCustomFieldViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DataConfiguration\CreateCustomFieldListValueViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DataConfiguration\DataConfigurationViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DataConfiguration\ListCustomFieldListValueViewModel.cs" />
@@ -491,6 +492,7 @@
     <Content Include="src\contents\images\sort.png" />
     <Content Include="src\contents\images\sort_down.png" />
     <Content Include="src\contents\images\sort_up.png" />
+    <Content Include="src\js\admin\customfield\customfield.js" />
     <Content Include="src\js\admin\dataconfiguration\dataconfigurationindex.js" />
     <Content Include="src\js\admin\dataTableCommon.js" />
     <Content Include="src\js\admin\reference\reference-admin.js" />
@@ -570,6 +572,7 @@
     <Content Include="Areas\Admin\Views\DataConfiguration\_ListCustomFieldListValue.cshtml" />
     <Content Include="Areas\Admin\Views\DataConfiguration\_EditCustomFieldListValue.cshtml" />
     <Content Include="Areas\Admin\Views\Mail\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CustomFields\_ListCustomFields.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -2016,7 +2019,7 @@
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\FileManager\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CustomFields\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\CustomFields\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\CustomFields\_Create.cshtml" />
     <Content Include="Views\Ticket\_TicketDescription.cshtml" />
     <Content Include="Views\Ticket\_TicketAttachedFiles.cshtml" />
     <Content Include="Views\Ticket\NewFacilityTicket.cshtml" />

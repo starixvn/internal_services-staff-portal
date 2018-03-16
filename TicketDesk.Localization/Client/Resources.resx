@@ -540,4 +540,7 @@
   <data name="SelectLanguage" xml:space="preserve">
     <value>Select language</value>
   </data>
+  <data name="TicketCategory" xml:space="preserve">
+    <value>Ticket Category</value>
+  </data>
 </root>

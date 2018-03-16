@@ -29,6 +29,20 @@
         [Display(Name = nameof(Resources.Values_vi), ResourceType = typeof(Resources))]
         public string Values_vi { get; set; }
 
+        [Display(Name = "Is Required")]
+        public bool IsRequired { get; set; }
+
+        public string Regex { get; set; }
+
+        [Display(Name = "Regex Error Message")]
+        public string RegexValidationErrorMessage { get; set; }
+
+        [Display(Name = "Min Length")]
+        public int MinLength { get; set; }
+
+        [Display(Name = "Max Length")]
+        public int MaxLength { get; set; }
+
         [Display(Name = nameof(Resources.IsEnabled), ResourceType = typeof(Resources))]
         public bool IsEnabled { get; set; }
 

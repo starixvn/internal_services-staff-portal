@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Service.Implement
 {
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Linq;
     using Core.Enumerations;
     using Domain.Model;
@@ -34,6 +35,22 @@
             {
                 customField.CustomFieldValues =
                     context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
+            }
+
+            return availableCustomField;
+        }
+
+        public IQueryable<CustomField> GetCustomFieldsWithTypeForTicketCategory(TicketCategoryTypes type)
+        {
+            var customFieldIds = context.TicketCategoryCustomField
+                .Where(x => x.CategoryId == (int)type)
+                .Select(x => x.CustomFieldId);
+
+            var availableCustomField = context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
+
+            foreach (var customField in availableCustomField)
+            {
+                customField.CustomFieldType = context.CustomFieldTypes.Find(customField.CustomFieldTypeId);
             }
 
             return availableCustomField;

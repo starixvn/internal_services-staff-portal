@@ -153,6 +153,7 @@
     <Compile Include="Implement\FileManagerService.cs" />
     <Compile Include="Implement\PaginationService.cs" />
     <Compile Include="Implement\ShopService.cs" />
+    <Compile Include="Implement\TicketCategoryService.cs" />
     <Compile Include="Implement\TicketService.cs" />
     <Compile Include="Interface\IAnnouncementService.cs" />
     <Compile Include="Interface\ICustomFieldService.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Interface\IFileManagerService.cs" />
     <Compile Include="Interface\IPaginationService.cs" />
     <Compile Include="Interface\IShopService.cs" />
+    <Compile Include="Interface\ITicketCategoryService.cs" />
     <Compile Include="Interface\ITicketService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

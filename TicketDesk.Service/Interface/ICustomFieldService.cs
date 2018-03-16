@@ -11,6 +11,8 @@
 
         IQueryable<CustomField> GetCustomFieldsForTicketCategory(TicketCategoryTypes type);
 
+        IQueryable<CustomField> GetCustomFieldsWithTypeForTicketCategory(TicketCategoryTypes type);
+
         CustomFieldValue AddCustomFieldValue(string groupId, int customFieldId, string value, int ticketId);
 
         bool AddCustomFieldValues(IEnumerable<CustomFieldValue> customFieldValues);

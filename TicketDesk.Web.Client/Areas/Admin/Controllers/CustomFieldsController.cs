@@ -1,62 +1,52 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
     using System.Collections.Generic;
-    using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Web.Mvc;
     using Client.Controllers;
-    using Domain;
+    using Core.Enumerations;
     using Domain.Infrastructure;
-    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Models.CustomField;
+    using Service.Interface;
 
-    [NapAuth(FunctionKey = FunctionKeys.CustomFields, Policy = Constant.Policy.Read)]
+    [NapAuth(FunctionKey = FunctionKeys.CustomFields, Policy = Constant.Policy.Host)]
     public class CustomFieldsController : BaseController
     {
-        private readonly TdDomainContext _context;
+        private readonly ICustomFieldService customFieldService;
 
-        public CustomFieldsController(TdDomainContext context)
+        public CustomFieldsController(ICustomFieldService customFieldService)
         {
-            _context = context;
+            this.customFieldService = customFieldService;
         }
 
-        public ActionResult Index(int id = 1)
+        public ActionResult Index()
         {
-            var categoryIds = _context.TicketCategoryCustomField.Select(x => x.CategoryId);
+            return View();
+        }
 
-            var viewModel = new CustomFieldsViewModel
+        public ActionResult ListCustomField(int ticketTypeId)
+        {
+            ListCustomFieldViewModel viewModel = new ListCustomFieldViewModel
             {
-                SelectedCategoryId = id,
-                TicketCategoryWithCustomFields =
-                    _context.TicketCategories.Where(x => categoryIds.Contains(x.CategoryId))
+                CustomFields = customFieldService.GetCustomFieldsWithTypeForTicketCategory((TicketCategoryTypes)ticketTypeId)
             };
 
-            var customFieldIds = _context.TicketCategoryCustomField.Where(x => x.CategoryId == id)
-                .Select(x => x.CustomFieldId);
-
-            viewModel.CustomFields = _context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
-
-            foreach (var customField in viewModel.CustomFields)
-            {
-                customField.CustomFieldType = _context.CustomFieldTypes.Find(customField.CustomFieldTypeId);
-            }
-
-            return View(viewModel);
+            return PartialView("_ListCustomFields", viewModel);
         }
 
-        public ActionResult Add()
+        public ActionResult CreateCustomField()
         {
             var viewModel = new AddCustomFieldViewModel
             {
-                TicketCategories = new List<SelectListItem>(_context.TicketCategories.Select(x =>
+                TicketCategories = new List<SelectListItem>(context.TicketCategories.Select(x =>
                     new SelectListItem
                     {
                         Text = x.Name,
                         Value = x.CategoryId.ToString()
                     })),
-                CustomFieldTypes = new List<SelectListItem>(_context.CustomFieldTypes.Select(x =>
+                CustomFieldTypes = new List<SelectListItem>(context.CustomFieldTypes.Select(x =>
                     new SelectListItem
                     {
                         Text = x.Name,
@@ -64,133 +54,178 @@
                     }))
             };
 
-            return View(viewModel);
+            return PartialView("_Create", viewModel);
         }
 
-        [HttpPost]
-        public ActionResult Add(AddCustomFieldViewModel viewModel)
-        {
-            var customField = new CustomField
-            {
-                Name = viewModel.Name,
-                Name_vi = viewModel.Name_vi,
-                CustomFieldTypeId = viewModel.CustomFieldTypeId,
-                Values = viewModel.Values,
-                Values_vi = viewModel.Values_vi,
-                IsEnabled = viewModel.IsEnabled,
-                IsAllowedToEditListValue = viewModel.IsAllowedToEditListValue
-            };
+        ////public ActionResult Index(int id = 1)
+        ////{
+        ////    var categoryIds = _context.TicketCategoryCustomField.Select(x => x.CategoryId);
 
-            _context.CustomFields.Add(customField);
+        ////    var viewModel = new CustomFieldsViewModel
+        ////    {
+        ////        SelectedCategoryId = id,
+        ////        TicketCategoryWithCustomFields =
+        ////            _context.TicketCategories.Where(x => categoryIds.Contains(x.CategoryId))
+        ////    };
 
-            _context.SaveChanges();
+        ////    var customFieldIds = _context.TicketCategoryCustomField.Where(x => x.CategoryId == id)
+        ////        .Select(x => x.CustomFieldId);
 
-            foreach (var id in viewModel.TicketCategoryIds)
-            {
-                var ticketCategoryCustomField = new TicketCategoryCustomField
-                {
-                    CategoryId = id,
-                    CustomFieldId = customField.Id
-                };
+        ////    viewModel.CustomFields = _context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
 
-                _context.TicketCategoryCustomField.Add(ticketCategoryCustomField);
-            }
+        ////    foreach (var customField in viewModel.CustomFields)
+        ////    {
+        ////        customField.CustomFieldType = _context.CustomFieldTypes.Find(customField.CustomFieldTypeId);
+        ////    }
 
-            _context.SaveChanges();
+        ////    return View(viewModel);
+        ////}
 
-            return RedirectToAction("Index");
-        }
+        ////public ActionResult Add()
+        ////{
+        ////    var viewModel = new AddCustomFieldViewModel
+        ////    {
+        ////        TicketCategories = new List<SelectListItem>(_context.TicketCategories.Select(x =>
+        ////            new SelectListItem
+        ////            {
+        ////                Text = x.Name,
+        ////                Value = x.CategoryId.ToString()
+        ////            })),
+        ////        CustomFieldTypes = new List<SelectListItem>(_context.CustomFieldTypes.Select(x =>
+        ////            new SelectListItem
+        ////            {
+        ////                Text = x.Name,
+        ////                Value = x.Id.ToString()
+        ////            }))
+        ////    };
 
-        public ActionResult Edit(int id)
-        {
-            var customField = _context.CustomFields.Find(id);
+        ////    return View(viewModel);
+        ////}
 
-            var categoriesHaveCustomField = _context.TicketCategoryCustomField.Where(x => x.CustomFieldId == id)
-                .Select(x => x.CategoryId);
+        ////[HttpPost]
+        ////public ActionResult Add(AddCustomFieldViewModel viewModel)
+        ////{
+        ////    var customField = new CustomField
+        ////    {
+        ////        Name = viewModel.Name,
+        ////        Name_vi = viewModel.Name_vi,
+        ////        CustomFieldTypeId = viewModel.CustomFieldTypeId,
+        ////        Values = viewModel.Values,
+        ////        Values_vi = viewModel.Values_vi,
+        ////        IsEnabled = viewModel.IsEnabled,
+        ////        IsAllowedToEditListValue = viewModel.IsAllowedToEditListValue
+        ////    };
 
-            if (customField != null)
-            {
-                var viewModel = new EditCustomFieldViewModel
-                {
-                    Id = id,
-                    TicketCategories = new List<SelectListItem>(_context.TicketCategories.Select(x =>
-                        new SelectListItem
-                        {
-                            Text = x.Name,
-                            Value = x.CategoryId.ToString(),
-                            Selected = categoriesHaveCustomField.Contains(x.CategoryId)
-                        })),
-                    Name = customField.Name,
-                    Name_vi = customField.Name_vi,
-                    Values = customField.Values,
-                    Values_vi = customField.Values_vi,
-                    DisplayOrder = customField.DisplayOrder,
-                    IsEnabled = customField.IsEnabled,
-                    IsAllowedToEditListValue = customField.IsAllowedToEditListValue,
-                    CustomFieldTypeId = customField.CustomFieldTypeId
-                };
+        ////    _context.CustomFields.Add(customField);
 
-                return View(viewModel);
-            }
+        ////    _context.SaveChanges();
 
-            return RedirectToAction("Index", "CustomFields");
-        }
+        ////    foreach (var id in viewModel.TicketCategoryIds)
+        ////    {
+        ////        var ticketCategoryCustomField = new TicketCategoryCustomField
+        ////        {
+        ////            CategoryId = id,
+        ////            CustomFieldId = customField.Id
+        ////        };
 
-        [HttpPost]
-        public ActionResult Edit(EditCustomFieldViewModel viewModel)
-        {
-            var customField = _context.CustomFields.Find(viewModel.Id);
+        ////        _context.TicketCategoryCustomField.Add(ticketCategoryCustomField);
+        ////    }
 
-            if (customField != null)
-            {
-                customField.Name = viewModel.Name;
-                customField.Name_vi = viewModel.Name_vi;
-                customField.Values_vi = viewModel.Values_vi;
-                customField.Values = viewModel.Values;
-                customField.DisplayOrder = viewModel.DisplayOrder;
-                customField.IsEnabled = viewModel.IsEnabled;
-                customField.IsAllowedToEditListValue = viewModel.IsAllowedToEditListValue;
+        ////    _context.SaveChanges();
 
-                _context.CustomFields.AddOrUpdate(customField);
+        ////    return RedirectToAction("Index");
+        ////}
 
-                _context.SaveChanges();
+        ////public ActionResult Edit(int id)
+        ////{
+        ////    var customField = _context.CustomFields.Find(id);
 
-                // Update ticket categories
-                var ticketCategoryCustomFields =
-                    _context.TicketCategoryCustomField.Where(x => x.CustomFieldId == viewModel.Id);
+        ////    var categoriesHaveCustomField = _context.TicketCategoryCustomField.Where(x => x.CustomFieldId == id)
+        ////        .Select(x => x.CategoryId);
 
-                _context.TicketCategoryCustomField.RemoveRange(ticketCategoryCustomFields);
+        ////    if (customField != null)
+        ////    {
+        ////        var viewModel = new EditCustomFieldViewModel
+        ////        {
+        ////            Id = id,
+        ////            TicketCategories = new List<SelectListItem>(_context.TicketCategories.Select(x =>
+        ////                new SelectListItem
+        ////                {
+        ////                    Text = x.Name,
+        ////                    Value = x.CategoryId.ToString(),
+        ////                    Selected = categoriesHaveCustomField.Contains(x.CategoryId)
+        ////                })),
+        ////            Name = customField.Name,
+        ////            Name_vi = customField.Name_vi,
+        ////            Values = customField.Values,
+        ////            Values_vi = customField.Values_vi,
+        ////            DisplayOrder = customField.DisplayOrder,
+        ////            IsEnabled = customField.IsEnabled,
+        ////            IsAllowedToEditListValue = customField.IsAllowedToEditListValue,
+        ////            CustomFieldTypeId = customField.CustomFieldTypeId
+        ////        };
 
-                foreach (var id in viewModel.TicketCategoryIds)
-                {
-                    var ticketCategoryCustomField = new TicketCategoryCustomField
-                    {
-                        CategoryId = id,
-                        CustomFieldId = customField.Id
-                    };
+        ////        return View(viewModel);
+        ////    }
 
-                    _context.TicketCategoryCustomField.Add(ticketCategoryCustomField);
-                }
+        ////    return RedirectToAction("Index", "CustomFields");
+        ////}
 
-                _context.SaveChanges();
-            }
+        ////[HttpPost]
+        ////public ActionResult Edit(EditCustomFieldViewModel viewModel)
+        ////{
+        ////    var customField = _context.CustomFields.Find(viewModel.Id);
 
-            return RedirectToAction("Index");
-        }
+        ////    if (customField != null)
+        ////    {
+        ////        customField.Name = viewModel.Name;
+        ////        customField.Name_vi = viewModel.Name_vi;
+        ////        customField.Values_vi = viewModel.Values_vi;
+        ////        customField.Values = viewModel.Values;
+        ////        customField.DisplayOrder = viewModel.DisplayOrder;
+        ////        customField.IsEnabled = viewModel.IsEnabled;
+        ////        customField.IsAllowedToEditListValue = viewModel.IsAllowedToEditListValue;
 
-        public ActionResult Delete(int id)
-        {
-            var customFieldToDelete = new CustomField
-            {
-                Id = id
-            };
+        ////        _context.CustomFields.AddOrUpdate(customField);
 
-            _context.CustomFields.Attach(customFieldToDelete);
-            _context.CustomFields.Remove(customFieldToDelete);
+        ////        _context.SaveChanges();
 
-            _context.SaveChanges();
+        ////        // Update ticket categories
+        ////        var ticketCategoryCustomFields =
+        ////            _context.TicketCategoryCustomField.Where(x => x.CustomFieldId == viewModel.Id);
 
-            return RedirectToAction("Index");
-        }
+        ////        _context.TicketCategoryCustomField.RemoveRange(ticketCategoryCustomFields);
+
+        ////        foreach (var id in viewModel.TicketCategoryIds)
+        ////        {
+        ////            var ticketCategoryCustomField = new TicketCategoryCustomField
+        ////            {
+        ////                CategoryId = id,
+        ////                CustomFieldId = customField.Id
+        ////            };
+
+        ////            _context.TicketCategoryCustomField.Add(ticketCategoryCustomField);
+        ////        }
+
+        ////        _context.SaveChanges();
+        ////    }
+
+        ////    return RedirectToAction("Index");
+        ////}
+
+        ////public ActionResult Delete(int id)
+        ////{
+        ////    var customFieldToDelete = new CustomField
+        ////    {
+        ////        Id = id
+        ////    };
+
+        ////    _context.CustomFields.Attach(customFieldToDelete);
+        ////    _context.CustomFields.Remove(customFieldToDelete);
+
+        ////    _context.SaveChanges();
+
+        ////    return RedirectToAction("Index");
+        ////}
     }
 }

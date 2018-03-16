@@ -9,7 +9,6 @@
     using System.Web.Mvc;
     using System.Web.Security;
     using Domain;
-    using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Context;

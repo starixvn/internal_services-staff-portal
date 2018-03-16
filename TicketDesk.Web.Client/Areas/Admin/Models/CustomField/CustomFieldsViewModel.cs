@@ -1,14 +1,14 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Models.CustomField
 {
-    using System.Collections.Generic;
-    using Domain.Model;
+    using System.ComponentModel.DataAnnotations;
+    using Core.Enumerations;
+    using Localization.Client;
 
     public class CustomFieldsViewModel
     {
-        public int SelectedCategoryId { get; set; }
+        [Display(Name = nameof(Resources.TicketCategory), ResourceType = typeof(Resources))]
+        public TicketCategoryTypes SelectedTicketCategoryType { get; set; }
 
-        public IEnumerable<TicketCategory> TicketCategoryWithCustomFields { get; set; }
-
-        public IEnumerable<CustomField> CustomFields { get; set; }
+        ////public IEnumerable<TicketCategory> TicketCategories { get; set; }
     }
 }
