@@ -42,12 +42,6 @@
                 $(".datepicker.start").data("DateTimePicker").maxDate(e.date);
             });
     }
-
-    //setupDatePicker: function (useCurrent) {
-    //    $(".datepicker").datetimepicker({
-    //        format: "MM-DD-YYYY"
-    //    });
-    //}
 }
 
 var modalhandler = {
@@ -285,6 +279,7 @@ var publishAnnouncement = {
 }
 
 var announcement = {
+
     init: function () {
         announcement.assignButton();
     },
@@ -335,11 +330,16 @@ var announcement = {
 }
 
 var listAnnouncement = {
+    init: function () {
+        listAnnouncement.filterForm();
+        $(".filter-row").trigger("submit");
+    },
+
     initDataTable: function ($table) {
         var announcementDataTable = commonDataTableInit.Init();
         announcementDataTable.order = [[2, "desc"]];
         announcementDataTable.columns =
-             [
+            [
                 { width: "55px", sortable: false },
                 { width: "55px", sortable: true },
                 { width: "140px", sortable: true },
@@ -349,30 +349,28 @@ var listAnnouncement = {
                 { width: "70px", sortable: true },
                 { width: "70px", sortable: false },
                 { width: "50px", sortable: false }
-             ];
+            ];
         $table.DataTable(announcementDataTable);
         commonDataTableInit.InitFixedHeaderDataTable();
     },
 
-    initSelect2: function () {
-        $("select").select2({
-            minimumResultsForSearch: Infinity
-        });
-    },
-
-    getListAnnouncement: function (form) {
-        var url = $(form).attr("action");
-        $.ajax({
-            url: url,
-            method: "get",
-            data: $("form.filter-row").serialize(),
-            success: function (response) {
-                $("#announcement-table").html("");
-                $("#announcement-table").html(response);
-                listAnnouncement.initDataTable($("table.announcement-list"));
-                listAnnouncement.initSelect2();
-            }
-        });
+    filterForm: function () {
+        $(".filter-form").on("submit",
+            ".filter-row",
+            function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr("action"),
+                    method: $(this).attr("method"),
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $("#announcement-table").html("");
+                        $("#announcement-table").html(response);
+                        listAnnouncement.initDataTable($("table.announcement-list"));
+                        sidebar.initSelect2();
+                    }
+                });
+            });
     }
 }
 
@@ -381,10 +379,5 @@ $(document).ready(function () {
     modalhandler.init();
     publishAnnouncement.init();
     announcement.init();
-    listAnnouncement.getListAnnouncement("form.filter-row");
-
-    $("form.filter-row").on("submit", function (e) {
-        e.preventDefault();
-        listAnnouncement.getListAnnouncement($(this));
-    })
+    listAnnouncement.init();
 });

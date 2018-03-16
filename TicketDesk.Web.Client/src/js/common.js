@@ -17,11 +17,11 @@ var nexcelSSPCommon = (function ($) {
         if ($.fn.select2) {
             if ($("select").hasClass("select2-searchable")) {
                 $("select").not(".not-select2").select2({
-                    width: '100%'
+                    width: "100%"
                 });
             } else {
                 $("select").not(".not-select2").select2({
-                    width: '100%',
+                    width: "100%",
                     minimumResultsForSearch: Infinity
                 });
             }

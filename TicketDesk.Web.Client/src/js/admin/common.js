@@ -29,9 +29,18 @@
     },
 
     initSelect2: function() {
-        $("select").select2({
-            minimumResultsForSearch: Infinity
-        });
+        if ($.fn.select2) {
+            if ($("select").hasClass("select2-searchable")) {
+                $("select").not(".not-select2").select2({
+                    width: "100%"
+                });
+            } else {
+                $("select").not(".not-select2").select2({
+                    width: "100%",
+                    minimumResultsForSearch: Infinity
+                });
+            }
+        }
     },
 
     toggleMenu: function() {
