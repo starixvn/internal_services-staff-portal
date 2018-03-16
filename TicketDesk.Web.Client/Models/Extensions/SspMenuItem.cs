@@ -65,7 +65,6 @@
                 IconClass = icon
             };
 
-
             return newMenuItem;
         }
     }

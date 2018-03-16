@@ -14,6 +14,11 @@
     [NapAuth(FunctionKey = FunctionKeys.Administration, Policy = Constant.Policy.Read)]
     public class HomeController : BaseController
     {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         [ChildActionOnly]
         public PartialViewResult Menu()
         {
@@ -31,9 +36,9 @@
             return PartialView("~/Areas/Admin/Views/Shared/_AdminNavbar.cshtml", model);
         }
 
-        public ActionResult Index()
+        private static List<SspMenuItem> PopulateChildList(SspMenuItem sspMenuItem, IEnumerable<SspMenuItem> menus)
         {
-            return View();
+            return menus.Where(x => x.Parent != null && x.Parent.Id == sspMenuItem.Id).OrderBy(x => x.DisplayOrder).ToList();
         }
 
         private static List<SspMenuItem> PopulateMenus(IEnumerable<MenuItem> menus)
@@ -48,7 +53,8 @@
             // Filter Administration menus only
             var test = menus
                 .Where(x => x.Function.Name == FunctionKeys.Administration)
-                .Select(x => (SspMenuItem)x);
+                .Select(x => (SspMenuItem)x)
+                .ToList();
 
             // Add Admin menu
             var adminMenu = test.First(x => x.Parent == null);
@@ -65,16 +71,6 @@
             result = result.OrderBy(x => x.DisplayOrder).ToList();
 
             return result;
-
-            ////return menus.Where(x => x.Parent != null && x.Function.Name == FunctionKeys.Administration)
-            ////    .Select(x => (SspMenuItem)x)
-            ////    .OrderBy(x => x.DisplayOrder)
-            ////    .ToList();
-        }
-
-        private static List<SspMenuItem> PopulateChildList(SspMenuItem sspMenuItem, IEnumerable<SspMenuItem> menus)
-        {
-            return menus.Where(x => x.Parent != null && x.Parent.Id == sspMenuItem.Id).OrderBy(x => x.DisplayOrder).ToList();
         }
     }
 }
