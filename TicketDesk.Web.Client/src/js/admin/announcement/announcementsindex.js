@@ -66,7 +66,6 @@ var modalhandler = {
             }
             var publish = modalhandler.publishAjax();
             modalhandler.confirmModal(title, message, publish);
-            ;
         });
     },
 
@@ -81,7 +80,10 @@ var modalhandler = {
                     if (response.success) {
                         $("#confirm-popup").modal("hide");
                         toastr.success(response.message);
-                        setTimeout(function () { location.reload(true) }, 3000);
+                        //setTimeout(function() {
+                        //    location.reload(true);
+                        //}, 3000);
+                        $(".filter-row").trigger("submit");
                     } else {
                         toastr.error("Error");
                     }

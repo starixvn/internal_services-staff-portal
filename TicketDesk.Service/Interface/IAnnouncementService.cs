@@ -14,7 +14,7 @@
 
         bool UpdateAnnouncement(Announcement announcement);
 
-        bool PublishAnnouncements(PublishAnnouncementsCriteria criteria);
+        bool PublishAnnouncements(IList<int> ids);
 
         bool DeleteAnnouncement(int id);
 

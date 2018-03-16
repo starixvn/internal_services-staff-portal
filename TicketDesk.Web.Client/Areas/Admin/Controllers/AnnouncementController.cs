@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Web.Mvc;
     using Client.Controllers;
-    using Criteria.Announcement;
     using Domain.Infrastructure;
     using Domain.Model;
     using Fanex.NAP.Core.Business;
@@ -207,17 +206,7 @@
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Publish(List<int> Ids)
         {
-            var criteria = new PublishAnnouncementsCriteria
-            {
-                Ids = new List<int>()
-            };
-
-            foreach (var id in Ids)
-            {
-                criteria.Ids.Add(id);
-            }
-
-            _announcementService.PublishAnnouncements(criteria);
+            _announcementService.PublishAnnouncements(Ids);
 
             var message = "The announcement has been successfully published.";
             if (Ids.Count > 1)

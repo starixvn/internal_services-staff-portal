@@ -133,23 +133,20 @@
             return result;
         }
 
-        public bool PublishAnnouncements(PublishAnnouncementsCriteria criteria)
+        public bool PublishAnnouncements(IList<int> ids)
         {
-            foreach (var id in criteria.Ids)
+            var announcements = context.Announcements.Where(x => ids.Contains(x.Id));
+
+            foreach (var announcement in announcements)
             {
-                var originalAnnouncement = GetAnnouncement(id);
-
-                if (originalAnnouncement.State == AnnouncementState.Published)
+                if (announcement.State != AnnouncementState.Published)
                 {
-                    continue;
+                    announcement.PublishedDateTime = DateTime.Now;
+                    announcement.LastModified = DateTime.Now;
+                    announcement.ModifiedBy = CurrentUsername;
+
+                    context.Entry(announcement).CurrentValues.SetValues(announcement);
                 }
-
-                originalAnnouncement.PublishedDateTime = DateTime.Now;
-                originalAnnouncement.LastModified = DateTime.Now;
-
-                originalAnnouncement.ModifiedBy = CurrentUsername;
-
-                context.Entry(originalAnnouncement).CurrentValues.SetValues(originalAnnouncement);
             }
 
             var result = context.SaveChanges();
