@@ -1,8 +1,11 @@
-﻿var originForm = $("form").serialize();
-var userSubmit = 0;
-var originReference = $(".reference-entry").length;
-
+﻿
 var reference = (function ($) {
+    var originForm = $("form").serialize();
+
+    var userSubmit = 0;
+
+    var originReference = $(".reference-entry").length;
+
     var domElement = {
         DateTimePicker: ".datetimepicker",
         ImageUrl: ".image-url",
@@ -53,7 +56,8 @@ var reference = (function ($) {
 
     function registerUploadImageButtonEvent() {
         $(domElement.UploadImageButton).on("change", function (e) {
-            var parent = $(this).closest(domElement.ReferenceEntry);
+            var btn = $(this);
+            var parent = $(btn).closest(domElement.ReferenceEntry);
             var files = e.target.files;
             if (files.length > 0) {
                 if (window.FormData !== undefined) {
@@ -61,7 +65,7 @@ var reference = (function ($) {
                     data.append("file", files[0]);
                     $.ajax({
                         type: "POST",
-                        url: "/Admin/References/UploadImage",
+                        url: $(btn).data("href"),
                         contentType: false,
                         processData: false,
                         data: data,
@@ -116,10 +120,9 @@ var reference = (function ($) {
 
     function eventClickAddNewReference() {
         $(domElement.AddReferenceButton).click(function () {
-            var type = $(this).attr("data-type");
-            var isNewsletters = type == "newsLetters";
-            var limitEntry = isNewsletters ? 50 : 31;
-            var url = "/Admin/References/GetReferenceEntity?isNewsletters=" + isNewsletters;
+            var addBtn = $(this);
+            var limitEntry = $(addBtn).data("limit");
+            var url = $(addBtn).data("href");
             $.get(url, function (html) {
                 if (!isLimitedReference(limitEntry)) {
                     $(domElement.ReferenceZone).append(html);
@@ -138,6 +141,7 @@ var reference = (function ($) {
         registerUploadImageButtonEvent();
         updateDisabledDates();
         registerChangeDateEvent();
+        setSubmitButtonState();
         initValidationForm(domElement.Form);
     }
 
@@ -222,11 +226,11 @@ var reference = (function ($) {
         registerUploadImageButtonEvent();
         eventClickSubmitButton();
         eventLeavePage();
+        setSubmitButtonState();
     }
 
     return {
         initModule: initModule
-        
     }
 })(jQuery);
 

@@ -17,8 +17,7 @@
             source: function (request, response) {
                 var term = request.term;
                 $.ajax({
-                    url: '/Admin/Shop/GetShopSuggestion',
-                    dataType: 'json',
+                    url: $(domElement.FilterShopName).data("href"),
                     data: {
                         shopName: term
                     },
@@ -120,13 +119,11 @@
 
     function eventClickEditIconHandler() {
         $(".icon-edit").on("click", function () {
-            var id = $(this).data("id");
             var editModalContent = $(domElement.EditModalContent);
             $(editModalContent).html('');
             $.ajax({
                 type: "GET",
-                url: "/Admin/Shop/Edit/" + id,
-                dataType: "html",
+                url: $(this).data("href"),
                 success: function (data) {
                     $(editModalContent).html(data);
                     initValidationForm($(editModalContent));
@@ -142,7 +139,7 @@
             var $createModalContent = $(domElement.CreateModalContent);
             $.ajax({
                 type: "GET",
-                url: "/Admin/Shop/Create",
+                url: $(this).data("href"),
                 dataType: "html",
                 success: function(data) {
                     $createModalContent.html(data);

@@ -50,7 +50,7 @@
                 </td>
                 @if (Model.IsHostPermission)
                 {
-                    <td class="text-center"><span class="icon-edit action-edit" data-id="@shop.ShopId"></span></td>
+                    <td class="text-center"><span class="icon-edit action-edit" data-href="@Url.Action("Edit", "Shop", new { id = shop.ShopId})"></span></td>
                 }
             </tr>
         }

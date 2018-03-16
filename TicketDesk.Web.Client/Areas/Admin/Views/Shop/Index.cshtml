@@ -24,7 +24,7 @@
         <div class="text-field">
             @Html.LabelFor(x => x.ShopName)
             <div class="text-field">
-                @Html.TextBoxFor(x => x.ShopName, new { @class = "form-control" })
+                @Html.TextBoxFor(x => x.ShopName, new { @class = "form-control", data_href = Url.Action("GetShopSuggestion", "Shop") })
                 @Html.HiddenFor(x => x.ShopId, new { @class = "form-control" })
             </div>
         </div>
@@ -43,7 +43,7 @@
 @if (Model.IsHostPermission)
 {
     <div class="table-actions">
-        <a class="btn btn-create create"><span class="icon-add"></span>Create New Shop</a>
+        <a class="btn btn-create create" data-href="@Url.Action("Create", "Shop")"><span class="icon-add"></span>Create New Shop</a>
     </div>
 }
 
