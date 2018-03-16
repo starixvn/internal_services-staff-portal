@@ -61,6 +61,7 @@
             success: function(data) {
                 $(domElement.TableArea).html(data);
                 initDataTable();
+                sidebar.initSelect2();
                 eventClickEditIconHandler();
             }
         });
