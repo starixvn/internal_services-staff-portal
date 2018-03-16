@@ -23,12 +23,14 @@
 
             if (criteria.PublishedFrom != null)
             {
-                announcements = announcements.Where(x => criteria.PublishedFrom <= DbFunctions.TruncateTime(x.PublishedDateTime));
+                announcements = announcements.Where(x => criteria.PublishedFrom <= DbFunctions.TruncateTime(x.PublishedDateTime)
+                                                         || x.PublishedDateTime == null);
             }
 
             if (criteria.PublishedTo != null)
             {
-                announcements = announcements.Where(x => DbFunctions.TruncateTime(x.PublishedDateTime) <= criteria.PublishedTo);
+                announcements = announcements.Where(x => DbFunctions.TruncateTime(x.PublishedDateTime) <= criteria.PublishedTo
+                                                         || x.PublishedDateTime == null);
             }
 
             if (criteria.Type != null)

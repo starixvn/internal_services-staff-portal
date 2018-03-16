@@ -288,44 +288,8 @@ var announcement = {
         $("#announcement-modal").on("click",
             "#set-current-datetime-button",
             function () {
-                var date = announcement.getCurrentDate();
-                var time = announcement.getCurrentTime();
-
-                announcement.setCurrentDateTime(date + " " + time);
+                $("#announcement-date").val(moment().format('MM-DD-YYYY hh:mm A'));
             });
-    },
-
-    setCurrentDateTime: function (datetime) {
-        $("#announcement-date").val(datetime);
-    },
-
-    getCurrentDate: function () {
-        var today = new Date();
-        var dd = announcement.addMissingZero(today.getDate());
-        var mm = announcement.addMissingZero(today.getMonth() + 1); //January is 0!
-        var yyyy = today.getFullYear();
-
-        return mm + "-" + dd + "-" + yyyy;
-    },
-
-    getCurrentTime: function () {
-        var today = new Date();
-
-        var hours = today.getHours();
-        var minutes = today.getMinutes();
-        var ampm = hours >= 12 ? "PM" : "AM";
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        var strTime = hours + ":" + minutes + " " + ampm;
-        return strTime;
-    },
-
-    addMissingZero: function (data) {
-        if (data < 10) {
-            data = "0" + data;
-        }
-        return data;
     }
 }
 
