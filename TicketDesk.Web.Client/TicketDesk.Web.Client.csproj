@@ -560,7 +560,6 @@
     <Content Include="Areas\Admin\Views\References\_ReferenceCommon.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Announcement\_Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Announcement\_AnnouncementForm.cshtml" />
     <Content Include="Areas\Admin\Views\Announcement\_Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Announcement\_Publish.cshtml" />
     <Content Include="Areas\Admin\Views\Announcement\_QuickPublish.cshtml" />

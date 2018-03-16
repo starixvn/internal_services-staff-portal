@@ -56,9 +56,7 @@
         {
             var viewModel = new NewAnnouncementViewModel
             {
-                Announcement = new Announcement(),
-                ActionType = ActionType.Create,
-                ModalId = ModalId.CreateAnnouncementModal
+                Announcement = new Announcement()
             };
 
             return PartialView("_Create", viewModel);
@@ -98,7 +96,7 @@
 
             if (!ModelState.IsValid)
             {
-                return PartialView("_AnnouncementForm", viewModel);
+                return PartialView("_Create", viewModel);
             }
 
             _announcementService.AddAnnouncement(viewModel.Announcement);
@@ -124,9 +122,7 @@
         {
             var viewModel = new NewAnnouncementViewModel
             {
-                Announcement = _announcementService.GetAnnouncement(id),
-                ModalId = ModalId.EditAnnouncementModal,
-                ActionType = ActionType.Edit
+                Announcement = _announcementService.GetAnnouncement(id)
             };
 
             return PartialView("_Edit", viewModel);
@@ -166,10 +162,7 @@
 
             if (!ModelState.IsValid)
             {
-                viewModel.ModalId = ModalId.EditAnnouncementModal;
-                viewModel.ActionType = ActionType.Edit;
-
-                return PartialView("_AnnouncementForm", viewModel);
+                return PartialView("_Edit", viewModel);
             }
 
             _announcementService.UpdateAnnouncement(viewModel.Announcement);

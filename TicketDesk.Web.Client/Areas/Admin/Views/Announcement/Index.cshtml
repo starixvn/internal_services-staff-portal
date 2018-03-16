@@ -1,5 +1,4 @@
-﻿@using TicketDesk.Domain
-@using TicketDesk.Web.Client.Areas.Admin.Models.Announcements
+﻿@using TicketDesk.Web.Client.Areas.Admin.Models.Announcements
 @using TicketDesk.Localization.Client
 @model AnnouncementViewModel
 
@@ -93,7 +92,7 @@
            data-toggle="modal"
            href="#"
            data-href="@Url.Action("Create", "Announcement")"
-           data-modalid="#@ModalId.CreateAnnouncementModal.ToString()"><span class="icon-add"></span>@ModalId.CreateAnnouncementModal.GetDisplayName()</a>
+           data-modalid="#CreateAnnouncementModal"><span class="icon-add"></span>@Resources.CreateNewAnnouncement</a>
     </div>
 }
 

@@ -16,35 +16,6 @@
             set => Announcement.Type = value ? AnnouncementType.Important : AnnouncementType.Normal;
         }
 
-        public ModalId ModalId { get; set; } = ModalId.CreateAnnouncementModal;
-
-        public ActionType ActionType { get; set; } = ActionType.Create;
-
         public bool IsPublishedImmediately { get; set; }
-    }
-
-    public enum ActionType
-    {
-        Create,
-
-        [Display(Name = nameof(Resources.Sumbit), ResourceType = typeof(Resources))]
-        Edit,
-
-        Delete
-    }
-
-    public enum ModalId
-    {
-        [Display(Name = nameof(Resources.CreateNewAnnouncement), ResourceType = typeof(Resources))]
-        CreateAnnouncementModal,
-
-        [Display(Name = nameof(Resources.EditAnnouncement), ResourceType = typeof(Resources))]
-        EditAnnouncementModal,
-
-        [Display(Name = nameof(Resources.PublishAnnouncement), ResourceType = typeof(Resources))]
-        PublishAnnouncement,
-
-        [Display(Name = nameof(Resources.DeleteAnnouncement), ResourceType = typeof(Resources))]
-        DeleteAnnouncementModal
     }
 }

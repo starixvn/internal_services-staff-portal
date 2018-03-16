@@ -16,10 +16,6 @@
             set => Announcement.Type = value ? AnnouncementType.Important : AnnouncementType.Normal;
         }
 
-        public ModalId ModalId { get; set; } = ModalId.EditAnnouncementModal;
-
-        public ActionType ActionType { get; set; } = ActionType.Edit;
-
         public bool IsPublishedImmediately { get; set; }
     }
 }
