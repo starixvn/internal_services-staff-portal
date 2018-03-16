@@ -113,19 +113,24 @@
 
         public bool UpdateAnnouncement(Announcement announcement)
         {
+            var result = false;
             var originalAnnouncement = GetAnnouncement(announcement.Id);
-            originalAnnouncement.LastModified = DateTime.Now;
-            originalAnnouncement.ModifiedBy = CurrentUsername;
 
-            originalAnnouncement.PublishedDateTime = announcement.PublishedDateTime;
-            originalAnnouncement.Message = announcement.Message;
-            originalAnnouncement.Type = announcement.Type;
+            if (originalAnnouncement.State != AnnouncementState.Published)
+            {
+                originalAnnouncement.LastModified = DateTime.Now;
+                originalAnnouncement.ModifiedBy = CurrentUsername;
 
-            context.Entry(originalAnnouncement).CurrentValues.SetValues(originalAnnouncement);
+                originalAnnouncement.PublishedDateTime = announcement.PublishedDateTime;
+                originalAnnouncement.Message = announcement.Message;
+                originalAnnouncement.Type = announcement.Type;
 
-            var result = context.SaveChanges();
+                context.Entry(originalAnnouncement).CurrentValues.SetValues(originalAnnouncement);
 
-            return result > 0;
+                result = context.SaveChanges() > 0;
+            }
+
+            return result;
         }
 
         public bool PublishAnnouncements(PublishAnnouncementsCriteria criteria)
@@ -156,7 +161,7 @@
         {
             var announcement = GetAnnouncement(id);
 
-            if (announcement == null)
+            if (announcement == null || announcement.State == AnnouncementState.Published)
             {
                 return false;
             }

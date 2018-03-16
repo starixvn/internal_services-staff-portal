@@ -3,10 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
     using System.Web.Mvc;
     using Client.Controllers;
-    using Core.Enumerations;
     using Criteria.Announcement;
     using Domain.Infrastructure;
     using Domain.Model;
@@ -122,29 +120,16 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var announcement = _announcementService.GetAnnouncement(id.Value);
-
-            var invalidAnnouncement = ReturnInvalidAnnouncement(announcement);
-            if (invalidAnnouncement != null)
-            {
-                return invalidAnnouncement;
-            }
-
             var viewModel = new NewAnnouncementViewModel
             {
-                Announcement = announcement,
+                Announcement = _announcementService.GetAnnouncement(id),
                 ModalId = ModalId.EditAnnouncementModal,
                 ActionType = ActionType.Edit
             };
 
-            return PartialView("_Create", viewModel);
+            return PartialView("_Edit", viewModel);
         }
 
         [HttpPost]
@@ -152,15 +137,6 @@
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(NewAnnouncementViewModel viewModel)
         {
-            // Prevent edit published Announcement
-            var announcement = _announcementService.GetAnnouncement(viewModel.Announcement.Id);
-
-            var invalidAnnouncement = ReturnInvalidAnnouncement(announcement);
-            if (invalidAnnouncement != null)
-            {
-                return invalidAnnouncement;
-            }
-
             // Check datetime
             if (viewModel.Announcement.PublishedDateTime != null)
             {
@@ -225,22 +201,11 @@
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Delete(Announcement viewModel)
         {
-            var announcement = _announcementService.GetAnnouncement(viewModel.Id);
-
-            var invalidAnnouncement = ReturnInvalidAnnouncement(announcement);
-            if (invalidAnnouncement != null)
-            {
-                return invalidAnnouncement;
-            }
-
-            if (announcement != null)
-            {
-                _announcementService.DeleteAnnouncement(viewModel.Id);
-            }
+            var result = _announcementService.DeleteAnnouncement(viewModel.Id);
 
             return Json(new
             {
-                success = true,
+                success = result,
                 message = "The announcement has been successfully deleted"
             });
         }
@@ -272,21 +237,6 @@
                 success = true,
                 message
             });
-        }
-
-        private ActionResult ReturnInvalidAnnouncement(Announcement announcement)
-        {
-            if (announcement == null)
-            {
-                return HttpNotFound();
-            }
-
-            if (announcement.State == AnnouncementState.Published)
-            {
-                return RedirectToAction("Index");
-            }
-
-            return null;
         }
     }
 }
