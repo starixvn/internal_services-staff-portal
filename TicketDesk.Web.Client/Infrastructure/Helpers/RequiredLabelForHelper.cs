@@ -26,7 +26,7 @@
                 return MvcHtmlString.Empty;
             }
 
-            labelText = BuildLabelInnerHtml(expression, isIncludeMaxlength, metaData);
+            labelText += BuildLabelInnerHtml(expression, isIncludeMaxlength, metaData);
 
             var label = new TagBuilder("label");
             label.Attributes.Add("for", helper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName));
