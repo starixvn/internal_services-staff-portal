@@ -1,5 +1,4 @@
-﻿
-var reference = (function ($) {
+﻿var reference = (function ($) {
     var originForm = $("form").serialize();
 
     var userSubmit = 0;
@@ -53,6 +52,14 @@ var reference = (function ($) {
             updateDisabledDates();
         });
     }
+    
+    function removeLimitWarning() {
+        var limit = $(domElement.AddReferenceButton).data("limit");
+        var length = $(domElement.ReferenceEntry).length;
+        if (length <= limit) {
+            $(domElement.LimitMessagePlace).text("");
+        }
+    }
 
     function registerUploadImageButtonEvent() {
         $(domElement.UploadImageButton).on("change", function (e) {
@@ -70,7 +77,6 @@ var reference = (function ($) {
                         processData: false,
                         data: data,
                         success: function (result) {
-                            console.log(result);
                             if (result.isSuccessful) {
                                 parent.find(domElement.ImageUrl).val(result.imageDirectory);
                                 parent.find(domElement.ImageUrl).removeClass(domElement.InputValidationError);
@@ -87,7 +93,7 @@ var reference = (function ($) {
                             var err = "Error " + " " + status + " " + p3 + " " + p4;
                             if (xhr.responseText && xhr.responseText[0] === "{")
                                 err = JSON.parse(xhr.responseText).Message;
-                            alert(err);
+                            toastr.error(err);
                         }
                     });
                 } else {
@@ -150,6 +156,7 @@ var reference = (function ($) {
             $(this).parent().parent().remove();
             updateFormFieldsName();
             updateDisabledDates();
+            removeLimitWarning();
             if (originReference == 0) {
                 setSubmitButtonState();
             }

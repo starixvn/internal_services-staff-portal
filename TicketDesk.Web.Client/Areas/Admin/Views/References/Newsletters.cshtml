@@ -63,10 +63,11 @@
             }
         </ul>
 
+        <p class="text-red" id="limitEntry"></p>
         @if (Model.IsHostPermission)
         {
             <div class="button-group">
-                <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" data-href="@Url.Action("GetReferenceEntity", "References", new { isNewsletters = true})"/>
+                <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" data-limit="50" data-href="@Url.Action("GetReferenceEntity", "References", new { isNewsletters = true})" />
                 <input type="submit" id="submit" value="Submit" class="btn btn-submit" />
             </div>
         }
