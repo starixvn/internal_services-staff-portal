@@ -105,8 +105,8 @@
                         </div>
 
                         <div class="fullwidth border key">
-                            @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "" })
-                            <span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
+                            @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", isIncludeMaxlength: true)
+                            @*<span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>*@
                         </div>
 
                         <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(i).Reason, guid, "Items", new { @class = "description" })</div>
@@ -137,8 +137,8 @@
         </div>
 
         <div class="fullwidth border key">
-            @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(0).Reason, sampleGuid, "Items", new { @class = "" })
-            <span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>
+            @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(0).Reason, sampleGuid, "Items", isIncludeMaxlength: true)
+            @*<span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>*@
         </div>
 
         <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(0).Reason, sampleGuid, "Items", new { @class = "description" })</div>

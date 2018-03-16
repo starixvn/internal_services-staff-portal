@@ -1,8 +1,5 @@
 ﻿namespace TicketDesk.Web.Client.Infrastructure.Helpers
 {
-    using Core.Enumerations;
-    using Domain.Model;
-    using Localization.Client;
     using System;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -10,6 +7,9 @@
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Web.Mvc;
+    using Core.Enumerations;
+    using Domain.Model;
+    using Localization.Client;
 
     public static class CustomFieldForHelper
     {
@@ -65,7 +65,8 @@
         public static MvcHtmlString CustomFieldLabelFor<TModel, TValue>(
             this HtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> propertyExpression,
-            object htmlAttributes = null)
+            object htmlAttributes = null,
+            bool isIncludeMaxlength = false)
         {
             var customFieldValue = propertyExpression.Compile()(html.ViewData.Model) as CustomFieldValue;
             var htmlFieldName = ExpressionHelper.GetExpressionText(propertyExpression);
@@ -73,15 +74,22 @@
             TagBuilder label = new TagBuilder("label");
             label.Attributes.Add("for", htmlFieldName + ".Value");
 
-            string innerText = GetMultiligualStringOfCustomField(customFieldValue);
+            if (customFieldValue != null)
+            {
+                string labelText = GetMultiligualStringOfCustomField(customFieldValue);
 
-            if (customFieldValue != null && customFieldValue.CustomField.IsRequired)
-            {
-                label.InnerHtml = innerText + "<span class=\"highlight\">&nbsp;*</span>";
-            }
-            else
-            {
-                label.SetInnerText(innerText);
+                if (customFieldValue.CustomField.IsRequired)
+                {
+                    labelText = labelText + "<span class=\"highlight\">&nbsp;*</span>";
+                }
+
+                if (isIncludeMaxlength)
+                {
+                    var maxLength = customFieldValue.CustomField.MaxLength;
+                    labelText += $"&nbsp;<span class=\"highlight\">(<span class=\"countdown-character\">{maxLength}</span> {Resources.Common_Form_Characters})</span>";
+                }
+
+                label.InnerHtml = labelText;
             }
 
             if (htmlAttributes != null)
@@ -110,7 +118,8 @@
             Expression<Func<TModel, TValue>> propertyExpression,
             string guid,
             string parentName,
-            object htmlAttributes = null)
+            object htmlAttributes = null,
+            bool isIncludeMaxlength = false)
         {
             var customFieldValue = propertyExpression.Compile()(html.ViewData.Model) as CustomFieldValue;
             var htmlFieldName = ExpressionHelper.GetExpressionText(propertyExpression);
@@ -119,16 +128,20 @@
             label.Attributes.Add("for", parentName + "[" + guid + "]." + htmlFieldName);
             if (customFieldValue != null)
             {
-                string innerText = GetMultiligualStringOfCustomField(customFieldValue);
+                string labelText = GetMultiligualStringOfCustomField(customFieldValue);
 
                 if (customFieldValue.CustomField.IsRequired)
                 {
-                    label.InnerHtml = innerText + "<span class=\"highlight\">&nbsp;*</span>";
+                    labelText = labelText + "<span class=\"highlight\">&nbsp;*</span>";
                 }
-                else
+
+                if (isIncludeMaxlength)
                 {
-                    label.SetInnerText(innerText);
+                    var maxLength = customFieldValue.CustomField.MaxLength;
+                    labelText += $"&nbsp;<span class=\"highlight\">(<span class=\"countdown-character\">{maxLength}</span> {Resources.Common_Form_Characters})</span>";
                 }
+
+                label.InnerHtml = labelText;
             }
 
             if (htmlAttributes != null)
@@ -146,8 +159,7 @@
             string guid,
             string parentName,
             object htmlAttributes = null)
-            where TModel
-            : class
+            where TModel : class
         {
             var item = propertyExpression.Compile()(html.ViewData.Model) as CustomFieldValue;
             var htmlFieldName = ExpressionHelper.GetExpressionText(propertyExpression);
