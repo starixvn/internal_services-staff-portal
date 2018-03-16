@@ -14,7 +14,6 @@
 
 @section scripts
 {
-    @*@Html.Partial("_DropzoneScripts", Model)*@
     <script src="~/src/libs/dropzone/dropzone.min.js"></script>
     <script src="~/src/js/ticket-dropzone.js"></script>
 
@@ -52,8 +51,8 @@
                     @Html.HiddenFor(model => model.SelectedFeedbackByValue, new { @class = "required-radio-value" })
 
                     @foreach (string feedbackByValue in Model.FeedbackByValues)
-                {
-                    var rdId = "rd-" + feedbackByValue.Replace(' ', '_');
+                    {
+                        var rdId = "rd-" + feedbackByValue.Replace(' ', '_');
 
                         <p>
                             @Html.RadioButtonFor(x => x.FeedbackBy.Value, feedbackByValue, new { id = rdId, @class = "required-radio" })
@@ -87,7 +86,6 @@
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.Feedback, isIncludeMaxlength: true)
-                @*<span class="highlight">(<span class="countdown-character">@Model.Feedback.CustomField.MaxLength</span> @Resources.Common_Form_Characters)</span>*@
             </div>
             <div class="fullwidth">
                 @Html.CustomFieldFor(x => x.Feedback, new { @class = "description" })

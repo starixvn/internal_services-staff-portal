@@ -2021,7 +2021,6 @@
     <Content Include="Views\FileManager\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CustomFields\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CustomFields\_Create.cshtml" />
-    <Content Include="Views\Ticket\_TicketDescription.cshtml" />
     <Content Include="Views\Ticket\_TicketAttachedFiles.cshtml" />
     <Content Include="Views\Ticket\NewFacilityTicket.cshtml" />
     <Content Include="Views\Ticket\_FeedbackCustomField.cshtml" />

@@ -14,8 +14,6 @@
 
 @section scripts
 {
-    @*@Html.Partial("_DropzoneScripts", Model)*@
-
     <script src="~/src/libs/dropzone/dropzone.min.js"></script>
     <script src="~/src/js/ticket-dropzone.js"></script>
 
@@ -89,7 +87,6 @@
         <div class="item-list item">
             <div class="key fullwidth">
                 @Html.CustomFieldLabelFor(x => x.Description, isIncludeMaxlength: true)
-                @*<span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>*@
             </div>
             <div class="fullwidth">
                 @Html.CustomFieldFor(x => x.Description, new { @class = "description" })
