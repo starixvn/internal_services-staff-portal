@@ -99,33 +99,29 @@
             return result;
         }
 
-        private NewAnnouncementCriteria CommitAnnouncement(NewAnnouncementCriteria criteria)
+        public bool AddAnnouncement(Announcement announcement)
         {
-            // Set date-time
-            criteria.Announcement.CreatedDateTime = DateTime.Now;
-            criteria.Announcement.LastModified = DateTime.Now;
-            criteria.Announcement.ModifiedBy = CurrentUsername;
+            announcement.CreatedDateTime = DateTime.Now;
+            announcement.LastModified = DateTime.Now;
+            announcement.ModifiedBy = CurrentUsername;
 
-            return criteria;
-        }
-
-        public bool AddAnnouncement(NewAnnouncementCriteria criteria)
-        {
-            var committedCriteria = CommitAnnouncement(criteria);
-
-            context.Announcements.Add(committedCriteria.Announcement);
+            context.Announcements.Add(announcement);
             var result = context.SaveChanges();
 
             return result > 0;
         }
 
-        public bool UpdateAnnouncement(NewAnnouncementCriteria criteria)
+        public bool UpdateAnnouncement(Announcement announcement)
         {
-            var committedCriteria = CommitAnnouncement(criteria);
+            var originalAnnouncement = GetAnnouncement(announcement.Id);
+            originalAnnouncement.LastModified = DateTime.Now;
+            originalAnnouncement.ModifiedBy = CurrentUsername;
 
-            var originalAnnouncement = GetAnnouncement(criteria.Announcement.Id);
+            originalAnnouncement.PublishedDateTime = announcement.PublishedDateTime;
+            originalAnnouncement.Message = announcement.Message;
+            originalAnnouncement.Type = announcement.Type;
 
-            context.Entry(originalAnnouncement).CurrentValues.SetValues(committedCriteria.Announcement);
+            context.Entry(originalAnnouncement).CurrentValues.SetValues(originalAnnouncement);
 
             var result = context.SaveChanges();
 

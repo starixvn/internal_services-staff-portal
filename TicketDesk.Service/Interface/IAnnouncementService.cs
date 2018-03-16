@@ -10,9 +10,9 @@
 
         IEnumerable<Announcement> GetAnnouncements(GetAnnouncementsCriteria criteria);
 
-        bool AddAnnouncement(NewAnnouncementCriteria criteria);
+        bool AddAnnouncement(Announcement announcement);
 
-        bool UpdateAnnouncement(NewAnnouncementCriteria criteria);
+        bool UpdateAnnouncement(Announcement announcement);
 
         bool PublishAnnouncements(PublishAnnouncementsCriteria criteria);
 

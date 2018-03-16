@@ -103,7 +103,7 @@
                 return PartialView("_AnnouncementForm", viewModel);
             }
 
-            _announcementService.AddAnnouncement(viewModel.GetNewAnnouncementCriteria());
+            _announcementService.AddAnnouncement(viewModel.Announcement);
 
             if (viewModel.IsPublishedImmediately)
             {
@@ -196,7 +196,7 @@
                 return PartialView("_AnnouncementForm", viewModel);
             }
 
-            _announcementService.UpdateAnnouncement(viewModel.GetNewAnnouncementCriteria());
+            _announcementService.UpdateAnnouncement(viewModel.Announcement);
 
             if (viewModel.IsPublishedImmediately)
             {

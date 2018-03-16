@@ -2,7 +2,6 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Core.Enumerations;
-    using Criteria.Announcement;
     using Domain.Model;
     using Localization.Client;
 
@@ -22,14 +21,6 @@
         public ActionType ActionType { get; set; } = ActionType.Create;
 
         public bool IsPublishedImmediately { get; set; }
-
-        public NewAnnouncementCriteria GetNewAnnouncementCriteria()
-        {
-            return new NewAnnouncementCriteria
-            {
-                Announcement = Announcement
-            };
-        }
     }
 
     public enum ActionType
