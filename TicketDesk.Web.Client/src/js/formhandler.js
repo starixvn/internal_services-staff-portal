@@ -78,7 +78,7 @@ var formhandler = {
         $("form").on("keyup",
             ".description",
             function () {
-                var maxLength = 5000;
+                var maxLength = $(this).attr("maxLength");
                 var remainLength = maxLength - $(this).val().length;
                 var parent = $(this).closest(".item");
                 if ($(".countdown-character").length) {
