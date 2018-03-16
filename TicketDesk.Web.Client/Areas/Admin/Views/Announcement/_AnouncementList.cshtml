@@ -23,7 +23,7 @@
             @if (Model.HaveHostPermission)
             {
                 <th class="publish">
-                    <button class="btn btn-publish" disabled="disabled" type="button">@Resources.Publish</button>
+                    <button class="btn btn-publish" disabled="disabled" type="button" data-href="@Url.Action("Publish", "Announcement")">@Resources.Publish</button>
                 </th>
                 <th class="action">@Resources.Action</th>
             }

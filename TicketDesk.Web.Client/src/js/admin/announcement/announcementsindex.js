@@ -74,7 +74,7 @@ var modalhandler = {
         var Ids = publishAnnouncement.getIdsToPublish();
         return function () {
             $.ajax({
-                url: "/Admin/Announcement/Publish",
+                url: $(".btn-publish").data("href"),
                 method: "post",
                 data: { Ids },
                 success: function (response) {
@@ -279,7 +279,6 @@ var publishAnnouncement = {
 }
 
 var announcement = {
-
     init: function () {
         announcement.assignButton();
     },
