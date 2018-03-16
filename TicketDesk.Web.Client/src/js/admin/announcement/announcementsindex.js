@@ -298,22 +298,42 @@ var listAnnouncement = {
         $(".filter-row").trigger("submit");
     },
 
+    dataTableDateTimeRenderer: $.fn.dataTable.render.moment("M/D/YYYY h:m A", "M/D/YYYY h:m A"),
+
     initDataTable: function ($table) {
-        var announcementDataTable = commonDataTableInit.Init();
-        announcementDataTable.order = [[2, "desc"]];
-        announcementDataTable.columns =
-            [
-                { width: "55px", sortable: false },
-                { width: "55px", sortable: true },
-                { width: "140px", sortable: true },
-                { width: "100px", sortable: true },
-                { width: "140px", sortable: true },
-                { width: "auto", sortable: true },
-                { width: "70px", sortable: true },
-                { width: "70px", sortable: false },
-                { width: "50px", sortable: false }
-            ];
-        $table.DataTable(announcementDataTable);
+        var tableConfigs = commonDataTableInit.Init();
+        tableConfigs.order = [[2, "desc"]];
+        tableConfigs.columnDefs = [
+            {
+                sortable: false,
+                targets: [0, -1, -2]
+            },
+            {
+                width: "55px",
+                targets: [0, 1, -1]
+            },
+            {
+                width: "140px",
+                targets: [2, 3, 4]
+            },
+            {
+                width: "70px",
+                targets: [-2, -3]
+            },
+            {
+                render: function(data, type, row) {
+                    if (!data) {
+                        return data;
+                    } else {
+                        return listAnnouncement.dataTableDateTimeRenderer(data, type, row);
+                    }
+                },
+
+                targets: [2, 4]
+            }
+        ];
+
+        $table.DataTable(tableConfigs);
         commonDataTableInit.InitFixedHeaderDataTable();
     },
 

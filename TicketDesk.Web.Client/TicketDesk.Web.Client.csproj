@@ -513,6 +513,7 @@
     <Content Include="src\libs\jquery.DataTable\dataTables.fixedHeader.min.js" />
     <Content Include="src\libs\jquery.DataTable\datatables.min.css" />
     <Content Include="src\libs\jquery.DataTable\datatables.min.js" />
+    <Content Include="src\libs\jquery.DataTable\datetime.js" />
     <Content Include="src\libs\jquery.DataTable\fixedHeader.dataTables.min.css" />
     <Content Include="src\libs\jquery.floatThead\jquery.floatThead.js" />
     <Content Include="src\libs\select2\select2.min.css" />
