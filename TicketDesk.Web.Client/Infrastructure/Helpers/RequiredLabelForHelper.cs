@@ -26,18 +26,7 @@
                 return MvcHtmlString.Empty;
             }
 
-            if (metaData.IsRequired)
-            {
-                labelText += "<span class=\"highlight\">&nbsp;*</span>";
-            }
-
-            if (isIncludeMaxlength)
-            {
-                var member = expression.Body as MemberExpression;
-                var propertyInfo = member?.Member as PropertyInfo;
-                var maxLength = propertyInfo?.GetCustomAttribute<StringLengthAttribute>().MaximumLength;
-                labelText += $"<span class=\"highlight\">({maxLength} characters)</span>";
-            }
+            labelText = BuildLabelInnerHtml(expression, isIncludeMaxlength, metaData);
 
             var label = new TagBuilder("label");
             label.Attributes.Add("for", helper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName));
@@ -52,6 +41,26 @@
 
             label.InnerHtml = labelText;
             return MvcHtmlString.Create(label.ToString());
+        }
+
+        private static string BuildLabelInnerHtml<TModel, TValue>(Expression<Func<TModel, TValue>> expression, bool isIncludeMaxlength,
+            ModelMetadata metaData)
+        {
+            string labelText = "";
+            if (metaData.IsRequired)
+            {
+                labelText += "<span class=\"highlight\">&nbsp;*</span>";
+            }
+
+            if (isIncludeMaxlength)
+            {
+                var member = expression.Body as MemberExpression;
+                var propertyInfo = member?.Member as PropertyInfo;
+                var maxLength = propertyInfo?.GetCustomAttribute<StringLengthAttribute>().MaximumLength;
+                labelText += $"<span class=\"highlight\">({maxLength} characters)</span>";
+            }
+
+            return labelText;
         }
     }
 }
