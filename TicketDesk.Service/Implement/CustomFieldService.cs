@@ -1,7 +1,6 @@
 ﻿namespace TicketDesk.Service.Implement
 {
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Linq;
     using Core.Enumerations;
     using Domain.Model;

@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="Announcement\GetAnnouncementsCriteria.cs" />
     <Compile Include="Announcement\NewAnnouncementCriteria.cs" />
+    <Compile Include="Announcement\PublishAnnouncementsCriteria.cs" />
     <Compile Include="FileManager\DeleteFileCriteria.cs" />
     <Compile Include="FileManager\UploadFileCriteria.cs" />
     <Compile Include="FileManager\AddFolderCriteria.cs" />

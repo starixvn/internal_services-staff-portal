@@ -64,11 +64,12 @@
 
             <div class="form-group checkbox">
                 <input type="checkbox"
-                       id="Active"
+                       id="@Html.IdFor(x => x.IsActive)"
                        name="@Html.NameFor(x => x.IsActive)"
                        value="true"
                        checked="checked" />
-                <label for="Active">@Resources.Active</label>
+                @*<label for="Active">@Resources.Active</label>*@
+                @Html.LabelFor(x => x.IsActive)
             </div>
         </div>
     </div>

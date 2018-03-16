@@ -149,7 +149,7 @@
         private void HandleListReferenceUploaded(ReferenceType referenceType, ListReferencesViewModel listReferences)
         {
             var criteriaList = listReferences.GetQueryCriteria();
-            _referenceService.UploadReferences(referenceType, criteriaList, CurrentSession.Username);
+            _referenceService.UploadReferences(referenceType, criteriaList);
         }
 
         private ListReferencesViewModel GetListReferenceViewModel(ReferenceType referenceType)

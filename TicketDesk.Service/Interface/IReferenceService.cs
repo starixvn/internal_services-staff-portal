@@ -9,7 +9,7 @@
     {
         IEnumerable<Reference> GetListReference(ReferenceType referenceType);
 
-        void UploadReferences(ReferenceType referenceType, IEnumerable<ReferenceCriteria> references, string modifiedBy);
+        void UploadReferences(ReferenceType referenceType, IEnumerable<ReferenceCriteria> references);
 
         Reference GetRelevantReference(ReferenceType referenceType);
     }

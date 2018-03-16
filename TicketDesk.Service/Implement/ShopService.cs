@@ -77,7 +77,7 @@
                 shop.Email = criteria.Email;
                 shop.Address = criteria.Address;
                 shop.IsActive = criteria.IsActive;
-                shop.LastUpdatedBy = criteria.ModifiedBy;
+                shop.LastUpdatedBy = CurrentUsername;
                 shop.LastUpdatedDate = DateTime.Now;
                 result = context.SaveChanges() > 0;
             }

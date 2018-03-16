@@ -99,12 +99,12 @@
             return result;
         }
 
-        private static NewAnnouncementCriteria CommitAnnouncement(NewAnnouncementCriteria criteria)
+        private NewAnnouncementCriteria CommitAnnouncement(NewAnnouncementCriteria criteria)
         {
             // Set date-time
             criteria.Announcement.CreatedDateTime = DateTime.Now;
             criteria.Announcement.LastModified = DateTime.Now;
-            criteria.Announcement.ModifiedBy = criteria.ModifiedBy;
+            criteria.Announcement.ModifiedBy = CurrentUsername;
 
             criteria.Announcement.Type = criteria.IsImportant ? AnnouncementType.Important : AnnouncementType.Normal;
 
@@ -148,7 +148,7 @@
                 originalAnnouncement.PublishedDateTime = DateTime.Now;
                 originalAnnouncement.LastModified = DateTime.Now;
 
-                originalAnnouncement.ModifiedBy = criteria.ModifiedBy;
+                originalAnnouncement.ModifiedBy = CurrentUsername;
 
                 context.Entry(originalAnnouncement).CurrentValues.SetValues(originalAnnouncement);
             }

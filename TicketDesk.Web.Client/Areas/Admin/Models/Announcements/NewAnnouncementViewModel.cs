@@ -18,13 +18,12 @@
 
         public bool IsPublishedImmediately { get; set; }
 
-        public NewAnnouncementCriteria GetNewAnnouncementCriteria(string modifiedBy)
+        public NewAnnouncementCriteria GetNewAnnouncementCriteria()
         {
             return new NewAnnouncementCriteria
             {
                 Announcement = Announcement,
-                IsImportant = IsImportant,
-                ModifiedBy = modifiedBy
+                IsImportant = IsImportant
             };
         }
     }

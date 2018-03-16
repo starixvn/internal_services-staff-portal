@@ -103,7 +103,7 @@
                 return PartialView("_AnnouncementForm", viewModel);
             }
 
-            _announcementService.AddAnnouncement(viewModel.GetNewAnnouncementCriteria(CurrentSession.Username));
+            _announcementService.AddAnnouncement(viewModel.GetNewAnnouncementCriteria());
 
             if (viewModel.IsPublishedImmediately)
             {
@@ -197,7 +197,7 @@
                 return PartialView("_AnnouncementForm", viewModel);
             }
 
-            _announcementService.UpdateAnnouncement(viewModel.GetNewAnnouncementCriteria(CurrentSession.Username));
+            _announcementService.UpdateAnnouncement(viewModel.GetNewAnnouncementCriteria());
 
             if (viewModel.IsPublishedImmediately)
             {
@@ -252,8 +252,7 @@
         {
             var criteria = new PublishAnnouncementsCriteria
             {
-                Ids = new List<int>(),
-                ModifiedBy = CurrentSession.Username
+                Ids = new List<int>()
             };
 
             foreach (var id in Ids)

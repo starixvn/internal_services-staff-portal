@@ -40,6 +40,7 @@
         [MaxLength(500, ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage), ErrorMessageResourceType = typeof(Resources))]
         public string Address { get; set; }
 
+        [Display(Name = nameof(Resources.Active), ResourceType = typeof(Resources))]
         public bool IsActive { get; set; }
 
         public ShopCriteria GetCriteria()

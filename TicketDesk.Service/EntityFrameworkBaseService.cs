@@ -8,6 +8,8 @@
     {
         protected readonly TdDomainContext context = DependencyResolver.Current.GetService<TdDomainContext>();
 
+        public string CurrentUsername => context.SecurityProvider.NapContextHelper.CurrentSession.Username;
+
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
