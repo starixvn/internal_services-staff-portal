@@ -27,9 +27,10 @@
                 Email = criteria.Email,
                 Address = criteria.Address,
                 IsActive = criteria.IsActive,
-                LastUpdatedBy = criteria.ModifiedBy,
+                LastUpdatedBy = context.SecurityProvider.NapContextHelper.CurrentSession.Username,
                 LastUpdatedDate = DateTime.Now
             };
+
             context.Shops.Add(newShop);
             var result = context.SaveChanges();
             return result > 0;

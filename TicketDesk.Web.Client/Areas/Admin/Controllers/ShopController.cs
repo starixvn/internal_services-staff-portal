@@ -79,15 +79,13 @@
 
             if (ModelState.IsValid)
             {
-                var criteria = GetShopCriteriaFromViewModal(viewModel);
-
-                isSuccessful = _shopService.CreateNewShop(criteria);
+                isSuccessful = _shopService.CreateNewShop(viewModel.GetCriteria());
                 message = isSuccessful ? Messages.CreateShopSuccess : Messages.Error;
             }
 
-            var errors = from item in ModelState
-                         where item.Value.Errors.Any()
-                         select new { item.Key, item.Value.Errors.FirstOrDefault().ErrorMessage };
+            var errors = ModelState
+                .Where(item => item.Value.Errors.Any())
+                .Select(item => new { item.Key, item.Value.Errors.FirstOrDefault()?.ErrorMessage });
 
             return Json(new { isSuccessful, message, errors });
         }
@@ -131,33 +129,15 @@
 
             if (ModelState.IsValid)
             {
-                var criteria = GetShopCriteriaFromViewModal(viewModel);
-
-                isSuccessful = _shopService.UpdateShop(id, criteria);
+                isSuccessful = _shopService.UpdateShop(id, viewModel.GetCriteria());
                 message = isSuccessful ? Messages.UpdateShopSuccess : Messages.Error;
             }
 
-            var errors = from item in ModelState
-                         where item.Value.Errors.Any()
-                         select new { item.Key, item.Value.Errors.FirstOrDefault().ErrorMessage };
+            var errors = ModelState
+                .Where(item => item.Value.Errors.Any())
+                .Select(item => new { item.Key, item.Value.Errors.FirstOrDefault()?.ErrorMessage });
 
             return Json(new { isSuccessful, message, errors });
-        }
-
-        private ShopCriteria GetShopCriteriaFromViewModal(ShopViewModel viewModel)
-        {
-            var criteria = new ShopCriteria
-            {
-                ShopName = viewModel.ShopName,
-                ShopCode = viewModel.ShopCode,
-                ContactName = viewModel.ContactName,
-                ContactNumber = viewModel.ContactNumber,
-                Email = viewModel.Email,
-                Address = viewModel.Address,
-                IsActive = viewModel.IsActive,
-                ModifiedBy = CurrentSession.Username,
-            };
-            return criteria;
         }
     }
 }

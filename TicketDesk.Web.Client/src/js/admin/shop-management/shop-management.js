@@ -59,12 +59,12 @@
             method: "post",
             url: $($form).attr("action"),
             data: data,
-            success: function (data) {
+            success: function(data) {
                 $(domElement.TableArea).html(data);
                 initDataTable();
                 eventClickEditIconHandler();
-            },
-        })
+            }
+        });
     }
 
     function registerFormSubmitEvent($form, $modal) {
@@ -79,7 +79,7 @@
                     onAjaxSuccessful(response, $form, $modal);
                 },
                 error: function (response) {
-                    toasrt.error(response);
+                    toastr.error(response);
                 }
             });
         });
@@ -112,6 +112,7 @@
                 targets: [4]
             }
             ];
+
         $("table").DataTable(shopDataTable);
 
         commonDataTableInit.InitFixedHeaderDataTable();
@@ -143,13 +144,13 @@
                 type: "GET",
                 url: "/Admin/Shop/Create",
                 dataType: "html",
-                success: function (data) {
+                success: function(data) {
                     $createModalContent.html(data);
                     initValidationForm($(domElement.CreateShopForm));
                     registerFormSubmitEvent(domElement.CreateShopForm, domElement.CreateModal);
                     $(domElement.CreateModal).modal('show');
                 }
-            })
+            });
         });
     }
 
@@ -195,10 +196,11 @@
         eventClickEditIconHandler();
         searchShopSuggest();
 
-        $(domElement.FilterForm).on("submit", function (e) {
-            getListShop($(this));
-            e.preventDefault();
-        })
+        $(domElement.FilterForm).on("submit",
+            function(e) {
+                getListShop($(this));
+                e.preventDefault();
+            });
     }
 
     return {
