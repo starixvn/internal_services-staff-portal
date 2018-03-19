@@ -130,7 +130,7 @@ var ajaxSetup = {
     init: function () {
         $.ajaxSetup({
             error: function (x, status, error) {
-                if (x.status === 403) {
+                if (x.status === 403 || x.status === 302) {
                     window.location.reload();
                 }
             }
