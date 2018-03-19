@@ -10,18 +10,7 @@
 
     public class AnnouncementViewModel
     {
-        public AnnouncementViewModel()
-        {
-            NewAnnouncementViewModel = new NewAnnouncementViewModel
-            {
-                Announcement = new Announcement(),
-                IsImportant = false
-            };
-        }
-
         public IList<Announcement> Announcements { get; set; }
-
-        public bool IsPublishImmediately { get; set; }
 
         [Display(Name = nameof(Resources.PublishedFrom), ResourceType = typeof(Resources))]
         public DateTime? PublishedFrom { get; set; }
@@ -36,9 +25,6 @@
         public AnnouncementState? State { get; set; }
 
         public bool HaveHostPermission { get; set; }
-
-        // Create
-        public NewAnnouncementViewModel NewAnnouncementViewModel { get; set; }
 
         public GetAnnouncementsCriteria GetQueryCriteria()
         {

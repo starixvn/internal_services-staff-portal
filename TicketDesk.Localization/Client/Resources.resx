@@ -558,4 +558,31 @@
   <data name="PublishMultipleAnnouncementMessage" xml:space="preserve">
     <value>Are you sure you want to publish these announcements right away?</value>
   </data>
+  <data name="SingleAnnouncementCreatedMessage" xml:space="preserve">
+    <value>The announcement has been successfully created.</value>
+  </data>
+  <data name="SingleAnnouncementEditedMessage" xml:space="preserve">
+    <value>The announcement has been successfully edited.</value>
+  </data>
+  <data name="SingleAnnouncementDeletedMessage" xml:space="preserve">
+    <value>The announcement has been successfully deleted</value>
+  </data>
+  <data name="SingleAnnouncementPublishedMessage" xml:space="preserve">
+    <value>The announcement has been successfully published.</value>
+  </data>
+  <data name="MultipleAnnouncementPublishedMessage" xml:space="preserve">
+    <value>The announcements have been successfully published.</value>
+  </data>
+  <data name="AnnouncementContent" xml:space="preserve">
+    <value>Announcement Content</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>Publish Date</value>
+  </data>
+  <data name="DateNotInRange" xml:space="preserve">
+    <value>Date not in Range</value>
+  </data>
 </root>

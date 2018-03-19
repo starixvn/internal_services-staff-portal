@@ -10,6 +10,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Models.Announcements;
     using Service.Interface;
+    using Localization.Client;
 
     public class AnnouncementController : BaseController
     {
@@ -81,7 +82,7 @@
             return Json(new
             {
                 success = true,
-                message = "The announcement has been successfully created."
+                message = Resources.SingleAnnouncementCreatedMessage
             });
         }
 
@@ -106,7 +107,7 @@
             return Json(new
             {
                 success = true,
-                message = "The announcement has been successfully edited."
+                message = Resources.SingleAnnouncementEditedMessage
             });
         }
 
@@ -126,7 +127,7 @@
             return Json(new
             {
                 success = result,
-                message = "The announcement has been successfully deleted"
+                message = Resources.SingleAnnouncementDeletedMessage
             });
         }
 
@@ -142,11 +143,9 @@
         {
             _announcementService.PublishAnnouncements(ids);
 
-            var message = "The announcement has been successfully published.";
-            if (ids.Length > 1)
-            {
-                message = "The announcements have been successfully published.";
-            }
+            var message = ids.Length > 1
+                ? Resources.MultipleAnnouncementPublishedMessage
+                : Resources.SingleAnnouncementPublishedMessage;
 
             return Json(new
             {
@@ -178,7 +177,7 @@
             return Json(new
             {
                 success = true,
-                message = "The announcement has been successfully published."
+                message = Resources.SingleAnnouncementPublishedMessage
             });
         }
     }

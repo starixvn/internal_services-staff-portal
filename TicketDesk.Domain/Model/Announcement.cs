@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using Core.Enumerations;
     using DelegateDecompiler;
+    using TicketDesk.Localization.Client;
 
     public class Announcement
     {
@@ -13,26 +14,25 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Display(Name = "Announcement Content")]
-        [StringLength(5000, ErrorMessage = "{0} must under {1} characters")]
-        [Required(ErrorMessage = "{0} is required")]
+        [Display(Name = nameof(Resources.AnnouncementContent), ResourceType = typeof(Resources))]
+        [StringLength(5000, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage))]
         [AllowHtml]
         public string Message { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
 
-        [Display(Name = "Publish Date")]
-        [Remote(controller: "Announcement", action: "CheckPublishedDateTime", ErrorMessage = "Date not in Range")]
+        [Display(Name = nameof(Resources.PublishDate), ResourceType = typeof(Resources))]
+        [Remote(controller: "Announcement", action: "CheckPublishedDateTime", ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.DateNotInRange))]
         public DateTime? PublishedDateTime { get; set; }
 
-        [Display(Name = "Specific to Shop")]
         public int ShopId { get; set; }
 
-        [Display(Name = "Type")]
-        [Required(ErrorMessage = "{0} is required")]
+        [Display(Name = nameof(Resources.Type), ResourceType = typeof(Resources))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage))]
         public AnnouncementType Type { get; set; }
 
-        [Display(Name = "State")]
+        [Display(Name = nameof(Resources.State), ResourceType = typeof(Resources))]
         [NotMapped]
         [Computed]
         public AnnouncementState State

@@ -558,4 +558,28 @@
   <data name="DeleteAnnouncementMessage" xml:space="preserve">
     <value>Bán có muốn xóa thông báo này?</value>
   </data>
+  <data name="SingleAnnouncementEditedMessage" xml:space="preserve">
+    <value>Thông báo đã được chỉnh sửa thành công</value>
+  </data>
+  <data name="SingleAnnouncementDeletedMessage" xml:space="preserve">
+    <value>Thông báo đã được xóa</value>
+  </data>
+  <data name="SingleAnnouncementPublishedMessage" xml:space="preserve">
+    <value>Thông báo đã được đăng</value>
+  </data>
+  <data name="MultipleAnnouncementPublishedMessage" xml:space="preserve">
+    <value>Các thông báo đã được đăng</value>
+  </data>
+  <data name="AnnouncementContent" xml:space="preserve">
+    <value>Nội dung thông báo</value>
+  </data>
+  <data name="SingleAnnouncementCreatedMessage" xml:space="preserve">
+    <value>Thông báo đã được tạo</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>Tình trạng</value>
+  </data>
+  <data name="DateNotInRange" xml:space="preserve">
+    <value>Ngày không nằm trong khoảng cho phép</value>
+  </data>
 </root>
