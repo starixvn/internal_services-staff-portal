@@ -1,6 +1,6 @@
 ﻿var announcementReadEvent = {
     registerUnreadClickEvent: function () {
-        $(".unread").one("click", function (e) {
+        $(".unread").on("click", function (e) {
             var currentAnnouncement = $(this);
             var id = currentAnnouncement.data("id");
             var url = $(currentAnnouncement).data("href");
