@@ -23,7 +23,7 @@
             @if (Model.HaveHostPermission)
             {
                 <th class="publish">
-                    <button class="btn btn-publish" disabled="disabled" type="button" data-href="@Url.Action("Publish", "Announcement")">@Resources.Publish</button>
+                    <button class="btn btn-publish quick-publish" disabled="disabled" type="button" data-href="@Url.Action("QuickPublish", "Announcement")">@Resources.Publish</button>
                 </th>
                 <th class="action">@Resources.Action</th>
             }
@@ -83,14 +83,12 @@
                                     </div>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownAction">
                                         <li>
-                                            <a class="edit"
-                                               data-href="@Url.Action("Edit", "Announcement", new { id = item.Id })"
-                                               href="#">
+                                            <a class="modal-form" href="#" data-href="@Url.Action("Edit", "Announcement", new { id = item.Id })">
                                                 <span class="icon-edit"></span><span>@Resources.Edit</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="delete" href="#" data-href="@Url.Action("Delete", "Announcement", new { id = item.Id })">
+                                            <a class="modal-form" href="#" data-href="@Url.Action("Delete", "Announcement", new { id = item.Id })">
                                                 <span class="icon-delete"></span><span>@Resources.Delete</span>
                                             </a>
                                         </li>

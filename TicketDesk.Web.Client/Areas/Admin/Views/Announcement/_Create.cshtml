@@ -1,11 +1,31 @@
-﻿@using TicketDesk.Core.Enumerations
-@using TicketDesk.Localization.Client
+﻿@using TicketDesk.Localization.Client
 @using TicketDesk.Web.Client.Areas.Admin.Models.Announcements
 @using TicketDesk.Web.Client.Infrastructure.Helpers
 @model NewAnnouncementViewModel
 
 @using (Html.BeginForm("Create", "Announcement", FormMethod.Post, new { id = "modal-form" }))
 {
+    <div class="hidden">
+        <a id="is-publish-url" href="@Url.Action("IsPublishImmediately","Announcement")"></a>
+        <a id="publish-action-url" href="@Url.Action("Publish","Announcement")"></a>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
+        @Html.HiddenFor(x => x.IsPublishedImmediately, new { id = "is-publish-immediatly" })
+
+        <div class="modal-dialog confirm-modal" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                <div class="modal-body">
+                    <p>@Resources.PublishSingleAnnouncementMessage</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal">@Resources.Cancel</button>
+                    <button type="submit" class="btn btn-primary">@Resources.Publish</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" tabindex="-1" role="dialog" id="CreateAnnouncementModal" data-backdrop="static">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -37,23 +57,10 @@
                         </div>
 
                         <div class="form-group checkbox">
-                            @{
-                                if (Model.Announcement.Type == AnnouncementType.Important)
-                                {
-                                    <input type="checkbox"
-                                           id="@Html.NameFor(x => x.IsImportant)"
-                                           name="@Html.NameFor(x => x.IsImportant)"
-                                           value="true"
-                                           checked="checked" />
-                                }
-                                else
-                                {
-                                    <input type="checkbox"
-                                           id="@Html.NameFor(x => x.IsImportant)"
-                                           name="@Html.NameFor(x => x.IsImportant)"
-                                           value="true" />
-                                }
-                            }
+                            <input type="checkbox"
+                                   id="@Html.NameFor(x => x.IsImportant)"
+                                   name="@Html.NameFor(x => x.IsImportant)"
+                                   value="true"/>
                             @Html.LabelFor(model => model.IsImportant)
                         </div>
                     </div>

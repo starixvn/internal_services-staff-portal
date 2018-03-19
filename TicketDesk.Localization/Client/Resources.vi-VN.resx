@@ -546,4 +546,16 @@
   <data name="ContactName" xml:space="preserve">
     <value>Tên liên lạc</value>
   </data>
+  <data name="Create" xml:space="preserve">
+    <value>Tạo</value>
+  </data>
+  <data name="PublishSingleAnnouncementMessage" xml:space="preserve">
+    <value>Bạn có muốn đăng thông báo này ngay không?</value>
+  </data>
+  <data name="PublishMultipleAnnouncementMessage" xml:space="preserve">
+    <value>Bạn có muốn đăng các thông báo này ngay không?</value>
+  </data>
+  <data name="DeleteAnnouncementMessage" xml:space="preserve">
+    <value>Bán có muốn xóa thông báo này?</value>
+  </data>
 </root>

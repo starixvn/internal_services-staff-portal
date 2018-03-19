@@ -30,9 +30,9 @@
 
 }
 
-<div id="announcement-modal">
-    <!--edit announcement modal place holder-->
-</div>
+<div id="announcement-modal"></div>
+
+<div id="quick-publish-modal"></div>
 
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" id="confirm-popup">
     <div class="modal-dialog" role="document">
@@ -88,11 +88,9 @@
 @if (Model.HaveHostPermission)
 {
     <div class="table-actions">
-        <a class="btn btn-create create"
-           data-toggle="modal"
-           href="#"
-           data-href="@Url.Action("Create", "Announcement")"
-           data-modalid="#CreateAnnouncementModal"><span class="icon-add"></span>@Resources.CreateNewAnnouncement</a>
+        <a class="btn btn-create modal-form" href="#" data-href="@Url.Action("Create", "Announcement")">
+            <span class="icon-add"></span>@Resources.CreateNewAnnouncement
+        </a>
     </div>
 }
 

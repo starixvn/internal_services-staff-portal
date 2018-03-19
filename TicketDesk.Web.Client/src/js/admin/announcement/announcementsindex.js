@@ -48,80 +48,17 @@ var modalhandler = {
     init: function () {
         modalhandler.resetModalForm();
         modalhandler.assignFunctions();
-        modalhandler.modalFormAjax();
         modalhandler.dismissAll();
-        modalhandler.showMessageIfAny();
-        modalhandler.quickPublish();
+        modalhandler.handleModalForms();
+        modalhandler.assignButton();
     },
 
-    quickPublish: function () {
-        $("#announcement-table").on("click", ".btn-publish", function () {
-            var title = "Announcement Publish";
-            var Ids = publishAnnouncement.getIdsToPublish();
-            var message;
-            if (Ids.length > 1) {
-                message = "Are you sure you want to publish these announcements right away?";
-            } else {
-                message = "Are you sure you want to publish this announcement right away?";
-            }
-            var publish = modalhandler.publishAjax();
-            modalhandler.confirmModal(title, message, publish);
-        });
-    },
-
-    publishAjax: function () {
-        var Ids = publishAnnouncement.getIdsToPublish();
-        return function () {
-            $.ajax({
-                url: $(".btn-publish").data("href"),
-                method: "post",
-                data: { Ids },
-                success: function (response) {
-                    if (response.success) {
-                        $("#confirm-popup").modal("hide");
-                        toastr.success(response.message);
-                        //setTimeout(function() {
-                        //    location.reload(true);
-                        //}, 3000);
-                        $(".filter-row").trigger("submit");
-                    } else {
-                        toastr.error("Error");
-                    }
-                }
+    assignButton: function () {
+        $("#announcement-modal").on("click",
+            "#set-current-datetime-button",
+            function () {
+                $("#announcement-date").val(moment().format("MM-DD-YYYY hh:mm A"));
             });
-        };
-    },
-
-    confirmModal: function (title, message, action) {
-        var popup = $("#confirm-popup");
-        popup.find(".modal-title").text(title);
-        popup.find(".message").text(message);
-        popup.modal("show");
-        var notTrigger = false;
-        $(popup).one("click", "#confirm-btn", function () {
-            if (!notTrigger) {
-                action();
-            }
-        });
-        $(popup).one("click", ".cancel-btn", function () {
-            notTrigger = true;
-        });
-    },
-
-    showMessageIfAny: function () {
-        var message = localStorage.getItem("message");
-        if (message !== null) {
-            $(".alert-success").text(message);
-            $(".alert-success").removeClass("hide");
-
-            window.setTimeout(function () {
-                $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
-                    $(".alert-success").addClass("hide");
-                });
-            }, 5000);
-
-            localStorage.removeItem("message");
-        }
     },
 
     dismissAll: function () {
@@ -133,7 +70,6 @@ var modalhandler = {
     },
 
     resetModalForm: function () {
-        // apply to future modal too
         $("#announcement-modal").on("hidden.bs.modal",
             ".modal",
             function () {
@@ -147,150 +83,157 @@ var modalhandler = {
             });
     },
 
-    modalFormAjax: function () {
-        // ONLY FOR PUBLISH
+    assignFunctions: function () {
+        $("body").on("click",
+            ".modal-form",
+            function () {
+                var href = $(this).data("href");
+                modalhandler.getModalForm(href);
+            });
+    },
+
+    getModalForm: function (href) {
+        $.ajax({
+            url: href,
+            method: "get",
+            success: function (result) {
+                $("#announcement-modal").html(result);
+                datetimepicker.setupDateTimePicker();
+                $.validator.unobtrusive.parse($("#announcement-modal form"));
+                $("#announcement-modal form").validate();
+                $("#announcement-modal .modal").last().modal();
+            }
+        });
+    },
+
+    handleModalForms: function () {
         $("#announcement-modal").on("submit",
             "form",
             function (e) {
                 e.preventDefault();
-
-                $.validator.unobtrusive.parse($(this));
-                $(this).validate();
-
                 if ($(this).valid()) {
-                    modalhandler.ajaxForm(this, "#announcement-modal .modal", "#announcement-modal .modal");
-                }
+                    // Check if announcement publish immediatly
 
-                return false;
+                    var isPublishImmediately = $("#is-publish-immediatly").val();
+                    if (isPublishImmediately === "False") {
+                        $.ajax({
+                            url: $("#is-publish-url").attr("href"),
+                            method: $(this).attr("method"),
+                            data: $(this).serialize(),
+                            success: function(result) {
+                                if (result === true) {
+                                    // set value to true
+                                    $("#is-publish-immediatly").val(true);
+
+                                    // change action url
+                                    var publishUrl = $("#publish-action-url").attr("href");
+                                    $(this).attr("action", publishUrl);
+
+                                    // render confirm modal
+                                    $("#announcement-modal .modal").first().modal();
+                                } else {
+                                    modalhandler.submitModalForm($("#announcement-modal form"));
+                                }
+                            }
+                        });
+                    } else {
+                        modalhandler.submitModalForm($(this));
+                    }
+                }
             });
     },
 
-    ajaxForm: function (form, selector, selectorWithModal) {
+    submitModalForm: function(form) {
         $.ajax({
             url: $(form).attr("action"),
             method: $(form).attr("method"),
             data: $(form).serialize(),
             success: function (result) {
-                if (result.success) {
-                    if (result.html !== undefined) {
-                        $(selector).before(result.html);
-                        $(selectorWithModal).first().modal();
-                    } else {
-                        if (result.message !== undefined) {
-                            $(".modal").modal("hide");
-                            toastr.success(result.message);
-                            //setTimeout(function() {
-                            //        location.reload();
-                            //    },
-                            //    3000);
-                            $(".filter-row").trigger("submit");
-                        }
-                    }
-                } else {
-                    // ON VALIDATION ERROR
-                    $(selectorWithModal).html(result);
+                // form return true/false
+                if (result.success === true) {
+                    $("#announcement-modal .modal").modal("hide");
+                    toastr.success(result.message);
+                    $(".filter-row").trigger("submit");
                 }
-            }
-        });
-    },
-
-    assignFunctions: function () {
-        modalhandler.assignCreate();
-        modalhandler.assignEdit();
-        modalhandler.assignDelete();
-        //modalhandler.assignPublish();
-    },
-
-    assignEdit: function () {
-        $("#announcement-table").on("click", ".edit",
-            function () {
-                var href = $(this).data("href");
-                modalhandler.ajaxModal(href);
-            });
-    },
-
-    assignCreate: function () {
-        $(".create").on("click",
-            function () {
-                var href = $(this).data("href");
-                modalhandler.ajaxModal(href);
-            });
-    },
-
-    assignDelete: function () {
-        $("#announcement-table").on("click", ".delete",
-            function () {
-                var href = $(this).data("href");
-                modalhandler.ajaxModal(href);
-            });
-    },
-
-    ajaxModal: function (href, method) {
-        if (method === undefined) {
-            method = "get";
-        }
-
-        $.ajax({
-            url: href,
-            method: method,
-            success: function (result) {
-                $("#announcement-modal").html(result);
-                datetimepicker.setupDateTimePicker();
-                $("#announcement-modal .modal").modal();
             }
         });
     }
 }
 
-var publishAnnouncement = {
+var quickPublish = {
     init: function () {
-        $("#announcement-table").on("click", "input[type=checkbox]",
+        quickPublish.handleCheckBoxes();
+        quickPublish.handlePublishButton();
+        quickPublish.handelQuickPublishForm();
+    },
+
+    handlePublishButton: function() {
+        $("#announcement-table").on("click",
+            ".quick-publish",
             function () {
-                var listIdsToPublish = publishAnnouncement.getIdsToPublish();
-                publishAnnouncement.handlePublishButton(listIdsToPublish.length);
+                var listIdsToPublish = quickPublish.getIdsToPublish();
+                var modalUrl = $(this).data("href");
+
+                $.ajax({
+                    url: modalUrl,
+                    method: "post",
+                    data: { ids: listIdsToPublish},
+                    success: function (result) {
+                        $("#quick-publish-modal").html(result);
+                        $("#quick-publish-modal .modal").modal();
+                    }
+                });
+            });
+    },
+
+    handelQuickPublishForm: function() {
+        $("#quick-publish-modal").on("submit",
+            "form",
+            function(e) {
+                e.preventDefault();
+                var listIdsToPublish = quickPublish.getIdsToPublish();
+                $.ajax({
+                    url: $(this).attr("action"),
+                    method: $(this).attr("method"),
+                    data: { ids: listIdsToPublish },
+                    success: function (result) {
+                        // form return true/false
+                        if (result.success === true) {
+                            $("#quick-publish-modal .modal").modal("hide");
+                            toastr.success(result.message);
+                            $(".filter-row").trigger("submit");
+                        }
+                    }
+                });
+            });
+    },
+
+    handleCheckBoxes: function() {
+        $("#announcement-table").on("click",
+            "input[type=checkbox]",
+            function () {
+                var listIdsToPublish = quickPublish.getIdsToPublish();
+                quickPublish.togglePublishButton(listIdsToPublish.length);
             });
     },
 
     getIdsToPublish: function () {
-        var listIdsToPublish = [];
+        var idsToPublish = [];
 
         $(".announcement-list input[type=checkbox]:checked").each(function () {
-            listIdsToPublish.push($(this).val());
+            var id = parseInt($(this).val());
+            idsToPublish.push(id);
         });
 
-        return listIdsToPublish;
+        return idsToPublish;
     },
 
-    updatetext: function (count) {
-        if (count > 1) {
-            $("#publish-announcement-confirm-modal .modal-body p")
-                .text("Are you sure you want to publish these announcements right away?");
-        } else {
-            $("#publish-announcement-confirm-modal .modal-body p")
-                .text("Are you sure you want to publish this announcement right away?");
-        }
-    },
-
-    handlePublishButton: function (count) {
+    togglePublishButton: function (count) {
         if (count > 0) {
             $(".btn-publish").attr("disabled", false);
         } else {
             $(".btn-publish").attr("disabled", true);
         }
-    }
-}
-
-var announcement = {
-    init: function () {
-        announcement.assignButton();
-    },
-
-    assignButton: function () {
-        $("#announcement-modal").on("click",
-            "#set-current-datetime-button",
-            function () {
-                $("#announcement-date").val(moment().format("MM-DD-YYYY hh:mm A"));
-            });
     }
 }
 
@@ -323,7 +266,7 @@ var listAnnouncement = {
                 targets: [-2, -3]
             },
             {
-                render: function(data, type, row) {
+                render: function (data, type, row) {
                     if (!data) {
                         return data;
                     } else {
@@ -362,7 +305,6 @@ var listAnnouncement = {
 $(document).ready(function () {
     datetimepicker.init();
     modalhandler.init();
-    publishAnnouncement.init();
-    announcement.init();
+    quickPublish.init();
     listAnnouncement.init();
 });

@@ -22,6 +22,7 @@
         public DateTime CreatedDateTime { get; set; }
 
         [Display(Name = "Publish Date")]
+        [Remote(controller: "Announcement", action: "CheckPublishedDateTime", ErrorMessage = "Date not in Range")]
         public DateTime? PublishedDateTime { get; set; }
 
         [Display(Name = "Specific to Shop")]

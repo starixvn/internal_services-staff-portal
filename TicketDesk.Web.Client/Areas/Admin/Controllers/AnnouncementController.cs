@@ -1,7 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using Client.Controllers;
@@ -15,6 +14,7 @@
     public class AnnouncementController : BaseController
     {
         private readonly IAnnouncementService _announcementService;
+        private readonly TimeSpan tolerateTime = TimeSpan.FromMinutes(5);
 
         public AnnouncementController(IAnnouncementService announcementService)
         {
@@ -61,53 +61,22 @@
             return PartialView("_Create", viewModel);
         }
 
+        public ActionResult CheckPublishedDateTime(NewAnnouncementViewModel viewModel)
+        {
+            var result = viewModel.Announcement.PublishedDateTime == null ||
+                     (((DateTime.Now - viewModel.Announcement.PublishedDateTime) <= tolerateTime) &&
+                      ((viewModel.Announcement.PublishedDateTime - DateTime.Now) <= TimeSpan.FromDays(365)));
+
+            // Too far in the past or more than 1 year in the future
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Create(NewAnnouncementViewModel viewModel)
         {
-            // Check datetime
-            if (viewModel.Announcement.PublishedDateTime != null)
-            {
-                var tolerateTime = TimeSpan.FromMinutes(5);
-
-                // Too far in the past or more than 1 year in the future
-                if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) > tolerateTime
-                    || (viewModel.Announcement.PublishedDateTime - DateTime.Now) > TimeSpan.FromDays(365))
-                {
-                    ModelState.AddModelError("Announcement.PublishedDateTime", "Date not in range");
-                }
-
-                // Published in the past
-                // TOLERATE TIME: 5 MINUTES
-                if (Math.Abs((DateTime.Now - viewModel.Announcement.PublishedDateTime).Value.TotalMinutes) <=
-                    tolerateTime.Minutes && !viewModel.IsPublishedImmediately)
-                {
-                    viewModel.IsPublishedImmediately = true;
-                    // Show confirm modal: Publish announcement immediately
-                    return Json(new
-                    {
-                        success = true,
-                        html = RenderRazorViewToString("_Publish", viewModel)
-                    });
-                }
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return PartialView("_Create", viewModel);
-            }
-
             _announcementService.AddAnnouncement(viewModel.Announcement);
-
-            if (viewModel.IsPublishedImmediately)
-            {
-                return Json(new
-                {
-                    success = true,
-                    message = "The announcement has been successfully published."
-                });
-            }
 
             return Json(new
             {
@@ -132,48 +101,7 @@
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(NewAnnouncementViewModel viewModel)
         {
-            // Check datetime
-            if (viewModel.Announcement.PublishedDateTime != null)
-            {
-                var tolerateTime = TimeSpan.FromMinutes(5);
-
-                // Too far in the past or more than 1 year in the future
-                if ((DateTime.Now - viewModel.Announcement.PublishedDateTime) > tolerateTime
-                    || (viewModel.Announcement.PublishedDateTime - DateTime.Now) > TimeSpan.FromDays(365))
-                {
-                    ModelState.AddModelError("Announcement.PublishedDateTime", "Date not in range");
-                }
-
-                // Published in the past
-                // TOLERATE TIME: 5 MINUTES
-                if (Math.Abs((DateTime.Now - viewModel.Announcement.PublishedDateTime).Value.TotalMinutes) <=
-                    tolerateTime.Minutes && !viewModel.IsPublishedImmediately)
-                {
-                    viewModel.IsPublishedImmediately = true;
-                    // Show confirm modal: Publish announcement immediately
-                    return Json(new
-                    {
-                        success = true,
-                        html = RenderRazorViewToString("_Publish", viewModel)
-                    });
-                }
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return PartialView("_Edit", viewModel);
-            }
-
             _announcementService.UpdateAnnouncement(viewModel.Announcement);
-
-            if (viewModel.IsPublishedImmediately)
-            {
-                return Json(new
-                {
-                    success = true,
-                    message = "The announcement has been successfully published."
-                });
-            }
 
             return Json(new
             {
@@ -202,14 +130,20 @@
             });
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult QuickPublish(int[] ids)
+        {
+            return PartialView("_QuickPublish", ids);
+        }
+
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult Publish(List<int> Ids)
+        public ActionResult Publish(int[] ids)
         {
-            _announcementService.PublishAnnouncements(Ids);
+            _announcementService.PublishAnnouncements(ids);
 
             var message = "The announcement has been successfully published.";
-            if (Ids.Count > 1)
+            if (ids.Length > 1)
             {
                 message = "The announcements have been successfully published.";
             }
@@ -218,6 +152,33 @@
             {
                 success = true,
                 message
+            });
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult IsPublishImmediately(NewAnnouncementViewModel viewModel)
+        {
+            // Check datetime
+            // Published in the past
+            // TOLERATE TIME: -/+5 MINUTES
+
+            var result = viewModel.Announcement.PublishedDateTime != null
+                         &&
+                         (Math.Abs((DateTime.Now - viewModel.Announcement.PublishedDateTime).Value.TotalMinutes) <=
+                          tolerateTime.Minutes);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult Publish(NewAnnouncementViewModel viewModel)
+        {
+            _announcementService.UpdateAnnouncement(viewModel.Announcement);
+
+            return Json(new
+            {
+                success = true,
+                message = "The announcement has been successfully published."
             });
         }
     }

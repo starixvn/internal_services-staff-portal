@@ -304,6 +304,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this announcement?.
+        /// </summary>
+        public static string DeleteAnnouncementMessage {
+            get {
+                return ResourceManager.GetString("DeleteAnnouncementMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -759,6 +768,24 @@ namespace TicketDesk.Localization.Client {
         public static string PublishedTo {
             get {
                 return ResourceManager.GetString("PublishedTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to publish these announcements right away?.
+        /// </summary>
+        public static string PublishMultipleAnnouncementMessage {
+            get {
+                return ResourceManager.GetString("PublishMultipleAnnouncementMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to publish this announcement right away?.
+        /// </summary>
+        public static string PublishSingleAnnouncementMessage {
+            get {
+                return ResourceManager.GetString("PublishSingleAnnouncementMessage", resourceCulture);
             }
         }
         
