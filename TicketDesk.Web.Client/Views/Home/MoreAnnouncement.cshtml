@@ -111,7 +111,7 @@
                                 announcementClass += " unread";
                             }
 
-                            <tr class="@announcementClass" data-id="@unreadId">
+                            <tr class="@announcementClass" data-id="@unreadId" data-href="@Url.Action("SaveUnreadAnnouncement", "NapUserSetting", new { id = unreadId})">
                                 <td class="text-center">@(index + 1)</td>
                                 <td>
                                     <span>@announcement.PublishedDateTime.Value.ToString("g") @announcement.Id</span><br>

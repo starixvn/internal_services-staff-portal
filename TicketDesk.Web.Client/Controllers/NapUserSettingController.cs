@@ -7,9 +7,12 @@
     {
         private readonly INapUserSettingService napUserSettingService;
 
-        public NapUserSettingController(INapUserSettingService napUserSettingService)
+        private readonly IAnnouncementService announcementService;
+
+        public NapUserSettingController(INapUserSettingService napUserSettingService, IAnnouncementService announcementService)
         {
             this.napUserSettingService = napUserSettingService;
+            this.announcementService = announcementService;
         }
 
         public ActionResult SetIsSidebarExpanded(bool isSidebarExpanded)
@@ -22,8 +25,9 @@
         public ActionResult SaveUnreadAnnouncement(int id)
         {
             var result = napUserSettingService.UpdateUnreadAnnouncements(CurrentSession.UserId, id);
+            var unreadQuantity = announcementService.CountUnreadAnnouncement(NapUserSetting.SettingObject.ReadAnnouncements);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(new { result, unreadQuantity }, JsonRequestBehavior.AllowGet);
         }
     }
 }

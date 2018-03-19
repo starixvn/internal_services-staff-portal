@@ -1,17 +1,16 @@
 ﻿var announcementReadEvent = {
     registerUnreadClickEvent: function () {
-        $(".unread").one("click", function () {
+        $(".unread").one("click", function (e) {
             var currentAnnouncement = $(this);
             var id = currentAnnouncement.data("id");
-            var url = "/NapUserSetting/SaveUnreadAnnouncement/" + id;
+            var url = $(currentAnnouncement).data("href");
             if (id > 0) {
                 $.get(url, function (response) {
-                    if (response) {
+                    if (response.result) {
                         currentAnnouncement.removeClass("unread");
                         currentAnnouncement.attr("data-id", 0);
                         if ($(".unread-announcements").length) {
-                            var unreadAnnouncement = parseInt($(".unread-announcements").text());
-                            $(".unread-announcements").text(unreadAnnouncement - 1);
+                            $(".unread-announcements").text(response.unreadQuantity);
                         }
                     }
                 });

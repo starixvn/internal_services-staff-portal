@@ -84,7 +84,6 @@ var hiddenText = {
 
         $(".announcement-msg").on("click",
             function () {
-                console.log("Click");
                 var element = $(this).find(".morecontent");
                 var dots = $(this).find(".dots");
                 var sign = $(this).find(".sign");
