@@ -11,11 +11,11 @@
 
     public class DataConfigurationController : BaseController
     {
-        private readonly IDataConfigurationService _dataConfigurationService;
+        private readonly IDataConfigurationService dataConfigurationService;
 
         public DataConfigurationController(IDataConfigurationService dataConfirgurationService)
         {
-            _dataConfigurationService = dataConfirgurationService;
+            dataConfigurationService = dataConfirgurationService;
         }
 
         [NapAuth(FunctionKey = FunctionKeys.DataConfiguration, Policy = Constant.Policy.Read)]
@@ -23,7 +23,7 @@
         {
             var dataConfigurationViewModel = new DataConfigurationViewModel
             {
-                EditableCustomFields = _dataConfigurationService.GetEditableCustomFields()
+                EditableCustomFields = dataConfigurationService.GetEditableCustomFields()
             };
 
             return View(dataConfigurationViewModel);
@@ -34,7 +34,7 @@
         {
             ListCustomFieldListValueViewModel viewModel = new ListCustomFieldListValueViewModel
             {
-                CustomFieldListValues = _dataConfigurationService.GetEditableListValues(selectedFieldId),
+                CustomFieldListValues = dataConfigurationService.GetEditableListValues(selectedFieldId),
                 SelectedFieldId = selectedFieldId,
                 ModalTitle = modalTitle,
                 HaveHostPermission = IsHaveHostPermission(FunctionKeys.DataConfiguration, Constant.Policy.Host)
@@ -69,7 +69,7 @@
                     IsActive = viewModel.IsActive
                 };
 
-                _dataConfigurationService.CreateCustomFieldListValue(customFieldListValue);
+                dataConfigurationService.CreateCustomFieldListValue(customFieldListValue);
             }
 
             var newViewModel = new CreateCustomFieldListValueViewModel
@@ -99,7 +99,7 @@
                     IsActive = viewModel.IsActive
                 };
 
-                result = _dataConfigurationService.CreateCustomFieldListValue(customFieldListValue);
+                result = dataConfigurationService.CreateCustomFieldListValue(customFieldListValue);
             }
 
             return Json(result);
@@ -108,7 +108,7 @@
         [NapAuth(FunctionKey = FunctionKeys.DataConfiguration, Policy = Constant.Policy.Host)]
         public ActionResult EditCustomFieldListvalue(int id)
         {
-            CustomFieldListValue customFieldListValue = _dataConfigurationService.GetEditableListValue(id);
+            CustomFieldListValue customFieldListValue = dataConfigurationService.GetEditableListValue(id);
 
             return PartialView("_EditCustomFieldListValue", customFieldListValue);
         }
@@ -120,7 +120,7 @@
             var result = false;
             if (ModelState.IsValid)
             {
-                result = _dataConfigurationService.EditCustomFieldListValue(customFieldListValue);
+                result = dataConfigurationService.EditCustomFieldListValue(customFieldListValue);
             }
 
             return Json(result);
@@ -129,14 +129,14 @@
         [AcceptVerbs("Get", "Post")]
         public ActionResult IsDisplayNameViUnique(CreateCustomFieldListValueViewModel viewModel)
         {
-            var result = _dataConfigurationService.IsCustomFieldDisplayNameViUnique(viewModel.CustomFieldId, viewModel.DisplayName_vi, viewModel.Id);
+            var result = dataConfigurationService.IsCustomFieldDisplayNameViUnique(viewModel.CustomFieldId, viewModel.DisplayName_vi, viewModel.Id);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [AcceptVerbs("Get", "Post")]
         public ActionResult IsDisplayNameEnUnique(CreateCustomFieldListValueViewModel viewModel)
         {
-            var result = _dataConfigurationService.IsCustomFieldDisplayNameEnUnique(viewModel.CustomFieldId, viewModel.DisplayName, viewModel.Id);
+            var result = dataConfigurationService.IsCustomFieldDisplayNameEnUnique(viewModel.CustomFieldId, viewModel.DisplayName, viewModel.Id);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
