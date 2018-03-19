@@ -12,7 +12,6 @@
     using Fanex.NAP.Core.Web.Attribute;
     using IO;
     using Localization.Client;
-    using Localization.Controllers;
     using Models.Ticket;
     using Service.Interface;
 
@@ -86,17 +85,16 @@
 
             viewModel.Ticket.Owner = CurrentSession.UserId.ToString();
 
-            return View("NewFacilityTicket", viewModel);
+            return View(viewModel);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)]
+        [ValidateOnlyIncomingValues]
         public ActionResult NewFacilityTicket(NewFacilityTicketViewModel viewModel)
         {
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
-            ReValidateModelState(viewModel);
 
             if (ModelState.IsValid)
             {
@@ -129,18 +127,16 @@
                 }
             };
 
-            return View("NewFeedbackTicket", viewModel);
+            return View(viewModel);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)]
+        [ValidateOnlyIncomingValues]
         public ActionResult NewFeedbackTicket(NewFeedbackTicketViewModel viewModel)
         {
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Feedback;
-
-            ReValidateModelState(viewModel);
 
             if (ModelState.IsValid)
             {
@@ -174,24 +170,23 @@
 
             viewModel.Ticket.ShopList = shopService.GetShopSelectList();
 
-            return View("NewIncidentTicket", viewModel);
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
-        [ValidateInput(false)]
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public ActionResult NewIncidentTicket(NewIncidentTicketViewModel viewModel)
         {
-            if (viewModel.Ticket.IsHtml)
-            {
-                viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
-                if (string.IsNullOrEmpty(viewModel.Ticket.Details))
-                {
-                    ModelState.AddModelError("Details", Strings.RequiredField);
-                }
-            }
+            ////if (viewModel.Ticket.IsHtml)
+            ////{
+            ////    viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
+            ////    if (string.IsNullOrEmpty(viewModel.Ticket.Details))
+            ////    {
+            ////        ModelState.AddModelError("Details", Strings.RequiredField);
+            ////    }
+            ////}
 
             ////viewModel.Ticket.Shop = context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Incident;
@@ -224,24 +219,23 @@
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };
 
-            return View("NewHardwareTicket", viewModel);
+            return View(viewModel);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
-        [ValidateInput(false)]
         public ActionResult NewHardwareTicket(NewHardwareTicketViewModel viewModel)
         {
-            if (viewModel.Ticket.IsHtml)
-            {
-                viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
-                if (string.IsNullOrEmpty(viewModel.Ticket.Details))
-                {
-                    ModelState.AddModelError("Details", Strings.RequiredField);
-                }
-            }
+            ////if (viewModel.Ticket.IsHtml)
+            ////{
+            ////    viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
+            ////    if (string.IsNullOrEmpty(viewModel.Ticket.Details))
+            ////    {
+            ////        ModelState.AddModelError("Details", Strings.RequiredField);
+            ////    }
+            ////}
 
             // TODO: Replace with actual project ID represent for shop id here
             ////viewModel.Ticket.Shop = context.Shops.Find(viewModel.Ticket.ShopId);
@@ -275,24 +269,23 @@
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };
 
-            return View("NewSoftwareTicket", viewModel);
+            return View(viewModel);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
-        [ValidateInput(false)]
         public ActionResult NewSoftwareTicket(NewSoftwareTicketViewModel viewModel)
         {
-            if (viewModel.Ticket.IsHtml)
-            {
-                viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
-                if (string.IsNullOrEmpty(viewModel.Ticket.Details))
-                {
-                    ModelState.AddModelError("Details", Strings.RequiredField);
-                }
-            }
+            ////if (viewModel.Ticket.IsHtml)
+            ////{
+            ////    viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
+            ////    if (string.IsNullOrEmpty(viewModel.Ticket.Details))
+            ////    {
+            ////        ModelState.AddModelError("Details", Strings.RequiredField);
+            ////    }
+            ////}
 
             // TODO: Replace with actual project ID represent for shop id here
             ////viewModel.Ticket.Shop = context.Shops.Find(viewModel.Ticket.ShopId);
@@ -328,7 +321,7 @@
                 Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
             };
 
-            return View("NewCustomerSupportTicket", viewModel);
+            return View(viewModel);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
@@ -337,14 +330,14 @@
         [ValidateOnlyIncomingValues]
         public ActionResult NewCustomerSupportTicket(NewCustomerSupportTicketViewModel viewModel)
         {
-            if (viewModel.Ticket.IsHtml)
-            {
-                viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
-                if (string.IsNullOrEmpty(viewModel.Ticket.Details))
-                {
-                    ModelState.AddModelError("Details", Strings.RequiredField);
-                }
-            }
+            ////if (viewModel.Ticket.IsHtml)
+            ////{
+            ////    viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
+            ////    if (string.IsNullOrEmpty(viewModel.Ticket.Details))
+            ////    {
+            ////        ModelState.AddModelError("Details", Strings.RequiredField);
+            ////    }
+            ////}
 
             ////viewModel.Ticket.Shop = context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.CustomerSupport;
