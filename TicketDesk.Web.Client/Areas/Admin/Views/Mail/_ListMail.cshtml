@@ -1,0 +1,11 @@
+﻿@model TicketDesk.Web.Client.Areas.Admin.Models.Mail.ListMailViewModel
+
+<section>
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(x => x.SelectedTicketCategory.MailTo)
+        @Html.TextAreaFor(x => x.SelectedTicketCategory.MailTo);
+    }
+    
+    <button type="submit">Save</button>
+</section>

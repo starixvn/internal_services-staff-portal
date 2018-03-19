@@ -95,6 +95,7 @@
             container.Register<IIdUploaderService>(() => new IdUploaderService(), hybridLifestyle);
             container.Register<INapUserSettingService>(() => new NapUserSettingService(), hybridLifestyle);
             container.Register<ICustomFieldService>(() => new CustomFieldService(), hybridLifestyle);
+            container.Register<ITicketCategoryService>(() => new TicketCategoryService(), hybridLifestyle);
 
             container.RegisterInitializer<TicketDeskUserManager>(manager => manager.ConfigureDataProtection(app));
             ////container.RegisterMvcControllers(Assembly.GetExecutingAssembly());

@@ -368,6 +368,7 @@
     <Compile Include="Areas\Admin\Models\DataConfiguration\CreateCustomFieldListValueViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DataConfiguration\DataConfigurationViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DataConfiguration\ListCustomFieldListValueViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Mail\MailViewModel.cs" />
     <Compile Include="Areas\Admin\Models\References\ReferenceViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopFilterViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopListViewModel.cs" />
@@ -496,6 +497,7 @@
     <Content Include="src\js\admin\customfield\customfield.js" />
     <Content Include="src\js\admin\dataconfiguration\dataconfigurationindex.js" />
     <Content Include="src\js\admin\dataTableCommon.js" />
+    <Content Include="src\js\admin\mail\mail.js" />
     <Content Include="src\js\admin\reference\reference-admin.js" />
     <Content Include="src\js\admin\shop-management\shop-management.js" />
     <Content Include="src\js\home\read-announcement.js" />
@@ -574,6 +576,7 @@
     <Content Include="Areas\Admin\Views\Mail\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CustomFields\_ListCustomFields.cshtml" />
     <Content Include="Areas\Admin\Views\Announcement\_Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Mail\_ListMail.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
