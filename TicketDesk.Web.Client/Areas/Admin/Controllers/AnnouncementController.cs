@@ -14,12 +14,105 @@
 
     public class AnnouncementController : BaseController
     {
-        private readonly IAnnouncementService _announcementService;
+        private readonly IAnnouncementService announcementService;
         private readonly TimeSpan tolerateTime = TimeSpan.FromMinutes(5);
 
         public AnnouncementController(IAnnouncementService announcementService)
         {
-            _announcementService = announcementService;
+            this.announcementService = announcementService;
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
+        public ActionResult AnnouncementList(AnnouncementViewModel viewModel)
+        {
+            var listAnnouncementViewModel = new ListAnnouncementViewModel
+            {
+                Announcements = announcementService.GetAnnouncements(viewModel.GetQueryCriteria())
+                    .OrderByDescending(x => x.LastModified),
+                HaveHostPermission = IsHaveHostPermission(FunctionKeys.Announcement, Constant.Policy.Host)
+            };
+
+            return PartialView("_AnouncementList", listAnnouncementViewModel);
+        }
+
+        public ActionResult CheckPublishedDateTime(NewAnnouncementViewModel viewModel)
+        {
+            var result = viewModel.Announcement.PublishedDateTime == null ||
+                     (((DateTime.Now - viewModel.Announcement.PublishedDateTime) <= tolerateTime) &&
+                      ((viewModel.Announcement.PublishedDateTime - DateTime.Now) <= TimeSpan.FromDays(365)));
+
+            // Too far in the past or more than 1 year in the future
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult Create()
+        {
+            var viewModel = new NewAnnouncementViewModel
+            {
+                Announcement = new Announcement()
+            };
+
+            return PartialView("_Create", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult Create(NewAnnouncementViewModel viewModel)
+        {
+            announcementService.AddAnnouncement(viewModel.Announcement);
+
+            return Json(new
+            {
+                success = true,
+                message = Resources.SingleAnnouncementCreatedMessage
+            });
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult Delete(int id)
+        {
+            var viewModel = new Announcement { Id = id };
+            return PartialView("_Delete", viewModel);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult Delete(Announcement viewModel)
+        {
+            var result = announcementService.DeleteAnnouncement(viewModel.Id);
+
+            return Json(new
+            {
+                success = result,
+                message = Resources.SingleAnnouncementDeletedMessage
+            });
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult Edit(int id)
+        {
+            var viewModel = new NewAnnouncementViewModel
+            {
+                Announcement = announcementService.GetAnnouncement(id)
+            };
+
+            return PartialView("_Edit", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult Edit(NewAnnouncementViewModel viewModel)
+        {
+            announcementService.UpdateAnnouncement(viewModel.Announcement);
+
+            return Json(new
+            {
+                success = true,
+                message = Resources.SingleAnnouncementEditedMessage
+            });
         }
 
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
@@ -38,122 +131,6 @@
             return View(viewModel);
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
-        public ActionResult AnnouncementList(AnnouncementViewModel viewModel)
-        {
-            var listAnnouncementViewModel = new ListAnnouncementViewModel
-            {
-                Announcements = _announcementService.GetAnnouncements(viewModel.GetQueryCriteria())
-                    .OrderByDescending(x => x.LastModified),
-                HaveHostPermission = IsHaveHostPermission(FunctionKeys.Announcement, Constant.Policy.Host)
-            };
-
-            return PartialView("_AnouncementList", listAnnouncementViewModel);
-        }
-
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult Create()
-        {
-            var viewModel = new NewAnnouncementViewModel
-            {
-                Announcement = new Announcement()
-            };
-
-            return PartialView("_Create", viewModel);
-        }
-
-        public ActionResult CheckPublishedDateTime(NewAnnouncementViewModel viewModel)
-        {
-            var result = viewModel.Announcement.PublishedDateTime == null ||
-                     (((DateTime.Now - viewModel.Announcement.PublishedDateTime) <= tolerateTime) &&
-                      ((viewModel.Announcement.PublishedDateTime - DateTime.Now) <= TimeSpan.FromDays(365)));
-
-            // Too far in the past or more than 1 year in the future
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult Create(NewAnnouncementViewModel viewModel)
-        {
-            _announcementService.AddAnnouncement(viewModel.Announcement);
-
-            return Json(new
-            {
-                success = true,
-                message = Resources.SingleAnnouncementCreatedMessage
-            });
-        }
-
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult Edit(int id)
-        {
-            var viewModel = new NewAnnouncementViewModel
-            {
-                Announcement = _announcementService.GetAnnouncement(id)
-            };
-
-            return PartialView("_Edit", viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult Edit(NewAnnouncementViewModel viewModel)
-        {
-            _announcementService.UpdateAnnouncement(viewModel.Announcement);
-
-            return Json(new
-            {
-                success = true,
-                message = Resources.SingleAnnouncementEditedMessage
-            });
-        }
-
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult Delete(int id)
-        {
-            var viewModel = new Announcement { Id = id };
-            return PartialView("_Delete", viewModel);
-        }
-
-        [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult Delete(Announcement viewModel)
-        {
-            var result = _announcementService.DeleteAnnouncement(viewModel.Id);
-
-            return Json(new
-            {
-                success = result,
-                message = Resources.SingleAnnouncementDeletedMessage
-            });
-        }
-
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult QuickPublish(int[] ids)
-        {
-            return PartialView("_QuickPublish", ids);
-        }
-
-        [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult Publish(int[] ids)
-        {
-            _announcementService.PublishAnnouncements(ids);
-
-            var message = ids.Length > 1
-                ? Resources.MultipleAnnouncementPublishedMessage
-                : Resources.SingleAnnouncementPublishedMessage;
-
-            return Json(new
-            {
-                success = true,
-                message
-            });
-        }
-
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult IsPublishImmediately(NewAnnouncementViewModel viewModel)
         {
@@ -169,16 +146,39 @@
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult Publish(int[] ids)
+        {
+            announcementService.PublishAnnouncements(ids);
+
+            var message = ids.Length > 1
+                ? Resources.MultipleAnnouncementPublishedMessage
+                : Resources.SingleAnnouncementPublishedMessage;
+
+            return Json(new
+            {
+                success = true,
+                message
+            });
+        }
+
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Publish(NewAnnouncementViewModel viewModel)
         {
-            _announcementService.UpdateAnnouncement(viewModel.Announcement);
+            announcementService.UpdateAnnouncement(viewModel.Announcement);
 
             return Json(new
             {
                 success = true,
                 message = Resources.SingleAnnouncementPublishedMessage
             });
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult QuickPublish(int[] ids)
+        {
+            return PartialView("_QuickPublish", ids);
         }
     }
 }
