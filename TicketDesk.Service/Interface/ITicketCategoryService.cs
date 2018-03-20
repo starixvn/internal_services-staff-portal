@@ -6,5 +6,7 @@
     public interface ITicketCategoryService
     {
         IEnumerable<TicketCategory> GetTicketCategories();
+
+        bool UpdateTicketCategory(TicketCategory ticketCategory);
     }
 }

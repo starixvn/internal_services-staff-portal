@@ -3,7 +3,6 @@
     using System.Linq;
     using System.Web.Mvc;
     using Client.Controllers;
-    using Core.Enumerations;
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -22,7 +21,11 @@
         [NapAuth(FunctionKey = FunctionKeys.MailManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            var viewModel = new MailViewModel { TicketCategories = ticketCategoryService.GetTicketCategories() };
+            var viewModel = new MailViewModel
+            {
+                TicketCategories = ticketCategoryService.GetTicketCategories()
+            };
+
             return View(viewModel);
         }
 
@@ -36,6 +39,20 @@
             };
 
             return PartialView("_ListMail", viewModel);
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.MailManagement, Policy = Constant.Policy.Host)]
+        [HttpPost]
+        public ActionResult EditMailSettings(ListMailViewModel viewModel)
+        {
+            var result = false;
+
+            if (ModelState.IsValid)
+            {
+                result = ticketCategoryService.UpdateTicketCategory(viewModel.SelectedTicketCategory);
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

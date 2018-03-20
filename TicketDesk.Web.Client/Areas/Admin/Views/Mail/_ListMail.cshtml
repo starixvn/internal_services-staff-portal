@@ -1,8 +1,8 @@
 ﻿@using TicketDesk.Localization.Client
 @model TicketDesk.Web.Client.Areas.Admin.Models.Mail.ListMailViewModel
 
-<section>
-    @using (Html.BeginForm())
+<section id="mail-settings">
+    @using (Html.BeginForm("EditMailSettings", "Mail", FormMethod.Post))
     {
         <div class="form-group">
             @Html.LabelFor(x => x.SelectedTicketCategory.MailTo, new { @class = "control-label text-content" })
@@ -27,7 +27,7 @@
                 @Html.ValidationMessageFor(x => x.SelectedTicketCategory.MailBccTo, "", new { @class = "text-danger" })
             </div>
         </div>
-    }
 
-    <button type="submit" class="btn btn-primary">@Resources.Save</button>
+        <button type="submit" class="btn btn-primary">@Resources.Save</button>
+    }
 </section>
