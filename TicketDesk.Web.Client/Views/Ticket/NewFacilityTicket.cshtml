@@ -50,7 +50,7 @@
             <div class="key fullwidth">
                 @Html.RequiredLabelFor(x => x.Ticket.Title, new { @class = "" })
             </div>
-           
+
             <div class="fullwidth value">
                 @Html.ValidationMessageFor(x => x.Ticket.Title)
                 @Html.TextBoxFor(model => model.Ticket.Title, new { @class = "ticket-title", @readonly = "readonly" })
@@ -137,7 +137,6 @@
 
         <div class="fullwidth border key">
             @Html.CustomFieldLabelWithGuidIndexFor(x => x.Items.ElementAt(0).Reason, sampleGuid, "Items", isIncludeMaxlength: true)
-            @*<span class="highlight">(<span class="countdown-character">5000</span> @Resources.Common_Form_Characters)</span>*@
         </div>
 
         <div class="fullwidth border input-area">@Html.CustomFieldWithGuidIndexFor(x => x.Items.ElementAt(0).Reason, sampleGuid, "Items", new { @class = "description" })</div>

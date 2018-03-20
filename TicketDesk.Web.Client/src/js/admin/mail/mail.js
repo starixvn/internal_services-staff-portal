@@ -21,7 +21,7 @@
     },
 
     handleSave: function () {
-        $("#mail-settings").on("submit",
+        $("#data-list").on("submit",
             "form",
             function (e) {
                 e.preventDefault();
