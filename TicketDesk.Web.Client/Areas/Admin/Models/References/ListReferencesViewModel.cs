@@ -1,11 +1,14 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Models.References
 {
     using System.Collections.Generic;
+    using Core.Enumerations;
     using Criteria.Reference;
 
     public class ListReferencesViewModel
     {
         public bool IsHostPermission { get; set; }
+
+        public ReferenceType Type { get; set; }
 
         public IList<ReferenceViewModel> References { get; set; }
 

@@ -9,66 +9,69 @@
     <span>Minimum image size: <strong>600x400px</strong></span>
 </div>
 <div>
-    @Html.AntiForgeryToken()
-    <ul class="references-zone" id="ReferencesZone">
-        @if (Model.References != null && Model.References.Count() > 0)
+    @using (Html.BeginForm("UploadReferences", "References", new { referenceType = Model.Type }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <ul class="references-zone" id="ReferencesZone">
+            @if (Model.References != null && Model.References.Count() > 0)
             {
                 for (var i = 0; i < Model.References.Count(); i++)
                 {
-                <li class="reference-entry">
-                    <div class="date form-group">
-                        @Html.LabelFor(model => model.References[i].DateAppear)
-                        <span class="text-red">*</span>
-                        <div class="datetime-field">
+                    <li class="reference-entry">
+                        <div class="date form-group">
+                            @Html.LabelFor(model => model.References[i].DateAppear)
+                            <span class="text-red">*</span>
+                            <div class="datetime-field">
+                                @if (Model.IsHostPermission)
+                                {
+                                    @Html.TextBoxFor(model => model.References[i].DateAppear, "{0:MM-dd-yyyy}", new { @class = "datetimepicker form-control" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(model => model.References[i].DateAppear, "{0:MM-dd-yyyy}", new { @class = "datetimepicker form-control", @readonly = "readonly" })
+                                }
+                                <span class="icon-calendar"></span>
+                                @Html.ValidationMessageFor(model => model.References[i].DateAppear, string.Empty, new { @class = "error-message" })
+                            </div>
+                        </div>
+
+                        @Html.TextBoxFor(model => model.References[i].Id, new { @class = "hidden reference-id" })
+                        <div class="url form-group">
+                            @Html.LabelFor(model => model.References[i].ImageLink)
+                            <span class="text-red">*</span>
                             @if (Model.IsHostPermission)
-                            {
-                                @Html.TextBoxFor(model => model.References[i].DateAppear, "{0:MM-dd-yyyy}", new { @class = "datetimepicker form-control" })
+                        {
+                                @Html.TextBoxFor(model => model.References[i].ImageLink, new { maxLength = 500, @class = "form-control image-url" })
                             }
                             else
                             {
-                                @Html.TextBoxFor(model => model.References[i].DateAppear, "{0:MM-dd-yyyy}", new { @class = "datetimepicker form-control", @readonly = "readonly" })
+                                @Html.TextBoxFor(model => model.References[i].ImageLink, new { maxLength = 500, @class = "form-control image-url", @readonly = "readonly" })
                             }
-                            <span class="icon-calendar"></span>
-                            @Html.ValidationMessageFor(model => model.References[i].DateAppear, string.Empty, new { @class = "error-message" })
+                            @Html.ValidationMessageFor(model => model.References[i].ImageLink, string.Empty, new { @class = "error-message" })
+                            <span class="error-message upload-image-validation"></span>
                         </div>
-                    </div>
-
-                    @Html.TextBoxFor(model => model.References[i].Id, new { @class = "hidden reference-id" })
-                    <div class="url form-group">
-                        @Html.LabelFor(model => model.References[i].ImageLink)
-                        <span class="text-red">*</span>
                         @if (Model.IsHostPermission)
                         {
-                            @Html.TextBoxFor(model => model.References[i].ImageLink, new { maxLength = 500, @class = "form-control image-url" })
-                        }
-                        else
-                        {
-                            @Html.TextBoxFor(model => model.References[i].ImageLink, new { maxLength = 500, @class = "form-control image-url", @readonly = "readonly" })
-                        }
-                        @Html.ValidationMessageFor(model => model.References[i].ImageLink, string.Empty, new { @class = "error-message" })
-                        <span class="error-message upload-image-validation"></span>
-                    </div>
-                    @if (Model.IsHostPermission)
-                    {
-                        <div class="browse form-group">
-                            <div class="btn btn-browse">
-                                <span>Browse...</span>
-                                <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload" data-href="@Url.Action("UploadImage", "References")">
+                            <div class="browse form-group">
+                                <div class="btn btn-browse">
+                                    <span>Browse...</span>
+                                    <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload" data-href="@Url.Action("UploadImage", "References")">
+                                </div>
+                                <input type="button" class="btn btn-delete remove-entry" value="@Resources.Delete">
                             </div>
-                            <input type="button" class="btn btn-delete remove-entry" value="@Resources.Delete">
-                        </div>
-                    }
-                </li>
+                        }
+                    </li>
+                }
             }
-        }
-    </ul>
+        </ul>
 
-    <p class="text-red" id="limitEntry"></p>
-    @if (Model.IsHostPermission)
-    {
-        <div class="button-group">
-            <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" data-limit="31" data-href="@Url.Action("GetReferenceEntity", "References", new { isNewsletters = false})" />
-            <input type="submit" id="submit" value="@Resources.Views_Announcement_Submit" class="btn btn-submit" />
-        </div>
+        <p class="text-red" id="limitEntry"></p>
+        if (Model.IsHostPermission)
+        {
+            <div class="button-group">
+                <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" data-limit="31" data-href="@Url.Action("GetReferenceEntity", "References", new { isNewsletters = false})" />
+                <input type="submit" id="submit" value="@Resources.Views_Announcement_Submit" class="btn btn-submit" />
+            </div>
+        }
     }
 </div>

@@ -19,7 +19,4 @@
 }
 
 <h2 class="page-title">@ViewLang.FeaturedEvents</h2>
-@using (Html.BeginForm("FeatureEvents", "References", FormMethod.Post))
-{
-    @Html.Partial("_ReferenceCommon", Model)
-}
+@Html.Partial("_ReferenceCommon", Model)

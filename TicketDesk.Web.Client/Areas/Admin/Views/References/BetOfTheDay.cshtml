@@ -19,7 +19,4 @@
 }
 
 <h2 class="page-title">@ViewLang.BetOfTheDay</h2>
-@using (Html.BeginForm("BetOfTheDay", "References", FormMethod.Post))
-{
-    @Html.Partial("_ReferenceCommon", Model)
-}
+@Html.Partial("_ReferenceCommon", Model)

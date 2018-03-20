@@ -28,7 +28,7 @@
     <span>Minimum image size: <strong>600x400px</strong></span>
 </div>
 
-@using (Html.BeginForm("Newsletters", "References", FormMethod.Post))
+@using (Html.BeginForm("UploadReferences", "References", new { referenceType = Model.Type }, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 

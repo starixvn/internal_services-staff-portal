@@ -48,26 +48,10 @@
             return View(viewModel);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
-        public JsonResult TVSchedules(ListReferencesViewModel viewModel)
-        {
-            return HandlePostReferences(ReferenceType.TvSchedule, viewModel);
-        }
-
         public ActionResult FeatureEvents()
         {
             var viewModel = GetListReferenceViewModel(ReferenceType.FeaturedEvent);
             return View(viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
-        public JsonResult FeatureEvents(ListReferencesViewModel viewModel)
-        {
-            return HandlePostReferences(ReferenceType.FeaturedEvent, viewModel);
         }
 
         public ActionResult BetOfTheDay()
@@ -76,26 +60,10 @@
             return View(viewModel);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
-        public JsonResult BetOfTheDay(ListReferencesViewModel viewModel)
-        {
-            return HandlePostReferences(ReferenceType.BetOfTheDay, viewModel);
-        }
-
         public ActionResult TradingLimits()
         {
             var viewModel = GetListReferenceViewModel(ReferenceType.TradingLimits);
             return View(viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
-        public JsonResult TradingLimits(ListReferencesViewModel viewModel)
-        {
-            return HandlePostReferences(ReferenceType.TradingLimits, viewModel);
         }
 
         public ActionResult Newsletters()
@@ -107,12 +75,7 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
-        public ActionResult Newsletters(ListReferencesViewModel viewModel)
-        {
-            return HandlePostReferences(ReferenceType.Newsletters, viewModel);
-        }
-
-        private JsonResult HandlePostReferences(ReferenceType referenceType, ListReferencesViewModel viewModel)
+        public JsonResult UploadReferences(ReferenceType referenceType, ListReferencesViewModel viewModel)
         {
             var isSuccessful = false;
             var message = string.Empty;
@@ -173,7 +136,8 @@
             var viewModel = new ListReferencesViewModel
             {
                 IsHostPermission = IsHaveHostPermission(FunctionKeys.References, Constant.Policy.Host),
-                References = referenceType == ReferenceType.Newsletters ? listReference : listReference.OrderBy(r => r.DateAppear).ToList()
+                References = referenceType == ReferenceType.Newsletters ? listReference : listReference.OrderBy(r => r.DateAppear).ToList(),
+                Type = referenceType
             };
 
             return viewModel;
