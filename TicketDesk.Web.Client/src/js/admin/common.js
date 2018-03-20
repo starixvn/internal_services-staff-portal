@@ -3,7 +3,10 @@
         sidebar.hovermenu();
         sidebar.initSelect2();
         $(".toggle-sidebar").on("click",
-            function () {
+            function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
                 sidebar.toggleMenu();
                 dataTableReflow.setIntervalToReinitFixedHeader();
             });
@@ -24,8 +27,8 @@
     },
 
     saveExpandedMenuState: function (isSidebarExpanded) {
-        var url = "/NapUserSetting/SetIsSidebarExpanded?IsSidebarExpanded=" + isSidebarExpanded;
-        $.get(url);
+        var url = $(".toggle-sidebar").attr("href");
+        $.get(url + "?IsSidebarExpanded=" + isSidebarExpanded);
     },
 
     initSelect2: function () {
