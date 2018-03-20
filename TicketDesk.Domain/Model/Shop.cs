@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using TicketDesk.Localization.Client;
 
     public class Shop
     {
@@ -11,33 +12,33 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ShopId { get; set; }
 
-        [Display(Name = "Shop Name")]
-        [StringLength(100, ErrorMessage = "{0} must under {1} characters")]
-        [Required(ErrorMessage = "{0} is required")]
+        [Display(Name = nameof(Resources.ShopName), ResourceType = typeof(Resources))]
+        [StringLength(100, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
+        [Required(ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.RequiredErrorMessage))]
         public string ShopName { get; set; }
 
-        [Display(Name = "Shop Code")]
-        [StringLength(50, ErrorMessage = "{0} must under {1} characters")]
+        [Display(Name = nameof(Resources.ShopCode), ResourceType = typeof(Resources))]
+        [StringLength(50, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
         public string ShopCode { get; set; }
 
-        [Display(Name = "Contact Name")]
-        [StringLength(70, ErrorMessage = "{0} must under {1} characters")]
+        [Display(Name = nameof(Resources.ContactName), ResourceType = typeof(Resources))]
+        [StringLength(70, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
         public string ContactName { get; set; }
 
-        [Display(Name = "Contact Number")]
-        [StringLength(20, ErrorMessage = "{0} must under {1} characters")]
+        [Display(Name = nameof(Resources.ContactNumber), ResourceType = typeof(Resources))]
+        [StringLength(20, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
         public string ContactNumber { get; set; }
 
-        [Display(Name = "Email Address")]
-        [StringLength(254, ErrorMessage = "{0} must under {1} characters")]
+        [Display(Name = nameof(Resources.Email), ResourceType = typeof(Resources))]
+        [StringLength(254, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
         public string Email { get; set; }
 
-        [Display(Name = "Shop Address")]
-        [StringLength(500, ErrorMessage = "{0} must under {1} characters")]
+        [Display(Name = nameof(Resources.ShopAddress), ResourceType = typeof(Resources))]
+        [StringLength(500, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
         public string Address { get; set; }
 
-        [Display(Name = "Shop Description")]
-        [StringLength(500, ErrorMessage = "{0} must under {1} characters")]
+        [Display(Name = nameof(Resources.ShopDescription), ResourceType = typeof(Resources))]
+        [StringLength(500, ErrorMessageResourceType = typeof(Resources), ErrorMessageResourceName = nameof(Resources.StringLengthMaxErrorMessage))]
         public string ShopDescription { get; set; }
 
         public bool IsActive { get; set; }

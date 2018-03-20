@@ -1,0 +1,56 @@
+﻿@using TicketDesk.Localization.Client
+@using TicketDesk.Domain.Model
+@model TicketDesk.Web.Client.Models.TicketList.TicketListViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content">
+    <div class="feature">
+        <div class="panel-body">
+            @using (Html.BeginForm("Index", "TicketList", FormMethod.Get, new { @class = "form-inline filter" }))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Status)
+                    <div class='input-group date'>
+                        @Html.EnumDropDownListFor(x => x.Status, "All", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="@Resources.Views_Announcement_Submit" class="btn btn-submit" />
+                </div>
+            }
+            <table class="table table-bordered table-hover" id="ticket-list-table">
+                <thead>
+                    <tr>
+                        <th class="text-center width-80">#</th>
+                        <th>@Resources.Domain_Model_Ticket_Title</th>
+                        <th>@Resources.TicketCategory</th>
+                        <th class="text-center width-150">@Resources.Domain_Model_Ticket_CreatedDate</th>
+                        <th class="text-center width-150">@Resources.Domain_Model_Ticket_Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var index = 1;
+                        foreach (var ticket in Model.Tickets)
+                        {
+                            <tr>
+                                <td>@index</td>
+                                <td>@ticket.Title</td>
+                                <td>@ticket.CategoryId</td>
+                                <td>@ticket.CreatedDate</td>
+                                <td>@ticket.TicketStatus</td>
+                            </tr>
+                            index++;
+                        }
+                    }
+                </tbody>
+            </table>
+
+            @Html.Partial("_Pagination", Model)
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using TicketDesk.Localization.Client
 @model TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement.ShopFilterViewModel
 
 @{
@@ -29,21 +30,21 @@
             </div>
         </div>
 
-        <div class="dropdown-small">
-            @Html.LabelFor(x => x.ActiveState)
-            @Html.EnumDropDownListFor(x => x.ActiveState, new { @class = "form-control" })
-        </div>
+            <div class="dropdown-small">
+                @Html.LabelFor(x => x.ActiveState)
+                @Html.EnumDropDownListFor(x => x.ActiveState, new { @class = "form-control" })
+            </div>
 
-        <div class="button-filter">
-            <button type="submit" class="btn btn-submit">Submit</button>
-        </div>
+            <div class="button-filter">
+                <button type="submit" class="btn btn-submit">@Resources.Views_Announcement_Submit</button>
+            </div>
     }
 </section>
 
 @if (Model.IsHostPermission)
 {
     <div class="table-actions">
-        <a class="btn btn-create create" data-href="@Url.Action("Create", "Shop")"><span class="icon-add"></span>Create New Shop</a>
+        <a class="btn btn-create create" data-href="@Url.Action("Create", "Shop")"><span class="icon-add"></span>@Resources.CreateNewShop</a>
     </div>
 }
 

@@ -389,6 +389,7 @@
     <Compile Include="Controllers\TicketActivityController.cs" />
     <Compile Include="Controllers\TicketCenterController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
+    <Compile Include="Controllers\TicketListController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -457,6 +458,7 @@
     <Compile Include="Models\SystemInfoViewModel.cs" />
     <Compile Include="Models\TicketCenterListViewModel.cs" />
     <Compile Include="Models\TicketEmail.cs" />
+    <Compile Include="Models\TicketList\TicketListViewModel.cs" />
     <Compile Include="Models\Ticket\FacilityItem.cs" />
     <Compile Include="Models\Ticket\ITicketCustomFieldsProvider.cs" />
     <Compile Include="Models\Ticket\NewCustomerSupportTicketViewModel.cs" />
@@ -2100,6 +2102,7 @@
     <Content Include="Views\Ticket\NewCustomerSupportTicket.cshtml" />
     <Content Include="Views\Ticket\_NotificationModal.cshtml" />
     <Content Include="Views\Home\_AnnouncementListHomePage.cshtml" />
+    <Content Include="Views\TicketList\Index.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -51,7 +51,7 @@
                 shopList = shopList.Where(s => s.ShopName.Contains(criteria.ShopName));
             }
 
-            return shopList;
+            return shopList.OrderBy(x => x.ShopCode);
         }
 
         public Shop GetShopById(int id)

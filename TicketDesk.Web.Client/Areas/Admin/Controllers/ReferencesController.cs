@@ -17,6 +17,7 @@
     using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Localization.Client;
     using Models.References;
     using Service.Interface;
 
@@ -118,7 +119,7 @@
 
             if (referenceType != ReferenceType.Newsletters && CheckIfDateDuplicate(viewModel.References))
             {
-                ModelState.AddModelError("", Messages.DuplicatedDay);
+                ModelState.AddModelError("DateAppear", Messages.DuplicatedDay);
             }
 
             if (ModelState.IsValid)
@@ -138,10 +139,9 @@
         [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
         public ActionResult GetReferenceEntity(bool isNewsletters)
         {
-            var referenceType = isNewsletters ? ReferenceType.Newsletters : ReferenceType.TvSchedule;
             var reference = new ReferenceViewModel
             {
-                ReferenceType = referenceType
+                ReferenceType = isNewsletters ? ReferenceType.Newsletters : ReferenceType.TvSchedule
             };
             return PartialView("_ReferenceEntryEditor", reference);
         }
@@ -184,7 +184,6 @@
         {
             HttpPostedFileBase file = Request.Files[0];
             var filePath = string.Empty;
-            bool isSuccessful = false;
 
             if (file.ContentLength > 0)
             {
@@ -195,19 +194,19 @@
                 string fileName = Path.GetFileName(file.FileName);
                 int fileSize = file.ContentLength;
 
-                if (!IsValidExtention(fileName))
+                if (!IsValidFilenameExtension(fileName))
                 {
-                    return Json(new { isSuccessful, message = Messages.InvalidImageFormat });
+                    return Json(new { isSuccessful = false, message = Messages.InvalidImageFormat });
                 }
 
                 if (fileSize > imageSizeLimit)
                 {
-                    return Json(new { isSuccessful, message = Messages.ImageExceededCapacity });
+                    return Json(new { isSuccessful = false, message = Messages.ImageExceededCapacity });
                 }
 
-                if (!ValidImageDimension(file))
+                if (!IsValidImageDimension(file))
                 {
-                    return Json(new { isSuccessful, message = Messages.ImageDimensionInvalid });
+                    return Json(new { isSuccessful = false, message = Messages.ImageDimensionInvalid });
                 }
 
                 var fileExist = System.IO.File.Exists(Path.Combine(directory, file.FileName));
@@ -228,7 +227,7 @@
                 return Json(new { isSuccessful = true, imageDirectory });
             }
 
-            return Json(new { isSuccessful, message = "Upload fail" });
+            return Json(new { isSuccessful = false, message = Resources.UploadImageFail });
         }
 
         public ActionResult IsValidImageUrl()
@@ -241,7 +240,7 @@
                 var imageLink = new Uri(value);
                 var req = WebRequest.Create(imageLink);
                 WebResponse response = req.GetResponse();
-                validUrl = CheckValidImageUrlExtension(response, "jpeg") || CheckValidImageUrlExtension(response, "jpg") || CheckValidImageUrlExtension(response, "png");
+                validUrl = IsValidImageUrlExtension(response, "jpeg") || IsValidImageUrlExtension(response, "jpg") || IsValidImageUrlExtension(response, "png");
             }
             catch
             {
@@ -250,33 +249,27 @@
             return Json(validUrl, JsonRequestBehavior.AllowGet);
         }
 
-        private static bool CheckValidImageUrlExtension(WebResponse response, string extension)
+        private static bool IsValidImageUrlExtension(WebResponse response, string extension)
         {
             return response.ContentType.ToLower(CultureInfo.InvariantCulture)
                                .StartsWith(string.Format("image/{0}", extension));
         }
 
-        private static bool IsValidExtention(string fileName)
+        private static bool IsValidFilenameExtension(string fileName)
         {
             string ext = Path.GetExtension(fileName).ToLowerInvariant();
             return ext == ".jpg" || ext == ".png" || ext == ".jpeg";
         }
 
-        private bool ValidImageDimension(HttpPostedFileBase file)
+        private bool IsValidImageDimension(HttpPostedFileBase file)
         {
-            var isValid = false;
             Stream fileStream = file.InputStream;
             Image image = Image.FromStream(fileStream);
             int imageHeight = image.Height;
             int imageWidth = image.Width;
             image.Dispose();
 
-            if (imageHeight >= limitHeight && imageWidth >= limitWidth)
-            {
-                isValid = true;
-            }
-
-            return isValid;
+            return imageHeight >= limitHeight && imageWidth >= limitWidth;
         }
 
         private static string MakeWebPath(string path, bool addSeperatorToBegin = false, bool addSeperatorToLast = false)
@@ -302,7 +295,8 @@
             {
                 return references.GroupBy(r => r.DateAppear.Date)
                                        .Where(g => g.Count() > 1)
-                                       .Select(g => g.Key).Any();
+                                       .Select(g => g.Key)
+                                       .Any();
             }
             return false;
         }

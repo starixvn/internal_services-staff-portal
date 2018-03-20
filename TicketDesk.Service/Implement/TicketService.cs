@@ -69,6 +69,26 @@
                                                   || x.TicketStatus == TicketStatus.MoreInfo));
         }
 
+        public IEnumerable<Ticket> GetTicketByStatus(int userId, int skip, int take, TicketStatus? ticketStatus)
+        {
+            var tickets = context.Tickets.Where(x => x.CreatedBy == userId.ToString());
+            tickets = ticketStatus == null ? tickets.OrderByDescending(x => x.LastUpdateDate)
+                                                    .Skip(skip)
+                                                    .Take(take)
+                                           : tickets.Where(x => x.TicketStatus == ticketStatus)
+                                                    .OrderByDescending(x => x.LastUpdateDate)
+                                                    .Skip(skip)
+                                                    .Take(take);
+
+            return tickets;
+        }
+
+        public int GetUserTotalTicketByStatus(int userId, TicketStatus? ticketStatus)
+        {
+            return ticketStatus == null ? context.Tickets.Count(x => x.CreatedBy == userId.ToString())
+                                               : context.Tickets.Count(x => x.CreatedBy == userId.ToString() && x.TicketStatus == ticketStatus);
+        }
+
         public bool UpdateTicketSubscription(int ticketId, string userId)
         {
             var ticket = context.Tickets

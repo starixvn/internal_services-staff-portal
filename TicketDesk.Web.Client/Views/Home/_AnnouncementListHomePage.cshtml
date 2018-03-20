@@ -1,11 +1,10 @@
 ﻿@using TicketDesk.Core.Enumerations
 @using TicketDesk.Domain.Model
-@using TicketDesk.Localization.Client
 @model IList<Announcement>
 
-    <table class="table table-bordered tbl-announcement">
-        <tbody>
-            @foreach (Announcement announcement in Model)
+<table class="table table-bordered tbl-announcement">
+    <tbody>
+        @foreach (Announcement announcement in Model)
             {
                 bool isImportant = announcement.Type == AnnouncementType.Important;
 
@@ -23,12 +22,12 @@
 
                 if (announcement.PublishedDateTime != null)
                 {
-                    <tr class="@announcementClass" data-id="@unreadId" data-href="@Url.Action("SaveUnreadAnnouncement", "NapUserSetting", new { id = unreadId})">
-                        <td class="date"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToShortDateString()</td>
-                        <td class="time">@announcement.PublishedDateTime.Value.ToShortTimeString()</td>
-                        <td class="show-text">@announcement.Message</td>
-                    </tr>
-                }
+                <tr class="@announcementClass" data-id="@unreadId" data-href="@Url.Action("SaveAndCountTotalUnreadAnnouncement", "NapUserSetting", new { id = unreadId})">
+                    <td class="date"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToShortDateString()</td>
+                    <td class="time">@announcement.PublishedDateTime.Value.ToShortTimeString()</td>
+                    <td class="show-text">@announcement.Message</td>
+                </tr>
             }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>

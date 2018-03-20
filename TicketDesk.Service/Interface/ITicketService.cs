@@ -12,12 +12,14 @@
 
         int GetUserTotalOpeningTickets(int userId);
 
+        int GetUserTotalTicketByStatus(int userId, TicketStatus? ticketStatus);
+
         bool UpdateTicketSubscription(int ticketId, string userId);
 
         bool CreateTicket(Ticket ticket, Guid tempId);
 
         IEnumerable<string> CommitPendingAttachments(Ticket ticket, Guid tempId);
 
-
+        IEnumerable<Ticket> GetTicketByStatus(int userId, int skip, int take, TicketStatus? ticketStatus);
     }
 }

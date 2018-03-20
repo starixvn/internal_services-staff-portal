@@ -22,7 +22,7 @@
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult SaveUnreadAnnouncement(int id)
+        public ActionResult SaveAndCountTotalUnreadAnnouncement(int id)
         {
             var result = napUserSettingService.UpdateUnreadAnnouncements(CurrentSession.UserId, id);
             var unreadQuantity = announcementService.CountUnreadAnnouncement(NapUserSetting.SettingObject.ReadAnnouncements);

@@ -19,7 +19,7 @@ namespace TicketDesk.Localization.Client {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -228,6 +228,15 @@ namespace TicketDesk.Localization.Client {
         public static string CreateNewItem {
             get {
                 return ResourceManager.GetString("CreateNewItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Shop.
+        /// </summary>
+        public static string CreateNewShop {
+            get {
+                return ResourceManager.GetString("CreateNewShop", resourceCulture);
             }
         }
         
@@ -889,6 +898,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shop Description.
+        /// </summary>
+        public static string ShopDescription {
+            get {
+                return ResourceManager.GetString("ShopDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shop Name.
         /// </summary>
         public static string ShopName {
@@ -984,6 +1002,15 @@ namespace TicketDesk.Localization.Client {
         public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload fail.
+        /// </summary>
+        public static string UploadImageFail {
+            get {
+                return ResourceManager.GetString("UploadImageFail", resourceCulture);
             }
         }
         

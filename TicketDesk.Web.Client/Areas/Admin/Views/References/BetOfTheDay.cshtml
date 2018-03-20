@@ -14,13 +14,12 @@
     @Styles.Render("~/content/reference-admin")
 }
 
-<h2 class="page-title">Bet Of The Day</h2>
-@using (Html.BeginForm("BetOfTheDay", "References", FormMethod.Post))
-{
-@Html.Partial("_ReferenceCommon", Model)
-}
-
 @section scripts {
     @Scripts.Render("~/bundles/reference-admin")
+}
 
+<h2 class="page-title">@ViewLang.BetOfTheDay</h2>
+@using (Html.BeginForm("BetOfTheDay", "References", FormMethod.Post))
+{
+    @Html.Partial("_ReferenceCommon", Model)
 }

@@ -1,5 +1,6 @@
 ﻿@using TicketDesk.Web.Client.Areas.Admin.Models.References
 @using TicketDesk.Core.Enumerations
+@using TicketDesk.Localization.Client
 @model ReferenceViewModel
 
 <li class="reference-entry">
@@ -29,6 +30,6 @@
             <span>Browse...</span>
             <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload" data-href="@Url.Action("UploadImage", "References")" data-limit="50">
         </div>
-        <input type="button" class="btn btn-delete remove-entry" value="Delete">
+        <input type="button" class="btn btn-delete remove-entry" value="@Resources.Delete">
     </div>
 </li>

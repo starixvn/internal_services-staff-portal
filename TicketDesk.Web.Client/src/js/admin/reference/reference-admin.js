@@ -202,7 +202,6 @@
     }
 
     function onSuccess(response) {
-        userSubmit = 0;
         if (response.isSuccessful) {
             toastr.success(response.message);
             $(".reference-entry").each(function (i, e) {
@@ -211,6 +210,8 @@
             });
             setTimeout(function () { location.reload(true); }, 2000);
         } else {
+            userSubmit = 0;
+
             if (response.errors) {
                 showErrorMessage(domElement.Form, response.errors);
             }

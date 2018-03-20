@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using TicketDesk.Localization.Client
 @using TicketDesk.Web.Client.Areas.Admin.Models.References
 @using TicketDesk.Core.Resources
 
@@ -14,7 +15,11 @@
     @Styles.Render("~/content/reference-admin")
 }
 
-<h2 class="page-title">Newsletters</h2>
+@section scripts {
+    @Scripts.Render("~/bundles/reference-admin")
+}
+
+<h2 class="page-title">@ViewLang.NewsLetters</h2>
 
 <div class="upload-info">
     <span>Allowed file type: <strong>jpeg, jpg, png</strong></span> |
@@ -31,7 +36,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <ul class="references-zone" id="ReferencesZone">
             @for (var i = 0; i < Model.References.Count(); i++)
-            {
+                {
                 <li class="reference-entry">
                     <div class="url form-group">
                         @Html.LabelFor(model => model.References[i].ImageLink)
@@ -56,7 +61,7 @@
                                 <span>Browse...</span>
                                 <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="excelFile" data-href="@Url.Action("UploadImage", "References")">
                             </div>
-                            <input type="button" class="btn btn-delete remove-entry" value="Delete">
+                            <input type="button" class="btn btn-delete remove-entry" value="@Resources.Delete">
                         </div>
                     }
                 </li>
@@ -68,12 +73,8 @@
         {
             <div class="button-group">
                 <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" data-limit="50" data-href="@Url.Action("GetReferenceEntity", "References", new { isNewsletters = true})" />
-                <input type="submit" id="submit" value="Submit" class="btn btn-submit" />
+                <input type="submit" id="submit" value="@Resources.Views_Announcement_Submit" class="btn btn-submit" />
             </div>
         }
     </div>
-}
-
-@section scripts {
-    @Scripts.Render("~/bundles/reference-admin")
 }

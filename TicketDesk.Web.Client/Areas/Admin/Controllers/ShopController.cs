@@ -15,11 +15,11 @@
     [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Read)]
     public class ShopController : BaseController
     {
-        private readonly IShopService _shopService;
+        private readonly IShopService shopService;
 
         public ShopController(IShopService shopService)
         {
-            _shopService = shopService;
+            this.shopService = shopService;
         }
 
         public ActionResult Index()
@@ -42,19 +42,17 @@
                 ActiveState = model.ActiveState
             };
 
-            var shops = _shopService.GetListShop(criteria);
-
             var viewModel = new ShopListViewModel
             {
                 IsHostPermission = IsHaveHostPermission(FunctionKeys.ShopManagement, Constant.Policy.Host),
-                Shops = shops.OrderBy(s => s.ShopCode).ToList()
+                Shops = shopService.GetListShop(criteria).ToList()
             };
             return PartialView("_ListShop", viewModel);
         }
 
         public ActionResult GetShopSuggestion(string shopName)
         {
-            var shops = _shopService.GetShopSuggestion(shopName);
+            var shops = shopService.GetShopSuggestion(shopName);
             return Json(shops, JsonRequestBehavior.AllowGet);
         }
 
@@ -72,14 +70,14 @@
         {
             bool isSuccessful = false;
             string message = string.Empty;
-            if (_shopService.CheckExistShopName(viewModel.ShopName))
+            if (shopService.CheckExistShopName(viewModel.ShopName))
             {
                 ModelState.AddModelError("ShopName", Messages.ShopExist);
             }
 
             if (ModelState.IsValid)
             {
-                isSuccessful = _shopService.CreateNewShop(viewModel.GetCriteria());
+                isSuccessful = shopService.CreateNewShop(viewModel.GetCriteria());
                 message = isSuccessful ? Messages.CreateShopSuccess : Messages.Error;
             }
 
@@ -93,7 +91,7 @@
         [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id)
         {
-            var shop = _shopService.GetShopById(id);
+            var shop = shopService.GetShopById(id);
             if (shop != null)
             {
                 var viewModel = new ShopViewModel
@@ -120,16 +118,16 @@
         {
             bool isSuccessful = false;
             string message = string.Empty;
-            var shop = _shopService.GetShopById(id);
+            var shop = shopService.GetShopById(id);
 
-            if (shop != null && shop.ShopName != viewModel.ShopName && _shopService.CheckExistShopName(viewModel.ShopName))
+            if (shop != null && shop.ShopName != viewModel.ShopName && shopService.CheckExistShopName(viewModel.ShopName))
             {
                 ModelState.AddModelError("ShopName", Messages.ShopExist);
             }
 
             if (ModelState.IsValid)
             {
-                isSuccessful = _shopService.UpdateShop(id, viewModel.GetCriteria());
+                isSuccessful = shopService.UpdateShop(id, viewModel.GetCriteria());
                 message = isSuccessful ? Messages.UpdateShopSuccess : Messages.Error;
             }
 

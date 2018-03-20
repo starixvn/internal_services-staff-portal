@@ -53,11 +53,10 @@
     }
 
     function getListShop(form) {
-        var data = $(domElement.FilterForm).serialize();
         $.ajax({
             method: $(form).attr("method"),
             url: $(form).attr("action"),
-            data: data,
+            data: $(form).serialize(),
             success: function (data) {
                 $(domElement.TableArea).html(data);
                 initDataTable();

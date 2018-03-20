@@ -14,13 +14,12 @@
     @Styles.Render("~/content/reference-admin")
 }
 
-<h2 class="page-title">Feature Events</h2>
-@using (Html.BeginForm("FeatureEvents", "References",FormMethod.Post))
-{
-    @Html.Partial("_ReferenceCommon", Model)
-}
-
 @section scripts {
     @Scripts.Render("~/bundles/reference-admin")
+}
 
+<h2 class="page-title">@ViewLang.FeaturedEvents</h2>
+@using (Html.BeginForm("FeatureEvents", "References", FormMethod.Post))
+{
+    @Html.Partial("_ReferenceCommon", Model)
 }

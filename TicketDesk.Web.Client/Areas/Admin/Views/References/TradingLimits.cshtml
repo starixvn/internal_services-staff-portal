@@ -14,13 +14,12 @@
     @Styles.Render("~/content/reference-admin")
 }
 
-<h2 class="page-title">Trading Limits</h2>
+@section scripts {
+    @Scripts.Render("~/bundles/reference-admin")
+}
+
+<h2 class="page-title">@ViewLang.TradingLimits</h2>
 @using (Html.BeginForm("TradingLimits", "References", FormMethod.Post))
 {
     @Html.Partial("_ReferenceCommon", Model)
-}
-
-@section scripts {
-    @Scripts.Render("~/bundles/reference-admin")
-
 }
