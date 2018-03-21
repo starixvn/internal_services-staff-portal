@@ -345,7 +345,6 @@
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
     <Compile Include="App_Start\AuthConfig.cs" />
-    <Compile Include="App_Start\Startup.PushNotifications.cs" />
     <Compile Include="App_Start\Startup.SimpleInjector.cs" />
     <Compile Include="App_Start\Startup.Bundles.cs" />
     <Compile Include="App_Start\DatabaseConfig.cs" />
@@ -381,7 +380,6 @@
     <Compile Include="Controllers\IdUploaderController.cs" />
     <Compile Include="Areas\Admin\Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\NapUserSettingController.cs" />
-    <Compile Include="Controllers\PushNotificationSettingsController.cs" />
     <Compile Include="Controllers\FirstRunSetupController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\FileController.cs" />
@@ -423,7 +421,6 @@
     <Compile Include="Infrastructure\Identity\TicketDeskUserManagerExtensions.cs" />
     <Compile Include="Infrastructure\ModelBinders\CommaSeparatedValuesModelBinder.cs" />
     <Compile Include="Infrastructure\ModelBinders\SummernoteModelBinder.cs" />
-    <Compile Include="Infrastructure\PushNotifications\InProcessPushNotificationScheduler.cs" />
     <Compile Include="Infrastructure\WhenSetupEnabledAttribute.cs" />
     <Compile Include="Infrastructure\ValidateOnlyIncomingValuesAttribute.cs" />
     <Compile Include="Models\Account\AccountPasswordViewModel.cs" />
@@ -2006,9 +2003,6 @@
     <Content Include="Views\FirstRunSetup\_AzureInfo.cshtml" />
     <Content Include="Views\FirstRunSetup\_LegacySecurity.cshtml" />
     <Content Include="Views\FirstRunSetup\_SetupCompleteInfo.cshtml" />
-    <Content Include="Views\PushNotificationSettings\Index.cshtml" />
-    <Content Include="Views\PushNotificationSettings\ListDeliveryProviderSettings.cshtml" />
-    <Content Include="Views\PushNotificationSettings\ConfigureDeliveryProvider.cshtml" />
     <Content Include="Views\Emails\Ticket.Html.cshtml" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\Ticket.cshtml" />
