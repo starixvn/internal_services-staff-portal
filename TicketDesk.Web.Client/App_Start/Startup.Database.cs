@@ -2,7 +2,7 @@
 {
     using Domain;
     using Identity;
-    using PushNotifications;
+    ////using PushNotifications;
     using System.Data.Entity;
 
     public partial class Startup
@@ -14,13 +14,13 @@
             // kill initializer - features that may need one will reset this later
             Database.SetInitializer<TdDomainContext>(null);
             Database.SetInitializer<TdIdentityContext>(null);
-            Database.SetInitializer<TdPushNotificationContext>(null);
+            ////Database.SetInitializer<TdPushNotificationContext>(null);
 
             // set the std migrator for identity
             if (DatabaseConfig.IsDatabaseReady)
             {
                 Database.SetInitializer(new TdIdentityDbInitializer());
-                Database.SetInitializer(new TdPushNotificationDbInitializer());
+                ////Database.SetInitializer(new TdPushNotificationDbInitializer());
             }
 
             DatabaseConfig.RegisterDatabase();

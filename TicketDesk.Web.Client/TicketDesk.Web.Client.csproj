@@ -2116,10 +2116,6 @@
     <Folder Include="src\libs\slick\fonts\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\S22.Mail\S22.Mail.csproj">
-      <Project>{ca72a1aa-6f1a-4d5f-b98b-fd73f5407563}</Project>
-      <Name>S22.Mail</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TicketDesk.Core\TicketDesk.Core.csproj">
       <Project>{f2dc8fb5-9da1-4525-9b12-9bb855e7c635}</Project>
       <Name>TicketDesk.Core</Name>
@@ -2139,10 +2135,6 @@
     <ProjectReference Include="..\TicketDesk.Localization\TicketDesk.Localization.csproj">
       <Project>{be8715f9-e858-473e-a2b6-561c9edca416}</Project>
       <Name>TicketDesk.Localization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TicketDesk.PushNotifications\TicketDesk.PushNotifications.csproj">
-      <Project>{6e3b1af8-762d-4b69-84c3-c79e74aa9c82}</Project>
-      <Name>TicketDesk.PushNotifications</Name>
     </ProjectReference>
     <ProjectReference Include="..\TicketDesk.Service\TicketDesk.Service.csproj">
       <Project>{00764825-d0eb-4060-a5b3-341cd845605a}</Project>

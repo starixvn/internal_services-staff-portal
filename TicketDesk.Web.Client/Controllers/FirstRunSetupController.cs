@@ -11,8 +11,8 @@
     using Identity.Model;
     using Microsoft.AspNet.Identity;
     using Models;
-    using PushNotifications;
-    using PushNotifications.Model;
+    ////using PushNotifications;
+    ////using PushNotifications.Model;
 
     [RoutePrefix("first-run-setup")]
     [Route("{action=index}")]
@@ -77,31 +77,31 @@
                 }
             }
 
-            Database.SetInitializer(new TdPushNotificationDbInitializer());
+            ////Database.SetInitializer(new TdPushNotificationDbInitializer());
 
-            Startup.ConfigurePushNotifications();
-            if (newUser != null)
-            {
-                using (var notificationContext = new TdPushNotificationContext())
-                {
-                    notificationContext.SubscriberPushNotificationSettingsManager.AddSettingsForSubscriber(
-                        new SubscriberNotificationSetting
-                        {
-                            SubscriberId = newUser.Id,
-                            IsEnabled = true,
-                            PushNotificationDestinations = new[]
-                            {
-                                new PushNotificationDestination
-                                {
-                                    DestinationType = "email",
-                                    DestinationAddress = newUser.Email,
-                                    SubscriberName = newUser.DisplayName
-                                }
-                            }
-                        });
-                    notificationContext.SaveChanges();
-                }
-            }
+            ////Startup.ConfigurePushNotifications();
+            ////if (newUser != null)
+            ////{
+            ////    using (var notificationContext = new TdPushNotificationContext())
+            ////    {
+            ////        notificationContext.SubscriberPushNotificationSettingsManager.AddSettingsForSubscriber(
+            ////            new SubscriberNotificationSetting
+            ////            {
+            ////                SubscriberId = newUser.Id,
+            ////                IsEnabled = true,
+            ////                PushNotificationDestinations = new[]
+            ////                {
+            ////                    new PushNotificationDestination
+            ////                    {
+            ////                        DestinationType = "email",
+            ////                        DestinationAddress = newUser.Email,
+            ////                        SubscriberName = newUser.DisplayName
+            ////                    }
+            ////                }
+            ////            });
+            ////        notificationContext.SaveChanges();
+            ////    }
+            ////}
 
             ////UpdateSearchIndex();
             return RedirectToAction("Index");
