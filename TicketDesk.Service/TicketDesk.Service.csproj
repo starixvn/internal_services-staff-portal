@@ -65,6 +65,9 @@
       <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.MailDeliver.MailClient, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.MailDeliver.MailClient.1.0.0.2\lib\net40\Fanex.MailDeliver.MailClient.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.NAP.Core, Version=2.1.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Core.2.1.0.6\lib\net40\Fanex.NAP.Core.dll</HintPath>
       <Private>True</Private>
@@ -148,6 +151,7 @@
     <Compile Include="Implement\CustomFieldService.cs" />
     <Compile Include="Implement\DataConfigurationService.cs" />
     <Compile Include="Implement\IdUploaderService.cs" />
+    <Compile Include="Implement\MailService.cs" />
     <Compile Include="Implement\NapUserSettingService.cs" />
     <Compile Include="Implement\ReferenceService.cs" />
     <Compile Include="Implement\FileManagerService.cs" />
@@ -166,6 +170,7 @@
     <Compile Include="Interface\IShopService.cs" />
     <Compile Include="Interface\ITicketCategoryService.cs" />
     <Compile Include="Interface\ITicketService.cs" />
+    <Compile Include="Interface\IMailService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

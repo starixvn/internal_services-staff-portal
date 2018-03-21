@@ -96,6 +96,7 @@
             container.Register<INapUserSettingService>(() => new NapUserSettingService(), hybridLifestyle);
             container.Register<ICustomFieldService>(() => new CustomFieldService(), hybridLifestyle);
             container.Register<ITicketCategoryService>(() => new TicketCategoryService(), hybridLifestyle);
+            container.Register<IMailService>(() => new MailService(), hybridLifestyle);
 
             container.RegisterInitializer<TicketDeskUserManager>(manager => manager.ConfigureDataProtection(app));
             ////container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
