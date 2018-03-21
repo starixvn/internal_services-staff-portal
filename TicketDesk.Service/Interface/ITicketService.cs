@@ -19,6 +19,8 @@
 
         bool CreateTicket(Ticket ticket, Guid tempId);
 
+        bool UpdateTicketStatus(int id, TicketStatus status);
+
         IEnumerable<string> CommitPendingAttachments(Ticket ticket, Guid tempId);
 
         IEnumerable<TicketViewModel> GetTicketByStatus(int userId, int skip, int take, TicketStatus? ticketStatus);

@@ -150,7 +150,7 @@
                                              && x.CreatedDate >= criteria.FromDate);
             }
 
-            return tickets.OrderByDescending(x => x.CreatedDate).ToList();
+            return tickets.OrderBy(x => x.ShopName).ToList();
         }
 
         public bool UpdateTicketSubscription(int ticketId, string userId)
@@ -201,6 +201,21 @@
             mailService.Send(mailRecord);
 
             return result > 0;
+        }
+
+        public bool UpdateTicketStatus(int id, TicketStatus status)
+        {
+            var result = false;
+            if (id > 0)
+            {
+                var ticket = context.Tickets.Find(id);
+                if (ticket != null)
+                {
+                    ticket.TicketStatus = status;
+                    result = context.SaveChanges() > 0;
+                }
+            }
+            return result;
         }
 
         public IEnumerable<string> CommitPendingAttachments(Ticket ticket, Guid tempId)

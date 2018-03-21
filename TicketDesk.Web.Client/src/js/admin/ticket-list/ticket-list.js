@@ -27,35 +27,38 @@
             format: "MM-DD-YYYY",
             useCurrent: false,
         });
-       
+
         setupFromDateToDate();
     }
 
     function initDataTable() {
         var ticketListTable = commonDataTableInit.Init();
-
-        ticketListTable.columnDefs =
+        ticketListTable.order = [[3, "asc"]];
+        ticketListTable.columns =
             [
-                {
-                    orderable: false,
-                    searchable: false,
-                    targets: [0,]
-                },
             {
-                width: "70px",
-                targets: [0]
+                width: 70,
+                sortable: false
             },
             {
-                width: "200px",
-                targets: [2, 3]
+                width: undefined,
+                sortable: true
             },
             {
-                width: "250px",
-                targets: [4]
+                width: 200,
+                sortable: true
             },
             {
-                width: "150px",
-                targets: [5]
+                width: 250,
+                sortable: true
+            },
+            {
+                width: 150,
+                sortable: true
+            },
+            {
+                width: 100,
+                sortable: true
             }
             ];
         $(domElement.TicketTable).DataTable(ticketListTable);

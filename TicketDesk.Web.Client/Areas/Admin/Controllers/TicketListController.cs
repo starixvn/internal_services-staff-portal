@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using Client.Controllers;
+    using Domain.Model;
     using Models.TicketList;
     using Service.Interface;
 
@@ -32,6 +33,13 @@
             var criteria = viewModel.GetQueryCriteria();
             var tickets = ticketService.GetTicketByFilter(criteria);
             return PartialView("_TicketList", tickets);
+        }
+
+        public JsonResult UpdateTicketStatus(int id, TicketStatus status)
+        {
+            var isSuccessful = ticketService.UpdateTicketStatus(id, status);
+
+            return Json(isSuccessful);
         }
     }
 }
