@@ -6,6 +6,8 @@
     using System.Globalization;
     using System.Linq;
     using System.Threading;
+    using Core.Enumerations;
+    using Criteria.TicketList;
     using Domain.Model;
     using Interface;
     using IO;
@@ -69,14 +71,34 @@
                                                   || x.TicketStatus == TicketStatus.MoreInfo));
         }
 
-        public IEnumerable<Ticket> GetTicketByStatus(int userId, int skip, int take, TicketStatus? ticketStatus)
+        private IEnumerable<TicketViewModel> BasicGetTicketJoinWithShop()
         {
-            var tickets = context.Tickets.Where(x => x.CreatedBy == userId.ToString());
-            tickets = ticketStatus == null ? tickets.OrderByDescending(x => x.LastUpdateDate)
+            return context.Tickets
+               .Join(context.Shops,
+                     t => t.ShopId,
+                     s => s.ShopId,
+                     (t, s) => new TicketViewModel
+                     {
+                         Id = t.TicketId,
+                         ShopId = s.ShopId,
+                         ShopName = s.ShopName,
+                         Subject = t.Title,
+                         Category = (TicketCategoryTypes)t.CategoryId,
+                         Status = t.TicketStatus,
+                         CreatedDate = t.CreatedDate,
+                         UpdatedDate = t.LastUpdateDate
+                     });
+        }
+
+        public IEnumerable<TicketViewModel> GetTicketByStatus(int userId, int skip, int take, TicketStatus? ticketStatus)
+        {
+            var tickets = BasicGetTicketJoinWithShop();
+
+            tickets = ticketStatus == null ? tickets.OrderByDescending(x => x.UpdatedDate)
                                                     .Skip(skip)
                                                     .Take(take)
-                                           : tickets.Where(x => x.TicketStatus == ticketStatus)
-                                                    .OrderByDescending(x => x.LastUpdateDate)
+                                           : tickets.Where(x => x.Status == ticketStatus)
+                                                    .OrderByDescending(x => x.UpdatedDate)
                                                     .Skip(skip)
                                                     .Take(take);
 
@@ -87,6 +109,34 @@
         {
             return ticketStatus == null ? context.Tickets.Count(x => x.CreatedBy == userId.ToString())
                                                : context.Tickets.Count(x => x.CreatedBy == userId.ToString() && x.TicketStatus == ticketStatus);
+        }
+
+        public IList<TicketViewModel> GetTicketByFilter(TicketListFilterCriteria criteria)
+        {
+            var tickets = BasicGetTicketJoinWithShop();
+
+            if (criteria.ShopId != null)
+            {
+                tickets = tickets.Where(x => x.ShopId == criteria.ShopId);
+            }
+
+            if (criteria.Category != null)
+            {
+                tickets = tickets.Where(x => x.Category == criteria.Category);
+            }
+
+            if (criteria.Status != null)
+            {
+                tickets = tickets.Where(x => x.Status == criteria.Status);
+            }
+
+            if (criteria.FromDate != null && criteria.ToDate != null)
+            {
+                tickets = tickets.Where(x => x.CreatedDate <= criteria.ToDate
+                                          && x.CreatedDate >= criteria.FromDate);
+            }
+
+            return tickets.OrderByDescending(x => x.CreatedDate).ToList();
         }
 
         public bool UpdateTicketSubscription(int ticketId, string userId)

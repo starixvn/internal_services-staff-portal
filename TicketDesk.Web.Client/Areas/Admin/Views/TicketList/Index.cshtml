@@ -1,0 +1,72 @@
+﻿@using TicketDesk.Localization.Client
+@model TicketDesk.Web.Client.Areas.Admin.Models.TicketList.TicketListFilterViewModel
+
+@{
+    ViewBag.Title = "Ticket List";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section css
+{
+    <link href="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/src/libs/jquery.DataTable/datatables.min.css" rel="stylesheet" />
+    <link href="~/src/libs/jquery.DataTable/fixedHeader.dataTables.min.css" rel="stylesheet" />
+}
+
+@section scripts
+{
+    <script src="~/src/libs/datetimepicker/moment.js"></script>
+    <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.js"></script>
+
+    <script src="~/src/libs/jquery.DataTable/datatables.min.js"></script>
+    <script src="~/src/libs/jquery.DataTable/dataTables.fixedHeader.min.js"></script>
+    <script src="~/src/libs/jquery.DataTable/datetime.js"></script>
+
+    <script src="~/src/js/admin/dataTableCommon.js"></script>
+    <script src="~/src/js/admin/ticket-list/ticket-list.js"></script>
+
+}
+
+<h2 class="page-title">@ViewBag.Title</h2>
+
+<section class="filter-form">
+    @using (Html.BeginForm("GetTicketList", "TicketList", FormMethod.Get, new { @class = "filter-row", id = "filterForm" }))
+    {
+        <div class="dropdown-small">
+            @Html.LabelFor(x => x.ShopId)
+            @Html.DropDownListFor(x => x.ShopId, Model.Shops, "All", new { @class = "form-control" })
+        </div>
+
+        <div class="dropdown-small">
+            @Html.LabelFor(x => x.Category)
+            @Html.EnumDropDownListFor(x => x.Category, "All", new { @class = "form-control" })
+        </div>
+
+        <div class="dropdown-small">
+            @Html.LabelFor(x => x.Status)
+            @Html.EnumDropDownListFor(x => x.Status, "All", new { @class = "form-control" })
+        </div>
+
+        <div class="date-time">
+            @Html.LabelFor(x => x.CreateDateFrom)
+            <div class="date-time">
+                @Html.TextBoxFor(x => x.CreateDateFrom, new { @class = "datetimepicker from form-control" })
+                <span class="icon-calendar"></span>
+            </div>
+        </div>
+
+        <div class="date-time">
+            @Html.LabelFor(x => x.CreateDateTo)
+            <div class="date-time">
+                @Html.TextBoxFor(x => x.CreateDateTo, new { @class = "datetimepicker to form-control" })
+                <span class="icon-calendar"></span>
+            </div>
+        </div>
+
+        <div class="button-filter">
+            <button type="submit" class="btn btn-submit">@Resources.Views_Announcement_Submit</button>
+        </div>
+    }
+</section>
+
+<section id="ticket-list-section"></section>

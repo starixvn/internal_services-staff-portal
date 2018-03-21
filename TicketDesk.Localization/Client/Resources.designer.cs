@@ -232,7 +232,7 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create New Shop.
+        ///   Looks up a localized string similar to CreateNewShop.
         /// </summary>
         public static string CreateNewShop {
             get {
@@ -997,6 +997,24 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Date From.
+        /// </summary>
+        public static string TicketListFilterViewModel_CreateDateFrom {
+            get {
+                return ResourceManager.GetString("TicketListFilterViewModel_CreateDateFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Date To.
+        /// </summary>
+        public static string TicketListFilterViewModel_CreateDateTo {
+            get {
+                return ResourceManager.GetString("TicketListFilterViewModel_CreateDateTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         public static string Type {
@@ -1006,11 +1024,11 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload fail.
+        ///   Looks up a localized string similar to Upload failed..
         /// </summary>
-        public static string UploadImageFail {
+        public static string UploadFailed {
             get {
-                return ResourceManager.GetString("UploadImageFail", resourceCulture);
+                return ResourceManager.GetString("UploadFailed", resourceCulture);
             }
         }
         

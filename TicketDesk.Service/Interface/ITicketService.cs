@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Criteria.TicketList;
     using Domain.Model;
 
     public interface ITicketService
@@ -20,6 +21,8 @@
 
         IEnumerable<string> CommitPendingAttachments(Ticket ticket, Guid tempId);
 
-        IEnumerable<Ticket> GetTicketByStatus(int userId, int skip, int take, TicketStatus? ticketStatus);
+        IEnumerable<TicketViewModel> GetTicketByStatus(int userId, int skip, int take, TicketStatus? ticketStatus);
+
+        IList<TicketViewModel> GetTicketByFilter(TicketListFilterCriteria criteria);
     }
 }

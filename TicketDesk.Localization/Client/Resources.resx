@@ -585,4 +585,19 @@
   <data name="DateNotInRange" xml:space="preserve">
     <value>Date not in Range</value>
   </data>
+  <data name="TicketListFilterViewModel_CreateDateFrom" xml:space="preserve">
+    <value>Create Date From</value>
+  </data>
+  <data name="TicketListFilterViewModel_CreateDateTo" xml:space="preserve">
+    <value>Create Date To</value>
+  </data>
+  <data name="ShopDescription" xml:space="preserve">
+    <value>Shop Description</value>
+  </data>
+  <data name="UploadFailed" xml:space="preserve">
+    <value>Upload failed.</value>
+  </data>
+  <data name="CreateNewShop" xml:space="preserve">
+    <value>CreateNewShop</value>
+  </data>
 </root>

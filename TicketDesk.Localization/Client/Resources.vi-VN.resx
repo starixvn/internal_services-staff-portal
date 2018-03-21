@@ -582,4 +582,7 @@
   <data name="DateNotInRange" xml:space="preserve">
     <value>Ngày không nằm trong khoảng cho phép</value>
   </data>
+  <data name="CreateNewShop" xml:space="preserve">
+    <value>Tạo shop mới</value>
+  </data>
 </root>

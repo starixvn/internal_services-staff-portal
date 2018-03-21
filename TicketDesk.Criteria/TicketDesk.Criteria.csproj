@@ -86,6 +86,8 @@
     <Compile Include="Reference\ReferenceCriteria.cs" />
     <Compile Include="Shop\ShopCriteria.cs" />
     <Compile Include="Shop\ShopFilterCrietria.cs" />
+    <Compile Include="TicketList\TicketListFilterCriteria.cs" />
+    <Compile Include="TicketList\TicketViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />

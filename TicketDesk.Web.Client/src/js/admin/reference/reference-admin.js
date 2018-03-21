@@ -166,11 +166,12 @@
     function eventClickSubmitButton() {
         $(domElement.Form).on("submit", function (e) {
             userSubmit++;
-            $form = $(this);
+            form = $(this);
+            $(".error-message").text("");
             e.preventDefault();
             $.ajax({
-                url: $($form).attr("action"),
-                data: $($form).serialize(),
+                url: $(form).attr("action"),
+                data: $(form).serialize(),
                 method: "post",
                 success: function (response) {
                     onSuccess(response);

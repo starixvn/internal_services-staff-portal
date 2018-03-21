@@ -6,6 +6,7 @@
     using System.Web.Routing;
     using Common;
     using Core.Enumerations;
+    using Criteria.TicketList;
     using Domain.Model;
 
     public class TicketListViewModel : Pagination
@@ -16,10 +17,10 @@
             Controller = "Home";
             CurrentPage = 1;
             ItemPerPage = 20;
-            Tickets = new List<Ticket>();
+            Tickets = new List<TicketViewModel>();
         }
 
-        public IEnumerable<Ticket> Tickets { get; set; }
+        public IEnumerable<TicketViewModel> Tickets { get; set; }
 
         public TicketStatus? Status { get; set; }
 

@@ -28,6 +28,7 @@
                         <th class="text-center width-80">#</th>
                         <th>@Resources.Domain_Model_Ticket_Title</th>
                         <th>@Resources.TicketCategory</th>
+                        <th>@Resources.ShopName</th>
                         <th class="text-center width-150">@Resources.Domain_Model_Ticket_CreatedDate</th>
                         <th class="text-center width-150">@Resources.Domain_Model_Ticket_Status</th>
                     </tr>
@@ -39,10 +40,11 @@
                         {
                             <tr>
                                 <td>@index</td>
-                                <td>@ticket.Title</td>
-                                <td>@ticket.CategoryId</td>
+                                <td>@ticket.Subject</td>
+                                <td>@ticket.Category</td>
+                                <td>@ticket.ShopName</td>
                                 <td>@ticket.CreatedDate</td>
-                                <td>@ticket.TicketStatus</td>
+                                <td>@ticket.Status</td>
                             </tr>
                             index++;
                         }

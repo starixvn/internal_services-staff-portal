@@ -191,7 +191,7 @@
                 return Json(new { isSuccessful = true, imageDirectory });
             }
 
-            return Json(new { isSuccessful = false, message = Resources.UploadImageFail });
+            return Json(new { isSuccessful = false, message = Resources.UploadFailed });
         }
 
         public ActionResult IsValidImageUrl()

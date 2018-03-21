@@ -359,6 +359,7 @@
     <Compile Include="Areas\Admin\Controllers\ReferencesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShopController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TicketListController.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\AnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\EditAnnouncementViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Announcements\ListAnnouncementViewModel.cs" />
@@ -372,6 +373,7 @@
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopFilterViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopListViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\TicketList\TicketListFilterViewModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomFieldsController.cs" />
     <Compile Include="Controllers\EmailTestController.cs" />
@@ -499,6 +501,7 @@
     <Content Include="src\js\admin\mail\mail.js" />
     <Content Include="src\js\admin\reference\reference-admin.js" />
     <Content Include="src\js\admin\shop-management\shop-management.js" />
+    <Content Include="src\js\admin\ticket-list\ticket-list.js" />
     <Content Include="src\js\home\read-announcement.js" />
     <Content Include="src\js\ticket-dropzone.js" />
     <Content Include="src\js\ticket\customer-support.js" />
@@ -576,6 +579,8 @@
     <Content Include="Areas\Admin\Views\CustomFields\_ListCustomFields.cshtml" />
     <Content Include="Areas\Admin\Views\Announcement\_Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Mail\_ListMail.cshtml" />
+    <Content Include="Areas\Admin\Views\TicketList\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TicketList\_TicketList.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

@@ -1,0 +1,34 @@
+﻿@using TicketDesk.Criteria.TicketList
+@using TicketDesk.Localization.Domain
+@using TicketDesk.Localization.Client
+@model IList<TicketViewModel>
+
+<table class="data-table dataTable no-footer" id="ticket-table">
+    <thead>
+        <tr>
+            <th class="number">#</th>
+            <th>@Resources.Domain_Model_Ticket_Title</th>
+            <th>@Strings.TicketCategory</th>
+            <th>@Resources.ShopName</th>
+            <th>@Resources.Domain_Model_Ticket_CreatedDate</th>
+            <th>@Resources.Domain_Model_Ticket_Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var index = 0;
+        }
+        @foreach (var ticket in Model)
+            {
+                index++;
+            <tr>
+                <td class="text-center">@index</td>
+                <td>@ticket.Subject</td>
+                <td>@ticket.Category</td>
+                <td>@ticket.ShopName</td>
+                <td>@ticket.CreatedDate.UtcDateTime</td>
+                <td class="text-center">@ticket.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
