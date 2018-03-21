@@ -585,6 +585,7 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="MailTemplate\GeneralTicketDetail.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\filesystem-precompiled-release.pubxml" />
     <None Include="Properties\PublishProfiles\SSP.pubxml" />
