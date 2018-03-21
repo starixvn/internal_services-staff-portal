@@ -85,31 +85,33 @@
         private IEnumerable<TicketViewModel> BasicGetTicketJoinWithShop()
         {
             return context.Tickets
-               .Join(context.Shops,
-                     t => t.ShopId,
-                     s => s.ShopId,
-                     (t, s) => new TicketViewModel
-                     {
-                         Id = t.TicketId,
-                         ShopId = s.ShopId,
-                         ShopName = s.ShopName,
-                         Subject = t.Title,
-                         Category = (TicketCategoryTypes)t.CategoryId,
-                         Status = t.TicketStatus,
-                         CreatedDate = t.CreatedDate,
-                         UpdatedDate = t.LastUpdateDate
-                     });
+                .Join(context.Shops,
+                    t => t.ShopId,
+                    s => s.ShopId,
+                    (t, s) => new TicketViewModel
+                    {
+                        Id = t.TicketId,
+                        ShopId = s.ShopId,
+                        ShopName = s.ShopName,
+                        Subject = t.Title,
+                        Category = (TicketCategoryTypes)t.CategoryId,
+                        Status = t.TicketStatus,
+                        CreatedDate = t.CreatedDate,
+                        UpdatedDate = t.LastUpdateDate
+                    });
         }
 
-        public IEnumerable<TicketViewModel> GetTicketByStatus(int userId, int skip, int take, TicketStatus? ticketStatus)
+        public IEnumerable<TicketViewModel> GetTicketByStatus(int userId, int skip, int take,
+            TicketStatus? ticketStatus)
         {
             var tickets = BasicGetTicketJoinWithShop();
 
-            tickets = ticketStatus == null ? tickets.OrderByDescending(x => x.UpdatedDate)
+            tickets = ticketStatus == null
+                ? tickets.OrderByDescending(x => x.UpdatedDate)
                     .Skip(skip)
                     .Take(take)
-                                           : tickets.Where(x => x.Status == ticketStatus)
-                                                    .OrderByDescending(x => x.UpdatedDate)
+                : tickets.Where(x => x.Status == ticketStatus)
+                    .OrderByDescending(x => x.UpdatedDate)
                     .Skip(skip)
                     .Take(take);
 
@@ -145,7 +147,7 @@
             if (criteria.FromDate != null && criteria.ToDate != null)
             {
                 tickets = tickets.Where(x => x.CreatedDate <= criteria.ToDate
-                                          && x.CreatedDate >= criteria.FromDate);
+                                             && x.CreatedDate >= criteria.FromDate);
             }
 
             return tickets.OrderByDescending(x => x.CreatedDate).ToList();
