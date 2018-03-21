@@ -1,28 +1,41 @@
 ﻿namespace TicketDesk.Service.Implement
 {
     using System.Configuration;
-    using Core.Model;
+    using Domain.Model;
     using Fanex.MailDeliver.MailClient.API;
     using Fanex.MailDeliver.Model;
     using Interface;
 
-    public class MailService : IMailService
+    public class MailService : EntityFrameworkBaseService, IMailService
     {
-        public void Send(MailMessage message)
+        public void Send(MailRecord mailRecord)
         {
-            var mailItem = new MailRecord
-            {
-                MailTo = message.ReceiverEmail,
-                MailCc = message.MailCC,
-                Subject = message.Subject,
-                Title = ConfigurationManager.AppSettings["app_mail_title"],
-                Body = message.Body
-            };
-
             using (var client = new MailDeliver())
             {
-                client.SendMail(mailItem);
+                client.SendMail(mailRecord);
             }
+        }
+
+        public MailRecord ComposeMail(Ticket ticket)
+        {
+            // Get ticket category
+            var ticketCategory = context.TicketCategories.Find(ticket.CategoryId);
+            var mailRecord = new MailRecord();
+
+            if (ticketCategory != null)
+            {
+                mailRecord = new MailRecord
+                {
+                    Title = ConfigurationManager.AppSettings["app_mail_title"],
+                    MailTo = ticketCategory.MailTo,
+                    MailCc = ticketCategory.MailCcTo,
+                    MailBcc = ticketCategory.MailBccTo,
+                    Body = "test",
+                    Subject = "test subject"
+                };
+            }
+
+            return mailRecord;
         }
     }
 }

@@ -14,6 +14,17 @@
 
     public class TicketService : EntityFrameworkBaseService, ITicketService
     {
+        private readonly IMailService mailService;
+
+        public TicketService() : this(null)
+        {
+        }
+
+        public TicketService(IMailService mailService)
+        {
+            this.mailService = mailService ?? new MailService();
+        }
+
         public Ticket GetTicket(int id)
         {
             return context.Tickets.Find(id);
@@ -95,20 +106,21 @@
             var tickets = BasicGetTicketJoinWithShop();
 
             tickets = ticketStatus == null ? tickets.OrderByDescending(x => x.UpdatedDate)
-                                                    .Skip(skip)
-                                                    .Take(take)
+                    .Skip(skip)
+                    .Take(take)
                                            : tickets.Where(x => x.Status == ticketStatus)
                                                     .OrderByDescending(x => x.UpdatedDate)
-                                                    .Skip(skip)
-                                                    .Take(take);
+                    .Skip(skip)
+                    .Take(take);
 
             return tickets;
         }
 
         public int GetUserTotalTicketByStatus(int userId, TicketStatus? ticketStatus)
         {
-            return ticketStatus == null ? context.Tickets.Count(x => x.CreatedBy == userId.ToString())
-                                               : context.Tickets.Count(x => x.CreatedBy == userId.ToString() && x.TicketStatus == ticketStatus);
+            return ticketStatus == null
+                ? context.Tickets.Count(x => x.CreatedBy == userId.ToString())
+                : context.Tickets.Count(x => x.CreatedBy == userId.ToString() && x.TicketStatus == ticketStatus);
         }
 
         public IList<TicketViewModel> GetTicketByFilter(TicketListFilterCriteria criteria)
@@ -182,6 +194,10 @@
             context.Tickets.Add(ticket);
             var result = context.SaveChanges();
             CommitPendingAttachments(ticket, tempId);
+
+            var mailRecord = mailService.ComposeMail(ticket);
+            mailService.Send(mailRecord);
+
             return result > 0;
         }
 
