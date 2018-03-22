@@ -497,6 +497,10 @@
       <Project>{f2dc8fb5-9da1-4525-9b12-9bb855e7c635}</Project>
       <Name>TicketDesk.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TicketDesk.IO\TicketDesk.IO.csproj">
+      <Project>{D9477C13-68C4-43E0-A30B-F06F444C5358}</Project>
+      <Name>TicketDesk.IO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TicketDesk.Localization\TicketDesk.Localization.csproj">
       <Project>{be8715f9-e858-473e-a2b6-561c9edca416}</Project>
       <Name>TicketDesk.Localization</Name>

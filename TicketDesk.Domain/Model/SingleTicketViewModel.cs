@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Domain.Model
 {
     using System.Collections.Generic;
+    using IO;
 
     public class SingleTicketViewModel
     {
@@ -13,5 +14,7 @@
         public string UpdatedByUsername { get; set; }
 
         public IEnumerable<CustomFieldValue> CustomFieldValues { get; set; }
+
+        public IEnumerable<TicketDeskFileInfo> Attachments { get; set; }
     }
 }

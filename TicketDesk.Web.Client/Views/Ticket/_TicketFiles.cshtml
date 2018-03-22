@@ -15,7 +15,7 @@
                     @foreach (var file in Model)
                     {
                         <li>
-                            <a href="@Url.RouteUrl("GetAttachedFile", new {Id = ViewBag.TicketId, FileName = file.Name})" target="_blank"><i class="fa fa-file fa-align-left"></i> @file.Name</a>
+                            <a href="@Url.Action("GetFile", "File",  new {Id = ViewBag.TicketId, FileName = file.Name})" target="_blank"><i class="fa fa-file fa-align-left"></i> @file.Name</a>
                         </li>
                     }
                 </ul>

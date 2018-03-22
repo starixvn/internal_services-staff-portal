@@ -161,3 +161,19 @@
         </div>
     </div>
 </div>
+<div class="panel panel-info" style="padding-top: 0; padding-bottom: 0;">
+    <div class="panel-heading panel-title" style="padding: 3px 5px;">
+        @Index.Files
+    </div>
+    <div class="panel-body" style="">
+        <ul class="list-unstyled list-inline">
+            @foreach (var file in Model.Attachments)
+            {
+                <li>
+                    <a href="@Url.Action("GetFile", "File", new {Id = Model.Ticket.TicketId, FileName = file.Name})" target="_blank"><i class="fa fa-file fa-align-left"></i> @file.Name</a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+

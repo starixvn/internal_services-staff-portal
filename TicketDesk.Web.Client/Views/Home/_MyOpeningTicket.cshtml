@@ -32,7 +32,7 @@
 
                     <tr class="@evenClass" data-group="@ticketGroup.Name">
                         <td class="text-center">
-                            <a href="@Url.Action("Index","TicketCenter", new {id = ticket.TicketId})" class="id-ticket">@ticket.TicketId</a>
+                            <a href="@Url.Action("Details","Ticket", new {ticketId = ticket.TicketId})" class="id-ticket">@ticket.TicketId</a>
                         </td>
                         <td>@ticket.Title</td>
                         <td class="text-center">@ticket.CreatedDate.ToString("MMM dd, yyyy")</td>

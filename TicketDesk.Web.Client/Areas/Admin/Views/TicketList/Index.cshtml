@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Localization.Client
+@using TicketDesk.Core.Resources
 @model TicketDesk.Web.Client.Areas.Admin.Models.TicketList.TicketListFilterViewModel
 
 @{
@@ -70,3 +71,18 @@
 </section>
 
 <section class="table" id="ticket-list-section"></section>
+
+<!-- Confirm Modal -->
+<div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" id="confirm-popup">
+    <div class="modal-dialog small-modal" role="document">
+        <div class="modal-content -has-title">
+            <div class="modal-body">
+                <p>Do you want to change status this ticket?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-submit" id="confirm-button">@Messages.Yes</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">@Resources.Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

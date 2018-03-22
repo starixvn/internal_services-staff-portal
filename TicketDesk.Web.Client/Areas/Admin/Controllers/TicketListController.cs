@@ -37,9 +37,10 @@
 
         public JsonResult UpdateTicketStatus(int id, TicketStatus status)
         {
-            var isSuccessful = ticketService.UpdateTicketStatus(id, status);
+            bool isSuccessful = ticketService.UpdateTicketStatus(id, status);
+            string message = isSuccessful ? "Ticket status has been successfully updated." : "Update failed";
 
-            return Json(isSuccessful);
+            return Json(new { isSuccessful, message });
         }
     }
 }

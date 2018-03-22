@@ -357,17 +357,18 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult TicketDetails(int ticketId)
+        public ActionResult Details(int ticketId)
         {
             var ticket = ticketService.GetTicket(ticketId);
 
             var singleTicketViewModel = new SingleTicketViewModel
             {
                 Ticket = ticket,
-                CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket)
+                CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket),
+                Attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(CultureInfo.InvariantCulture), false)
             };
 
-            return PartialView("_TicketDetails", singleTicketViewModel);
+            return View(singleTicketViewModel);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]

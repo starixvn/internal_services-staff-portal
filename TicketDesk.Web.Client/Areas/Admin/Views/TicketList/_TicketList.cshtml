@@ -29,7 +29,9 @@
                 <td>@ticket.Category</td>
                 <td>@ticket.ShopName</td>
                 <td>@ticket.CreatedDate.UtcDateTime</td>
-                <td class="text-center">@ticket.Status</td>
+                <td class="text-center">
+                    @Html.EnumDropDownListFor(x => ticket.Status, new { @class =  "form-control ticket-status", data_href = Url.Action("UpdateTicketStatus", "TicketList", new { id = ticket.Id}) })
+                </td>
             </tr>
         }
     </tbody>

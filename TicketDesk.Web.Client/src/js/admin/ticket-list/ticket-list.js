@@ -6,7 +6,10 @@
         ToDate: ".datetimepicker.to",
         FormFilter: "#filterForm",
         TicketTableSection: "#ticket-list-section",
-        TicketTable: "#ticket-table"
+        TicketTable: "#ticket-table",
+        TicketStatusSelector: ".ticket-status",
+        ConfirmPopup: "#confirm-popup",
+        ConfirmButton: "#confirm-button"
     }
 
     function setupFromDateToDate() {
@@ -71,8 +74,49 @@
             data: $(domElement.FormFilter).serialize(),
             success: function (data) {
                 $(domElement.TicketTableSection).html(data);
+                registerChangeStatusEvent();
                 initDataTable();
             }
+        });
+    }
+
+    function registerChangeStatusEvent() {
+        $(domElement.TicketStatusSelector).on("change", function () {
+            var url = $(this).data("href");
+            var status = $(this).val();
+            var action = function () {
+                $.ajax({
+                    url: url,
+                    method: "post",
+                    data: {
+                        status
+                    },
+                    success: function (response) {
+                        $(domElement.ConfirmPopup).modal("hide");
+                        if (response.isSuccessful) {
+                            toastr.success(response.message);
+                            getTicketList();
+                        } else {
+                            toastr.error(response.message)
+                        }
+                    }
+                });
+            }
+            confirmPopup(action);
+        })
+    }
+
+    function confirmPopup(action) {
+        var $popup = $(domElement.ConfirmPopup);
+        $popup.modal("show");
+        var notTrigger = false;
+        $('#confirm-popup').one('click', domElement.ConfirmButton, function () {
+            if (!notTrigger) {
+                action();
+            }
+        });
+        $('#confirm-popup').one('click', '.btn-cancel', function () {
+            notTrigger = true;
         });
     }
 
