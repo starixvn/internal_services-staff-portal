@@ -36,8 +36,8 @@
             var userIdString = userId.ToString();
             var tickets = context.Tickets
                 .Where(x => x.CreatedBy == userIdString
-                            && (x.TicketStatus == TicketStatus.Active
-                                || x.TicketStatus == TicketStatus.MoreInfo))
+                            && (x.TicketStatus == TicketStatus.New
+                                || x.TicketStatus == TicketStatus.InProgress))
                 .OrderBy(x => x.CategoryId)
                 .ThenByDescending(x => x.TicketId)
                 .Skip(skip)
@@ -78,8 +78,8 @@
         {
             string userIdString = userId.ToString();
             return context.Tickets.Count(x => x.CreatedBy == userIdString
-                                              && (x.TicketStatus == TicketStatus.Active
-                                                  || x.TicketStatus == TicketStatus.MoreInfo));
+                                              && (x.TicketStatus == TicketStatus.New
+                                                  || x.TicketStatus == TicketStatus.InProgress));
         }
 
         private IEnumerable<TicketViewModel> BasicGetTicketJoinWithShop()

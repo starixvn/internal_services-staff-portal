@@ -40,7 +40,7 @@
                 sortable: false
             },
             {
-                width: undefined,
+                width: 300,
                 sortable: true
             },
             {
@@ -59,7 +59,7 @@
                 width: 100,
                 sortable: true
             }];
-        ticketListTable.autoWidth = false;
+        ticketListTable.bAutoWidth = false;
         $(domElement.TicketTable).DataTable(ticketListTable);
 
         commonDataTableInit.InitFixedHeaderDataTable();

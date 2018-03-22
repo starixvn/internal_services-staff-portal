@@ -159,7 +159,7 @@ namespace TicketDesk.Domain.Model
         public bool IsAssigned => !string.IsNullOrEmpty(AssignedTo);
 
         [NotMapped]
-        public bool IsOpen => TicketStatus != TicketStatus.Resolved && TicketStatus != TicketStatus.Closed;
+        public bool IsOpen => TicketStatus != TicketStatus.Rejected && TicketStatus != TicketStatus.Closed;
 
         public void EnsureSubscribers()
         {
@@ -180,9 +180,9 @@ namespace TicketDesk.Domain.Model
         public TicketActivity GetAvailableActivites(string userId)
         {
             var isOwnedByMe = Owner == userId;
-            var isMoreInfo = TicketStatus == TicketStatus.MoreInfo;
+            var isMoreInfo = TicketStatus == TicketStatus.Pending;
             var isAssignedToMe = !string.IsNullOrEmpty(AssignedTo) && AssignedTo == userId;
-            var isResolved = TicketStatus == TicketStatus.Resolved;
+            var isResolved = TicketStatus == TicketStatus.Closed;
             var validActivities = TicketActivity.None;
 
             if (TicketId == default(int))

@@ -23,7 +23,9 @@
                 index++;
             <tr>
                 <td class="text-center">@index</td>
-                <td>@ticket.Subject</td>
+                <td>
+                    @Html.ActionLink(ticket.Subject, "Details", "Ticket", new { Area = "", ticketId = ticket.Id}, null)
+                </td>
                 <td>@ticket.Category</td>
                 <td>@ticket.ShopName</td>
                 <td>@ticket.CreatedDate.UtcDateTime</td>

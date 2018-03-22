@@ -817,15 +817,6 @@ namespace TicketDesk.Localization.Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Active.
-        /// </summary>
-        public static string TicketStatusActive {
-            get {
-                return ResourceManager.GetString("TicketStatusActive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Closed.
         /// </summary>
         public static string TicketStatusClosed {
@@ -835,20 +826,38 @@ namespace TicketDesk.Localization.Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to More Info.
+        ///   Looks up a localized string similar to In Progress.
         /// </summary>
-        public static string TicketStatusMoreInfo {
+        public static string TicketStatusInProgress {
             get {
-                return ResourceManager.GetString("TicketStatusMoreInfo", resourceCulture);
+                return ResourceManager.GetString("TicketStatusInProgress", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Resolved.
+        ///   Looks up a localized string similar to New.
         /// </summary>
-        public static string TicketStatusResolved {
+        public static string TicketStatusNew {
             get {
-                return ResourceManager.GetString("TicketStatusResolved", resourceCulture);
+                return ResourceManager.GetString("TicketStatusNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        public static string TicketStatusPending {
+            get {
+                return ResourceManager.GetString("TicketStatusPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rejected.
+        /// </summary>
+        public static string TicketStatusRejected {
+            get {
+                return ResourceManager.GetString("TicketStatusRejected", resourceCulture);
             }
         }
         

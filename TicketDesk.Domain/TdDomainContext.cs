@@ -369,7 +369,7 @@ namespace TicketDesk.Domain
             newTicket.Owner = newTicket.Owner ?? SecurityProvider.CurrentUserId;
             newTicket.CreatedBy = SecurityProvider.CurrentUserId;
             newTicket.CreatedDate = now;
-            newTicket.TicketStatus = TicketStatus.Active;
+            newTicket.TicketStatus = TicketStatus.New;
             newTicket.CurrentStatusDate = now;
             newTicket.CurrentStatusSetBy = SecurityProvider.CurrentUserId;
 

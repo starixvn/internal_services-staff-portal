@@ -1015,6 +1015,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        public static string TicketStatusPending {
+            get {
+                return ResourceManager.GetString("TicketStatusPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         public static string Type {

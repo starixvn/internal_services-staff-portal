@@ -352,17 +352,17 @@
   <data name="TicketPriorityShort" xml:space="preserve">
     <value>Priority</value>
   </data>
-  <data name="TicketStatusActive" xml:space="preserve">
-    <value>Active</value>
+  <data name="TicketStatusNew" xml:space="preserve">
+    <value>New</value>
   </data>
   <data name="TicketStatusClosed" xml:space="preserve">
     <value>Closed</value>
   </data>
-  <data name="TicketStatusMoreInfo" xml:space="preserve">
-    <value>More Info</value>
+  <data name="TicketStatusInProgress" xml:space="preserve">
+    <value>In Progress</value>
   </data>
-  <data name="TicketStatusResolved" xml:space="preserve">
-    <value>Resolved</value>
+  <data name="TicketStatusRejected" xml:space="preserve">
+    <value>Rejected</value>
   </data>
   <data name="TicketTagList" xml:space="preserve">
     <value>Tags</value>
@@ -415,5 +415,8 @@
   </data>
   <data name="AllowInternalUsersToSetOwner" xml:space="preserve">
     <value>Allow internal users to set or change the ticket owner?</value>
+  </data>
+  <data name="TicketStatusPending" xml:space="preserve">
+    <value>Pending</value>
   </data>
 </root>

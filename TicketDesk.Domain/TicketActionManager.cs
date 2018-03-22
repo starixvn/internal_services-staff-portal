@@ -1,9 +1,9 @@
 ﻿namespace TicketDesk.Domain
 {
-    using Model;
     using System;
     using System.Security;
     using System.Text;
+    using Model;
     using TicketDesk.Localization.Domain;
 
     public class TicketActionManager
@@ -74,7 +74,7 @@
             {
                 if (CheckSecurity(ticket, activity))
                 {
-                    ticket.TicketStatus = TicketStatus.Active;
+                    ticket.TicketStatus = TicketStatus.New;
 
                     ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
@@ -286,7 +286,7 @@
             {
                 if (CheckSecurity(ticket, activity))
                 {
-                    ticket.TicketStatus = TicketStatus.MoreInfo;
+                    ticket.TicketStatus = TicketStatus.InProgress;
 
                     ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
@@ -301,7 +301,7 @@
                 if (CheckSecurity(ticket, activity))
                 {
                     ticket.AssignedTo = assignToMe ? SecurityProvider.CurrentUserId : null;
-                    ticket.TicketStatus = TicketStatus.Active;
+                    ticket.TicketStatus = TicketStatus.New;
                     ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
@@ -314,7 +314,7 @@
             {
                 if (CheckSecurity(ticket, activity))
                 {
-                    ticket.TicketStatus = TicketStatus.Resolved;
+                    ticket.TicketStatus = TicketStatus.InProgress;
                     ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);
                 }
             };
@@ -329,7 +329,7 @@
                 {
                     if (reactivate)
                     {
-                        ticket.TicketStatus = TicketStatus.Active;
+                        ticket.TicketStatus = TicketStatus.New;
                     }
 
                     ticket.TicketEvents.AddActivityEvent(SecurityProvider.CurrentUserId, activity, comment);

@@ -5,16 +5,19 @@
 
     public enum TicketStatus
     {
-        [Display(Name = "TicketStatusActive", ResourceType = typeof(Strings))]
-        Active,
+        [Display(Name = nameof(Strings.TicketStatusNew), ResourceType = typeof(Strings))]
+        New,
 
-        [Display(Name = "TicketStatusMoreInfo", ResourceType = typeof(Strings))]
-        MoreInfo,
+        [Display(Name = nameof(Strings.TicketStatusInProgress), ResourceType = typeof(Strings))]
+        InProgress,
 
-        [Display(Name = "TicketStatusResolved", ResourceType = typeof(Strings))]
-        Resolved,
+        [Display(Name = nameof(Strings.TicketStatusRejected), ResourceType = typeof(Strings))]
+        Rejected,
 
-        [Display(Name = "TicketStatusClosed", ResourceType = typeof(Strings))]
+        [Display(Name = nameof(Strings.TicketStatusPending), ResourceType = typeof(Strings))]
+        Pending,
+
+        [Display(Name = nameof(Strings.TicketStatusClosed), ResourceType = typeof(Strings))]
         Closed
     }
 }
