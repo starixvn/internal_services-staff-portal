@@ -1934,7 +1934,6 @@
     <Content Include="src\libs\toastr\toastr.min.js" />
     <Content Include="src\libs\Touch\touche.js" />
     <Compile Include="App_Start\Startup.Database.cs" />
-    <Content Include="Properties\webjobs-list.json" />
     <Content Include="Scripts\jquery.clickable-0.1.9.min.js.map">
       <DependentUpon>jquery.clickable-0.1.9.min.js</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
