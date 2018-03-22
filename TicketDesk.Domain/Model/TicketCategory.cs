@@ -1,6 +1,7 @@
 ﻿namespace TicketDesk.Domain.Model
 {
     using System.ComponentModel.DataAnnotations;
+    using TicketDesk.Localization.Client;
 
     public class TicketCategory
     {
@@ -11,13 +12,13 @@
 
         public string Name_vi { get; set; }
 
-        [Display(Name = "Mail To")]
+        [Display(Name = nameof(Resources.MailTo), ResourceType = typeof(Resources))]
         public string MailTo { get; set; }
 
-        [Display(Name = "Cc Mail To")]
+        [Display(Name = nameof(Resources.MailCc), ResourceType = typeof(Resources))]
         public string MailCcTo { get; set; }
 
-        [Display(Name = "Bcc Mail To")]
+        [Display(Name = nameof(Resources.MailBcc), ResourceType = typeof(Resources))]
         public string MailBccTo { get; set; }
     }
 }

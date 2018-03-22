@@ -585,4 +585,10 @@
   <data name="CreateNewShop" xml:space="preserve">
     <value>Tạo shop mới</value>
   </data>
+  <data name="MailCc" xml:space="preserve">
+    <value>Cc</value>
+  </data>
+  <data name="MailBcc" xml:space="preserve">
+    <value>Bcc</value>
+  </data>
 </root>

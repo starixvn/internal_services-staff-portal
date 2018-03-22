@@ -603,4 +603,13 @@
   <data name="TicketStatusPending" xml:space="preserve">
     <value>Pending</value>
   </data>
+  <data name="MailTo" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="MailCc" xml:space="preserve">
+    <value>Cc</value>
+  </data>
+  <data name="MailBcc" xml:space="preserve">
+    <value>Bcc</value>
+  </data>
 </root>
