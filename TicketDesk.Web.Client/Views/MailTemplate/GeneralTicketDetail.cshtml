@@ -1,43 +1,98 @@
-﻿@using Fanex.NAP.Core.Web
-@model TicketDesk.Domain.Model.SingleTicketViewModel
+﻿@model TicketDesk.Domain.Model.SingleTicketViewModel
 
 @{
     Layout = "";
 }
 
-<section>
-    <p>
-        <span>Title: </span>
-        <span>@Model.Ticket.Title</span>
-    </p>
-    <p>
-        <span>Created Date: </span>
-        <span>@Model.Ticket.CreatedDate</span>
-    </p>
-    <p>
-        <span>Status: </span>
-        <span>@Model.Ticket.TicketStatus</span>
-    </p>
-    <p>
-        <span>Shop: </span>
-        <span>@Model.Ticket.ShopId</span>
-    </p>
-    <p>
-        <span>Created by: </span>
-        <span>@Model.Ticket.CreatedBy</span>
-    </p>
-    <p>
-        <span>Last update by: </span>
-        <span>@Model.Ticket.LastUpdateBy</span>
-    </p>
-</section>
+<style>
+
+    table, td {
+        border-collapse: collapse;
+        border: 1px solid black;
+        padding: 5px;
+    }
+
+        table tr td:nth-child(1) {
+            background-color: darkblue;
+            color: white;
+        }
+
+    .custom-field-subitem {
+        border: 1px solid black;
+        margin-top: 5px;
+        padding: 5px;
+    }
+
+    .red {
+        color: darkred;
+    }
+</style>
 
 <section>
-    @foreach (var customFieldValue in Model.CustomFieldValues)
-    {
-        <p>
-            <span>@customFieldValue.CustomFieldId</span>
-            <span>@customFieldValue.Value</span>
-        </p>
+    <table>
+        <tr>
+            <td>Title: </td>
+            <td>@Model.Ticket.Title</td>
+        </tr>
+        <tr>
+            <td>Created Date: </td>
+            <td>@Model.Ticket.CreatedDate</td>
+        </tr>
+        <tr>
+            <td>Status: </td>
+            <td>@Model.Ticket.TicketStatus</td>
+        </tr>
+        <tr>
+            <td>Shop: </td>
+            <td>@Model.ShopName</td>
+        </tr>
+        <tr>
+            <td>Created by: </td>
+            <td>@Model.Ticket.CreatedBy</td>
+        </tr>
+        <tr>
+            <td>Last update by: </td>
+            <td>@Model.Ticket.LastUpdateBy</td>
+        </tr>
+    </table>
+</section>
+
+<section class="custom-field">
+    <div>
+        <h3>Ticket Details</h3>
+    </div>
+    @{
+        var count = Model.CustomFieldValues.Count();
+        for (int i = 0; i < count; i++)
+        {
+            var customFieldValue = Model.CustomFieldValues.ElementAt(i);
+
+            <div class="custom-field-item">
+                @if (string.IsNullOrEmpty(customFieldValue.GroupId))
+                {
+                    <p>
+                        <span>@customFieldValue.CustomField.Name: </span>
+                        <span>@customFieldValue.Value</span>
+                    </p>
+                }
+                else
+                {
+                    var groupId = customFieldValue.GroupId;
+                    var subItems = Model.CustomFieldValues.Where(x => x.GroupId == groupId);
+
+                    <div class="custom-field-subitem">
+                        @foreach (var items in subItems)
+                        {
+                            <p>
+                                <span>@items.CustomField.Name: </span>
+                                <span>@items.Value</span>
+                            </p>
+                        }
+                    </div>
+
+                    i = i + subItems.Count();
+                }
+            </div>
+        }
     }
 </section>
