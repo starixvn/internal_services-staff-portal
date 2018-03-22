@@ -12,7 +12,7 @@
 
         public string Subject { get; set; }
 
-        public TicketCategoryTypes Category { get; set; }
+        public TicketCategoryTypes TicketType { get; set; }
 
         public string ShopName { get; set; }
         public TicketStatus Status { get; set; }

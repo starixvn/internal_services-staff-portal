@@ -8,7 +8,7 @@
     {
         public int? ShopId { get; set; }
 
-        public TicketCategoryTypes? Category { get; set; }
+        public TicketCategoryTypes? TicketType { get; set; }
 
         public TicketStatus? Status { get; set; }
 

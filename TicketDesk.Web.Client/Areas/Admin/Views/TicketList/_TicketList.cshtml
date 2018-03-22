@@ -26,7 +26,7 @@
                 <td>
                     @Html.ActionLink(ticket.Subject, "Details", "Ticket", new { Area = "", ticketId = ticket.Id}, null)
                 </td>
-                <td>@ticket.Category</td>
+                <td>@ticket.TicketType</td>
                 <td>@ticket.ShopName</td>
                 <td>@ticket.CreatedDate.UtcDateTime</td>
                 <td class="text-center">

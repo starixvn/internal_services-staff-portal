@@ -16,7 +16,8 @@
 
         public IEnumerable<SelectListItem> Shops { get; set; }
 
-        public TicketCategoryTypes? Category { get; set; }
+        [Display(Name = nameof(Resources.Type), ResourceType = typeof(Resources))]
+        public TicketCategoryTypes? TicketType { get; set; }
 
         public TicketStatus? Status { get; set; }
 
@@ -31,7 +32,7 @@
             return new TicketListFilterCriteria
             {
                 ShopId = ShopId,
-                Category = Category,
+                TicketType = TicketType,
                 Status = Status,
                 FromDate = CreateDateFrom,
                 ToDate = CreateDateTo

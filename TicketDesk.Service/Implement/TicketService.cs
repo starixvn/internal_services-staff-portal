@@ -94,7 +94,7 @@
                         ShopId = s.ShopId,
                         ShopName = s.ShopName,
                         Subject = t.Title,
-                        Category = (TicketCategoryTypes)t.CategoryId,
+                        TicketType = (TicketCategoryTypes)t.CategoryId,
                         Status = t.TicketStatus,
                         CreatedDate = t.CreatedDate,
                         UpdatedDate = t.LastUpdateDate
@@ -134,9 +134,9 @@
                 tickets = tickets.Where(x => x.ShopId == criteria.ShopId);
             }
 
-            if (criteria.Category != null)
+            if (criteria.TicketType != null)
             {
-                tickets = tickets.Where(x => x.Category == criteria.Category);
+                tickets = tickets.Where(x => x.TicketType == criteria.TicketType);
             }
 
             if (criteria.Status != null)
