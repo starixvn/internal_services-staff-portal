@@ -1051,6 +1051,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ticket Type.
+        /// </summary>
+        public static string TicketType {
+            get {
+                return ResourceManager.GetString("TicketType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         public static string Type {

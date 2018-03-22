@@ -612,4 +612,7 @@
   <data name="MailBcc" xml:space="preserve">
     <value>Bcc</value>
   </data>
+  <data name="TicketType" xml:space="preserve">
+    <value>Ticket Type</value>
+  </data>
 </root>

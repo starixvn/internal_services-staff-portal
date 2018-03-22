@@ -3,10 +3,11 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Domain.Model;
+    using Localization.Client;
 
     public class MailViewModel
     {
-        [Display(Name = "Ticket Type")]
+        [Display(Name = nameof(Resources.TicketType), ResourceType = typeof(Resources))]
         public int CategoryId { get; set; }
 
         public IEnumerable<TicketCategory> TicketCategories { get; set; }
