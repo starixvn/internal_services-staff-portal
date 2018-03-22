@@ -25,6 +25,7 @@
                 originalTicketCategory.MailTo = ticketCategory.MailTo;
                 originalTicketCategory.MailCcTo = ticketCategory.MailCcTo;
                 originalTicketCategory.MailBccTo = ticketCategory.MailBccTo;
+                originalTicketCategory.IsAllowAdditionalMail = ticketCategory.IsAllowAdditionalMail;
             }
 
             var result = context.SaveChanges();

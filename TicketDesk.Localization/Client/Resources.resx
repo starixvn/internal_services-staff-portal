@@ -615,4 +615,7 @@
   <data name="TicketType" xml:space="preserve">
     <value>Ticket Type</value>
   </data>
+  <data name="SendEmailTo" xml:space="preserve">
+    <value>Send email to</value>
+  </data>
 </root>

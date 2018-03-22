@@ -28,5 +28,43 @@
         </div>
     </div>
 
+    <div class="form-group">
+        @if (Model.SelectedTicketCategory.IsAllowAdditionalMail)
+        {
+            <input type="checkbox"
+                   id="@Html.NameFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)"
+                   name="@Html.NameFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)"
+                   value="true"
+                   checked="checked" />
+        }
+        else
+        {
+            <input type="checkbox"
+                   id="@Html.NameFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)"
+                   name="@Html.NameFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)"
+                   value="true" />
+        }
+        @Html.LabelFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)
+    </div>
+
+    @*<div class="form-group checkbox">
+        @if (Model.SelectedTicketCategory.IsAllowAdditionalMail)
+        {
+            <input type="checkbox"
+                   id="@Html.NameFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)"
+                   name="@Html.NameFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)"
+                   value="true"
+                   checked="checked" />
+        }
+        else
+        {
+            <input type="checkbox"
+                   id="@Html.NameFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)"
+                   name="@Html.NameFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)"
+                   value="true" />
+        }
+        @Html.LabelFor(model => model.SelectedTicketCategory.IsAllowAdditionalMail)
+    </div>*@
+
     <button type="submit" class="btn btn-primary">@Resources.Save</button>
 }

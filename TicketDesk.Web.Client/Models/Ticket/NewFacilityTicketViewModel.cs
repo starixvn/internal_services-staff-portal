@@ -12,6 +12,8 @@
 
         public Ticket Ticket { get; set; }
 
+        public bool AllowToChooseRecipient { get; set; }
+
         public CustomFieldValue RequestType { get; set; }
 
         public ICollection<FacilityItem> Items { get; }

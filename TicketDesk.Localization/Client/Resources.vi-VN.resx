@@ -591,4 +591,7 @@
   <data name="MailBcc" xml:space="preserve">
     <value>Bcc</value>
   </data>
+  <data name="SendEmailTo" xml:space="preserve">
+    <value>Gửi email tới</value>
+  </data>
 </root>

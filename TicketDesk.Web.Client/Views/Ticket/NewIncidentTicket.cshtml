@@ -77,6 +77,21 @@
             </div>
         </div>
         @Html.Partial("_DropzoneView", Model)
+
+        @if (Model.AllowToChooseRecipient)
+        {
+            <div class="item-list item shop-item">
+                <div class="key fullwidth">
+                    @Html.LabelFor(x => x.Ticket.AdditionalMail)
+                </div>
+
+                <div class="fullwidth">
+                    <div class="fullwidth no-border custom-dropdown">
+                        @Html.TextBoxFor(x => x.Ticket.AdditionalMail)
+                    </div>
+                </div>
+            </div>
+        }
     </div>
     <input type="submit" class="btn btn-primary btn-send" value="Send" />
 }

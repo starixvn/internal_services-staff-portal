@@ -21,7 +21,7 @@
         [Display(Name = nameof(Resources.MailBcc), ResourceType = typeof(Resources))]
         public string MailBccTo { get; set; }
 
-        [Display(Name = "Allow additional mail")]
+        [Display(Name = "Allow to choose recipient")]
         public bool IsAllowAdditionalMail { get; set; }
     }
 }

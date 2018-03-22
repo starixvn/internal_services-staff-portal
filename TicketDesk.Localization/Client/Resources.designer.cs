@@ -907,6 +907,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send email to.
+        /// </summary>
+        public static string SendEmailTo {
+            get {
+                return ResourceManager.GetString("SendEmailTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shop Address.
         /// </summary>
         public static string ShopAddress {

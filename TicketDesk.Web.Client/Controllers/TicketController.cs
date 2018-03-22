@@ -20,12 +20,18 @@
         private readonly ITicketService ticketService;
         private readonly ICustomFieldService customFieldService;
         private readonly IShopService shopService;
+        private readonly ITicketCategoryService ticketCategoryService;
 
-        public TicketController(ITicketService ticketService, ICustomFieldService customFieldService, IShopService shopService)
+        public TicketController(
+            ITicketService ticketService,
+            ICustomFieldService customFieldService,
+            IShopService shopService,
+            ITicketCategoryService ticketCategoryService)
         {
             this.ticketService = ticketService;
             this.customFieldService = customFieldService;
             this.shopService = shopService;
+            this.ticketCategoryService = ticketCategoryService;
         }
 
         [HttpPost]
@@ -64,10 +70,12 @@
             var viewModel = new NewFacilityTicketViewModel
             {
                 TempId = Guid.NewGuid(),
-                Ticket = {
+                Ticket =
+                {
                     ShopList = shopService.GetShopSelectList()
                 },
-                RequestType = { CustomField = availableCustomField.First(x => x.Name == "Request Type") }
+                RequestType = { CustomField = availableCustomField.First(x => x.Name == "Request Type") },
+                AllowToChooseRecipient = ticketCategoryService.GetTicketCategory((int)TicketCategoryTypes.Facility).IsAllowAdditionalMail
             };
 
             // TODO: Bug can happen here
@@ -124,7 +132,8 @@
                 {
                     Owner = CurrentSession.UserId.ToString(),
                     ShopList = shopService.GetShopSelectList()
-                }
+                },
+                AllowToChooseRecipient = ticketCategoryService.GetTicketCategory((int)TicketCategoryTypes.Feedback).IsAllowAdditionalMail
             };
 
             return View(viewModel);
@@ -159,7 +168,8 @@
             {
                 TempId = Guid.NewGuid(),
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Incident Date/Time") },
-                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
+                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") },
+                AllowToChooseRecipient = ticketCategoryService.GetTicketCategory((int)TicketCategoryTypes.Incident).IsAllowAdditionalMail
             };
 
             if (viewModel.TimeOfIncident.Value == null)
@@ -179,16 +189,6 @@
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public ActionResult NewIncidentTicket(NewIncidentTicketViewModel viewModel)
         {
-            ////if (viewModel.Ticket.IsHtml)
-            ////{
-            ////    viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
-            ////    if (string.IsNullOrEmpty(viewModel.Ticket.Details))
-            ////    {
-            ////        ModelState.AddModelError("Details", Strings.RequiredField);
-            ////    }
-            ////}
-
-            ////viewModel.Ticket.Shop = context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Incident;
 
             if (ModelState.IsValid)
@@ -216,7 +216,8 @@
                 },
                 System = { CustomField = availableCustomField.First(x => x.Name == "Device") },
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Incident Date/Time") },
-                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
+                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") },
+                AllowToChooseRecipient = ticketCategoryService.GetTicketCategory((int)TicketCategoryTypes.Hardware).IsAllowAdditionalMail
             };
 
             return View(viewModel);
@@ -228,17 +229,6 @@
         [ValidateOnlyIncomingValues]
         public ActionResult NewHardwareTicket(NewHardwareTicketViewModel viewModel)
         {
-            ////if (viewModel.Ticket.IsHtml)
-            ////{
-            ////    viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
-            ////    if (string.IsNullOrEmpty(viewModel.Ticket.Details))
-            ////    {
-            ////        ModelState.AddModelError("Details", Strings.RequiredField);
-            ////    }
-            ////}
-
-            // TODO: Replace with actual project ID represent for shop id here
-            ////viewModel.Ticket.Shop = context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Hardware;
 
             if (ModelState.IsValid)
@@ -266,7 +256,8 @@
                 },
                 System = { CustomField = availableCustomField.First(x => x.Name == "System") },
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Incident Date/Time") },
-                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
+                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") },
+                AllowToChooseRecipient = ticketCategoryService.GetTicketCategory((int)TicketCategoryTypes.Software).IsAllowAdditionalMail
             };
 
             return View(viewModel);
@@ -278,17 +269,6 @@
         [ValidateOnlyIncomingValues]
         public ActionResult NewSoftwareTicket(NewSoftwareTicketViewModel viewModel)
         {
-            ////if (viewModel.Ticket.IsHtml)
-            ////{
-            ////    viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
-            ////    if (string.IsNullOrEmpty(viewModel.Ticket.Details))
-            ////    {
-            ////        ModelState.AddModelError("Details", Strings.RequiredField);
-            ////    }
-            ////}
-
-            // TODO: Replace with actual project ID represent for shop id here
-            ////viewModel.Ticket.Shop = context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Software;
 
             if (ModelState.IsValid)
@@ -318,7 +298,8 @@
                 SupportType = { CustomField = availableCustomField.First(x => x.Name == "Support Type") },
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == "Incident Date/Time") },
                 NationalIdCardNo = { CustomField = availableCustomField.First(x => x.Name == "National Id Card No") },
-                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") }
+                Description = { CustomField = availableCustomField.First(x => x.Name == "Description") },
+                AllowToChooseRecipient = ticketCategoryService.GetTicketCategory((int)TicketCategoryTypes.CustomerSupport).IsAllowAdditionalMail
             };
 
             return View(viewModel);
@@ -330,16 +311,6 @@
         [ValidateOnlyIncomingValues]
         public ActionResult NewCustomerSupportTicket(NewCustomerSupportTicketViewModel viewModel)
         {
-            ////if (viewModel.Ticket.IsHtml)
-            ////{
-            ////    viewModel.Ticket.Details = viewModel.Ticket.Details.StripHtmlWhenEmpty();
-            ////    if (string.IsNullOrEmpty(viewModel.Ticket.Details))
-            ////    {
-            ////        ModelState.AddModelError("Details", Strings.RequiredField);
-            ////    }
-            ////}
-
-            ////viewModel.Ticket.Shop = context.Shops.Find(viewModel.Ticket.ShopId);
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.CustomerSupport;
 
             if (ModelState.IsValid)

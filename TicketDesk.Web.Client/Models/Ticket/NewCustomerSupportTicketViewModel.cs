@@ -5,6 +5,8 @@
 
     public class NewCustomerSupportTicketViewModel : TicketWithFilesBaseViewModel, ITicketCustomFieldsProvider
     {
+        public bool AllowToChooseRecipient { get; set; }
+
         public Ticket Ticket { get; set; }
 
         public CustomFieldValue SupportType { get; set; }

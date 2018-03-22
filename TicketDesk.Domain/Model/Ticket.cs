@@ -140,6 +140,7 @@ namespace TicketDesk.Domain.Model
 
         public int CategoryId { get; set; }
 
+        [Display(Name = nameof(Resources.SendEmailTo), ResourceType = typeof(Resources))]
         public string AdditionalMail { get; set; }
 
         [NotMapped]

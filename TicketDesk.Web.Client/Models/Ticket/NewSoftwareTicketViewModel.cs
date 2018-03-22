@@ -13,6 +13,8 @@
             TimeOfIncident = new CustomFieldValue();
         }
 
+        public bool AllowToChooseRecipient { get; set; }
+
         public Ticket Ticket { get; set; }
 
         public CustomFieldValue System { get; set; }

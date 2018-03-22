@@ -10,6 +10,8 @@
     {
         private string[] _feedbackByValues;
 
+        public bool AllowToChooseRecipient { get; set; }
+
         public Ticket Ticket { get; set; }
 
         public CustomFieldValue FeedbackBy { get; set; }
