@@ -35,8 +35,7 @@
         var ticketListTable = commonDataTableInit.Init();
         ticketListTable.order = [[3, "asc"]];
         ticketListTable.columns =
-            [
-            {
+            [{
                 width: 70,
                 sortable: false
             },
@@ -59,8 +58,8 @@
             {
                 width: 100,
                 sortable: true
-            }
-            ];
+            }];
+        ticketListTable.autoWidth = false;
         $(domElement.TicketTable).DataTable(ticketListTable);
 
         commonDataTableInit.InitFixedHeaderDataTable();
