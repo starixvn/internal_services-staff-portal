@@ -1,6 +1,5 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
-    using System.Linq;
     using System.Web.Mvc;
     using Client.Controllers;
     using Domain.Infrastructure;
@@ -34,8 +33,7 @@
         {
             var viewModel = new ListMailViewModel
             {
-                SelectedTicketCategory =
-                    context.TicketCategories.First(x => x.CategoryId == categoryId)
+                SelectedTicketCategory = ticketCategoryService.GetTicketCategory(categoryId)
             };
 
             return PartialView("_ListMail", viewModel);

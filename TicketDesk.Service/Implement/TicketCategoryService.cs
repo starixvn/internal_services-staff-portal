@@ -6,6 +6,11 @@
 
     public class TicketCategoryService : EntityFrameworkBaseService, ITicketCategoryService
     {
+        public TicketCategory GetTicketCategory(int categoryId)
+        {
+            return context.TicketCategories.Find(categoryId);
+        }
+
         public IEnumerable<TicketCategory> GetTicketCategories()
         {
             return context.TicketCategories;
