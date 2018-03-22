@@ -308,6 +308,10 @@
     <Compile Include="Migrations\201803140408191_Nexcel_AddMailToTicketCategory.Designer.cs">
       <DependentUpon>201803140408191_Nexcel_AddMailToTicketCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803220855394_Nexcel_AdditionalEmail.cs" />
+    <Compile Include="Migrations\201803220855394_Nexcel_AdditionalEmail.Designer.cs">
+      <DependentUpon>201803220855394_Nexcel_AdditionalEmail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -490,6 +494,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803140408191_Nexcel_AddMailToTicketCategory.resx">
       <DependentUpon>201803140408191_Nexcel_AddMailToTicketCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803220855394_Nexcel_AdditionalEmail.resx">
+      <DependentUpon>201803220855394_Nexcel_AdditionalEmail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

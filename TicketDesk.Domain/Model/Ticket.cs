@@ -140,6 +140,8 @@ namespace TicketDesk.Domain.Model
 
         public int CategoryId { get; set; }
 
+        public string AdditionalMail { get; set; }
+
         [NotMapped]
         public string CategoryName { get; set; }
 

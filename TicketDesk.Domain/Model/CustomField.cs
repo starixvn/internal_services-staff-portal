@@ -19,8 +19,6 @@
 
         public string Values_vi { get; set; }
 
-        public int CustomFieldListValueId { get; set; }
-
         public bool IsEnabled { get; set; }
 
         public int DisplayOrder { get; set; }

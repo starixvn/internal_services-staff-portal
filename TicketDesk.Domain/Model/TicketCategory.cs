@@ -20,5 +20,8 @@
 
         [Display(Name = nameof(Resources.MailBcc), ResourceType = typeof(Resources))]
         public string MailBccTo { get; set; }
+
+        [Display(Name = "Allow additional mail")]
+        public bool IsAllowAdditionalMail { get; set; }
     }
 }
