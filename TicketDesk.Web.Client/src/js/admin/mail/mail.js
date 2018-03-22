@@ -4,7 +4,13 @@
         mail.handleSave();
     },
 
-    filterForm: function() {
+    filterForm: function () {
+        $(".filter-form form").on("change",
+            "select",
+            function() {
+                $(".filter-form form").trigger("submit");
+            });
+
         $(".filter-form").on("submit",
             "form",
             function (e) {
@@ -18,6 +24,8 @@
                     }
                 });
             });
+
+        $(".filter-form form").trigger("submit");
     },
 
     handleSave: function () {
