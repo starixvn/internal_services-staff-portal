@@ -381,6 +381,7 @@
     <Compile Include="Controllers\FileManagerController.cs" />
     <Compile Include="Controllers\IdUploaderController.cs" />
     <Compile Include="Areas\Admin\Controllers\LanguagesController.cs" />
+    <Compile Include="Controllers\MailTemplateController.cs" />
     <Compile Include="Controllers\NapUserSettingController.cs" />
     <Compile Include="Controllers\FirstRunSetupController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
@@ -467,7 +468,6 @@
     <Compile Include="Models\Ticket\NewNetworkTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewSoftwareTicketViewModel.cs" />
     <Compile Include="Models\Ticket\NewFacilityTicketViewModel.cs" />
-    <Compile Include="Models\Ticket\SingleTicketViewModel.cs" />
     <Compile Include="Models\Ticket\TicketFeedbackCustomField.cs" />
     <Compile Include="Models\Ticket\TicketWithFilesBaseViewModel.cs" />
     <Compile Include="Models\UserSignInViewModel.cs" />
@@ -585,7 +585,7 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="MailTemplate\GeneralTicketDetail.cshtml" />
+    <Content Include="Views\MailTemplate\GeneralTicketDetail.cshtml" />
     <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Properties\PublishProfiles\filesystem-precompiled-release.pubxml" />
     <None Include="Properties\PublishProfiles\SSP.pubxml" />

@@ -3,30 +3,30 @@
     using System.Configuration;
     using System.IO;
     using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
+    using System.Web.Routing;
     using Domain.Model;
     using Fanex.MailDeliver.MailClient.API;
     using Fanex.MailDeliver.Model;
     using Interface;
 
+    public class MailEmptyController : Controller
+    {
+    }
+
     public class MailService : EntityFrameworkBaseService, IMailService
     {
-        ////public string RenderRazorViewToString(string viewName, object model)
-        ////{
-        ////    ViewData.Model = model;
-
-        ////    using (var sw = new StringWriter())
-        ////    {
-        ////        var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext,
-        ////            viewName);
-
-        ////        var viewContext = new ViewContext(ControllerContext, viewResult.View,
-        ////            ViewData, TempData, sw);
-        ////        viewResult.View.Render(viewContext, sw);
-        ////        viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-        ////        return sw.GetStringBuilder().ToString();
-        ////    }
-        ////}
+        public static string GetRazorViewAsString(object model, string filePath)
+        {
+            var st = new StringWriter();
+            var context = new HttpContextWrapper(HttpContext.Current);
+            var routeData = new RouteData();
+            var controllerContext = new ControllerContext(new RequestContext(context, routeData), new MailEmptyController());
+            var razor = new RazorView(controllerContext, filePath, null, false, null);
+            razor.Render(new ViewContext(controllerContext, razor, new ViewDataDictionary(model), new TempDataDictionary(), st), st);
+            return st.ToString();
+        }
 
         public void Send(MailRecord mailRecord)
         {
@@ -41,7 +41,15 @@
             // Get ticket category
             var ticketCategory = context.TicketCategories.Find(ticket.CategoryId);
 
-            ////var customFields = context.CustomFieldValues.Where(x => x.TicketId == ticket.TicketId);
+            var customFieldValues = context.CustomFieldValues.Where(x => x.TicketId == ticket.TicketId);
+
+            var singleTicketViewModel = new SingleTicketViewModel
+            {
+                Ticket = ticket,
+                CustomFieldValues = customFieldValues
+            };
+
+            var body = GetRazorViewAsString(singleTicketViewModel, "~/Views/MailTemplate/GeneralTicketDetail.cshtml");
 
             var mailRecord = new MailRecord();
 
@@ -53,7 +61,7 @@
                     MailTo = ticketCategory.MailTo,
                     MailCc = ticketCategory.MailCcTo,
                     MailBcc = ticketCategory.MailBccTo,
-                    Body = "test",
+                    Body = body,
                     Subject = ticket.Title
                 };
             }

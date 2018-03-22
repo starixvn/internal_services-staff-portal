@@ -347,6 +347,7 @@
     <Compile Include="Model\Extensions\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\Reference.cs" />
+    <Compile Include="Model\SingleTicketViewModel.cs" />
     <Compile Include="Model\TicketCategory.cs" />
     <Compile Include="Model\TicketCategoryCustomField.cs" />
     <Compile Include="Model\TicketEventNotification.cs" />

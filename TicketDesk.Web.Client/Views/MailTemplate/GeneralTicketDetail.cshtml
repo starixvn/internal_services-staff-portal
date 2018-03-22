@@ -1,0 +1,43 @@
+﻿@using Fanex.NAP.Core.Web
+@model TicketDesk.Domain.Model.SingleTicketViewModel
+
+@{
+    Layout = "";
+}
+
+<section>
+    <p>
+        <span>Title: </span>
+        <span>@Model.Ticket.Title</span>
+    </p>
+    <p>
+        <span>Created Date: </span>
+        <span>@Model.Ticket.CreatedDate</span>
+    </p>
+    <p>
+        <span>Status: </span>
+        <span>@Model.Ticket.TicketStatus</span>
+    </p>
+    <p>
+        <span>Shop: </span>
+        <span>@Model.Ticket.ShopId</span>
+    </p>
+    <p>
+        <span>Created by: </span>
+        <span>@Model.Ticket.CreatedBy</span>
+    </p>
+    <p>
+        <span>Last update by: </span>
+        <span>@Model.Ticket.LastUpdateBy</span>
+    </p>
+</section>
+
+<section>
+    @foreach (var customFieldValue in Model.CustomFieldValues)
+    {
+        <p>
+            <span>@customFieldValue.CustomFieldId</span>
+            <span>@customFieldValue.Value</span>
+        </p>
+    }
+</section>

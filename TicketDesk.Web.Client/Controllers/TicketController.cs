@@ -357,7 +357,7 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult TicketDetails(int ticketId, int? categoryId)
+        public ActionResult TicketDetails(int ticketId)
         {
             var ticket = ticketService.GetTicket(ticketId);
 
