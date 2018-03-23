@@ -50,7 +50,7 @@
             @using (Html.BeginForm("MoreAnnouncement", "Home", FormMethod.Get, new { @class = "form-inline filter" }))
             {
                 <div class="form-group">
-                    @Html.LabelFor(x => x.PublishedFrom)
+                    @Html.LabelFor(x => x.PublishedFrom, new { @class = "label-filter" })
                     <div class='input-group date'>
                         @Html.TextBoxFor(x => x.PublishedFrom, new { @class = "form-control datetimepicker", id = "from-date" })
                         <span class="icon-calendar"></span>
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(x => x.PublishedTo)
+                    @Html.LabelFor(x => x.PublishedTo, new { @class = "label-filter" })
                     <div class='input-group date'>
                         @Html.TextBoxFor(x => x.PublishedTo, new { @class = "form-control datetimepicker", id = "to-date" })
                         <span class="icon-calendar"></span>
@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(x => x.Type)
+                    @Html.LabelFor(x => x.Type, new { @class = "label-filter" })
                     <div class='input-group date'>
                         @Html.EnumDropDownListFor(x => x.Type, "All", new { @class = "form-control" })
                     </div>

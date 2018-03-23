@@ -1288,6 +1288,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     .filter .form-group label {
       font-weight: 600;
       margin-right: 8px; }
+    .filter .form-group .label-filter {
+      color: #2e4592; }
   .filter .input-group.date .form-control {
     width: 115px; }
   .filter .input-group.date .input-group-addon {

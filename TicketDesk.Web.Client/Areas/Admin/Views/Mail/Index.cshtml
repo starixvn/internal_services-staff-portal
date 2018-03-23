@@ -23,11 +23,9 @@
 <section class="filter-form">
     @using (Html.BeginForm("ListMail", "Mail", FormMethod.Post, new { @class = "filter-row" }))
     {
-        <div class="select-group">
-            @Html.LabelFor(x => x.CategoryId)
-            <div class="select-group">
-                @Html.EnumDropDownListFor(x => x.CategoryId, new { @class = "form-control" })
-            </div>
+        <div class="dropdown-medium">
+            @Html.LabelFor(x => x.CategoryId)            
+            @Html.EnumDropDownListFor(x => x.CategoryId, new { @class = "form-control" })            
         </div>
     }
 </section>

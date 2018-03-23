@@ -31,12 +31,12 @@
 <section class="filter-form">
     @using (Html.BeginForm("GetTicketList", "TicketList", FormMethod.Get, new { @class = "filter-row", id = "filterForm" }))
     {
-        <div class="dropdown-small">
+        <div class="select-group">
             @Html.LabelFor(x => x.ShopId)
             @Html.DropDownListFor(x => x.ShopId, Model.Shops, "All", new { @class = "form-control searchable" })
         </div>
 
-        <div class="dropdown-small">
+        <div class="dropdown-medium">
             @Html.LabelFor(x => x.TicketType)
             @Html.EnumDropDownListFor(x => x.TicketType, "All", new { @class = "form-control" })
         </div>
