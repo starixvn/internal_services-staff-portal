@@ -11,7 +11,7 @@
 }
 
 <div class="ticket-list">
-    <div class="form-content">
+    <div class="form-content feature">
         <div class="title panel-heading">
             @Resources.TicketList
         </div>
@@ -20,7 +20,7 @@
             {
                 <div class="form-group">
                     @Html.LabelFor(x => x.Status)
-                    <div class='input-group date'>
+                    <div class='input-group dropdown'>
                         @Html.EnumDropDownListFor(x => x.Status, "All", new { @class = "form-control" })
                     </div>
                 </div>
@@ -33,12 +33,12 @@
                 <thead>
                     <tr>
                         <th class="text-center width-80">#</th>
-                        <th>@Resources.ID</th>
+                        <th class="text-center width-80">@Resources.ID</th>
                         <th>@Resources.Domain_Model_Ticket_Title</th>
-                        <th>@Resources.TicketCategory</th>
+                        <th class="width-150">@Resources.TicketCategory</th>
                         <th>@Resources.ShopName</th>
-                        <th class="text-center width-150">@Resources.Domain_Model_Ticket_CreatedDate</th>
-                        <th class="text-center width-150">@Resources.Domain_Model_Ticket_Status</th>
+                        <th class="text-center width-230">@Resources.Domain_Model_Ticket_CreatedDate</th>
+                        <th class="text-center width-120">@Resources.Domain_Model_Ticket_Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,8 +51,8 @@
                             index++;
 
                             <tr class="@evenClass">
-                                <td>@index</td>
-                                <td>
+                                <td class="text-center">@index</td>
+                                <td class="text-center">
                                     <a href="@Url.Action("TicketDetails", "TicketList", new { ticketId = ticket.Id })">@ticket.Id</a>
                                 </td>
                                 <td>@ticket.Subject</td>

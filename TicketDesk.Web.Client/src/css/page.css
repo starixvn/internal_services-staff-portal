@@ -408,19 +408,25 @@ tr.header {
 .ticketItems .clickable {
   color: #333; }
 
-.status, .inprogress, .new, .pending {
+.status, .inprogress, .new, .pending, .rejected, .closed {
   color: #fff;
   border-radius: 32px;
   padding: 2px 12px 4px; }
 
 .inprogress {
-  background-color: #ffa337; }
-
-.new {
   background-color: #65d26d; }
 
+.new {
+  background-color: #4fcfff; }
+
 .pending {
-  background-color: #ec2a53; }
+  background-color: #ffa337; }
+
+.rejected {
+  background-color: #f81919; }
+
+.closed {
+  background-color: #898989; }
 
 .display-item {
   float: left; }
@@ -1194,8 +1200,14 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .width-150 {
   width: 150px; }
 
+.width-120 {
+  width: 120px; }
+
 .width-100 {
   width: 100px; }
+
+.width-230 {
+  width: 230px; }
 
 @-webkit-keyframes sonarEffect {
   0% {
@@ -1304,6 +1316,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     width: 40px;
     text-align: center;
     cursor: pointer; }
+  .filter .input-group.dropdown {
+    width: 150px; }
 
 .tbl-announcement-detail tbody tr td:first-child {
   vertical-align: middle; }

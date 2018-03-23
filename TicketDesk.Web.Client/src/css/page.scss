@@ -583,17 +583,27 @@ tr.header {
 
 .inprogress {
     @extend .status;
-    background-color: #ffa337;
+    background-color: #65d26d;
 }
 
 .new {
     @extend .status;
-    background-color: #65d26d;
+    background-color: #4fcfff;
 }
 
 .pending {
     @extend .status;
-    background-color: #ec2a53;
+    background-color: #ffa337;
+}
+
+.rejected {
+    @extend .status;
+    background-color: #f81919;
+}
+
+.closed {
+    @extend .status;
+    background-color: #898989;
 }
 
 .display-item {
@@ -1611,8 +1621,16 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     width: 150px;
 }
 
+.width-120 {
+    width: 120px;
+}
+
 .width-100 {
     width: 100px;
+}
+
+.width-230 {
+    width: 230px;
 }
 
 @-webkit-keyframes sonarEffect {
@@ -1777,6 +1795,10 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
             text-align: center;
             cursor: pointer;
         }
+    }
+
+    .input-group.dropdown {
+        width: 150px;
     }
 }
 
