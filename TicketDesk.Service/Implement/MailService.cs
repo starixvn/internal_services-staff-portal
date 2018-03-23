@@ -58,11 +58,16 @@
                      GroupId = x.GroupId
                  });
 
+            var createdBy = context.SecurityProvider.NapContextHelper.UserService.GetById(int.Parse(ticket.CreatedBy));
+            var lastUpdateBy = context.SecurityProvider.NapContextHelper.UserService.GetById(int.Parse(ticket.LastUpdateBy));
+
             var singleTicketViewModel = new SingleTicketViewModel
             {
                 Ticket = ticket,
                 CustomFieldValues = customFieldValues,
-                ShopName = context.Shops.Find(ticket.ShopId)?.ShopName
+                ShopName = context.Shops.Find(ticket.ShopId)?.ShopName,
+                CreatedByUsername = createdBy.Username,
+                UpdatedByUsername = lastUpdateBy.Username
             };
 
             var body = GetRazorViewAsString(singleTicketViewModel, "~/Views/MailTemplate/GeneralTicketDetail.cshtml");

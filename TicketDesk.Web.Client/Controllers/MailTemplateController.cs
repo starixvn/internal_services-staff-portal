@@ -25,28 +25,16 @@
         {
             var ticket = ticketService.GetTicket(ticketId);
 
-            //// var customFieldValues =
-            ////     (from cfv in context.CustomFieldValues
-            ////      join cf in context.CustomFields on cfv.CustomFieldId equals cf.Id
-            ////      where cfv.TicketId == ticketId
-            ////      orderby cf.DisplayOrder, cfv.Id
-            ////      select new
-            ////      {
-            ////          CustomField = cf,
-            ////          cfv.Value,
-            ////          cfv.GroupId
-            ////      }).ToList().Select(x => new CustomFieldValue
-            ////      {
-            ////          CustomField = x.CustomField,
-            ////          Value = x.Value,
-            ////          GroupId = x.GroupId
-            ////      });
+            var createdBy = context.SecurityProvider.NapContextHelper.UserService.GetById(int.Parse(ticket.CreatedBy));
+            var lastUpdateBy = context.SecurityProvider.NapContextHelper.UserService.GetById(int.Parse(ticket.LastUpdateBy));
 
             var singleTicketViewModel = new SingleTicketViewModel
             {
                 Ticket = ticket,
                 CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket),
-                ShopName = shopService.GetShopById(ticket.ShopId).ShopName
+                ShopName = shopService.GetShopById(ticket.ShopId).ShopName,
+                CreatedByUsername = createdBy.Username,
+                UpdatedByUsername = lastUpdateBy.Username
             };
 
             return View(singleTicketViewModel);
