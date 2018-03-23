@@ -13,10 +13,9 @@
     provided to the recipient.
 *@
 @using TicketDesk.Localization.Views.TicketActivity
-
-@using TicketDesk.Domain
 @using TicketDesk.Domain.Model
 @using TicketDesk.Core.Enumerations;
+@using TicketDesk.Domain.Extensions
 @model  Ticket
 @{
     var activity = (TicketActivity)ViewBag.Activity;

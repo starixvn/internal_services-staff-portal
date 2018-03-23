@@ -113,8 +113,6 @@
     <Compile Include="Enumerations\RouteNames.cs" />
     <Compile Include="Enumerations\SizeUnit.cs" />
     <Compile Include="Enumerations\TicketCategoryTypes.cs" />
-    <Compile Include="Helpers\Enumerations.cs" />
-    <Compile Include="Helpers\HelperService.cs" />
     <Compile Include="Model\CommandResult.cs" />
     <Compile Include="Model\SortData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -170,9 +168,7 @@
     </None>
     <None Include="TicketDesk.Core.ruleset" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Constants\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.CSharp.dll" />

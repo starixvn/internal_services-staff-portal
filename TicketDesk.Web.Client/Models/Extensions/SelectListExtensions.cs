@@ -16,11 +16,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using TicketDesk.Domain;
 using TicketDesk.Localization.Models;
 
 namespace TicketDesk.Web.Client
 {
+    using Domain.Extensions;
+
     /// <summary>
     /// This class contains a series of helpers and extensions for transforming collections to MVC select lists.
     /// </summary>

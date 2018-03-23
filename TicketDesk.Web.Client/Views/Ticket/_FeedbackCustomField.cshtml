@@ -1,6 +1,5 @@
 ﻿@using TicketDesk.Web.Client.Models.Ticket
 @using TicketDesk.Core.Enumerations
-@using TicketDesk.Core.Helpers
 
 @model IList<TicketFeedbackCustomField>
 
@@ -14,7 +13,7 @@
                 @Html.Label(field.CustomFieldName, new { @class = "col-md-2 col-sm-1 control-label" })
                 <div class="col-md-8 col-sm-11">
                     @{
-                        var possibleValues = HelperService.ConvertValuesToList(field.CustomFieldPossibleValue);
+                        var possibleValues = field.CustomFieldPossibleValue.Split(new[] { "\r\n" }, StringSplitOptions.None);
                     }
                     @foreach (var value in possibleValues)
                     {

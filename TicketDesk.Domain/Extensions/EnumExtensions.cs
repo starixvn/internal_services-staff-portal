@@ -1,12 +1,35 @@
-﻿namespace TicketDesk.Domain
+﻿namespace TicketDesk.Domain.Extensions
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using System.Reflection;
 
     public static class EnumExtensions
     {
+        /// <summary>
+        /// Get description for enum
+        /// Wrote by Raymond.Le
+        /// </summary>
+        /// <param name="enumType"></param>
+        /// <returns></returns>
+        public static string GetDescription(Enum enumType)
+        {
+            string desciption = string.Empty;
+
+            if (enumType != null)
+            {
+                FieldInfo fi = enumType.GetType().GetField(enumType.ToString());
+                DescriptionAttribute[] attributes =
+                    (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                desciption = attributes.Length > 0 ? attributes[0].Description : enumType.ToString();
+            }
+
+            return desciption;
+        }
+
         /// <summary>
         /// Gets the display name for an enum.
         /// </summary>
