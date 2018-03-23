@@ -11,6 +11,7 @@
     <link href="~/src/libs/dropzone/dropzone.min.css" rel="stylesheet" />
     <link href="~/src/css/custom-dropzone.css" rel="stylesheet" />
     <link href="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/src/libs/bootstrap-tagsinput/bootstrap-tagsinput.css" />
 }
 
 @section scripts
@@ -20,6 +21,8 @@
 
     <script src="~/src/libs/datetimepicker/moment.js"></script>
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="~/src/libs/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
 
     <script src="~/src/js/formhandler.js"></script>
 }
@@ -103,7 +106,7 @@
 
                 <div class="fullwidth">
                     <div class="fullwidth no-border custom-dropdown">
-                        @Html.TextBoxFor(x => x.Ticket.AdditionalMail)
+                        @Html.TextBoxFor(x => x.Ticket.AdditionalMail, new { @class = "tag" })
                     </div>
                 </div>
             </div>

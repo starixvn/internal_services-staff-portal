@@ -7,7 +7,7 @@
     <div class="form-group">
         @Html.LabelFor(x => x.SelectedTicketCategory.MailTo, new { @class = "control-label text-content" })
         <div class="text-content">
-            @Html.TextAreaFor(x => x.SelectedTicketCategory.MailTo, new { @class = "form-control" })
+            @Html.TextBoxFor(x => x.SelectedTicketCategory.MailTo, new { @class = "form-control tag"})
             @Html.ValidationMessageFor(x => x.SelectedTicketCategory.MailTo, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -15,7 +15,7 @@
     <div class="form-group">
         @Html.LabelFor(x => x.SelectedTicketCategory.MailCcTo, new { @class = "control-label text-content" })
         <div class="text-content">
-            @Html.TextAreaFor(x => x.SelectedTicketCategory.MailCcTo, new { @class = "form-control" })
+            @Html.TextBoxFor(x => x.SelectedTicketCategory.MailCcTo, new { @class = "form-control tag"})
             @Html.ValidationMessageFor(x => x.SelectedTicketCategory.MailCcTo, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -23,7 +23,7 @@
     <div class="form-group">
         @Html.LabelFor(x => x.SelectedTicketCategory.MailBccTo, new { @class = "control-label text-content" })
         <div class="text-content">
-            @Html.TextAreaFor(x => x.SelectedTicketCategory.MailBccTo, new { @class = "form-control" })
+            @Html.TextBoxFor(x => x.SelectedTicketCategory.MailBccTo, new { @class = "form-control tag"})
             @Html.ValidationMessageFor(x => x.SelectedTicketCategory.MailBccTo, "", new { @class = "text-danger" })
         </div>
     </div>

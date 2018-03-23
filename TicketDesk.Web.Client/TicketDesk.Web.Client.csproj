@@ -506,6 +506,8 @@
     <Content Include="src\js\ticket-dropzone.js" />
     <Content Include="src\js\ticket\customer-support.js" />
     <Content Include="src\js\ticket\facility.js" />
+    <Content Include="src\libs\bootstrap-tagsinput\bootstrap-tagsinput.css" />
+    <Content Include="src\libs\bootstrap-tagsinput\bootstrap-tagsinput.js" />
     <Content Include="src\libs\jquery-ui\jquery-ui.css" />
     <Content Include="src\libs\jquery-ui\jquery-ui.js" />
     <Content Include="src\libs\jquery-ui\jquery-ui.min.css" />

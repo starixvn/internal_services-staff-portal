@@ -10,12 +10,15 @@
 {
     <link href="~/src/libs/dropzone/dropzone.min.css" rel="stylesheet" />
     <link href="~/src/css/custom-dropzone.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/src/libs/bootstrap-tagsinput/bootstrap-tagsinput.css" />
 }
 
 @section scripts
 {
     <script src="~/src/libs/dropzone/dropzone.min.js"></script>
     <script src="~/src/js/ticket-dropzone.js"></script>
+
+    <script src="~/src/libs/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
 
     <script src="~/src/js/formhandler.js"></script>
     <script src="~/src/js/ticket/facility.js"></script>
@@ -126,7 +129,7 @@
 
                 <div class="fullwidth">
                     <div class="fullwidth no-border custom-dropdown">
-                        @Html.TextBoxFor(x => x.Ticket.AdditionalMail)
+                        @Html.TextBoxFor(x => x.Ticket.AdditionalMail, new { @class = "tag" })
                     </div>
                 </div>
             </div>

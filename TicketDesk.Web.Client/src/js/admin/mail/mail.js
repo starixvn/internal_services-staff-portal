@@ -4,6 +4,23 @@
         mail.handleSave();
     },
 
+    initTag: function() {
+        $(".tag").tagsinput();
+    },
+
+    checkMailFormat: function(params) {
+        // Don't offset to create a tag if there is no @ symbol
+        if (params.term.indexOf("@") === -1) {
+            // Return null to disable tag creation
+            return null;
+        }
+
+        return {
+            id: params.term,
+            text: params.term
+        }
+    },
+
     filterForm: function () {
         $(".filter-form form").on("change",
             "select",
@@ -21,6 +38,7 @@
                     data: $(this).serialize(),
                     success: function (result) {
                         $("#data-list").html(result);
+                        mail.initTag();
                     }
                 });
             });

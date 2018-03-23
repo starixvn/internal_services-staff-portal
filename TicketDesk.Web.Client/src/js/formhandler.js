@@ -14,6 +14,11 @@ var formhandler = {
         formhandler.handelFormSubmit();
         //formhandler.initSelect2();
         formhandler.initDateTimePicker();
+        formhandler.initTag();
+    },
+
+    initTag: function () {
+        $(".tag").tagsinput();
     },
 
     initDateTimePicker: function () {
