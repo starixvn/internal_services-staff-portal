@@ -147,6 +147,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
     <Compile Include="EntityFrameworkBaseService.cs" />
     <Compile Include="Implement\AnnouncementService.cs" />
     <Compile Include="Implement\CustomFieldService.cs" />

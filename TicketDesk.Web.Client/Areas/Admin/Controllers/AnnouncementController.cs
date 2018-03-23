@@ -15,7 +15,8 @@
     public class AnnouncementController : BaseController
     {
         private readonly IAnnouncementService announcementService;
-        private readonly TimeSpan tolerateTime = TimeSpan.FromMinutes(5);
+        private const int tolerateMinute = 5;
+        private const int allowedDaysInFuture = 365;
 
         public AnnouncementController(IAnnouncementService announcementService)
         {
@@ -38,8 +39,8 @@
         public ActionResult CheckPublishedDateTime(NewAnnouncementViewModel viewModel)
         {
             var result = viewModel.Announcement.PublishedDateTime == null ||
-                     (((DateTime.Now - viewModel.Announcement.PublishedDateTime) <= tolerateTime) &&
-                      ((viewModel.Announcement.PublishedDateTime - DateTime.Now) <= TimeSpan.FromDays(365)));
+                     (((DateTime.Now - viewModel.Announcement.PublishedDateTime).Value.TotalMinutes <= tolerateMinute) &&
+                      ((viewModel.Announcement.PublishedDateTime - DateTime.Now).Value.TotalDays <= allowedDaysInFuture));
 
             // Too far in the past or more than 1 year in the future
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -141,7 +142,7 @@
             var result = viewModel.Announcement.PublishedDateTime != null
                          &&
                          (Math.Abs((DateTime.Now - viewModel.Announcement.PublishedDateTime).Value.TotalMinutes) <=
-                          tolerateTime.Minutes);
+                          tolerateMinute);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
