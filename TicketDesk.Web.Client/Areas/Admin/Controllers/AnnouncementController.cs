@@ -15,12 +15,26 @@
     public class AnnouncementController : BaseController
     {
         private readonly IAnnouncementService announcementService;
-        private const int tolerateMinute = 5;
-        private const int allowedDaysInFuture = 365;
 
         public AnnouncementController(IAnnouncementService announcementService)
         {
             this.announcementService = announcementService;
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
+        public ActionResult Index()
+        {
+            var today = DateTime.Now;
+            var viewModel = new AnnouncementViewModel
+            {
+                PublishedFrom = today.AddDays(-7),
+                PublishedTo = today,
+                Type = null,
+                State = null,
+                HaveHostPermission = IsHaveHostPermission(FunctionKeys.Announcement, Constant.Policy.Host)
+            };
+
+            return View(viewModel);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
@@ -34,16 +48,6 @@
             };
 
             return PartialView("_AnouncementList", listAnnouncementViewModel);
-        }
-
-        public ActionResult CheckPublishedDateTime(NewAnnouncementViewModel viewModel)
-        {
-            var result = viewModel.Announcement.PublishedDateTime == null ||
-                     (((DateTime.Now - viewModel.Announcement.PublishedDateTime).Value.TotalMinutes <= tolerateMinute) &&
-                      ((viewModel.Announcement.PublishedDateTime - DateTime.Now).Value.TotalDays <= allowedDaysInFuture));
-
-            // Too far in the past or more than 1 year in the future
-            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
@@ -116,34 +120,10 @@
             });
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Read)]
-        public ActionResult Index()
-        {
-            var today = DateTime.Now;
-            var viewModel = new AnnouncementViewModel
-            {
-                PublishedFrom = today.AddDays(-7),
-                PublishedTo = today,
-                Type = null,
-                State = null,
-                HaveHostPermission = IsHaveHostPermission(FunctionKeys.Announcement, Constant.Policy.Host)
-            };
-
-            return View(viewModel);
-        }
-
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult IsPublishImmediately(NewAnnouncementViewModel viewModel)
         {
-            // Check datetime
-            // Published in the past
-            // TOLERATE TIME: -/+5 MINUTES
-
-            var result = viewModel.Announcement.PublishedDateTime != null
-                         &&
-                         (Math.Abs((DateTime.Now - viewModel.Announcement.PublishedDateTime).Value.TotalMinutes) <=
-                          tolerateMinute);
-
+            var result = viewModel.Announcement.IsPublished;
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

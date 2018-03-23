@@ -112,33 +112,27 @@ var modalhandler = {
             function (e) {
                 e.preventDefault();
                 if ($(this).valid()) {
-                    // Check if announcement publish immediatly
 
-                    var isPublishImmediately = $("#is-publish-immediatly").val();
-                    if (isPublishImmediately === "False") {
-                        $.ajax({
-                            url: $("#is-publish-url").attr("href"),
-                            method: $(this).attr("method"),
-                            data: $(this).serialize(),
-                            success: function (result) {
-                                if (result === true) {
-                                    // set value to true
-                                    $("#is-publish-immediatly").val(true);
+                    $.ajax({
+                        url: 'Announcement/IsPublishImmediately',
+                        method: $(this).attr("method"),
+                        data: $(this).serialize(),
+                        success: function (result) {
+                            if (result === true) {
+                                // set value to true
+                                $("#is-publish-immediatly").val(true);
 
-                                    // change action url
-                                    var publishUrl = $("#publish-action-url").attr("href");
-                                    $(this).attr("action", publishUrl);
+                                // change action url
+                                var publishUrl = $("#publish-action-url").attr("href");
+                                $(this).attr("action", publishUrl);
 
-                                    // render confirm modal
-                                    $("#announcement-modal .modal").first().modal();
-                                } else {
-                                    modalhandler.submitModalForm($("#announcement-modal form"));
-                                }
+                                // render confirm modal
+                                $("#announcement-modal .modal").first().modal();
+                            } else {
+                                modalhandler.submitModalForm($("#announcement-modal form"));
                             }
-                        });
-                    } else {
-                        modalhandler.submitModalForm($(this));
-                    }
+                        }
+                    });
                 }
             });
     },

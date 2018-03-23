@@ -6,12 +6,9 @@
 @using (Html.BeginForm("Create", "Announcement", FormMethod.Post, new { id = "modal-form" }))
 {
     <div class="hidden">
-        <a id="is-publish-url" href="@Url.Action("IsPublishImmediately","Announcement")"></a>
         <a id="publish-action-url" href="@Url.Action("Publish","Announcement")"></a>
     </div>
     <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
-        @Html.HiddenFor(x => x.IsPublishedImmediately, new { id = "is-publish-immediatly" })
-
         <div class="modal-dialog confirm-modal" role="document">
             <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
