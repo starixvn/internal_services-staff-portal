@@ -1120,6 +1120,9 @@ table.dataTable {
   .filter-row .dropdown-small {
     flex-basis: 95px;
     max-width: 95px; }
+  .filter-row .dropdown-medium {
+    flex-basis: 150px;
+    max-width: 150px; }
 
 .button-filter {
   margin-left: -1rem; }
