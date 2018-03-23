@@ -376,7 +376,6 @@
     <Compile Include="Areas\Admin\Models\TicketList\TicketListFilterViewModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomFieldsController.cs" />
-    <Compile Include="Controllers\EmailTestController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FileManagerController.cs" />
     <Compile Include="Controllers\IdUploaderController.cs" />
@@ -490,6 +489,7 @@
     <Content Include="Scripts\jquery.validate.globalize.js" />
     <Content Include="Scripts\jquery.validate.globalize.min.js" />
     <Content Include="src\contents\images\check.svg" />
+    <Content Include="src\contents\images\error-assets\accessdenied.png" />
     <Content Include="src\contents\images\flag-en.png" />
     <Content Include="src\contents\images\flag-vn.png" />
     <Content Include="src\contents\images\sort.png" />
