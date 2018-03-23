@@ -36,7 +36,7 @@
 
     function initDataTable() {
         var ticketListTable = commonDataTableInit.Init();
-        ticketListTable.order = [[3, "asc"]];
+        ticketListTable.order = [[4, "asc"]];
         ticketListTable.columns =
             [{
                 width: 70,
@@ -66,9 +66,7 @@
                 width: 150,
                 sortable: true
             }];
-        ticketListTable.bAutoWidth = false;
         $(domElement.TicketTable).DataTable(ticketListTable);
-
         floatThead.initFloatThead(domElement.TicketTable);
         sidebar.initSelect2();
     }

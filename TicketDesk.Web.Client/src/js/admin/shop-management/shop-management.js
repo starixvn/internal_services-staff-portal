@@ -60,7 +60,6 @@
             success: function (data) {
                 $(domElement.TableArea).html(data);
                 initDataTable();
-                sidebar.initSelect2();
                 eventClickEditIconHandler();
             }
         });
@@ -112,8 +111,9 @@
             ];
 
         $("table").DataTable(shopDataTable);
-
         floatThead.initFloatThead("table");
+        sidebar.initSelect2();
+
     }
 
     function eventClickEditIconHandler() {
