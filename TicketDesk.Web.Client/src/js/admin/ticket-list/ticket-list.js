@@ -43,7 +43,11 @@
                 sortable: false
             },
             {
-                width: 300,
+                width: 100,
+                sortable: true
+            },
+            {
+                width: null,
                 sortable: true
             },
             {
@@ -51,7 +55,7 @@
                 sortable: true
             },
             {
-                width: 250,
+                width: 200,
                 sortable: true
             },
             {
@@ -59,13 +63,14 @@
                 sortable: true
             },
             {
-                width: 100,
+                width: 150,
                 sortable: true
             }];
         ticketListTable.bAutoWidth = false;
         $(domElement.TicketTable).DataTable(ticketListTable);
 
-        commonDataTableInit.InitFixedHeaderDataTable();
+        floatThead.initFloatThead(domElement.TicketTable);
+        sidebar.initSelect2();
     }
 
     function getTicketList() {
@@ -110,12 +115,12 @@
         var $popup = $(domElement.ConfirmPopup);
         $popup.modal("show");
         var notTrigger = false;
-        $('#confirm-popup').one('click', domElement.ConfirmButton, function () {
+        $(domElement.ConfirmPopup).one('click', domElement.ConfirmButton, function () {
             if (!notTrigger) {
                 action();
             }
         });
-        $('#confirm-popup').one('click', '.btn-cancel', function () {
+        $(domElement.ConfirmPopup).one('click', '.btn-cancel', function () {
             notTrigger = true;
         });
     }

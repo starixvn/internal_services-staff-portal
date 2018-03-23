@@ -120,7 +120,7 @@ var modalhandler = {
                             url: $("#is-publish-url").attr("href"),
                             method: $(this).attr("method"),
                             data: $(this).serialize(),
-                            success: function(result) {
+                            success: function (result) {
                                 if (result === true) {
                                     // set value to true
                                     $("#is-publish-immediatly").val(true);
@@ -143,7 +143,7 @@ var modalhandler = {
             });
     },
 
-    submitModalForm: function(form) {
+    submitModalForm: function (form) {
         $.ajax({
             url: $(form).attr("action"),
             method: $(form).attr("method"),
@@ -167,7 +167,7 @@ var quickPublish = {
         quickPublish.handelQuickPublishForm();
     },
 
-    handlePublishButton: function() {
+    handlePublishButton: function () {
         $("#announcement-table").on("click",
             ".quick-publish",
             function () {
@@ -177,7 +177,7 @@ var quickPublish = {
                 $.ajax({
                     url: modalUrl,
                     method: "post",
-                    data: { ids: listIdsToPublish},
+                    data: { ids: listIdsToPublish },
                     success: function (result) {
                         $("#quick-publish-modal").html(result);
                         $("#quick-publish-modal .modal").modal();
@@ -186,10 +186,10 @@ var quickPublish = {
             });
     },
 
-    handelQuickPublishForm: function() {
+    handelQuickPublishForm: function () {
         $("#quick-publish-modal").on("submit",
             "form",
-            function(e) {
+            function (e) {
                 e.preventDefault();
                 var listIdsToPublish = quickPublish.getIdsToPublish();
                 $.ajax({
@@ -208,7 +208,7 @@ var quickPublish = {
             });
     },
 
-    handleCheckBoxes: function() {
+    handleCheckBoxes: function () {
         $("#announcement-table").on("click",
             "input[type=checkbox]",
             function () {
@@ -279,7 +279,7 @@ var listAnnouncement = {
         ];
 
         $table.DataTable(tableConfigs);
-        commonDataTableInit.InitFixedHeaderDataTable();
+        floatThead.initFloatThead($table);
     },
 
     filterForm: function () {

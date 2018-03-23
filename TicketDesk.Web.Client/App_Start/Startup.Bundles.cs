@@ -166,7 +166,7 @@
 
             bundles.Add(new ScriptBundle("~/bundles/shop-management").Include(
                    "~/src/libs/jquery.DataTable/datatables.min.js",
-                   "~/src/libs/jquery.DataTable/dataTables.fixedHeader.min.js",
+                   "~/src/libs/jquery.floatThead/jquery.floatThead.js",
                    "~/src/libs/jquery-ui/jquery-ui.min.js",
                    "~/src/js/admin/dataTableCommon.js",
                    "~/src/js/admin/shop-management/shop-management.js"));

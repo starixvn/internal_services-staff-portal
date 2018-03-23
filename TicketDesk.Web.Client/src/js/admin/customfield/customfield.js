@@ -101,7 +101,7 @@
         datatableConfigs.order = [[1, "asc"]];
 
         $("table").DataTable(datatableConfigs);
-        commonDataTableInit.InitFixedHeaderDataTable();
+        floatThead.initFloatThead("table");
     }
 }
 

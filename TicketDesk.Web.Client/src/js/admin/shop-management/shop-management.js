@@ -113,7 +113,7 @@
 
         $("table").DataTable(shopDataTable);
 
-        commonDataTableInit.InitFixedHeaderDataTable();
+        floatThead.initFloatThead("table");
     }
 
     function eventClickEditIconHandler() {

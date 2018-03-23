@@ -7,6 +7,7 @@
     <thead>
         <tr>
             <th class="number">#</th>
+            <th>@Resources.ID</th>
             <th>@Resources.Domain_Model_Ticket_Title</th>
             <th>@Strings.TicketCategory</th>
             <th>@Resources.ShopName</th>
@@ -23,14 +24,15 @@
                 index++;
             <tr>
                 <td class="text-center">@index</td>
+                <td class="text-center">@ticket.Id</td>
                 <td>
-                    @Html.ActionLink(ticket.Subject, "Details", "Ticket", new { Area = "", ticketId = ticket.Id}, null)
+                    @Html.ActionLink(ticket.Subject, "Details", "Ticket", new { Area = "", ticketId = ticket.Id }, null)
                 </td>
                 <td>@ticket.TicketType</td>
                 <td>@ticket.ShopName</td>
                 <td>@ticket.CreatedDate.UtcDateTime</td>
-                <td class="text-center">
-                    @Html.EnumDropDownListFor(x => ticket.Status, new { @class =  "form-control ticket-status", data_href = Url.Action("UpdateTicketStatus", "TicketList", new { id = ticket.Id}) })
+                <td>
+                    @Html.EnumDropDownListFor(x => ticket.Status, new { @class = "form-control ticket-status", data_href = Url.Action("UpdateTicketStatus", "TicketList", new { id = ticket.Id }) })
                 </td>
             </tr>
         }

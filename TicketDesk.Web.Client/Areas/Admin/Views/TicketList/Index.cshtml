@@ -18,11 +18,9 @@
 {
     <script src="~/src/libs/datetimepicker/moment.js"></script>
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.js"></script>
-
     <script src="~/src/libs/jquery.DataTable/datatables.min.js"></script>
-    <script src="~/src/libs/jquery.DataTable/dataTables.fixedHeader.min.js"></script>
+    <script src="~/src/libs/jquery.floatThead/jquery.floatThead.js"></script>
     <script src="~/src/libs/jquery.DataTable/datetime.js"></script>
-
     <script src="~/src/js/admin/dataTableCommon.js"></script>
     <script src="~/src/js/admin/ticket-list/ticket-list.js"></script>
 
@@ -35,7 +33,7 @@
     {
         <div class="dropdown-small">
             @Html.LabelFor(x => x.ShopId)
-            @Html.DropDownListFor(x => x.ShopId, Model.Shops, "All", new { @class = "form-control" })
+            @Html.DropDownListFor(x => x.ShopId, Model.Shops, "All", new { @class = "form-control searchable" })
         </div>
 
         <div class="dropdown-small">

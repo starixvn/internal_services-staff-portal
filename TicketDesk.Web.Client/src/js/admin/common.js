@@ -33,13 +33,14 @@
 
     initSelect2: function () {
         if ($.fn.select2) {
-            if ($("select").hasClass("select2-searchable")) {
-                $("select").not(".not-select2").select2();
-            } else {
-                $("select").not(".not-select2").select2({
+            if (!$("select").hasClass("not-select2")) {
+
+                $("select.searchable").select2();
+
+                $("select").not(".searchable").select2({
                     minimumResultsForSearch: Infinity
                 });
-            }
+            } 
         }
     },
 
@@ -77,20 +78,24 @@
     }
 }
 
-var dataTableReflow = {
-    reInitFixedHeader: function () {
-        if ($("table").length) {
-            var $table = $("table").DataTable();
-            $table.fixedHeader.disable();
-            $table.fixedHeader.enable();
-        }
-    },
+var floatThead = {
+    initFloatThead: function (table) {
+        $(table).floatThead({
+            top: 50,
+            autoReflow: true
+        })
+    }
+}
 
+var dataTableReflow = {
     setIntervalToReinitFixedHeader: function () {
         if ($(".data-table").length) {
+            var interval = setInterval(function () {
+                $(".data-table").floatThead("reflow");
+            }, 0);
             setTimeout(function () {
-                dataTableReflow.reInitFixedHeader();
-            }, 500);
+                clearInterval(interval)
+            }, 2000)
         }
     }
 }
