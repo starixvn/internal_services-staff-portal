@@ -6,8 +6,12 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="content">
-    <div class="feature">
+
+<div class="ticket-list">
+    <div class="form-content">
+        <div class="title panel-heading">            
+            Ticket List
+        </div>
         <div class="panel-body">
             @using (Html.BeginForm("Index", "TicketList", FormMethod.Get, new { @class = "form-inline filter" }))
             {
