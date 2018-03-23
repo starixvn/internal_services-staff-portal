@@ -1,0 +1,183 @@
+﻿@using TicketDesk.Domain
+@using TicketDesk.Localization.Client
+@using TicketDesk.Localization.Views.Ticket
+@using TicketDesk.Domain.Model
+@model SingleTicketViewModel
+
+<div class="modal-header">
+    <p class="text-info">@Model.Ticket.Title</p>
+</div>
+<div class="modal-body">
+    <h3 class="text-info">@Html.DisplayNameFor(x => x.Ticket.Title)</h3>
+    <p class="text-info">@Model.Ticket.Title</p>
+
+    @foreach (var customFieldValue in Model.CustomFieldValues)
+    {
+        <h3 class="text-info">@customFieldValue.CustomField.Name</h3>
+        if (string.IsNullOrEmpty(customFieldValue.Value))
+        {
+            <p class="text-danger">[NO VALUES]</p>
+        }
+        else
+        {
+            <p class="text-info">@customFieldValue.Value</p>
+        }
+    }
+
+    <div class="panel-heading" style="padding: 3px 5px;">
+        <div class="row">
+            <div class="row-same-height row-full-height">
+                <div class="col-xs-2 col-sm-2 col-xs-height col-full-height text-center panel-title" style="border-right: 1px solid #dcdcdc;">
+                    @Model.Ticket.TicketStatus.GetDisplayName()
+                </div>
+                <div class="col-xs-2 col-sm-1 col-xs-height col-full-height text-center panel-title" style="border-right: 1px solid #dcdcdc;">
+                    #@Model.Ticket.TicketId
+                </div>
+                <div class="col-xs-7 col-sm-9 col-xs-height col-full-height panel-title">
+                    @Model.Ticket.Title
+                </div>
+                <div class="col-xs-1 col-xs-height col-full-height">
+                    <div class="pull-right">
+                        <button id="watch" type="button" class="btn btn-default"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="">
+                            <i class="fa fa-eye"></i> <span class="hidden-sm hidden-xs"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body" style="padding: 0">
+        <div class="row row-no-padding row-same-height row-full-height" style="width: 100%;margin:0">
+            <div class="col-md-8 col-sm-8 col-xs-12 col-xs-height col-full-height">
+                <div class="container-fluid" style="padding: 0;">
+                    <div class="col-xs-12" style="border-bottom: 1px solid #B3CBDF; padding: 5px; background-color: #F7F7F7;">
+                        <div class="pull-right">
+                            @if (ViewBag.DisplayProjects ?? false)
+                            {
+                                <div class="text-primary">
+                                    <i class="fa fa-book"></i>
+                                    @Model.Ticket.ShopId
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.Ticket.TagList))
+                            {
+                                <div class="text-muted text-default">
+
+                                    @foreach (var tag in Model.Ticket.TagList.Split(','))
+                                    {
+                                        <div><i class="fa fa-tag"></i> @tag</div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                        <div>
+                            <div>@(string.IsNullOrEmpty(Model.Ticket.Priority) ? string.Empty : string.Format(Index.Priority, Model.Ticket.Priority)) @Model.Ticket.Category @Model.Ticket.TicketType</div>
+
+                            <div>
+                                @Html.Raw(string.Format(Index.AssignedTo, string.IsNullOrEmpty(Model.Ticket.AssignedTo) ? "<span class='label label-warning'>" + Index.Unassigned + "</span>" : Model.Ticket.GetAssignedToInfo().DisplayName))
+                            </div>
+                            <div>
+                                @Html.Raw(string.Format(Index.OwnedBy, Model.Ticket.GetOwnerInfo().DisplayName))
+                            </div>
+                            <div class="hidden-sm hidden-md hidden-lg">
+                                @Html.Raw(string.Format(Index.UpdatedBy, Model.Ticket.GetLastUpdatedByInfo().DisplayName, Model.Ticket.LastUpdateDate.DateTime.ToShortDateString(), Model.Ticket.LastUpdateDate.DateTime.ToShortTimeString()))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="" style="margin: 0; padding: 0;">
+                    <div class="" id="detailsText" style="height: 200px; overflow: auto; margin: 0; padding: 5px;">
+                        @Model.Ticket.HtmlDetails()
+                    </div>
+                    <div id="detailTextExpander" class="expanderButton" style="height: 20px; display: none;">
+                        <i id="expandersymbol" class="fa fa-chevron-down text-center"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 hidden-xs col-sm-height col-full-height col-top" style="border-left: 1px solid #B3CBDF;background-color: #F7F7F7;">
+                <div class="container-fluid" style="padding: 0;">
+                    <aside class="small">
+                        <div style="padding: 5px;">
+                            <div class="row">
+                                @Html.LabelFor(m => m.Ticket.TicketStatus, new { @class = "col-sm-5 col-lg-4 text-right" })
+                                <div class="col-sm-7 col-lg-8">
+                                    @Model.Ticket.TicketStatus.GetDisplayName()
+                                </div>
+                            </div>
+                            <div class="row">
+                                @Html.LabelFor(m => m.Ticket.LastUpdateBy, new { @class = "col-sm-5 col-lg-4 text-right" })
+                                <div class="col-sm-7 col-lg-8">
+                                    @Model.Ticket.GetLastUpdatedByInfo().DisplayName
+                                </div>
+                            </div>
+                            <div class="row">
+                                @Html.LabelFor(m => m.Ticket.LastUpdateDate, new { @class = "col-sm-5 col-lg-4 text-right" })
+                                <div class="col-sm-7 col-lg-8">
+                                    @Model.Ticket.LastUpdateDate.DateTime.ToShortDateString() @Model.Ticket.LastUpdateDate.DateTime.ToShortTimeString()
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                @Html.LabelFor(m => m.Ticket.CurrentStatusSetBy, new { @class = "col-sm-5 col-lg-4 text-right" })
+                                <div class="col-sm-7 col-lg-8">
+                                    @Model.Ticket.GetCurrentStatusSetByInfo().DisplayName
+                                </div>
+                            </div>
+                            <div class="row">
+                                @Html.LabelFor(m => m.Ticket.CurrentStatusDate, new { @class = "col-sm-5 col-lg-4 text-right" })
+                                <div class="col-sm-7 col-lg-8">
+                                    @Model.Ticket.CurrentStatusDate.DateTime.ToShortDateString() @Model.Ticket.CurrentStatusDate.DateTime.ToShortTimeString()
+                                </div>
+                            </div>
+                            <div class="row">
+                                @Html.LabelFor(m => m.Ticket.CreatedBy, new { @class = "col-sm-5 col-lg-4 text-right" })
+                                <div class="col-sm-7 col-lg-8">
+                                    @Model.Ticket.GetCreatedByInfo().DisplayName
+                                </div>
+                            </div>
+                            <div class="row">
+                                @Html.LabelFor(m => m.Ticket.CreatedDate, new { @class = "col-sm-5 col-lg-4 text-right" })
+                                <div class="col-sm-7 col-lg-8">
+                                    @Model.Ticket.CreatedDate.DateTime.ToShortDateString() @Model.Ticket.CreatedDate.DateTime.ToShortTimeString()
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-sm-5 col-lg-4 text-right">@Index.Subscribers</label>
+                                <div class="col-sm-7 col-lg-8">
+
+                                    @foreach (var sub in Model.Ticket.TicketSubscribers)
+                                    {
+                                        <div>@sub.GetSubscriberDisplayInfo().DisplayName</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-info" style="padding-top: 0; padding-bottom: 0;">
+        <div class="panel-heading panel-title" style="padding: 3px 5px;">
+            @Index.Files
+        </div>
+        <div class="panel-body" style="">
+            <ul class="list-unstyled list-inline">
+                @foreach (var file in Model.Attachments)
+            {
+                    <li>
+                        <a href="@Url.Action("GetFile", "File", new {Id = Model.Ticket.TicketId, FileName = file.Name})" target="_blank"><i class="fa fa-file fa-align-left"></i> @file.Name</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-cancel" data-dismiss="modal">@Resources.Dropzone_Modal_Close</button>
+</div>
+

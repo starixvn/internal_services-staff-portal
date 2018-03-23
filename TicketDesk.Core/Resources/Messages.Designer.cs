@@ -206,6 +206,15 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ticket status has been successfully updated..
+        /// </summary>
+        public static string UpdateTicketStatusSuccessful {
+            get {
+                return ResourceManager.GetString("UpdateTicketStatusSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} is requried.
         /// </summary>
         public static string ValidateRequiredMessage {

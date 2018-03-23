@@ -175,4 +175,7 @@ Do you really want to log out?</value>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="UpdateTicketStatusSuccessful" xml:space="preserve">
+    <value>Ticket status has been successfully updated.</value>
+  </data>
 </root>

@@ -26,7 +26,7 @@
                 <td class="text-center">@index</td>
                 <td class="text-center">@ticket.Id</td>
                 <td>
-                    @Html.ActionLink(ticket.Subject, "Details", "Ticket", new { Area = "", ticketId = ticket.Id }, null)
+                    @Html.ActionLink(ticket.Subject, "TicketDetails", "TicketList", new { ticketId = ticket.Id }, new { @class = "ticket-details" })
                 </td>
                 <td>@ticket.TicketType</td>
                 <td>@ticket.ShopName</td>

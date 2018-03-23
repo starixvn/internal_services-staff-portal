@@ -8,8 +8,11 @@
         TicketTableSection: "#ticket-list-section",
         TicketTable: "#ticket-table",
         TicketStatusSelector: ".ticket-status",
-        ConfirmPopup: "#confirm-popup",
-        ConfirmButton: "#confirm-button"
+        ConfirmPopup: "#confirm-modal",
+        ConfirmButton: "#confirm-button",
+        TicketDetailLink: "a.ticket-details",
+        TicketDetaisModal: "#ticket-details-modal",
+        TicketDetailsContent: "#ticket-details-content"
     }
 
     function setupFromDateToDate() {
@@ -43,7 +46,7 @@
                 sortable: false
             },
             {
-                width: 100,
+                width: 80,
                 sortable: true
             },
             {
@@ -51,15 +54,15 @@
                 sortable: true
             },
             {
-                width: 200,
-                sortable: true
-            },
-            {
-                width: 200,
+                width: 150,
                 sortable: true
             },
             {
                 width: 150,
+                sortable: true
+            },
+            {
+                width: 180,
                 sortable: true
             },
             {
@@ -78,6 +81,7 @@
             success: function (data) {
                 $(domElement.TicketTableSection).html(data);
                 registerChangeStatusEvent();
+                registerGetTicketDetailsEvent();
                 initDataTable();
             }
         });
@@ -120,6 +124,17 @@
         });
         $(domElement.ConfirmPopup).one('click', '.btn-cancel', function () {
             notTrigger = true;
+        });
+    }
+
+    function registerGetTicketDetailsEvent() {
+        $(domElement.TicketDetailLink).on("click", function (e) {
+            var href = $(this).attr("href");
+            $.get(href, function (data) {
+                $(domElement.TicketDetailsContent).html(data);
+                $(domElement.TicketDetaisModal).modal("show");
+            });
+            e.preventDefault();
         });
     }
 

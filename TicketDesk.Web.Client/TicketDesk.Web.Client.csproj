@@ -581,6 +581,7 @@
     <Content Include="Areas\Admin\Views\Mail\_ListMail.cshtml" />
     <Content Include="Areas\Admin\Views\TicketList\Index.cshtml" />
     <Content Include="Areas\Admin\Views\TicketList\_TicketList.cshtml" />
+    <Content Include="Areas\Admin\Views\TicketList\_TicketDetails.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
