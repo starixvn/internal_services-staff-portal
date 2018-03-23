@@ -43,7 +43,7 @@
                                 <td>@index</td>
                                 <td>@ticket.Id</td>
                                 <td>
-                                    @Html.ActionLink(ticket.Subject, "Details", "Ticket", new { ticketId = ticket.Id }, null)
+                                    @Html.ActionLink(ticket.Subject, "TicketDetails", "TicketList", new { ticketId = ticket.Id }, null)
                                 </td>
                                 <td>@ticket.TicketType</td>
                                 <td>@ticket.ShopName</td>

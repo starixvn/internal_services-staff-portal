@@ -2103,6 +2103,7 @@
     <Content Include="Views\Ticket\_NotificationModal.cshtml" />
     <Content Include="Views\Home\_AnnouncementListHomePage.cshtml" />
     <Content Include="Views\TicketList\Index.cshtml" />
+    <Content Include="Views\TicketList\TicketDetails.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

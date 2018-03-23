@@ -1,7 +1,13 @@
 ﻿@using TicketDesk.Domain
 @using TicketDesk.Domain.Model
+@using TicketDesk.Localization.Client
 @using TicketDesk.Localization.Views.Ticket
 @model SingleTicketViewModel
+
+@{
+    ViewBag.Title = @Resources.TicketDetails;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <h3 class="text-info">@Html.DisplayNameFor(x => x.Ticket.Title)</h3>
 <p class="text-info">@Model.Ticket.Title</p>
@@ -41,10 +47,8 @@
                     </button>
                 </div>
             </div>
-
         </div>
     </div>
-
 </div>
 <div class="panel-body" style="padding: 0">
     <div class="row row-no-padding row-same-height row-full-height" style="width: 100%;margin:0">
@@ -69,8 +73,6 @@
                                 }
                             </div>
                         }
-
-
                     </div>
                     <div>
                         <div>@(string.IsNullOrEmpty(Model.Ticket.Priority) ? string.Empty : string.Format(Index.Priority, Model.Ticket.Priority)) @Model.Ticket.Category @Model.Ticket.TicketType</div>
@@ -155,7 +157,6 @@
                             </div>
                         </div>
                     </div>
-
                 </aside>
             </div>
         </div>
@@ -176,4 +177,3 @@
         </ul>
     </div>
 </div>
-

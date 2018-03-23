@@ -328,21 +328,6 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
-        public ActionResult Details(int ticketId)
-        {
-            var ticket = ticketService.GetTicket(ticketId);
-
-            var singleTicketViewModel = new SingleTicketViewModel
-            {
-                Ticket = ticket,
-                CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket),
-                Attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(CultureInfo.InvariantCulture), false)
-            };
-
-            return View(singleTicketViewModel);
-        }
-
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
         public ActionResult TicketEvents(int ticketId)
         {
             // WARNING! This is also used as a child action and cannot be made async in MVC 5
