@@ -32,21 +32,23 @@
 
                     <tr class="@evenClass" data-group="@ticketGroup.Name">
                         <td class="text-center">
-                            <a href="@Url.Action("Details","Ticket", new {ticketId = ticket.TicketId})" class="id-ticket">@ticket.TicketId</a>
+                            <a href="@Url.Action("TicketDetails","TicketList", new {ticketId = ticket.TicketId})" class="id-ticket">@ticket.TicketId</a>
                         </td>
                         <td>@ticket.Title</td>
                         <td class="text-center">@ticket.CreatedDate.ToString("MMM dd, yyyy")</td>
-                        <td class="text-center"><span class="inprogress">@ticket.TicketStatus</span></td>
+                        @{
+                            var statusClass = ticket.TicketStatus.ToString().ToLowerInvariant();
+                        }
+                        <td class="text-center"><span class="@statusClass">@ticket.TicketStatus</span></td>
                     </tr>
-                }
-            }
+                                }
+                            }
         </tbody>
-
     </table>
 
     @Html.Partial("_Pagination", Model)
-}
-else
-{
-    <p>@Resources.Views_Home_Index_NoTicket</p>
-}
+                            }
+                            else
+                            {
+                                <p>@Resources.Views_Home_Index_NoTicket</p>
+                            }

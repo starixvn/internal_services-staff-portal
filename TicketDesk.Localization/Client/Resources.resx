@@ -541,7 +541,7 @@
     <value>Select language</value>
   </data>
   <data name="TicketCategory" xml:space="preserve">
-    <value>Ticket Category</value>
+    <value>Ticket Type</value>
   </data>
   <data name="ContactName" xml:space="preserve">
     <value>Contact Name</value>
@@ -620,5 +620,8 @@
   </data>
   <data name="TicketDetails" xml:space="preserve">
     <value>Ticket Details</value>
+  </data>
+  <data name="TableNoData" xml:space="preserve">
+    <value>There is no data</value>
   </data>
 </root>

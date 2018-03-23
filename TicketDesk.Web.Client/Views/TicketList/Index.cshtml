@@ -9,7 +9,7 @@
 
 <div class="ticket-list">
     <div class="form-content">
-        <div class="title panel-heading">            
+        <div class="title panel-heading">
             Ticket List
         </div>
         <div class="panel-body">
@@ -39,24 +39,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        var index = 1;
+                    @if (Model.Tickets.Count() > 0)
+                    {
+                        var index = 0;
                         foreach (var ticket in Model.Tickets)
                         {
+                            index++;
+
                             <tr>
                                 <td>@index</td>
-                                <td>@ticket.Id</td>
                                 <td>
-                                    @Html.ActionLink(ticket.Subject, "TicketDetails", "TicketList", new { ticketId = ticket.Id }, null)
+                                    <a href="@Url.Action("TicketDetails", "TicketList", new { ticketId = ticket.Id })">@ticket.Id</a>
                                 </td>
+                                <td>@ticket.Subject</td>
                                 <td>@ticket.TicketType.GetEnumDisplayName()</td>
                                 <td>@ticket.ShopName</td>
                                 <td>@ticket.CreatedDate</td>
-                                <td class="text-center">@ticket.Status.GetEnumDisplayName()</td>
+                                @{
+                                    var statusClass = ticket.Status.ToString().ToLowerInvariant();
+                                }
+                                <td class="text-center">
+                                    <span class="@statusClass">@ticket.Status.GetEnumDisplayName()</span>
+                                </td>
                             </tr>
-                            index++;
-                        }
-                    }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="7" class="text-center">
+                                                @Resources.TableNoData
+                                            </td>
+                                        </tr>
+                                    }
                 </tbody>
             </table>
 

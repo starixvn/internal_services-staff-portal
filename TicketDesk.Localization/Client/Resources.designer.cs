@@ -1024,7 +1024,16 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ticket Category.
+        ///   Looks up a localized string similar to There is no data.
+        /// </summary>
+        public static string TableNoData {
+            get {
+                return ResourceManager.GetString("TableNoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ticket Type.
         /// </summary>
         public static string TicketCategory {
             get {
