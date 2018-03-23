@@ -1051,6 +1051,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ticket List.
+        /// </summary>
+        public static string TicketList {
+            get {
+                return ResourceManager.GetString("TicketList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Date From.
         /// </summary>
         public static string TicketListFilterViewModel_CreateDateFrom {

@@ -624,4 +624,7 @@
   <data name="TableNoData" xml:space="preserve">
     <value>There is no data</value>
   </data>
+  <data name="TicketList" xml:space="preserve">
+    <value>Ticket List</value>
+  </data>
 </root>

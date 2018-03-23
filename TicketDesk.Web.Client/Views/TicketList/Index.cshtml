@@ -3,14 +3,17 @@
 @model TicketDesk.Web.Client.Models.TicketList.TicketListViewModel
 
 @{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section title
+{
+    @Resources.TicketList
 }
 
 <div class="ticket-list">
     <div class="form-content">
         <div class="title panel-heading">
-            Ticket List
+            @Resources.TicketList
         </div>
         <div class="panel-body">
             @using (Html.BeginForm("Index", "TicketList", FormMethod.Get, new { @class = "form-inline filter" }))
@@ -63,16 +66,16 @@
                                     <span class="@statusClass">@ticket.Status.GetDisplayName()</span>
                                 </td>
                             </tr>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <tr>
-                                            <td colspan="7" class="text-center">
-                                                @Resources.TableNoData
-                                            </td>
-                                        </tr>
-                                    }
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                @Resources.TableNoData
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
 
