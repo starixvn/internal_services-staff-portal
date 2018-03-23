@@ -330,7 +330,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Announcement.cs" />
-    <Compile Include="Model\AnnouncementGroup.cs" />
     <Compile Include="Model\ApplicaitonSettingsModel\ApplicationPermissionsSetting.cs" />
     <Compile Include="Model\ApplicaitonSettingsModel\ApplicationSecuritySetting.cs" />
     <Compile Include="Model\ApplicaitonSettingsModel\ApplicationSelectListSetting.cs" />
