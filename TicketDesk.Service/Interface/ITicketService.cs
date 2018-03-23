@@ -21,8 +21,6 @@
 
         bool UpdateTicketStatus(int id, TicketStatus status);
 
-        IEnumerable<string> CommitPendingAttachments(Ticket ticket, Guid tempId);
-
         IEnumerable<TicketViewModel> GetTicketByStatus(int userId, int skip, int take, TicketStatus? ticketStatus);
 
         IList<TicketViewModel> GetTicketByFilter(TicketListFilterCriteria criteria);

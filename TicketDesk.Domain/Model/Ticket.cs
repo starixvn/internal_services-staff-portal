@@ -136,8 +136,6 @@ namespace TicketDesk.Domain.Model
         [Timestamp]
         public byte[] Version { get; set; }
 
-        ////public virtual Shop Shop { get; set; }
-
         public int CategoryId { get; set; }
 
         [Display(Name = nameof(Resources.SendEmailTo), ResourceType = typeof(Resources))]

@@ -3,22 +3,22 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
-    using System.Globalization;
     using System.Linq;
     using System.Threading;
     using Core.Enumerations;
     using Criteria.TicketList;
     using Domain.Model;
     using Interface;
-    using IO;
 
     public class TicketService : EntityFrameworkBaseService, ITicketService
     {
         private readonly IMailService mailService;
+        private readonly IFileManagerService fileManagerService;
 
-        public TicketService(IMailService mailService)
+        public TicketService(IMailService mailService, IFileManagerService fileManagerService)
         {
             this.mailService = mailService;
+            this.fileManagerService = fileManagerService;
         }
 
         public Ticket GetTicket(int id)
@@ -191,7 +191,8 @@
             ticket.CreatedBy = context.SecurityProvider.CurrentUserId;
             context.Tickets.Add(ticket);
             var result = context.SaveChanges();
-            CommitPendingAttachments(ticket, tempId);
+
+            fileManagerService.CommitPendingAttachments(ticket, tempId);
 
             var mailRecord = mailService.ComposeMail(ticket);
             mailService.Send(mailRecord);
@@ -212,23 +213,6 @@
                 }
             }
             return result;
-        }
-
-        public IEnumerable<string> CommitPendingAttachments(Ticket ticket, Guid tempId)
-        {
-            var attachments = TicketDeskFileStore.ListAttachmentInfo(tempId.ToString(), true).ToArray();
-
-            foreach (var attachment in attachments)
-            {
-                TicketDeskFileStore.MoveFile(
-                    attachment.Name,
-                    tempId.ToString(),
-                    ticket.TicketId.ToString(CultureInfo.InvariantCulture),
-                    true,
-                    false);
-            }
-
-            return attachments.Select(a => a.Name);
         }
     }
 }
