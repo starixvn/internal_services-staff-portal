@@ -178,4 +178,22 @@ Do you really want to log out?</value>
   <data name="UpdateTicketStatusSuccessful" xml:space="preserve">
     <value>Ticket status has been successfully updated.</value>
   </data>
+  <data name="Facility" xml:space="preserve">
+    <value>Facility</value>
+  </data>
+  <data name="Hardware" xml:space="preserve">
+    <value>Hardware</value>
+  </data>
+  <data name="Software" xml:space="preserve">
+    <value>Software</value>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>Network</value>
+  </data>
+  <data name="CustomerSupport" xml:space="preserve">
+    <value>Customer Support</value>
+  </data>
+  <data name="Incident" xml:space="preserve">
+    <value>Incident</value>
+  </data>
 </root>

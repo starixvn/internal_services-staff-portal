@@ -70,6 +70,15 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer Support.
+        /// </summary>
+        public static string CustomerSupport {
+            get {
+                return ResourceManager.GetString("CustomerSupport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Date duplicated..
         /// </summary>
         public static string DuplicatedDay {
@@ -88,6 +97,24 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Facility.
+        /// </summary>
+        public static string Facility {
+            get {
+                return ResourceManager.GetString("Facility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hardware.
+        /// </summary>
+        public static string Hardware {
+            get {
+                return ResourceManager.GetString("Hardware", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The attachment image size is less than the allowable limits. Please use a bigger size file!.
         /// </summary>
         public static string ImageDimensionInvalid {
@@ -102,6 +129,15 @@ namespace TicketDesk.Core.Resources {
         public static string ImageExceededCapacity {
             get {
                 return ResourceManager.GetString("ImageExceededCapacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incident.
+        /// </summary>
+        public static string Incident {
+            get {
+                return ResourceManager.GetString("Incident", resourceCulture);
             }
         }
         
@@ -161,6 +197,15 @@ namespace TicketDesk.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network.
+        /// </summary>
+        public static string Network {
+            get {
+                return ResourceManager.GetString("Network", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string No {
@@ -175,6 +220,15 @@ namespace TicketDesk.Core.Resources {
         public static string ShopExist {
             get {
                 return ResourceManager.GetString("ShopExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Software.
+        /// </summary>
+        public static string Software {
+            get {
+                return ResourceManager.GetString("Software", resourceCulture);
             }
         }
         

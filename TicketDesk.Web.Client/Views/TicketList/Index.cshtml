@@ -1,5 +1,5 @@
 ﻿@using TicketDesk.Localization.Client
-@using TicketDesk.Domain.Model
+@using TicketDesk.Web.Client.Infrastructure.Extensions
 @model TicketDesk.Web.Client.Models.TicketList.TicketListViewModel
 
 @{
@@ -49,10 +49,10 @@
                                 <td>
                                     @Html.ActionLink(ticket.Subject, "TicketDetails", "TicketList", new { ticketId = ticket.Id }, null)
                                 </td>
-                                <td>@ticket.TicketType</td>
+                                <td>@ticket.TicketType.GetEnumDisplayName()</td>
                                 <td>@ticket.ShopName</td>
                                 <td>@ticket.CreatedDate</td>
-                                <td class="text-center">@ticket.Status</td>
+                                <td class="text-center">@ticket.Status.GetEnumDisplayName()</td>
                             </tr>
                             index++;
                         }

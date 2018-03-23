@@ -1,5 +1,9 @@
 ﻿namespace TicketDesk.Web.Client.Infrastructure.Extensions
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Reflection;
     using System.Web;
     using System.Web.Mvc;
 
@@ -20,7 +24,7 @@
             var request = HttpContext.Current.Request;
             var controller = request.RequestContext.RouteData.Values["controller"].ToString();
 
-            if(napRoute == "/" && controller == "Home")
+            if (napRoute == "/" && controller == "Home")
             {
                 return "active";
             }
@@ -48,6 +52,22 @@
             }
 
             return string.Empty;
+        }
+
+        public static T GetAttribute<T>(this Enum value) where T : Attribute
+        {
+            var type = value.GetType();
+            var memberInfo = type.GetMember(value.ToString());
+            var attributes = memberInfo[0].GetCustomAttributes(typeof(T), false);
+            return (T)attributes[0];
+        }
+
+        public static string GetEnumDisplayName(this Enum value)
+        {
+            return value.GetType().GetMember(value.ToString())
+                   .First()
+                   .GetCustomAttribute<DisplayAttribute>()
+                   .GetName();
         }
     }
 }
