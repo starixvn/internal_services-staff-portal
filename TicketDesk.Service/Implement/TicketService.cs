@@ -16,13 +16,9 @@
     {
         private readonly IMailService mailService;
 
-        public TicketService() : this(null)
-        {
-        }
-
         public TicketService(IMailService mailService)
         {
-            this.mailService = mailService ?? new MailService();
+            this.mailService = mailService;
         }
 
         public Ticket GetTicket(int id)

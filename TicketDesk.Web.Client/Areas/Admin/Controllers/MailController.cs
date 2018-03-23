@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using Client.Controllers;
+    using Core.Enumerations;
     using Domain.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -22,7 +23,7 @@
         {
             var viewModel = new MailViewModel
             {
-                TicketCategories = ticketCategoryService.GetTicketCategories()
+                CategoryId = TicketCategoryTypes.Facility
             };
 
             return View(viewModel);

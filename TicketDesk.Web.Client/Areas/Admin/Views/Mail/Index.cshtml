@@ -1,5 +1,4 @@
-﻿@using TicketDesk.Localization.Client
-@model TicketDesk.Web.Client.Areas.Admin.Models.Mail.MailViewModel
+﻿@model TicketDesk.Web.Client.Areas.Admin.Models.Mail.MailViewModel
 
 @{
     ViewBag.Title = "Mail Management";
@@ -27,7 +26,7 @@
         <div class="select-group">
             @Html.LabelFor(x => x.CategoryId)
             <div class="select-group">
-                @Html.DropDownListFor(x => x.CategoryId, Model.TicketCategories.Select(x => new SelectListItem { Text = x.Name, Value = x.CategoryId.ToString() }))
+                @Html.EnumDropDownListFor(x => x.CategoryId, new { @class = "form-control" })
             </div>
         </div>
     }

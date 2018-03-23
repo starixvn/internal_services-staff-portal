@@ -79,7 +79,7 @@
             container.Register<SignInManager<TicketDeskUser, string>, TicketDeskSignInManager>(Lifestyle.Scoped);
             container.Register<TicketDeskRoleManager>(hybridLifestyle);
 
-            container.Register<ITicketService>(() => new TicketService(), hybridLifestyle);
+            container.Register<ITicketService>(() => new TicketService(new MailService()), hybridLifestyle);
 
             container.Register<IUserService>(() => new UserService(), hybridLifestyle);
             container.Register<IGroupService>(() => new GroupService(), hybridLifestyle);
