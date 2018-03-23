@@ -14,7 +14,7 @@
         public TicketListViewModel()
         {
             Action = "Index";
-            Controller = "Home";
+            Controller = "TicketList";
             CurrentPage = 1;
             ItemPerPage = 20;
             Tickets = new List<TicketViewModel>();
@@ -29,14 +29,19 @@
             var ticketListViewModel = new TicketListViewModel
             {
                 CurrentPage = i,
-                ItemPerPage = itemPerPage
+                ItemPerPage = itemPerPage,
+                Status = Status
             };
 
             var routeValues = new RouteValueDictionary
             {
                 { $"{nameof(ticketListViewModel.CurrentPage)}", ticketListViewModel.CurrentPage },
-                { $"{nameof(ticketListViewModel.ItemPerPage)}", ticketListViewModel.ItemPerPage }
+                { $"{nameof(ticketListViewModel.ItemPerPage)}", ticketListViewModel.ItemPerPage },
             };
+            if (ticketListViewModel.Status != null)
+            {
+                routeValues.Add(nameof(ticketListViewModel.Status), (int)ticketListViewModel.Status);
+            }
 
             return UrlHelper.GenerateUrl(
                 RouteNames.Default.ToString(),
