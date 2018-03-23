@@ -41,12 +41,28 @@
             // Get ticket category
             var ticketCategory = context.TicketCategories.Find(ticket.CategoryId);
 
-            var customFieldValues = context.CustomFieldValues.Where(x => x.TicketId == ticket.TicketId);
+            var customFieldValues =
+                (from cfv in context.CustomFieldValues
+                 join cf in context.CustomFields on cfv.CustomFieldId equals cf.Id
+                 where cfv.TicketId == ticket.TicketId
+                 orderby cf.DisplayOrder, cfv.Id
+                 select new
+                 {
+                     CustomField = cf,
+                     cfv.Value,
+                     cfv.GroupId
+                 }).ToList().Select(x => new CustomFieldValue
+                 {
+                     CustomField = x.CustomField,
+                     Value = x.Value,
+                     GroupId = x.GroupId
+                 });
 
             var singleTicketViewModel = new SingleTicketViewModel
             {
                 Ticket = ticket,
-                CustomFieldValues = customFieldValues
+                CustomFieldValues = customFieldValues,
+                ShopName = context.Shops.Find(ticket.ShopId)?.ShopName
             };
 
             var body = GetRazorViewAsString(singleTicketViewModel, "~/Views/MailTemplate/GeneralTicketDetail.cshtml");
