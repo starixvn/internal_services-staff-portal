@@ -1,9 +1,5 @@
 ﻿namespace TicketDesk.Web.Client.Infrastructure.Extensions
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Reflection;
     using System.Web;
     using System.Web.Mvc;
 
@@ -52,14 +48,6 @@
             }
 
             return string.Empty;
-        }
-
-        public static string GetEnumDisplayName(this Enum value)
-        {
-            return value.GetType().GetMember(value.ToString())
-                   .First()
-                   .GetCustomAttribute<DisplayAttribute>()
-                   .GetName();
         }
     }
 }

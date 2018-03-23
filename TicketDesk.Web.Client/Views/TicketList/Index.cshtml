@@ -1,5 +1,5 @@
 ﻿@using TicketDesk.Localization.Client
-@using TicketDesk.Web.Client.Infrastructure.Extensions
+@using TicketDesk.Domain
 @model TicketDesk.Web.Client.Models.TicketList.TicketListViewModel
 
 @{
@@ -44,22 +44,23 @@
                         var index = 0;
                         foreach (var ticket in Model.Tickets)
                         {
+                            var evenClass = index % 2 != 0 ? "even" : string.Empty;
                             index++;
 
-                            <tr>
+                            <tr class="@evenClass">
                                 <td>@index</td>
                                 <td>
                                     <a href="@Url.Action("TicketDetails", "TicketList", new { ticketId = ticket.Id })">@ticket.Id</a>
                                 </td>
                                 <td>@ticket.Subject</td>
-                                <td>@ticket.TicketType.GetEnumDisplayName()</td>
+                                <td>@ticket.TicketType.GetDisplayName()</td>
                                 <td>@ticket.ShopName</td>
                                 <td>@ticket.CreatedDate</td>
                                 @{
                                     var statusClass = ticket.Status.ToString().ToLowerInvariant();
                                 }
                                 <td class="text-center">
-                                    <span class="@statusClass">@ticket.Status.GetEnumDisplayName()</span>
+                                    <span class="@statusClass">@ticket.Status.GetDisplayName()</span>
                                 </td>
                             </tr>
                                         }

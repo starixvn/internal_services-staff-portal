@@ -14,13 +14,12 @@ var nexcelSSPCommon = (function ($) {
 
     function initSelect2() {
         if ($.fn.select2) {
-            if (!$("select").hasClass("not-select2")) {
-
-                $("select.select2-searchable").select2({
+            if ($("select").hasClass("select2-searchable")) {
+                $("select").not(".not-select2").select2({
                     width: "100%"
                 });
-
-                $("select").not(".select2-searchable").select2({
+            } else {
+                $("select").not(".not-select2").select2({
                     minimumResultsForSearch: Infinity
                 });
             }
