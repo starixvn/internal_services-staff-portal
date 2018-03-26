@@ -1173,6 +1173,8 @@ table.dataTable {
   color: #333; }
   .form-control.input-validation-error {
     border-color: #ea1118; }
+  .form-control.ticket-status {
+    background: #fff; }
 
 .select2-container--default .select2-selection--single {
   border-radius: 2px;

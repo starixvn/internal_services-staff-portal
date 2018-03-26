@@ -140,6 +140,10 @@
     &.input-validation-error {
         border-color: #ea1118;
     }
+
+    &.ticket-status {
+        background: #fff;
+    }
 }
 
 .select2-container--default .select2-selection--single {
