@@ -5,20 +5,22 @@
     },
 
     initTag: function() {
-        $(".tag").tagsinput();
+        $(".tag").tagsinput({
+            confirmKeys: [13, 44, 32, 186, 188],
+            trimValue: true
+        });
+        $("#data-list").on("beforeItemAdd",
+            ".tag",
+            function (event) {
+                if (!mail.checkMailFormat(event.item)) {
+                    event.cancel = true;
+                }
+            });
     },
 
-    checkMailFormat: function(params) {
-        // Don't offset to create a tag if there is no @ symbol
-        if (params.term.indexOf("@") === -1) {
-            // Return null to disable tag creation
-            return null;
-        }
-
-        return {
-            id: params.term,
-            text: params.term
-        }
+    checkMailFormat: function(email) {
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
     },
 
     filterForm: function () {
