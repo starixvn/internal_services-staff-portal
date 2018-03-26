@@ -26,6 +26,17 @@
             this.ticketService = ticketService;
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.ListAssignedTicket, Policy = Constant.Policy.Read)]
+        public ActionResult Index()
+        {
+            var homeViewModel = new HomeViewModel
+            {
+                UnreadAnnouncementQuatity = announcementService.CountUnreadAnnouncement(NapUserSetting.SettingObject.ReadAnnouncements)
+            };
+
+            return View(homeViewModel);
+        }
+
         public ActionResult MyOpeningTicket(MyOpenningTicketsViewModel viewModel)
         {
             var myOpenningIssues = viewModel ?? new MyOpenningTicketsViewModel();
@@ -40,15 +51,26 @@
             return PartialView("_MyOpeningTicket", myOpenningIssues);
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.ListAssignedTicket, Policy = Constant.Policy.Read)]
-        public ActionResult Index()
+        public ActionResult MoreAnnouncement(MoreAnnouncementViewModel viewModel)
         {
-            var homeViewModel = new HomeViewModel
-            {
-                UnreadAnnouncementQuatity = announcementService.CountUnreadAnnouncement(NapUserSetting.SettingObject.ReadAnnouncements)
-            };
+            var moreannouncementViewModel = viewModel ?? new MoreAnnouncementViewModel();
 
-            return View(homeViewModel);
+            var announcements = announcementService.GetAnnouncements(moreannouncementViewModel.GetAnnouncementsCriteria());
+            announcements = announcementService.CalculateAnnouncementsReadStatus(
+                announcements,
+                NapUserSetting.SettingObject.ReadAnnouncements);
+
+            moreannouncementViewModel.TotalItem = announcements.Count();
+
+            var paginationService = new PaginationService<Announcement, DateTime?>();
+
+            moreannouncementViewModel.Announcements = paginationService.Pagination(
+                announcements,
+                x => x.PublishedDateTime,
+                moreannouncementViewModel.Skipped,
+                moreannouncementViewModel.ItemPerPage).ToList();
+
+            return View(moreannouncementViewModel);
         }
 
         public ActionResult GetListAnnouncementByReadState(bool isUnreadOnly)
@@ -103,28 +125,6 @@
             }
 
             return result.OrderBy(x => x.DisplayOrder).ToList();
-        }
-
-        public ActionResult MoreAnnouncement(MoreAnnouncementViewModel viewModel)
-        {
-            var moreannouncementViewModel = viewModel ?? new MoreAnnouncementViewModel();
-
-            var announcements = announcementService.GetAnnouncements(moreannouncementViewModel.GetAnnouncementsCriteria());
-            announcements = announcementService.CalculateAnnouncementsReadStatus(
-                announcements,
-                NapUserSetting.SettingObject.ReadAnnouncements);
-
-            moreannouncementViewModel.TotalItem = announcements.Count();
-
-            var paginationService = new PaginationService<Announcement, DateTime?>();
-
-            moreannouncementViewModel.Announcements = paginationService.Pagination(
-                announcements,
-                x => x.PublishedDateTime,
-                moreannouncementViewModel.Skipped,
-                moreannouncementViewModel.ItemPerPage).ToList();
-
-            return View(moreannouncementViewModel);
         }
     }
 }
