@@ -83,33 +83,6 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult Delete(int id)
-        {
-            var viewModel = new Announcement { Id = id };
-            return PartialView("_Delete", viewModel);
-        }
-
-        [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult Delete(Announcement viewModel)
-        {
-            var result = false;
-
-            if (ModelState.IsValid)
-            {
-                result = announcementService.DeleteAnnouncement(viewModel.Id);
-            }
-
-            var message = result ? Resources.SingleAnnouncementDeletedMessage : Resources.DeleteAnnouncementError;
-
-            return Json(new
-            {
-                success = result,
-                message
-            });
-        }
-
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int id)
         {
             var viewModel = new NewAnnouncementViewModel
@@ -148,6 +121,25 @@
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult Publish(NewAnnouncementViewModel viewModel)
+        {
+            var result = false;
+
+            if(ModelState.IsValid)
+            {
+                result = announcementService.UpdateAnnouncement(viewModel.Announcement);
+            }
+
+            var message = result ? Resources.SingleAnnouncementPublishedMessage : Resources.PublishAnnouncementError;
+
+            return Json(new
+            {
+                success = result,
+                message
+            });
+        }
+
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Publish(int[] ids)
@@ -172,28 +164,36 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult Publish(NewAnnouncementViewModel viewModel)
+        public ActionResult QuickPublish(int[] ids)
+        {
+            return PartialView("_QuickPublish", ids);
+        }
+
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult Delete(int id)
+        {
+            var viewModel = new Announcement { Id = id };
+            return PartialView("_Delete", viewModel);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
+        public ActionResult Delete(Announcement viewModel)
         {
             var result = false;
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                result = announcementService.UpdateAnnouncement(viewModel.Announcement);
+                result = announcementService.DeleteAnnouncement(viewModel.Id);
             }
 
-            var message = result ? Resources.SingleAnnouncementPublishedMessage : Resources.PublishAnnouncementError;
+            var message = result ? Resources.SingleAnnouncementDeletedMessage : Resources.DeleteAnnouncementError;
 
             return Json(new
             {
                 success = result,
                 message
             });
-        }
-
-        [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
-        public ActionResult QuickPublish(int[] ids)
-        {
-            return PartialView("_QuickPublish", ids);
         }
     }
 }
