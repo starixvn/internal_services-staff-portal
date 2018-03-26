@@ -96,29 +96,23 @@
                     });
         }
 
-        public IEnumerable<TicketViewModel> GetTicketByStatus(int userId, int skip, int take,
-            TicketStatus? ticketStatus)
+        public IEnumerable<TicketViewModel> GetTicketByStatus(int userId, TicketStatus? ticketStatus, TicketCategoryTypes? ticketType)
         {
             var tickets = BasicGetTicketJoinWithShop();
 
-            tickets = ticketStatus == null
-                ? tickets.Where(x => x.CreatedBy == userId.ToString())
-                    .OrderByDescending(x => x.UpdatedDate)
-                    .Skip(skip)
-                    .Take(take)
-                : tickets.Where(x => x.Status == ticketStatus && x.CreatedBy == userId.ToString())
-                    .OrderByDescending(x => x.UpdatedDate)
-                    .Skip(skip)
-                    .Take(take);
+            tickets = tickets.Where(x => x.CreatedBy == userId.ToString());
 
-            return tickets;
-        }
+            if (ticketStatus != null)
+            {
+                tickets = tickets.Where(x => x.Status == ticketStatus);
+            }
 
-        public int GetUserTotalTicketByStatus(int userId, TicketStatus? ticketStatus)
-        {
-            return ticketStatus == null
-                ? context.Tickets.Count(x => x.CreatedBy == userId.ToString())
-                : context.Tickets.Count(x => x.CreatedBy == userId.ToString() && x.TicketStatus == ticketStatus);
+            if (ticketType != null)
+            {
+                tickets = tickets.Where(x => x.TicketType == ticketType);
+            }
+
+            return tickets.OrderByDescending(x => x.UpdatedDate).ToList();
         }
 
         public IList<TicketViewModel> GetTicketByFilter(TicketListFilterCriteria criteria)

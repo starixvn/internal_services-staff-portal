@@ -21,13 +21,15 @@
         public ActionResult Index(TicketListViewModel viewModel)
         {
             var ticketListViewModel = viewModel ?? new TicketListViewModel();
-            ticketListViewModel.Tickets = ticketService.GetTicketByStatus(CurrentSession.UserId,
-                                                                          ticketListViewModel.Skipped,
-                                                                          ticketListViewModel.ItemPerPage,
-                                                                          ticketListViewModel.Status);
-            ticketListViewModel.TotalItem = ticketService.GetUserTotalTicketByStatus(CurrentSession.UserId, ticketListViewModel.Status);
 
             return View(ticketListViewModel);
+        }
+
+        [HttpPost]
+        public PartialViewResult TicketList(TicketListViewModel viewModel)
+        {
+            var tickets = ticketService.GetTicketByStatus(CurrentSession.UserId, viewModel.Status, viewModel.TicketType);
+            return PartialView("_TicketList", tickets);
         }
 
         public ActionResult TicketDetails(int ticketId)

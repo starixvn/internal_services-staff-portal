@@ -504,6 +504,7 @@
     <Content Include="src\js\admin\ticket-list\ticket-list.js" />
     <Content Include="src\js\home\read-announcement.js" />
     <Content Include="src\js\ticket-dropzone.js" />
+    <Content Include="src\js\ticket-list\ticket-list.js" />
     <Content Include="src\js\ticket\customer-support.js" />
     <Content Include="src\js\ticket\facility.js" />
     <Content Include="src\libs\bootstrap-tagsinput\bootstrap-tagsinput.css" />
@@ -2106,6 +2107,7 @@
     <Content Include="Views\Home\_AnnouncementListHomePage.cshtml" />
     <Content Include="Views\TicketList\Index.cshtml" />
     <Content Include="Views\TicketList\TicketDetails.cshtml" />
+    <Content Include="Views\TicketList\_TicketList.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
