@@ -18,10 +18,6 @@
         [Display(Name = nameof(Messages.Software), ResourceType = typeof(Messages))]
         Software = 3,
 
-        [Description("Network")]
-        [Display(Name = nameof(Messages.Network), ResourceType = typeof(Messages))]
-        Network = 4,
-
         [Description("Customer Support")]
         [Display(Name = nameof(Messages.CustomerSupport), ResourceType = typeof(Messages))]
         CustomerSupport = 5,

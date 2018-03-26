@@ -19,6 +19,8 @@
         [Display(Name = nameof(Resources.Type), ResourceType = typeof(Resources))]
         public TicketCategoryTypes? TicketType { get; set; }
 
+        public IEnumerable<SelectListItem> Types { get; set; }
+
         public TicketStatus? Status { get; set; }
 
         [Display(Name = nameof(Resources.TicketListFilterViewModel_CreateDateFrom), ResourceType = typeof(Resources))]

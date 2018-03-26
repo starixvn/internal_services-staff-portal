@@ -38,7 +38,7 @@
 
         <div class="dropdown-medium">
             @Html.LabelFor(x => x.TicketType)
-            @Html.EnumDropDownListFor(x => x.TicketType, "All", new { @class = "form-control" })
+            @Html.DropDownListFor(x => x.TicketType, Model.Types, new { @class = "form-control" })
         </div>
 
         <div class="dropdown-small">
@@ -89,7 +89,6 @@
 <div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" id="ticket-details-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content -has-title" id="ticket-details-content">
-            
         </div>
     </div>
 </div>

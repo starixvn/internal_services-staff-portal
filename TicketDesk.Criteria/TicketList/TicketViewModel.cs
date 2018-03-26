@@ -20,5 +20,7 @@
         public DateTimeOffset CreatedDate { get; set; }
 
         public DateTimeOffset UpdatedDate { get; set; }
+
+        public bool IsHostPermissionOnTicketType { get; set; }
     }
 }

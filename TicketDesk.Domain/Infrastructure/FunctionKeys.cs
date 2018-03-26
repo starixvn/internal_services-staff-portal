@@ -25,6 +25,13 @@
         public const string ShopManagement = "ShopManagement";
         public const string DataConfiguration = "DataConfiguration";
         public const string MailManagement = "MailManagement";
+        public const string TicketList = "TicketList";
+        public const string Facility = "Facility";
+        public const string Feedback = "Feedback";
+        public const string Hardware = "Hardware";
+        public const string Software = "Software";
+        public const string CustomerSupport = "CustomerSupport";
+        public const string Incident = "Incident";
 
         #endregion Admin
     }
