@@ -67,7 +67,7 @@
             },
             {
                 width: 150,
-                sortable: true
+                sortable: false
             }];
         ticketListTable.drawCallback = function (settings) {
             sidebar.initSelect2();
