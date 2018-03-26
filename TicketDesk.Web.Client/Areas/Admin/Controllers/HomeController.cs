@@ -36,7 +36,7 @@
             return PartialView("~/Areas/Admin/Views/Shared/_AdminNavbar.cshtml", model);
         }
 
-        private static List<SspMenuItem> PopulateChildList(SspMenuItem sspMenuItem, IEnumerable<SspMenuItem> menus)
+        private static List<SspMenuItem> GetChildMenuList(SspMenuItem sspMenuItem, IEnumerable<SspMenuItem> menus)
         {
             return menus.Where(x => x.Parent != null && x.Parent.Id == sspMenuItem.Id).OrderBy(x => x.DisplayOrder).ToList();
         }
@@ -45,30 +45,28 @@
         {
             var result = new List<SspMenuItem>();
 
-            if (menus == null)
+            if (menus != null)
             {
-                return result;
-            }
+                // Filter Administration menus only
+                var adminMenus = menus
+                    .Where(x => x.Function.Name == FunctionKeys.Administration)
+                    .Select(x => (SspMenuItem)x)
+                    .ToList();
 
-            // Filter Administration menus only
-            var test = menus
-                .Where(x => x.Function.Name == FunctionKeys.Administration)
-                .Select(x => (SspMenuItem)x)
-                .ToList();
+                // Add Admin menu
+                var adminMenu = adminMenus.First(x => x.Parent == null);
 
-            // Add Admin menu
-            var adminMenu = test.First(x => x.Parent == null);
-
-            foreach (var menu in test)
-            {
-                if (menu.Parent?.Id == adminMenu.Id)
+                foreach (var menu in adminMenus)
                 {
-                    menu.Children = PopulateChildList(menu, test);
-                    result.Add(menu);
+                    if (menu.Parent?.Id == adminMenu.Id)
+                    {
+                        menu.Children = GetChildMenuList(menu, adminMenus);
+                        result.Add(menu);
+                    }
                 }
-            }
 
-            result = result.OrderBy(x => x.DisplayOrder).ToList();
+                result = result.OrderBy(x => x.DisplayOrder).ToList();
+            }
 
             return result;
         }
