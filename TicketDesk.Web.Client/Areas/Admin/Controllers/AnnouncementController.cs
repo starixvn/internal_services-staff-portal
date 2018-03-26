@@ -145,16 +145,12 @@
         public ActionResult Publish(int[] ids)
         {
             var result = announcementService.PublishAnnouncements(ids);
-            string message;
 
-            if(result)
-            {
-                message = ids.Length > 1 ? Resources.MultipleAnnouncementPublishedMessage : Resources.SingleAnnouncementPublishedMessage;
-            }
-            else
-            {
-                message = Resources.PublishAnnouncementError;
-            }
+            var message = result
+                ? (ids.Length > 1
+                    ? Resources.MultipleAnnouncementPublishedMessage
+                    : Resources.SingleAnnouncementPublishedMessage)
+                : Resources.PublishAnnouncementError;
 
             return Json(new
             {
