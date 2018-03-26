@@ -41,7 +41,7 @@
                             var statusClass = ticket.TicketStatus.ToString().ToLowerInvariant();
                         }
                         <td class="text-center"><span class="@statusClass">@ticket.TicketStatus</span></td>
-                        <td>@Html.Raw(ticketGroup.Name + " <span class='number-ticket'>(" + ticketGroup.TotalItems + ")</span>")</td>
+                        <td>@Html.Raw(ticketGroup.Name + "(" + ticketGroup.TotalItems + ")")</td>
                     </tr>
                 }
             }
