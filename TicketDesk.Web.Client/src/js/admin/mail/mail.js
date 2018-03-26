@@ -2,13 +2,10 @@
     init: function () {
         mail.filterForm();
         mail.handleSave();
+        mail.preventInValidMail();
     },
 
-    initTag: function() {
-        $(".tag").tagsinput({
-            confirmKeys: [13, 44, 32, 186, 188],
-            trimValue: true
-        });
+    preventInValidMail: function() {
         $("#data-list").on("beforeItemAdd",
             ".tag",
             function (event) {
@@ -16,6 +13,15 @@
                     event.cancel = true;
                 }
             });
+    },
+
+    initTag: function() {
+        $(".tag").tagsinput({
+            confirmKeys: [13, 44, 32, 188],
+            trimValue: true,
+            delimiter: ";",
+            delimiterRegex: null
+        });
     },
 
     checkMailFormat: function(email) {
