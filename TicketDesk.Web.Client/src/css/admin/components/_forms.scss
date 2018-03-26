@@ -219,3 +219,22 @@
         }
     }
 }
+
+// --------------  Bootstrap Tagsinput --------------- //
+.bootstrap-tagsinput {
+    width: 100%;
+    box-shadow: none;
+    border-color: #b7b7b7;
+    border-radius: 2px;
+
+    .label {
+        border-radius: 40px;
+        font-size: 13px;
+        font-weight: normal;
+        color: #333;
+    }
+
+    .label-info {
+        background: #e5e5e5;
+    }
+}

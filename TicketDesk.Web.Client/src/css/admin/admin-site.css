@@ -1230,6 +1230,19 @@ table.dataTable {
     transform: scale(0);
     transition: .2s; }
 
+.bootstrap-tagsinput {
+  width: 100%;
+  box-shadow: none;
+  border-color: #b7b7b7;
+  border-radius: 2px; }
+  .bootstrap-tagsinput .label {
+    border-radius: 40px;
+    font-size: 13px;
+    font-weight: normal;
+    color: #333; }
+  .bootstrap-tagsinput .label-info {
+    background: #e5e5e5; }
+
 .confirm-modal {
   margin-top: 60px;
   width: 430px; }
