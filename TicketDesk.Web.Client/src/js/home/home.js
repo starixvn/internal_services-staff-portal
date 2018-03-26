@@ -45,6 +45,10 @@
             return "Displaying " + start + " to " + end +" of " + max + " item(s)";
         }
 
+        tableConfigs.drawCallback = function (settings) {
+            nexcelSSPCommon.initSelect2();
+        }
+
         $table.DataTable(tableConfigs);
     },
 
