@@ -7,7 +7,7 @@
 
 @section css
 {
-    <link rel="stylesheet" href="~/src/libs/bootstrap-tagsinput/bootstrap-tagsinput.css"/>
+    <link rel="stylesheet" href="~/src/libs/bootstrap-tagsinput/bootstrap-tagsinput.css" />
 }
 
 @section scripts
@@ -22,8 +22,8 @@
     @using (Html.BeginForm("ListMail", "Mail", FormMethod.Post, new { @class = "filter-row" }))
     {
         <div class="dropdown-medium">
-            @Html.LabelFor(x => x.CategoryId)            
-            @Html.EnumDropDownListFor(x => x.CategoryId, new { @class = "form-control" })            
+            @Html.LabelFor(x => x.CategoryId)
+            @Html.EnumDropDownListFor(x => x.CategoryId, new { @class = "form-control" })
         </div>
     }
 </section>
