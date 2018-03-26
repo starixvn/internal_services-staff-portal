@@ -13,6 +13,7 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using IO;
+    using Localization.Client;
     using Models.TicketList;
     using Service.Interface;
 
@@ -64,7 +65,7 @@
 
                 return Json(new { isSuccessful, message }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { message = "No permission" });
+            return Json(new { message = Resources.NoPermissionForTicketType });
         }
 
         [NapAuth(FunctionKey = FunctionKeys.TicketList, Policy = Constant.Policy.Read)]
@@ -87,7 +88,9 @@
             if (id > 0)
             {
                 var ticket = ticketService.GetTicket(id);
-                IsHaveHostPermission(ticket.TicketType, Constant.Policy.Host);
+                TicketCategoryTypes ticketType = (TicketCategoryTypes)ticket.CategoryId;
+                var isHost = IsHaveHostPermission(ticketType.ToString(), Constant.Policy.Host);
+                return isHost;
             }
             return false;
         }

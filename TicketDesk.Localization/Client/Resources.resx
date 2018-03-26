@@ -639,4 +639,7 @@
   <data name="PublishAnnouncementError" xml:space="preserve">
     <value>Publish Announcement(s) Error</value>
   </data>
+  <data name="NoPermissionForTicketType" xml:space="preserve">
+    <value>You don't have permission to change  status this ticket type</value>
+  </data>
 </root>
