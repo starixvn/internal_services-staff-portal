@@ -8,9 +8,9 @@
     using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Localization.Client;
     using Models.Announcements;
     using Service.Interface;
-    using Localization.Client;
 
     public class AnnouncementController : BaseController
     {
@@ -66,12 +66,19 @@
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Create(NewAnnouncementViewModel viewModel)
         {
-            announcementService.AddAnnouncement(viewModel.Announcement);
+            var result = false;
+
+            if (ModelState.IsValid)
+            {
+                result = announcementService.AddAnnouncement(viewModel.Announcement);
+            }
+
+            var message = result ? Resources.SingleAnnouncementCreatedMessage : Resources.CreateAnnouncementError;
 
             return Json(new
             {
-                success = true,
-                message = Resources.SingleAnnouncementCreatedMessage
+                success = result,
+                message
             });
         }
 
@@ -86,12 +93,19 @@
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Delete(Announcement viewModel)
         {
-            var result = announcementService.DeleteAnnouncement(viewModel.Id);
+            var result = false;
+
+            if (ModelState.IsValid)
+            {
+                result = announcementService.DeleteAnnouncement(viewModel.Id);
+            }
+
+            var message = result ? Resources.SingleAnnouncementDeletedMessage : Resources.DeleteAnnouncementError;
 
             return Json(new
             {
                 success = result,
-                message = Resources.SingleAnnouncementDeletedMessage
+                message
             });
         }
 
@@ -111,12 +125,19 @@
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(NewAnnouncementViewModel viewModel)
         {
-            announcementService.UpdateAnnouncement(viewModel.Announcement);
+            var result = false;
+
+            if (ModelState.IsValid)
+            {
+                result = announcementService.UpdateAnnouncement(viewModel.Announcement);
+            }
+
+            var message = result ? Resources.SingleAnnouncementEditedMessage : Resources.EditAnnouncementError;
 
             return Json(new
             {
-                success = true,
-                message = Resources.SingleAnnouncementEditedMessage
+                success = result,
+                message
             });
         }
 
@@ -131,15 +152,21 @@
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Publish(int[] ids)
         {
-            announcementService.PublishAnnouncements(ids);
+            var result = announcementService.PublishAnnouncements(ids);
+            string message;
 
-            var message = ids.Length > 1
-                ? Resources.MultipleAnnouncementPublishedMessage
-                : Resources.SingleAnnouncementPublishedMessage;
+            if(result)
+            {
+                message = ids.Length > 1 ? Resources.MultipleAnnouncementPublishedMessage : Resources.SingleAnnouncementPublishedMessage;
+            }
+            else
+            {
+                message = Resources.PublishAnnouncementError;
+            }
 
             return Json(new
             {
-                success = true,
+                success = result,
                 message
             });
         }
@@ -147,12 +174,19 @@
         [NapAuth(FunctionKey = FunctionKeys.Announcement, Policy = Constant.Policy.Host)]
         public ActionResult Publish(NewAnnouncementViewModel viewModel)
         {
-            announcementService.UpdateAnnouncement(viewModel.Announcement);
+            var result = false;
+
+            if(ModelState.IsValid)
+            {
+                result = announcementService.UpdateAnnouncement(viewModel.Announcement);
+            }
+
+            var message = result ? Resources.SingleAnnouncementPublishedMessage : Resources.PublishAnnouncementError;
 
             return Json(new
             {
-                success = true,
-                message = Resources.SingleAnnouncementPublishedMessage
+                success = result,
+                message
             });
         }
 

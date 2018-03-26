@@ -50,10 +50,10 @@ var modalhandler = {
         modalhandler.assignFunctions();
         modalhandler.dismissAll();
         modalhandler.handleModalForms();
-        modalhandler.assignButton();
+        modalhandler.handleSetCurrentDateTimeButton();
     },
 
-    assignButton: function () {
+    handleSetCurrentDateTimeButton: function () {
         $("#announcement-modal").on("click",
             "#set-current-datetime-button",
             function () {

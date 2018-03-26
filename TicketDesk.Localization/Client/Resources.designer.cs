@@ -19,7 +19,7 @@ namespace TicketDesk.Localization.Client {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -214,6 +214,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Announcement Error.
+        /// </summary>
+        public static string CreateAnnouncementError {
+            get {
+                return ResourceManager.GetString("CreateAnnouncementError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create New Announcement.
         /// </summary>
         public static string CreateNewAnnouncement {
@@ -327,6 +336,15 @@ namespace TicketDesk.Localization.Client {
         public static string DeleteAnnouncement {
             get {
                 return ResourceManager.GetString("DeleteAnnouncement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Announcement Error.
+        /// </summary>
+        public static string DeleteAnnouncementError {
+            get {
+                return ResourceManager.GetString("DeleteAnnouncementError", resourceCulture);
             }
         }
         
@@ -628,6 +646,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Announcement Error.
+        /// </summary>
+        public static string EditAnnouncementError {
+            get {
+                return ResourceManager.GetString("EditAnnouncementError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email Address.
         /// </summary>
         public static string Email {
@@ -795,6 +822,15 @@ namespace TicketDesk.Localization.Client {
         public static string PublishAnnouncement {
             get {
                 return ResourceManager.GetString("PublishAnnouncement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publish Announcement(s) Error.
+        /// </summary>
+        public static string PublishAnnouncementError {
+            get {
+                return ResourceManager.GetString("PublishAnnouncementError", resourceCulture);
             }
         }
         

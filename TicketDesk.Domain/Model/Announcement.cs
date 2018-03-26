@@ -1,13 +1,13 @@
 ﻿namespace TicketDesk.Domain.Model
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Web.Mvc;
     using Core.Enumerations;
     using DelegateDecompiler;
     using TicketDesk.Localization.Client;
-    using System.Collections.Generic;
 
     public class Announcement : IValidatableObject
     {
@@ -80,9 +80,8 @@
 
             if (!isValid)
             {
-                var validation = new ValidationResult(
-                    Resources.DateNotInRange,
-                    new[] { "PublishedDateTime" });
+                var validation = new ValidationResult(Resources.DateNotInRange, new[] { nameof(PublishedDateTime) });
+
                 result.Add(validation);
             }
 

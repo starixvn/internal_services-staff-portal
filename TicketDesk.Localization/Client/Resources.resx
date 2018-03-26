@@ -627,4 +627,16 @@
   <data name="TicketList" xml:space="preserve">
     <value>Ticket List</value>
   </data>
+  <data name="CreateAnnouncementError" xml:space="preserve">
+    <value>Create Announcement Error</value>
+  </data>
+  <data name="DeleteAnnouncementError" xml:space="preserve">
+    <value>Delete Announcement Error</value>
+  </data>
+  <data name="EditAnnouncementError" xml:space="preserve">
+    <value>Edit Announcement Error</value>
+  </data>
+  <data name="PublishAnnouncementError" xml:space="preserve">
+    <value>Publish Announcement(s) Error</value>
+  </data>
 </root>
