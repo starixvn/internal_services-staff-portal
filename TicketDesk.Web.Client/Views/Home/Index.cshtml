@@ -1,11 +1,23 @@
-﻿@using TicketDesk.Core.Enumerations
-@using TicketDesk.Localization.Client
+﻿@using TicketDesk.Localization.Client
 @model TicketDesk.Web.Client.Models.Home.HomeViewModel
 
 @section title{ @Resources.Common_App_Title }
 
+@section css
+{
+    <link href="~/src/libs/jquery.DataTable/datatables.min.css" rel="stylesheet" />
+}
+
 @section scripts
 {
+    <script src="~/src/libs/datetimepicker/moment.js"></script>
+
+    <script src="~/src/libs/jquery.DataTable/datatables.min.js" type="text/javascript"></script>
+    <script src="~/src/libs/jquery.DataTable/datetime.js" type="text/javascript"></script>
+    <script src="~/src/libs/jquery.DataTable/dataTables.rowGroup.min.js" type="text/javascript"></script>
+
+    <script src="~/src/js/admin/dataTableCommon.js"></script>
+
     <script type="text/javascript" src="~/src/js/home/read-announcement.js"></script>
     <script type="text/javascript" src="~/src/js/home/home.js"></script>
 }
@@ -13,8 +25,7 @@
 <div class="home-main">
     <div class="feature">
         <div class="panel-heading text-info">@Resources.Views_Home_Index_MyOpenningIssue</div>
-        <div class="panel-body" id="my-opening-tickets" data-action="@Url.Action("MyOpeningTicket","Home")">
-        </div>
+        <div class="panel-body" id="my-opening-tickets" data-action="@Url.Action("MyOpeningTicket","Home")"></div>
     </div>
     <div class="feature">
         <div class="panel-heading text-info">

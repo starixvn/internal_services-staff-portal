@@ -41,12 +41,15 @@
         {
             var myOpenningIssues = viewModel ?? new MyOpenningTicketsViewModel();
 
-            myOpenningIssues.TicketGroups = ticketService.GetUserOpeningTicketsInGroups(
-                CurrentSession.UserId,
-                myOpenningIssues.Skipped,
-                myOpenningIssues.ItemPerPage);
+            ////myOpenningIssues.TicketGroups = ticketService.GetUserOpeningTicketsInGroups(
+            ////    CurrentSession.UserId,
+            ////    myOpenningIssues.Skipped,
+            ////    myOpenningIssues.ItemPerPage);
 
-            myOpenningIssues.TotalItem = ticketService.GetUserTotalOpeningTickets(CurrentSession.UserId);
+            myOpenningIssues.TicketGroups = ticketService.GetUserOpeningTicketsInGroups(
+                CurrentSession.UserId, 0, 1000);
+
+            ////myOpenningIssues.TotalItem = ticketService.GetUserTotalOpeningTickets(CurrentSession.UserId);
 
             return PartialView("_MyOpeningTicket", myOpenningIssues);
         }

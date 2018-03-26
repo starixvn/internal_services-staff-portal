@@ -21,5 +21,5 @@
             },
             autoWidth: false
         }
-    },
+    }
 }

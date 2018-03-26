@@ -1,15 +1,66 @@
 ﻿var myOpenningTicket = {
     init: function () {
-        $("#my-opening-tickets").on("click",
-            "a.ajax",
-            function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                var action = $(this).attr("href");
-                myOpenningTicket.getMyOpenningTickets(action);
-            });
+        //$("#my-opening-tickets").on("click",
+        //    "a.ajax",
+        //    function (e) {
+        //        e.preventDefault();
+        //        e.stopPropagation();
+        //        var action = $(this).attr("href");
+        //        myOpenningTicket.getMyOpenningTickets(action);
+        //    });
 
         myOpenningTicket.getMyOpenningTickets();
+    },
+
+    dataTableDateTimeRenderer: $.fn.dataTable.render.moment("MMM DD, YYYY", "MMM DD, YYYY"),
+
+    getGroupingRow: function (rows, group) {
+        var nameArray = group.split("(");
+        var groupName = nameArray[0].trim();
+        var count = nameArray[1].split(")")[0].trim();
+        return $('<tr class="header expand" data-title="' + groupName + '"><td colspan="4"><span class="sign expanded"></span> ' + groupName + ' <span class="number-ticket">(' + count + ')</span></td></tr>');
+    },
+
+    initDatatable: function($table) {
+        var tableConfigs = commonDataTableInit.Init();
+        //tableConfigs.order = [[2, "desc"]];
+        tableConfigs.ordering = false;
+        tableConfigs.searching = false;
+        tableConfigs.columnDefs = [
+            {
+                visible: false,
+                targets: [4]
+            }
+        ];
+
+        tableConfigs.rowGroup = {
+            dataSrc: 4,
+            startRender: function (rows, group) {
+                return myOpenningTicket.getGroupingRow(rows, group);
+            }
+        }
+
+        ////tableConfigs.drawCallback = function(settings) {
+        ////    collapseTable.init();
+        ////}
+
+        //tableConfigs.drawCallback = function(settings) {
+        //    var api = this.api();
+        //    var rows = api.rows({ page: 'current' }).nodes();
+        //    var last = null;
+
+        //    api.column(4, { page: 'current' }).data().each(function (group, i) {
+        //        if (last !== group) {
+        //            $(rows).eq(i).before(
+        //                '<tr class="header expand" data-title="' + group + '"><td colspan="4"><span class="sign expanded"></span> ' + group + ' <span class="number-ticket">' + group + '</span></td></tr>'
+        //            );
+
+        //            last = group;
+        //        }
+        //    });
+        //}
+
+        $table.DataTable(tableConfigs);
     },
 
     getMyOpenningTickets: function (action) {
@@ -22,6 +73,7 @@
             method: "get",
             success: function (result) {
                 $("#my-opening-tickets").html(result);
+                myOpenningTicket.initDatatable($("#my-opening-tickets table"));
                 collapseTable.init();
             }
         });
@@ -34,8 +86,9 @@ var collapseTable = {
     },
 
     assignCollapseHeader: function () {
-        $(".header").on("click",
-            function () {
+        $("table").on("click",
+            ".header",
+            function() {
                 var $this = $(this);
                 collapseTable.toggleCollapseExpand($this);
             });
