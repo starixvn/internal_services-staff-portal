@@ -92,6 +92,7 @@
                         Subject = t.Title,
                         TicketType = (TicketCategoryTypes)t.CategoryId,
                         Status = t.TicketStatus,
+                        CreatedBy = t.CreatedBy,
                         CreatedDate = t.CreatedDate,
                         UpdatedDate = t.LastUpdateDate
                     });
@@ -103,10 +104,11 @@
             var tickets = BasicGetTicketJoinWithShop();
 
             tickets = ticketStatus == null
-                ? tickets.OrderByDescending(x => x.UpdatedDate)
+                ? tickets.Where(x => x.CreatedBy == userId.ToString())
+                    .OrderByDescending(x => x.UpdatedDate)
                     .Skip(skip)
                     .Take(take)
-                : tickets.Where(x => x.Status == ticketStatus)
+                : tickets.Where(x => x.Status == ticketStatus && x.CreatedBy == userId.ToString())
                     .OrderByDescending(x => x.UpdatedDate)
                     .Skip(skip)
                     .Take(take);
