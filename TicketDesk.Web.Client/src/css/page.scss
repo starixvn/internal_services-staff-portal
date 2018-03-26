@@ -19,6 +19,14 @@
     padding-top: 4px;
 }
 
+.id-ticket {
+    color: #0060ff;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 ul {
     padding: 0;
     margin: 0;
@@ -361,7 +369,6 @@ body {
     .panel-heading {
         padding: 0 12px;
         display: flex;
-        justify-content: space-between;
         line-height: 48px;
         align-items: center;
         border-radius: 0;
@@ -369,6 +376,10 @@ body {
         color: $text-second-color;
         text-transform: uppercase;
         font-weight: 700;
+
+        &.text-info {
+            justify-content: space-between;
+        }
 
         .btn-unread {
             font-family: inherit;
@@ -428,14 +439,6 @@ body {
             .number-ticket {
                 color: $primary-color;
                 font-weight: 600;
-            }
-        }
-
-        td .id-ticket {
-            color: #0060ff;
-
-            &:hover {
-                text-decoration: underline;
             }
         }
     }
@@ -1080,7 +1083,7 @@ tr.header {
             border-radius: 40px;
             font-size: 15px;
             font-weight: normal;
-            color: #333;
+            color: #2e4592;
 
             > [data-role="remove"] {
                 position: absolute;

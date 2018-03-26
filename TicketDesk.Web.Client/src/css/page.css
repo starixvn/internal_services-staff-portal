@@ -13,6 +13,11 @@
   display: block;
   padding-top: 4px; }
 
+.id-ticket {
+  color: #0060ff; }
+  .id-ticket:hover {
+    text-decoration: underline; }
+
 ul {
   padding: 0;
   margin: 0;
@@ -266,7 +271,6 @@ body {
   .feature .panel-heading {
     padding: 0 12px;
     display: flex;
-    justify-content: space-between;
     line-height: 48px;
     align-items: center;
     border-radius: 0;
@@ -274,6 +278,8 @@ body {
     color: #fff;
     text-transform: uppercase;
     font-weight: 700; }
+    .feature .panel-heading.text-info {
+      justify-content: space-between; }
     .feature .panel-heading .btn-unread {
       font-family: inherit;
       background: rgba(255, 255, 255, 0.1);
@@ -312,11 +318,6 @@ body {
   .table-bordered tr.header td .number-ticket {
     color: #bf141a;
     font-weight: 600; }
-
-.table-bordered tr td .id-ticket {
-  color: #0060ff; }
-  .table-bordered tr td .id-ticket:hover {
-    text-decoration: underline; }
 
 .table-bordered.tbl-announcement .date {
   width: 130px; }
@@ -746,7 +747,7 @@ tr.header {
       border-radius: 40px;
       font-size: 15px;
       font-weight: normal;
-      color: #333; }
+      color: #2e4592; }
       .form-content .bootstrap-tagsinput .tag > [data-role="remove"] {
         position: absolute;
         font-family: 'icomoon' !important;
