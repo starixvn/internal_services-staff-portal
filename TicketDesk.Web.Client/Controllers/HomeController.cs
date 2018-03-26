@@ -1,18 +1,15 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using Domain.Infrastructure;
-    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Web.Attribute;
     using Models;
     using Models.Extensions;
     using Models.Home;
-    using Service.Implement;
     using Service.Interface;
 
     public class HomeController : BaseController
@@ -53,26 +50,22 @@
             return PartialView("_MyOpeningTicket", myOpenningIssues);
         }
 
-        public ActionResult MoreAnnouncement(MoreAnnouncementViewModel viewModel)
+        public ActionResult MoreAnnouncement()
         {
-            var moreannouncementViewModel = viewModel ?? new MoreAnnouncementViewModel();
+            var viewModel = new MoreAnnouncementViewModel();
 
-            var announcements = announcementService.GetAnnouncements(moreannouncementViewModel.GetAnnouncementsCriteria());
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult ListAllAnnouncement(MoreAnnouncementViewModel viewModel)
+        {
+            var criteria = viewModel.GetAnnouncementsCriteria();
+            var announcements = announcementService.GetAnnouncements(criteria);
             announcements = announcementService.CalculateAnnouncementsReadStatus(
                 announcements,
                 NapUserSetting.SettingObject.ReadAnnouncements);
-
-            moreannouncementViewModel.TotalItem = announcements.Count();
-
-            var paginationService = new PaginationService<Announcement, DateTime?>();
-
-            moreannouncementViewModel.Announcements = paginationService.Pagination(
-                announcements,
-                x => x.PublishedDateTime,
-                moreannouncementViewModel.Skipped,
-                moreannouncementViewModel.ItemPerPage).ToList();
-
-            return View(moreannouncementViewModel);
+            return PartialView("_ListAllAnnouncements", announcements.OrderByDescending(x => x.CreatedDateTime).ToList());
         }
 
         public ActionResult GetListAnnouncementByReadState(bool isUnreadOnly)

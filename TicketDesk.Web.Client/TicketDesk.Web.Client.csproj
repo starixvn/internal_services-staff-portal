@@ -502,6 +502,7 @@
     <Content Include="src\js\admin\reference\reference-admin.js" />
     <Content Include="src\js\admin\shop-management\shop-management.js" />
     <Content Include="src\js\admin\ticket-list\ticket-list.js" />
+    <Content Include="src\js\home\more-announcement.js" />
     <Content Include="src\js\home\read-announcement.js" />
     <Content Include="src\js\ticket-dropzone.js" />
     <Content Include="src\js\ticket-list\ticket-list.js" />
@@ -2108,6 +2109,7 @@
     <Content Include="Views\TicketList\Index.cshtml" />
     <Content Include="Views\TicketList\TicketDetails.cshtml" />
     <Content Include="Views\TicketList\_TicketList.cshtml" />
+    <Content Include="Views\Home\_ListAllAnnouncements.cshtml" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

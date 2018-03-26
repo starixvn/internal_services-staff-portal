@@ -7,35 +7,18 @@
 @section css
 {
     <link href="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/src/libs/jquery.DataTable/datatables.min.css" rel="stylesheet" />
+
 }
 
 @section scripts
 {
-    <script src="~/src/js/pagination.js" type="text/javascript"></script>
+    <script src="~/src/js/admin/dataTableCommon.js"></script>
+    <script src="~/src/libs/jquery.DataTable/datatables.min.js" type="text/javascript"></script>
     <script src="~/src/libs/datetimepicker/moment.js"></script>
     <script src="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.js"></script>
     <script src="~/src/js/home/read-announcement.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#from-date').datetimepicker({
-                format: 'MM-DD-YYYY'
-            });
-
-            $('#to-date').datetimepicker({
-                format: 'MM-DD-YYYY',
-                useCurrent: false
-            });
-
-            $("#from-date").on("dp.change", function (e) {
-                $('#to-date').data("DateTimePicker").minDate(e.date);
-            });
-
-            $("#to-date").on("dp.change", function (e) {
-                $('#from-date').data("DateTimePicker").maxDate(e.date);
-            });
-        });
-    </script>
+    <script src="~/src/js/home/more-announcement.js"></script>
 }
 
 <div class="announcement-detail">
@@ -48,7 +31,7 @@
 
         <div class="content-announcement panel-body">
 
-            @using (Html.BeginForm("MoreAnnouncement", "Home", FormMethod.Get, new { @class = "form-inline filter" }))
+            @using (Html.BeginForm("ListAllAnnouncement", "Home", FormMethod.Post, new { @class = "form-inline filter" }))
             {
                 <div class="form-group">
                     @Html.LabelFor(x => x.PublishedFrom, new { @class = "label-filter" })
@@ -78,63 +61,7 @@
                 </div>
             }
 
-            <table class="table table-bordered tbl-announcement-detail tbl-announcement">
-                <thead>
-                    <tr>
-                        <th class="text-center id">#</th>
-                        <th class="text-center">@Resources.Views_Announcement_Message</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @if (Model.Announcements != null && Model.Announcements.Count() > 0)
-                    {
-                        int index = 0;
-                        foreach (var announcement in Model.Announcements)
-                        {
-                            bool isImportant = announcement.Type == AnnouncementType.Important;
-                            bool isEven = index % 2 == 1;
-
-                            string announcementClass = "";
-                            int unreadId = !announcement.IsRead ? announcement.Id : 0;
-
-                            if (isImportant)
-                            {
-                                announcementClass += " msg-important";
-                            }
-                            if (isEven)
-                            {
-                                announcementClass += " even";
-                            }
-
-                            if (!announcement.IsRead)
-                            {
-                                announcementClass += " unread";
-                            }
-
-                            <tr class="@announcementClass" data-id="@unreadId" data-href="@Url.Action("SaveAndCountTotalUnreadAnnouncement", "NapUserSetting", new { id = unreadId})">
-                                <td class="text-center">@(index + 1)</td>
-                                <td>
-                                    <span>@announcement.PublishedDateTime.Value.ToString("g") @announcement.Id</span><br>
-                                    <span>@announcement.Message</span>
-                                </td>
-                            </tr>
-
-                            index++;
-                        }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="2" class="text-center">
-                                @Resources.TableNoData
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
-            @Html.Partial("_Pagination", Model)
+            <div id="announcement-list"></div>
         </div>
     </div>
 </div>
