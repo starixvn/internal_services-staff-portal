@@ -69,10 +69,13 @@
                 width: 150,
                 sortable: true
             }];
+        ticketListTable.drawCallback = function (settings) {
+            sidebar.initSelect2();
+        }
         $(domElement.TicketTable).DataTable(ticketListTable);
         floatThead.initFloatThead(domElement.TicketTable);
-        sidebar.initSelect2();
     }
+
 
     function getTicketList() {
         $.ajax({
