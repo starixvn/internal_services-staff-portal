@@ -38,14 +38,7 @@
         {
             var myOpenningIssues = viewModel ?? new MyOpenningTicketsViewModel();
 
-            ////myOpenningIssues.TicketGroups = ticketService.GetUserOpeningTicketsInGroups(
-            ////    CurrentSession.UserId,
-            ////    myOpenningIssues.Skipped,
-            ////    myOpenningIssues.ItemPerPage);
-
             myOpenningIssues.TicketGroups = ticketService.GetUserOpeningTicketsInGroups();
-
-            ////myOpenningIssues.TotalItem = ticketService.GetUserTotalOpeningTickets(CurrentSession.UserId);
 
             return PartialView("_MyOpeningTicket", myOpenningIssues);
         }
@@ -84,7 +77,7 @@
         {
             var model = new NavbarViewModel
             {
-                MenuItems = PopulateMenus(CurrentSession.MenuItemList),
+                MenuItems = GetMenus(CurrentSession.MenuItemList),
                 Username = CurrentSession.Username,
                 IsAuthenticated = CurrentSession.UserId > 0
             };
@@ -92,7 +85,7 @@
             return PartialView("~/Views/Shared/_Navbar.cshtml", model);
         }
 
-        private static List<SspMenuItem> PopulateMenus(IEnumerable<MenuItem> menus)
+        private static List<SspMenuItem> GetMenus(IEnumerable<MenuItem> menus)
         {
             var result = new List<SspMenuItem>();
 

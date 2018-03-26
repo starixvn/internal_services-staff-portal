@@ -61,12 +61,17 @@
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        private string RemoveWrongEmailAddresses(string emails)
+        private static string RemoveWrongEmailAddresses(string emails)
         {
-            List<string> validMails = new List<string>();
-            string[] emailStrings = emails.Split(',', ' ', ';');
+            if (string.IsNullOrEmpty(emails))
+            {
+                return null;
+            }
 
-            foreach (string emailString in emailStrings)
+            List<string> validMails = new List<string>();
+            var emailStrings = emails.Split(',', ' ', ';');
+
+            foreach (var emailString in emailStrings)
             {
                 if (IsEmailValid(emailString.Trim()))
                 {
@@ -79,7 +84,7 @@
 
         private static bool IsEmailValid(string email)
         {
-            return Regex.IsMatch(email, @"/^[^\s@]+@[^\s@]+\.[^\s@]+$/");
+            return Regex.IsMatch(email, @"^[^\s@]+@[^\s@]+\.[^\s@]+$");
         }
     }
 }

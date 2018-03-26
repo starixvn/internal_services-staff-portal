@@ -6,6 +6,7 @@
     using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Localization.Client;
     using Models.DataConfiguration;
     using Service.Interface;
 
@@ -59,26 +60,34 @@
         [NapAuth(FunctionKey = FunctionKeys.DataConfiguration, Policy = Constant.Policy.Host)]
         public ActionResult CreateAndContinueCustomFieldListValue(CreateCustomFieldListValueViewModel viewModel)
         {
+            CreateCustomFieldListValueViewModel newViewModel = viewModel;
             if (ModelState.IsValid)
             {
                 CustomFieldListValue customFieldListValue = new CustomFieldListValue
                 {
-                    CustomFieldId = viewModel.CustomFieldId,
-                    DisplayName_vi = viewModel.DisplayName_vi,
-                    DisplayName = viewModel.DisplayName,
-                    IsActive = viewModel.IsActive
+                    CustomFieldId = newViewModel.CustomFieldId,
+                    DisplayName_vi = newViewModel.DisplayName_vi,
+                    DisplayName = newViewModel.DisplayName,
+                    IsActive = newViewModel.IsActive
                 };
 
-                dataConfigurationService.CreateCustomFieldListValue(customFieldListValue);
+                var result = dataConfigurationService.CreateCustomFieldListValue(customFieldListValue);
+
+                if (result)
+                {
+                    newViewModel = new CreateCustomFieldListValueViewModel
+                    {
+                        CustomFieldId = viewModel.CustomFieldId,
+                        ModalTitle = viewModel.ModalTitle
+                    };
+
+                    ModelState.Clear();
+                }
+                else
+                {
+                    ModelState.AddModelError("", Resources.CreateItemError);
+                }
             }
-
-            var newViewModel = new CreateCustomFieldListValueViewModel
-            {
-                CustomFieldId = viewModel.CustomFieldId,
-                ModalTitle = viewModel.ModalTitle
-            };
-
-            ModelState.Clear();
 
             return PartialView("_CreateCustomFieldListValue", newViewModel);
         }
@@ -126,14 +135,12 @@
             return Json(result);
         }
 
-        [AcceptVerbs("Get", "Post")]
         public ActionResult IsDisplayNameViUnique(CreateCustomFieldListValueViewModel viewModel)
         {
             var result = dataConfigurationService.IsCustomFieldDisplayNameViUnique(viewModel.CustomFieldId, viewModel.DisplayName_vi, viewModel.Id);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [AcceptVerbs("Get", "Post")]
         public ActionResult IsDisplayNameEnUnique(CreateCustomFieldListValueViewModel viewModel)
         {
             var result = dataConfigurationService.IsCustomFieldDisplayNameEnUnique(viewModel.CustomFieldId, viewModel.DisplayName, viewModel.Id);

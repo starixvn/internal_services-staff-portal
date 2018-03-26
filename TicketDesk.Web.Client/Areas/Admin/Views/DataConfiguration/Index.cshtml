@@ -34,20 +34,7 @@
         <div class="select-group">
             @Html.LabelFor(x => x.SelectedFieldId)
             <div class="select-group">
-                <select class="form-control" id="@Html.IdFor(x => x.SelectedFieldId)" name="@Html.NameFor(x => x.SelectedFieldId)">
-                    @foreach (var editableField in Model.EditableCustomFields)
-                    {
-                        if (editableField.CustomFieldId == Model.SelectedFieldId)
-                        {
-                            ViewBag.NewCustomFieldListValueTitle = editableField.Name;
-                            <option selected="selected" value="@editableField.CustomFieldId">@editableField.Name</option>
-                        }
-                        else
-                        {
-                            <option value="@editableField.CustomFieldId">@editableField.Name</option>
-                        }
-                    }
-                </select>
+                @Html.DropDownListFor(x => x.SelectedFieldId, new SelectList(Model.EditableCustomFields, "CustomFieldId", "Name"), new { @class="form-control" })
             </div>
         </div>
 

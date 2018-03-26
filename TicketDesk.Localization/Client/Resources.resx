@@ -642,4 +642,7 @@
   <data name="NoPermissionForTicketType" xml:space="preserve">
     <value>You don't have permission to change  status this ticket type</value>
   </data>
+  <data name="CreateItemError" xml:space="preserve">
+    <value>Create Item error</value>
+  </data>
 </root>
