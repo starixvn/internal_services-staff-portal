@@ -26,6 +26,7 @@
         //tableConfigs.order = [[2, "desc"]];
         tableConfigs.ordering = false;
         tableConfigs.searching = false;
+        tableConfigs.info = true;
         tableConfigs.columnDefs = [
             {
                 visible: false,
@@ -40,25 +41,9 @@
             }
         }
 
-        ////tableConfigs.drawCallback = function(settings) {
-        ////    collapseTable.init();
-        ////}
-
-        //tableConfigs.drawCallback = function(settings) {
-        //    var api = this.api();
-        //    var rows = api.rows({ page: 'current' }).nodes();
-        //    var last = null;
-
-        //    api.column(4, { page: 'current' }).data().each(function (group, i) {
-        //        if (last !== group) {
-        //            $(rows).eq(i).before(
-        //                '<tr class="header expand" data-title="' + group + '"><td colspan="4"><span class="sign expanded"></span> ' + group + ' <span class="number-ticket">' + group + '</span></td></tr>'
-        //            );
-
-        //            last = group;
-        //        }
-        //    });
-        //}
+        tableConfigs.infoCallback = function(settings, start, end, max, total, pre) {
+            return "Displaying " + start + " to " + end +" of " + max + " item(s)";
+        }
 
         $table.DataTable(tableConfigs);
     },

@@ -26,18 +26,16 @@
             return context.Tickets.Find(id);
         }
 
-        public IList<TicketGroup> GetUserOpeningTicketsInGroups(int userId, int skip, int take)
+        public IList<TicketGroup> GetUserOpeningTicketsInGroups()
         {
             var result = new List<TicketGroup>();
-            var userIdString = userId.ToString();
+            var userIdString = context.SecurityProvider.CurrentUserId;
             var tickets = context.Tickets
                 .Where(x => x.CreatedBy == userIdString
                             && (x.TicketStatus == TicketStatus.New
                                 || x.TicketStatus == TicketStatus.InProgress))
                 .OrderBy(x => x.CategoryId)
                 .ThenByDescending(x => x.TicketId)
-                .Skip(skip)
-                .Take(take)
                 .GroupBy(x => x.CategoryId);
 
             // Get ticket categories

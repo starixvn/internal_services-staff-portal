@@ -46,8 +46,7 @@
             ////    myOpenningIssues.Skipped,
             ////    myOpenningIssues.ItemPerPage);
 
-            myOpenningIssues.TicketGroups = ticketService.GetUserOpeningTicketsInGroups(
-                CurrentSession.UserId, 0, 1000);
+            myOpenningIssues.TicketGroups = ticketService.GetUserOpeningTicketsInGroups();
 
             ////myOpenningIssues.TotalItem = ticketService.GetUserTotalOpeningTickets(CurrentSession.UserId);
 

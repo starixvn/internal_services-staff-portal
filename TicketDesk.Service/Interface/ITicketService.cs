@@ -9,7 +9,7 @@
     {
         Ticket GetTicket(int id);
 
-        IList<TicketGroup> GetUserOpeningTicketsInGroups(int userId, int skip, int take);
+        IList<TicketGroup> GetUserOpeningTicketsInGroups();
 
         int GetUserTotalOpeningTickets(int userId);
 
