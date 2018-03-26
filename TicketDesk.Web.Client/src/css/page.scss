@@ -438,7 +438,7 @@ body {
                 text-decoration: underline;
             }
         }
-    }    
+    }
 
     &.tbl-announcement {
         .date {
@@ -1052,6 +1052,62 @@ tr.header {
             max-width: none;
             padding-left: 1rem;
             font-size: 16px;
+        }
+    }
+    // ------------------ Bootstrap Tags Input ------------------ //
+    .bootstrap-tagsinput {
+        width: 100%;
+        min-height: 38px;
+        padding: 6px 6px 1px;
+        border-radius: 0;
+        box-shadow: none;
+        margin-bottom: 1rem;
+
+        input[type="text"] {
+            display: inline-block;
+            width: auto;
+            height: auto;
+            border: 0;
+            padding: 0;
+        }
+
+        .tag {
+            position: relative;
+            display: inline-block;
+            margin-right: 35px;
+            margin-bottom: 5px;
+            padding: 5px 8px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: normal;
+            color: #333;
+
+            > [data-role="remove"] {
+                position: absolute;
+                font-family: 'icomoon' !important;
+                margin: 0;
+
+                &:after {
+                    position: relative;
+                    content: "\e90d";
+                    font-size: 24px;
+                    color: #838282;
+                    top: -3px;
+                    left: 10px;
+                }
+
+                &:hover, &:active, &:focus, &:hover:active {
+                    box-shadow: none;
+                }
+
+                &:hover:after {
+                    color: #bf141a;
+                }
+            }
+        }
+
+        .label-info {
+            background: #d5d5d5;
         }
     }
 }
@@ -2094,7 +2150,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     cursor: pointer;
     -webkit-transition: all .5s;
     -moz-transition: all .5s;
-    transition: all .5s;    
+    transition: all .5s;
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     backface-visibility: hidden;
