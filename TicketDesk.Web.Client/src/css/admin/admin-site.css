@@ -1187,6 +1187,13 @@ table.dataTable {
   outline: none;
   border-color: #66afe9; }
 
+.select2-container--open .select2-dropdown--below,
+.select2-container--open .select2-dropdown--above {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.45); }
+
+.select2-container--default .select2-results > .select2-results__options {
+  max-height: 210px; }
+
 .checkbox input[type="checkbox"] {
   display: block;
   opacity: 0;
@@ -1349,4 +1356,28 @@ table.dataTable {
   .modal-footer .btn {
     padding-top: 6px;
     padding-bottom: 6px; }
+
+.ticket-list-modal {
+  width: 700px; }
+  .ticket-list-modal .modal-header {
+    font-size: 16px; }
+  .ticket-list-modal .modal-body {
+    max-height: 500px;
+    overflow-y: auto;
+    background: linear-gradient(white 15px, rgba(255, 255, 255, 0)) 0 0/100% 50px, radial-gradient(at top, rgba(0, 0, 0, 0.2), transparent 70%) 0 0/100% 15px, linear-gradient(to top, white 15px, rgba(255, 255, 255, 0)) bottom/100% 50px, radial-gradient(at bottom, rgba(0, 0, 0, 0.2), transparent 70%) bottom/100% 15px;
+    background-repeat: no-repeat;
+    background-attachment: local, scroll, local, scroll; }
+  .ticket-list-modal .modal-footer {
+    padding-top: 2rem; }
+  .ticket-list-modal .detail-item {
+    padding-bottom: 5px; }
+    .ticket-list-modal .detail-item .item-title {
+      font-weight: 700; }
+  .ticket-list-modal .file-attachments {
+    display: inline-block;
+    margin-bottom: 5px;
+    padding: 0 5px;
+    color: #2e4592;
+    background: #e5e5e5;
+    border-radius: 40px; }
 

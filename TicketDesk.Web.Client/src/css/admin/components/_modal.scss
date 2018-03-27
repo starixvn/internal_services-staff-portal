@@ -38,12 +38,10 @@
 
         &:hover {
             opacity: 1;
-
             /*&:before, &:after {
                 background: #444;
             }*/
         }
-
         /*span {
             visibility: hidden;
         }
@@ -67,7 +65,7 @@
         &:after {
             transform: rotate(-45deg);
         }*/
-    }    
+    }
 }
 
 .modal-header {
@@ -85,7 +83,6 @@
 
 .modal-body {
     padding: 10px;
-
     /*&:before {
         content: '';
         display: block;
@@ -97,11 +94,51 @@
 }
 
 .modal-footer {
-    border: 0;    
+    border: 0;
     padding-top: 0;
 
     .btn {
         padding-top: 6px;
         padding-bottom: 6px;
+    }
+}
+
+.ticket-list-modal {
+    width: 700px;
+
+    .modal-header {
+        font-size: 16px;
+    }
+
+    .modal-body {
+        max-height: 500px;
+        overflow-y: auto;
+        background: linear-gradient(white 15px, hsla(0,0%,100%,0)) 0 0 / 100% 50px, 
+            radial-gradient(at top, rgba(0,0,0,.2), transparent 70%) 0 0 / 100% 15px, 
+            linear-gradient(to top, white 15px, hsla(0,0%,100%,0)) bottom / 100% 50px, 
+            radial-gradient(at bottom, rgba(0,0,0,.2), transparent 70%) bottom / 100% 15px;
+        background-repeat: no-repeat;
+        background-attachment: local, scroll, local, scroll;
+    }
+
+    .modal-footer {
+        padding-top: 2rem;
+    }
+
+    .detail-item {
+        padding-bottom: 5px;
+
+        .item-title {
+            font-weight: 700;
+        }
+    }
+
+    .file-attachments {
+        display: inline-block;
+        margin-bottom: 5px;
+        padding: 0 5px;
+        color: #2e4592;
+        background: #e5e5e5;
+        border-radius: 40px;
     }
 }

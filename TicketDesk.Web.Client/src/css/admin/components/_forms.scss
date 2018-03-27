@@ -161,6 +161,14 @@
     border-color: #66afe9;
 }
 
+.select2-container--open .select2-dropdown--below, 
+.select2-container--open .select2-dropdown--above {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.45);
+}
+
+.select2-container--default .select2-results>.select2-results__options {
+    max-height: 210px;
+}
 
 .checkbox {
     $size: 14px;

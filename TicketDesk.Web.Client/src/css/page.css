@@ -335,6 +335,9 @@ tr.header {
     padding: 0 42px 0 12px;
     height: 34px; }
 
+table.dataTable {
+  border-collapse: collapse; }
+
 .form-horizontal {
   width: 100%; }
 

@@ -31,7 +31,7 @@
                 <td>@ticket.TicketType</td>
                 <td>@ticket.ShopName</td>
                 <td>@ticket.CreatedDate.UtcDateTime</td>
-                <td class="text-center">
+                <td>
                     @if (ticket.IsHostPermissionOnTicketType)
                     {
                         @Html.EnumDropDownListFor(x => ticket.Status, new { @class = "form-control ticket-status", data_href = Url.Action("UpdateTicketStatus", "TicketList", new { id = ticket.Id }), id = ticket.Id })
