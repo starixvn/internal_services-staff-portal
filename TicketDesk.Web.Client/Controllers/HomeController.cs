@@ -89,30 +89,30 @@
         {
             var result = new List<SspMenuItem>();
 
-            if (menus == null)
+            if (menus != null)
             {
-                return result;
-            }
-
-            // Get parent menu item
-            foreach (var rawItem in menus)
-            {
-                if (rawItem.Parent == null && rawItem.Function.Name != FunctionKeys.Administration)
+                // Level 0 - Get Non-Admin Menu
+                foreach (var rawItem in menus)
                 {
-                    result.Add(rawItem);
+                    if (rawItem.Parent == null && rawItem.Function.Name != FunctionKeys.Administration)
+                    {
+                        result.Add(rawItem);
+                    }
                 }
+
+                // Level 1 - Get children menu item
+                foreach (var menuItem in result)
+                {
+                    menuItem.Children = menus
+                        .Where(x => x.Parent != null && x.Parent.Id == menuItem.Id)
+                        .Select(x => (SspMenuItem)x)
+                        .OrderBy(x => x.DisplayOrder).ToList();
+                }
+
+                result = result.OrderBy(x => x.DisplayOrder).ToList();
             }
 
-            // Get children menu item
-            foreach (var menuItem in result)
-            {
-                menuItem.Children = menus
-                    .Where(x => x.Parent != null && x.Parent.Id == menuItem.Id)
-                    .Select(x => (SspMenuItem)x)
-                    .OrderBy(x => x.DisplayOrder).ToList();
-            }
-
-            return result.OrderBy(x => x.DisplayOrder).ToList();
+            return result;
         }
     }
 }

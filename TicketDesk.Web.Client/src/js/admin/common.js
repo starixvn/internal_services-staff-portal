@@ -40,7 +40,7 @@
                 $("select").not(".searchable").select2({
                     minimumResultsForSearch: Infinity
                 });
-            } 
+            }
         }
     },
 
@@ -83,7 +83,7 @@ var floatThead = {
         $(table).floatThead({
             top: 50,
             autoReflow: true
-        })
+        });
     }
 }
 
@@ -94,8 +94,9 @@ var dataTableReflow = {
                 $(".data-table").floatThead("reflow");
             }, 0);
             setTimeout(function () {
-                clearInterval(interval)
-            }, 2000)
+                clearInterval(interval);
+            },
+                2000);
         }
     }
 }

@@ -23,7 +23,7 @@
     [RoutePrefix("ticket-activity")]
     [Route("{action}")]
     [ValidateInput(false)]
-    [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+    [NapAuth(FunctionKey = FunctionKeys.TicketList, Policy = Constant.Policy.Read)]
     public class TicketActivityController : BaseController
     {
         public TicketActivityController(TdDomainContext context)

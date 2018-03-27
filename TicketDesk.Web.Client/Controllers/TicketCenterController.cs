@@ -13,7 +13,7 @@
 
     [RoutePrefix("tickets")]
     [Route("{action=index}")]
-    [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+    [NapAuth(FunctionKey = FunctionKeys.TicketList, Policy = Constant.Policy.Read)]
     public class TicketCenterController : BaseController
     {
         public TicketCenterController(TdDomainContext context)
@@ -50,7 +50,7 @@
         }
 
         [Route("{id:int}")]
-        [NapAuth(FunctionKey = FunctionKeys.TicketCenter, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.TicketList, Policy = Constant.Policy.Read)]
         public async Task<ActionResult> Index(int id)
         {
             var model = await Context.Tickets.Include(t => t.TicketSubscribers).FirstOrDefaultAsync(t => t.TicketId == id).ConfigureAwait(false);

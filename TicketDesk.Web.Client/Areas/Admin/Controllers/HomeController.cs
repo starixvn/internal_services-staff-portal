@@ -26,7 +26,7 @@
 
             var model = new NavbarViewModel
             {
-                MenuItems = PopulateMenus(CurrentSession.MenuItemList),
+                MenuItems = GetMenus(CurrentSession.MenuItemList),
                 IsAuthenticated = CurrentSession.UserId > 0,
                 Username = user.Username,
                 FullName = $"{user.FirstName} {user.LastName}".Trim(' '),
@@ -36,33 +36,31 @@
             return PartialView("~/Areas/Admin/Views/Shared/_AdminNavbar.cshtml", model);
         }
 
-        private static List<SspMenuItem> GetChildMenuList(SspMenuItem sspMenuItem, IEnumerable<SspMenuItem> menus)
+        private static List<SspMenuItem> GetChildMenuList(SspMenuItem sspMenuItem, IEnumerable<MenuItem> menus)
         {
-            return menus.Where(x => x.Parent != null && x.Parent.Id == sspMenuItem.Id).OrderBy(x => x.DisplayOrder).ToList();
+            return menus.Where(x => x.Parent != null && x.Parent.Id == sspMenuItem.Id)
+                .OrderBy(x => x.DisplayOrder)
+                .Select(x => (SspMenuItem)x)
+                .ToList();
         }
 
-        private static List<SspMenuItem> PopulateMenus(IEnumerable<MenuItem> menus)
+        private static List<SspMenuItem> GetMenus(IEnumerable<MenuItem> menus)
         {
             var result = new List<SspMenuItem>();
 
             if (menus != null)
             {
-                // Filter Administration menus only
-                var adminMenus = menus
-                    .Where(x => x.Function.Name == FunctionKeys.Administration)
-                    .Select(x => (SspMenuItem)x)
-                    .ToList();
+                // Level 0 - Get Admin Menu
+                var adminMenu = menus.First(x => x.Function.Name == FunctionKeys.Administration);
 
-                // Add Admin menu
-                var adminMenu = adminMenus.First(x => x.Parent == null);
+                // Level 1 - Get Admin child menus
+                var adminChildMenus = menus.Where(x => x.Parent != null && x.Parent.Id == adminMenu.Id).Select(x => (SspMenuItem)x);
 
-                foreach (var menu in adminMenus)
+                // Level 2 - Get child of admin child menu
+                foreach (SspMenuItem menu in adminChildMenus)
                 {
-                    if (menu.Parent?.Id == adminMenu.Id)
-                    {
-                        menu.Children = GetChildMenuList(menu, adminMenus);
-                        result.Add(menu);
-                    }
+                    menu.Children = GetChildMenuList(menu, menus);
+                    result.Add(menu);
                 }
 
                 result = result.OrderBy(x => x.DisplayOrder).ToList();
