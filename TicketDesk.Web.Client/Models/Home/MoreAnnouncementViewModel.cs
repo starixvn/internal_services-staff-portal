@@ -3,65 +3,22 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Routing;
-    using Common;
     using Core.Enumerations;
     using Criteria.Announcement;
     using Domain.Model;
+    using Localization.Client;
 
-    public class MoreAnnouncementViewModel : Pagination
+    public class MoreAnnouncementViewModel
     {
-        public MoreAnnouncementViewModel()
-        {
-            Action = "MoreAnnouncement";
-            Controller = "Home";
-        }
-
-        [Display(Name = "Published Form")]
+        [Display(Name = nameof(Resources.PublishedForm), ResourceType = typeof(Resources))]
         public DateTime? PublishedFrom { get; set; }
 
-        [Display(Name = "Published To")]
+        [Display(Name = nameof(Resources.PublishedTo), ResourceType = typeof(Resources))]
         public DateTime? PublishedTo { get; set; }
 
         public AnnouncementType? Type { get; set; }
 
         public IEnumerable<Announcement> Announcements { get; set; }
-
-        public override string IndexLink(int i, int itemPerPage)
-        {
-            var index = new MoreAnnouncementViewModel
-            {
-                CurrentPage = i,
-                ItemPerPage = itemPerPage,
-                PublishedFrom = PublishedFrom,
-                PublishedTo = PublishedTo,
-                Type = Type
-            };
-
-            var routeValues = new RouteValueDictionary
-            {
-                { nameof(index.CurrentPage), index.CurrentPage },
-                { nameof(index.ItemPerPage), index.ItemPerPage },
-                { nameof(index.PublishedFrom), index.PublishedFrom },
-                { nameof(index.PublishedTo), index.PublishedTo }
-            };
-
-            if (index.Type != null)
-            {
-                routeValues.Add(nameof(index.Type), (int)index.Type);
-            }
-
-            return UrlHelper.GenerateUrl(
-                RouteNames.Default.ToString(),
-                Action,
-                Controller,
-                routeValues,
-                RouteTable.Routes,
-                HttpContext.Current.Request.RequestContext,
-                false);
-        }
 
         public GetAnnouncementsCriteria GetAnnouncementsCriteria()
         {

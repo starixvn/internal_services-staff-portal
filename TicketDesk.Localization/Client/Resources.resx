@@ -645,4 +645,7 @@
   <data name="CreateItemError" xml:space="preserve">
     <value>Create Item error</value>
   </data>
+  <data name="PublishedForm" xml:space="preserve">
+    <value>Published Form</value>
+  </data>
 </root>

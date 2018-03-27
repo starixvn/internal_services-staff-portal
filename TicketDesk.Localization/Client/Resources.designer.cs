@@ -880,6 +880,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Published Form.
+        /// </summary>
+        public static string PublishedForm {
+            get {
+                return ResourceManager.GetString("PublishedForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Published From.
         /// </summary>
         public static string PublishedFrom {

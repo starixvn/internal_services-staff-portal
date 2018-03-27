@@ -446,7 +446,6 @@
     <Compile Include="Models\Extensions\TicketSubscriberExtensions.cs" />
     <Compile Include="Models\FilterBarViewModel.cs" />
     <Compile Include="Models\Home\HomeViewModel.cs" />
-    <Compile Include="Models\Common\Pagination.cs" />
     <Compile Include="Models\Home\MoreAnnouncementViewModel.cs" />
     <Compile Include="Models\Home\MyOpenningTicketsViewModel.cs" />
     <Compile Include="Models\IdUploaderViewModel.cs" />
@@ -2076,7 +2075,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Ticket\_HardwareTicketDetails.cshtml" />
-    <Content Include="Views\Shared\_Pagination.cshtml" />
     <Content Include="Areas\Admin\Views\Languages\Index.cshtml" />
     <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />

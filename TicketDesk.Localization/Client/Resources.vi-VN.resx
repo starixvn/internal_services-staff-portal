@@ -594,4 +594,7 @@
   <data name="SendEmailTo" xml:space="preserve">
     <value>Gửi email tới</value>
   </data>
+  <data name="PublishedForm" xml:space="preserve">
+    <value>Đăng từ</value>
+  </data>
 </root>
