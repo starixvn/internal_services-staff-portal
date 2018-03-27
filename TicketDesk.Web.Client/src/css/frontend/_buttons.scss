@@ -1,0 +1,94 @@
+﻿@import "variables";
+@import "mixins";
+
+.btn-primary.disabled.focus, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled].focus, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
+    background: #2e4592;
+    opacity: 0.5;
+}
+
+.btn {
+    font-weight: bold;
+    font-size: 15px;
+    padding: 5px 10px;
+    border-radius: 2px;
+
+    [class^="icon-"] {
+        margin-right: 8px;
+        font-size: 12px;
+    }
+
+    &:hover, &:focus {
+        color: #fff;
+    }
+
+    &.btn-add {
+        @include button($title-form-bg, $text-second-color);
+        float: right;
+        margin-top: 3px;
+    }
+
+    &.btn-delete {
+        @include button(#ffc5c7, #333);
+        margin: 3px 12px 0 8px;
+        float: right;
+
+        .icon-delete {
+            color: #ea1118;
+            font-size: 18px;
+            position: relative;
+            top: 2px;
+        }
+    }
+
+    &.btn-primary {
+        @include button($title-form-bg, $text-second-color);
+    }
+
+    &.btn-second {
+        @include button(#e6e6ea, $text-color);
+    }
+
+    &.btn-submit {
+        @include button($title-form-bg, $text-second-color);
+        padding: 8px 15px 9px;
+    }
+
+    &.btn-send {
+        width: 100%;
+        margin: 16px 0 32px;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    &.btn-delete-all-file {
+        display: none;
+        @include button(#ea1118, $text-second-color);
+        float: right;
+        margin-right: 0;
+
+        .icon-delete {
+            color: #fff;
+        }
+    }
+
+    &.btn-browser {
+        @include button(#dad7d7, #333);
+        border: 1px solid #999;
+    }
+
+    &.btn-more {
+        width: 100%;
+        background: #bebebe;
+        color: $text-color;
+        height: 48px;
+        padding: 0;
+        line-height: 48px;
+        border: none;
+        box-shadow: 1px 3px 4px #999;
+    }
+
+    &.btn-back {
+        @include button(#bebebe, #333);
+        text-transform: initial;
+    }
+}

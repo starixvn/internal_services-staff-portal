@@ -1,0 +1,92 @@
+﻿@import "variables";
+@import "mixins";
+
+/**************************************************** Modal ******************************************************/
+.modal {
+    margin-top: 250px;
+}
+
+#attach-file-modal .modal-title {
+    color: $primary-color;
+    font-weight: 700;
+}
+
+.modal-dialog {
+    color: $text-color;
+
+    &.small-modal {
+        width: 370px;
+    }
+
+    .modal-content {
+        padding: 0 24px;
+        border-radius: 0;
+        box-shadow: 0 0 6px rgba(0,0,0,.3);
+    }
+
+    .modal-header, .modal-body, .modal-footer {
+        padding: 15px 0;
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom-color: #d3d7db;
+
+        &:before, &:after {
+            display: initial;
+            content: none;
+        }
+
+        color: $menu-color;
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 700;
+            order: 1;
+        }
+    }
+
+    .modal-body {
+        font-size: 16px;
+        line-height: 26px;
+
+        pre {
+            font-size: 16px;
+            border: none;
+            border-radius: 0;
+            background-color: #fff;
+            padding: 0;
+            font-family: $font-family;
+            margin: 0;
+            line-height: unset;
+        }
+    }
+
+    .modal-footer {
+        border-top: none;
+
+        button {
+            width: 80px;
+            border-radius: 3px;
+        }
+    }
+
+    .close {
+        color: $menu-color;
+        font-size: 32px;
+        font-weight: normal;
+        opacity: 1;
+        order: 2;
+    }
+
+    .btn-cancel {
+        background: #d3d7db;
+
+        &:hover {
+            color: #333;
+            background: darken(#d3d7db, 5%);
+        }
+    }
+}

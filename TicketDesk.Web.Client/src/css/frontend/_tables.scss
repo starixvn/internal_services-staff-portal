@@ -1,0 +1,244 @@
+﻿@import "variables";
+@import "mixins";
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 9px 8px;
+}
+
+tr.header {
+    cursor: pointer;
+}
+
+.table {
+    table, tr, td, th {
+        border: none;
+
+        &.id {
+            width: 120px;
+        }
+    }
+}
+
+.table-bordered {
+    > thead > tr > th {
+        background: #ececec;
+        color: $title-form-bg;
+    }
+
+    tr {
+        &.header td {
+            background: #d5def7;
+            color: $title-form-bg;
+            text-transform: uppercase;
+            font-weight: 700;
+
+            .number-ticket {
+                color: $primary-color;
+                font-weight: 600;
+            }
+        }
+    }
+
+    &.tbl-announcement {
+        .date {
+            width: 130px;
+        }
+
+        .time {
+            width: 85px;
+        }
+
+        tr {
+            cursor: pointer;
+
+            &:nth-child(even) {
+                background: #f2f2f2;
+            }
+
+            &.header {
+                pointer-events: none;
+            }
+
+            &.expand td {
+                font-weight: normal;
+            }
+        }
+
+        tbody > tr > td {
+            border: none;
+            border-bottom: 1px solid $border-color;
+            border-right: 1px solid $border-color;
+        }
+
+        tr.unread {
+            font-weight: 700;
+        }
+
+        tr.error td {
+            color: $primary-color;
+
+            .sign:after {
+                background: $primary-color;
+                color: $text-second-color;
+            }
+        }
+
+        tr.success td {
+            color: #65d26d;
+            background: initial;
+
+            .sign:after {
+                background: #65d26d;
+                color: $text-second-color;
+            }
+        }
+    }
+}
+
+.tbl-content {
+    width: 100%;
+    background: #fff;
+    color: $text-color;
+
+    .title {
+        background-color: #2e4592;
+        height: 48px;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    tbody > tr > td {
+        height: 40px;
+        vertical-align: middle;
+
+        &.key {
+            text-transform: uppercase;
+            color: #2e4592;
+            font-weight: 700;
+
+            &:after {
+                content: ':';
+                float: right;
+                color: $text-color;
+            }
+        }
+
+        &.value.td-ddl {
+            padding: 0;
+        }
+
+        select {
+            width: 100%;
+            height: 100%;
+            border: none;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    td.description {
+        padding: 0;
+
+        textarea {
+            width: 100%;
+            border: none;
+            background: transparent;
+            height: 100%;
+            min-height: 150px;
+            padding: 8px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+.table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td,
+.table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+    border: 1px solid $border-color;
+}
+
+// ---------------------------- Pagination --------------------------------- //
+.pagination {
+    vertical-align: middle;
+    margin: 0;
+    float: right;
+
+    > li {
+        margin: 0 2px;
+
+        &.active, &:hover {
+            a {
+                background: $title-form-bg;
+                color: $text-second-color;
+                border: 1px solid $title-form-bg;
+            }
+        }
+
+        &.active a:hover {
+            background: $title-form-bg;
+            color: $text-second-color;
+            border: 1px solid $title-form-bg;
+        }
+
+        &:first-child, &:last-child {
+            a {
+                border-radius: 2px;
+                position: relative;
+                top: 1px;
+            }
+        }
+    }
+
+    > li > a {
+        padding: 7px 13px;
+        float: unset;
+        background: #e8e8e8;
+        color: $text-color;
+        border: 1px solid #999;
+        border-radius: 2px;
+    }
+
+    [class^="icon-"] {
+        padding: 4px 8px 5px;
+        display: inline-block;
+        color: #767575;
+
+        &.disabled {
+            cursor: not-allowed;
+            background: rgba(#e8e8e8, 0.5);
+            color: rgba(#767575, 0.5);
+
+            &:hover {
+                border: 1px solid #999;
+            }
+        }
+
+        &:before {
+            font-size: 18px;
+        }
+    }
+}
+
+.page-size {
+    float: right;
+    //display: inline-block;
+    color: $text-color;
+    margin-right: 16px;
+    vertical-align: middle;
+
+    label {
+        font-weight: normal;
+    }
+
+    .custom-dropdown select {
+        padding: 5px 10px;
+        color: $text-color;
+        padding: 0 42px 0 12px;
+        height: 34px;
+    }
+}

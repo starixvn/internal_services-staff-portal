@@ -9,23 +9,43 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3 class="text-info">@Html.DisplayNameFor(x => x.Ticket.Title)</h3>
-<p class="text-info">@Model.Ticket.Title</p>
+<div class="ticket-list">
+    <div class="form-content feature">
+        <div class="title panel-heading">
+            <a href="/" class="btn btn-back"><span class="icon-angle-left"></span>Back to Ticket List</a>
+            <span class="id">84211</span><span> - Facility</span>
+        </div>
+        <div class="panel-body">
+            <div class="detail-item">
+                <span class="item-title">@Html.DisplayNameFor(x => x.Ticket.Title): </span>
+                <span class="item-content">@Model.Ticket.Title</span>
+            </div>
 
-@foreach (var customFieldValue in Model.CustomFieldValues)
-{
-    <h3 class="text-info">@customFieldValue.CustomField.Name</h3>
-    if (string.IsNullOrEmpty(customFieldValue.Value))
-    {
-        <p class="text-danger">[NO VALUES]</p>
-    }
-    else
-    {
-        <p class="text-info">@customFieldValue.Value</p>
-    }
-}
+            <div class="detail-item">
+                <span class="item-title">Shop Name: </span>
+                <span class="item-content">Quang Trung</span>
+            </div>
 
-<div class="panel-heading" style="padding: 3px 5px;">
+            @foreach (var customFieldValue in Model.CustomFieldValues)
+            {
+                <div class="detail-item">
+                    <span class="item-title">@customFieldValue.CustomField.Name: </span>
+
+                    @if (string.IsNullOrEmpty(customFieldValue.Value))
+                    {
+                    <span class="item-content">[NO VALUES]</span>
+                    }
+                    else
+                    {
+                    <span class="item-content">@customFieldValue.Value</span>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*<div class="panel-heading" style="padding: 3px 5px;">
     <div class="row">
         <div class="row-same-height row-full-height">
             <div class="col-xs-2 col-sm-2 col-xs-height col-full-height text-center panel-title" style="border-right: 1px solid #dcdcdc;">
@@ -49,8 +69,8 @@
             </div>
         </div>
     </div>
-</div>
-<div class="panel-body" style="padding: 0">
+</div>*@
+@*<div class="panel-body" style="padding: 0">
     <div class="row row-no-padding row-same-height row-full-height" style="width: 100%;margin:0">
         <div class="col-md-8 col-sm-8 col-xs-12 col-xs-height col-full-height">
             <div class="container-fluid" style="padding: 0;">
@@ -161,7 +181,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <div class="panel panel-info" style="padding-top: 0; padding-bottom: 0;">
     <div class="panel-heading panel-title" style="padding: 3px 5px;">
         @Index.Files

@@ -2062,11 +2062,11 @@
     <Content Include="Views\IdUploader\Index.cshtml" />
     <Content Include="Views\Shared\_SubmenuNavigation.cshtml" />
     <Content Include="src\css\custom-dropzone.scss" />
-    <Content Include="src\css\_variables.scss" />
+    <Content Include="src\css\frontend\_variables.scss" />
     <Content Include="Views\Home\_MyOpeningTicket.cshtml" />
     <Content Include="Views\Shared\_DropzoneView.cshtml" />
     <Content Include="Views\Ticket\NewHardwareTicket.cshtml" />
-    <Content Include="src\css\_mixins.scss" />
+    <Content Include="src\css\frontend\_mixins.scss" />
     <Content Include="src\libs\rippler\css\rippler.css.map" />
     <Content Include="Areas\Admin\Views\CustomFields\Edit.cshtml" />
     <Content Include="src\libs\forge\forge.min.js.map" />
@@ -2108,6 +2108,13 @@
     <Content Include="Views\TicketList\TicketDetails.cshtml" />
     <Content Include="Views\TicketList\_TicketList.cshtml" />
     <Content Include="Views\Home\_ListAllAnnouncements.cshtml" />
+    <Content Include="src\css\frontend\_typo.scss" />
+    <Content Include="src\css\frontend\_buttons.scss" />
+    <Content Include="src\css\frontend\_tables.scss" />
+    <Content Include="src\css\frontend\_forms.scss" />
+    <Content Include="src\css\frontend\_modals.scss" />
+    <Content Include="src\css\frontend\_header.scss" />
+    <Content Include="src\css\frontend\_content.scss" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

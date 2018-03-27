@@ -1,0 +1,617 @@
+﻿@import "variables";
+@import "mixins";
+
+.form-horizontal {
+    width: 100%;
+}
+
+.form-content {
+    background: #fff;
+    box-shadow: 0 0 6px rgba(102, 102, 102, 0.3);
+    display: flex;
+    flex-flow: row wrap;
+    // grid-template-columns: repeat(4, 1fr);
+    //align-items: center;
+    color: $text-color;
+
+    label {
+        margin-bottom: 0;
+    }
+
+    .border {
+        border: 1px solid $border-color;
+        border-bottom: none;
+        border-right: 0;
+    }
+
+    .no-border {
+        border: 0;
+    }
+
+    .border-bottom {
+        border-bottom: 1px solid $border-color;
+    }
+
+    input[type="file"], select {
+        border-top: none;
+        font-family: inherit;
+    }
+
+    select {
+        flex: 1;
+    }
+
+    input[type="file"] {
+        margin-top: 8px;
+    }
+
+    input[type="text"] {
+        height: 40px;
+        width: 100%;
+        padding: 0 12px;
+    }
+
+    .title, .key, .value, .fullwidth, textarea {
+        padding: 0 12px;
+    }
+
+    .title {
+        color: #fff;
+        //grid-column: span 4;
+        flex: 1 100%;
+        background: $title-form-bg;
+        height: 48px;
+        line-height: 48px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    > .title {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+
+    .key {
+        text-transform: uppercase;
+        color: $title-form-bg;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+
+    .value, .key {
+        height: 36px;
+        line-height: 40px;
+        flex: 1;
+    }
+
+    .value.span-3 {
+        //grid-column: span 3;
+        flex: 3;
+    }
+
+    .span-2 {
+        //grid-column: span 2;
+        flex: 2;
+    }
+
+    .item-list, .attach-file {
+        //grid-column: span 4;
+        flex: 1 100%;
+        flex-flow: row wrap;
+        display: flex;
+    }
+
+    .date-time {
+        position: relative;
+
+        .icon-calendar {
+            position: absolute;
+            top: 12px;
+            right: 22px;
+            font-size: 19px;
+            color: $primary-color;
+        }
+    }
+
+    .attach-file {
+        .key {
+            display: flex;
+            align-items: center;
+            line-height: unset;
+        }
+        //display: grid;
+        //grid-template-columns: inherit;
+        /*.key {
+            display: table;
+            .text {
+                display: table-cell;
+                vertical-align: middle;
+            }
+        }*/
+    }
+
+    .item-head {
+        background: #f5e598;
+        color: $title-form-bg;
+        text-transform: uppercase;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .item {
+        display: flex;
+        //grid-template-columns: repeat(4, 1fr);
+        //grid-template-rows: 40px 40px 100px;
+        flex-flow: row wrap;
+        flex: 1 100%;
+
+        &.even {
+            background: #f2f2f2;
+            /**:not(.btn-delete) {
+                background: inherit;
+            }
+
+            .select2-selection__rendered {
+                background-color: transparent;
+            }*/
+            .description {
+                background: inherit;
+            }
+        }
+    }
+
+    .fullwidth {
+        width: 100% !important;
+    }
+
+    .fullwidth, textarea {
+        //grid-column: span 4;
+        flex: 1 100%;
+    }
+
+    input[type="text"], textarea {
+        font-family: inherit;
+        font-size: 16px;
+        border: 1px solid $border-color;
+        -webkit-appearance: none;
+        -webkit-border-radius: 0;
+    }
+
+    textarea {
+        padding: 6px 12px;
+        min-height: 120px;
+        resize: vertical;
+        min-height: 100px;
+        width: 100%;
+        margin-bottom: 6px;
+    }
+
+    .custom-dropdown {
+        padding: 0;
+        //border: 0;
+    }
+
+    input[disabled="disabled"] {
+        background: inherit;
+    }
+
+    .subject textarea {
+        min-height: unset;
+        width: auto;
+        max-width: 100%;
+    }
+
+    .subject-support-type {
+        .input-field {
+            display: flex;
+            align-items: center;
+            padding: 0;
+            margin: 0 12px;
+            border: 1px solid $border-color;
+        }
+
+        input[type="text"] {
+            border: 0;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        .field-validation-error {
+            padding-left: 1.2rem;
+        }
+
+        .support-type-label {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+            width: auto;
+            max-width: none;
+            padding-left: 1rem;
+            font-size: 16px;
+        }
+    }
+    // ------------------ Bootstrap Tags Input ------------------ //
+    .bootstrap-tagsinput {
+        width: 100%;
+        min-height: 38px;
+        padding: 6px 6px 1px;
+        border-radius: 0;
+        box-shadow: none;
+        margin-bottom: 1rem;
+
+        input[type="text"] {
+            display: inline-block;
+            width: auto;
+            height: auto;
+            border: 0;
+            padding: 0;
+        }
+
+        .tag {
+            position: relative;
+            display: inline-block;
+            margin-right: 35px;
+            margin-bottom: 5px;
+            padding: 5px 8px;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: normal;
+            color: #2e4592;
+
+            > [data-role="remove"] {
+                position: absolute;
+                font-family: 'icomoon' !important;
+                margin: 0;
+
+                &:after {
+                    position: relative;
+                    content: "\e90d";
+                    font-size: 24px;
+                    color: #838282;
+                    top: -3px;
+                    left: 10px;
+                }
+
+                &:hover, &:active, &:focus, &:hover:active {
+                    box-shadow: none;
+                }
+
+                &:hover:after {
+                    color: #bf141a;
+                }
+            }
+        }
+
+        .label-info {
+            background: #d5d5d5;
+        }
+    }
+}
+
+.attach-file .fullwidth {
+    padding: 9px 12px;
+}
+
+input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
+    border: none !important;
+    box-shadow: 0 0 4px #1c6cf2;
+}
+
+.facility-form {
+    .subject {
+        padding-bottom: 1.5rem;
+        border-left: 1px solid $border-color;
+
+        input[type="text"] {
+            height: 40px;
+        }
+    }
+
+    .shop-item {
+        padding-bottom: 0 !important;
+    }
+
+    input[type="text"] {
+        border: none;
+        width: 100%;
+        height: 100%;
+        //margin: 0 -12px;
+        //padding: 0 12px;
+        border: 1px solid $border-color;
+    }
+
+    .fullwidth.input-area {
+        padding: 12px;
+
+        textarea {
+            height: 100%;
+            margin-bottom: 0;
+            border: 0;
+            padding: 0;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    .item .field-validation-error {
+        border-left: 1px solid $border-color;
+        padding: 0 0 8px 12px;
+    }
+
+    .select2-container .select2-selection--single {
+        border: 0;
+        background: transparent;
+
+        .select2-selection__rendered {
+            line-height: 38px;
+        }
+    }
+
+    .custom-dropdown {
+        min-width: 300px;
+        border-radius: 0;
+    }
+}
+
+.feedback-form, .facility-form {
+    .shop-item {
+        padding-bottom: 1rem;
+        border-left: 1px solid #d3d7db;
+
+        .select2-selection--single {
+            border: 1px solid #d3d7db;
+        }
+    }
+}
+
+.feedback-form, .hardware-form {
+    .item {
+        border-left: 1px solid $border-color;
+        padding-top: 0;
+
+        .key.border {
+            border-left: none;
+        }
+
+        input[type="text"] {
+            height: 40px;
+            width: 100%;
+            padding: 0 12px;
+        }
+    }
+    /*.attach-file .fullwidth {
+        height: 40px;
+        line-height: 40px;
+    }*/
+    textarea + .field-validation-error {
+        position: relative;
+        top: -10px;
+    }
+}
+
+
+
+.height-auto {
+    flex: 1 100%;
+    flex-flow: row wrap;
+    display: flex;
+
+    .key, .value.span-3 {
+        height: auto;
+        min-height: 40px;
+    }
+
+    .label-item {
+        flex-basis: 270px;
+        max-width: 270px;
+
+        @media (max-width: 1199px) {
+            flex-basis: 170px;
+            max-width: 170px;
+        }
+    }
+
+    .key {
+        display: flex;
+        align-items: center;
+        line-height: unset;
+    }
+}
+
+.attach-file {
+    .key, .value.span-3 {
+        height: auto;
+        min-height: 40px;
+    }
+
+    .field-validation-error {
+        color: #ff3232;
+    }
+
+    .input-validation-error, .input-validation-error:focus {
+        outline: none;
+    }
+}
+
+/**************************************************** Radio button ******************************************************/
+.radio-group {
+    display: flex;
+    flex-direction: row;
+
+    p {
+        margin: 0 48px 0 0;
+    }
+
+    label {
+        font-weight: normal;
+    }
+}
+
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+
+[type="radio"]:checked + label,
+[type="radio"]:not(:checked) + label {
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+}
+
+[type="radio"]:checked + label:before,
+[type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 2px solid $title-form-bg;
+    border-radius: 100%;
+    background: #fff;
+}
+
+[type="radio"]:checked + label:after,
+[type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: $title-form-bg;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+[type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+
+[type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+// --------------------- Customize Select2 --------------------- //
+.select2-container {
+    // width: 150px !important;
+    .select2-selection--single {
+        border-radius: 0;
+        border-color: #d3d7db;
+        height: 40px;
+
+        &:focus {
+            outline: none;
+        }
+
+        .select2-selection__rendered {
+            line-height: 40px;
+            font-size: 16px;
+        }
+
+        .select2-selection__arrow {
+            top: 1px;
+            height: 38px;
+            width: 32px;
+            //background: #e8e8e8;
+            //border-left: 1px solid #d3d7db;
+        }
+    }
+}
+
+.select2-container--open .select2-dropdown--below, .select2-container--open .select2-dropdown--above {
+    border-radius: 0;
+    border-color: #d3d7db;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.45);
+
+    .select2-search__field {
+        height: 3.6rem;
+        font-family: inherit;
+        color: #333;
+        border-radius: 0;
+    }
+}
+
+.select2-results__option {
+    color: #333;
+    padding: 7px 10px;
+    font-size: 16px;
+}
+
+.select2-search--dropdown {
+    padding: 1rem;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #e1e1e1;
+    color: #333;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #5897fb;
+    color: #fff;
+}
+
+.select2-container--default .select2-results > .select2-results__options {
+    max-height: 222px;
+}
+
+/******************************************* DatePicker ***********************************************/
+.datepicker {
+    .new {
+        background: inherit;
+    }
+}
+
+.bootstrap-datetimepicker-widget {
+    &.dropdown-menu {
+        width: auto !important;
+        min-width: 349px;
+    }
+
+    table tr td {
+        border-radius: 2px;
+    }
+
+    table tr td.day {
+        font-weight: 600;
+        height: 40px;
+        width: 40px;
+        /*&.today, &:hover {
+            background: $title-form-bg;
+            color: $text-second-color;
+        }*/
+        &.today:before {
+            //border-bottom-color: $title-form-bg;
+        }
+    }
+
+    table tr td.active, table tr td span.active {
+        //background: $primary-color;
+    }
+    /*table tr td span:hover {
+        background: $title-form-bg;
+        color: $text-second-color;
+    }*/
+}
+
+.bootstrap-datetimepicker-widget table td.disabled, .bootstrap-datetimepicker-widget table td.disabled:hover {
+    color: rgba(#777, 0.2);
+}
+
+.table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {
+    padding: 5px 11px;
+}

@@ -1,0 +1,17 @@
+﻿@import "variables";
+@import "mixins";
+
+// ----------------------- Ticket List Detail -------------------- //
+.detail-item {
+    display: flex;
+    padding-bottom: 1rem;
+
+    .item-title {        
+        color: #2e4592;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .item-content {
+    }
+}
