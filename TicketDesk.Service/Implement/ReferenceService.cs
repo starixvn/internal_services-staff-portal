@@ -28,7 +28,7 @@
             }
             else
             {
-                var oldReferences = references.Where(r => r.Id != 0).ToList();
+                var oldReferences = references.Where(r => r.Id > 0).ToList();
 
                 if (oldReferences.Count > 0)
                 {
@@ -37,7 +37,7 @@
 
                 foreach (ReferenceCriteria reference in references)
                 {
-                    if (reference.Id == null)
+                    if (reference.Id == 0 || reference.Id == null)
                     {
                         SaveReference(reference, referenceType);
                     }

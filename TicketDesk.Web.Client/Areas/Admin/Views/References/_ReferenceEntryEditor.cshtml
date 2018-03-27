@@ -1,7 +1,7 @@
-﻿@using TicketDesk.Web.Client.Areas.Admin.Models.References
+﻿@using TicketDesk.Domain.Model
 @using TicketDesk.Core.Enumerations
 @using TicketDesk.Localization.Client
-@model ReferenceViewModel
+@model Reference
 
 <li class="reference-entry">
     @if (Model.ReferenceType != ReferenceType.Newsletters)
@@ -27,7 +27,7 @@
 
     <div class="browse form-group">
         <div class="btn btn-browse">
-            <span>Browse...</span>
+            <span>@Resources.Dropzone_Form_Browse</span>
             <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload" data-href="@Url.Action("UploadImage", "References")" data-limit="50">
         </div>
         <input type="button" class="btn btn-delete remove-entry" value="@Resources.Delete">

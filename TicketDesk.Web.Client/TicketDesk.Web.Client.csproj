@@ -369,7 +369,6 @@
     <Compile Include="Areas\Admin\Models\DataConfiguration\DataConfigurationViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DataConfiguration\ListCustomFieldListValueViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Mail\MailViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\References\ReferenceViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopFilterViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopListViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopViewModel.cs" />
@@ -394,7 +393,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Attribute\ImageLinkAttribute.cs" />
     <Compile Include="Infrastructure\Attribute\FileSizeAttribute.cs" />
     <Compile Include="Infrastructure\Attribute\FileTypeAttribute.cs" />
     <Compile Include="Infrastructure\Attribute\NumberOfFileAttribute.cs" />
@@ -428,7 +426,7 @@
     <Compile Include="Models\Account\AccountPasswordViewModel.cs" />
     <Compile Include="Models\Account\AccountProfileViewModel.cs" />
     <Compile Include="Models\Account\UserAccountInfoViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\References\ListReferencesViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\References\ReferencesViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CustomField\CustomFieldsViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CustomField\AddCustomFieldViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CustomField\EditCustomFieldViewModel.cs" />

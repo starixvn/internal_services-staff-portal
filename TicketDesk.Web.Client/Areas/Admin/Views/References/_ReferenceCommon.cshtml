@@ -1,6 +1,6 @@
 ﻿@using TicketDesk.Web.Client.Areas.Admin.Models.References
 @using TicketDesk.Localization.Client
-@model ListReferencesViewModel
+@model ReferencesViewModel
 
 <div class="upload-info">
     <span>Allowed file type: <strong>jpeg, jpg, png</strong></span> |
@@ -12,6 +12,7 @@
     @using (Html.BeginForm("UploadReferences", "References", new { referenceType = Model.Type }, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.Type, new { @readonly = "readonly" })
         <ul class="references-zone" id="ReferencesZone">
             @if (Model.References != null && Model.References.Count() > 0)
             {

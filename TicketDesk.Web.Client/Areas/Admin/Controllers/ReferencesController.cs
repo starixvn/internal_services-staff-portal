@@ -74,20 +74,21 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateOnlyIncomingValues]
         [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
-        public JsonResult UploadReferences(ReferenceType referenceType, ListReferencesViewModel viewModel)
+        public JsonResult UploadReferences(ReferencesViewModel viewModel)
         {
             var isSuccessful = false;
             var message = string.Empty;
 
-            if (referenceType != ReferenceType.Newsletters && CheckIfDateDuplicate(viewModel.References))
+            if (viewModel.Type != ReferenceType.Newsletters && CheckIfDateDuplicate(viewModel.References))
             {
                 ModelState.AddModelError("DateAppear", Messages.DuplicatedDay);
             }
 
             if (ModelState.IsValid)
             {
-                HandleListReferenceUploaded(referenceType, viewModel);
+                HandleListReferenceUploaded(viewModel);
                 isSuccessful = true;
                 message = Messages.UpdateReferencesSuccessful;
             }
@@ -102,41 +103,25 @@
         [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
         public ActionResult GetReferenceEntity(bool isNewsletters)
         {
-            var reference = new ReferenceViewModel
+            var reference = new Reference
             {
                 ReferenceType = isNewsletters ? ReferenceType.Newsletters : ReferenceType.TvSchedule
             };
             return PartialView("_ReferenceEntryEditor", reference);
         }
 
-        private void HandleListReferenceUploaded(ReferenceType referenceType, ListReferencesViewModel listReferences)
+        private void HandleListReferenceUploaded(ReferencesViewModel viewModel)
         {
-            var criteriaList = listReferences.GetQueryCriteria();
-            _referenceService.UploadReferences(referenceType, criteriaList);
+            var criteriaList = viewModel.GetQueryCriteria();
+            _referenceService.UploadReferences(viewModel.Type, criteriaList);
         }
 
-        private ListReferencesViewModel GetListReferenceViewModel(ReferenceType referenceType)
+        private ReferencesViewModel GetListReferenceViewModel(ReferenceType referenceType)
         {
-            var references = _referenceService.GetListReference(referenceType);
-
-            var listReference = new List<ReferenceViewModel>();
-
-            foreach (Reference reference in references)
-            {
-                var referenceViewModel = new ReferenceViewModel
-                {
-                    Id = reference.Id,
-                    DateAppear = reference.DateAppear,
-                    ImageLink = reference.ImageLink,
-                    ReferenceType = reference.ReferenceType
-                };
-                listReference.Add(referenceViewModel);
-            }
-
-            var viewModel = new ListReferencesViewModel
+            var viewModel = new ReferencesViewModel
             {
                 IsHostPermission = IsHaveHostPermission(FunctionKeys.References, Constant.Policy.Host),
-                References = referenceType == ReferenceType.Newsletters ? listReference : listReference.OrderBy(r => r.DateAppear).ToList(),
+                References = _referenceService.GetListReference(referenceType).ToList(),
                 Type = referenceType
             };
 
@@ -253,16 +238,9 @@
             return validPath;
         }
 
-        private static bool CheckIfDateDuplicate(IList<ReferenceViewModel> references)
+        private static bool CheckIfDateDuplicate(IList<Reference> references)
         {
-            if (references != null)
-            {
-                return references.GroupBy(r => r.DateAppear.Date)
-                                       .Where(g => g.Count() > 1)
-                                       .Select(g => g.Key)
-                                       .Any();
-            }
-            return false;
+            return references != null && references.GroupBy(r => r.DateAppear.Date).Any(g => g.Count() > 1);
         }
     }
 }

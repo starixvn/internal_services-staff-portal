@@ -3,7 +3,7 @@
 @using TicketDesk.Web.Client.Areas.Admin.Models.References
 @using TicketDesk.Core.Resources
 
-@model ListReferencesViewModel
+@model ReferencesViewModel
 
 @{
     ViewBag.Title = ViewLang.NewsLetters;
@@ -34,6 +34,7 @@
 
     <div>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(x => x.Type, new { @readonly = "readonly" })
         <ul class="references-zone" id="ReferencesZone">
             @for (var i = 0; i < Model.References.Count(); i++)
                 {
@@ -58,7 +59,7 @@
                     {
                         <div class="browse form-group">
                             <div class="btn btn-browse">
-                                <span>Browse...</span>
+                                <span>@Resources.Dropzone_Form_Browse</span>
                                 <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="excelFile" data-href="@Url.Action("UploadImage", "References")">
                             </div>
                             <input type="button" class="btn btn-delete remove-entry" value="@Resources.Delete">

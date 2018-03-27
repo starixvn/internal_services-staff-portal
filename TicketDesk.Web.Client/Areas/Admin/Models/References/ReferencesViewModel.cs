@@ -3,14 +3,15 @@
     using System.Collections.Generic;
     using Core.Enumerations;
     using Criteria.Reference;
+    using Domain.Model;
 
-    public class ListReferencesViewModel
+    public class ReferencesViewModel
     {
         public bool IsHostPermission { get; set; }
 
         public ReferenceType Type { get; set; }
 
-        public IList<ReferenceViewModel> References { get; set; }
+        public IList<Reference> References { get; set; }
 
         public IList<ReferenceCriteria> GetQueryCriteria()
         {
