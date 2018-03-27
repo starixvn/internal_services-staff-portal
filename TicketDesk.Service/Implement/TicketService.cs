@@ -12,12 +12,10 @@
 
     public class TicketService : EntityFrameworkBaseService, ITicketService
     {
-        private readonly IMailService mailService;
         private readonly IFileManagerService fileManagerService;
 
-        public TicketService(IMailService mailService, IFileManagerService fileManagerService)
+        public TicketService(IFileManagerService fileManagerService)
         {
-            this.mailService = mailService;
             this.fileManagerService = fileManagerService;
         }
 
@@ -175,13 +173,14 @@
         public bool CreateTicket(Ticket ticket, Guid tempId)
         {
             ticket.CreatedBy = context.SecurityProvider.CurrentUserId;
+            ticket.Owner = context.SecurityProvider.CurrentUserId;
+            ticket.CurrentStatusSetBy = context.SecurityProvider.CurrentUserId;
+            ticket.LastUpdateBy = context.SecurityProvider.CurrentUserId;
+
             context.Tickets.Add(ticket);
             var result = context.SaveChanges();
 
             fileManagerService.CommitPendingAttachments(ticket, tempId);
-
-            var mailRecord = mailService.ComposeMail(ticket);
-            mailService.Send(mailRecord);
 
             return result > 0;
         }

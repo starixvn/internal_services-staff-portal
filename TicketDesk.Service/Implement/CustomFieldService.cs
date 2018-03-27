@@ -72,6 +72,7 @@
         {
             context.CustomFieldValues.AddRange(customFieldValues);
             var result = context.SaveChanges();
+
             return result > 0;
         }
     }

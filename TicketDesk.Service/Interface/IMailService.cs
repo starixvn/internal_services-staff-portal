@@ -8,5 +8,7 @@
         void Send(MailRecord mailRecord);
 
         MailRecord ComposeMail(Ticket ticket);
+
+        void ComposeAndSendMail(Ticket ticket);
     }
 }

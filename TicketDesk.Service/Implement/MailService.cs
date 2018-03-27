@@ -2,7 +2,6 @@
 {
     using System.Configuration;
     using System.IO;
-    using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -17,6 +16,13 @@
 
     public class MailService : EntityFrameworkBaseService, IMailService
     {
+        private readonly ICustomFieldService customFieldService;
+
+        public MailService(ICustomFieldService customFieldService)
+        {
+            this.customFieldService = customFieldService;
+        }
+
         public static string GetRazorViewAsString(object model, string filePath)
         {
             var st = new StringWriter();
@@ -41,30 +47,13 @@
             // Get ticket category
             var ticketCategory = context.TicketCategories.Find(ticket.CategoryId);
 
-            var customFieldValues =
-                (from cfv in context.CustomFieldValues
-                 join cf in context.CustomFields on cfv.CustomFieldId equals cf.Id
-                 where cfv.TicketId == ticket.TicketId
-                 orderby cf.DisplayOrder, cfv.Id
-                 select new
-                 {
-                     CustomField = cf,
-                     cfv.Value,
-                     cfv.GroupId
-                 }).ToList().Select(x => new CustomFieldValue
-                 {
-                     CustomField = x.CustomField,
-                     Value = x.Value,
-                     GroupId = x.GroupId
-                 });
-
             var createdBy = context.SecurityProvider.NapContextHelper.UserService.GetById(int.Parse(ticket.CreatedBy));
             var lastUpdateBy = context.SecurityProvider.NapContextHelper.UserService.GetById(int.Parse(ticket.LastUpdateBy));
 
             var singleTicketViewModel = new SingleTicketViewModel
             {
                 Ticket = ticket,
-                CustomFieldValues = customFieldValues,
+                CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket),
                 ShopName = context.Shops.Find(ticket.ShopId)?.ShopName,
                 CreatedByUsername = createdBy.Username,
                 UpdatedByUsername = lastUpdateBy.Username
@@ -88,6 +77,12 @@
             }
 
             return mailRecord;
+        }
+
+        public void ComposeAndSendMail(Ticket ticket)
+        {
+            var mailRecord = ComposeMail(ticket);
+            Send(mailRecord);
         }
     }
 }

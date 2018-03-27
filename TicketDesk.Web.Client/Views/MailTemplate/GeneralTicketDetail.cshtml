@@ -1,98 +1,190 @@
-﻿@model TicketDesk.Domain.Model.SingleTicketViewModel
+﻿@using TicketDesk.Domain.Model
+@model SingleTicketViewModel
 
 @{
     Layout = "";
 }
 
-<style>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Email Template</title>
 
-    table, td {
-        border-collapse: collapse;
-        border: 1px solid black;
-        padding: 5px;
-    }
+    <style type="text/css">
 
-        table tr td:nth-child(1) {
-            background-color: darkblue;
-            color: white;
+        img {
+            max-width: 100%;
         }
 
-    .custom-field-subitem {
-        border: 1px solid black;
-        margin-top: 5px;
-        padding: 5px;
-    }
+        body {
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-size-adjust: none;
+            width: 100% !important;
+            height: 100%;
+            line-height: 1.6em;
+        }
 
-    .red {
-        color: darkred;
-    }
-</style>
+        body {
+            background-color: #f6f6f6;
+        }
 
-<section>
-    <table>
-        <tr>
-            <td>Title: </td>
-            <td>@Model.Ticket.Title</td>
-        </tr>
-        <tr>
-            <td>Created Date: </td>
-            <td>@Model.Ticket.CreatedDate</td>
-        </tr>
-        <tr>
-            <td>Status: </td>
-            <td>@Model.Ticket.TicketStatus</td>
-        </tr>
-        <tr>
-            <td>Shop: </td>
-            <td>@Model.ShopName</td>
-        </tr>
-        <tr>
-            <td>Created by: </td>
-            <td>@Model.CreatedByUsername</td>
-        </tr>
-        <tr>
-            <td>Last update by: </td>
-            <td>@Model.UpdatedByUsername</td>
+        @@media only screen and (max-width: 640px) {
+            body {
+                padding: 0 !important;
+            }
+
+            h1 {
+                font-weight: 800 !important;
+                margin: 20px 0 5px !important;
+            }
+
+            h2 {
+                font-weight: 800 !important;
+                margin: 20px 0 5px !important;
+            }
+
+            h3 {
+                font-weight: 800 !important;
+                margin: 20px 0 5px !important;
+            }
+
+            h4 {
+                font-weight: 800 !important;
+                margin: 20px 0 5px !important;
+            }
+
+            h1 {
+                font-size: 22px !important;
+            }
+
+            h2 {
+                font-size: 18px !important;
+            }
+
+            h3 {
+                font-size: 16px !important;
+            }
+
+            .container {
+                padding: 0 !important;
+                width: 100% !important;
+            }
+
+            .content {
+                padding: 0 !important;
+            }
+
+            .content-wrap {
+                padding: 10px !important;
+            }
+
+            .invoice {
+                width: 100% !important;
+            }
+        }
+    </style>
+</head>
+
+<body itemscope itemtype="http://schema.org/EmailMessage" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: none; width: 100% !important; height: 100%; line-height: 1.6em; background-color: #eaeced; margin: 0;" bgcolor="#eaeced">
+    <table class="body-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; background-color: #eaeced; margin: 0;" bgcolor="#eaeced">
+        <tr style="margin: 0;">
+            <td style="vertical-align: top; margin: 0;" valign="top"></td>
+            <td class="container" width="600" style="display: block !important; max-width: 600px !important; clear: both !important; margin: 20px auto 0;" valign="top">
+                <div class="content" style="max-width: 600px; display: block; margin: 0 auto;">
+                    <table class="main" width="100%" cellpadding="0" cellspacing="0" style="border-radius: 3px; background-color: #fff; margin: 0; border: 1px solid #e9e9e9;" bgcolor="#fff">
+                        <tr style="margin: 0;">
+                            <td class="content-wrap aligncenter" style="vertical-align: top; text-align: center; margin: 0; padding: 20px;" align="center" valign="top">
+                                <table width="100%" cellpadding="0" cellspacing="0" style="margin: 0;">
+                                    <tr style="margin: 0;">
+                                        <td class="content-block" style="text-align: left;">
+                                            <img class="logo" width="140" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMzUxLjcgOTYuMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzUxLjcgOTYuMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+LnN0MHtmaWxsOnVybCgjU1ZHSURfMV8pO30uc3Qxe2ZpbGw6dXJsKCNTVkdJRF8yXyk7fS5zdDJ7ZmlsbDp1cmwoI1NWR0lEXzNfKTt9LnN0M3tmaWxsOnVybCgjU1ZHSURfNF8pO30uc3Q0e2ZpbGw6dXJsKCNTVkdJRF81Xyk7fS5zdDV7ZmlsbDojQzcyMTI3O30uc3Q2e2ZpbGw6IzFDNEU4RDt9PC9zdHlsZT48Zz48Zz48bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzFfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjI3Ljc4MzUiIHkxPSIzNi4yMzQ0IiB4Mj0iNTguODI5NCIgeTI9IjIuNzA0OCI+PHN0b3AgIG9mZnNldD0iMC4yNzEyIiBzdHlsZT0ic3RvcC1jb2xvcjojRUUyRDMwIi8+PHN0b3AgIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6I0Y4OUEzRSIvPjwvbGluZWFyR3JhZGllbnQ+PHBhdGggY2xhc3M9InN0MCIgZD0iTTEzLjgsMzMuNWgyNi41YzAsMCw2LjYtMzUuNCwzNi0yNi4zQzc2LjMsNy4zLDQxLTIwLjksMTMuOCwzMy41eiIvPjxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfMl8iIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iLTMzLjEyODQiIHkxPSItMTMzLjQ1MjkiIHgyPSItMi4wODM1IiB5Mj0iLTE2Ni45ODE1IiBncmFkaWVudFRyYW5zZm9ybT0ibWF0cml4KDAuMzYzNiAwLjkzMTYgLTAuOTMxNiAwLjM2MzYgLTUxLjIxMzEgMTAyLjUwMjYpIj48c3RvcCAgb2Zmc2V0PSIwLjI3MTIiIHN0eWxlPSJzdG9wLWNvbG9yOiNENUE1M0EiLz48c3RvcCAgb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojRkJERjU1Ii8+PC9saW5lYXJHcmFkaWVudD48cGF0aCBjbGFzcz0ic3QxIiBkPSJNNTguNSw5LjFsOS42LDI0LjhjMCwwLDM1LjQtNi43LDM3LjUsMjRDMTA1LjcsNTcuOSwxMTksMTQuNiw1OC41LDkuMXoiLz48bGluZWFyR3JhZGllbnQgaWQ9IlNWR0lEXzNfIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9Ii0yMjIuNDU5NyIgeTE9Ii0zNS4wMzQxIiB4Mj0iLTE5MS4zODcyIiB5Mj0iLTY4LjU5MjUiIGdyYWRpZW50VHJhbnNmb3JtPSJtYXRyaXgoLTAuODI0IDAuNTY2NiAtMC41NjY2IC0wLjgyNCAtMTIxLjk1MTYgMTQxLjkwNzcpIj48c3RvcCAgb2Zmc2V0PSIwLjI3MTIiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMDU3OUMiLz48c3RvcCAgb2Zmc2V0PSIxIiBzdHlsZT0ic3RvcC1jb2xvcjojMDA5OEQ0Ii8+PC9saW5lYXJHcmFkaWVudD48cGF0aCBjbGFzcz0ic3QyIiBkPSJNOTQuMywzOS4xTDcyLjQsNTQuMWMwLDAsMTQuNiwzMy0xNC44LDQyLjFDNTcuNiw5Ni4yLDEwMi43LDk5LjMsOTQuMywzOS4xeiIvPjxsaW5lYXJHcmFkaWVudCBpZD0iU1ZHSURfNF8iIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iLTEzOS40NzI3IiB5MT0iMTkwLjU3MjciIHgyPSItMTA4LjQ0MjYiIHkyPSIxNTcuMDYwMiIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgtMC44MzgxIC0wLjU0NTUgMC41NDU1IC0wLjgzODEgLTE1OC41MTk1IDE1NC45NDQyKSI+PHN0b3AgIG9mZnNldD0iMC4yNzEyIiBzdHlsZT0ic3RvcC1jb2xvcjojMUExQTFBIi8+PHN0b3AgIG9mZnNldD0iMSIgc3R5bGU9InN0b3AtY29sb3I6IzRGNEY1MSIvPjwvbGluZWFyR3JhZGllbnQ+PHBhdGggY2xhc3M9InN0MyIgZD0iTTcyLjYsODEuMkw1MC4zLDY2LjdjMCwwLTI0LjksMjYuMS00NC41LDIuM0M1LjgsNjkuMSwyMC4yLDExMiw3Mi42LDgxLjJ6Ii8+PGxpbmVhckdyYWRpZW50IGlkPSJTVkdJRF81XyIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIHgxPSIxMDMuOTI2MyIgeTE9IjI4NS44NzUxIiB4Mj0iMTM0Ljk5NTkiIHkyPSIyNTIuMzE5OSIgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgwLjE2NiAtMC45ODYxIDAuOTg2MSAwLjE2NiAtMjY3LjQyMDYgMTE3Ljk3OCkiPjxzdG9wICBvZmZzZXQ9IjAuMjcxMiIgc3R5bGU9InN0b3AtY29sb3I6IzAwNzg0NiIvPjxzdG9wICBvZmZzZXQ9IjEiIHN0eWxlPSJzdG9wLWNvbG9yOiMwMDlFNTQiLz48L2xpbmVhckdyYWRpZW50PjxwYXRoIGNsYXNzPSJzdDQiIGQ9Ik0yNi43LDc2LjNsNC40LTI2LjJjMCwwLTMzLjgtMTIuNC0xOS45LTM5LjlDMTEuMiwxMC4yLTIyLjQsNDAuNSwyNi43LDc2LjN6Ii8+PC9nPjxnPjxwb2x5Z29uIGNsYXNzPSJzdDUiIHBvaW50cz0iMTQ4LjEsMzQuMiAxNDcuMSwzNC4yIDE0My45LDU1LjggMTM0LjIsMzQuMiAxMzMuMiwzNC4yIDEyNy40LDM0LjIgMTI2LjQsMzQuMiAxMjEuMyw2OC4zIDEyMi4zLDY4LjMgMTI4LjEsNjguMyAxMjkuMSw2OC4zIDEzMi4zLDQ2LjggMTQyLDY4LjMgMTQzLDY4LjMgMTQ4LjgsNjguMyAxNDkuOCw2OC4zIDE1NC45LDM0LjIgMTUzLjksMzQuMiAiLz48cG9seWdvbiBjbGFzcz0ic3Q1IiBwb2ludHM9IjE2NS40LDM0LjIgMTY0LjQsMzQuMiAxNTkuMyw2OC4zIDE2MC4zLDY4LjMgMTY2LjEsNjguMyAxNjcuMSw2OC4zIDE2OS4yLDU0LjEgMTgxLjMsNTQuMSAxODIuMyw1NC4xIDE4My4xLDQ4LjkgMTgyLjEsNDguOSAxNzAsNDguOSAxNzEuNCwzOS41IDE4NS45LDM5LjUgMTg2LjksMzkuNSAxODcuNywzNC4yIDE4Ni43LDM0LjIgIi8+PC9nPjxnPjxwYXRoIGNsYXNzPSJzdDYiIGQ9Ik0yMTUuNywzNi41Yy0yLjItMS45LTUuMS0yLjgtOC45LTIuOGMtMC4yLDAtMC4zLDAtMC41LDBjLTAuMiwwLTAuMywwLTAuNSwwYy0zLjQsMC02LjQsMC44LTguOCwyLjRzLTMuOCwzLjctNC4yLDYuNWMtMC40LDIuOSwwLjMsNS4yLDIuMiw3YzEuOSwxLjgsNC44LDMuMyw4LjcsNC41YzIuNSwwLjksNC4yLDEuNyw1LjEsMi42czEuMiwyLDEsMy41Yy0wLjIsMS0wLjgsMS45LTEuOCwyLjVjLTEsMC42LTIsMC45LTMuMiwxYy0xLjctMC4xLTMuMi0wLjUtNC4zLTEuMmMtMS4zLTAuOC0xLjgtMi4yLTEuNS00LjFoLTFoLTUuNmgtMWwwLDAuMWMtMC42LDMuNiwwLjMsNi4yLDIuOSw3LjlzNS43LDIuNSw5LjQsMi41YzAuMiwwLDAuMywwLDAuNSwwYzAuMiwwLDAuMywwLDAuNSwwYzMuNSwwLDYuNS0wLjgsOC45LTIuM3MzLjgtMy43LDQuMi02LjZjMC40LTMtMC4yLTUuNC0xLjktNy4xYy0xLjctMS44LTQuNC0zLjItOC4xLTQuNGMtMi45LTEtNC45LTEuOS01LjgtMi42Yy0wLjktMC44LTEuMy0xLjktMS4xLTMuM2MwLjEtMSwwLjctMS44LDEuNy0yLjVjMC45LTAuNiwxLjktMC45LDMtMWMxLjYsMC4xLDIuOSwwLjUsMy44LDEuNGMxLDEsMS40LDIuMywxLjIsMy44aDFoNS42aDFsMC0wLjFDMjE4LjcsNDAuOSwyMTcuOSwzOC40LDIxNS43LDM2LjV6Ii8+PHBhdGggY2xhc3M9InN0NiIgZD0iTTI0MSw0Mi41Yy0wLjIsMC0wLjMsMC0wLjUsMGMtMC4yLDAtMC4zLDAtMC41LDBjLTEuNCwwLTIuNywwLjMtMy44LDAuOWMtMC43LDAuNC0xLjQsMC45LTIuMSwxLjVsMC0xLjloLTFIMjI4aC0xbC01LjIsMzUuMWgxaDUuOGgxbDEuNy0xMS4yYzAuNCwwLjUsMC45LDAuOSwxLjUsMS4yYzEsMC41LDIuMSwwLjgsMy40LDAuOGMwLjIsMCwwLjQsMCwwLjUsMGMwLjIsMCwwLjMsMCwwLjUsMGMzLjEsMCw1LjctMS4xLDcuOC0zLjNjMi0yLjIsMy40LTUuMyw0LTkuMmwwLjEtMC41YzAuNi00LDAuMi03LjItMS4zLTkuNlMyNDQsNDIuNSwyNDEsNDIuNXogTTIzMy41LDYzYy0wLjctMC40LTEuMi0wLjktMS41LTEuN2wxLjctMTFjMC42LTAuOCwxLjItMS40LDItMS45YzAuNy0wLjQsMS40LTAuNiwyLjItMC42YzEuNCwwLjEsMi4zLDAuOSwyLjgsMi4yYzAuNiwxLjUsMC43LDMuNCwwLjMsNS45bC0wLjEsMC41Yy0wLjMsMi4yLTEsMy45LTIsNS4zYy0wLjksMS4yLTIsMS44LTMuNCwxLjlDMjM0LjgsNjMuNSwyMzQuMSw2My4zLDIzMy41LDYzeiIvPjxwYXRoIGNsYXNzPSJzdDYiIGQ9Ik0yNzAuMiw0Mi41Yy0wLjIsMC0wLjMsMC0wLjUsMGMtMC4yLDAtMC4zLDAtMC41LDBjLTMuOCwwLTYuOSwxLjItOS4zLDMuNWMtMi40LDIuMy00LDUuNS00LjUsOS40bC0wLjEsMC41Yy0wLjYsMy44LDAsNi44LDEuOSw5LjNjMS44LDIuNCw0LjUsMy42LDguMSwzLjZjMC4yLDAsMC4zLDAsMC41LDBjMC4yLDAsMC4zLDAsMC41LDBjMy44LDAsNi45LTEuMiw5LjMtMy41YzIuNC0yLjMsNC01LjUsNC42LTkuNGwwLjEtMC41YzAuNS0zLjctMC4xLTYuOC0xLjktOS4zUzI3My44LDQyLjUsMjcwLjIsNDIuNXogTTI2My40LDYxLjVjLTAuNi0xLjQtMC43LTMuMi0wLjQtNS42bDAuMS0wLjVjMC4zLTIuMiwxLTQsMi4xLTUuNWMxLTEuMywyLjItMiwzLjctMi4xYzEuNSwwLjEsMi41LDAuOCwzLjEsMmMwLjYsMS40LDAuNywzLjIsMC40LDUuNmwtMC4xLDAuNWMtMC4zLDIuMy0xLjEsNC4xLTIuMSw1LjVjLTEsMS4zLTIuMiwyLTMuNywyLjFDMjY1LDYzLjQsMjY0LDYyLjgsMjYzLjQsNjEuNXoiLz48cGF0aCBjbGFzcz0ic3Q2IiBkPSJNMzAyLjcsNDIuNWMtMC4yLDAtMC40LDAtMC41LDBjLTAuMiwwLTAuMywwLTAuNSwwYy0xLjIsMC0yLjQsMC40LTMuNCwxLjFjLTAuNiwwLjQtMS4xLDAuOS0xLjYsMS41bDAuMS0yLjFoLTFoLTUuM2gtMWwtMy44LDI1LjRoMWg1LjhoMWwyLjUtMTdjMC41LTAuOCwxLjEtMS40LDEuOC0xLjljMC43LTAuNCwxLjQtMC42LDIuMy0wLjZsMS44LDAuMWwwLDBsMSwwbDEuNi02LjFjLTAuMy0wLjEtMC41LTAuMS0wLjktMC4yUzMwMy4xLDQyLjUsMzAyLjcsNDIuNXoiLz48cGF0aCBjbGFzcz0ic3Q2IiBkPSJNMzIwLjEsNDNsMC45LTYuMmgtMWgtNS44aC0xbC0wLjksNi4yaC0yLjdoLTFsLTAuNyw0LjhoMWgyLjdsLTEuOSwxMi45Yy0wLjQsMi44LTAuMSw0LjgsMSw2LjFjMS4xLDEuMywyLjgsMiw1LjEsMmMwLjIsMCwwLjMsMCwwLjUsMGMwLjIsMCwwLjMsMCwwLjUsMGMwLjgsMCwxLjUtMC4xLDIuMS0wLjJzMS40LTAuMywyLjEtMC41bDAuMi00LjljLTAuMywwLjEtMC43LDAuMi0wLjksMC4yYzAsMCwwLDAtMC4xLDBsMC0wLjJjLTAuMywwLjEtMC43LDAuMi0wLjksMC4yYy0wLjEsMC0wLjMsMC0wLjQsMGMtMC41LTAuMS0wLjgtMC4zLTEuMS0wLjZjLTAuMy0wLjQtMC40LTEuMS0wLjMtMi4xbDEuOS0xMi45aDMuM2gxbDAuNy00LjhoLTFIMzIwLjF6Ii8+PHBhdGggY2xhc3M9InN0NiIgZD0iTTM0OS42LDQ0LjhjLTEuOC0xLjUtNC4yLTIuMy03LjMtMi4zYy0wLjIsMC0wLjMsMC0wLjUsMGMtMC4yLDAtMC4zLDAtMC41LDBjLTMuMSwwLTUuNywwLjctNy43LDIuMnMtMy4yLDMuNC0zLjUsNS42Yy0wLjMsMi4xLDAuMywzLjcsMS42LDQuOXMzLjUsMi4xLDYuNCwyLjdjMS45LDAuNCwzLjIsMC45LDMuOSwxLjRzMC45LDEuMiwwLjgsMS45Yy0wLjEsMC45LTAuNiwxLjUtMS4zLDIuMWMtMC43LDAuNC0xLjUsMC43LTIuNCwwLjdjLTEuMS0wLjEtMi0wLjQtMi43LTAuOWMtMC44LTAuNi0xLjEtMS42LTAuOS0zaC0xaC01LjNoLTFsLTAuMSwwLjFjLTAuNCwyLjEsMC4zLDQuMSwyLjEsNS44czQuMywyLjYsNy41LDIuNmMwLjIsMCwwLjQsMCwwLjYsMGMwLjEsMCwwLjMsMCwwLjQsMGMzLjIsMCw1LjktMC43LDgtMi4xczMuNC0zLjMsMy43LTUuN2MwLjMtMi4xLTAuMy0zLjgtMS42LTVzLTMuNS0yLjEtNi41LTIuOGMtMi0wLjQtMy4zLTAuOC0zLjktMS4zcy0wLjgtMS4xLTAuNy0xLjljMC4xLTAuOCwwLjUtMS41LDEuMy0yYzAuNi0wLjUsMS40LTAuNywyLjItMC44YzEsMC4xLDEuNywwLjQsMi4yLDAuOWMwLjYsMC42LDAuOCwxLjUsMC42LDIuNWgxaDUuNmgxbDAtMC4xQzM1Miw0OC4zLDM1MS4zLDQ2LjQsMzQ5LjYsNDQuOHoiLz48L2c+PC9nPjwvc3ZnPg==">
+                                            <a class="link" href="#" style="float: right; color: #1c7deb; margin-top: 15px;">View in browser</a>
+                                        </td>
+                                    </tr>
+                                    <tr style="margin: 0;">
+                                        <td class="content-block aligncenter" style="vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">
+                                            <table class="invoice" style="text-align: left; width: 100%; margin: 15px auto 0; border: 1px solid #d4d4d4; border-collapse: collapse;">
+                                                <tbody>
+                                                    <tr style="margin: 0;">
+                                                        <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Title: </td>
+                                                        <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.Ticket.Title</td>
+                                                    </tr>
+                                                    <tr style="margin: 0;">
+                                                        <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Create Date: </td>
+                                                        <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.Ticket.CreatedDate</td>
+                                                    </tr>
+                                                    <tr style="margin: 0;">
+                                                        <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Status: </td>
+                                                        <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.Ticket.TicketStatus</td>
+                                                    </tr>
+                                                    <tr style="margin: 0;">
+                                                        <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Shop: </td>
+                                                        <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.ShopName</td>
+                                                    </tr>
+                                                    <tr style="margin: 0;">
+                                                        <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Create By: </td>
+                                                        <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.CreatedByUsername</td>
+                                                    </tr>
+                                                    <tr style="margin: 0;">
+                                                        <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Last Update By: </td>
+                                                        <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.UpdatedByUsername</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    @*<tr style="margin: 0;">
+                                            <td class="content-block" style="vertical-align: top; text-align: left; margin: 0; padding: 0 0 10px;" align="center" valign="top">
+                                                <p style="font-weight: bold; color: #2e4592; margin: 0;">Ticket Edited</p>
+                                                <p style="margin: 0;">Status Changed: from New to In progress</p>
+                                            </td>
+                                        </tr>*@
+
+                                    <tr style="margin: 0;">
+                                        <td class="content-block" style="vertical-align: top; text-align: left; margin: 0; padding: 0 0 10px;" align="center" valign="top">
+                                            <p style="font-weight: bold; color: #2e4592; margin: 0;">Ticket Details</p>
+                                            @{
+                                                var nonGroupCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId == null);
+                                                foreach (var customFieldValue in nonGroupCustomFieldValues)
+                                                {
+                                                    <p style="margin: 0;">
+                                                        <span>@customFieldValue.CustomField.Name: </span>
+                                                        <span>@customFieldValue.Value</span>
+                                                    </p>
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+
+                                    @{
+                                        var groupedCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId != null).GroupBy(x => x.GroupId);
+                                        foreach (IGrouping<string, CustomFieldValue> group in groupedCustomFieldValues)
+                                        {
+                                            var customFieldValues = group.ToList();
+                                            <tr style="margin: 0;">
+                                                <td class="content-block" style="vertical-align: top; text-align: left; margin: 0; padding: 0 0 10px;" align="center" valign="top">
+                                                    <ul style="padding: 0 0 0 17px; margin: 0;">
+                                                        @foreach (var customFieldValue in customFieldValues)
+                                                        {
+
+                                                            <li><strong style="color: #333;">@customFieldValue.CustomField.Name:</strong><span style="padding-left: 3px;">@customFieldValue.Value</span></li>
+                                                        }
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+            <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>
         </tr>
     </table>
-</section>
-
-<section class="custom-field">
-    <div>
-        <h3>Ticket Details</h3>
-    </div>
-    @{
-        var count = Model.CustomFieldValues.Count();
-        for (int i = 0; i < count; i++)
-        {
-            var customFieldValue = Model.CustomFieldValues.ElementAt(i);
-
-            <div class="custom-field-item">
-                @if (string.IsNullOrEmpty(customFieldValue.GroupId))
-                {
-                    <p>
-                        <span>@customFieldValue.CustomField.Name: </span>
-                        <span>@customFieldValue.Value</span>
-                    </p>
-                }
-                else
-                {
-                    var groupId = customFieldValue.GroupId;
-                    var subItems = Model.CustomFieldValues.Where(x => x.GroupId == groupId);
-
-                    <div class="custom-field-subitem">
-                        @foreach (var items in subItems)
-                        {
-                            <p>
-                                <span>@items.CustomField.Name: </span>
-                                <span>@items.Value</span>
-                            </p>
-                        }
-                    </div>
-
-                    i = i + subItems.Count();
-                }
-            </div>
-        }
-    }
-</section>
+</body>
+</html>

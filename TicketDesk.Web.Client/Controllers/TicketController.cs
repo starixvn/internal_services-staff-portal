@@ -21,17 +21,20 @@
         private readonly ICustomFieldService customFieldService;
         private readonly IShopService shopService;
         private readonly ITicketCategoryService ticketCategoryService;
+        private readonly IMailService mailService;
 
         public TicketController(
             ITicketService ticketService,
             ICustomFieldService customFieldService,
             IShopService shopService,
-            ITicketCategoryService ticketCategoryService)
+            ITicketCategoryService ticketCategoryService,
+            IMailService mailService)
         {
             this.ticketService = ticketService;
             this.customFieldService = customFieldService;
             this.shopService = shopService;
             this.ticketCategoryService = ticketCategoryService;
+            this.mailService = mailService;
         }
 
         [HttpPost]
@@ -110,6 +113,8 @@
 
                 customFieldService.AddCustomFieldValues(
                     viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+
+                mailService.ComposeAndSendMail(viewModel.Ticket);
 
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
