@@ -26,18 +26,21 @@
             </div>
 
             <div class="detail-item">
-                <span class="item-title">Shop Name: </span>
-                <span class="item-content">Quang Trung</span>
+                <span class="item-title">@Resources.ShopName: </span>
+                <span class="item-content">@Model.ShopName</span>
             </div>
 
             <div class="detail-item">
-                <span class="item-title">Status: </span>
-                <span class="item-content">New</span>
+                <span class="item-title">@Resources.Domain_Model_Ticket_Status: </span>
+                @{
+                    string status = Model.Ticket.TicketStatus.ToString().ToLowerInvariant();
+                }
+                <span class="item-content @status">@Model.Ticket.TicketStatus</span>
             </div>
 
             <div class="detail-item">
-                <span class="item-title">Create Date: </span>
-                <span class="item-content">20/03/2018</span>
+                <span class="item-title">@Resources.Domain_Model_Ticket_CreatedDate: </span>
+                <span class="item-content">@Model.Ticket.CreatedDate</span>
             </div>
 
             @foreach (var customFieldValue in Model.CustomFieldValues)
