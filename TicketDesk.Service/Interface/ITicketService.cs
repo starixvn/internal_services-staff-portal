@@ -12,8 +12,6 @@
 
         IList<TicketGroup> GetUserOpeningTicketsInGroups();
 
-        int GetUserTotalOpeningTickets(int userId);
-
         bool UpdateTicketSubscription(int ticketId, string userId);
 
         bool CreateTicket(Ticket ticket, Guid tempId);

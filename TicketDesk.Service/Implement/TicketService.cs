@@ -68,14 +68,6 @@
             return result;
         }
 
-        public int GetUserTotalOpeningTickets(int userId)
-        {
-            string userIdString = userId.ToString();
-            return context.Tickets.Count(x => x.CreatedBy == userIdString
-                                              && (x.TicketStatus == TicketStatus.New
-                                                  || x.TicketStatus == TicketStatus.InProgress));
-        }
-
         private IEnumerable<TicketViewModel> BasicGetTicketJoinWithShop()
         {
             return context.Tickets
