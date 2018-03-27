@@ -1,6 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
-    using System.Collections.Generic;
+    using System.Linq;
     using System.Text.RegularExpressions;
     using System.Web.Mvc;
     using Client.Controllers;
@@ -39,43 +39,50 @@
             return PartialView("_ListMail", ticketCategory);
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.MailManagement, Policy = Constant.Policy.Host)]
         [HttpPost]
+        [NapAuth(FunctionKey = FunctionKeys.MailManagement, Policy = Constant.Policy.Host)]
         public ActionResult EditMailSettings(TicketCategory ticketCategory)
         {
             var result = false;
 
+            if (IsEmailListValid(ticketCategory.MailTo))
+            {
+                ModelState.AddModelError(nameof(ticketCategory.MailTo), "Email not valid");
+            }
+
+            if (IsEmailListValid(ticketCategory.MailCcTo))
+            {
+                ModelState.AddModelError(nameof(ticketCategory.MailCcTo), "Email not valid");
+            }
+
+            if (IsEmailListValid(ticketCategory.MailBccTo))
+            {
+                ModelState.AddModelError(nameof(ticketCategory.MailBccTo), "Email not valid");
+            }
+
             if (ModelState.IsValid)
             {
-                ticketCategory.MailTo = RemoveWrongEmailAddresses(ticketCategory.MailTo);
-                ticketCategory.MailCcTo = RemoveWrongEmailAddresses(ticketCategory.MailCcTo);
-                ticketCategory.MailBccTo = RemoveWrongEmailAddresses(ticketCategory.MailBccTo);
-
                 result = ticketCategoryService.UpdateTicketCategory(ticketCategory);
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        private static string RemoveWrongEmailAddresses(string emails)
+        private static bool IsEmailListValid(string emails)
         {
-            if (string.IsNullOrEmpty(emails))
-            {
-                return null;
-            }
+            var result = true;
 
-            List<string> validMails = new List<string>();
-            var emailStrings = emails.Split(',', ' ', ';');
-
-            foreach (var emailString in emailStrings)
+            if (!string.IsNullOrEmpty(emails))
             {
-                if (IsEmailValid(emailString.Trim()))
+                var emailStrings = emails.Split(',', ' ', ';');
+
+                if (emailStrings.Any(emailString => !IsEmailValid(emailString.Trim())))
                 {
-                    validMails.Add(emailString.Trim());
+                    result = false;
                 }
             }
 
-            return string.Join(";", validMails);
+            return result;
         }
 
         private static bool IsEmailValid(string email)

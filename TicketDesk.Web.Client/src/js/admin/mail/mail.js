@@ -2,18 +2,18 @@
     init: function () {
         mail.filterForm();
         mail.handleSave();
-        mail.preventInValidMail();
+        //mail.preventInValidMail();
     },
 
-    preventInValidMail: function () {
-        $("#data-list").on("beforeItemAdd",
-            ".tag",
-            function (event) {
-                if (!mail.checkMailFormat(event.item)) {
-                    event.cancel = true;
-                }
-            });
-    },
+    //preventInValidMail: function () {
+    //    $("#data-list").on("beforeItemAdd",
+    //        ".tag",
+    //        function (event) {
+    //            if (!mail.checkMailFormat(event.item)) {
+    //                event.cancel = true;
+    //            }
+    //        });
+    //},
 
     initTag: function () {
         $(".tag").tagsinput({
@@ -63,9 +63,13 @@
                     url: $(this).attr("action"),
                     method: $(this).attr("method"),
                     data: $(this).serialize(),
-                    success: function () {
-                        toastr.success("Mail Settings Saved");
-                        $(".filter-form form").trigger("submit");
+                    success: function (result) {
+                        if (result === "true") {
+                            toastr.success("Mail Settings Saved");
+                            $(".filter-form form").trigger("submit");
+                        } else {
+                            toastr.error("Emails errors");
+                        }
                     }
                 });
             });

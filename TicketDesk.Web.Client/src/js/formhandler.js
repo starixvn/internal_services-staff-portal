@@ -24,18 +24,18 @@ var formhandler = {
             delimiter: ";",
             delimiterRegex: null
         });
-        formhandler.preventInValidMail();
+        //formhandler.preventInValidMail();
     },
 
-    preventInValidMail: function () {
-        $(".ticket-form").on("beforeItemAdd",
-            ".tag",
-            function (event) {
-                if (!formhandler.checkMailFormat(event.item)) {
-                    event.cancel = true;
-                }
-            });
-    },
+    //preventInValidMail: function () {
+    //    $(".ticket-form").on("beforeItemAdd",
+    //        ".tag",
+    //        function (event) {
+    //            if (!formhandler.checkMailFormat(event.item)) {
+    //                event.cancel = true;
+    //            }
+    //        });
+    //},
 
     checkMailFormat: function (email) {
         var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
