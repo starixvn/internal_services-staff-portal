@@ -988,9 +988,24 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   display: flex;
   padding-bottom: 1rem; }
   .detail-item .item-title {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    width: auto;
+    max-width: none;
+    padding-right: 5px;
     color: #2e4592;
     text-transform: uppercase;
     font-weight: 700; }
+  .detail-item .file-attachments {
+    display: inline-block;
+    border: 1px solid #d3d7db;
+    border-radius: 28px;
+    margin-bottom: 5px;
+    padding: 2px 7px;
+    font-size: 15px;
+    color: #2e4592;
+    background-color: #d5d5d5; }
 
 @font-face {
   font-family: 'icomoon';

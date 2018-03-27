@@ -26,6 +26,16 @@
                 <span class="item-content">Quang Trung</span>
             </div>
 
+            <div class="detail-item">
+                <span class="item-title">Status: </span>
+                <span class="item-content">New</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="item-title">Create Date: </span>
+                <span class="item-content">20/03/2018</span>
+            </div>
+
             @foreach (var customFieldValue in Model.CustomFieldValues)
             {
                 <div class="detail-item">
@@ -41,6 +51,18 @@
                     }
                 </div>
             }
+
+            <div class="detail-item">
+                <span class="item-title">@Index.Files</span>
+                <ul class="list-unstyled list-inline">
+                    @foreach (var file in Model.Attachments)
+                    {
+                        <li>
+                            <a class="file-attachments" href="@Url.Action("GetFile", "File", new {Id = Model.Ticket.TicketId, FileName = file.Name})" target="_blank"><i class="fa fa-file fa-align-left"></i> @file.Name</a>
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -182,7 +204,7 @@
         </div>
     </div>
 </div>*@
-<div class="panel panel-info" style="padding-top: 0; padding-bottom: 0;">
+@*<div class="panel panel-info" style="padding-top: 0; padding-bottom: 0;">
     <div class="panel-heading panel-title" style="padding: 3px 5px;">
         @Index.Files
     </div>
@@ -196,4 +218,4 @@
             }
         </ul>
     </div>
-</div>
+</div>*@
