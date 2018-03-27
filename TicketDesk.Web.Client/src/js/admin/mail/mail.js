@@ -5,7 +5,7 @@
         mail.preventInValidMail();
     },
 
-    preventInValidMail: function() {
+    preventInValidMail: function () {
         $("#data-list").on("beforeItemAdd",
             ".tag",
             function (event) {
@@ -15,16 +15,16 @@
             });
     },
 
-    initTag: function() {
+    initTag: function () {
         $(".tag").tagsinput({
-            confirmKeys: [13, 44, 32, 188],
+            confirmKeys: [13, 32, 44, 188],
             trimValue: true,
             delimiter: ";",
             delimiterRegex: null
         });
     },
 
-    checkMailFormat: function(email) {
+    checkMailFormat: function (email) {
         var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(String(email).toLowerCase());
     },
@@ -32,7 +32,7 @@
     filterForm: function () {
         $(".filter-form form").on("change",
             "select",
-            function() {
+            function () {
                 $(".filter-form form").trigger("submit");
             });
 
