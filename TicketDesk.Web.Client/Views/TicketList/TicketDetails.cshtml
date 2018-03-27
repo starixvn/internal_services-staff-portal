@@ -32,10 +32,8 @@
 
             <div class="detail-item">
                 <span class="item-title">@Resources.Domain_Model_Ticket_Status: </span>
-                @{
-                    string status = Model.Ticket.TicketStatus.ToString().ToLowerInvariant();
-                }
-                <span class="item-content @status">@Model.Ticket.TicketStatus</span>
+               
+                <span class="item-content">@Model.Ticket.TicketStatus</span>
             </div>
 
             <div class="detail-item">
