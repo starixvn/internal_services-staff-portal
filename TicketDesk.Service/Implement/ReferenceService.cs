@@ -15,7 +15,7 @@
             var references = context.References.Where(x => x.ReferenceType == referenceType).ToList();
             if (referenceType != ReferenceType.Newsletters)
             {
-                references = references.Where(r => r.DateAppear.Date >= DateTime.Now.Date).ToList();
+                references = references.Where(r => r.DateAppear.Date >= DateTime.Now.Date).OrderBy(x => x.DateAppear.Date).ToList();
             }
             return references;
         }
@@ -28,34 +28,39 @@
             }
             else
             {
-                var oldReferences = references.Where(r => r.Id > 0).ToList();
+                RemoveOldReferences(referenceType, references);
 
-                if (oldReferences.Count > 0)
+                UpdateAndSaveReferences(references);
+            }
+        }
+
+        private void UpdateAndSaveReferences(IEnumerable<ReferenceCriteria> references)
+        {
+            foreach (ReferenceCriteria reference in references)
+            {
+                if (reference.Id == 0 || IsNotExistReference(reference.Id))
                 {
-                    RemoveOldReferences(referenceType, oldReferences);
+                    SaveReference(reference);
                 }
-
-                foreach (ReferenceCriteria reference in references)
+                else
                 {
-                    if (reference.Id == 0 || reference.Id == null)
-                    {
-                        SaveReference(reference, referenceType);
-                    }
-                    else
-                    {
-                        UpdateReference(reference);
-                    }
+                    UpdateReference(reference);
                 }
             }
         }
 
-        private void SaveReference(ReferenceCriteria reference, ReferenceType referenceType)
+        private bool IsNotExistReference(int id)
+        {
+            return context.References.Find(id) == null;
+        }
+
+        private void SaveReference(ReferenceCriteria reference)
         {
             var data = new Reference
             {
-                DateAppear = referenceType != ReferenceType.Newsletters ? reference.DateAppear : DateTime.Now,
+                DateAppear = reference.ReferenceType != ReferenceType.Newsletters ? reference.DateAppear : DateTime.Now,
                 ImageLink = reference.ImageLink,
-                ReferenceType = referenceType,
+                ReferenceType = reference.ReferenceType,
                 LastUpdateBy = CurrentUsername,
                 LastUpdateDate = DateTime.Now
             };
@@ -68,17 +73,12 @@
         {
             var oldReference = context.References.Find(reference.Id);
 
-            if (oldReference == null)
-            {
-                SaveReference(reference, reference.ReferenceType);
-            }
-
             if (oldReference != null && IsChangedReference(oldReference, reference))
             {
                 oldReference.ImageLink = reference.ImageLink;
                 oldReference.DateAppear = oldReference.ReferenceType != ReferenceType.Newsletters
-                    ? reference.DateAppear
-                    : DateTime.Now;
+                                            ? reference.DateAppear
+                                            : DateTime.Now;
                 oldReference.LastUpdateDate = DateTime.Now;
                 oldReference.LastUpdateBy = CurrentUsername;
             }
@@ -110,14 +110,19 @@
             }
         }
 
-        private void RemoveOldReferences(ReferenceType referenceType, List<ReferenceCriteria> references)
+        private void RemoveOldReferences(ReferenceType referenceType, IEnumerable<ReferenceCriteria> references)
         {
-            var originReferences = GetListReference(referenceType);
-            var excludedIDs = new HashSet<int?>(references.Select(p => p.Id));
-            var listDeletedReferenceIds = originReferences.Where(p => !excludedIDs.Contains(p.Id)).Select(p => p.Id).ToList();
-            foreach (var referenceId in listDeletedReferenceIds)
+            var oldReferences = references.Where(r => r.Id > 0).ToList();
+
+            if (oldReferences.Any())
             {
-                DeleteReference(referenceId);
+                var originReferences = GetListReference(referenceType);
+                var excludedIDs = new HashSet<int>(references.Select(p => p.Id));
+                var listDeletedReferenceIds = originReferences.Where(p => !excludedIDs.Contains(p.Id)).Select(p => p.Id).ToList();
+                foreach (var referenceId in listDeletedReferenceIds)
+                {
+                    DeleteReference(referenceId);
+                }
             }
         }
 

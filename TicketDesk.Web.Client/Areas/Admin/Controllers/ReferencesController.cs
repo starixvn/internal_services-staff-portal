@@ -21,6 +21,7 @@
     using Models.References;
     using Service.Interface;
 
+    [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Read)]
     public class ReferencesController : BaseController
     {
         private readonly string webRootPath;
@@ -101,11 +102,11 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
-        public ActionResult GetReferenceEntity(bool isNewsletters)
+        public ActionResult GetReferenceEntity(ReferenceType type)
         {
             var reference = new Reference
             {
-                ReferenceType = isNewsletters ? ReferenceType.Newsletters : ReferenceType.TvSchedule
+                ReferenceType = type
             };
             return PartialView("_ReferenceEntryEditor", reference);
         }
@@ -129,7 +130,7 @@
         }
 
         [HttpPost]
-        public ActionResult UploadImage()
+        public ActionResult UploadImage(ReferenceType type)
         {
             HttpPostedFileBase file = Request.Files[0];
             var filePath = string.Empty;
@@ -137,9 +138,9 @@
             if (file.ContentLength > 0)
             {
                 var domain = Request.Url.GetLeftPart(UriPartial.Authority);
-                var today = DateTime.Now.Date;
-                var directory = string.Format("{0}/{1}/{2}/{3}", webRootPath, today.Year, today.Month, today.Day);
-                var imageDirectory = string.Format("{0}/{1}/{2}/{3}/{4}", domain, webPath, today.Year, today.Month, today.Day);
+                var today = DateTime.Now;
+                var directory = string.Format("{0}/{1}/{2}/{3}/{4}/{5}", webRootPath, type.ToString(), today.Year, today.Month, today.Day, today.Hour);
+                var imageDirectory = string.Format("{0}/{1}/{2}/{3}/{4}/{5}{6}", domain, webPath, type.ToString(), today.Year, today.Month, today.Day, today.Hour);
                 string fileName = Path.GetFileName(file.FileName);
                 int fileSize = file.ContentLength;
 
@@ -161,15 +162,17 @@
                 var fileExist = System.IO.File.Exists(Path.Combine(directory, file.FileName));
                 filePath = MakeWebPath(Path.Combine(directory, file.FileName));
 
-                if (!fileExist)
+                if (!Directory.Exists(directory))
                 {
-                    if (!Directory.Exists(directory))
-                    {
-                        Directory.CreateDirectory(directory);
-                    }
-
-                    file.SaveAs(filePath);
+                    Directory.CreateDirectory(directory);
                 }
+
+                if (fileExist)
+                {
+                    System.IO.File.Delete(Path.Combine(directory, file.FileName));
+                }
+
+                file.SaveAs(filePath);
 
                 imageDirectory = string.Format("{0}/{1}", imageDirectory, fileName);
 

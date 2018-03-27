@@ -5,7 +5,7 @@
 
     public class ReferenceCriteria
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public DateTime DateAppear { get; set; }
 

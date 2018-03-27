@@ -56,7 +56,7 @@
                             <div class="browse form-group">
                                 <div class="btn btn-browse">
                                     <span>Browse...</span>
-                                    <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload" data-href="@Url.Action("UploadImage", "References")">
+                                    <input class="upload-image" type="file" accept=".jpg, .jpeg, .png" id="imageUpload" data-href="@Url.Action("UploadImage", "References", new { type = Model.Type})">
                                 </div>
                                 <input type="button" class="btn btn-delete remove-entry" value="@Resources.Delete">
                             </div>
@@ -70,7 +70,7 @@
         if (Model.IsHostPermission)
         {
             <div class="button-group">
-                <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" data-limit="31" data-href="@Url.Action("GetReferenceEntity", "References", new { isNewsletters = false})" />
+                <input type="button" id="addReferenceEntry" value="+ Add Image" class="btn btn-create" data-limit="31" data-href="@Url.Action("GetReferenceEntity", "References", new { type = Model.Type})" />
                 <input type="submit" id="submit" value="@Resources.Views_Announcement_Submit" class="btn btn-submit" />
             </div>
         }
