@@ -9,7 +9,6 @@
     using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using Microsoft.Practices.ObjectBuilder2;
     using Models.Mail;
     using Service.Interface;
 
@@ -36,13 +35,7 @@
         [NapAuth(FunctionKey = FunctionKeys.MailManagement, Policy = Constant.Policy.Read)]
         public ActionResult ListMail(int categoryId)
         {
-            ////var viewModel = new ListMailViewModel
-            ////{
-            ////    SelectedTicketCategory = ticketCategoryService.GetTicketCategory(categoryId)
-            ////};
-
             var ticketCategory = ticketCategoryService.GetTicketCategory(categoryId);
-
             return PartialView("_ListMail", ticketCategory);
         }
 
@@ -82,7 +75,7 @@
                 }
             }
 
-            return validMails.JoinStrings(";");
+            return string.Join(";", validMails);
         }
 
         private static bool IsEmailValid(string email)
