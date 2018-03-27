@@ -65,11 +65,25 @@
 
             if (ticketCategory != null)
             {
+                var mailTo = ticketCategory.MailTo;
+                var mailCcTo = ticketCategory.MailCcTo;
+
+                if (!string.IsNullOrEmpty(ticket.AdditionalMail))
+                {
+                    mailCcTo = mailCcTo + ";" + ticket.AdditionalMail;
+                }
+
+                if (string.IsNullOrEmpty(mailTo))
+                {
+                    mailTo = mailCcTo;
+                    mailCcTo = null;
+                }
+
                 mailRecord = new MailRecord
                 {
                     Title = ConfigurationManager.AppSettings["app_mail_title"],
-                    MailTo = ticketCategory.MailTo,
-                    MailCc = ticketCategory.MailCcTo,
+                    MailTo = mailTo,
+                    MailCc = mailCcTo,
                     MailBcc = ticketCategory.MailBccTo,
                     Body = body,
                     Subject = ticket.Title
@@ -82,7 +96,11 @@
         public void ComposeAndSendMail(Ticket ticket)
         {
             var mailRecord = ComposeMail(ticket);
-            Send(mailRecord);
+
+            if (!string.IsNullOrEmpty(mailRecord.MailTo))
+            {
+                Send(mailRecord);
+            }
         }
     }
 }

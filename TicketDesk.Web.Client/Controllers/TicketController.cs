@@ -158,6 +158,8 @@
                 customFieldService.AddCustomFieldValues(
                     viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
 
+                mailService.ComposeAndSendMail(viewModel.Ticket);
+
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
@@ -202,6 +204,8 @@
                 customFieldService.AddCustomFieldValues(
                     viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
 
+                mailService.ComposeAndSendMail(viewModel.Ticket);
+
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
@@ -242,6 +246,8 @@
                 customFieldService.AddCustomFieldValues(
                     viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
 
+                mailService.ComposeAndSendMail(viewModel.Ticket);
+
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
@@ -281,6 +287,8 @@
                 ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
                 customFieldService.AddCustomFieldValues(
                     viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+
+                mailService.ComposeAndSendMail(viewModel.Ticket);
 
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
@@ -323,8 +331,10 @@
                 var ticketTitle = "[" + viewModel.SupportType.Value + "] - " + viewModel.Ticket.Title;
                 viewModel.Ticket.Title = ticketTitle;
                 ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-                customFieldService.AddCustomFieldValues(
-                    viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+
+                customFieldService.AddCustomFieldValues(viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+
+                mailService.ComposeAndSendMail(viewModel.Ticket);
 
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }

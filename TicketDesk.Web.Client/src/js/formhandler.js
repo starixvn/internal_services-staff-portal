@@ -18,7 +18,28 @@ var formhandler = {
     },
 
     initTag: function () {
-        $(".tag").tagsinput();
+        $(".tag").tagsinput({
+            confirmKeys: [13, 32, 44, 188],
+            trimValue: true,
+            delimiter: ";",
+            delimiterRegex: null
+        });
+        formhandler.preventInValidMail();
+    },
+
+    preventInValidMail: function () {
+        $(".ticket-form").on("beforeItemAdd",
+            ".tag",
+            function (event) {
+                if (!formhandler.checkMailFormat(event.item)) {
+                    event.cancel = true;
+                }
+            });
+    },
+
+    checkMailFormat: function (email) {
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
     },
 
     initDateTimePicker: function () {
