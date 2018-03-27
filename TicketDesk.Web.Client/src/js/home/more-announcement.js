@@ -15,6 +15,7 @@
                 $(domElement.AnnouncementTable).html(data);
                 initDataTable($("table"));
                 nexcelSSPCommon.initSelect2();
+                announcementReadEvent.registerUnreadClickEvent();
             }
         })
     }
