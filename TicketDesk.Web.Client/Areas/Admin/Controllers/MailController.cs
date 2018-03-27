@@ -6,6 +6,7 @@
     using Client.Controllers;
     using Core.Enumerations;
     using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Microsoft.Practices.ObjectBuilder2;
@@ -35,27 +36,29 @@
         [NapAuth(FunctionKey = FunctionKeys.MailManagement, Policy = Constant.Policy.Read)]
         public ActionResult ListMail(int categoryId)
         {
-            var viewModel = new ListMailViewModel
-            {
-                SelectedTicketCategory = ticketCategoryService.GetTicketCategory(categoryId)
-            };
+            ////var viewModel = new ListMailViewModel
+            ////{
+            ////    SelectedTicketCategory = ticketCategoryService.GetTicketCategory(categoryId)
+            ////};
 
-            return PartialView("_ListMail", viewModel);
+            var ticketCategory = ticketCategoryService.GetTicketCategory(categoryId);
+
+            return PartialView("_ListMail", ticketCategory);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.MailManagement, Policy = Constant.Policy.Host)]
         [HttpPost]
-        public ActionResult EditMailSettings(ListMailViewModel viewModel)
+        public ActionResult EditMailSettings(TicketCategory ticketCategory)
         {
             var result = false;
 
             if (ModelState.IsValid)
             {
-                viewModel.SelectedTicketCategory.MailTo = RemoveWrongEmailAddresses(viewModel.SelectedTicketCategory.MailTo);
-                viewModel.SelectedTicketCategory.MailCcTo = RemoveWrongEmailAddresses(viewModel.SelectedTicketCategory.MailCcTo);
-                viewModel.SelectedTicketCategory.MailBccTo = RemoveWrongEmailAddresses(viewModel.SelectedTicketCategory.MailBccTo);
+                ticketCategory.MailTo = RemoveWrongEmailAddresses(ticketCategory.MailTo);
+                ticketCategory.MailCcTo = RemoveWrongEmailAddresses(ticketCategory.MailCcTo);
+                ticketCategory.MailBccTo = RemoveWrongEmailAddresses(ticketCategory.MailBccTo);
 
-                result = ticketCategoryService.UpdateTicketCategory(viewModel.SelectedTicketCategory);
+                result = ticketCategoryService.UpdateTicketCategory(ticketCategory);
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);

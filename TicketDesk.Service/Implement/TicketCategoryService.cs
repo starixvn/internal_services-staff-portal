@@ -28,6 +28,7 @@
                 entry.Property(x => x.MailTo).IsModified = true;
                 entry.Property(x => x.MailCcTo).IsModified = true;
                 entry.Property(x => x.MailBccTo).IsModified = true;
+                entry.Property(x => x.IsAllowAdditionalMail).IsModified = true;
             }
 
             var result = context.SaveChanges();
