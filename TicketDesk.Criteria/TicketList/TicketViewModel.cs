@@ -15,6 +15,7 @@
         public TicketCategoryTypes TicketType { get; set; }
 
         public string ShopName { get; set; }
+
         public TicketStatus Status { get; set; }
 
         public string CreatedBy { get; set; }

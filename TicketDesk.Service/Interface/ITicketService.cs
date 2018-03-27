@@ -10,6 +10,8 @@
     {
         Ticket GetTicket(int id);
 
+        TicketViewModel GetTicketById(int id);
+
         IList<TicketGroup> GetUserOpeningTicketsInGroups();
 
         bool UpdateTicketSubscription(int ticketId, string userId);

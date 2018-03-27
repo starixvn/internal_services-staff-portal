@@ -67,7 +67,13 @@
         private void UpdateReference(ReferenceCriteria reference)
         {
             var oldReference = context.References.Find(reference.Id);
-            if (IsChangedReference(oldReference, reference) && oldReference != null)
+
+            if (oldReference == null)
+            {
+                SaveReference(reference, reference.ReferenceType);
+            }
+
+            if (oldReference != null && IsChangedReference(oldReference, reference))
             {
                 oldReference.ImageLink = reference.ImageLink;
                 oldReference.DateAppear = oldReference.ReferenceType != ReferenceType.Newsletters

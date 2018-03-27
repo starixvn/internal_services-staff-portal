@@ -199,5 +199,23 @@
             }
             return result;
         }
+
+        public TicketViewModel GetTicketById(int id)
+        {
+            var ticket = GetTicket(id);
+            var shop = context.Shops.Find(ticket.ShopId);
+            return new TicketViewModel
+            {
+                Id = ticket.TicketId,
+                ShopId = ticket.ShopId,
+                ShopName = shop.ShopName,
+                Subject = ticket.Title,
+                Status = ticket.TicketStatus,
+                TicketType = (TicketCategoryTypes)ticket.CategoryId,
+                CreatedBy = ticket.CreatedBy,
+                CreatedDate = ticket.CreatedDate,
+                UpdatedDate = ticket.LastUpdateDate
+            };
+        }
     }
 }

@@ -26,7 +26,7 @@
                         Id = reference.Id,
                         ImageLink = reference.ImageLink,
                         DateAppear = reference.DateAppear,
-                        ReferenceType = reference.ReferenceType
+                        ReferenceType = Type
                     };
                     criteriaList.Add(criteria);
                 }
