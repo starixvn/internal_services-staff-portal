@@ -6,9 +6,9 @@
     using Client.Controllers;
     using Core.Enumerations;
     using Domain.Infrastructure;
-    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Localization.Client;
     using Models.Mail;
     using Service.Interface;
 
@@ -35,37 +35,46 @@
         [NapAuth(FunctionKey = FunctionKeys.MailManagement, Policy = Constant.Policy.Read)]
         public ActionResult ListMail(int categoryId)
         {
-            var ticketCategory = ticketCategoryService.GetTicketCategory(categoryId);
-            return PartialView("_ListMail", ticketCategory);
+            var viewModel = new MailListViewModel
+            {
+                SelectedTicketCategory = ticketCategoryService.GetTicketCategory(categoryId)
+            };
+
+            return PartialView("_ListMail", viewModel);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = FunctionKeys.MailManagement, Policy = Constant.Policy.Host)]
-        public ActionResult EditMailSettings(TicketCategory ticketCategory)
+        public ActionResult EditMailSettings(MailListViewModel viewModel)
         {
-            var result = false;
-
-            if (IsEmailListValid(ticketCategory.MailTo))
+            var ticketCategoryName = nameof(viewModel.SelectedTicketCategory);
+            if (!IsEmailListValid(viewModel.SelectedTicketCategory.MailTo))
             {
-                ModelState.AddModelError(nameof(ticketCategory.MailTo), "Email not valid");
+                ModelState.AddModelError(
+                    $"{ticketCategoryName}.{nameof(viewModel.SelectedTicketCategory.MailTo)}",
+                    Resources.EmailNotValid);
             }
 
-            if (IsEmailListValid(ticketCategory.MailCcTo))
+            if (!IsEmailListValid(viewModel.SelectedTicketCategory.MailCcTo))
             {
-                ModelState.AddModelError(nameof(ticketCategory.MailCcTo), "Email not valid");
+                ModelState.AddModelError(
+                    $"{ticketCategoryName}.{nameof(viewModel.SelectedTicketCategory.MailCcTo)}",
+                    Resources.EmailNotValid);
             }
 
-            if (IsEmailListValid(ticketCategory.MailBccTo))
+            if (!IsEmailListValid(viewModel.SelectedTicketCategory.MailBccTo))
             {
-                ModelState.AddModelError(nameof(ticketCategory.MailBccTo), "Email not valid");
+                ModelState.AddModelError(
+                    $"{ticketCategoryName}.{nameof(viewModel.SelectedTicketCategory.MailBccTo)}",
+                    Resources.EmailNotValid);
             }
 
             if (ModelState.IsValid)
             {
-                result = ticketCategoryService.UpdateTicketCategory(ticketCategory);
+                viewModel.IsSuccess = ticketCategoryService.UpdateTicketCategory(viewModel.SelectedTicketCategory);
             }
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return PartialView("_ListMail", viewModel);
         }
 
         private static bool IsEmailListValid(string emails)

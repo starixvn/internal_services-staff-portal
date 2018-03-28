@@ -1,50 +1,52 @@
 ﻿@using TicketDesk.Localization.Client
-@model TicketDesk.Domain.Model.TicketCategory
+@model TicketDesk.Web.Client.Areas.Admin.Models.Mail.MailListViewModel
+
+<input type="hidden" id="is-save-success" value="@Model.IsSuccess"/>
 
 @using (Html.BeginForm("EditMailSettings", "Mail", FormMethod.Post))
 {
-    @Html.HiddenFor(x => x.CategoryId)
+    @Html.HiddenFor(x => x.SelectedTicketCategory.CategoryId)
     <div class="form-group">
-        @Html.LabelFor(x => x.MailTo, new { @class = "control-label text-content" })
+        @Html.LabelFor(x => x.SelectedTicketCategory.MailTo, new { @class = "control-label text-content" })
         <div class="text-content">
-            @Html.TextBoxFor(x => x.MailTo, new { @class = "form-control tag" })
-            @Html.ValidationMessageFor(x => x.MailTo, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(x => x.SelectedTicketCategory.MailTo, new { @class = "form-control tag" })
+            @Html.ValidationMessageFor(x => x.SelectedTicketCategory.MailTo, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(x => x.MailCcTo, new { @class = "control-label text-content" })
+        @Html.LabelFor(x => x.SelectedTicketCategory.MailCcTo, new { @class = "control-label text-content" })
         <div class="text-content">
-            @Html.TextBoxFor(x => x.MailCcTo, new { @class = "form-control tag" })
-            @Html.ValidationMessageFor(x => x.MailCcTo, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(x => x.SelectedTicketCategory.MailCcTo, new { @class = "form-control tag" })
+            @Html.ValidationMessageFor(x => x.SelectedTicketCategory.MailCcTo, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(x => x.MailBccTo, new { @class = "control-label text-content" })
+        @Html.LabelFor(x => x.SelectedTicketCategory.MailBccTo, new { @class = "control-label text-content" })
         <div class="text-content">
-            @Html.TextBoxFor(x => x.MailBccTo, new { @class = "form-control tag" })
-            @Html.ValidationMessageFor(x => x.MailBccTo, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(x => x.SelectedTicketCategory.MailBccTo, new { @class = "form-control tag" })
+            @Html.ValidationMessageFor(x => x.SelectedTicketCategory.MailBccTo, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group checkbox">
-        @if (Model.IsAllowAdditionalMail)
+        @if (Model.SelectedTicketCategory.IsAllowAdditionalMail)
         {
             <input type="checkbox"
-                   id="@Html.IdFor(x => x.IsAllowAdditionalMail)"
-                   name="@Html.NameFor(x => x.IsAllowAdditionalMail)"
+                   id="@Html.IdFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)"
+                   name="@Html.NameFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)"
                    value="true"
                    checked="checked" />
         }
         else
         {
             <input type="checkbox"
-                   id="@Html.IdFor(x => x.IsAllowAdditionalMail)"
-                   name="@Html.NameFor(x => x.IsAllowAdditionalMail)"
+                   id="@Html.IdFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)"
+                   name="@Html.NameFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)"
                    value="true" />
         }
-        @Html.LabelFor(x => x.IsAllowAdditionalMail)
+        @Html.LabelFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)
     </div>
 
     <button type="submit" class="btn btn-primary">@Resources.Save</button>

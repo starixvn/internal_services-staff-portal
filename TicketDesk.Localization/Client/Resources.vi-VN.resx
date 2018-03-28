@@ -597,4 +597,7 @@
   <data name="PublishedForm" xml:space="preserve">
     <value>Đăng từ</value>
   </data>
+  <data name="EmailNotValid" xml:space="preserve">
+    <value>Email không hợp lệ</value>
+  </data>
 </root>

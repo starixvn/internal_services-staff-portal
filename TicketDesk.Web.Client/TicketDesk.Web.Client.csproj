@@ -368,6 +368,7 @@
     <Compile Include="Areas\Admin\Models\DataConfiguration\CreateCustomFieldListValueViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DataConfiguration\DataConfigurationViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DataConfiguration\ListCustomFieldListValueViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Mail\MailListViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Mail\MailViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopFilterViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopListViewModel.cs" />

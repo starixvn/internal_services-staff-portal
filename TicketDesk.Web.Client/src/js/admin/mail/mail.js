@@ -2,31 +2,15 @@
     init: function () {
         mail.filterForm();
         mail.handleSave();
-        //mail.preventInValidMail();
     },
-
-    //preventInValidMail: function () {
-    //    $("#data-list").on("beforeItemAdd",
-    //        ".tag",
-    //        function (event) {
-    //            if (!mail.checkMailFormat(event.item)) {
-    //                event.cancel = true;
-    //            }
-    //        });
-    //},
 
     initTag: function () {
         $(".tag").tagsinput({
             confirmKeys: [13, 32, 44, 188],
             trimValue: true,
-            delimiter: ";",
+            delimiter: [";", ",", " "],
             delimiterRegex: null
         });
-    },
-
-    checkMailFormat: function (email) {
-        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(String(email).toLowerCase());
     },
 
     filterForm: function () {
@@ -64,11 +48,11 @@
                     method: $(this).attr("method"),
                     data: $(this).serialize(),
                     success: function (result) {
-                        if (result === "true") {
-                            toastr.success("Mail Settings Saved");
-                            $(".filter-form form").trigger("submit");
-                        } else {
-                            toastr.error("Emails errors");
+                        $("#data-list").html(result);
+                        mail.initTag();
+                        var isSaveSuccess = $("#is-save-success").val();
+                        if (isSaveSuccess) {
+                            toastr.success("Email settings saved");
                         }
                     }
                 });
