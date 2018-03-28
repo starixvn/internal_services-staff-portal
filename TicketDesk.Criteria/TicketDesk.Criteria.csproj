@@ -84,7 +84,7 @@
     <Compile Include="FileManager\DeleteFolderCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reference\ReferenceCriteria.cs" />
-    <Compile Include="Shop\ShopFilterCrietria.cs" />
+    <Compile Include="Shop\ShopFilter.cs" />
     <Compile Include="TicketList\TicketListFilterCriteria.cs" />
     <Compile Include="TicketList\TicketViewModel.cs" />
   </ItemGroup>

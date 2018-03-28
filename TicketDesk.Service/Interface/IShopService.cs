@@ -8,7 +8,7 @@
 
     public interface IShopService
     {
-        IQueryable<Shop> GetListShop(ShopFilterCrietria criteria);
+        IQueryable<Shop> GetListShop(ShopFilter criteria);
 
         Shop GetShopById(int id);
 

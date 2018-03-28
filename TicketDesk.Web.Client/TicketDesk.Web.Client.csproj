@@ -370,7 +370,6 @@
     <Compile Include="Areas\Admin\Models\DataConfiguration\ListCustomFieldListValueViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Mail\MailListViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Mail\MailViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\ShopManagement\ShopFilterViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ShopManagement\ShopListViewModel.cs" />
     <Compile Include="Areas\Admin\Models\TicketList\TicketListFilterViewModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />

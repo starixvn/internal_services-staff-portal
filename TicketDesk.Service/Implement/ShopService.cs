@@ -23,7 +23,7 @@
             return result > 0;
         }
 
-        public IQueryable<Shop> GetListShop(ShopFilterCrietria criteria)
+        public IQueryable<Shop> GetListShop(ShopFilter criteria)
         {
             bool isActive = criteria.ActiveState == ActiveState.Yes;
             var shopList = criteria.ActiveState == ActiveState.All ? context.Shops : context.Shops.Where(s => s.IsActive == isActive);

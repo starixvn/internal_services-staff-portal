@@ -606,4 +606,64 @@
   <data name="BccEmailErrorMessage" xml:space="preserve">
     <value>Địa chỉ email không hợp lệ</value>
   </data>
+  <data name="UploadFailed" xml:space="preserve">
+    <value>Upload không thành công</value>
+  </data>
+  <data name="ToEmailErrorMessage" xml:space="preserve">
+    <value>Email không hợp lệ</value>
+  </data>
+  <data name="TicketType" xml:space="preserve">
+    <value>Loại vé</value>
+  </data>
+  <data name="TicketStatusPending" xml:space="preserve">
+    <value>Đang chờ</value>
+  </data>
+  <data name="TicketListFilterViewModel_CreateDateTo" xml:space="preserve">
+    <value>Thời gian tạo (từ)</value>
+  </data>
+  <data name="TicketListFilterViewModel_CreateDateFrom" xml:space="preserve">
+    <value>Thời gian tạo (đến)</value>
+  </data>
+  <data name="TicketList" xml:space="preserve">
+    <value>Danh sách vé</value>
+  </data>
+  <data name="TicketDetails" xml:space="preserve">
+    <value>Chi tiết vé</value>
+  </data>
+  <data name="TableNoData" xml:space="preserve">
+    <value>Không có dữ liệu</value>
+  </data>
+  <data name="ShopManagement" xml:space="preserve">
+    <value>Quản lý shop</value>
+  </data>
+  <data name="ShopDescription" xml:space="preserve">
+    <value>Mô tả shop</value>
+  </data>
+  <data name="PublishDate" xml:space="preserve">
+    <value>Ngày công bố</value>
+  </data>
+  <data name="PublishAnnouncementError" xml:space="preserve">
+    <value>Công bố thông báo bị lỗi</value>
+  </data>
+  <data name="NoPermissionForTicketType" xml:space="preserve">
+    <value>Bạn không có quyền thay đổi trạng thái cho loại vé này</value>
+  </data>
+  <data name="MailTo" xml:space="preserve">
+    <value>Đến</value>
+  </data>
+  <data name="EditAnnouncementError" xml:space="preserve">
+    <value>Chỉnh sửa thông báo bị lỗi</value>
+  </data>
+  <data name="DeleteAnnouncementError" xml:space="preserve">
+    <value>Xoá thông báo bị lỗi</value>
+  </data>
+  <data name="CreateItemError" xml:space="preserve">
+    <value>Tạo item bị lỗi</value>
+  </data>
+  <data name="CreateAnnouncementError" xml:space="preserve">
+    <value>Tạo thông báo bị lỗi</value>
+  </data>
+  <data name="BackToTicketList" xml:space="preserve">
+    <value>Trờ lại danh sách vé</value>
+  </data>
 </root>

@@ -663,4 +663,7 @@
   <data name="BccEmailErrorMessage" xml:space="preserve">
     <value>The Bcc Email is not valid</value>
   </data>
+  <data name="ShopManagement" xml:space="preserve">
+    <value>Shop Management</value>
+  </data>
 </root>
