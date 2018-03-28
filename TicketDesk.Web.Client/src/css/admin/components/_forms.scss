@@ -161,12 +161,12 @@
     border-color: #66afe9;
 }
 
-.select2-container--open .select2-dropdown--below, 
+.select2-container--open .select2-dropdown--below,
 .select2-container--open .select2-dropdown--above {
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.45);
 }
 
-.select2-container--default .select2-results>.select2-results__options {
+.select2-container--default .select2-results > .select2-results__options {
     max-height: 210px;
 }
 
@@ -265,7 +265,7 @@
                 position: relative;
                 content: "\e90d";
                 font-size: 18px;
-                color: #838282;                
+                color: #838282;
                 top: 2px;
                 left: 10px;
             }
@@ -287,8 +287,30 @@
 
 // ------------- jQuery Tag Editor ------------------- //
 .tag-editor {
+    font-family: inherit;
+    min-height: 30px;
+
     .tag-editor-tag {
+        padding: 1px 6px;
+        font-size: 13px;
         background: #e5e5e5;
         border-radius: 40px;
+        color: #333;
+    }
+
+    .tag-editor-delete {
+        background: transparent;
+        border-radius: 50%;
+        line-height: 1;
+
+        i:before {
+            font-family: 'icomoon' !important;
+            position: relative;
+            content: "\e90d";
+            font-size: 18px;
+            color: #838282;
+            top: 2px;
+            //left: 0;
+        }
     }
 }

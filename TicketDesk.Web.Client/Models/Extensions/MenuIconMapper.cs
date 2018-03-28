@@ -34,7 +34,7 @@
             { "/Admin/Shop", "icon-shop" },
             { "/Admin/DataConfiguration", "icon-data" },
             { "/Admin/TicketList", "icon-ticketlist" },
-            { "/Admin/Mail", "icon-email" },
+            { "/Admin/Mail", "icon-mail" },
             { "/admin/custom-field-settings", "icon-admin-customfieldsettings" },
             { "/file-manager", "icon-filemanager" }
         };
