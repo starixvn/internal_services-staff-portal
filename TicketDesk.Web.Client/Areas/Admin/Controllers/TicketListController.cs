@@ -65,17 +65,23 @@
 
                 return Json(new { isSuccessful, message }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { message = Resources.NoPermissionForTicketType });
+            return Json(new { isSuccessful = false, message = Resources.NoPermissionForTicketType }, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = FunctionKeys.TicketList, Policy = Constant.Policy.Read)]
         public ActionResult TicketDetails(int ticketId)
         {
             var ticket = ticketService.GetTicket(ticketId);
-
+            var shopName = string.Empty;
+            if (ticket != null)
+            {
+                var shop = shopService.GetShopById(ticket.ShopId);
+                shopName = shop.ShopName;
+            }
             var singleTicketViewModel = new SingleTicketViewModel
             {
                 Ticket = ticket,
+                ShopName = shopName,
                 CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket),
                 Attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(CultureInfo.InvariantCulture), false)
             };

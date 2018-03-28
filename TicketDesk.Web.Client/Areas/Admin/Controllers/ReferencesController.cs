@@ -30,12 +30,12 @@
         private readonly int limitHeight = 400;
         private readonly int limitWidth = 600;
 
-        private readonly IReferenceService _referenceService;
+        private readonly IReferenceService referenceService;
 
         public ReferencesController(IReferenceService referenceService)
         {
             webRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, webPath);
-            _referenceService = referenceService;
+            this.referenceService = referenceService;
 
             if (!Directory.Exists(webRootPath))
             {
@@ -114,7 +114,7 @@
         private void HandleListReferenceUploaded(ReferencesViewModel viewModel)
         {
             var criteriaList = viewModel.GetQueryCriteria();
-            _referenceService.UploadReferences(viewModel.Type, criteriaList);
+            referenceService.UploadReferences(viewModel.Type, criteriaList);
         }
 
         private ReferencesViewModel GetListReferenceViewModel(ReferenceType referenceType)
@@ -122,7 +122,7 @@
             var viewModel = new ReferencesViewModel
             {
                 IsHostPermission = IsHaveHostPermission(FunctionKeys.References, Constant.Policy.Host),
-                References = _referenceService.GetListReference(referenceType).ToList(),
+                References = referenceService.GetListReference(referenceType).ToList(),
                 Type = referenceType
             };
 

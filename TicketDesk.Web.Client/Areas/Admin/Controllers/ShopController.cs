@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
+    using System;
     using System.Linq;
     using System.Web.Mvc;
     using Client.Controllers;
@@ -7,6 +8,7 @@
     using Core.Resources;
     using Criteria.Shop;
     using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Models.ShopManagement;
@@ -59,25 +61,28 @@
         [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Host)]
         public ActionResult Create()
         {
-            var viewModel = new ShopViewModel();
-            return PartialView("_Create", viewModel);
+            var model = new Shop();
+            return PartialView("_Create", model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateOnlyIncomingValues]
         [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Host)]
-        public ActionResult Create(ShopViewModel viewModel)
+        public ActionResult Create(Shop model)
         {
             bool isSuccessful = false;
             string message = string.Empty;
-            if (shopService.CheckExistShopName(viewModel.ShopName))
+            if (shopService.CheckExistShopName(model.ShopName))
             {
                 ModelState.AddModelError("ShopName", Messages.ShopExist);
             }
 
             if (ModelState.IsValid)
             {
-                isSuccessful = shopService.CreateNewShop(viewModel.GetCriteria());
+                model.LastUpdatedBy = CurrentSession.Username;
+                model.LastUpdatedDate = DateTime.Now;
+                isSuccessful = shopService.CreateNewShop(model);
                 message = isSuccessful ? Messages.CreateShopSuccess : Messages.Error;
             }
 
@@ -94,18 +99,7 @@
             var shop = shopService.GetShopById(id);
             if (shop != null)
             {
-                var viewModel = new ShopViewModel
-                {
-                    ShopId = shop.ShopId,
-                    ShopName = shop.ShopName,
-                    ShopCode = shop.ShopCode,
-                    ContactName = shop.ContactName,
-                    ContactNumber = shop.ContactNumber,
-                    Email = shop.Email,
-                    Address = shop.Address,
-                    IsActive = shop.IsActive
-                };
-                return PartialView("_Edit", viewModel);
+                return PartialView("_Edit", shop);
             }
 
             return HttpNotFound();
@@ -113,21 +107,22 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateOnlyIncomingValues]
         [NapAuth(FunctionKey = FunctionKeys.ShopManagement, Policy = Constant.Policy.Host)]
-        public ActionResult Edit(int id, ShopViewModel viewModel)
+        public ActionResult Edit(int id, Shop model)
         {
             bool isSuccessful = false;
             string message = string.Empty;
             var shop = shopService.GetShopById(id);
 
-            if (shop != null && shop.ShopName != viewModel.ShopName && shopService.CheckExistShopName(viewModel.ShopName))
+            if (shop != null && shop.ShopName != model.ShopName && shopService.CheckExistShopName(model.ShopName))
             {
                 ModelState.AddModelError("ShopName", Messages.ShopExist);
             }
 
             if (ModelState.IsValid)
             {
-                isSuccessful = shopService.UpdateShop(id, viewModel.GetCriteria());
+                isSuccessful = shopService.UpdateShop(id, model);
                 message = isSuccessful ? Messages.UpdateShopSuccess : Messages.Error;
             }
 

@@ -12,9 +12,9 @@
 
         Shop GetShopById(int id);
 
-        bool CreateNewShop(ShopCriteria criteria);
+        bool CreateNewShop(Shop shop);
 
-        bool UpdateShop(int id, ShopCriteria criteria);
+        bool UpdateShop(int id, Shop shop);
 
         bool CheckExistShopName(string shopName);
 

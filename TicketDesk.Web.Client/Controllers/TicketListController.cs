@@ -11,11 +11,13 @@
     {
         private readonly ITicketService ticketService;
         private readonly ICustomFieldService customFieldService;
+        private readonly IShopService shopService;
 
-        public TicketListController(ITicketService ticketService, ICustomFieldService customFieldService)
+        public TicketListController(ITicketService ticketService, ICustomFieldService customFieldService, IShopService shopService)
         {
             this.ticketService = ticketService;
             this.customFieldService = customFieldService;
+            this.shopService = shopService;
         }
 
         public ActionResult Index(TicketListViewModel viewModel)
@@ -35,10 +37,17 @@
         public ActionResult TicketDetails(int ticketId)
         {
             var ticket = ticketService.GetTicket(ticketId);
+            var shopName = string.Empty;
+            if (ticket != null)
+            {
+                var shop = shopService.GetShopById(ticket.ShopId);
+                shopName = shop.ShopName;
+            }
 
             var singleTicketViewModel = new SingleTicketViewModel
             {
                 Ticket = ticket,
+                ShopName = shopName,
                 CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket),
                 Attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(CultureInfo.InvariantCulture), false)
             };

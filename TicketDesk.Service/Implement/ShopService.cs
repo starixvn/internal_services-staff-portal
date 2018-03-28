@@ -16,22 +16,9 @@
             return context.Shops.Any(x => x.ShopName == shopName);
         }
 
-        public bool CreateNewShop(ShopCriteria criteria)
+        public bool CreateNewShop(Shop shop)
         {
-            var newShop = new Shop
-            {
-                ShopName = criteria.ShopName,
-                ShopCode = criteria.ShopCode,
-                ContactName = criteria.ContactName,
-                ContactNumber = criteria.ContactNumber,
-                Email = criteria.Email,
-                Address = criteria.Address,
-                IsActive = criteria.IsActive,
-                LastUpdatedBy = context.SecurityProvider.NapContextHelper.CurrentSession.Username,
-                LastUpdatedDate = DateTime.Now
-            };
-
-            context.Shops.Add(newShop);
+            context.Shops.Add(shop);
             var result = context.SaveChanges();
             return result > 0;
         }
@@ -64,19 +51,19 @@
             return context.Shops.Where(s => s.ShopName.Contains(shopName)).Select(x => new { x.ShopId, x.ShopName }).Take(10);
         }
 
-        public bool UpdateShop(int id, ShopCriteria criteria)
+        public bool UpdateShop(int id, Shop model)
         {
             bool result = false;
             var shop = context.Shops.Find(id);
             if (shop != null)
             {
-                shop.ShopName = criteria.ShopName;
-                shop.ShopCode = criteria.ShopCode;
-                shop.ContactName = criteria.ContactName;
-                shop.ContactNumber = criteria.ContactNumber;
-                shop.Email = criteria.Email;
-                shop.Address = criteria.Address;
-                shop.IsActive = criteria.IsActive;
+                shop.ShopName = model.ShopName;
+                shop.ShopCode = model.ShopCode;
+                shop.ContactName = model.ContactName;
+                shop.ContactNumber = model.ContactNumber;
+                shop.Email = model.Email;
+                shop.Address = model.Address;
+                shop.IsActive = model.IsActive;
                 shop.LastUpdatedBy = CurrentUsername;
                 shop.LastUpdatedDate = DateTime.Now;
                 result = context.SaveChanges() > 0;
