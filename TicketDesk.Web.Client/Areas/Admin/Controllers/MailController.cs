@@ -1,7 +1,5 @@
 ﻿namespace TicketDesk.Web.Client.Areas.Admin.Controllers
 {
-    using System.Linq;
-    using System.Text.RegularExpressions;
     using System.Web.Mvc;
     using Client.Controllers;
     using Core.Enumerations;
@@ -15,10 +13,12 @@
     public class MailController : BaseController
     {
         private readonly ITicketCategoryService ticketCategoryService;
+        private readonly IMailService mailService;
 
-        public MailController(ITicketCategoryService ticketCategoryService)
+        public MailController(ITicketCategoryService ticketCategoryService, IMailService mailService)
         {
             this.ticketCategoryService = ticketCategoryService;
+            this.mailService = mailService;
         }
 
         [NapAuth(FunctionKey = FunctionKeys.MailManagement, Policy = Constant.Policy.Read)]
@@ -51,21 +51,21 @@
             viewModel.IsHaveHostPermission = IsHavePermission(FunctionKeys.MailManagement, Constant.Policy.Host);
 
             var ticketCategoryName = nameof(viewModel.SelectedTicketCategory);
-            if (!IsEmailListValid(viewModel.SelectedTicketCategory.MailTo))
+            if (!mailService.IsEmailListValid(viewModel.SelectedTicketCategory.MailTo))
             {
                 ModelState.AddModelError(
                     $"{ticketCategoryName}.{nameof(viewModel.SelectedTicketCategory.MailTo)}",
                     Resources.ToEmailErrorMessage);
             }
 
-            if (!IsEmailListValid(viewModel.SelectedTicketCategory.MailCcTo))
+            if (!mailService.IsEmailListValid(viewModel.SelectedTicketCategory.MailCcTo))
             {
                 ModelState.AddModelError(
                     $"{ticketCategoryName}.{nameof(viewModel.SelectedTicketCategory.MailCcTo)}",
                     Resources.CcEmailErrorMessage);
             }
 
-            if (!IsEmailListValid(viewModel.SelectedTicketCategory.MailBccTo))
+            if (!mailService.IsEmailListValid(viewModel.SelectedTicketCategory.MailBccTo))
             {
                 ModelState.AddModelError(
                     $"{ticketCategoryName}.{nameof(viewModel.SelectedTicketCategory.MailBccTo)}",
@@ -78,28 +78,6 @@
             }
 
             return PartialView("_ListMail", viewModel);
-        }
-
-        private static bool IsEmailListValid(string emails)
-        {
-            var result = true;
-
-            if (!string.IsNullOrEmpty(emails))
-            {
-                var emailStrings = emails.Split(',', ' ', ';');
-
-                if (emailStrings.Any(emailString => !IsEmailValid(emailString.Trim())))
-                {
-                    result = false;
-                }
-            }
-
-            return result;
-        }
-
-        private static bool IsEmailValid(string email)
-        {
-            return Regex.IsMatch(email, @"^[^\s@]+@[^\s@]+\.[^\s@]+$");
         }
     }
 }

@@ -107,6 +107,13 @@
         {
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
 
+            if (!mailService.IsEmailListValid(viewModel.Ticket.AdditionalMail))
+            {
+                ModelState.AddModelError(
+                    $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
+                    Resources.ToEmailErrorMessage);
+            }
+
             if (ModelState.IsValid)
             {
                 ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);

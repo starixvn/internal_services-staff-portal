@@ -2,6 +2,8 @@
 {
     using System.Configuration;
     using System.IO;
+    using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -101,6 +103,28 @@
             {
                 Send(mailRecord);
             }
+        }
+
+        public bool IsEmailListValid(string emails)
+        {
+            var result = true;
+
+            if (!string.IsNullOrEmpty(emails))
+            {
+                var emailStrings = emails.Split(',', ' ', ';');
+
+                if (emailStrings.Any(emailString => !IsEmailValid(emailString.Trim())))
+                {
+                    result = false;
+                }
+            }
+
+            return result;
+        }
+
+        public bool IsEmailValid(string email)
+        {
+            return Regex.IsMatch(email, @"^[^\s@]+@[^\s@]+\.[^\s@]+$");
         }
     }
 }

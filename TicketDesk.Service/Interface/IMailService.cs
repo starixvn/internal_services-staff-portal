@@ -10,5 +10,9 @@
         MailRecord ComposeMail(Ticket ticket);
 
         void ComposeAndSendMail(Ticket ticket);
+
+        bool IsEmailListValid(string emails);
+
+        bool IsEmailValid(string email);
     }
 }
