@@ -34,12 +34,7 @@
             { "/Admin/Shop", "icon-shop" },
             { "/Admin/DataConfiguration", "icon-data" },
             { "/Admin/TicketList", "icon-ticketlist" },
-            { "/Admin/Mail", "icon-data" },
-            { "/admin/application-settings", "icon-admin-appsettings" },
-            { "/admin/projects", "icon-admin-shop" },
-            { "/admin/push-notification-settings", "icon-admin-notificationsettings" },
-            { "/admin/data-management/demo", "icon-admin-datademo" },
-            { "/admin/search-manager", "icon-admin-searchmanager" },
+            { "/Admin/Mail", "icon-email" },
             { "/admin/custom-field-settings", "icon-admin-customfieldsettings" },
             { "/file-manager", "icon-filemanager" }
         };
