@@ -13,5 +13,7 @@
 
         [Display(Name = "Active")]
         public ActiveState ActiveState { get; set; }
+
+        public bool IsHostPermission { get; set; }
     }
 }

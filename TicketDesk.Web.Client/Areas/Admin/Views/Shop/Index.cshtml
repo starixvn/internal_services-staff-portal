@@ -1,67 +1,68 @@
 ﻿@using System.Web.Optimization
 @using TicketDesk.Localization.Client
-@model TicketDesk.Web.Client.Areas.Admin.Models.ShopManagement.ShopFilterViewModel
+@using TicketDesk.Criteria.Shop
+    @model ShopFilterCrietria
 
-@{
-    ViewBag.Title = "Shop Management";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-}
+        @{
+            ViewBag.Title = "Shop Management";
+            Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+        }
 
-@section css
+        @section css
 {
-    @Styles.Render("~/content/shop-management")
-}
+            @Styles.Render("~/content/shop-management")
+        }
 
-@section scripts
+        @section scripts
 {
-    @Scripts.Render("~/bundles/shop-management")
-}
+            @Scripts.Render("~/bundles/shop-management")
+        }
 
-<h2 class="page-title">@ViewBag.Title</h2>
+        <h2 class="page-title">@ViewBag.Title</h2>
 
-<section class="filter-form">
-    @using (Html.BeginForm("GetListShop", "Shop", FormMethod.Post, new { @class = "filter-row", id = "filterForm" }))
-    {
-        <div class="text-field">
-            @Html.LabelFor(x => x.ShopName)
-            <div class="text-field">
-                @Html.TextBoxFor(x => x.ShopName, new { @class = "form-control", data_href = Url.Action("GetShopSuggestion", "Shop") })
-                @Html.HiddenFor(x => x.ShopId, new { @class = "form-control" })
+        <section class="filter-form">
+            @using (Html.BeginForm("GetListShop", "Shop", FormMethod.Post, new { @class = "filter-row", id = "filterForm" }))
+            {
+                <div class="text-field">
+                    @Html.LabelFor(x => x.ShopName)
+                    <div class="text-field">
+                        @Html.TextBoxFor(x => x.ShopName, new { @class = "form-control", data_href = Url.Action("GetShopSuggestion", "Shop") })
+                        @Html.HiddenFor(x => x.ShopId, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="dropdown-small">
+                    @Html.LabelFor(x => x.ActiveState)
+                    @Html.EnumDropDownListFor(x => x.ActiveState, new { @class = "form-control" })
+                </div>
+
+                <div class="button-filter">
+                    <button type="submit" class="btn btn-submit">@Resources.Views_Announcement_Submit</button>
+                </div>
+            }
+        </section>
+
+        @if (Model.IsHostPermission)
+        {
+            <div class="table-actions">
+                <a class="btn btn-create create" data-href="@Url.Action("Create", "Shop")"><span class="icon-add"></span>@Resources.CreateNewShop</a>
+            </div>
+        }
+
+        <section class="table" id="shopList"></section>
+
+        <!-- Create New Item -->
+        <div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" id="createModal">
+            <div class="modal-dialog small-modal" role="document">
+                <div class="modal-content -has-title" id="createModalContent">
+                </div>
             </div>
         </div>
 
-            <div class="dropdown-small">
-                @Html.LabelFor(x => x.ActiveState)
-                @Html.EnumDropDownListFor(x => x.ActiveState, new { @class = "form-control" })
+        <!-- Edit Item -->
+        <div class="modal fade" role="dialog" aria-labelledby="modalUpdateLabel" data-backdrop="static" id="editModal">
+            <div class="modal-dialog small-modal" role="document">
+                <div class="modal-content -has-title" id="editModalContent">
+                </div>
             </div>
-
-            <div class="button-filter">
-                <button type="submit" class="btn btn-submit">@Resources.Views_Announcement_Submit</button>
-            </div>
-    }
-</section>
-
-@if (Model.IsHostPermission)
-{
-    <div class="table-actions">
-        <a class="btn btn-create create" data-href="@Url.Action("Create", "Shop")"><span class="icon-add"></span>@Resources.CreateNewShop</a>
-    </div>
-}
-
-<section class="table" id="shopList"></section>
-
-<!-- Create New Item -->
-<div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" id="createModal">
-    <div class="modal-dialog small-modal" role="document">
-        <div class="modal-content -has-title" id="createModalContent">
         </div>
-    </div>
-</div>
-
-<!-- Edit Item -->
-<div class="modal fade" role="dialog" aria-labelledby="modalUpdateLabel" data-backdrop="static" id="editModal">
-    <div class="modal-dialog small-modal" role="document">
-        <div class="modal-content -has-title" id="editModalContent">
-        </div>
-    </div>
-</div>

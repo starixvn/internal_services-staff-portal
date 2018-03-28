@@ -26,7 +26,7 @@
 
         public ActionResult Index()
         {
-            var viewModel = new ShopFilterViewModel
+            var viewModel = new ShopFilterCrietria
             {
                 ActiveState = ActiveState.All,
                 IsHostPermission = IsHavePermission(FunctionKeys.ShopManagement, Constant.Policy.Host)
@@ -35,19 +35,12 @@
         }
 
         [HttpPost]
-        public ActionResult GetListShop(ShopFilterViewModel model)
+        public ActionResult GetListShop(ShopFilterCrietria model)
         {
-            var criteria = new ShopFilterCrietria
-            {
-                ShopId = model.ShopId,
-                ShopName = model.ShopName,
-                ActiveState = model.ActiveState
-            };
-
             var viewModel = new ShopListViewModel
             {
                 IsHostPermission = IsHavePermission(FunctionKeys.ShopManagement, Constant.Policy.Host),
-                Shops = shopService.GetListShop(criteria).ToList()
+                Shops = shopService.GetListShop(model).ToList()
             };
             return PartialView("_ListShop", viewModel);
         }
