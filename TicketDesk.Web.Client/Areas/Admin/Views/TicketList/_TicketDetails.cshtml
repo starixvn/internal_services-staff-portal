@@ -1,5 +1,4 @@
-﻿@using TicketDesk.Domain.Extensions
-@using TicketDesk.Localization.Client
+﻿@using TicketDesk.Localization.Client
 @using TicketDesk.Core.Enumerations
 @using TicketDesk.Localization.Views.Ticket
 @using TicketDesk.Domain.Model
@@ -33,20 +32,41 @@
         <span class="item-content">@Model.Ticket.CreatedDate</span>
     </div>
 
-    @foreach (var customFieldValue in Model.CustomFieldValues)
-            {
-        <div class="detail-item">
-            <span class="item-title">@customFieldValue.CustomField.Name: </span>
+    @{
+        var nonGroupCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId == null);
+        foreach (var customFieldValue in nonGroupCustomFieldValues)
+        {
+            <div class="detail-item">
+                <span class="item-title">@customFieldValue.CustomField.Name: </span>
 
-            @if (string.IsNullOrEmpty(customFieldValue.Value))
+                @if (string.IsNullOrEmpty(customFieldValue.Value))
                 {
-                <span class="item-content">[NO VALUES]</span>
-            }
-            else
-            {
-                <span class="item-content">@customFieldValue.Value</span>
-            }
-        </div>
+                    <span class="item-content">[NO VALUES]</span>
+                }
+                else
+                {
+                    <span class="item-content">@customFieldValue.Value</span>
+                }
+            </div>
+        }
+    }
+
+    @{
+        var groupedCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId != null).GroupBy(x => x.GroupId);
+        foreach (IGrouping<string, CustomFieldValue> group in groupedCustomFieldValues)
+        {
+            var customFieldValues = group.ToList();
+            <div>
+                <div class="content-block">
+                    <ul>
+                        @foreach (var customFieldValue in customFieldValues)
+                        {
+                            <li><strong>@customFieldValue.CustomField.Name: </strong><span>@customFieldValue.Value</span></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
     }
 
     <div class="detail-item">
