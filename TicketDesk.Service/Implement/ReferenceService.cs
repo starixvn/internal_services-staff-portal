@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Core.Enumerations;
-    using Criteria.Reference;
     using Domain.Model;
     using Interface;
 
@@ -20,7 +19,7 @@
             return references;
         }
 
-        public void UploadReferences(ReferenceType referenceType, IEnumerable<ReferenceCriteria> references)
+        public void UploadReferences(ReferenceType referenceType, IList<Reference> references)
         {
             if (references == null || !references.Any())
             {
@@ -28,65 +27,52 @@
             }
             else
             {
-                RemoveOldReferences(referenceType, references);
+                var originReferences = GetListReference(referenceType);
+                var removedReferences = originReferences.Where(r => !references.Any(x => x.Id == r.Id) && r.Id > 0);
+                var editReferences = references.Where(r => originReferences.Any(x => x.Id == r.Id));
+                var newReferences = references.Where(r => !originReferences.Any(x => x.Id == r.Id));
 
-                UpdateAndSaveReferences(references);
+                RemoveReferences(removedReferences);
+                UpdateReference(editReferences);
+                AddNewReferences(newReferences);
             }
-        }
-
-        private void UpdateAndSaveReferences(IEnumerable<ReferenceCriteria> references)
-        {
-            foreach (ReferenceCriteria reference in references)
-            {
-                if (reference.Id == 0 || IsNotExistReference(reference.Id))
-                {
-                    SaveReference(reference);
-                }
-                else
-                {
-                    UpdateReference(reference);
-                }
-            }
-        }
-
-        private bool IsNotExistReference(int id)
-        {
-            return context.References.Find(id) == null;
-        }
-
-        private void SaveReference(ReferenceCriteria reference)
-        {
-            var data = new Reference
-            {
-                DateAppear = reference.ReferenceType != ReferenceType.Newsletters ? reference.DateAppear : DateTime.Now,
-                ImageLink = reference.ImageLink,
-                ReferenceType = reference.ReferenceType,
-                LastUpdateBy = CurrentUsername,
-                LastUpdateDate = DateTime.Now
-            };
-
-            context.References.Add(data);
             context.SaveChanges();
         }
 
-        private void UpdateReference(ReferenceCriteria reference)
+        private void RemoveReferences(IEnumerable<Reference> removedReferences)
         {
-            var oldReference = context.References.Find(reference.Id);
-
-            if (oldReference != null && IsChangedReference(oldReference, reference))
-            {
-                oldReference.ImageLink = reference.ImageLink;
-                oldReference.DateAppear = oldReference.ReferenceType != ReferenceType.Newsletters
-                                            ? reference.DateAppear
-                                            : DateTime.Now;
-                oldReference.LastUpdateDate = DateTime.Now;
-                oldReference.LastUpdateBy = CurrentUsername;
-            }
-
-            context.SaveChanges();
+            context.References.RemoveRange(removedReferences);
         }
 
-        private static bool IsChangedReference(Reference oldReference, ReferenceCriteria newReference)
+        private void AddNewReferences(IEnumerable<Reference> newReferences)
+        {
+            foreach (Reference reference in newReferences)
+            {
+                reference.LastUpdateBy = CurrentUsername;
+                reference.LastUpdateDate = DateTime.Now;
+            }
+            context.References.AddRange(newReferences);
+        }
+
+        private void UpdateReference(IEnumerable<Reference> references)
+        {
+            foreach (var reference in references)
+            {
+                var oldReference = context.References.Find(reference.Id);
+
+                if (oldReference != null && IsChangedReference(oldReference, reference))
+                {
+                    oldReference.ImageLink = reference.ImageLink;
+                    oldReference.DateAppear = oldReference.ReferenceType != ReferenceType.Newsletters
+                                                ? reference.DateAppear
+                                                : DateTime.Now;
+                    oldReference.LastUpdateDate = DateTime.Now;
+                    oldReference.LastUpdateBy = CurrentUsername;
+                }
+            }
+        }
+
+        private static bool IsChangedReference(Reference oldReference, Reference newReference)
         {
             bool isHaveChanged = oldReference.ReferenceType != ReferenceType.Newsletters
                 && (DateTime.Compare(oldReference.DateAppear.Date, newReference.DateAppear.Date) != 0
@@ -105,18 +91,6 @@
         {
             var references = GetListReference(referenceType);
             context.References.RemoveRange(references);
-            context.SaveChanges();
-        }
-
-        private void RemoveOldReferences(ReferenceType referenceType, IEnumerable<ReferenceCriteria> references)
-        {
-            if (references.Any(r => r.Id > 0))
-            {
-                var originReferences = GetListReference(referenceType);
-                var removedReferences = originReferences.Where(r => !references.Any(x => x.Id == r.Id));
-                context.References.RemoveRange(removedReferences);
-                context.SaveChanges();
-            }
         }
 
         public Reference GetRelevantReference(ReferenceType referenceType)

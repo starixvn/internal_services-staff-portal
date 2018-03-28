@@ -102,7 +102,7 @@
                 tickets = tickets.Where(x => x.TicketType == ticketType);
             }
 
-            return tickets.OrderByDescending(x => x.UpdatedDate).ToList();
+            return tickets.OrderByDescending(x => x.Id).ToList();
         }
 
         public IList<TicketViewModel> GetTicketByFilter(TicketListFilterCriteria criteria)

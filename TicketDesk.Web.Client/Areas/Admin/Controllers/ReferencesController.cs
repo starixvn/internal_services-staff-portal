@@ -118,8 +118,7 @@
 
         private void HandleListReferenceUploaded(ReferencesViewModel viewModel)
         {
-            var criteriaList = viewModel.GetQueryCriteria();
-            referenceService.UploadReferences(viewModel.Type, criteriaList);
+            referenceService.UploadReferences(viewModel.Type, viewModel.References);
         }
 
         private ReferencesViewModel GetListReferenceViewModel(ReferenceType referenceType)
