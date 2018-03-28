@@ -666,4 +666,7 @@
   <data name="ShopManagement" xml:space="preserve">
     <value>Shop Management</value>
   </data>
+  <data name="NewShop" xml:space="preserve">
+    <value>New Shop</value>
+  </data>
 </root>

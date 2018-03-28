@@ -853,6 +853,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Shop.
+        /// </summary>
+        public static string NewShop {
+            get {
+                return ResourceManager.GetString("NewShop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You don&apos;t have permission to change  status this ticket type.
         /// </summary>
         public static string NoPermissionForTicketType {

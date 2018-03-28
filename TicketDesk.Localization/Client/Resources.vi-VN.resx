@@ -666,4 +666,7 @@
   <data name="BackToTicketList" xml:space="preserve">
     <value>Trờ lại danh sách vé</value>
   </data>
+  <data name="NewShop" xml:space="preserve">
+    <value>Tạo shop mới</value>
+  </data>
 </root>
