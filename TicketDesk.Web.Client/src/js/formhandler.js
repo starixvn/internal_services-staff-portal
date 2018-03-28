@@ -26,7 +26,7 @@ var formhandler = {
     initDateTimePicker: function () {
         if ($.fn.datetimepicker) {
             $(".datetimepicker").datetimepicker({
-                format: "DD/MM/YYYY hh:mm",
+                format: "DD/MM/YYYY hh:mm:A",
                 useCurrent: false,
                 maxDate: moment().endOf('d'),
                 sideBySide: true
