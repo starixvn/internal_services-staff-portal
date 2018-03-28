@@ -235,56 +235,6 @@
     }
 }
 
-// --------------  Bootstrap Tagsinput --------------- //
-.bootstrap-tagsinput {
-    width: 100%;
-    padding: 2px 6px;
-    box-shadow: none;
-    border-color: #b7b7b7;
-    border-radius: 2px;
-
-    input {
-        padding: 0;
-    }
-
-    .tag {
-        position: relative;
-        margin-right: 30px;
-        padding: 1px 7px;
-        border-radius: 40px;
-        font-size: 13px;
-        font-weight: normal;
-        color: #333;
-
-        > [data-role="remove"] {
-            position: absolute;
-            font-family: 'icomoon' !important;
-            margin: 0;
-
-            &:after {
-                position: relative;
-                content: "\e90d";
-                font-size: 18px;
-                color: #838282;
-                top: 2px;
-                left: 10px;
-            }
-
-            &:hover, &:active, &:focus, &:hover:active {
-                box-shadow: none;
-            }
-
-            &:hover:after {
-                color: #bf141a;
-            }
-        }
-    }
-
-    .label-info {
-        background: #e5e5e5;
-    }
-}
-
 // ------------- jQuery Tag Editor ------------------- //
 .tag-editor {
     font-family: inherit;

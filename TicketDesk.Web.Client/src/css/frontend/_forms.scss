@@ -615,3 +615,49 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {
     padding: 5px 11px;
 }
+
+// ------------- jQuery Tag Editor ------------------- //
+.tag-editor {
+    font-family: inherit;
+    min-height: 40px;
+
+    li {
+        margin-top: 7px;
+    }
+
+    .tag-editor-tag {
+        //border: 1px solid #d3d7db;
+        border-radius: 28px;
+        font-size: 15px;
+        padding: 3px 6px;
+        color: #2e4592;
+        background-color: #d5d5d5;
+    }
+
+    input[type="text"] {
+        display: inline-block;
+        width: auto;
+        height: 20px !important;
+        border: 0 !important;
+        padding: 0 !important;
+        font-size: 15px;
+        margin: 0;
+    }
+
+    .tag-editor-delete {
+        background: transparent;
+        border-radius: 50%;
+        line-height: 1;
+        padding-right: 6px;
+
+        i:before {
+            font-family: 'icomoon' !important;
+            position: relative;
+            content: "\e90d";
+            font-size: 24px;
+            color: #838282;
+            top: 5px;
+            left: 2px;
+        }
+    }
+}

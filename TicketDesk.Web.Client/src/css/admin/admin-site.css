@@ -1239,40 +1239,6 @@ table.dataTable {
     transform: scale(0);
     transition: .2s; }
 
-.bootstrap-tagsinput {
-  width: 100%;
-  padding: 2px 6px;
-  box-shadow: none;
-  border-color: #b7b7b7;
-  border-radius: 2px; }
-  .bootstrap-tagsinput input {
-    padding: 0; }
-  .bootstrap-tagsinput .tag {
-    position: relative;
-    margin-right: 30px;
-    padding: 1px 7px;
-    border-radius: 40px;
-    font-size: 13px;
-    font-weight: normal;
-    color: #333; }
-    .bootstrap-tagsinput .tag > [data-role="remove"] {
-      position: absolute;
-      font-family: 'icomoon' !important;
-      margin: 0; }
-      .bootstrap-tagsinput .tag > [data-role="remove"]:after {
-        position: relative;
-        content: "\e90d";
-        font-size: 18px;
-        color: #838282;
-        top: 2px;
-        left: 10px; }
-      .bootstrap-tagsinput .tag > [data-role="remove"]:hover, .bootstrap-tagsinput .tag > [data-role="remove"]:active, .bootstrap-tagsinput .tag > [data-role="remove"]:focus, .bootstrap-tagsinput .tag > [data-role="remove"]:hover:active {
-        box-shadow: none; }
-      .bootstrap-tagsinput .tag > [data-role="remove"]:hover:after {
-        color: #bf141a; }
-  .bootstrap-tagsinput .label-info {
-    background: #e5e5e5; }
-
 .tag-editor {
   font-family: inherit;
   min-height: 30px; }
