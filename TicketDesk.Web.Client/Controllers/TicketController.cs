@@ -3,7 +3,6 @@
     using System;
     using System.Globalization;
     using System.Linq;
-    using System.Net;
     using System.Web.Mvc;
     using Core.Enumerations;
     using Domain.Infrastructure;
@@ -107,6 +106,7 @@
         {
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
 
+            var result = false;
             if (!mailService.IsEmailListValid(viewModel.Ticket.AdditionalMail))
             {
                 ModelState.AddModelError(
@@ -116,17 +116,28 @@
 
             if (ModelState.IsValid)
             {
-                ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
+                result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
 
-                customFieldService.AddCustomFieldValues(
-                    viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                if (result)
+                {
+                    result = customFieldService.AddCustomFieldValues(
+                        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                }
 
                 mailService.ComposeAndSendMail(viewModel.Ticket);
 
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                ////return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ////return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            return Json(new
+            {
+                result,
+                errors = ModelState.Values.SelectMany(m => m.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList()
+            });
         }
 
         [NapAuth(FunctionKey = FunctionKeys.Feedback, Policy = Constant.Policy.Read)]
@@ -157,20 +168,40 @@
         [NapAuth(FunctionKey = FunctionKeys.Feedback, Policy = Constant.Policy.Host)]
         public ActionResult NewFeedbackTicket(NewFeedbackTicketViewModel viewModel)
         {
+            var result = false;
+
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Feedback;
+
+            if (!mailService.IsEmailListValid(viewModel.Ticket.AdditionalMail))
+            {
+                ModelState.AddModelError(
+                    $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
+                    Resources.ToEmailErrorMessage);
+            }
 
             if (ModelState.IsValid)
             {
-                ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-                customFieldService.AddCustomFieldValues(
-                    viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
+                if (result)
+                {
+                    result = customFieldService.AddCustomFieldValues(
+                        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                }
 
                 mailService.ComposeAndSendMail(viewModel.Ticket);
 
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                ////return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ////return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            return Json(new
+            {
+                result,
+                errors = ModelState.Values.SelectMany(m => m.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList()
+            });
         }
 
         [NapAuth(FunctionKey = FunctionKeys.Incident, Policy = Constant.Policy.Read)]
@@ -203,20 +234,33 @@
         [NapAuth(FunctionKey = FunctionKeys.Incident, Policy = Constant.Policy.Host)]
         public ActionResult NewIncidentTicket(NewIncidentTicketViewModel viewModel)
         {
+            var result = false;
+
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Incident;
 
             if (ModelState.IsValid)
             {
-                ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-                customFieldService.AddCustomFieldValues(
-                    viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
+                if (result)
+                {
+                    result = customFieldService.AddCustomFieldValues(
+                        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                }
 
                 mailService.ComposeAndSendMail(viewModel.Ticket);
 
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                ////return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ////return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            return Json(new
+            {
+                result,
+                errors = ModelState.Values.SelectMany(m => m.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList()
+            });
         }
 
         [NapAuth(FunctionKey = FunctionKeys.Hardware, Policy = Constant.Policy.Read)]
@@ -247,18 +291,38 @@
         {
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Hardware;
 
+            var result = false;
+            if (!mailService.IsEmailListValid(viewModel.Ticket.AdditionalMail))
+            {
+                ModelState.AddModelError(
+                    $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
+                    Resources.ToEmailErrorMessage);
+            }
+
             if (ModelState.IsValid)
             {
-                ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-                customFieldService.AddCustomFieldValues(
-                    viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
+
+                if (result)
+                {
+                    result = customFieldService.AddCustomFieldValues(
+                        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                }
 
                 mailService.ComposeAndSendMail(viewModel.Ticket);
 
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                ////return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ////return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            return Json(new
+            {
+                result,
+                errors = ModelState.Values.SelectMany(m => m.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList()
+            });
         }
 
         [NapAuth(FunctionKey = FunctionKeys.Software, Policy = Constant.Policy.Read)]
@@ -289,18 +353,37 @@
         {
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Software;
 
+            var result = false;
+            if (!mailService.IsEmailListValid(viewModel.Ticket.AdditionalMail))
+            {
+                ModelState.AddModelError(
+                    $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
+                    Resources.ToEmailErrorMessage);
+            }
+
             if (ModelState.IsValid)
             {
-                ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-                customFieldService.AddCustomFieldValues(
-                    viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
+                if (result)
+                {
+                    result = customFieldService.AddCustomFieldValues(
+                        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                }
 
                 mailService.ComposeAndSendMail(viewModel.Ticket);
 
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                ////return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ////return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            return Json(new
+            {
+                result,
+                errors = ModelState.Values.SelectMany(m => m.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList()
+            });
         }
 
         [NapAuth(FunctionKey = FunctionKeys.CustomerSupport, Policy = Constant.Policy.Read)]
@@ -334,20 +417,40 @@
         {
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.CustomerSupport;
 
+            var result = false;
+            if (!mailService.IsEmailListValid(viewModel.Ticket.AdditionalMail))
+            {
+                ModelState.AddModelError(
+                    $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
+                    Resources.ToEmailErrorMessage);
+            }
+
             if (ModelState.IsValid)
             {
                 var ticketTitle = "[" + viewModel.SupportType.Value + "] - " + viewModel.Ticket.Title;
                 viewModel.Ticket.Title = ticketTitle;
-                ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
+                result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
 
-                customFieldService.AddCustomFieldValues(viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                if (result)
+                {
+                    result = customFieldService.AddCustomFieldValues(
+                        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                }
 
                 mailService.ComposeAndSendMail(viewModel.Ticket);
 
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                ////return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ////return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            return Json(new
+            {
+                result,
+                errors = ModelState.Values.SelectMany(m => m.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList()
+            });
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]

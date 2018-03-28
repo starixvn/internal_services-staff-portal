@@ -8,6 +8,7 @@ var formhandler = {
     init: function () {
         formhandler.countDownCharacter();
         formhandler.resetFormOnModalDismissed();
+        formhandler.enableFormOnErrorModalDimissed();
         formhandler.checkFormOnInput();
         formhandler.setValueForRequiredRadioButton();
         formhandler.applyMaxLengh();
@@ -103,6 +104,13 @@ var formhandler = {
             });
     },
 
+    enableFormOnErrorModalDimissed: function() {
+        $("#error-modal").on("hidden.bs.modal",
+            function () {
+                $(".content form input[type=submit]").prop("disabled", false);
+            });
+    },
+
     checkFormOnInput: function () {
         $(".content form").on("input",
             "input[type='text'], textarea",
@@ -124,8 +132,17 @@ var formhandler = {
                             url: $(this).attr("action"),
                             method: $(this).attr("method"),
                             data: $(this).serialize(),
-                            success: function (res, status, xhr) {
-                                $("#notification-modal").modal();
+                            success: function (data) {
+                                if (data.result === true) {
+                                    $("#notification-modal").modal();
+                                } else {
+                                    var text = "";
+                                    data.errors.forEach(function(item, index) {
+                                        text = text + item + "\n";
+                                    });
+                                    $("#error-modal div.modal-body > p").text(text);
+                                    $("#error-modal").modal();
+                                }
                             },
                             error: function (request, error) {
                                 $("#notification-modal div.modal-header > h4").text(error);
