@@ -12,6 +12,12 @@
 
         #region Ticket Types
 
+        public const string ReferenceAdmin = "ReferenceAdmin";
+        public const string TvScheduleAdmin = "TvScheduleAdmin";
+        public const string FeaturedEventAdmin = "FeaturedEventAdmin";
+        public const string BetOfTheDayAdmin = "BetOfTheDayAdmin";
+        public const string TradingLimitsAdmin = "TradingLimitsAdmin";
+        public const string NewslettersAdmin = "NewslettersAdmin";
         public const string Facility = "Facility";
         public const string Feedback = "Feedback";
         public const string Hardware = "Hardware";
@@ -19,7 +25,7 @@
         public const string CustomerSupport = "CustomerSupport";
         public const string Incident = "Incident";
 
-        #endregion
+        #endregion Ticket Types
 
         #region Admin
 

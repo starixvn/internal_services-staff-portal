@@ -21,7 +21,7 @@
     using Models.References;
     using Service.Interface;
 
-    [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Read)]
+    [NapAuth(FunctionKey = FunctionKeys.ReferenceAdmin, Policy = Constant.Policy.Read)]
     public class ReferencesController : BaseController
     {
         private readonly string webRootPath;
@@ -43,30 +43,35 @@
             }
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.TvScheduleAdmin, Policy = Constant.Policy.Read)]
         public ActionResult TVSchedules()
         {
             var viewModel = GetListReferenceViewModel(ReferenceType.TvSchedule);
             return View(viewModel);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.FeaturedEventAdmin, Policy = Constant.Policy.Read)]
         public ActionResult FeatureEvents()
         {
             var viewModel = GetListReferenceViewModel(ReferenceType.FeaturedEvent);
             return View(viewModel);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.BetOfTheDayAdmin, Policy = Constant.Policy.Read)]
         public ActionResult BetOfTheDay()
         {
             var viewModel = GetListReferenceViewModel(ReferenceType.BetOfTheDay);
             return View(viewModel);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.TradingLimitsAdmin, Policy = Constant.Policy.Read)]
         public ActionResult TradingLimits()
         {
             var viewModel = GetListReferenceViewModel(ReferenceType.TradingLimits);
             return View(viewModel);
         }
 
+        [NapAuth(FunctionKey = FunctionKeys.NewslettersAdmin, Policy = Constant.Policy.Read)]
         public ActionResult Newsletters()
         {
             var viewModel = GetListReferenceViewModel(ReferenceType.Newsletters);
