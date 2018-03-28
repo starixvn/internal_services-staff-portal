@@ -81,13 +81,13 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateOnlyIncomingValues]
-        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.ReferenceAdmin, Policy = Constant.Policy.Host)]
         public JsonResult UploadReferences(ReferencesViewModel viewModel)
         {
             var isSuccessful = false;
             var message = string.Empty;
 
-            if (viewModel.Type != ReferenceType.Newsletters && CheckIfDateDuplicate(viewModel.References))
+            if (viewModel.Type != ReferenceType.Newsletters && CheckIfDateDuplicate(viewModel.References.ToList()))
             {
                 ModelState.AddModelError("DateAppear", Messages.DuplicatedDay);
             }
@@ -106,7 +106,7 @@
             return Json(new { isSuccessful, message, errors });
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.ReferenceAdmin, Policy = Constant.Policy.Host)]
         public ActionResult GetReferenceEntity(ReferenceType type)
         {
             var reference = new Reference
@@ -124,10 +124,11 @@
 
         private ReferencesViewModel GetListReferenceViewModel(ReferenceType referenceType)
         {
+            string functionKey = string.Format("{0}{1}", referenceType.ToString(), "Admin");
             var viewModel = new ReferencesViewModel
             {
-                IsHostPermission = IsHavePermission(FunctionKeys.References, Constant.Policy.Host),
-                References = referenceService.GetListReference(referenceType).ToList(),
+                IsHostPermission = IsHaveHostPermission(functionKey, Constant.Policy.Host),
+                References = referenceService.GetListReference(referenceType),
                 Type = referenceType
             };
 

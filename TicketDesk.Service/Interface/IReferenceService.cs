@@ -7,7 +7,7 @@
 
     public interface IReferenceService
     {
-        IEnumerable<Reference> GetListReference(ReferenceType referenceType);
+        IList<Reference> GetListReference(ReferenceType referenceType);
 
         void UploadReferences(ReferenceType referenceType, IEnumerable<ReferenceCriteria> references);
 

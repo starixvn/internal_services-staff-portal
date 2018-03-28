@@ -14,13 +14,13 @@
         @Html.AntiForgeryToken()
         @Html.HiddenFor(x => x.Type, new { @readonly = "readonly" })
         <ul class="references-zone" id="ReferencesZone">
-            @if (Model.References != null && Model.References.Count() > 0)
+            @if (Model.References.Any())
             {
                 for (var i = 0; i < Model.References.Count(); i++)
                 {
                     <li class="reference-entry">
                         <div class="date form-group">
-                            @Html.LabelFor(model => model.References[i].DateAppear)
+                            @Html.LabelFor(model => Model.References[i].DateAppear)
                             <span class="text-red">*</span>
                             <div class="datetime-field">
                                 @if (Model.IsHostPermission)

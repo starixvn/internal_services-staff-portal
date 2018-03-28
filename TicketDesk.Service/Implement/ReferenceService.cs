@@ -10,12 +10,12 @@
 
     public class ReferenceService : EntityFrameworkBaseService, IReferenceService
     {
-        public IEnumerable<Reference> GetListReference(ReferenceType referenceType)
+        public IList<Reference> GetListReference(ReferenceType referenceType)
         {
-            var references = context.References.Where(x => x.ReferenceType == referenceType);
+            var references = context.References.Where(x => x.ReferenceType == referenceType).ToList();
             if (referenceType != ReferenceType.Newsletters)
             {
-                references = references.Where(r => r.DateAppear.Date >= DateTime.Now.Date).OrderBy(x => x.DateAppear.Date);
+                references = references.Where(r => r.DateAppear.Date >= DateTime.Now.Date).OrderBy(x => x.DateAppear.Date).ToList();
             }
             return references;
         }
