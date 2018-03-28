@@ -506,8 +506,11 @@
     <Content Include="src\js\ticket-list\ticket-list.js" />
     <Content Include="src\js\ticket\customer-support.js" />
     <Content Include="src\js\ticket\facility.js" />
-    <Content Include="src\libs\bootstrap-tagsinput\bootstrap-tagsinput.css" />
-    <Content Include="src\libs\bootstrap-tagsinput\bootstrap-tagsinput.js" />
+    <Content Include="src\libs\jQuery-tagEditor\demo.html" />
+    <Content Include="src\libs\jQuery-tagEditor\jquery.caret.min.js" />
+    <Content Include="src\libs\jQuery-tagEditor\jquery.tag-editor.css" />
+    <Content Include="src\libs\jQuery-tagEditor\jquery.tag-editor.js" />
+    <Content Include="src\libs\jQuery-tagEditor\jquery.tag-editor.min.js" />
     <Content Include="src\libs\jquery-ui\jquery-ui.css" />
     <Content Include="src\libs\jquery-ui\jquery-ui.js" />
     <Content Include="src\libs\jquery-ui\jquery-ui.min.css" />
@@ -2114,6 +2117,9 @@
     <Content Include="src\css\frontend\_modals.scss" />
     <Content Include="src\css\frontend\_header.scss" />
     <Content Include="src\css\frontend\_content.scss" />
+    <Content Include="src\libs\jQuery-tagEditor\bower.json" />
+    <Content Include="src\libs\jQuery-tagEditor\readme.md" />
+    <Content Include="src\libs\jQuery-tagEditor\tag-editor.jquery.json" />
     <None Include="Web.azure.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -5,11 +5,9 @@
     },
 
     initTag: function () {
-        $(".tag").tagsinput({
-            confirmKeys: [13, 32, 44, 188],
+        $(".tag").tagEditor({
             trimValue: true,
-            delimiter: [";", ",", " "],
-            delimiterRegex: null
+            delimiter: ";, "
         });
     },
 
