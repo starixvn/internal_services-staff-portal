@@ -127,7 +127,7 @@
             string functionKey = string.Format("{0}{1}", referenceType.ToString(), "Admin");
             var viewModel = new ReferencesViewModel
             {
-                IsHostPermission = IsHaveHostPermission(functionKey, Constant.Policy.Host),
+                IsHostPermission = IsHavePermission(functionKey, Constant.Policy.Host),
                 References = referenceService.GetListReference(referenceType),
                 Type = referenceType
             };
