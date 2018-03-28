@@ -14,7 +14,7 @@
 
         bool CreateNewShop(Shop shop);
 
-        bool UpdateShop(int id, Shop shop);
+        bool UpdateShop(int id, Shop model);
 
         bool CheckExistShopName(string shopName);
 
