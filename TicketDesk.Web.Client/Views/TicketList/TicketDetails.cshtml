@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="ticket-list">
+<div class="ticket-list-detail">
     <div class="form-content feature">
         <div class="title panel-heading">
             <a href="@Url.Action("Index", "TicketList")" class="btn btn-back"><span class="icon-angle-left"></span>@Resources.BackToTicketList</a>
@@ -60,25 +60,28 @@
                 }
             }
 
-            @{
-                var groupedCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId != null).GroupBy(x => x.GroupId);
-                foreach (IGrouping<string, CustomFieldValue> group in groupedCustomFieldValues)
-                {
-                    var customFieldValues = group.ToList();
-                    <div>
-                        <div class="content-block">
+            <div class="facility-item">
+                @{
+                    var groupedCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId != null).GroupBy(x => x.GroupId);
+                    foreach (IGrouping<string, CustomFieldValue> group in groupedCustomFieldValues)
+                    {
+                        var customFieldValues = group.ToList();
+                        <div class="detail-item">
                             <ul>
                                 @foreach (var customFieldValue in customFieldValues)
                                 {
-                                    <li><strong>@customFieldValue.CustomField.Name: </strong><span>@customFieldValue.Value</span></li>
+                                    <li>
+                                        <span class="item-title">@customFieldValue.CustomField.Name: </span>
+                                        <span class="item-content">@customFieldValue.Value</span>
+                                    </li>
                                 }
                             </ul>
                         </div>
-                    </div>
+                    }
                 }
-            }
+            </div>
 
-            <div class="detail-item">
+            <div class="detail-item attachments">
                 <span class="item-title">@Index.Files</span>
                 <ul class="list-unstyled list-inline">
                     @foreach (var file in Model.Attachments)

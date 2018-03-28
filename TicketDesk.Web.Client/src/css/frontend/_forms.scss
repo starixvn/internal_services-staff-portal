@@ -14,6 +14,10 @@
     //align-items: center;
     color: $text-color;
 
+    &.feature {
+        margin-bottom: 2rem;
+    }
+
     label {
         margin-bottom: 0;
     }

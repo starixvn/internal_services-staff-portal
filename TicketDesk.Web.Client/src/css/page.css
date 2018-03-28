@@ -347,6 +347,8 @@ table.dataTable {
   display: flex;
   flex-flow: row wrap;
   color: #333; }
+  .form-content.feature {
+    margin-bottom: 2rem; }
   .form-content label {
     margin-bottom: 0; }
   .form-content .border {
@@ -1020,9 +1022,32 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px; }
 
+.ticket-list-detail {
+  flex: 1 100%;
+  /*.form-content {
+        margin-bottom: 2rem;
+    }*/ }
+  .ticket-list-detail .feature .panel-body {
+    padding-left: 0;
+    padding-right: 0; }
+
+.facility-item {
+  margin-bottom: 1rem; }
+  .facility-item:empty {
+    margin-bottom: 1rem; }
+  .facility-item .detail-item {
+    padding-bottom: .8rem;
+    border-top: 1px solid #dcdcdc; }
+    .facility-item .detail-item:last-child {
+      border-bottom: 1px solid #dcdcdc; }
+    .facility-item .detail-item:nth-child(2n+0) {
+      background: #f2f2f2; }
+    .facility-item .detail-item li {
+      padding-top: .8rem; }
+
 .detail-item {
-  display: flex;
-  padding-bottom: 1rem; }
+  padding: 1.2rem;
+  padding-top: 0; }
   .detail-item .item-title {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 auto;
