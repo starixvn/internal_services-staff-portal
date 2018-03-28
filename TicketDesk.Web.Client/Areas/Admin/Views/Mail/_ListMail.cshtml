@@ -1,7 +1,8 @@
 ﻿@using TicketDesk.Localization.Client
 @model TicketDesk.Web.Client.Areas.Admin.Models.Mail.MailListViewModel
 
-<input type="hidden" id="is-save-success" value="@Model.IsSuccess"/>
+<input type="hidden" id="is-save-success" value="@Model.IsSuccess" />
+<input type="hidden" id="is-have-host-permission" value="@Model.IsHaveHostPermission"/>
 
 @using (Html.BeginForm("EditMailSettings", "Mail", FormMethod.Post))
 {
@@ -49,5 +50,8 @@
         @Html.LabelFor(x => x.SelectedTicketCategory.IsAllowAdditionalMail)
     </div>
 
-    <button type="submit" class="btn btn-primary">@Resources.Save</button>
+    if (Model.IsHaveHostPermission)
+    {
+        <button type="submit" class="btn btn-primary">@Resources.Save</button>
+    }
 }

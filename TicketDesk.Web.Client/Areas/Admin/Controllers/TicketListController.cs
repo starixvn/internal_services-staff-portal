@@ -49,7 +49,7 @@
             var tickets = ticketService.GetTicketByFilter(criteria);
             foreach (var ticket in tickets)
             {
-                ticket.IsHostPermissionOnTicketType = IsHaveHostPermission(ticket.TicketType.ToString(), Constant.Policy.Host);
+                ticket.IsHostPermissionOnTicketType = IsHavePermission(ticket.TicketType.ToString(), Constant.Policy.Host);
             }
             return PartialView("_TicketList", tickets);
         }
@@ -95,7 +95,7 @@
             {
                 var ticket = ticketService.GetTicket(id);
                 TicketCategoryTypes ticketType = (TicketCategoryTypes)ticket.CategoryId;
-                var isHost = IsHaveHostPermission(ticketType.ToString(), Constant.Policy.Host);
+                var isHost = IsHavePermission(ticketType.ToString(), Constant.Policy.Host);
                 return isHost;
             }
             return false;
@@ -106,7 +106,7 @@
             var selectList = new List<SelectListItem>();
             foreach (TicketCategoryTypes type in Enum.GetValues(typeof(TicketCategoryTypes)))
             {
-                if (IsHaveHostPermission(type.ToString(), Constant.Policy.Read))
+                if (IsHavePermission(type.ToString(), Constant.Policy.Read))
                 {
                     selectList.Add(new SelectListItem
                     {

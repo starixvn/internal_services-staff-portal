@@ -133,11 +133,29 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Bcc Email is not valid.
+        /// </summary>
+        public static string BccEmailErrorMessage {
+            get {
+                return ResourceManager.GetString("BccEmailErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Cc Email is not valid.
+        /// </summary>
+        public static string CcEmailErrorMessage {
+            get {
+                return ResourceManager.GetString("CcEmailErrorMessage", resourceCulture);
             }
         }
         
@@ -682,7 +700,7 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email not valid.
+        ///   Looks up a localized string similar to Not valid email(s).
         /// </summary>
         public static string EmailNotValid {
             get {
@@ -1173,6 +1191,15 @@ namespace TicketDesk.Localization.Client {
         public static string TicketType {
             get {
                 return ResourceManager.GetString("TicketType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The To Email is not valid.
+        /// </summary>
+        public static string ToEmailErrorMessage {
+            get {
+                return ResourceManager.GetString("ToEmailErrorMessage", resourceCulture);
             }
         }
         

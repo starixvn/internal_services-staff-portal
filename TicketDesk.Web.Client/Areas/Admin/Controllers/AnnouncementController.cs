@@ -31,7 +31,7 @@
                 PublishedTo = today,
                 Type = null,
                 State = null,
-                HaveHostPermission = IsHaveHostPermission(FunctionKeys.Announcement, Constant.Policy.Host)
+                HaveHostPermission = IsHavePermission(FunctionKeys.Announcement, Constant.Policy.Host)
             };
 
             return View(viewModel);
@@ -44,7 +44,7 @@
             {
                 Announcements = announcementService.GetAnnouncements(viewModel.GetQueryCriteria())
                     .OrderByDescending(x => x.LastModified),
-                HaveHostPermission = IsHaveHostPermission(FunctionKeys.Announcement, Constant.Policy.Host)
+                HaveHostPermission = IsHavePermission(FunctionKeys.Announcement, Constant.Policy.Host)
             };
 
             return PartialView("_AnouncementList", listAnnouncementViewModel);

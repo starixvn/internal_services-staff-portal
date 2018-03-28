@@ -6,9 +6,17 @@
 
     initTag: function () {
         $(".tag").tagEditor({
-            trimValue: true,
             delimiter: ";, "
         });
+    },
+
+    checkFormPermission: function() {
+        var isHaveHostPermission = $("#is-have-host-permission").val();
+        if (isHaveHostPermission) {
+            mail.initTag();
+        } else {
+            $("#data-list form :input").prop("disabled", true);
+        }
     },
 
     filterForm: function () {
@@ -28,7 +36,7 @@
                     data: $(this).serialize(),
                     success: function (result) {
                         $("#data-list").html(result);
-                        mail.initTag();
+                        mail.checkFormPermission();
                     }
                 });
             });

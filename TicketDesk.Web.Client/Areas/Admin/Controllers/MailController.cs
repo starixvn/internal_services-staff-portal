@@ -37,7 +37,8 @@
         {
             var viewModel = new MailListViewModel
             {
-                SelectedTicketCategory = ticketCategoryService.GetTicketCategory(categoryId)
+                SelectedTicketCategory = ticketCategoryService.GetTicketCategory(categoryId),
+                IsHaveHostPermission = IsHavePermission(FunctionKeys.MailManagement, Constant.Policy.Host)
             };
 
             return PartialView("_ListMail", viewModel);
@@ -47,26 +48,28 @@
         [NapAuth(FunctionKey = FunctionKeys.MailManagement, Policy = Constant.Policy.Host)]
         public ActionResult EditMailSettings(MailListViewModel viewModel)
         {
+            viewModel.IsHaveHostPermission = IsHavePermission(FunctionKeys.MailManagement, Constant.Policy.Host);
+
             var ticketCategoryName = nameof(viewModel.SelectedTicketCategory);
             if (!IsEmailListValid(viewModel.SelectedTicketCategory.MailTo))
             {
                 ModelState.AddModelError(
                     $"{ticketCategoryName}.{nameof(viewModel.SelectedTicketCategory.MailTo)}",
-                    Resources.EmailNotValid);
+                    Resources.ToEmailErrorMessage);
             }
 
             if (!IsEmailListValid(viewModel.SelectedTicketCategory.MailCcTo))
             {
                 ModelState.AddModelError(
                     $"{ticketCategoryName}.{nameof(viewModel.SelectedTicketCategory.MailCcTo)}",
-                    Resources.EmailNotValid);
+                    Resources.CcEmailErrorMessage);
             }
 
             if (!IsEmailListValid(viewModel.SelectedTicketCategory.MailBccTo))
             {
                 ModelState.AddModelError(
                     $"{ticketCategoryName}.{nameof(viewModel.SelectedTicketCategory.MailBccTo)}",
-                    Resources.EmailNotValid);
+                    Resources.BccEmailErrorMessage);
             }
 
             if (ModelState.IsValid)

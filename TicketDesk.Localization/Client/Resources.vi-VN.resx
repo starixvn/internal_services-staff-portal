@@ -600,4 +600,10 @@
   <data name="EmailNotValid" xml:space="preserve">
     <value>Email không hợp lệ</value>
   </data>
+  <data name="CcEmailErrorMessage" xml:space="preserve">
+    <value>Địa chỉ email không hợp lệ</value>
+  </data>
+  <data name="BccEmailErrorMessage" xml:space="preserve">
+    <value>Địa chỉ email không hợp lệ</value>
+  </data>
 </root>

@@ -29,7 +29,7 @@
             var viewModel = new ShopFilterViewModel
             {
                 ActiveState = ActiveState.All,
-                IsHostPermission = IsHaveHostPermission(FunctionKeys.ShopManagement, Constant.Policy.Host)
+                IsHostPermission = IsHavePermission(FunctionKeys.ShopManagement, Constant.Policy.Host)
             };
             return View(viewModel);
         }
@@ -46,7 +46,7 @@
 
             var viewModel = new ShopListViewModel
             {
-                IsHostPermission = IsHaveHostPermission(FunctionKeys.ShopManagement, Constant.Policy.Host),
+                IsHostPermission = IsHavePermission(FunctionKeys.ShopManagement, Constant.Policy.Host),
                 Shops = shopService.GetListShop(criteria).ToList()
             };
             return PartialView("_ListShop", viewModel);

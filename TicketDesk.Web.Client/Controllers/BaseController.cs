@@ -41,7 +41,7 @@
             set => NapContextHelper.CurrentContext = value;
         }
 
-        public bool IsHaveHostPermission(string functionKey, Constant.Policy policy)
+        public bool IsHavePermission(string functionKey, Constant.Policy policy)
         {
             var siteId = int.Parse(ConfigurationManager.AppSettings["SiteId"]);
             return UserService.HasPermissionUserSiteFunctionKey(CurrentSession.UserId, siteId, functionKey, policy);

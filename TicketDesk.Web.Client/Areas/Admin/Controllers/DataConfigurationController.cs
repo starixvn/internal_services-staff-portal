@@ -38,7 +38,7 @@
                 CustomFieldListValues = dataConfigurationService.GetEditableListValues(selectedFieldId),
                 SelectedFieldId = selectedFieldId,
                 ModalTitle = modalTitle,
-                HaveHostPermission = IsHaveHostPermission(FunctionKeys.DataConfiguration, Constant.Policy.Host)
+                HaveHostPermission = IsHavePermission(FunctionKeys.DataConfiguration, Constant.Policy.Host)
             };
 
             return PartialView("_ListCustomFieldListValue", viewModel);

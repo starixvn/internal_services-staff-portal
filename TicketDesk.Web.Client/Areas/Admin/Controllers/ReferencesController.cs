@@ -126,7 +126,7 @@
         {
             var viewModel = new ReferencesViewModel
             {
-                IsHostPermission = IsHaveHostPermission(FunctionKeys.References, Constant.Policy.Host),
+                IsHostPermission = IsHavePermission(FunctionKeys.References, Constant.Policy.Host),
                 References = referenceService.GetListReference(referenceType).ToList(),
                 Type = referenceType
             };
