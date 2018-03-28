@@ -66,17 +66,20 @@
         {
             bool isSuccessful = false;
             string message = string.Empty;
-            if (shopService.CheckExistShopName(model.ShopName))
-            {
-                ModelState.AddModelError("ShopName", Messages.ShopExist);
-            }
 
             if (ModelState.IsValid)
             {
-                model.LastUpdatedBy = CurrentSession.Username;
-                model.LastUpdatedDate = DateTime.Now;
-                isSuccessful = shopService.CreateNewShop(model);
-                message = isSuccessful ? Messages.CreateShopSuccess : Messages.Error;
+                if (shopService.CheckExistShopName(model.ShopName))
+                {
+                    ModelState.AddModelError("ShopName", Messages.ShopExist);
+                }
+                else
+                {
+                    model.LastUpdatedBy = CurrentSession.Username;
+                    model.LastUpdatedDate = DateTime.Now;
+                    isSuccessful = shopService.CreateNewShop(model);
+                    message = isSuccessful ? Messages.CreateShopSuccess : Messages.Error;
+                }
             }
 
             var errors = ModelState
@@ -108,15 +111,17 @@
             string message = string.Empty;
             var shop = shopService.GetShopById(id);
 
-            if (shop != null && shop.ShopName != model.ShopName && shopService.CheckExistShopName(model.ShopName))
-            {
-                ModelState.AddModelError("ShopName", Messages.ShopExist);
-            }
-
             if (ModelState.IsValid)
             {
-                isSuccessful = shopService.UpdateShop(id, model);
-                message = isSuccessful ? Messages.UpdateShopSuccess : Messages.Error;
+                if (shop != null && shop.ShopName != model.ShopName && shopService.CheckExistShopName(model.ShopName))
+                {
+                    ModelState.AddModelError("ShopName", Messages.ShopExist);
+                }
+                else
+                {
+                    isSuccessful = shopService.UpdateShop(id, model);
+                    message = isSuccessful ? Messages.UpdateShopSuccess : Messages.Error;
+                }
             }
 
             var errors = ModelState

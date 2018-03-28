@@ -31,14 +31,14 @@
                 <div class="form-group">
                     @Html.LabelFor(x => x.Status)
                     <div class='input-group dropdown'>
-                        @Html.EnumDropDownListFor(x => x.Status, "All", new { @class = "form-control" })
+                        @Html.EnumDropDownListFor(x => x.Status, @Resources.All, new { @class = "form-control" })
                     </div>
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(x => x.TicketType)
                     <div class='input-group dropdown'>
-                        @Html.EnumDropDownListFor(x => x.TicketType, "All", new { @class = "form-control" })
+                        @Html.EnumDropDownListFor(x => x.TicketType, @Resources.All, new { @class = "form-control" })
                     </div>
                 </div>
 

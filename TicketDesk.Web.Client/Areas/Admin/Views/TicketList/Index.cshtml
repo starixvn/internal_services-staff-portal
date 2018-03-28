@@ -33,7 +33,7 @@
     {
         <div class="select-group">
             @Html.LabelFor(x => x.ShopId)
-            @Html.DropDownListFor(x => x.ShopId, Model.Shops, "All", new { @class = "form-control searchable" })
+            @Html.DropDownListFor(x => x.ShopId, Model.Shops, @Resources.All, new { @class = "form-control searchable" })
         </div>
 
         <div class="dropdown-medium">
@@ -43,7 +43,7 @@
 
         <div class="dropdown-small">
             @Html.LabelFor(x => x.Status)
-            @Html.EnumDropDownListFor(x => x.Status, "All", new { @class = "form-control" })
+            @Html.EnumDropDownListFor(x => x.Status, @Resources.All, new { @class = "form-control" })
         </div>
 
         <div class="date-time">

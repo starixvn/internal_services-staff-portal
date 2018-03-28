@@ -122,7 +122,7 @@
                 selectList.Add(new SelectListItem
                 {
                     Value = null,
-                    Text = "All"
+                    Text = Resources.All
                 });
             }
 

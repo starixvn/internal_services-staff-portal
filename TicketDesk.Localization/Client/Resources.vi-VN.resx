@@ -669,4 +669,7 @@
   <data name="NewShop" xml:space="preserve">
     <value>Tạo shop mới</value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>Tất cả</value>
+  </data>
 </root>

@@ -52,7 +52,7 @@
                 <div class="form-group">
                     @Html.LabelFor(x => x.Type, new { @class = "label-filter" })
                     <div class='input-group date'>
-                        @Html.EnumDropDownListFor(x => x.Type, "All", new { @class = "form-control" })
+                        @Html.EnumDropDownListFor(x => x.Type, @Resources.All, new { @class = "form-control" })
                     </div>
                 </div>
 
