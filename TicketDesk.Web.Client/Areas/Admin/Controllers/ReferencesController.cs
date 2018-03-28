@@ -135,7 +135,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.References, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.ReferenceAdmin, Policy = Constant.Policy.Host)]
         public ActionResult UploadImage(ReferenceType type)
         {
             HttpPostedFileBase file = Request.Files[0];
