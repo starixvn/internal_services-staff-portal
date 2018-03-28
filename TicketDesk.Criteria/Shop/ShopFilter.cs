@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using Core.Enumerations;
 
-    public class ShopFilterCrietria
+    public class ShopFilter
     {
         [Display(Name = "Shop Name")]
         [StringLength(100)]

@@ -26,7 +26,7 @@
 
         public ActionResult Index()
         {
-            var viewModel = new ShopFilterCrietria
+            var viewModel = new ShopFilter
             {
                 ActiveState = ActiveState.All,
                 IsHostPermission = IsHavePermission(FunctionKeys.ShopManagement, Constant.Policy.Host)
@@ -35,7 +35,7 @@
         }
 
         [HttpPost]
-        public ActionResult GetListShop(ShopFilterCrietria model)
+        public ActionResult GetListShop(ShopFilter model)
         {
             var viewModel = new ShopListViewModel
             {
