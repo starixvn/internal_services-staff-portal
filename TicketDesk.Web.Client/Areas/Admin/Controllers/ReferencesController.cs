@@ -113,6 +113,7 @@
             {
                 ReferenceType = type
             };
+
             return PartialView("_ReferenceEntryEditor", reference);
         }
 
@@ -231,6 +232,7 @@
             {
                 validUrl = false;
             }
+
             return Json(validUrl, JsonRequestBehavior.AllowGet);
         }
 

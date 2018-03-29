@@ -31,6 +31,7 @@
                 ActiveState = ActiveState.All,
                 IsHostPermission = IsHavePermission(FunctionKeys.ShopManagement, Constant.Policy.Host)
             };
+
             return View(viewModel);
         }
 
@@ -42,6 +43,7 @@
                 IsHostPermission = IsHavePermission(FunctionKeys.ShopManagement, Constant.Policy.Host),
                 Shops = shopService.GetListShop(model).ToList()
             };
+
             return PartialView("_ListShop", viewModel);
         }
 

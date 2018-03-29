@@ -56,6 +56,7 @@
             {
                 ticket.IsHostPermissionOnTicketType = IsHavePermission(GetFunctionKeyByTicketType(ticket.TicketType), Constant.Policy.Host);
             }
+
             return PartialView("_TicketList", tickets);
         }
 
@@ -72,6 +73,7 @@
                 {
                     mailService.ComposeAndSendMail(ticketService.GetTicket(id));
                 }
+
                 return Json(new { isSuccessful, message }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { isSuccessful = false, message = Resources.NoPermissionForTicketType }, JsonRequestBehavior.AllowGet);
@@ -87,6 +89,7 @@
                 var shop = shopService.GetShopById(ticket.ShopId);
                 shopName = shop.ShopName;
             }
+
             var singleTicketViewModel = new SingleTicketViewModel
             {
                 Ticket = ticket,
@@ -107,6 +110,7 @@
                 var isHost = IsHavePermission(GetFunctionKeyByTicketType(ticketType), Constant.Policy.Host);
                 return isHost;
             }
+
             return false;
         }
 
