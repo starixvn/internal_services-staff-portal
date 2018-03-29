@@ -28,7 +28,6 @@
     }
 
     function initDateTimePicker() {
-        var nowDate = new Date();
         $(domElement.DateTimePicker).datetimepicker({
             format: "MM-DD-YYYY",
             useCurrent: false,
