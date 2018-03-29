@@ -7,17 +7,19 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using Localization.Client;
 
     [AttributeUsage(AttributeTargets.Property)]
     public class FileTypeAttribute : ValidationAttribute, IClientValidatable
     {
-        private readonly string _defaultErrorMessage = "Only the following file types are allowed: {0}";
+        private readonly string defaultErrorMessage = Resources.FileTypeErrorMessage;
+
         public IEnumerable<string> ValidTypes { get; }
 
         public FileTypeAttribute(string[] validTypes)
         {
             ValidTypes = validTypes.Select(x => x.ToLower(CultureInfo.InvariantCulture));
-            ErrorMessage = string.Format(_defaultErrorMessage, string.Join(" or ", ValidTypes));
+            ErrorMessage = string.Format(defaultErrorMessage, string.Join(" or ", ValidTypes));
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

@@ -6,12 +6,11 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using Localization.Client;
 
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class FileSizeAttribute : ValidationAttribute, IClientValidatable
     {
-        private const string ErrorMessageWithFormat = "Total size of files must not exceed {0} MB(s)";
-
         public int MaxBytes { get; set; }
 
         private int MaxMegaByte => MaxBytes / 1048576;
@@ -26,7 +25,7 @@
 
                 if (totalBytes > MaxBytes)
                 {
-                    return new ValidationResult(string.Format(ErrorMessageWithFormat, MaxMegaByte));
+                    return new ValidationResult(string.Format(Resources.FilesOversizeErrorMessage, MaxMegaByte));
                 }
             }
 
@@ -38,7 +37,7 @@
             var rule = new ModelClientValidationRule
             {
                 ValidationType = "filesize",
-                ErrorMessage = string.Format(ErrorMessageWithFormat, MaxMegaByte)
+                ErrorMessage = string.Format(Resources.FilesOversizeErrorMessage, MaxMegaByte)
             };
 
             rule.ValidationParameters["maxbytes"] = MaxBytes;

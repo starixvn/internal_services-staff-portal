@@ -238,10 +238,6 @@
       <HintPath>..\packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SendGrid, Version=9.5.1.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sendgrid.9.5.1\lib\net452\SendGrid.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="SimpleInjector, Version=4.0.12.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.4.0.12\lib\net45\SimpleInjector.dll</HintPath>
       <Private>True</Private>
@@ -331,14 +327,6 @@
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="X.PagedList, Version=1.24.1.31653, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\X.PagedList.1.24.1.320\lib\net451\X.PagedList.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="X.PagedList.Mvc, Version=4.9.1.31908, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\X.PagedList.Mvc.4.9.1.310\lib\net45\X.PagedList.Mvc.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalSuppressions.cs">
@@ -384,8 +372,6 @@
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TicketActivityController.cs" />
-    <Compile Include="Controllers\TicketCenterController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\TicketListController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -398,8 +384,6 @@
     <Compile Include="Infrastructure\DbSetupFilter.cs" />
     <Compile Include="Infrastructure\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\HtmlHelperExtensions.cs" />
-    <Compile Include="Infrastructure\Extensions\PagedListAsync.cs" />
-    <Compile Include="Infrastructure\Extensions\PagedListExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\SummerNoteStringExtensions.cs" />
     <Compile Include="Infrastructure\Filters\CustomJsonResultAttribute.cs" />
@@ -451,7 +435,6 @@
     <Compile Include="Models\Reference\NewsLetterReferencesViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Language\LanguagesViewModel.cs" />
     <Compile Include="Models\SystemInfoViewModel.cs" />
-    <Compile Include="Models\TicketCenterListViewModel.cs" />
     <Compile Include="Models\TicketEmail.cs" />
     <Compile Include="Models\TicketList\TicketListViewModel.cs" />
     <Compile Include="Models\Ticket\FacilityItem.cs" />
@@ -1976,35 +1959,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_UserMenu.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\TicketCenter\Index.cshtml" />
-    <Content Include="Views\TicketCenter\_ListMenu.cshtml" />
-    <Content Include="Views\TicketCenter\_FilterBar.cshtml" />
-    <Content Include="Views\TicketCenter\_TicketList.cshtml" />
     <Content Include="Scripts\ticketdesk\ticketcenter.min.js.map">
       <DependentUpon>ticketcenter.min.js</DependentUpon>
     </Content>
     <Content Include="Views\Shared\_QuickSearch.cshtml" />
     <Content Include="Views\Ticket\Index.cshtml" />
-    <Content Include="Views\TicketActivity\_AddComment.cshtml" />
-    <Content Include="Views\TicketActivity\_ActivityButtons.cshtml" />
-    <Content Include="Views\TicketActivity\_ModifyAttachments.cshtml" />
-    <Content Include="Views\TicketActivity\_ReOpen.cshtml" />
-    <Content Include="Views\TicketActivity\_EditTicketInfo.cshtml" />
-    <Content Include="Views\TicketActivity\_SupplyMoreInfo.cshtml" />
-    <Content Include="Views\TicketActivity\_RequestMoreInfo.cshtml" />
-    <Content Include="Views\TicketActivity\_CancelMoreInfo.cshtml" />
-    <Content Include="Views\TicketActivity\_GiveUp.cshtml" />
-    <Content Include="Views\TicketActivity\_TakeOver.cshtml" />
-    <Content Include="Views\TicketActivity\_Assign.cshtml" />
-    <Content Include="Views\TicketActivity\_ReAssign.cshtml" />
-    <Content Include="Views\TicketActivity\_Pass.cshtml" />
-    <Content Include="Views\TicketActivity\_ForceClose.cshtml" />
-    <Content Include="Views\TicketActivity\_Resolve.cshtml" />
-    <Content Include="Views\TicketActivity\_Close.cshtml" />
-    <Content Include="Views\TicketActivity\_ActivityComment.cshtml" />
     <Content Include="Views\Ticket\_TicketEvents.cshtml" />
-    <Content Include="Views\TicketActivity\_ActivityForm.cshtml" />
-    <Content Include="Views\TicketActivity\_ChangeAssignment.cshtml" />
     <Content Include="Views\FirstRunSetup\Index.cshtml" />
     <Content Include="Views\FirstRunSetup\_DatabaseInfo.cshtml" />
     <Content Include="Views\FirstRunSetup\_NewDatabase.cshtml" />
@@ -2051,7 +2011,6 @@
     <Content Include="src\Fonts\iconFont\fonts\icomoon.woff" />
     <Content Include="src\Fonts\iconFont\selection.json" />
     <Content Include="Views\Reference\Index.cshtml" />
-    <Content Include="Views\TicketCenter\SingleTicket.cshtml" />
     <Content Include="Views\Reference\BetOfTheDay.cshtml" />
     <Content Include="Views\Reference\FeaturedEvents.cshtml" />
     <Content Include="Views\Reference\Newsletters.cshtml" />

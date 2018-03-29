@@ -6,11 +6,12 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using Localization.Client;
 
     [AttributeUsage(AttributeTargets.Property)]
     public class NumberOfFileAttribute : ValidationAttribute, IClientValidatable
     {
-        private const string ErrorMessageWithFormat = "Maximum number of files: {0}";
+        private readonly string ErrorMessageWithFormat = Resources.MaximumNumberOfFileErrorMessage;
 
         public int Max { get; set; }
 

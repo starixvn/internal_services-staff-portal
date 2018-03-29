@@ -681,4 +681,13 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="FilesOversizeErrorMessage" xml:space="preserve">
+    <value>Total size of files must not exceed {0} MB(s)</value>
+  </data>
+  <data name="FileTypeErrorMessage" xml:space="preserve">
+    <value>Only the following file types are allowed: {0}</value>
+  </data>
+  <data name="MaximumNumberOfFileErrorMessage" xml:space="preserve">
+    <value>Maximum number of files: {0}</value>
+  </data>
 </root>

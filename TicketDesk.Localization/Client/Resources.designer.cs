@@ -19,7 +19,7 @@ namespace TicketDesk.Localization.Client {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -736,6 +736,24 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total size of files must not exceed {0} MB(s).
+        /// </summary>
+        public static string FilesOversizeErrorMessage {
+            get {
+                return ResourceManager.GetString("FilesOversizeErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only the following file types are allowed: {0}.
+        /// </summary>
+        public static string FileTypeErrorMessage {
+            get {
+                return ResourceManager.GetString("FileTypeErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID.
         /// </summary>
         public static string ID {
@@ -831,6 +849,15 @@ namespace TicketDesk.Localization.Client {
         public static string MailTo {
             get {
                 return ResourceManager.GetString("MailTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum number of files: {0}.
+        /// </summary>
+        public static string MaximumNumberOfFileErrorMessage {
+            get {
+                return ResourceManager.GetString("MaximumNumberOfFileErrorMessage", resourceCulture);
             }
         }
         

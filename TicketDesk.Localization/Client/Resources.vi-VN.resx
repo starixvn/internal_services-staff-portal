@@ -681,4 +681,13 @@
   <data name="Back" xml:space="preserve">
     <value>Trở lại</value>
   </data>
+  <data name="FilesOversizeErrorMessage" xml:space="preserve">
+    <value>Tổng dung lượng không vượt quá {0} MB</value>
+  </data>
+  <data name="FileTypeErrorMessage" xml:space="preserve">
+    <value>Chỉ cho phép những file có định dạng: {0}</value>
+  </data>
+  <data name="MaximumNumberOfFileErrorMessage" xml:space="preserve">
+    <value>Tổng số file được phép: {0}</value>
+  </data>
 </root>
