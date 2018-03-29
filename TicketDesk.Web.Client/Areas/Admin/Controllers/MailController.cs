@@ -74,7 +74,7 @@
 
             if (ModelState.IsValid)
             {
-                viewModel.IsSuccess = ticketCategoryService.UpdateTicketCategory(viewModel.SelectedTicketCategory);
+                viewModel.IsSuccessful = ticketCategoryService.UpdateTicketCategory(viewModel.SelectedTicketCategory);
             }
 
             return PartialView("_ListMail", viewModel);

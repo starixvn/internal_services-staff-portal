@@ -6,7 +6,7 @@
     {
         public TicketCategory SelectedTicketCategory { get; set; }
 
-        public bool IsSuccess { get; set; }
+        public bool IsSuccessful { get; set; }
 
         public bool IsHaveHostPermission { get; set; }
     }
