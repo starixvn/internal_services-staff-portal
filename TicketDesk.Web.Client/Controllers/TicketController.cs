@@ -125,11 +125,7 @@
                 }
 
                 mailService.ComposeAndSendMail(viewModel.Ticket);
-
-                ////return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
-
-            ////return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             return Json(new
             {
@@ -189,11 +185,7 @@
                 }
 
                 mailService.ComposeAndSendMail(viewModel.Ticket);
-
-                ////return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
-
-            ////return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             return Json(new
             {
@@ -248,11 +240,7 @@
                 }
 
                 mailService.ComposeAndSendMail(viewModel.Ticket);
-
-                ////return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
-
-            ////return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             return Json(new
             {
@@ -310,11 +298,7 @@
                 }
 
                 mailService.ComposeAndSendMail(viewModel.Ticket);
-
-                ////return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
-
-            ////return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             return Json(new
             {
@@ -371,11 +355,7 @@
                 }
 
                 mailService.ComposeAndSendMail(viewModel.Ticket);
-
-                ////return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
-
-            ////return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             return Json(new
             {
@@ -438,11 +418,7 @@
                 }
 
                 mailService.ComposeAndSendMail(viewModel.Ticket);
-
-                ////return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
-
-            ////return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             return Json(new
             {

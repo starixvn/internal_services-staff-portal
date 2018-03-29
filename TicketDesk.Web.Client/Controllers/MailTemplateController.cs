@@ -37,7 +37,7 @@
                 ShopName = shopService.GetShopById(ticket.ShopId).ShopName,
                 CreatedByUsername = createdBy.Username,
                 UpdatedByUsername = lastUpdateBy.Username,
-                Attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(CultureInfo.InvariantCulture), false)
+                Attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(), false)
             };
 
             return View(singleTicketViewModel);

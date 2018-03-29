@@ -11,6 +11,7 @@
     using Fanex.MailDeliver.MailClient.API;
     using Fanex.MailDeliver.Model;
     using Interface;
+    using IO;
 
     public class MailEmptyController : Controller
     {
@@ -58,7 +59,8 @@
                 CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket),
                 ShopName = context.Shops.Find(ticket.ShopId)?.ShopName,
                 CreatedByUsername = createdBy.Username,
-                UpdatedByUsername = lastUpdateBy.Username
+                UpdatedByUsername = lastUpdateBy.Username,
+                Attachments = TicketDeskFileStore.ListAttachmentInfo(ticket.TicketId.ToString(), false)
             };
 
             var body = GetRazorViewAsString(singleTicketViewModel, "~/Views/MailTemplate/GeneralTicketDetail.cshtml");
