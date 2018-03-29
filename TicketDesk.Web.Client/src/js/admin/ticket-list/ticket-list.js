@@ -39,7 +39,7 @@
 
     function initDataTable() {
         var ticketListTable = commonDataTableInit.Init();
-        ticketListTable.order = [[4, "asc"]];
+        ticketListTable.order = [[1, "desc"]];
         ticketListTable.columns =
             [{
                 width: 70,

@@ -145,8 +145,9 @@
             {
                 var domain = Request.Url.GetLeftPart(UriPartial.Authority);
                 var today = DateTime.Now;
-                var directory = string.Format("{0}/{1}/{2}/{3}/{4}/{5}", webRootPath, type.ToString(), today.Year, today.Month, today.Day, today.Hour);
-                var imageDirectory = string.Format("{0}/{1}/{2}/{3}/{4}/{5}{6}", domain, webPath, type.ToString(), today.Year, today.Month, today.Day, today.Hour);
+                var timestamp = today.ToString("yyyyMMddHHmmssffff");
+                var directory = string.Format("{0}/{1}/{2}/{3}/{4}/{5}/{6}", webRootPath, type.ToString(), today.Year, today.Month, today.Day, today.Hour, timestamp);
+                var imageDirectory = string.Format("{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}", domain, webPath, type.ToString(), today.Year, today.Month, today.Day, today.Hour, timestamp);
                 string fileName = Path.GetFileName(file.FileName);
                 int fileSize = file.ContentLength;
 

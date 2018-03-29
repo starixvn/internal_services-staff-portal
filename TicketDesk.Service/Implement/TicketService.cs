@@ -130,7 +130,7 @@
                                              && x.CreatedDate >= criteria.FromDate);
             }
 
-            return tickets.OrderBy(x => x.ShopName).ToList();
+            return tickets.OrderByDescending(x => x.Id).ToList();
         }
 
         public bool UpdateTicketSubscription(int ticketId, string userId)
