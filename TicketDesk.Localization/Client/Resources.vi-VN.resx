@@ -675,4 +675,10 @@
   <data name="StatusChangedMessage" xml:space="preserve">
     <value>từ {0} đến {1}</value>
   </data>
+  <data name="TicketActivity_ChangeStatus" xml:space="preserve">
+    <value>Thay đổi trạng thái</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Trở lại</value>
+  </data>
 </root>

@@ -678,4 +678,7 @@
   <data name="StatusChangedMessage" xml:space="preserve">
     <value>from {0} to {1}</value>
   </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
 </root>
