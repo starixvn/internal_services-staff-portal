@@ -60,13 +60,13 @@
                 }
             }
 
-            <div class="facility-item">
-                @{
-                    var groupedCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId != null).GroupBy(x => x.GroupId);
-                    foreach (IGrouping<string, CustomFieldValue> group in groupedCustomFieldValues)
-                    {
-                        var customFieldValues = group.ToList();
-                        <div class="detail-item">
+            @{
+                var groupedCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId != null).GroupBy(x => x.GroupId);
+                foreach (IGrouping<string, CustomFieldValue> group in groupedCustomFieldValues)
+                {
+                    var customFieldValues = group.ToList();
+                    <div>
+                        <div class="content-block">
                             <ul>
                                 @foreach (var customFieldValue in customFieldValues)
                                 {
@@ -77,21 +77,24 @@
                                 }
                             </ul>
                         </div>
-                    }
+                    </div>
                 }
-            </div>
+            }
 
-            <div class="detail-item attachments">
-                <span class="item-title">@Index.Files</span>
-                <ul class="list-unstyled list-inline">
-                    @foreach (var file in Model.Attachments)
-                    {
-                        <li>
-                            <a class="file-attachments" href="@Url.Action("GetFile", "File", new {Id = Model.Ticket.TicketId, FileName = file.Name})" target="_blank"><i class="fa fa-file fa-align-left"></i> @file.Name</a>
-                        </li>
-                    }
-                </ul>
-            </div>
+            @if (Model.Attachments.Any())
+            {
+                <div class="detail-item">
+                    <span class="item-title">@Index.Files</span>
+                    <ul class="list-unstyled list-inline">
+                        @foreach (var file in Model.Attachments)
+                        {
+                            <li>
+                                <a class="file-attachments" href="@Url.Action("GetFile", "File", new {Id = Model.Ticket.TicketId, FileName = file.Name})" target="_blank"><i class="fa fa-file fa-align-left"></i> @file.Name</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
         </div>
     </div>
 </div>

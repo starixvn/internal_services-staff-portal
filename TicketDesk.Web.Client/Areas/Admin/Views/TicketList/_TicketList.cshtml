@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Criteria.TicketList
+@using TicketDesk.Domain.Extensions
 @using TicketDesk.Localization.Domain
 @using TicketDesk.Localization.Client
 @model IList<TicketViewModel>
@@ -28,7 +29,7 @@
                 <td>
                     @Html.ActionLink(ticket.Subject, "TicketDetails", "TicketList", new { ticketId = ticket.Id }, new { @class = "ticket-details" })
                 </td>
-                <td>@ticket.TicketType</td>
+                <td>@ticket.TicketType.GetDisplayName()</td>
                 <td>@ticket.ShopName</td>
                 <td>@ticket.CreatedDate.UtcDateTime</td>
                 <td>
