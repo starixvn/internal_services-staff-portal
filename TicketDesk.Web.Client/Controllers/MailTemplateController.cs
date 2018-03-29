@@ -1,10 +1,12 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using System.Globalization;
     using System.Web.Mvc;
     using Domain.Infrastructure;
     using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using IO;
     using Service.Interface;
 
     [NapAuth(FunctionKey = FunctionKeys.Administration, Policy = Constant.Policy.Read)]
@@ -34,7 +36,8 @@
                 CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket),
                 ShopName = shopService.GetShopById(ticket.ShopId).ShopName,
                 CreatedByUsername = createdBy.Username,
-                UpdatedByUsername = lastUpdateBy.Username
+                UpdatedByUsername = lastUpdateBy.Username,
+                Attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(CultureInfo.InvariantCulture), false)
             };
 
             return View(singleTicketViewModel);
