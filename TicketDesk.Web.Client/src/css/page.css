@@ -83,6 +83,10 @@ ul {
     .btn.btn-add:hover:enabled {
       background: #22336b;
       transition: all 0.3s ease; }
+    .btn.btn-add:focus {
+      background: #22336b;
+      border: 1px solid #22336b;
+      outline: none; }
     .btn.btn-add[disabled] {
       opacity: 0.5;
       color: rgba(255, 255, 255, 0.5); }
@@ -94,6 +98,10 @@ ul {
     .btn.btn-delete:hover:enabled {
       background: #ff9296;
       transition: all 0.3s ease; }
+    .btn.btn-delete:focus {
+      background: #ff9296;
+      border: 1px solid #ff9296;
+      outline: none; }
     .btn.btn-delete[disabled] {
       opacity: 0.5;
       color: rgba(51, 51, 51, 0.5); }
@@ -108,6 +116,10 @@ ul {
     .btn.btn-primary:hover:enabled {
       background: #22336b;
       transition: all 0.3s ease; }
+    .btn.btn-primary:focus {
+      background: #22336b;
+      border: 1px solid #22336b;
+      outline: none; }
     .btn.btn-primary[disabled] {
       opacity: 0.5;
       color: rgba(255, 255, 255, 0.5); }
@@ -117,6 +129,10 @@ ul {
     .btn.btn-second:hover:enabled {
       background: #cacad3;
       transition: all 0.3s ease; }
+    .btn.btn-second:focus {
+      background: #cacad3;
+      border: 1px solid #cacad3;
+      outline: none; }
     .btn.btn-second[disabled] {
       opacity: 0.5;
       color: rgba(51, 51, 51, 0.5); }
@@ -127,6 +143,10 @@ ul {
     .btn.btn-submit:hover:enabled {
       background: #22336b;
       transition: all 0.3s ease; }
+    .btn.btn-submit:focus {
+      background: #22336b;
+      border: 1px solid #22336b;
+      outline: none; }
     .btn.btn-submit[disabled] {
       opacity: 0.5;
       color: rgba(255, 255, 255, 0.5); }
@@ -144,6 +164,10 @@ ul {
     .btn.btn-delete-all-file:hover:enabled {
       background: #ba0e13;
       transition: all 0.3s ease; }
+    .btn.btn-delete-all-file:focus {
+      background: #ba0e13;
+      border: 1px solid #ba0e13;
+      outline: none; }
     .btn.btn-delete-all-file[disabled] {
       opacity: 0.5;
       color: rgba(255, 255, 255, 0.5); }
@@ -156,6 +180,10 @@ ul {
     .btn.btn-browser:hover:enabled {
       background: #c1bdbd;
       transition: all 0.3s ease; }
+    .btn.btn-browser:focus {
+      background: #c1bdbd;
+      border: 1px solid #c1bdbd;
+      outline: none; }
     .btn.btn-browser[disabled] {
       opacity: 0.5;
       color: rgba(51, 51, 51, 0.5); }
@@ -175,6 +203,10 @@ ul {
     .btn.btn-back:hover:enabled {
       background: #a5a5a5;
       transition: all 0.3s ease; }
+    .btn.btn-back:focus {
+      background: #a5a5a5;
+      border: 1px solid #a5a5a5;
+      outline: none; }
     .btn.btn-back[disabled] {
       opacity: 0.5;
       color: rgba(51, 51, 51, 0.5); }
@@ -202,6 +234,9 @@ tr.header {
   .table-bordered tr.header td .number-ticket {
     color: #bf141a;
     font-weight: 600; }
+
+.table-bordered tr:nth-child(even) {
+  background: #f2f2f2; }
 
 .table-bordered.tbl-announcement .date {
   width: 130px; }
@@ -375,7 +410,8 @@ tr.header {
     .dataTables_wrapper .dataTables_paginate .paginate_button.previous {
       margin-right: .5rem; }
     .dataTables_wrapper .dataTables_paginate .paginate_button.next {
-      margin-left: .5rem; }
+      margin-left: .5rem;
+      margin-right: 0; }
     .dataTables_wrapper .dataTables_paginate .paginate_button.previous, .dataTables_wrapper .dataTables_paginate .paginate_button.next {
       border: 1px solid #999; }
       .dataTables_wrapper .dataTables_paginate .paginate_button.previous.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.next.disabled {

@@ -74,6 +74,13 @@
         background: darken($bgcolor, 10%);
         transition: all 0.3s ease;        
     }
+
+    &:focus {
+        background: darken($bgcolor, 10%);
+        border: 1px solid darken($bgcolor, 10%);
+        outline: none;
+    }
+
     &[disabled] {
         opacity: 0.5;
         color: rgba( $color, .5 );
