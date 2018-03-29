@@ -154,11 +154,23 @@ var logoutConfirm = {
         });
     }
 }
+var common = {
+    removeDateValidate: function () {
+        // To remove date check
+        jQuery.validator.methods["date"] = function (value, element) { return true; }
+    },
+
+    init: function () {
+        common.removeDateValidate();
+        ajaxSetup.init();
+        sidebar.init();
+        bootstrapModalHack.init();
+        toastrPopup.initToastr();
+        logoutConfirm.init();
+        dataTableReflow.setIntervalToReinitFixedHeader();
+    }
+}
+
 $(document).ready(function () {
-    ajaxSetup.init();
-    sidebar.init();
-    bootstrapModalHack.init();
-    toastrPopup.initToastr();
-    logoutConfirm.init();
-    dataTableReflow.setIntervalToReinitFixedHeader();
+    common.init();
 });
