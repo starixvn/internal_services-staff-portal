@@ -24,10 +24,15 @@
             width: 100% !important;
             height: 100%;
             line-height: 1.6em;
+            background-color: #f6f6f6;
         }
 
-        body {
-            background-color: #f6f6f6;
+        .file-attachments {
+            text-decoration: none;
+        } 
+
+        .file-attachments:hover {
+            text-decoration: underline;
         }
 
         @@media only screen and (max-width: 640px) {
@@ -83,6 +88,8 @@
             .invoice {
                 width: 100% !important;
             }
+
+
         }
     </style>
 </head>
@@ -181,25 +188,26 @@
                                             </tr>
                                         }
                                     }
+
+                                    @if (Model.Attachments != null && Model.Attachments.Any())
+                                    {
+                                        <tr>
+                                            <td style="vertical-align: top; text-align: left; margin: 0; padding: 0 0 10px;" align="center" valign="top">
+                                                <span style="font-weight: bold; color: #2e4592; margin: 0;">Files </span>
+                                                <ul style="padding: 0 0 0 17px; margin: 0; list-style: none;">
+                                                    @foreach (var file in Model.Attachments)
+                                                    {
+                                                        <li>
+                                                            <a style="display: inline-block; line-height: 18px; margin-bottom: 10px; color: #1c7deb;" class="file-attachments" href="@Url.Action("GetFile", "File", new { Id = Model.Ticket.TicketId, FileName = file.Name })" target="_blank"><i class="fa fa-file fa-align-left"></i> @file.Name</a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    }  
                                 </table>
                             </td>
-                        </tr>
-                        @if (Model.Attachments != null && Model.Attachments.Any())
-                        {
-                            <tr>
-                                <td>
-                                    <span class="item-title">Files: </span>
-                                    <ul class="list-unstyled list-inline">
-                                        @foreach (var file in Model.Attachments)
-                                        {
-                                            <li>
-                                                <a class="file-attachments" href="@Url.Action("GetFile", "File", new { Id = Model.Ticket.TicketId, FileName = file.Name })" target="_blank"><i class="fa fa-file fa-align-left"></i> @file.Name</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </td>
-                            </tr>
-                        }
+                        </tr>                        
                     </table>
                 </div>
             </td>
