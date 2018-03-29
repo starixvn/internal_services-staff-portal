@@ -22,12 +22,17 @@
         private readonly IShopService shopService;
         private readonly ITicketService ticketService;
         private readonly ICustomFieldService customFieldService;
+        private readonly IMailService mailService;
 
-        public TicketListController(IShopService shopService, ITicketService ticketService, ICustomFieldService customFieldService)
+        public TicketListController(IShopService shopService,
+            ITicketService ticketService,
+            ICustomFieldService customFieldService,
+            IMailService mailService)
         {
             this.shopService = shopService;
             this.ticketService = ticketService;
             this.customFieldService = customFieldService;
+            this.mailService = mailService;
         }
 
         [NapAuth(FunctionKey = FunctionKeys.TicketListAdmin, Policy = Constant.Policy.Read)]
@@ -63,6 +68,10 @@
                 bool isSuccessful = ticketService.UpdateTicketStatus(id, status);
                 string message = isSuccessful ? Messages.UpdateTicketStatusSuccessful : Messages.Error;
 
+                if (isSuccessful)
+                {
+                    mailService.ComposeAndSendMail(ticketService.GetTicket(id));
+                }
                 return Json(new { isSuccessful, message }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { isSuccessful = false, message = Resources.NoPermissionForTicketType }, JsonRequestBehavior.AllowGet);

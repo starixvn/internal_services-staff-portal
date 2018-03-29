@@ -501,6 +501,7 @@
     <Content Include="src\js\home\more-announcement.js" />
     <Content Include="src\js\home\read-announcement.js" />
     <Content Include="src\js\ticket-dropzone.js" />
+    <Content Include="src\js\ticket-list\ticket-detail.js" />
     <Content Include="src\js\ticket-list\ticket-list.js" />
     <Content Include="src\js\ticket\customer-support.js" />
     <Content Include="src\js\ticket\facility.js" />

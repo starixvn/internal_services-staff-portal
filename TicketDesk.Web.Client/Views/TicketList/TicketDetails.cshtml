@@ -10,15 +10,7 @@
 }
 @section scripts
 {
-    <script type="text/javascript">
-        $(".btn-back").on("click", function () {
-            if (window.history.length == 2) {
-                window.location.href = "/TicketList";
-            } else {
-                window.history.back();
-            }
-        });
-    </script>
+    <script src="~/src/js/ticket-list/ticket-detail.js"></script>
 }
 
 <div class="ticket-list-detail">
