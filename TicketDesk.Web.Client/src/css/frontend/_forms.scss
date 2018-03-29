@@ -624,6 +624,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .tag-editor {
     font-family: inherit;
     min-height: 40px;
+    margin-bottom: 1rem;
+    border-color: #d3d7db;
 
     li {
         margin-top: 7px;
