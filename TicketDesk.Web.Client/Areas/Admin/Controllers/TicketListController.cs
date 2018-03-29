@@ -69,9 +69,9 @@
         }
 
         [NapAuth(FunctionKey = FunctionKeys.TicketList, Policy = Constant.Policy.Read)]
-        public ActionResult TicketDetails(int ticketId)
+        public ActionResult TicketDetails(int id)
         {
-            var ticket = ticketService.GetTicket(ticketId);
+            var ticket = ticketService.GetTicket(id);
             var shopName = string.Empty;
             if (ticket != null)
             {
@@ -83,7 +83,7 @@
                 Ticket = ticket,
                 ShopName = shopName,
                 CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket),
-                Attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(CultureInfo.InvariantCulture), false)
+                Attachments = TicketDeskFileStore.ListAttachmentInfo(id.ToString(CultureInfo.InvariantCulture), false)
             };
 
             return PartialView("_TicketDetails", singleTicketViewModel);

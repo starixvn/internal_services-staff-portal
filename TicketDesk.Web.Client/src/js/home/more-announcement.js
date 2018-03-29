@@ -3,7 +3,8 @@
         FormFiler: "form.filter",
         FromDate: "#from-date",
         ToDate: "#to-date",
-        AnnouncementTable: "#announcement-list"
+        AnnouncementTable: "#announcement-list",
+        BackButton: ".btn-back"
     }
 
     function getAnnouncementList() {
@@ -18,6 +19,12 @@
                 announcementReadEvent.registerUnreadClickEvent();
             }
         })
+    }
+
+    function registerBackButtonClickEvent() {
+        $(domElement.BackButton).on("click", function () {
+            window.history.back();
+        });
     }
 
     function initDataTable($table) {
@@ -53,6 +60,7 @@
     function initModule() {
         getAnnouncementList();
         initDateTimePicker();
+        registerBackButtonClickEvent();
         $(domElement.FormFiler).on("submit", function (e) {
             getAnnouncementList();
             e.preventDefault();

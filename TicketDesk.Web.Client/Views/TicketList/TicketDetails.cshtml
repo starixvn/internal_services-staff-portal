@@ -8,11 +8,23 @@
     ViewBag.Title = Resources.TicketDetails;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section scripts
+{
+    <script type="text/javascript">
+        $(".btn-back").on("click", function () {
+            if (window.history.length == 2) {
+                window.location.href = "/TicketList";
+            } else {
+                window.history.back();
+            }
+        });
+    </script>
+}
 
 <div class="ticket-list-detail">
     <div class="form-content feature">
         <div class="title panel-heading">
-            <a href="@Url.Action("Index", "TicketList")" class="btn btn-back"><span class="icon-angle-left"></span>@Resources.BackToTicketList</a>
+            <a class="btn btn-back"><span class="icon-angle-left"></span>@Resources.Back</a>
             @{
                 TicketCategoryTypes type = (TicketCategoryTypes)Model.Ticket.CategoryId;
                 string header = string.Format("{0}{1}{2}", Model.Ticket.TicketId, " - ", type.ToString());
@@ -61,23 +73,23 @@
             }
 
             <div class="facility-item">
-            @{
-                var groupedCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId != null).GroupBy(x => x.GroupId);
-                foreach (IGrouping<string, CustomFieldValue> group in groupedCustomFieldValues)
-                {
-                    var customFieldValues = group.ToList();
+                @{
+                    var groupedCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId != null).GroupBy(x => x.GroupId);
+                    foreach (IGrouping<string, CustomFieldValue> group in groupedCustomFieldValues)
+                    {
+                        var customFieldValues = group.ToList();
 
-                    <ul class="detail-item">
-                        @foreach (var customFieldValue in customFieldValues)
-                        {
-                            <li>
-                                <span class="item-title">@customFieldValue.CustomField.Name: </span>
-                                <span class="item-content">@customFieldValue.Value</span>
-                            </li>
-                        }
-                    </ul>
+                        <ul class="detail-item">
+                            @foreach (var customFieldValue in customFieldValues)
+                            {
+                                <li>
+                                    <span class="item-title">@customFieldValue.CustomField.Name: </span>
+                                    <span class="item-content">@customFieldValue.Value</span>
+                                </li>
+                            }
+                        </ul>
+                    }
                 }
-            }
             </div>
 
             @if (Model.Attachments.Any())

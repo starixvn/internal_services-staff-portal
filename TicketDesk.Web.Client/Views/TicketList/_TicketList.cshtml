@@ -25,7 +25,7 @@
                 <tr class="@evenClass">
                     <td class="text-center">@index</td>
                     <td class="text-center">
-                        <a class="id-ticket" href="@Url.Action("TicketDetails", "TicketList", new { ticketId = ticket.Id })">@ticket.Id</a>
+                        <a class="id-ticket" href="@Url.Action("TicketDetails", "TicketList", new { id = ticket.Id })">@ticket.Id</a>
                     </td>
                     <td>@ticket.Subject</td>
                     <td>@ticket.TicketType.GetDisplayName()</td>

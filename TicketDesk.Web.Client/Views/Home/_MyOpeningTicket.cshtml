@@ -1,4 +1,5 @@
 ﻿@using TicketDesk.Localization.Client
+@using TicketDesk.Domain.Extensions
 @model TicketDesk.Web.Client.Models.Home.MyOpenningTicketsViewModel
 
 @if (Model.TicketGroups.Any())
@@ -15,40 +16,36 @@
         </thead>
         <tbody>
             @foreach (var ticketGroup in Model.TicketGroups)
-            {
-                @*<tr class="header expand" data-title="@ticketGroup.Name">
-                    <td colspan="4"><span class="sign expanded"></span> @ticketGroup.Name <span class="number-ticket">(@ticketGroup.TotalItems)</span></td>
-                </tr>*@
-
-                int index = -1;
-
-                foreach (var ticket in ticketGroup.Tickets)
                 {
-                    index++;
-                    string evenClass = "";
-                    if (index % 2 == 1)
-                    {
-                        evenClass = "even";
-                    }
+                    int index = -1;
 
-                    <tr class="@evenClass" data-group="@ticketGroup.Name">
-                        <td class="text-center">
-                            <a href="@Url.Action("TicketDetails","TicketList", new {ticketId = ticket.TicketId})" class="id-ticket">@ticket.TicketId</a>
-                        </td>
-                        <td>@ticket.Title</td>
-                        <td class="text-center">@ticket.CreatedDate.ToString("MMM dd, yyyy")</td>
-                        @{
-                            var statusClass = ticket.TicketStatus.ToString().ToLowerInvariant();
+                    foreach (var ticket in ticketGroup.Tickets)
+                    {
+                        index++;
+                        string evenClass = "";
+                        if (index % 2 == 1)
+                        {
+                            evenClass = "even";
                         }
-                        <td class="text-center"><span class="@statusClass">@ticket.TicketStatus</span></td>
-                        <td>@Html.Raw(ticketGroup.Name + "(" + ticketGroup.TotalItems + ")")</td>
-                    </tr>
-                }
-            }
+
+                        <tr class="@evenClass" data-group="@ticketGroup.Name">
+                            <td class="text-center">
+                                <a href="@Url.Action("TicketDetails","TicketList", new {id = ticket.TicketId})" class="id-ticket">@ticket.TicketId</a>
+                            </td>
+                            <td>@ticket.Title</td>
+                            <td class="text-center">@ticket.CreatedDate.ToString("MMM dd, yyyy")</td>
+                            @{
+                                var statusClass = ticket.TicketStatus.ToString().ToLowerInvariant();
+                            }
+                            <td class="text-center"><span class="@statusClass">@ticket.TicketStatus.GetDisplayName()</span></td>
+                            <td>@Html.Raw(ticketGroup.Name + "(" + ticketGroup.TotalItems + ")")</td>
+                        </tr>
+                                    }
+                                }
         </tbody>
     </table>
-}
-else
-{
-    <p>@Resources.Views_Home_Index_NoTicket</p>
-}
+                                }
+                                else
+                                {
+                                    <p>@Resources.Views_Home_Index_NoTicket</p>
+                                }
