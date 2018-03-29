@@ -78,7 +78,7 @@
                         data: data,
                         success: function (result) {
                             if (result.isSuccessful) {
-                                parent.find(domElement.ImageUrl).val(result.imageDirectory);
+                                parent.find(domElement.ImageUrl).val(result.imageUrl);
                                 parent.find(domElement.ImageUrl).removeClass(domElement.InputValidationError);
                                 parent.find(domElement.FieldValidationError).addClass("hidden");
                                 parent.find(domElement.UploadImageValidation).text("");

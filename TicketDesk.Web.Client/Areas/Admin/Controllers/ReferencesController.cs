@@ -139,54 +139,80 @@
         public ActionResult UploadImage(ReferenceType type)
         {
             HttpPostedFileBase file = Request.Files[0];
-            var filePath = string.Empty;
 
             if (file.ContentLength > 0)
             {
+                if (!IsValidImageUpload(file))
+                {
+                    return Json(new { isSuccessful = false, message = GetErrorMessageUploadFile(file) });
+                }
+
                 var domain = Request.Url.GetLeftPart(UriPartial.Authority);
-                var today = DateTime.Now;
-                var timestamp = today.ToString("yyyyMMddHHmmssffff");
-                var directory = string.Format("{0}/{1}/{2}/{3}/{4}/{5}/{6}", webRootPath, type.ToString(), today.Year, today.Month, today.Day, today.Hour, timestamp);
-                var imageDirectory = string.Format("{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}", domain, webPath, type.ToString(), today.Year, today.Month, today.Day, today.Hour, timestamp);
+                var directory = string.Format("{0}/{1}", webRootPath, GetDirectoryToSaveFile(type));
+                var imageUrl = string.Format("{0}/{1}/{2}", domain, webPath, GetDirectoryToSaveFile(type));
                 string fileName = Path.GetFileName(file.FileName);
-                int fileSize = file.ContentLength;
 
-                if (!IsValidFilenameExtension(fileName))
-                {
-                    return Json(new { isSuccessful = false, message = Messages.InvalidImageFormat });
-                }
+                MoveFileToDirectory(file, directory);
 
-                if (fileSize > imageSizeLimit)
-                {
-                    return Json(new { isSuccessful = false, message = Messages.ImageExceededCapacity });
-                }
+                imageUrl = string.Format("{0}/{1}", imageUrl, fileName);
 
-                if (!IsValidImageDimension(file))
-                {
-                    return Json(new { isSuccessful = false, message = Messages.ImageDimensionInvalid });
-                }
-
-                var fileExist = System.IO.File.Exists(Path.Combine(directory, file.FileName));
-                filePath = MakeWebPath(Path.Combine(directory, file.FileName));
-
-                if (!Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
-
-                if (fileExist)
-                {
-                    System.IO.File.Delete(Path.Combine(directory, file.FileName));
-                }
-
-                file.SaveAs(filePath);
-
-                imageDirectory = string.Format("{0}/{1}", imageDirectory, fileName);
-
-                return Json(new { isSuccessful = true, imageDirectory });
+                return Json(new { isSuccessful = true, imageUrl });
             }
 
             return Json(new { isSuccessful = false, message = Resources.UploadFailed });
+        }
+
+        private static string GetDirectoryToSaveFile(ReferenceType type)
+        {
+            var today = DateTime.Now;
+            var timestamp = today.ToString("yyyyMMddHHmmssffff");
+            return string.Format("{0}/{1}/{2}/{3}/{4}/{5}", type.ToString(), today.Year, today.Month, today.Day, today.Hour, timestamp);
+        }
+
+        private static void MoveFileToDirectory(HttpPostedFileBase file, string directory)
+        {
+            var fileExist = System.IO.File.Exists(Path.Combine(directory, file.FileName));
+            string filePath = MakeWebPath(Path.Combine(directory, file.FileName));
+
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            if (fileExist)
+            {
+                System.IO.File.Delete(Path.Combine(directory, file.FileName));
+            }
+
+            file.SaveAs(filePath);
+        }
+
+        private bool IsValidImageUpload(HttpPostedFileBase file)
+        {
+            return IsValidFilenameExtension(Path.GetFileName(file.FileName)) &&
+                   file.ContentLength <= imageSizeLimit &&
+                   IsValidImageDimension(file);
+        }
+
+        private string GetErrorMessageUploadFile(HttpPostedFileBase file)
+        {
+            var message = string.Empty;
+            if (!IsValidFilenameExtension(Path.GetFileName(file.FileName)))
+            {
+                message = Messages.InvalidImageFormat;
+            }
+
+            if (file.ContentLength > imageSizeLimit)
+            {
+                message = Messages.ImageExceededCapacity;
+            }
+
+            if (!IsValidImageDimension(file))
+            {
+                message = Messages.ImageDimensionInvalid;
+            }
+
+            return message;
         }
 
         public ActionResult IsValidImageUrl()
