@@ -257,11 +257,16 @@ tr.header {
         padding-top: 15px;
 
         .select2-container {
-            width: 70px !important;
+            width: 80px !important;
+            margin-left: .5rem;
 
             .select2-selection__arrow {
                 background: #e8e8e8;
                 border-left: 1px solid #999;
+            }
+
+            .select2-selection--single {
+                border-color: #999;
             }
         }
     }
@@ -269,24 +274,21 @@ tr.header {
     .dataTables_paginate {
         padding: 0;
         margin-top: 15px;
-        margin-left: 10px;
+        margin-left: 15px;
         border-radius: 2px;
 
         .paginate_button {
-            padding: 4px 10px;
+            //padding: 4px 10px;
+            height: 4rem;
             color: #777;
-            margin: 0;
-            border-radius: 0;
-            border-top: 1px solid #cdcdcd;
-            border-bottom: 1px solid #cdcdcd;
-            border-right: 1px solid #cdcdcd;
-            border-left: 0;
+            margin: 0 .5rem;            
+            border-radius: 2px;
+            border: 1px solid #999;
 
             &:hover {
                 color: #2e4592 !important;
-                background: none;
-                border-color: #cdcdcd;
-                border-left: 0;
+                background: none;                
+                border: 1px solid #999;                
             }
 
             &:active {
@@ -294,31 +296,40 @@ tr.header {
                 box-shadow: none;
             }
 
+            &.previous {
+                margin-right: .5rem;
+            }
+
+            &.next {
+                margin-left: .5rem;
+            }
+
             &.previous, &.next {
-                border: 1px solid #cdcdcd;
+                border: 1px solid #999;     
+                
+                &.disabled {
+                    opacity: .8;
+                }          
 
                 &.disabled:hover {
-                    border: 1px solid #cdcdcd;
+                    border: 1px solid #999;
                     cursor: not-allowed;
                 }
             }
 
-            &.next, &.next:hover, &.next.disabled:hover {
+            /*&.next, &.next:hover, &.next.disabled:hover {
                 border-left: 0;
-            }
+            }*/
 
             &.current {
                 background: #2e4592;
                 color: #fff !important;
-                border-color: #cdcdcd;
-                border-left: 0;
+                border-color: #2e4592;
 
-                &:hover {
-                    //border: 0;
-                    background: lighten(#2e4592, 10%);
+                &:hover {                   
+                    background: lighten(#2e4592, 5%);
                     color: #fff !important;
-                    border-color: #cdcdcd;
-                    border-left: 0;
+                    border-color: lighten(#2e4592, 5%);
                 }
             }
         }
