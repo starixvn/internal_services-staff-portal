@@ -292,6 +292,11 @@
             background: #d5d5d5;
         }
     }
+
+    textarea + .field-validation-error {
+        position: relative;
+        top: -10px;
+    }
 }
 
 .attach-file .fullwidth {
@@ -390,14 +395,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     /*.attach-file .fullwidth {
         height: 40px;
         line-height: 40px;
-    }*/
-    textarea + .field-validation-error {
-        position: relative;
-        top: -10px;
-    }
+    }*/    
 }
-
-
 
 .height-auto {
     flex: 1 100%;
@@ -570,7 +569,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 }
 
 .select2-container--default .select2-results > .select2-results__options {
-    max-height: 255px;
+    max-height: 260px;
 }
 
 /******************************************* DatePicker ***********************************************/
@@ -656,11 +655,17 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
         line-height: 1;
         padding-right: 6px;
 
+        &:hover {
+            i:before {
+                color: #bf141a;
+            }
+        }
+
         i:before {
             font-family: 'icomoon' !important;
             position: relative;
             content: "\e90d";
-            font-size: 24px;
+            font-size: 23px;
             color: #838282;
             top: 5px;
             left: 2px;
