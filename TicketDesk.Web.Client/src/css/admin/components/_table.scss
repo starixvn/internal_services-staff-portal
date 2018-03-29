@@ -203,6 +203,13 @@ table.dataTable {
                 }
             }
         }
+
+        .ellipsis {
+            padding: 4px 10px;
+            border-top: 1px solid #cdcdcd;
+            border-bottom: 1px solid #cdcdcd;
+            border-right: 1px solid #cdcdcd;
+        }
     }
 }
 

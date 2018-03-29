@@ -572,6 +572,11 @@ table.dataTable {
         color: #fff !important;
         border-color: #cdcdcd;
         border-left: 0; }
+  .dataTables_wrapper .dataTables_paginate .ellipsis {
+    padding: 4px 10px;
+    border-top: 1px solid #cdcdcd;
+    border-bottom: 1px solid #cdcdcd;
+    border-right: 1px solid #cdcdcd; }
 
 .dataTables_filter {
   position: relative; }
@@ -1085,6 +1090,9 @@ table.dataTable {
 :-moz-placeholder {
   /* Firefox 18- */
   font-style: italic; }
+
+.filter-form {
+  width: calc(100% - 250px); }
 
 .filter-row {
   margin: 0 auto 1rem;
