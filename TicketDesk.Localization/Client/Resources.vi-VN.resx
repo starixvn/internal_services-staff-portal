@@ -672,4 +672,7 @@
   <data name="All" xml:space="preserve">
     <value>Tất cả</value>
   </data>
+  <data name="StatusChangedMessage" xml:space="preserve">
+    <value>từ {0} đến {1}</value>
+  </data>
 </root>

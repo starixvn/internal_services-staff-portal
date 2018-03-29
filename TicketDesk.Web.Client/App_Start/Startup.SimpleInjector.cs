@@ -79,7 +79,7 @@
             container.Register<SignInManager<TicketDeskUser, string>, TicketDeskSignInManager>(Lifestyle.Scoped);
             container.Register<TicketDeskRoleManager>(hybridLifestyle);
 
-            container.Register<ITicketService>(() => new TicketService(new FileManagerService()), hybridLifestyle);
+            container.Register<ITicketService>(() => new TicketService(new FileManagerService(), new TicketEventService()), hybridLifestyle);
 
             container.Register<IUserService>(() => new UserService(), hybridLifestyle);
             container.Register<IGroupService>(() => new GroupService(), hybridLifestyle);
@@ -96,7 +96,8 @@
             container.Register<INapUserSettingService>(() => new NapUserSettingService(), hybridLifestyle);
             container.Register<ICustomFieldService>(() => new CustomFieldService(), hybridLifestyle);
             container.Register<ITicketCategoryService>(() => new TicketCategoryService(), hybridLifestyle);
-            container.Register<IMailService>(() => new MailService(new CustomFieldService()), hybridLifestyle);
+            container.Register<IMailService>(() => new MailService(new CustomFieldService(), new TicketEventService()), hybridLifestyle);
+            container.Register<ITicketEventService>(() => new TicketEventService(), hybridLifestyle);
 
             container.RegisterInitializer<TicketDeskUserManager>(manager => manager.ConfigureDataProtection(app));
             ////container.RegisterMvcControllers(Assembly.GetExecutingAssembly());

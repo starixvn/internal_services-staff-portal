@@ -28,11 +28,11 @@
 
         .file-attachments {
             text-decoration: none;
-        } 
-
-        .file-attachments:hover {
-            text-decoration: underline;
         }
+
+            .file-attachments:hover {
+                text-decoration: underline;
+            }
 
         @@media only screen and (max-width: 640px) {
             body {
@@ -87,8 +87,6 @@
             .invoice {
                 width: 100% !important;
             }
-
-
         }
     </style>
 </head>
@@ -117,41 +115,44 @@
                                         <td class="content-block aligncenter" style="vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">
                                             <table class="invoice" style="text-align: left; width: 100%; margin: 15px auto 0; border: 1px solid #d4d4d4; border-collapse: collapse;">
                                                 <tbody>
-                                                <tr style="margin: 0;">
-                                                    <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Title: </td>
-                                                    <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.Ticket.Title</td>
-                                                </tr>
-                                                <tr style="margin: 0;">
-                                                    <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Created Date: </td>
-                                                    <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.Ticket.CreatedDate</td>
-                                                </tr>
-                                                <tr style="margin: 0;">
-                                                    <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Status: </td>
-                                                    <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.Ticket.TicketStatus</td>
-                                                </tr>
-                                                <tr style="margin: 0;">
-                                                    <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Shop: </td>
-                                                    <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.ShopName</td>
-                                                </tr>
-                                                <tr style="margin: 0;">
-                                                    <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Created By: </td>
-                                                    <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.CreatedByUsername</td>
-                                                </tr>
-                                                <tr style="margin: 0;">
-                                                    <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Last Updated By: </td>
-                                                    <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.UpdatedByUsername</td>
-                                                </tr>
+                                                    <tr style="margin: 0;">
+                                                        <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Title: </td>
+                                                        <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.Ticket.Title</td>
+                                                    </tr>
+                                                    <tr style="margin: 0;">
+                                                        <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Created Date: </td>
+                                                        <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.Ticket.CreatedDate</td>
+                                                    </tr>
+                                                    <tr style="margin: 0;">
+                                                        <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Status: </td>
+                                                        <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.Ticket.TicketStatus</td>
+                                                    </tr>
+                                                    <tr style="margin: 0;">
+                                                        <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Shop: </td>
+                                                        <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.ShopName</td>
+                                                    </tr>
+                                                    <tr style="margin: 0;">
+                                                        <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Created By: </td>
+                                                        <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.CreatedByUsername</td>
+                                                    </tr>
+                                                    <tr style="margin: 0;">
+                                                        <td width="140px" style="vertical-align: middle; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px; background: #2e4592; color: #fff;" valign="top">Last Updated By: </td>
+                                                        <td class="alignright" style="vertical-align: middle; text-align: left; border-top-width: 1px; border-top-color: #d4d4d4; border-top-style: solid; margin: 0; padding: 5px 10px;" align="right" valign="top">@Model.UpdatedByUsername</td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </td>
                                     </tr>
-
-                                    @*<tr style="margin: 0;">
+                                    
+                                    @if (!string.IsNullOrEmpty(Model.TicketEditedMessage))
+                                    {
+                                        <tr style="margin: 0;">
                                             <td class="content-block" style="vertical-align: top; text-align: left; margin: 0; padding: 0 0 10px;" align="center" valign="top">
                                                 <p style="font-weight: bold; color: #2e4592; margin: 0;">Ticket Edited</p>
-                                                <p style="margin: 0;">Status Changed: from New to In progress</p>
+                                                <p style="margin: 0;">Status Changed: @Model.TicketEditedMessage</p>
                                             </td>
-                                        </tr>*@
+                                        </tr>
+                                    }
 
                                     <tr style="margin: 0;">
                                         <td class="content-block" style="vertical-align: top; text-align: left; margin: 0; padding: 0 0 10px;" align="center" valign="top">
@@ -203,10 +204,10 @@
                                                 </ul>
                                             </td>
                                         </tr>
-                                    }  
+                                    }
                                 </table>
                             </td>
-                        </tr>                        
+                        </tr>
                     </table>
                 </div>
             </td>

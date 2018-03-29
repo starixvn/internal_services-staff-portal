@@ -9,10 +9,10 @@ namespace TicketDesk.Domain.Model
 
     public class TicketEvent
     {
-        public TicketEvent()
-        {
-            TicketEventNotifications = new HashSet<TicketEventNotification>();
-        }
+        ////public TicketEvent()
+        ////{
+        ////    TicketEventNotifications = new HashSet<TicketEventNotification>();
+        ////}
 
         [Key]
         [Column(Order = 0)]
@@ -46,7 +46,7 @@ namespace TicketDesk.Domain.Model
 
         public virtual Ticket Ticket { get; set; }
 
-        public virtual ICollection<TicketEventNotification> TicketEventNotifications { get; set; }
+        ////public virtual ICollection<TicketEventNotification> TicketEventNotifications { get; set; }
 
         public TicketActivity ForActivity { get; set; }
 
@@ -81,20 +81,20 @@ namespace TicketDesk.Domain.Model
         /// <summary>
         /// Creates the event notifications for each ticket subscriber and adds them to the TicketEventNotifications collection.
         /// </summary>
-        public void CreateSubscriberEventNotifications()
-        {
-            foreach (var subscriber in Ticket.TicketSubscribers)
-            {
-                var isSubscriberEvent = EventBy == subscriber.SubscriberId;
+        ////public void CreateSubscriberEventNotifications()
+        ////{
+        ////    foreach (var subscriber in Ticket.TicketSubscribers)
+        ////    {
+        ////        var isSubscriberEvent = EventBy == subscriber.SubscriberId;
 
-                TicketEventNotifications.Add(
-                    new TicketEventNotification
-                    {
-                        IsNew = !isSubscriberEvent,
-                        IsRead = isSubscriberEvent,
-                        SubscriberId = subscriber.SubscriberId,
-                    });
-            }
-        }
+        ////        TicketEventNotifications.Add(
+        ////            new TicketEventNotification
+        ////            {
+        ////                IsNew = !isSubscriberEvent,
+        ////                IsRead = isSubscriberEvent,
+        ////                SubscriberId = subscriber.SubscriberId,
+        ////            });
+        ////    }
+        ////}
     }
 }

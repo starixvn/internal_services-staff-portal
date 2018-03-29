@@ -20,10 +20,12 @@
     public class MailService : EntityFrameworkBaseService, IMailService
     {
         private readonly ICustomFieldService customFieldService;
+        private readonly ITicketEventService ticketEventService;
 
-        public MailService(ICustomFieldService customFieldService)
+        public MailService(ICustomFieldService customFieldService, ITicketEventService ticketEventService)
         {
             this.customFieldService = customFieldService;
+            this.ticketEventService = ticketEventService;
         }
 
         public static string GetRazorViewAsString(object model, string filePath)
@@ -60,7 +62,8 @@
                 ShopName = context.Shops.Find(ticket.ShopId)?.ShopName,
                 CreatedByUsername = createdBy.Username,
                 UpdatedByUsername = lastUpdateBy.Username,
-                Attachments = TicketDeskFileStore.ListAttachmentInfo(ticket.TicketId.ToString(), false)
+                Attachments = TicketDeskFileStore.ListAttachmentInfo(ticket.TicketId.ToString(), false),
+                TicketEditedMessage = ticketEventService.GetLastStatusChangeTicketEventMessage(ticket.TicketId)
             };
 
             var body = GetRazorViewAsString(singleTicketViewModel, "~/Views/MailTemplate/GeneralTicketDetail.cshtml");

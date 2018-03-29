@@ -1,6 +1,5 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
-    using System.Globalization;
     using System.Web.Mvc;
     using Domain.Infrastructure;
     using Domain.Model;
@@ -15,12 +14,18 @@
         private readonly ITicketService ticketService;
         private readonly IShopService shopService;
         private readonly ICustomFieldService customFieldService;
+        private readonly ITicketEventService ticketEventService;
 
-        public MailTemplateController(ITicketService ticketService, IShopService shopService, ICustomFieldService customFieldService)
+        public MailTemplateController(
+            ITicketService ticketService,
+            IShopService shopService,
+            ICustomFieldService customFieldService,
+            ITicketEventService ticketEventService)
         {
             this.ticketService = ticketService;
             this.shopService = shopService;
             this.customFieldService = customFieldService;
+            this.ticketEventService = ticketEventService;
         }
 
         public ActionResult GeneralTicketDetail(int ticketId)
@@ -37,7 +42,8 @@
                 ShopName = shopService.GetShopById(ticket.ShopId).ShopName,
                 CreatedByUsername = createdBy.Username,
                 UpdatedByUsername = lastUpdateBy.Username,
-                Attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(), false)
+                Attachments = TicketDeskFileStore.ListAttachmentInfo(ticketId.ToString(), false),
+                TicketEditedMessage = ticketEventService.GetLastStatusChangeTicketEventMessage(ticket.TicketId)
             };
 
             return View(singleTicketViewModel);

@@ -12,7 +12,7 @@
 
         IList<TicketGroup> GetUserOpeningTicketsInGroups();
 
-        bool UpdateTicketSubscription(int ticketId, string userId);
+        ////bool UpdateTicketSubscription(int ticketId, string userId);
 
         bool CreateTicket(Ticket ticket, Guid tempId);
 

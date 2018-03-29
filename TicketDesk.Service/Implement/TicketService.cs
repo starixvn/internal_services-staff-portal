@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Linq;
     using System.Threading;
     using Core.Enumerations;
@@ -13,10 +12,12 @@
     public class TicketService : EntityFrameworkBaseService, ITicketService
     {
         private readonly IFileManagerService fileManagerService;
+        private readonly ITicketEventService ticketEventService;
 
-        public TicketService(IFileManagerService fileManagerService)
+        public TicketService(IFileManagerService fileManagerService, ITicketEventService ticketEventService)
         {
             this.fileManagerService = fileManagerService;
+            this.ticketEventService = ticketEventService;
         }
 
         public Ticket GetTicket(int id)
@@ -133,43 +134,6 @@
             return tickets.OrderByDescending(x => x.Id).ToList();
         }
 
-        public bool UpdateTicketSubscription(int ticketId, string userId)
-        {
-            var ticket = context.Tickets
-                .Where(x => x.TicketId == ticketId)
-                .Include(x => x.TicketSubscribers)
-                .Include(t => t.TicketEvents.Select(e => e.TicketEventNotifications))
-                .FirstOrDefault();
-
-            var isSubscribed = false;
-
-            if (ticket == null)
-            {
-                return false;
-            }
-
-            var subscriber = ticket.TicketSubscribers.FirstOrDefault(s => s.SubscriberId == userId);
-
-            if (subscriber == null)
-            {
-                subscriber = new TicketSubscriber
-                {
-                    SubscriberId = userId,
-                };
-
-                ticket.TicketSubscribers.Add(subscriber);
-                isSubscribed = true;
-            }
-            else
-            {
-                ticket.TicketSubscribers.Remove(subscriber);
-            }
-
-            context.SaveChanges();
-
-            return isSubscribed;
-        }
-
         public bool CreateTicket(Ticket ticket, Guid tempId)
         {
             ticket.CreatedBy = context.SecurityProvider.CurrentUserId;
@@ -181,6 +145,7 @@
             var result = context.SaveChanges();
 
             fileManagerService.CommitPendingAttachments(ticket, tempId);
+            ticketEventService.CreateNewTicketEvent(ticket);
 
             return result > 0;
         }
@@ -188,15 +153,22 @@
         public bool UpdateTicketStatus(int id, TicketStatus status)
         {
             var result = false;
-            if (id > 0)
+
+            var ticket = context.Tickets.Find(id);
+
+            if (ticket != null)
             {
-                var ticket = context.Tickets.Find(id);
-                if (ticket != null)
+                var oldStatus = ticket.TicketStatus;
+
+                ticket.TicketStatus = status;
+                result = context.SaveChanges() > 0;
+
+                if (result)
                 {
-                    ticket.TicketStatus = status;
-                    result = context.SaveChanges() > 0;
+                    ticketEventService.CreateUpdateTicketStatusEvent(ticket, oldStatus, status);
                 }
             }
+
             return result;
         }
     }

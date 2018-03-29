@@ -19,7 +19,7 @@ namespace TicketDesk.Localization.Client {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -1123,6 +1123,15 @@ namespace TicketDesk.Localization.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to from {0} to {1}.
+        /// </summary>
+        public static string StatusChangedMessage {
+            get {
+                return ResourceManager.GetString("StatusChangedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} must be less than {1} characters.
         /// </summary>
         public static string StringLengthMaxErrorMessage {
@@ -1155,6 +1164,15 @@ namespace TicketDesk.Localization.Client {
         public static string TableNoData {
             get {
                 return ResourceManager.GetString("TableNoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change status.
+        /// </summary>
+        public static string TicketActivity_ChangeStatus {
+            get {
+                return ResourceManager.GetString("TicketActivity_ChangeStatus", resourceCulture);
             }
         }
         

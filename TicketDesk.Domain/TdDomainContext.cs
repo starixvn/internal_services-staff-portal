@@ -1,15 +1,9 @@
 namespace TicketDesk.Domain
 {
-    using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Validation;
-    using System.Linq;
-    using System.Threading.Tasks;
     using Model;
-    using TicketDesk.Localization.Domain;
 
     public sealed class TdDomainContext : DbContext
     {
@@ -28,7 +22,7 @@ namespace TicketDesk.Domain
             : this()
         {
             SecurityProvider = securityProvider;
-            TicketActions = TicketActionManager.GetInstance(SecurityProvider);
+            ////TicketActions = TicketActionManager.GetInstance(SecurityProvider);
         }
 
         public TdDomainContext()
@@ -61,7 +55,7 @@ namespace TicketDesk.Domain
 
         public TdDomainSecurityProviderBase SecurityProvider { get; }
 
-        public TicketActionManager TicketActions { get; }
+        ////public TicketActionManager TicketActions { get; }
 
         public DbSet<Shop> Shops { get; set; }
 
@@ -209,22 +203,22 @@ namespace TicketDesk.Domain
             return oc.CreateObjectSet<T>();
         }
 
-        protected override DbEntityValidationResult ValidateEntity(DbEntityEntry entityEntry, IDictionary<object, object> items)
-        {
-            var result = new DbEntityValidationResult(entityEntry, new List<DbValidationError>());
+        ////protected override DbEntityValidationResult ValidateEntity(DbEntityEntry entityEntry, IDictionary<object, object> items)
+        ////{
+        ////    var result = new DbEntityValidationResult(entityEntry, new List<DbValidationError>());
 
-            // skip the custom validation if a security provider wasn't supplied
-            if (SecurityProvider != null && entityEntry.Entity is Ticket && entityEntry.State == EntityState.Added)
-            {
-                var ticket = (Ticket)entityEntry.Entity;
-                if (!TicketActions.IsTicketActivityValid(ticket, TicketActivity.Create))
-                {
-                    result.ValidationErrors.Add(new DbValidationError("authorization", Strings.ExceptionSecurityUserCannotCreateNewTicket));
-                }
-            }
+        ////    // skip the custom validation if a security provider wasn't supplied
+        ////    if (SecurityProvider != null && entityEntry.Entity is Ticket && entityEntry.State == EntityState.Added)
+        ////    {
+        ////        var ticket = (Ticket)entityEntry.Entity;
+        ////        if (!TicketActions.IsTicketActivityValid(ticket, TicketActivity.Create))
+        ////        {
+        ////            result.ValidationErrors.Add(new DbValidationError("authorization", Strings.ExceptionSecurityUserCannotCreateNewTicket));
+        ////        }
+        ////    }
 
-            return result.ValidationErrors.Count > 0 ? result : base.ValidateEntity(entityEntry, items);
-        }
+        ////    return result.ValidationErrors.Count > 0 ? result : base.ValidateEntity(entityEntry, items);
+        ////}
 
         ////public override async Task<int> SaveChangesAsync()
         ////{

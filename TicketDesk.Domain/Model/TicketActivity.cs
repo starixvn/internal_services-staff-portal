@@ -3,6 +3,7 @@
     using Infrastructure;
     using System;
     using System.ComponentModel.DataAnnotations;
+    using TicketDesk.Localization.Client;
     using TicketDesk.Localization.Domain;
 
     [Flags]
@@ -66,6 +67,9 @@
         Create = 32768,
 
         [Display(Name = "TicketActivity_CreateOnBehalfOf", ResourceType = typeof(Strings))]
-        CreateOnBehalfOf = 65536
+        CreateOnBehalfOf = 65536,
+
+        [Display(Name = nameof(Resources.TicketActivity_ChangeStatus), ResourceType = typeof(Resources))]
+        ChangeStatus = 131072
     }
 }

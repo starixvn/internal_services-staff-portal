@@ -36,13 +36,13 @@
             this.mailService = mailService;
         }
 
-        [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        public JsonResult ChangeTicketSubscription(int ticketId)
-        {
-            var isSubscribed = ticketService.UpdateTicketSubscription(ticketId, CurrentSession.UserId.ToString());
-            return new JsonCamelCaseResult { Data = new { IsSubscribed = isSubscribed } };
-        }
+        ////[HttpPost]
+        ////[NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        ////public JsonResult ChangeTicketSubscription(int ticketId)
+        ////{
+        ////    var isSubscribed = ticketService.UpdateTicketSubscription(ticketId, CurrentSession.UserId.ToString());
+        ////    return new JsonCamelCaseResult { Data = new { IsSubscribed = isSubscribed } };
+        ////}
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public ActionResult FacilityTicketDetails(Ticket ticket)

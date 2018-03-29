@@ -16,5 +16,7 @@
         public IEnumerable<CustomFieldValue> CustomFieldValues { get; set; }
 
         public IEnumerable<TicketDeskFileInfo> Attachments { get; set; }
+
+        public string TicketEditedMessage { get; set; }
     }
 }
