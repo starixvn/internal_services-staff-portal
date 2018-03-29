@@ -116,7 +116,7 @@
             var result = false;
             var originalAnnouncement = GetAnnouncement(announcement.Id);
 
-            if (originalAnnouncement.State != AnnouncementState.Published)
+            if (originalAnnouncement != null && originalAnnouncement.State != AnnouncementState.Published)
             {
                 originalAnnouncement.LastModified = DateTime.Now;
                 originalAnnouncement.ModifiedBy = CurrentUsername;
@@ -124,8 +124,6 @@
                 originalAnnouncement.PublishedDateTime = announcement.PublishedDateTime;
                 originalAnnouncement.Message = announcement.Message;
                 originalAnnouncement.Type = announcement.Type;
-
-                context.Entry(originalAnnouncement).CurrentValues.SetValues(originalAnnouncement);
 
                 result = context.SaveChanges() > 0;
             }
@@ -139,33 +137,31 @@
 
             foreach (var announcement in announcements)
             {
-                if (announcement.State != AnnouncementState.Published)
+                if (announcement != null && announcement.State != AnnouncementState.Published)
                 {
                     announcement.PublishedDateTime = DateTime.Now;
                     announcement.LastModified = DateTime.Now;
                     announcement.ModifiedBy = CurrentUsername;
-
-                    context.Entry(announcement).CurrentValues.SetValues(announcement);
                 }
             }
 
             var result = context.SaveChanges();
-
             return result > 0;
         }
 
         public bool DeleteAnnouncement(int id)
         {
+            var result = false;
+
             var announcement = GetAnnouncement(id);
 
-            if (announcement == null || announcement.State == AnnouncementState.Published)
+            if (announcement != null && announcement.State != AnnouncementState.Published)
             {
-                return false;
+                context.Announcements.Remove(announcement);
+                result = context.SaveChanges() > 0;
             }
 
-            context.Announcements.Remove(announcement);
-            var result = context.SaveChanges();
-            return result > 0;
+            return result;
         }
 
         public int[] GetAllAnnouncementIds()

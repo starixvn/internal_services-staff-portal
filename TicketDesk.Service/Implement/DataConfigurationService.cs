@@ -45,14 +45,52 @@
             return result.OrderBy(x => x.Name);
         }
 
+        public CustomFieldListValue GetEditableListValue(int customFieldListValueId)
+        {
+            return context.CustomFieldListValues.Find(customFieldListValueId);
+        }
+
         public IEnumerable<CustomFieldListValue> GetEditableListValues(int customFieldId)
         {
             return context.CustomFieldListValues.Where(x => x.CustomFieldId == customFieldId).OrderBy(x => x.Id);
         }
 
-        public CustomFieldListValue GetEditableListValue(int customFieldListValueId)
+        public bool CreateCustomFieldListValue(CustomFieldListValue customFieldListValue)
         {
-            return context.CustomFieldListValues.Find(customFieldListValueId);
+            context.CustomFieldListValues.Add(customFieldListValue);
+            var result = context.SaveChanges();
+            UpdateCustomFieldValue(customFieldListValue.CustomFieldId);
+            return result > 0;
+        }
+
+        public bool IsCustomFieldDisplayNameEnUnique(int customFieldId, string displayNameEn, int customFieldListValueId)
+        {
+            // customFieldListValueId = 0 => create new
+            return customFieldListValueId == 0
+                ? !context.CustomFieldListValues.Any(x =>
+                    x.CustomFieldId == customFieldId && x.DisplayName == displayNameEn)
+                : !context.CustomFieldListValues.Any(x =>
+                    x.CustomFieldId == customFieldId && x.DisplayName == displayNameEn &&
+                    x.Id != customFieldListValueId);
+        }
+
+        public bool IsCustomFieldDisplayNameViUnique(int customFieldId, string displayNameVi, int customFieldListValueId)
+        {
+            // customFieldListValueId = 0 => create new
+            return customFieldListValueId == 0
+                ? !context.CustomFieldListValues.Any(x =>
+                    x.CustomFieldId == customFieldId && x.DisplayName_vi == displayNameVi)
+                : !context.CustomFieldListValues.Any(x =>
+                    x.CustomFieldId == customFieldId && x.DisplayName_vi == displayNameVi &&
+                    x.Id != customFieldListValueId);
+        }
+
+        public bool UpdateCustomFieldListValue(CustomFieldListValue modifiedCustomFieldListValue)
+        {
+            context.CustomFieldListValues.AddOrUpdate(modifiedCustomFieldListValue);
+            var result = context.SaveChanges();
+            UpdateCustomFieldValue(modifiedCustomFieldListValue.CustomFieldId);
+            return result >= 0;
         }
 
         private void UpdateCustomFieldValue(int customFieldId)
@@ -84,44 +122,6 @@
 
                 context.SaveChanges();
             }
-        }
-
-        public bool CreateCustomFieldListValue(CustomFieldListValue customFieldListValue)
-        {
-            context.CustomFieldListValues.Add(customFieldListValue);
-            var result = context.SaveChanges();
-            UpdateCustomFieldValue(customFieldListValue.CustomFieldId);
-            return result > 0;
-        }
-
-        public bool EditCustomFieldListValue(CustomFieldListValue modifiedCustomFieldListValue)
-        {
-            context.CustomFieldListValues.AddOrUpdate(modifiedCustomFieldListValue);
-            var result = context.SaveChanges();
-            UpdateCustomFieldValue(modifiedCustomFieldListValue.CustomFieldId);
-            return result >= 0;
-        }
-
-        public bool IsCustomFieldDisplayNameViUnique(int customFieldId, string displayNameVi, int customFieldListValueId)
-        {
-            // customFieldListValueId = 0 => create new
-            return customFieldListValueId == 0
-                ? !context.CustomFieldListValues.Any(x =>
-                    x.CustomFieldId == customFieldId && x.DisplayName_vi == displayNameVi)
-                : !context.CustomFieldListValues.Any(x =>
-                    x.CustomFieldId == customFieldId && x.DisplayName_vi == displayNameVi &&
-                    x.Id != customFieldListValueId);
-        }
-
-        public bool IsCustomFieldDisplayNameEnUnique(int customFieldId, string displayNameEn, int customFieldListValueId)
-        {
-            // customFieldListValueId = 0 => create new
-            return customFieldListValueId == 0
-                ? !context.CustomFieldListValues.Any(x =>
-                    x.CustomFieldId == customFieldId && x.DisplayName == displayNameEn)
-                : !context.CustomFieldListValues.Any(x =>
-                    x.CustomFieldId == customFieldId && x.DisplayName == displayNameEn &&
-                    x.Id != customFieldListValueId);
         }
     }
 }

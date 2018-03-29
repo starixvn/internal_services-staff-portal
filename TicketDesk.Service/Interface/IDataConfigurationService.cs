@@ -13,7 +13,7 @@
 
         bool CreateCustomFieldListValue(CustomFieldListValue customFieldListValue);
 
-        bool EditCustomFieldListValue(CustomFieldListValue modifiedCustomFieldListValue);
+        bool UpdateCustomFieldListValue(CustomFieldListValue modifiedCustomFieldListValue);
 
         bool IsCustomFieldDisplayNameViUnique(int customFieldId, string displayNameVi, int customFieldListValueId);
 

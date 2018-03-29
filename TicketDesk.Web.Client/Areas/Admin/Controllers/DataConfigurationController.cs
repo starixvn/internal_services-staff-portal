@@ -129,7 +129,7 @@
             var result = false;
             if (ModelState.IsValid)
             {
-                result = dataConfigurationService.EditCustomFieldListValue(customFieldListValue);
+                result = dataConfigurationService.UpdateCustomFieldListValue(customFieldListValue);
             }
 
             return Json(result);

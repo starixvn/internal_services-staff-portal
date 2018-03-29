@@ -23,6 +23,7 @@
 
             if (entry.State == EntityState.Detached)
             {
+                // Required because if there is no change, EF will return result = 0
                 context.TicketCategories.Attach(ticketCategory);
 
                 entry.Property(x => x.MailTo).IsModified = true;
