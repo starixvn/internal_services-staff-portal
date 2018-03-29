@@ -778,7 +778,7 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   color: #fff; }
 
 .select2-container--default .select2-results > .select2-results__options {
-  max-height: 222px; }
+  max-height: 255px; }
 
 /******************************************* DatePicker ***********************************************/
 .datepicker .new {
@@ -1085,7 +1085,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
     }*/ }
   .ticket-list-detail .feature .panel-body {
     padding-left: 0;
-    padding-right: 0; }
+    padding-right: 0;
+    padding-bottom: 0; }
 
 .facility-item .detail-item {
   padding-bottom: .8rem;
@@ -1580,7 +1581,7 @@ body {
 .announcement-detail, .ticket-list {
   flex: 1 100%; }
 
-.content-announcement .form-group:last-child {
+.content-announcement .form-group:last-child, .ticket-list .form-group:last-child {
   margin-left: -15px; }
 
 .filter {
