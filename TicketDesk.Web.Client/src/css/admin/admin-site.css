@@ -1095,7 +1095,7 @@ table.dataTable {
   width: calc(100% - 250px); }
 
 .filter-row {
-  margin: 0 auto 1rem;
+  margin: 0 auto .5rem;
   width: 100%;
   display: flex;
   flex: 0 1 auto;
@@ -1107,6 +1107,8 @@ table.dataTable {
     font-weight: 500;
     color: #777;
     margin-bottom: 2px; }
+  .filter-row > div {
+    margin-bottom: .5rem; }
   .filter-row > div:not(.button-filter) {
     margin-right: 2rem; }
   .filter-row .text-field {
@@ -1200,7 +1202,7 @@ table.dataTable {
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.45); }
 
 .select2-container--default .select2-results > .select2-results__options {
-  max-height: 210px; }
+  max-height: 220px; }
 
 .checkbox input[type="checkbox"] {
   display: block;
@@ -1260,6 +1262,8 @@ table.dataTable {
     background: transparent;
     border-radius: 50%;
     line-height: 1; }
+    .tag-editor .tag-editor-delete:hover i:before {
+      color: #bf141a; }
     .tag-editor .tag-editor-delete i:before {
       font-family: 'icomoon' !important;
       position: relative;
@@ -1358,6 +1362,7 @@ table.dataTable {
     font-size: 16px; }
   .ticket-list-modal .modal-body {
     max-height: 500px;
+    padding-bottom: 0;
     overflow-y: auto;
     background: linear-gradient(white 15px, rgba(255, 255, 255, 0)) 0 0/100% 50px, radial-gradient(at top, rgba(0, 0, 0, 0.2), transparent 70%) 0 0/100% 15px, linear-gradient(to top, white 15px, rgba(255, 255, 255, 0)) bottom/100% 50px, radial-gradient(at bottom, rgba(0, 0, 0, 0.2), transparent 70%) bottom/100% 15px;
     background-repeat: no-repeat;
@@ -1375,4 +1380,9 @@ table.dataTable {
     color: #2e4592;
     background: #e5e5e5;
     border-radius: 40px; }
+  .ticket-list-modal .attachments .item-title {
+    display: inline-block; }
+  .ticket-list-modal .attachments .list-inline {
+    display: inline-block;
+    margin-left: .5rem; }
 

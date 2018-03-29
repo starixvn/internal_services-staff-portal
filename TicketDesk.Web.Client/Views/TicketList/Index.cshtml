@@ -29,14 +29,14 @@
             @using (Html.BeginForm("TicketList", "TicketList", FormMethod.Post, new { @class = "form-inline filter" }))
             {
                 <div class="form-group">
-                    @Html.LabelFor(x => x.Status)
+                    @Html.LabelFor(x => x.Status, new { @class = "label-filter" })
                     <div class='input-group dropdown'>
                         @Html.EnumDropDownListFor(x => x.Status, @Resources.All, new { @class = "form-control" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(x => x.TicketType)
+                    @Html.LabelFor(x => x.TicketType, new { @class = "label-filter" })
                     <div class='input-group dropdown-large'>
                         @Html.EnumDropDownListFor(x => x.TicketType, @Resources.All, new { @class = "form-control" })
                     </div>

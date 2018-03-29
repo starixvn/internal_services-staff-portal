@@ -19,7 +19,7 @@
 }
 
 .filter-row {
-    margin: 0 auto 1rem;
+    margin: 0 auto .5rem;
     width: 100%;
     display: flex;
     flex: 0 1 auto;
@@ -32,6 +32,10 @@
         font-weight: 500;
         color: #777;
         margin-bottom: 2px;
+    }
+
+    > div {
+        margin-bottom: .5rem;
     }
 
     > div:not(.button-filter) {
@@ -172,7 +176,7 @@
 }
 
 .select2-container--default .select2-results > .select2-results__options {
-    max-height: 210px;
+    max-height: 220px;
 }
 
 .checkbox {
@@ -256,7 +260,13 @@
     .tag-editor-delete {
         background: transparent;
         border-radius: 50%;
-        line-height: 1;
+        line-height: 1;  
+              
+        &:hover {
+            i:before {
+                color: #bf141a;
+            }
+        }
 
         i:before {
             font-family: 'icomoon' !important;

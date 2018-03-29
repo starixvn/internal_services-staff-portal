@@ -112,6 +112,7 @@
 
     .modal-body {
         max-height: 500px;
+        padding-bottom: 0;
         overflow-y: auto;
         background: linear-gradient(white 15px, hsla(0,0%,100%,0)) 0 0 / 100% 50px, 
             radial-gradient(at top, rgba(0,0,0,.2), transparent 70%) 0 0 / 100% 15px, 
@@ -140,5 +141,16 @@
         color: #2e4592;
         background: #e5e5e5;
         border-radius: 40px;
+    }
+
+    .attachments {
+        .item-title {
+            display: inline-block;
+        }
+
+        .list-inline {
+            display: inline-block;
+            margin-left: .5rem;
+        }
     }
 }
