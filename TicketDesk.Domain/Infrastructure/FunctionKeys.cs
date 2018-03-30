@@ -10,16 +10,16 @@
 
         public const string FileManagement = "FileManagement";
 
-        #region Ticket Types
+        ////#region Ticket Types
 
-        public const string Facility = "Facility";
-        public const string Feedback = "Feedback";
-        public const string Hardware = "Hardware";
-        public const string Software = "Software";
-        public const string CustomerSupport = "CustomerSupport";
-        public const string Incident = "Incident";
+        ////public const string Facility = "Facility";
+        ////public const string Feedback = "Feedback";
+        ////public const string Hardware = "Hardware";
+        ////public const string Software = "Software";
+        ////public const string CustomerSupport = "CustomerSupport";
+        ////public const string Incident = "Incident";
 
-        #endregion Ticket Types
+        ////#endregion Ticket Types
 
         #region Admin
 
