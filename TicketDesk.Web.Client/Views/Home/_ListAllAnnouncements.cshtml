@@ -36,7 +36,7 @@
                     announcementClass += " unread";
                 }
 
-                <tr class="@announcementClass" data-id="@unreadId" data-href="@Url.Action("SaveAndCountTotalUnreadAnnouncement", "NapUserSetting", new { id = unreadId})">
+                <tr class="@announcementClass" data-id="@unreadId" data-href="@Url.Action("SaveAndCountTotalUnreadAnnouncement", "Home", new { id = unreadId})">
                     <td class="text-center">@(index + 1)</td>
                     <td>
                         <span>@announcement.PublishedDateTime.Value.ToString("g") @announcement.Id</span><br>

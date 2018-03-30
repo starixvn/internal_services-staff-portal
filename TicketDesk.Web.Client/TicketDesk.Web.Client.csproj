@@ -367,7 +367,7 @@
     <Compile Include="Controllers\IdUploaderController.cs" />
     <Compile Include="Areas\Admin\Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\MailTemplateController.cs" />
-    <Compile Include="Controllers\NapUserSettingController.cs" />
+    <Compile Include="Controllers\UserSettingController.cs" />
     <Compile Include="Controllers\FirstRunSetupController.cs" />
     <Compile Include="Controllers\ReferenceController.cs" />
     <Compile Include="Controllers\FileController.cs" />

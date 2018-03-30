@@ -56,21 +56,23 @@
         {
             var criteria = viewModel.GetAnnouncementsCriteria();
             var announcements = announcementService.GetAnnouncements(criteria);
-            ////announcements = announcementService.CalculateAnnouncementsReadStatus(
-            ////    announcements,
-            ////    NapUserSetting.SettingObject.ReadAnnouncements);
             return PartialView("_ListAllAnnouncements", announcements.OrderByDescending(x => x.CreatedDateTime).ToList());
         }
 
         public ActionResult GetListAnnouncementByReadState(bool isUnreadOnly)
         {
             var announcements = announcementService.GetHomeAnnouncements();
-            ////announcements = announcementService.CalculateAnnouncementsReadStatus(
-            ////        announcements,
-            ////        NapUserSetting.SettingObject.ReadAnnouncements);
 
             announcements = isUnreadOnly ? announcements.Where(x => !x.IsRead).ToList() : announcements.Take(10).ToList();
             return PartialView("_AnnouncementListHomePage", announcements);
+        }
+
+        public ActionResult SaveAndCountTotalUnreadAnnouncement(int id)
+        {
+            var result = announcementService.SetAnnouncementReadStatus(id, CurrentSession.UserId);
+            var unreadQuantity = announcementService.GetHomeAnnouncements().Count(x => !x.IsRead);
+
+            return Json(new { result, unreadQuantity }, JsonRequestBehavior.AllowGet);
         }
 
         [ChildActionOnly]

@@ -22,7 +22,7 @@
 
                 if (announcement.PublishedDateTime != null)
                 {
-                <tr class="@announcementClass" data-id="@unreadId" data-href="@Url.Action("SaveAndCountTotalUnreadAnnouncement", "NapUserSetting", new { id = unreadId})">
+                <tr class="@announcementClass" data-id="@unreadId" data-href="@Url.Action("SaveAndCountTotalUnreadAnnouncement", "Home", new { id = unreadId})">
                     <td class="date"><span class="sign"></span>@announcement.PublishedDateTime.Value.ToShortDateString()</td>
                     <td class="time">@announcement.PublishedDateTime.Value.ToShortTimeString()</td>
                     <td class="show-text">@announcement.Message</td>
