@@ -8,6 +8,7 @@
     using Client.Controllers;
     using Core.Enumerations;
     using Core.Resources;
+    using Domain.Extensions;
     using Domain.Infrastructure;
     using Domain.Model;
     using Fanex.NAP.Core.Business;
@@ -124,7 +125,7 @@
                     selectList.Add(new SelectListItem
                     {
                         Value = ((int)type).ToString(),
-                        Text = type.ToString()
+                        Text = EnumExtensions.GetDisplayName(type)
                     });
                 }
             }
