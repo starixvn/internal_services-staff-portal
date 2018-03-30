@@ -18,12 +18,8 @@
 
         bool DeleteAnnouncement(int id);
 
-        int[] GetAllAnnouncementIds();
-
-        int CountUnreadAnnouncement(string readAnnouncements);
-
         IEnumerable<Announcement> GetHomeAnnouncements();
 
-        IEnumerable<Announcement> CalculateAnnouncementsReadStatus(IEnumerable<Announcement> announcements, string readAnnouncements);
+        bool SetAnnouncementReadStatus(int announcementId, int userId, bool isRead = true);
     }
 }

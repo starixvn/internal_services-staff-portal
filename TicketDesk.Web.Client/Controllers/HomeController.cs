@@ -26,9 +26,10 @@
         [NapAuth(FunctionKey = FunctionKeys.ListAssignedTicket, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            var announcements = announcementService.GetHomeAnnouncements();
             var homeViewModel = new HomeViewModel
             {
-                UnreadAnnouncementQuatity = announcementService.CountUnreadAnnouncement(NapUserSetting.SettingObject.ReadAnnouncements)
+                UnreadAnnouncementQuatity = announcements.Count(x => !x.IsRead)
             };
 
             return View(homeViewModel);
@@ -55,18 +56,18 @@
         {
             var criteria = viewModel.GetAnnouncementsCriteria();
             var announcements = announcementService.GetAnnouncements(criteria);
-            announcements = announcementService.CalculateAnnouncementsReadStatus(
-                announcements,
-                NapUserSetting.SettingObject.ReadAnnouncements);
+            ////announcements = announcementService.CalculateAnnouncementsReadStatus(
+            ////    announcements,
+            ////    NapUserSetting.SettingObject.ReadAnnouncements);
             return PartialView("_ListAllAnnouncements", announcements.OrderByDescending(x => x.CreatedDateTime).ToList());
         }
 
         public ActionResult GetListAnnouncementByReadState(bool isUnreadOnly)
         {
             var announcements = announcementService.GetHomeAnnouncements();
-            announcements = announcementService.CalculateAnnouncementsReadStatus(
-                    announcements,
-                    NapUserSetting.SettingObject.ReadAnnouncements);
+            ////announcements = announcementService.CalculateAnnouncementsReadStatus(
+            ////        announcements,
+            ////        NapUserSetting.SettingObject.ReadAnnouncements);
 
             announcements = isUnreadOnly ? announcements.Where(x => !x.IsRead).ToList() : announcements.Take(10).ToList();
             return PartialView("_AnnouncementListHomePage", announcements);

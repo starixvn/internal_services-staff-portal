@@ -1,5 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
+    using System.Linq;
     using System.Web.Mvc;
     using Service.Interface;
 
@@ -24,8 +25,8 @@
 
         public ActionResult SaveAndCountTotalUnreadAnnouncement(int id)
         {
-            var result = napUserSettingService.UpdateUnreadAnnouncements(CurrentSession.UserId, id);
-            var unreadQuantity = announcementService.CountUnreadAnnouncement(NapUserSetting.SettingObject.ReadAnnouncements);
+            var result = announcementService.SetAnnouncementReadStatus(id, CurrentSession.UserId);
+            var unreadQuantity = announcementService.GetHomeAnnouncements().Count();
 
             return Json(new { result, unreadQuantity }, JsonRequestBehavior.AllowGet);
         }

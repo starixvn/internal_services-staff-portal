@@ -43,60 +43,60 @@
                 announcements = announcements.Where(x => x.State == criteria.State).Decompile();
             }
 
+            GetAnnouncementReadStatus(announcements);
+
             return announcements;
+        }
+
+        public bool SetAnnouncementReadStatus(int announcementId, int userId, bool isRead = true)
+        {
+            var userReadAnnouncement =
+                context.UserReadAnnouncements.FirstOrDefault(x => x.UserId == userId && x.AnnouncementId == announcementId);
+
+            if (userReadAnnouncement != null)
+            {
+                userReadAnnouncement.IsRead = isRead;
+            }
+            else
+            {
+                userReadAnnouncement = new UserReadAnnouncement
+                {
+                    UserId = userId,
+                    AnnouncementId = announcementId,
+                    IsRead = isRead
+                };
+
+                context.UserReadAnnouncements.Add(userReadAnnouncement);
+            }
+
+            return context.SaveChanges() > 0;
         }
 
         public IEnumerable<Announcement> GetHomeAnnouncements()
         {
-            return context.Announcements
+            var announcements = context.Announcements
                 .Where(x => x.State == AnnouncementState.Published)
                 .OrderByDescending(x => x.PublishedDateTime)
                 .Decompile();
+
+            GetAnnouncementReadStatus(announcements);
+
+            return announcements;
         }
 
-        public IEnumerable<Announcement> CalculateAnnouncementsReadStatus(
-            IEnumerable<Announcement> announcements,
-            string readAnnouncements)
+        private void GetAnnouncementReadStatus(IQueryable<Announcement> announcements)
         {
-            if (!string.IsNullOrEmpty(readAnnouncements))
-            {
-                var readAnnouncementIds = readAnnouncements
-                .Split(',')
-                .Distinct()
-                .Select(int.Parse).ToList();
+            var readAnnouncementIds = context.UserReadAnnouncements
+                            .Where(x => x.UserId == context.SecurityProvider.NapCurrentUserId && x.IsRead)
+                            .Select(x => x.AnnouncementId);
 
+            if (readAnnouncementIds.Any())
+            {
                 foreach (var announcement in announcements)
                 {
                     announcement.IsRead = readAnnouncementIds.Contains(announcement.Id);
                 }
             }
-            else
-            {
-                foreach (var announcement in announcements)
-                {
-                    announcement.IsRead = false;
-                }
-            }
-
-            return announcements;
-        }
-
-        public int CountUnreadAnnouncement(string readAnnouncements)
-        {
-            var publishedAnnouncementIds = context.Announcements
-                .Where(x => x.State == AnnouncementState.Published)
-                .Decompile()
-                .Select(x => x.Id.ToString());
-
-            int result = publishedAnnouncementIds.Count();
-
-            if (!string.IsNullOrEmpty(readAnnouncements))
-            {
-                var readAnnouncementIds = readAnnouncements.Split(',');
-                result = result - publishedAnnouncementIds.Intersect(readAnnouncementIds).Count();
-            }
-
-            return result;
         }
 
         public bool AddAnnouncement(Announcement announcement)
@@ -162,11 +162,6 @@
             }
 
             return result;
-        }
-
-        public int[] GetAllAnnouncementIds()
-        {
-            return context.Announcements.Where(a => a.PublishedDateTime < DateTime.Now).Select(a => a.Id).ToArray();
         }
     }
 }
