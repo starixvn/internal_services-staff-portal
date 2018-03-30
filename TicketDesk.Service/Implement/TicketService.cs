@@ -31,8 +31,9 @@
             var userIdString = context.SecurityProvider.CurrentUserId;
             var tickets = context.Tickets
                 .Where(x => x.CreatedBy == userIdString
-                            && (x.TicketStatus == TicketStatus.New
-                                || x.TicketStatus == TicketStatus.InProgress))
+                            && (x.TicketStatus == TicketStatus.New 
+                                || x.TicketStatus == TicketStatus.InProgress
+                                || x.TicketStatus == TicketStatus.Pending))
                 .OrderBy(x => x.CategoryId)
                 .ThenByDescending(x => x.TicketId)
                 .GroupBy(x => x.CategoryId);
