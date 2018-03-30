@@ -93,7 +93,7 @@ var formhandler = {
             });
     },
 
-    enableFormOnErrorModalDimissed: function() {
+    enableFormOnErrorModalDimissed: function () {
         $("#error-modal").on("hidden.bs.modal",
             function () {
                 $(".content form input[type=submit]").prop("disabled", false);
@@ -125,13 +125,17 @@ var formhandler = {
                                 if (data.result === true) {
                                     $("#notification-modal").modal();
                                 } else {
-                                    var text = "";
                                     if (data.errors !== undefined) {
+                                        var validator = $(".content form").validate();
+                                        var errors = {};
+
                                         data.errors.forEach(function (item, index) {
-                                            text = text + item + "\n";
+                                            errors[item.key] = item.errorMessage;
                                         });
-                                        $("#error-modal div.modal-body > p").text(text);
-                                        $("#error-modal").modal();
+
+                                        validator.showErrors(errors);
+
+                                        $(".content form input[type=submit]").prop("disabled", false);
                                     }
                                 }
                             },

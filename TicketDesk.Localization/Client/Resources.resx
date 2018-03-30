@@ -690,4 +690,7 @@
   <data name="MaximumNumberOfFileErrorMessage" xml:space="preserve">
     <value>Maximum number of files: {0}</value>
   </data>
+  <data name="NewTicketInValidEmailErrorMessage" xml:space="preserve">
+    <value>Email(s) is not valid</value>
+  </data>
 </root>

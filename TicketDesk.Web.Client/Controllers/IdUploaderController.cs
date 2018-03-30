@@ -64,9 +64,9 @@
             return Json(new
             {
                 result,
-                errors = ModelState.Values.SelectMany(m => m.Errors)
-                    .Select(e => e.ErrorMessage)
-                    .ToList()
+                errors = ModelState
+                    .Where(item => item.Value.Errors.Any())
+                    .Select(item => new { item.Key, item.Value.Errors.FirstOrDefault()?.ErrorMessage })
             });
         }
     }

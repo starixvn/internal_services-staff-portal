@@ -690,4 +690,7 @@
   <data name="MaximumNumberOfFileErrorMessage" xml:space="preserve">
     <value>Tổng số file được phép: {0}</value>
   </data>
+  <data name="NewTicketInValidEmailErrorMessage" xml:space="preserve">
+    <value>Địa chỉ email không hợp lệ</value>
+  </data>
 </root>

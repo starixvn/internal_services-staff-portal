@@ -36,14 +36,6 @@
             this.mailService = mailService;
         }
 
-        ////[HttpPost]
-        ////[NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
-        ////public JsonResult ChangeTicketSubscription(int ticketId)
-        ////{
-        ////    var isSubscribed = ticketService.UpdateTicketSubscription(ticketId, CurrentSession.UserId.ToString());
-        ////    return new JsonCamelCaseResult { Data = new { IsSubscribed = isSubscribed } };
-        ////}
-
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public ActionResult FacilityTicketDetails(Ticket ticket)
         {
@@ -80,7 +72,6 @@
                 AllowToChooseRecipient = ticketCategoryService.GetTicketCategory((int)TicketCategoryTypes.Facility).IsAllowAdditionalMail
             };
 
-            // TODO: Bug can happen here
             // Mapping object from custom field to ViewModel manually
             var item = new FacilityItem
             {
@@ -111,7 +102,7 @@
             {
                 ModelState.AddModelError(
                     $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
-                    Resources.ToEmailErrorMessage);
+                    Resources.NewTicketInValidEmailErrorMessage);
             }
 
             if (ModelState.IsValid)
@@ -130,9 +121,9 @@
             return Json(new
             {
                 result,
-                errors = ModelState.Values.SelectMany(m => m.Errors)
-                    .Select(e => e.ErrorMessage)
-                    .ToList()
+                errors = ModelState
+                    .Where(item => item.Value.Errors.Any())
+                    .Select(item => new { item.Key, item.Value.Errors.FirstOrDefault()?.ErrorMessage })
             });
         }
 
@@ -172,7 +163,7 @@
             {
                 ModelState.AddModelError(
                     $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
-                    Resources.ToEmailErrorMessage);
+                    Resources.NewTicketInValidEmailErrorMessage);
             }
 
             if (ModelState.IsValid)
@@ -190,9 +181,9 @@
             return Json(new
             {
                 result,
-                errors = ModelState.Values.SelectMany(m => m.Errors)
-                    .Select(e => e.ErrorMessage)
-                    .ToList()
+                errors = ModelState
+                    .Where(item => item.Value.Errors.Any())
+                    .Select(item => new { item.Key, item.Value.Errors.FirstOrDefault()?.ErrorMessage })
             });
         }
 
@@ -234,7 +225,7 @@
             {
                 ModelState.AddModelError(
                     $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
-                    Resources.ToEmailErrorMessage);
+                    Resources.NewTicketInValidEmailErrorMessage);
             }
 
             if (ModelState.IsValid)
@@ -252,9 +243,9 @@
             return Json(new
             {
                 result,
-                errors = ModelState.Values.SelectMany(m => m.Errors)
-                    .Select(e => e.ErrorMessage)
-                    .ToList()
+                errors = ModelState
+                    .Where(item => item.Value.Errors.Any())
+                    .Select(item => new { item.Key, item.Value.Errors.FirstOrDefault()?.ErrorMessage })
             });
         }
 
@@ -291,7 +282,7 @@
             {
                 ModelState.AddModelError(
                     $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
-                    Resources.ToEmailErrorMessage);
+                    Resources.NewTicketInValidEmailErrorMessage);
             }
 
             if (ModelState.IsValid)
@@ -310,9 +301,9 @@
             return Json(new
             {
                 result,
-                errors = ModelState.Values.SelectMany(m => m.Errors)
-                    .Select(e => e.ErrorMessage)
-                    .ToList()
+                errors = ModelState
+                    .Where(item => item.Value.Errors.Any())
+                    .Select(item => new { item.Key, item.Value.Errors.FirstOrDefault()?.ErrorMessage })
             });
         }
 
@@ -349,7 +340,7 @@
             {
                 ModelState.AddModelError(
                     $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
-                    Resources.ToEmailErrorMessage);
+                    Resources.NewTicketInValidEmailErrorMessage);
             }
 
             if (ModelState.IsValid)
@@ -367,9 +358,9 @@
             return Json(new
             {
                 result,
-                errors = ModelState.Values.SelectMany(m => m.Errors)
-                    .Select(e => e.ErrorMessage)
-                    .ToList()
+                errors = ModelState
+                    .Where(item => item.Value.Errors.Any())
+                    .Select(item => new { item.Key, item.Value.Errors.FirstOrDefault()?.ErrorMessage })
             });
         }
 
@@ -409,7 +400,7 @@
             {
                 ModelState.AddModelError(
                     $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
-                    Resources.ToEmailErrorMessage);
+                    Resources.NewTicketInValidEmailErrorMessage);
             }
 
             if (ModelState.IsValid)
@@ -430,16 +421,15 @@
             return Json(new
             {
                 result,
-                errors = ModelState.Values.SelectMany(m => m.Errors)
-                    .Select(e => e.ErrorMessage)
-                    .ToList()
+                errors = ModelState
+                    .Where(item => item.Value.Errors.Any())
+                    .Select(item => new { item.Key, item.Value.Errors.FirstOrDefault()?.ErrorMessage })
             });
         }
 
         [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
         public ActionResult TicketEvents(int ticketId)
         {
-            // WARNING! This is also used as a child action and cannot be made async in MVC 5
             var ticket = ticketService.GetTicket(ticketId);
             return PartialView("_TicketEvents", ticket?.TicketEvents);
         }
