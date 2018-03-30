@@ -71,25 +71,20 @@
                 }
             }
 
-            <div class="facility-item">
-                @{
-                    var groupedCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId != null).GroupBy(x => x.GroupId);
-                    foreach (IGrouping<string, CustomFieldValue> group in groupedCustomFieldValues)
+            @{
+                var groupedCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId != null).GroupBy(x => x.GroupId);
+                foreach (IGrouping<string, CustomFieldValue> group in groupedCustomFieldValues)
+                {
+                    var customFieldValues = group.ToList();
+                    foreach (var customFieldValue in customFieldValues)
                     {
-                        var customFieldValues = group.ToList();
-
-                        <ul class="detail-item">
-                            @foreach (var customFieldValue in customFieldValues)
-                            {
-                                <li>
-                                    <span class="item-title">@customFieldValue.CustomField.Name: </span>
-                                    <span class="item-content">@customFieldValue.Value</span>
-                                </li>
-                            }
-                        </ul>
+                        <div class="detail-item">
+                            <span class="item-title">@customFieldValue.CustomField.Name: </span>
+                            <span class="item-content">@customFieldValue.Value</span>
+                        </div>
                     }
                 }
-            </div>
+            }
 
             @if (Model.Attachments.Any())
             {

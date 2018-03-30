@@ -2,7 +2,6 @@
 @using TicketDesk.Domain.Extensions
 @using TicketDesk.Core.Enumerations
 @using TicketDesk.Localization.Views.Ticket
-@using TicketDesk.Localization.Domain
 @using TicketDesk.Domain.Model
 @model SingleTicketViewModel
 
@@ -26,17 +25,12 @@
 
     <div class="detail-item">
         <span class="item-title">@Resources.Domain_Model_Ticket_Status: </span>
-        <span class="item-content">@Model.Ticket.TicketStatus.GetDisplayName()</span>
+        <span class="item-content">@Model.Ticket.TicketStatus.ToString()</span>
     </div>
 
     <div class="detail-item">
         <span class="item-title">@Resources.Domain_Model_Ticket_CreatedDate: </span>
         <span class="item-content">@Model.Ticket.CreatedDate</span>
-    </div>
-
-    <div class="detail-item">
-        <span class="item-title">@Strings.TicketCreatedBy: </span>
-        <span class="item-content">@Model.CreatedByUsername</span>
     </div>
 
     @{
@@ -63,16 +57,16 @@
         foreach (IGrouping<string, CustomFieldValue> group in groupedCustomFieldValues)
         {
             var customFieldValues = group.ToList();
-            <div>
-                <div class="content-block">
-                    <ul>
-                        @foreach (var customFieldValue in customFieldValues)
-                        {
-                            <li><strong>@customFieldValue.CustomField.Name: </strong><span>@customFieldValue.Value</span></li>
-                        }
-                    </ul>
+            
+
+            foreach (var customFieldValue in customFieldValues)
+            {
+                <div class="detail-item">
+                    <span class="item-title">@customFieldValue.CustomField.Name: </span>
+                    <span class="item-content">@customFieldValue.Value</span>
                 </div>
-            </div>
+            }
+            
         }
     }
 

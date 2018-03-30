@@ -1369,10 +1369,6 @@ table.dataTable {
     background-attachment: local, scroll, local, scroll; }
   .ticket-list-modal .modal-footer {
     padding-top: 2rem; }
-  .ticket-list-modal .detail-item {
-    padding-bottom: 5px; }
-    .ticket-list-modal .detail-item .item-title {
-      font-weight: 700; }
   .ticket-list-modal .file-attachments {
     display: inline-block;
     margin-bottom: 5px;
@@ -1385,4 +1381,24 @@ table.dataTable {
   .ticket-list-modal .attachments .list-inline {
     display: inline-block;
     margin-left: .5rem; }
+  .ticket-list-modal .detail-item {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #dcdcdc;
+    border-bottom: 0; }
+    .ticket-list-modal .detail-item:last-child {
+      border-bottom: 1px solid #dcdcdc; }
+    .ticket-list-modal .detail-item .item-title {
+      width: 150px;
+      padding: .8rem;
+      font-weight: 700;
+      background: #f2f2f2;
+      border-right: 1px solid #dcdcdc; }
+    .ticket-list-modal .detail-item .item-content {
+      width: calc(100% - 150px);
+      padding: .8rem; }
+    .ticket-list-modal .detail-item.attachments ul {
+      margin: 0;
+      padding-top: .8rem;
+      padding-left: .5rem; }
 
