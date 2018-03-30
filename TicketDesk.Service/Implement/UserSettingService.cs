@@ -1,11 +1,9 @@
 ﻿namespace TicketDesk.Service.Implement
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Domain;
     using Interface;
 
-    public class NapUserSettingService : EntityFrameworkBaseService, INapUserSettingService
+    public class UserSettingService : EntityFrameworkBaseService, IUserSettingService
     {
         private NapUserSetting GetNapUserSetting(int userId)
         {
@@ -47,31 +45,6 @@
             var currentSetting = CreateNapUserSetting(userId);
 
             currentSetting.SettingObject.IsSidebarExpanded = isSideBarExpanded;
-
-            return UpdateNapUserSetting(currentSetting);
-        }
-
-        public bool UpdateUnreadAnnouncements(int userId, int alreadyReadAnnouncementId)
-        {
-            var currentSetting = CreateNapUserSetting(userId);
-
-            var readAnnouncementIds = new List<int>();
-            if (!string.IsNullOrEmpty(currentSetting.SettingObject.ReadAnnouncements))
-            {
-                readAnnouncementIds = currentSetting.SettingObject.ReadAnnouncements
-                    .Split(',')
-                    .Distinct()
-                    .Select(int.Parse)
-                    .ToList();
-
-                if (!readAnnouncementIds.Contains(alreadyReadAnnouncementId))
-                {
-                    readAnnouncementIds.Add(alreadyReadAnnouncementId);
-                    readAnnouncementIds.Sort();
-                }
-            }
-
-            currentSetting.SettingObject.ReadAnnouncements = string.Join(",", readAnnouncementIds);
 
             return UpdateNapUserSetting(currentSetting);
         }

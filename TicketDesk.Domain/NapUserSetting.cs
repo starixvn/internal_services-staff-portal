@@ -31,7 +31,5 @@
     public class NapUserSettingObject
     {
         public bool IsSidebarExpanded { get; set; }
-
-        public string ReadAnnouncements { get; set; }
     }
 }

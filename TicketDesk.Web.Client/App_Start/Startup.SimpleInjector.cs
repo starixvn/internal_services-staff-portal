@@ -93,7 +93,7 @@
             container.Register<IDataConfigurationService>(() => new DataConfigurationService(), hybridLifestyle);
             container.Register<IShopService>(() => new ShopService(), hybridLifestyle);
             container.Register<IIdUploaderService>(() => new IdUploaderService(), hybridLifestyle);
-            container.Register<INapUserSettingService>(() => new NapUserSettingService(), hybridLifestyle);
+            container.Register<IUserSettingService>(() => new UserSettingService(), hybridLifestyle);
             container.Register<ICustomFieldService>(() => new CustomFieldService(), hybridLifestyle);
             container.Register<ITicketCategoryService>(() => new TicketCategoryService(), hybridLifestyle);
             container.Register<IMailService>(() => new MailService(new CustomFieldService(), new TicketEventService()), hybridLifestyle);

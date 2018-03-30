@@ -317,6 +317,10 @@
     <Compile Include="Migrations\201803300137487_Nexcel_UserReadAnnouncement.Designer.cs">
       <DependentUpon>201803300137487_Nexcel_UserReadAnnouncement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803300947585_Nexcel_RemoveTicketDeskUserSettings.cs" />
+    <Compile Include="Migrations\201803300947585_Nexcel_RemoveTicketDeskUserSettings.Designer.cs">
+      <DependentUpon>201803300947585_Nexcel_RemoveTicketDeskUserSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DemoDataManager.cs" />
     <Compile Include="Infrastructure\PropertyUtility.cs" />
     <Compile Include="Infrastructure\TdDomainSecurityProviderBase.cs" />
@@ -505,6 +509,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803300137487_Nexcel_UserReadAnnouncement.resx">
       <DependentUpon>201803300137487_Nexcel_UserReadAnnouncement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803300947585_Nexcel_RemoveTicketDeskUserSettings.resx">
+      <DependentUpon>201803300947585_Nexcel_RemoveTicketDeskUserSettings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

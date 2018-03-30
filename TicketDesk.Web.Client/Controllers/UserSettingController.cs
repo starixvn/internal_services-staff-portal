@@ -5,16 +5,16 @@
 
     public class UserSettingController : BaseController
     {
-        private readonly INapUserSettingService napUserSettingService;
+        private readonly IUserSettingService userSettingService;
 
-        public UserSettingController(INapUserSettingService napUserSettingService, IAnnouncementService announcementService)
+        public UserSettingController(IUserSettingService userSettingService, IAnnouncementService announcementService)
         {
-            this.napUserSettingService = napUserSettingService;
+            this.userSettingService = userSettingService;
         }
 
         public ActionResult SetIsSidebarExpanded(bool isSidebarExpanded)
         {
-            var result = napUserSettingService.UpdateIsSideBarExpanded(CurrentSession.UserId, isSidebarExpanded);
+            var result = userSettingService.UpdateIsSideBarExpanded(CurrentSession.UserId, isSidebarExpanded);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

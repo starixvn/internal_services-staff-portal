@@ -10,7 +10,7 @@
     {
         public static void RemoveAllData(TdDomainContext context)
         {
-            context.UserSettings.RemoveRange(context.UserSettings);
+            ////context.UserSettings.RemoveRange(context.UserSettings);
             context.TicketTags.RemoveRange(context.TicketTags);
             context.TicketEventNotifications.RemoveRange(context.TicketEventNotifications);
             context.TicketSubscribers.RemoveRange(context.TicketSubscribers);

@@ -156,7 +156,7 @@
     <Compile Include="Implement\DataConfigurationService.cs" />
     <Compile Include="Implement\IdUploaderService.cs" />
     <Compile Include="Implement\MailService.cs" />
-    <Compile Include="Implement\NapUserSettingService.cs" />
+    <Compile Include="Implement\UserSettingService.cs" />
     <Compile Include="Implement\ReferenceService.cs" />
     <Compile Include="Implement\FileManagerService.cs" />
     <Compile Include="Implement\ShopService.cs" />
@@ -167,7 +167,7 @@
     <Compile Include="Interface\ICustomFieldService.cs" />
     <Compile Include="Interface\IDataConfigurationService.cs" />
     <Compile Include="Interface\IIdUploaderService.cs" />
-    <Compile Include="Interface\INapUserSettingService.cs" />
+    <Compile Include="Interface\IUserSettingService.cs" />
     <Compile Include="Interface\IReferenceService.cs" />
     <Compile Include="Interface\IFileManagerService.cs" />
     <Compile Include="Interface\IShopService.cs" />

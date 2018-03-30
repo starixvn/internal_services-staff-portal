@@ -5,7 +5,6 @@
     using System.Web.Mvc;
     using Core.Enumerations;
     using Domain.Infrastructure;
-    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Localization.Client;
