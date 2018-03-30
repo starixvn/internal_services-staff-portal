@@ -22,7 +22,6 @@ namespace TicketDesk.Domain
             : this()
         {
             SecurityProvider = securityProvider;
-            ////TicketActions = TicketActionManager.GetInstance(SecurityProvider);
         }
 
         public TdDomainContext()
@@ -36,26 +35,8 @@ namespace TicketDesk.Domain
             // This ctor can be removed or made internal by creating a class that implements IDbContextFactory<TicketDeskContext>
             // As I understand it, if the factory exists EF will use it instead of looking for a public ctor with no params
         }
-
-        /// <summary>
-        /// Occurs when tickets have been changed and persisted to the database.
-        /// </summary>
-        /// <remarks>
-        /// WARNING: Do not to register events from instance objects unless you
-        /// are sure they will de-register when they go out of scope. The
-        /// registered delegate will keep a reference to the isntance that that
-        /// registered. You can cause memory leaks if you aren't careful with
-        /// static events.
-        /// </remarks>
-        ////public static event EventHandler<IEnumerable<Ticket>> TicketsChanged;
-
-        ////public static event EventHandler<IEnumerable<Ticket>> TicketsCreated;
-
-        ////public static event EventHandler<IEnumerable<TicketEventNotification>> NotificationsCreated;
-
+        
         public TdDomainSecurityProviderBase SecurityProvider { get; }
-
-        ////public TicketActionManager TicketActions { get; }
 
         public DbSet<Shop> Shops { get; set; }
 
@@ -92,11 +73,11 @@ namespace TicketDesk.Domain
 
         public DbSet<Reference> References { get; set; }
 
-        ////public DbSet<ShopManagement> ShopManagement { get; set; }
-
         public DbSet<NapUserSetting> NapUserSettings { get; set; }
 
         public DbSet<CustomFieldListValue> CustomFieldListValues { get; set; }
+
+        public DbSet<UserReadAnnouncement> UserReadAnnouncements { get; set; }
 
         public UserSettingsManager UserSettingsManager => _userSettingsManager ?? (_userSettingsManager = new UserSettingsManager(this));
 
@@ -139,24 +120,6 @@ namespace TicketDesk.Domain
                 ApplicationSettings.Add(value);
             }
         }
-
-        ////private static void RaiseTicketsCreated(TdDomainContext sender, IEnumerable<Ticket> tickets)
-        ////{
-        ////    // TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
-        ////    TicketsCreated?.Invoke(sender, tickets);
-        ////}
-
-        ////private static void RaiseTicketsChanged(TdDomainContext sender, IEnumerable<Ticket> tickets)
-        ////{
-        ////    // TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
-        ////    TicketsChanged?.Invoke(sender, tickets);
-        ////}
-
-        ////private static void RaiseNotificationsCreated(TdDomainContext sender, IEnumerable<TicketEventNotification> notifications)
-        ////{
-        ////    // TODO: Static events have their (rare) uses, but this should use a service bus or formal pub/sub mechanism eventually
-        ////    NotificationsCreated?.Invoke(sender, notifications);
-        ////}
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -202,242 +165,5 @@ namespace TicketDesk.Domain
             var oc = ((IObjectContextAdapter)this).ObjectContext;
             return oc.CreateObjectSet<T>();
         }
-
-        ////protected override DbEntityValidationResult ValidateEntity(DbEntityEntry entityEntry, IDictionary<object, object> items)
-        ////{
-        ////    var result = new DbEntityValidationResult(entityEntry, new List<DbValidationError>());
-
-        ////    // skip the custom validation if a security provider wasn't supplied
-        ////    if (SecurityProvider != null && entityEntry.Entity is Ticket && entityEntry.State == EntityState.Added)
-        ////    {
-        ////        var ticket = (Ticket)entityEntry.Entity;
-        ////        if (!TicketActions.IsTicketActivityValid(ticket, TicketActivity.Create))
-        ////        {
-        ////            result.ValidationErrors.Add(new DbValidationError("authorization", Strings.ExceptionSecurityUserCannotCreateNewTicket));
-        ////        }
-        ////    }
-
-        ////    return result.ValidationErrors.Count > 0 ? result : base.ValidateEntity(entityEntry, items);
-        ////}
-
-        ////public override async Task<int> SaveChangesAsync()
-        ////{
-        ////    var pendingEntityChanges = OnSaving();
-        ////    var result = await base.SaveChangesAsync().ConfigureAwait(false);
-        ////    if (result > 0)
-        ////    {
-        ////        RaiseEntityChangeEvents(pendingEntityChanges);
-        ////    }
-
-        ////    return result;
-        ////}
-
-        ////public override int SaveChanges()
-        ////{
-        ////    var pendingEntityChanges = OnSaving();
-        ////    var result = base.SaveChanges();
-        ////    if (result > 0)
-        ////    {
-        ////        RaiseEntityChangeEvents(pendingEntityChanges);
-        ////    }
-
-        ////    return result;
-        ////}
-
-        ////private void RaiseEntityChangeEvents(PendingEventEntities pendingEntityChanges)
-        ////{
-        ////    RaiseTicketsCreated(this, pendingEntityChanges.PendingNewTickets);
-        ////    RaiseTicketsChanged(this, pendingEntityChanges.PendingTicketChanges);
-        ////    RaiseNotificationsCreated(this, pendingEntityChanges.PendingEventNotificationChanges);
-        ////}
-
-        ////private PendingEventEntities OnSaving()
-        ////{
-        ////    var pending = new PendingEventEntities
-        ////    {
-        ////        PendingTicketChanges = GetTicketChanges(),
-        ////        PendingNewTickets = GetNewTickets()
-        ////    };
-        ////    if (SecurityProvider != null)
-        ////    {
-        ////        ProcessDeletedProjects();
-        ////        PreProcessNewTickets();
-        ////        PreProcessModifiedTickets(pending.PendingTicketChanges);
-
-        ////        // IMPORTANT! ticket event changes may not exist until after preprocess methods above
-        ////        // are called. Order dependent operations!
-        ////        CreateEventNotifications();
-        ////        pending.PendingEventNotificationChanges = GetTicketEventNotificationChanges().ToArray();
-        ////    }
-
-        ////    return pending;
-        ////}
-
-        ////private void CreateEventNotifications()
-        ////{
-        ////    var pendingEventChanges = GetTicketEventChanges().ToArray();
-        ////    foreach (var change in pendingEventChanges)
-        ////    {
-        ////        change.CreateSubscriberEventNotifications();
-        ////    }
-        ////}
-
-        ////private void PreProcessModifiedTickets(IEnumerable<Ticket> ticketChanges)
-        ////{
-        ////    foreach (var change in ticketChanges)
-        ////    {
-        ////        PrePopulateModifiedTicket(change);
-        ////    }
-        ////}
-
-        ////private void ProcessDeletedProjects()
-        ////{
-        ////    var projectChanges = ChangeTracker.Entries<Shop>()
-        ////        .Where(t => t.State == EntityState.Deleted)
-        ////        .Select(t => t.Entity);
-        ////    foreach (var change in projectChanges)
-        ////    {
-        ////        var usersToUpdate = UserSettings.Where(u => u.SelectedProjectId == change.ShopId);
-        ////        foreach (var user in usersToUpdate)
-        ////        {
-        ////            user.SelectedProjectId = 0;
-        ////        }
-        ////    }
-        ////}
-
-        ////private void PreProcessNewTickets()
-        ////{
-        ////    var ticketChanges = ChangeTracker.Entries<Ticket>().Where(t => t.State == EntityState.Added).Select(t => t.Entity);
-
-        ////    foreach (var change in ticketChanges)
-        ////    {
-        ////        PrePopulateNewTicket(change);
-        ////    }
-        ////}
-
-        ////private void PrePopulateModifiedTicket(Ticket modifiedTicket)
-        ////{
-        ////    var o = ChangeTracker.Entries<Ticket>().Single(e => e.Entity.TicketId == modifiedTicket.TicketId);
-        ////    var now = DateTime.Now;
-
-        ////    modifiedTicket.LastUpdateBy = SecurityProvider.CurrentUserId;
-        ////    modifiedTicket.LastUpdateDate = now;
-
-        ////    // can't access orig values for new entities
-        ////    if (o.State != EntityState.Added)
-        ////    {
-        ////        var origTicket = (Ticket)o.OriginalValues.ToObject();
-
-        ////        // if status change, force update to status by/date
-        ////        if (modifiedTicket.TicketStatus != origTicket.TicketStatus)
-        ////        {
-        ////            modifiedTicket.CurrentStatusDate = now;
-        ////            modifiedTicket.CurrentStatusSetBy = SecurityProvider.CurrentUserId;
-        ////        }
-
-        ////        if (modifiedTicket.TagList != origTicket.TagList)
-        ////        {
-        ////            var tagNames = modifiedTicket.TagList.Split(',');
-        ////            var tagsInList = modifiedTicket.TicketTags.Where(ot => tagNames.Contains(ot.TagName)).ToArray();
-        ////            var tagsToKill = modifiedTicket.TicketTags.Except(tagsInList).ToArray();
-        ////            var newTags = tagNames
-        ////                .Where(tagName => tagsInList.Select(tagInList => tagInList.TagName).Contains(tagName))
-        ////                .Select(nt => new TicketTag
-        ////                {
-        ////                    TagName = nt,
-        ////                });
-        ////            TicketTags.RemoveRange(tagsToKill);
-        ////            modifiedTicket.TicketTags.AddRange(newTags);
-        ////        }
-        ////    }
-
-        ////    modifiedTicket.EnsureSubscribers();
-        ////}
-
-        ////private void PrePopulateNewTicket(Ticket newTicket)
-        ////{
-        ////    // TODO: Move this somewhere else?
-        ////    // TODO: double check owner if populated, make sure submitter can set this field if it isn't their id already
-        ////    // TODO: double check assigned if populated, make sure submitter can set this field.
-        ////    var now = DateTime.Now;
-        ////    newTicket.Owner = newTicket.Owner ?? SecurityProvider.CurrentUserId;
-        ////    newTicket.CreatedBy = SecurityProvider.CurrentUserId;
-        ////    newTicket.CreatedDate = now;
-        ////    newTicket.TicketStatus = TicketStatus.New;
-        ////    newTicket.CurrentStatusDate = now;
-        ////    newTicket.CurrentStatusSetBy = SecurityProvider.CurrentUserId;
-
-        ////    // last update info will be set by PrePopulateModifiedTicket method, no need to set it here too
-        ////    if (newTicket.TagList != null && newTicket.TagList.Any())
-        ////    {
-        ////        newTicket.TicketTags.AddRange(newTicket.TagList.Split(',').Select(tag =>
-        ////            new TicketTag
-        ////            {
-        ////                TagName = tag.Trim()
-        ////            }));
-        ////    }
-
-        ////    var act = (newTicket.Owner != SecurityProvider.CurrentUserId)
-        ////        ? TicketActivity.CreateOnBehalfOf
-        ////        : TicketActivity.Create;
-
-        ////    newTicket.TicketEvents.AddActivityEvent(
-        ////        SecurityProvider.CurrentUserId,
-        ////        act,
-        ////        null,
-        ////        null,
-        ////        SecurityProvider.GetUserDisplayName(newTicket.Owner));
-        ////    newTicket.EnsureSubscribers();
-        ////}
-
-        ////private IEnumerable<Ticket> GetNewTickets()
-        ////{
-        ////    // execute now, because after save changes this query will return no results
-        ////    return ChangeTracker.Entries<Ticket>()
-        ////        .Where(t => t.State == EntityState.Added)
-        ////        .Select(t => t.Entity)
-        ////        .ToArray();
-        ////}
-
-        ////private IEnumerable<Ticket> GetTicketChanges()
-        ////{
-        ////    var pendingEventChanges = GetTicketEventChanges();
-
-        ////    // execute now, because after save changes this query will return no results
-        ////    var pendingTicketChanges = ChangeTracker.Entries<Ticket>()
-        ////        .Where(t => t.State != EntityState.Unchanged || pendingEventChanges.Select(c => c.TicketId).Contains(t.Entity.TicketId))
-        ////        .Select(t => t.Entity)
-        ////        .ToArray();
-        ////    return pendingTicketChanges;
-        ////}
-
-        ////private IEnumerable<TicketEvent> GetTicketEventChanges()
-        ////{
-        ////    // execute now, because after save changes this query will return no results
-        ////    var pendingEventChanges =
-        ////        ChangeTracker.Entries<TicketEvent>().Where(t => t.State != EntityState.Unchanged)
-        ////        .Select(t => t.Entity)
-        ////        .ToArray();
-
-        ////    return pendingEventChanges;
-        ////}
-
-        ////private IEnumerable<TicketEventNotification> GetTicketEventNotificationChanges()
-        ////{
-        ////    var pendingEventNotificationChanges =
-        ////        ChangeTracker.Entries<TicketEventNotification>().Where(t => t.State != EntityState.Unchanged)
-        ////        .Select(t => t.Entity);
-
-        ////    return pendingEventNotificationChanges;
-        ////}
-
-        ////private class PendingEventEntities
-        ////{
-        ////    public IEnumerable<Ticket> PendingNewTickets { get; set; }
-
-        ////    public IEnumerable<Ticket> PendingTicketChanges { get; set; }
-
-        ////    public IEnumerable<TicketEventNotification> PendingEventNotificationChanges { get; set; }
-        ////}
     }
 }
