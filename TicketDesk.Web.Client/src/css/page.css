@@ -845,43 +845,57 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {
   padding: 5px 11px; }
 
-.tag-editor {
-  font-family: inherit;
-  min-height: 40px;
-  margin-bottom: 1rem;
-  border-color: #d3d7db; }
-  .tag-editor li {
-    margin-top: 7px; }
-  .tag-editor .tag-editor-tag {
-    border-radius: 28px;
-    font-size: 15px;
-    padding: 3px 6px;
-    color: #2e4592;
-    background-color: #d5d5d5; }
-  .tag-editor input[type="text"] {
-    display: inline-block;
-    width: auto;
-    height: 20px !important;
-    border: 0 !important;
-    padding: 0 !important;
-    font-size: 15px;
-    margin: 0; }
-  .tag-editor .tag-editor-delete {
-    background: transparent;
-    border-radius: 50%;
-    line-height: 1;
-    padding-right: 6px; }
-    .tag-editor .tag-editor-delete:hover i:before {
-      color: #bf141a; }
-    .tag-editor .tag-editor-delete i:before {
-      font-family: 'icomoon' !important;
-      position: relative;
-      content: "\e90d";
-      font-size: 23px;
-      color: #838282;
-      top: 5px;
-      left: 2px; }
+/*.tag-editor {
+    font-family: inherit;
+    min-height: 40px;
+    margin-bottom: 1rem;
+    border-color: #d3d7db;
 
+    li {
+        margin-top: 7px;
+    }
+
+    .tag-editor-tag {        
+        border-radius: 28px;
+        font-size: 15px;
+        padding: 3px 6px;
+        color: #2e4592;
+        background-color: #d5d5d5;
+    }
+
+    input[type="text"] {
+        display: inline-block;
+        width: auto;
+        height: 20px !important;
+        border: 0 !important;
+        padding: 0 !important;
+        font-size: 15px;
+        margin: 0;
+    }
+
+    .tag-editor-delete {
+        background: transparent;
+        border-radius: 50%;
+        line-height: 1;
+        padding-right: 6px;
+
+        &:hover {
+            i:before {
+                color: #bf141a;
+            }
+        }
+
+        i:before {
+            font-family: 'icomoon' !important;
+            position: relative;
+            content: "\e90d";
+            font-size: 23px;
+            color: #838282;
+            top: 5px;
+            left: 2px;
+        }
+    }
+}*/
 /**************************************************** Modal ******************************************************/
 .modal {
   margin-top: 250px; }
@@ -1253,8 +1267,6 @@ body {
   align-self: flex-start;
   background: #fff;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
-  .home-main .table {
-    margin-bottom: 15px; }
   .home-main .sign {
     position: relative;
     display: inline-block;
