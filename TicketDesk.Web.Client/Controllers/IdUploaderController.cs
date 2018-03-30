@@ -1,7 +1,7 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
     using System;
-    using System.Net;
+    using System.Linq;
     using System.Web.Mvc;
     using Domain.Infrastructure;
     using Domain.Model;
@@ -39,6 +39,7 @@
         [ValidateInput(false)]
         public ActionResult NewCustomer(IdUploaderViewModel viewModel)
         {
+            var result = false;
             if (ModelState.IsValid)
             {
                 UploadedUserId uploadedUserId = new UploadedUserId
@@ -49,17 +50,24 @@
                     Remark = viewModel.Remark
                 };
 
-                idUploaderService.CreateCustomer(uploadedUserId);
+                result = idUploaderService.CreateCustomer(uploadedUserId);
 
-                string pendingFolder = Server.MapPath("~/App_Data/filestore/ticketdesk-attachments/pending");
-                string idUploaderFolder = Server.MapPath("~/App_Data/filestore/id-uploaded/" + uploadedUserId.Id);
+                if (result)
+                {
+                    string pendingFolder = Server.MapPath("~/App_Data/filestore/ticketdesk-attachments/pending");
+                    string idUploaderFolder = Server.MapPath("~/App_Data/filestore/id-uploaded/" + uploadedUserId.Id);
 
-                idUploaderService.MoveFiles(viewModel.TempId, pendingFolder, idUploaderFolder);
-
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                    idUploaderService.MoveFiles(viewModel.TempId, pendingFolder, idUploaderFolder);
+                }
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            return Json(new
+            {
+                result,
+                errors = ModelState.Values.SelectMany(m => m.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList()
+            });
         }
     }
 }

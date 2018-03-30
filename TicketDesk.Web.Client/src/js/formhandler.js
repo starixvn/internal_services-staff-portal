@@ -126,11 +126,13 @@ var formhandler = {
                                     $("#notification-modal").modal();
                                 } else {
                                     var text = "";
-                                    data.errors.forEach(function(item, index) {
-                                        text = text + item + "\n";
-                                    });
-                                    $("#error-modal div.modal-body > p").text(text);
-                                    $("#error-modal").modal();
+                                    if (data.errors !== undefined) {
+                                        data.errors.forEach(function (item, index) {
+                                            text = text + item + "\n";
+                                        });
+                                        $("#error-modal div.modal-body > p").text(text);
+                                        $("#error-modal").modal();
+                                    }
                                 }
                             },
                             error: function (request, error) {
