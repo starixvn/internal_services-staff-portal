@@ -13,15 +13,16 @@ var formhandler = {
         formhandler.setValueForRequiredRadioButton();
         formhandler.applyMaxLengh();
         formhandler.handelFormSubmit();
-        //formhandler.initSelect2();
         formhandler.initDateTimePicker();
         formhandler.initTag();
     },
 
     initTag: function () {
-        $(".tag").tagEditor({
-            delimiter: ";, "
-        });
+        if ($.fn.tagEditor) {
+            $(".tag").tagEditor({
+                delimiter: ";, "
+            });
+        }
     },
 
     initDateTimePicker: function () {
@@ -29,23 +30,11 @@ var formhandler = {
             $(".datetimepicker").datetimepicker({
                 format: "DD/MM/YYYY hh:mm:A",
                 useCurrent: false,
-                maxDate: moment().endOf('d'),
+                maxDate: moment().endOf("d"),
                 sideBySide: true
             });
         }
     },
-
-    //initSelect2: function () {
-        //if ($.fn.select2) {
-        //    if ($("select").hasClass("select2-searchable")) {
-        //        $("select").not(".not-select2").select2();
-        //    } else {
-        //        $("select").not(".not-select2").select2({
-        //            minimumResultsForSearch: Infinity
-        //        });
-        //    }
-        //}
-    //},
 
     applyMaxLengh: function () {
         var textInput = $("input[type='text'], textarea");
