@@ -15,6 +15,10 @@
         TicketDetailsContent: "#ticket-details-content"
     }
 
+    var renderDateTime = {
+        dataTableDateTimeRenderer: $.fn.dataTable.render.moment("M/D/YYYY h:m:s A", "M/D/YYYY h:m:s A")
+    }
+
     function setupFromDateToDate() {
         $(domElement.FromDate).on("dp.change",
             function (e) {
@@ -62,7 +66,14 @@
             },
             {
                 width: 180,
-                sortable: true
+                sortable: true,
+                render: function (data, type, row) {
+                    if (!data) {
+                        return data;
+                    } else {
+                        return renderDateTime.dataTableDateTimeRenderer(data, type, row);
+                    }
+                }
             },
             {
                 width: 150,
@@ -74,7 +85,6 @@
         $(domElement.TicketTable).DataTable(ticketListTable);
         floatThead.initFloatThead(domElement.TicketTable);
     }
-
 
     function getTicketList() {
         $.ajax({
