@@ -7,14 +7,10 @@
     public class TicketListController : BaseController
     {
         private readonly ITicketService ticketService;
-        private readonly ICustomFieldService customFieldService;
-        private readonly IShopService shopService;
 
-        public TicketListController(ITicketService ticketService, ICustomFieldService customFieldService, IShopService shopService)
+        public TicketListController(ITicketService ticketService)
         {
             this.ticketService = ticketService;
-            this.customFieldService = customFieldService;
-            this.shopService = shopService;
         }
 
         public ActionResult Index(TicketListViewModel viewModel)

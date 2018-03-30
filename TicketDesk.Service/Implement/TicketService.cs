@@ -130,10 +130,14 @@
                 tickets = tickets.Where(x => x.Status == criteria.Status);
             }
 
-            if (criteria.FromDate != null && criteria.ToDate != null)
+            if (criteria.FromDate != null)
             {
-                tickets = tickets.Where(x => x.CreatedDate <= criteria.ToDate
-                                             && x.CreatedDate >= criteria.FromDate);
+                tickets = tickets.Where(x => x.CreatedDate.Date >= criteria.FromDate.Value.Date);
+            }
+
+            if (criteria.ToDate != null)
+            {
+                tickets = tickets.Where(x => x.CreatedDate.Date <= criteria.ToDate.Value.Date);
             }
 
             tickets = tickets.OrderByDescending(x => x.Id).ToList();
