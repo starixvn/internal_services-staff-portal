@@ -30,11 +30,11 @@
 
             var availableCustomField = context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
 
-            foreach (CustomField customField in availableCustomField)
-            {
-                customField.CustomFieldValues =
-                    context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
-            }
+            ////foreach (CustomField customField in availableCustomField)
+            ////{
+            ////    customField.CustomFieldValues =
+            ////        context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
+            ////}
 
             return availableCustomField;
         }
