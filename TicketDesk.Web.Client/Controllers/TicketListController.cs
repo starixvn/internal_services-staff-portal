@@ -29,9 +29,25 @@
 
         public ActionResult TicketDetails(int id)
         {
-            var singleTicketViewModel = ticketService.GetTicketDetail(id);
+            if (IsCreatorTicket(id))
+            {
+                var singleTicketViewModel = ticketService.GetTicketDetail(id);
 
-            return View(singleTicketViewModel);
+                return View(singleTicketViewModel);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        private bool IsCreatorTicket(int id)
+        {
+            bool isOwnerTicket = false;
+            var ticket = ticketService.GetTicket(id);
+            if (ticket.CreatedBy == CurrentSession.UserId.ToString())
+            {
+                isOwnerTicket = true;
+            }
+            return isOwnerTicket;
         }
     }
 }
