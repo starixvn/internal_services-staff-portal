@@ -23,7 +23,7 @@
         [HttpPost]
         public PartialViewResult TicketList(TicketListViewModel viewModel)
         {
-            var tickets = ticketService.GetTicketByStatus(CurrentSession.UserId, viewModel.Status, viewModel.TicketType);
+            var tickets = ticketService.GetTickets(CurrentSession.UserId, viewModel.Status, viewModel.TicketType);
             return PartialView("_TicketList", tickets);
         }
 

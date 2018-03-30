@@ -92,7 +92,7 @@
                     });
         }
 
-        public IEnumerable<TicketViewModel> GetTicketByStatus(int userId, TicketStatus? ticketStatus, TicketCategoryTypes? ticketType)
+        public IEnumerable<TicketViewModel> GetTickets(int userId, TicketStatus? ticketStatus, TicketCategoryTypes? ticketType)
         {
             var tickets = BasicGetTicketJoinWithShop();
 

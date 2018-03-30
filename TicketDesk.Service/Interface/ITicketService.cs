@@ -18,7 +18,7 @@
 
         bool UpdateTicketStatus(int id, TicketStatus status);
 
-        IEnumerable<TicketViewModel> GetTicketByStatus(int userId, TicketStatus? ticketStatus, TicketCategoryTypes? ticketType);
+        IEnumerable<TicketViewModel> GetTickets(int userId, TicketStatus? ticketStatus, TicketCategoryTypes? ticketType);
 
         IList<TicketViewModel> GetTicketByFilter(TicketListFilterCriteria criteria);
 
