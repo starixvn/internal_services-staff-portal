@@ -35,20 +35,12 @@
             return View(homeViewModel);
         }
 
-        public ActionResult MyOpeningTicket(MyOpenningTicketsViewModel viewModel)
+        public ActionResult GetListAnnouncementByReadState(bool isUnreadOnly)
         {
-            var myOpenningIssues = viewModel ?? new MyOpenningTicketsViewModel();
+            var announcements = announcementService.GetHomeAnnouncements();
 
-            myOpenningIssues.TicketGroups = ticketService.GetUserOpeningTicketsInGroups();
-
-            return PartialView("_MyOpeningTicket", myOpenningIssues);
-        }
-
-        public ActionResult MoreAnnouncement()
-        {
-            var viewModel = new MoreAnnouncementViewModel();
-
-            return View(viewModel);
+            announcements = isUnreadOnly ? announcements.Where(x => !x.IsRead).ToList() : announcements.Take(10).ToList();
+            return PartialView("_AnnouncementListHomePage", announcements);
         }
 
         [HttpPost]
@@ -59,12 +51,11 @@
             return PartialView("_ListAllAnnouncements", announcements.OrderByDescending(x => x.CreatedDateTime).ToList());
         }
 
-        public ActionResult GetListAnnouncementByReadState(bool isUnreadOnly)
+        public ActionResult MoreAnnouncement()
         {
-            var announcements = announcementService.GetHomeAnnouncements();
+            var viewModel = new MoreAnnouncementViewModel();
 
-            announcements = isUnreadOnly ? announcements.Where(x => !x.IsRead).ToList() : announcements.Take(10).ToList();
-            return PartialView("_AnnouncementListHomePage", announcements);
+            return View(viewModel);
         }
 
         public ActionResult SaveAndCountTotalUnreadAnnouncement(int id)
@@ -73,6 +64,15 @@
             var unreadQuantity = announcementService.GetHomeAnnouncements().Count(x => !x.IsRead);
 
             return Json(new { result, unreadQuantity }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult MyOpeningTicket(MyOpenningTicketsViewModel viewModel)
+        {
+            var myOpenningIssues = viewModel ?? new MyOpenningTicketsViewModel();
+
+            myOpenningIssues.TicketGroups = ticketService.GetUserOpeningTicketsInGroups();
+
+            return PartialView("_MyOpeningTicket", myOpenningIssues);
         }
 
         [ChildActionOnly]
