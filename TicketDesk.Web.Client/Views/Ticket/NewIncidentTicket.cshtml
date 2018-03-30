@@ -92,6 +92,7 @@
                     <div class="fullwidth no-border custom-dropdown">
                         @Html.TextBoxFor(x => x.Ticket.AdditionalMail, new { @class = "tag" })
                     </div>
+                    @Html.ValidationMessageFor(x => x.Ticket.AdditionalMail)
                 </div>
             </div>
         }
