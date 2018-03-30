@@ -1,4 +1,4 @@
-﻿namespace TicketDesk.IO
+﻿namespace TicketDesk.IO.FileStorage
 {
     public class TicketDeskFileInfo
     {

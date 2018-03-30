@@ -1,7 +1,6 @@
 ﻿namespace TicketDesk.Domain.Model
 {
     using Ganss.XSS;
-    using IO;
     ////using Search.Common;
     using System;
     using System.Collections.Generic;
@@ -9,6 +8,7 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using IO.FileStorage;
     using TicketDesk.Localization.Models;
     using Web.Client;
     using Web.Client.Models;

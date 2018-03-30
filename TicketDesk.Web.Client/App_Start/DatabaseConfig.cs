@@ -3,13 +3,11 @@
     using Configuration = Domain.Migrations.Configuration;
     using Domain;
     using Domain.Migrations;
-    using Domain.Model;
     ////using Search.Common;
     using System;
     using System.Configuration;
     using System.Data.Entity;
     using System.Linq;
-    using System.Web.Hosting;
     using System.Web.Mvc;
 
     public static class DatabaseConfig

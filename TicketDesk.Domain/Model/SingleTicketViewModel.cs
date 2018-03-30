@@ -1,7 +1,7 @@
 ﻿namespace TicketDesk.Domain.Model
 {
     using System.Collections.Generic;
-    using IO;
+    using IO.FileStorage;
 
     public class SingleTicketViewModel
     {

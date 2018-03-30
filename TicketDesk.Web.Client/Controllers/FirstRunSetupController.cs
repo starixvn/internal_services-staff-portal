@@ -107,16 +107,16 @@
             return RedirectToAction("Index");
         }
 
-        [ChildActionOnly]
-        public ActionResult AzureInfo()
-        {
-            if (!Model.AzureInfo.HasAzureServices)
-            {
-                return new EmptyResult();
-            }
+        ////[ChildActionOnly]
+        ////public ActionResult AzureInfo()
+        ////{
+        ////    if (!Model.AzureInfo.HasAzureServices)
+        ////    {
+        ////        return new EmptyResult();
+        ////    }
 
-            return PartialView("_AzureInfo", Model);
-        }
+        ////    return PartialView("_AzureInfo", Model);
+        ////}
 
         [ChildActionOnly]
         public ActionResult DatabaseInfo()
@@ -133,11 +133,11 @@
                 return new EmptyResult();
             }
 
-            if (Model.AzureInfo.IsAzureWebSite)
-            {
-                ViewBag.ErrorAzureDbDoesNotExist = !Model.DatabaseStatus.DatabaseExists;
-                ViewBag.WarnNotAnAzureDb = !Model.AzureInfo.IsSqlAzure;
-            }
+            ////if (Model.AzureInfo.IsAzureWebSite)
+            ////{
+            ////    ViewBag.ErrorAzureDbDoesNotExist = !Model.DatabaseStatus.DatabaseExists;
+            ////    ViewBag.WarnNotAnAzureDb = !Model.AzureInfo.IsSqlAzure;
+            ////}
 
             return View("_NewDatabase", Model);
         }

@@ -11,7 +11,6 @@
 using System;
 using System.Web;
 using System.IO;
-using System.Collections.Specialized;
 using System.Text;
 
 public class filemanager : IHttpHandler 

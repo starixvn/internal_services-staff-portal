@@ -5,7 +5,7 @@
     using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using IO;
+    using IO.FileStorage;
     using Service.Interface;
 
     [NapAuth(FunctionKey = FunctionKeys.Administration, Policy = Constant.Policy.Read)]

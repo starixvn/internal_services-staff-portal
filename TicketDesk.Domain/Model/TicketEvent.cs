@@ -2,7 +2,6 @@ namespace TicketDesk.Domain.Model
 {
     using Localization;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using TicketDesk.Localization;

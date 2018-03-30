@@ -1,6 +1,5 @@
-﻿namespace TicketDesk.IO
+﻿namespace TicketDesk.IO.FileStorage
 {
-    using AzureBlobFileSystem;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -8,6 +7,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using System.Web;
+    using AzureBlobFileSystem;
 
     public static class TicketDeskFileStore
     {
@@ -17,26 +17,7 @@
 
         private static IStorageProvider _currentProvider;
 
-        private static IStorageProvider Current
-        {
-            get
-            {
-                if (_currentProvider == null)
-                {
-                    var accout = AzureConnectionHelper.CloudStorageAccount;
-                    if (accout != null)
-                    {
-                        _currentProvider = new AzureBlobStorageProvider(accout);
-                    }
-                    else
-                    {
-                        _currentProvider = new FileSystemStorageProvider(Dir);
-                    }
-                }
-
-                return _currentProvider;
-            }
-        }
+        private static IStorageProvider Current => _currentProvider ?? (_currentProvider = new FileSystemStorageProvider(Dir));
 
         public static bool MoveFile(string fileName, string oldContainerId, string newContainerId, bool wasPending,
             bool isPending)

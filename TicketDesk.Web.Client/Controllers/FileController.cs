@@ -10,6 +10,7 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+    using IO.FileStorage;
 
     [RoutePrefix("file")]
     [TdAuthorize(Roles = "TdInternalUsers,TdHelpDeskUsers,TdAdministrators")]
