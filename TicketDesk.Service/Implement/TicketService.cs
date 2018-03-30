@@ -35,7 +35,7 @@
             var userIdString = context.SecurityProvider.CurrentUserId;
             var tickets = context.Tickets
                 .Where(x => x.CreatedBy == userIdString
-                            && (x.TicketStatus == TicketStatus.New 
+                            && (x.TicketStatus == TicketStatus.New
                                 || x.TicketStatus == TicketStatus.InProgress
                                 || x.TicketStatus == TicketStatus.Pending))
                 .OrderBy(x => x.CategoryId)
@@ -136,13 +136,14 @@
                                              && x.CreatedDate >= criteria.FromDate);
             }
 
+            tickets = tickets.OrderByDescending(x => x.Id).ToList();
             foreach (var ticket in tickets)
             {
                 var user = context.SecurityProvider.NapContextHelper.UserService.GetById(int.Parse(ticket.CreatedBy));
                 ticket.CreatedBy = user.Username;
             }
 
-            return tickets.OrderByDescending(x => x.Id).ToList();
+            return tickets.ToList();
         }
 
         public bool CreateTicket(Ticket ticket, Guid tempId)
