@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
     using Client.Controllers;
@@ -13,7 +12,6 @@
     using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using IO;
     using Localization.Client;
     using Models.TicketList;
     using Service.Interface;
@@ -22,17 +20,14 @@
     {
         private readonly IShopService shopService;
         private readonly ITicketService ticketService;
-        private readonly ICustomFieldService customFieldService;
         private readonly IMailService mailService;
 
         public TicketListController(IShopService shopService,
             ITicketService ticketService,
-            ICustomFieldService customFieldService,
             IMailService mailService)
         {
             this.shopService = shopService;
             this.ticketService = ticketService;
-            this.customFieldService = customFieldService;
             this.mailService = mailService;
         }
 
@@ -83,21 +78,7 @@
         [NapAuth(FunctionKey = FunctionKeys.TicketList, Policy = Constant.Policy.Read)]
         public ActionResult TicketDetails(int id)
         {
-            var ticket = ticketService.GetTicket(id);
-            var shopName = string.Empty;
-            if (ticket != null)
-            {
-                var shop = shopService.GetShopById(ticket.ShopId);
-                shopName = shop.ShopName;
-            }
-
-            var singleTicketViewModel = new SingleTicketViewModel
-            {
-                Ticket = ticket,
-                ShopName = shopName,
-                CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket),
-                Attachments = TicketDeskFileStore.ListAttachmentInfo(id.ToString(CultureInfo.InvariantCulture), false)
-            };
+            var singleTicketViewModel = ticketService.GetTicketDetail(id);
 
             return PartialView("_TicketDetails", singleTicketViewModel);
         }

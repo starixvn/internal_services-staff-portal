@@ -1,9 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
-    using System.Globalization;
     using System.Web.Mvc;
-    using Domain.Model;
-    using IO;
     using Models.TicketList;
     using Service.Interface;
 
@@ -36,21 +33,7 @@
 
         public ActionResult TicketDetails(int id)
         {
-            var ticket = ticketService.GetTicket(id);
-            var shopName = string.Empty;
-            if (ticket != null)
-            {
-                var shop = shopService.GetShopById(ticket.ShopId);
-                shopName = shop.ShopName;
-            }
-
-            var singleTicketViewModel = new SingleTicketViewModel
-            {
-                Ticket = ticket,
-                ShopName = shopName,
-                CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket),
-                Attachments = TicketDeskFileStore.ListAttachmentInfo(id.ToString(CultureInfo.InvariantCulture), false)
-            };
+            var singleTicketViewModel = ticketService.GetTicketDetail(id);
 
             return View(singleTicketViewModel);
         }

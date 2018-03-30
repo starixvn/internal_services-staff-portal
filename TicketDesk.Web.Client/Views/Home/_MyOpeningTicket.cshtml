@@ -32,7 +32,9 @@
                             <td class="text-center">
                                 <a href="@Url.Action("TicketDetails","TicketList", new {id = ticket.TicketId})" class="id-ticket">@ticket.TicketId</a>
                             </td>
-                            <td>@ticket.Title</td>
+                            <td>
+                                <a href="@Url.Action("TicketDetails","TicketList", new {id = ticket.TicketId})" class="id-ticket">@ticket.Title</a>
+                            </td>
                             <td class="text-center">@ticket.CreatedDate.ToString("MMM dd, yyyy")</td>
                             @{
                                 var statusClass = ticket.TicketStatus.ToString().ToLowerInvariant();

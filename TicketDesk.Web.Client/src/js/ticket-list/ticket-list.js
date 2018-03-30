@@ -21,10 +21,6 @@
         var tableConfigs = commonDataTableInit.Init();
         tableConfigs.ordering = false;
         tableConfigs.searching = false;
-        tableConfigs.info = true;
-        tableConfigs.infoCallback = function (settings, start, end, max, total, pre) {
-            return "Displaying " + start + " to " + end + " of " + max + " item(s)";
-        }
         $table.DataTable(tableConfigs);
     }
 

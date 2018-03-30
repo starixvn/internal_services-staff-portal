@@ -10,9 +10,10 @@
             <th class="number">#</th>
             <th>@Resources.ID</th>
             <th>@Resources.Domain_Model_Ticket_Title</th>
-            <th>@Strings.TicketCategory</th>
+            <th>@Resources.TicketCategory</th>
             <th>@Resources.ShopName</th>
             <th>@Resources.Domain_Model_Ticket_CreatedDate</th>
+            <th>@Strings.TicketCreatedBy</th>
             <th>@Resources.Domain_Model_Ticket_Status</th>
         </tr>
     </thead>
@@ -25,13 +26,16 @@
                 index++;
             <tr>
                 <td class="text-center">@index</td>
-                <td class="text-center">@ticket.Id</td>
+                <td class="text-center">
+                    <a href="@Url.Action("TicketDetails", "TicketList", new { id = ticket.Id })" , class="ticket-details">@ticket.Id</a>
+                </td>
                 <td>
                     @Html.ActionLink(ticket.Subject, "TicketDetails", "TicketList", new { id = ticket.Id }, new { @class = "ticket-details" })
                 </td>
                 <td>@ticket.TicketType.GetDisplayName()</td>
                 <td>@ticket.ShopName</td>
                 <td>@ticket.CreatedDate.UtcDateTime</td>
+                <td>@ticket.CreatedBy</td>
                 <td>
                     @if (ticket.IsHostPermissionOnTicketType)
                     {

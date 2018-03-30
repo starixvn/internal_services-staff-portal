@@ -77,6 +77,10 @@
             },
             {
                 width: 150,
+                sortable: true
+            },
+            {
+                width: 150,
                 sortable: false
             }];
         ticketListTable.drawCallback = function (settings) {

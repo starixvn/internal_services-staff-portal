@@ -21,5 +21,7 @@
         IEnumerable<TicketViewModel> GetTicketByStatus(int userId, TicketStatus? ticketStatus, TicketCategoryTypes? ticketType);
 
         IList<TicketViewModel> GetTicketByFilter(TicketListFilterCriteria criteria);
+
+        SingleTicketViewModel GetTicketDetail(int id);
     }
 }

@@ -2,22 +2,26 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading;
     using Core.Enumerations;
     using Criteria.TicketList;
     using Domain.Model;
     using Interface;
+    using IO;
 
     public class TicketService : EntityFrameworkBaseService, ITicketService
     {
         private readonly IFileManagerService fileManagerService;
         private readonly ITicketEventService ticketEventService;
+        private readonly ICustomFieldService customFieldService;
 
-        public TicketService(IFileManagerService fileManagerService, ITicketEventService ticketEventService)
+        public TicketService(IFileManagerService fileManagerService, ITicketEventService ticketEventService, ICustomFieldService customFieldService)
         {
             this.fileManagerService = fileManagerService;
             this.ticketEventService = ticketEventService;
+            this.customFieldService = customFieldService;
         }
 
         public Ticket GetTicket(int id)
@@ -132,6 +136,12 @@
                                              && x.CreatedDate >= criteria.FromDate);
             }
 
+            foreach (var ticket in tickets)
+            {
+                var user = context.SecurityProvider.NapContextHelper.UserService.GetById(int.Parse(ticket.CreatedBy));
+                ticket.CreatedBy = user.Username;
+            }
+
             return tickets.OrderByDescending(x => x.Id).ToList();
         }
 
@@ -162,6 +172,8 @@
                 var oldStatus = ticket.TicketStatus;
 
                 ticket.TicketStatus = status;
+                ticket.LastUpdateDate = DateTime.Now;
+                ticket.LastUpdateBy = context.SecurityProvider.CurrentUserId;
                 result = context.SaveChanges() > 0;
 
                 if (result)
@@ -171,6 +183,29 @@
             }
 
             return result;
+        }
+
+        public SingleTicketViewModel GetTicketDetail(int id)
+        {
+            var ticket = GetTicket(id);
+            var shopName = string.Empty;
+            var userName = string.Empty;
+            var singleTicket = new SingleTicketViewModel();
+            if (ticket != null)
+            {
+                var shop = context.Shops.Find(ticket.ShopId);
+                var user = context.SecurityProvider.NapContextHelper.UserService.GetById(int.Parse(ticket.CreatedBy));
+                shopName = shop.ShopName;
+                userName = user.Username;
+
+                singleTicket.Ticket = ticket;
+                singleTicket.ShopName = shopName;
+                singleTicket.CreatedByUsername = userName;
+                singleTicket.CustomFieldValues = customFieldService.GetCustomFieldValuesForTicket(ticket);
+                singleTicket.Attachments = TicketDeskFileStore.ListAttachmentInfo(id.ToString(CultureInfo.InvariantCulture), false);
+            }
+
+            return singleTicket;
         }
     }
 }

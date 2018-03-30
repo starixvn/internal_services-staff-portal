@@ -2,6 +2,7 @@
 @using TicketDesk.Domain.Extensions
 @using TicketDesk.Core.Enumerations
 @using TicketDesk.Localization.Views.Ticket
+@using TicketDesk.Localization.Domain
 @using TicketDesk.Domain.Model
 @model SingleTicketViewModel
 
@@ -31,6 +32,11 @@
     <div class="detail-item">
         <span class="item-title">@Resources.Domain_Model_Ticket_CreatedDate: </span>
         <span class="item-content">@Model.Ticket.CreatedDate</span>
+    </div>
+
+    <div class="detail-item">
+        <span class="item-title">@Strings.TicketCreatedBy: </span>
+        <span class="item-content">@Model.CreatedByUsername</span>
     </div>
 
     @{
