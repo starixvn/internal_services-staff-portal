@@ -129,9 +129,9 @@ namespace TicketDesk.Domain
                 .WillCascadeOnDelete(false);
 
             // json flattening: see this for more info: http://www.reddnet.net/entity-framework-json-column/
-            modelBuilder.ComplexType<UserTicketListSettingsCollection>()
-                .Property(p => p.Serialized)
-                .HasColumnName("ListSettingsJson");
+            ////modelBuilder.ComplexType<UserTicketListSettingsCollection>()
+            ////    .Property(p => p.Serialized)
+            ////    .HasColumnName("ListSettingsJson");
 
             modelBuilder.ComplexType<ApplicationSelectListSetting>()
                 .Property(p => p.Serialized)

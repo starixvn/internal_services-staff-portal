@@ -358,8 +358,6 @@
     <Compile Include="Model\Extensions\TicketActivityExtensions.cs" />
     <Compile Include="Model\Extensions\TicketEventExtensions.cs" />
     <Compile Include="Model\Extensions\TicketTagExtensions.cs" />
-    <Compile Include="Model\Extensions\UserTicketListFilterColumnExtensions.cs" />
-    <Compile Include="Model\Extensions\UserTicketListSettingsCollectionExtensions.cs" />
     <Compile Include="Model\Extensions\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\Reference.cs" />
@@ -371,23 +369,14 @@
     <Compile Include="Model\TicketSubscriber.cs" />
     <Compile Include="Model\UploadedUserId.cs" />
     <Compile Include="Model\UserReadAnnouncement.cs" />
-    <Compile Include="NapUserSetting.cs" />
-    <Compile Include="TicketActionManager.cs" />
+    <Compile Include="Model\NapUserSetting.cs" />
     <Compile Include="Model\TicketActivity.cs" />
-    <Compile Include="Model\UserSettingsModel\UserTicketListModel\ColumnSortDirection.cs" />
-    <Compile Include="Model\Extensions\UserSettingExtensions.cs" />
-    <Compile Include="Model\UserSettingsModel\UserTicketListModel\UserTicketListSettingsCollection.cs" />
-    <Compile Include="Model\UserSettingsModel\UserTicketListModel\UserTicketListSetting.cs" />
-    <Compile Include="Model\UserSettingsModel\UserTicketListModel\UserTicketListFilterColumn.cs" />
-    <Compile Include="Model\UserSettingsModel\UserTicketListModel\UserTicketListSortColumn.cs" />
     <Compile Include="Model\TicketStatus.cs" />
-    <Compile Include="Model\UserSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Ticket.cs" />
     <Compile Include="Model\TicketEvent.cs" />
     <Compile Include="TdDomainContext.cs" />
     <Compile Include="Model\TicketTag.cs" />
-    <Compile Include="UserSettingsManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

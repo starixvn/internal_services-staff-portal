@@ -397,7 +397,6 @@
     <Compile Include="Infrastructure\Helpers\PromptForHelper.cs" />
     <Compile Include="Infrastructure\Helpers\RazorViewHelper.cs" />
     <Compile Include="Infrastructure\Helpers\RequiredLabelForHelper.cs" />
-    <Compile Include="Infrastructure\Helpers\SortableColumnHeaderHelper.cs" />
     <Compile Include="Infrastructure\Identity\FakeAuthenticationManager.cs" />
     <Compile Include="Infrastructure\Identity\TicketDeskContextSecurityProvider.cs" />
     <Compile Include="Infrastructure\Identity\TicketDeskSignInManager.cs" />
@@ -425,7 +424,6 @@
     <Compile Include="Models\Extensions\TicketEventNotificationExtensions.cs" />
     <Compile Include="Models\Extensions\TicketExtensions.cs" />
     <Compile Include="Models\Extensions\TicketSubscriberExtensions.cs" />
-    <Compile Include="Models\FilterBarViewModel.cs" />
     <Compile Include="Models\Home\HomeViewModel.cs" />
     <Compile Include="Models\Home\MoreAnnouncementViewModel.cs" />
     <Compile Include="Models\Home\MyOpenningTicketsViewModel.cs" />
