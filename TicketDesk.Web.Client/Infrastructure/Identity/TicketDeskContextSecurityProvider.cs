@@ -43,11 +43,11 @@
 
         public override bool IsTdPendingUser => UserManager.IsTdPendingUser(CurrentUserId);
 
-        public override bool IsReadTicketCenter => IsHasTicketPolicy(FunctionKeys.TicketList, (int)Constant.Policy.Read);
+        public override bool IsReadTicketCenter => IsHasTicketPolicy(FunctionKeys.Ticket, (int)Constant.Policy.Read);
 
-        public override bool IsHostTicketCenter => IsHasTicketPolicy(FunctionKeys.TicketList, (int)Constant.Policy.Host);
+        public override bool IsHostTicketCenter => IsHasTicketPolicy(FunctionKeys.Ticket, (int)Constant.Policy.Host);
 
-        public override bool IsReadNewTicket => IsHasTicketPolicy(FunctionKeys.NewTicket, (int)Constant.Policy.Read);
+        public override bool IsReadNewTicket => IsHasTicketPolicy(FunctionKeys.Ticket, (int)Constant.Policy.Read);
 
         private bool IsHasTicketPolicy(string functionKey, int policy)
         {

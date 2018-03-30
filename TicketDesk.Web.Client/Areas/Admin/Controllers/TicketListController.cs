@@ -31,7 +31,7 @@
             this.mailService = mailService;
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.TicketListAdmin, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.Ticket, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var viewModel = new TicketListFilterViewModel
@@ -43,21 +43,21 @@
             return View(viewModel);
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.TicketList, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.Ticket, Policy = Constant.Policy.Read)]
         public ActionResult GetTicketList(TicketListFilterViewModel viewModel)
         {
             var criteria = viewModel.GetQueryCriteria();
             var tickets = ticketService.GetTicketByFilter(criteria);
             foreach (var ticket in tickets)
             {
-                ticket.IsHostPermissionOnTicketType = IsHavePermission(GetFunctionKeyByTicketType(ticket.TicketType), Constant.Policy.Host);
+                ticket.IsHostPermissionOnTicketType = IsHavePermission(ticket.TicketType.ToString(), Constant.Policy.Host);
             }
 
             return PartialView("_TicketList", tickets);
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = FunctionKeys.TicketList, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = FunctionKeys.Ticket, Policy = Constant.Policy.Host)]
         public JsonResult UpdateTicketStatus(int id, TicketStatus status)
         {
             if (IsHostPermissionOnTicket(id))
@@ -75,7 +75,7 @@
             return Json(new { isSuccessful = false, message = Resources.NoPermissionForTicketType }, JsonRequestBehavior.AllowGet);
         }
 
-        [NapAuth(FunctionKey = FunctionKeys.TicketList, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.Ticket, Policy = Constant.Policy.Read)]
         public ActionResult TicketDetails(int id)
         {
             var singleTicketViewModel = ticketService.GetTicketDetail(id);
@@ -89,7 +89,7 @@
             {
                 var ticket = ticketService.GetTicket(id);
                 TicketCategoryTypes ticketType = (TicketCategoryTypes)ticket.CategoryId;
-                var isHost = IsHavePermission(GetFunctionKeyByTicketType(ticketType), Constant.Policy.Host);
+                var isHost = IsHavePermission(ticketType.ToString(), Constant.Policy.Host);
                 return isHost;
             }
 
@@ -101,12 +101,12 @@
             var selectList = new List<SelectListItem>();
             foreach (TicketCategoryTypes type in Enum.GetValues(typeof(TicketCategoryTypes)))
             {
-                if (IsHavePermission(GetFunctionKeyByTicketType(type), Constant.Policy.Read))
+                if (IsHavePermission(type.ToString(), Constant.Policy.Read))
                 {
                     selectList.Add(new SelectListItem
                     {
                         Value = ((int)type).ToString(),
-                        Text = EnumExtensions.GetDisplayName(type)
+                        Text = type.GetDisplayName()
                     });
                 }
             }
@@ -122,11 +122,6 @@
             }
 
             return selectList.OrderBy(x => x.Value);
-        }
-
-        private static string GetFunctionKeyByTicketType(TicketCategoryTypes type)
-        {
-            return string.Format("{0}{1}", type.ToString(), "Admin");
         }
     }
 }

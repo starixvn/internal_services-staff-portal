@@ -13,7 +13,7 @@
     [NapAuth(FunctionKey = FunctionKeys.Languages, Policy = Constant.Policy.Read)]
     public class LanguagesController : BaseController
     {
-        [NapAuth(FunctionKey = FunctionKeys.NewTicket, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = FunctionKeys.Languages, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var viewModel = new LanguagesViewModel();
