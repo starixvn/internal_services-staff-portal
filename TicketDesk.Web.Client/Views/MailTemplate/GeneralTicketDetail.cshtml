@@ -36,6 +36,18 @@
             text-decoration: none;
         }
 
+        .dot {
+            position: relative;
+            top: 0;
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            margin-right: 7px;
+            background: #2e4592;
+            vertical-align: super;
+        }
+
         @@media only screen and (max-width: 640px) {
             body {
                 padding: 0 !important;
@@ -187,7 +199,7 @@
                                                             foreach (var customFieldValue in customFieldValues)
                                                             {
                                                                 <tr>
-                                                                    <td style="border: 1px solid #d4d4d4; padding: 5px 10px; background: #f2f2f2; font-style: italic; font-weight: 700; color: #2e4592;">@customFieldValue.CustomField.Name: </td>
+                                                                    <td style="border: 1px solid #d4d4d4; padding: 5px 10px; background: #f2f2f2; font-style: italic; font-weight: 700; color: #2e4592;"><span class="dot"></span>@customFieldValue.CustomField.Name: </td>
                                                                     <td style="border: 1px solid #d4d4d4; padding: 5px 10px;">@customFieldValue.Value</td>
                                                                 </tr>
                                                             }
