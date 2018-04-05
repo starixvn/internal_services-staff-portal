@@ -239,7 +239,7 @@
         private static bool IsValidImageUrlExtension(WebResponse response, string extension)
         {
             return response.ContentType.ToLower(CultureInfo.InvariantCulture)
-                               .StartsWith(string.Format("image/{0}", extension));
+                               .StartsWith(string.Format("image/{0}", extension), StringComparison.CurrentCulture);
         }
 
         private static bool IsValidFilenameExtension(string fileName)

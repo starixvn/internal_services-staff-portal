@@ -1961,7 +1961,6 @@
     </Content>
     <Content Include="Views\Shared\_QuickSearch.cshtml" />
     <Content Include="Views\Ticket\Index.cshtml" />
-    <Content Include="Views\Ticket\_TicketEvents.cshtml" />
     <Content Include="Views\FirstRunSetup\Index.cshtml" />
     <Content Include="Views\FirstRunSetup\_DatabaseInfo.cshtml" />
     <Content Include="Views\FirstRunSetup\_NewDatabase.cshtml" />
@@ -1974,7 +1973,6 @@
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\Ticket.cshtml" />
     <Content Include="Views\Emails\Ticket.Text.cshtml" />
-    <Content Include="Views\Ticket\_TicketFiles.cshtml" />
     <Content Include="Views\User\SignIn.cshtml" />
     <Content Include="Views\Shared\_ProjectMenu.cshtml" />
     <Content Include="Views\FirstRunSetup\CheckUpgradeProgress.cshtml" />
@@ -1987,10 +1985,7 @@
     <Content Include="Views\FileManager\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CustomFields\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CustomFields\_Create.cshtml" />
-    <Content Include="Views\Ticket\_TicketAttachedFiles.cshtml" />
     <Content Include="Views\Ticket\NewFacilityTicket.cshtml" />
-    <Content Include="Views\Ticket\_FeedbackCustomField.cshtml" />
-    <Content Include="Views\Ticket\_FacilityTicketDetails.cshtml" />
     <Content Include="Scripts\jquery-2.2.2.min.map" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
     <Content Include="TicketDesk.Web.Client.ruleset" />
@@ -2015,7 +2010,6 @@
     <Content Include="Views\Reference\TvSchedules.cshtml" />
     <Content Include="Views\Ticket\NewFeedbackTicket.cshtml" />
     <Content Include="src\css\login.scss" />
-    <Content Include="Views\Ticket\_FeedbackTicketDetails.cshtml" />
     <Content Include="Views\IdUploader\Index.cshtml" />
     <Content Include="Views\Shared\_SubmenuNavigation.cshtml" />
     <Content Include="src\css\custom-dropzone.scss" />
@@ -2031,7 +2025,6 @@
     <Content Include="Web.local.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Ticket\_HardwareTicketDetails.cshtml" />
     <Content Include="Areas\Admin\Views\Languages\Index.cshtml" />
     <Content Include="Views\Ticket\NewIncidentTicket.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminLayout.cshtml" />
@@ -2059,7 +2052,6 @@
     <Content Include="src\libs\toastr\toastr.less" />
     <Content Include="src\libs\toastr\toastr.scss" />
     <Content Include="Views\Ticket\NewCustomerSupportTicket.cshtml" />
-    <Content Include="Views\Ticket\_NotificationModal.cshtml" />
     <Content Include="Views\Home\_AnnouncementListHomePage.cshtml" />
     <Content Include="Views\TicketList\Index.cshtml" />
     <Content Include="Views\TicketList\TicketDetails.cshtml" />
