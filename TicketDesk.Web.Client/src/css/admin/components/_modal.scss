@@ -167,7 +167,8 @@
         }        
 
         &.attachments {
-            ul {                
+            ul {           
+                width: calc(100% - 150px);     
                 margin: 0;
                 padding-top: .8rem;
                 padding-left: .5rem;

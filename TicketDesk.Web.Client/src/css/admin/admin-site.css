@@ -1398,6 +1398,7 @@ table.dataTable {
       width: calc(100% - 150px);
       padding: .8rem; }
     .ticket-list-modal .detail-item.attachments ul {
+      width: calc(100% - 150px);
       margin: 0;
       padding-top: .8rem;
       padding-left: .5rem; }
