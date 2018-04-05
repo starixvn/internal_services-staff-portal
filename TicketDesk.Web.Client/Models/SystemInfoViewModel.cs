@@ -1,7 +1,6 @@
 ﻿namespace TicketDesk.Web.Client.Models
 {
     using Domain;
-    ////using Search.Azure;
     using System.Configuration;
     using System.Data.SqlClient;
 
@@ -9,13 +8,10 @@
     {
         private DatabaseInfoViewModel _databaseInfo;
         private DatabaseStatusViewModel _databaseStatus;
-        ////private AzureInfoViewModel _azureInfo;
 
         public DatabaseInfoViewModel DatabaseInfo => _databaseInfo ?? (_databaseInfo = new DatabaseInfoViewModel());
 
         public DatabaseStatusViewModel DatabaseStatus => _databaseStatus ?? (_databaseStatus = new DatabaseStatusViewModel());
-
-        ////public AzureInfoViewModel AzureInfo => _azureInfo ?? (_azureInfo = new AzureInfoViewModel(DatabaseInfo.DbEdition, DatabaseInfo.DatabaseName));
 
         public class DatabaseInfoViewModel
         {
@@ -126,72 +122,5 @@
 
             public static bool HasLegacySecurityObjects => DatabaseConfig.HasLegacySecurity();
         }
-
-        ////public class AzureInfoViewModel
-        ////{
-        ////    public AzureInfoViewModel(string databaseEdition, string databaseName)
-        ////    {
-        ////        AzureWebSiteName = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME");
-        ////        IsAzureWebSite = !string.IsNullOrEmpty(AzureWebSiteName);
-        ////        ////IsSqlAzure = databaseEdition != null && databaseEdition.IndexOf("azure", StringComparison.InvariantCultureIgnoreCase) >= 0;
-        ////        ////AzureSqlService = IsSqlAzure ? databaseName : null;
-        ////        ////AzureSearchService = GetAzureSearchServiceName();
-        ////        ////AzureStorageService = GetAzureStorageServiceName();
-        ////    }
-
-        ////    public string AzureWebSiteName { get; }
-
-        ////    public bool IsAzureWebSite { get; }
-
-        ////    ////public string AzureSqlService { get; }
-
-        ////    ////public bool IsSqlAzure { get; }
-
-        ////    ////public string AzureSearchService { get; }
-
-        ////    ////public string AzureStorageService { get; }
-
-        ////    ////public bool HasAzureServices => IsAzureWebSite || IsSqlAzure || !string.IsNullOrEmpty(AzureSearchService) || !string.IsNullOrEmpty(AzureStorageService);
-
-        ////    ////private static string GetAzureSearchServiceName()
-        ////    ////{
-        ////    ////    string svc = null;
-        ////    ////    var azureSearchInfo = AzureSearchConector.TryGetInfoFromConnectionString() ?? AzureSearchConector.TryGetInfoFromAppSettings();
-        ////    ////    if (azureSearchInfo != null)
-        ////    ////    {
-        ////    ////        svc = azureSearchInfo.ServiceName;
-        ////    ////    }
-
-        ////    ////    return svc;
-        ////    ////}
-
-        ////    ////private static string GetAzureStorageServiceName()
-        ////    ////{
-        ////    ////    string serviceName = null;
-        ////    ////    var azureStore = !string.IsNullOrEmpty(AzureConnectionHelper.ConfigManagerConnString)
-        ////    ////        ? AzureConnectionHelper.ConfigManagerConnString
-        ////    ////        : AzureConnectionHelper.CloudConfigConnString;
-
-        ////    ////    if (!string.IsNullOrEmpty(azureStore))
-        ////    ////    {
-        ////    ////        try
-        ////    ////        {
-        ////    ////            var parts = azureStore.Split(';').Select(p => p.Split('=')).Select(t => new { key = t[0], value = t[1] }).ToList();
-        ////    ////            var service = parts.FirstOrDefault(p => p.key.Equals("AccountName", StringComparison.InvariantCultureIgnoreCase));
-        ////    ////            if (service != null)
-        ////    ////            {
-        ////    ////                serviceName = service.value;
-        ////    ////            }
-        ////    ////        }
-        ////    ////        // ReSharper disable once EmptyGeneralCatchClause
-        ////    ////        catch
-        ////    ////        {
-        ////    ////            // TODO
-        ////    ////        }
-        ////    ////    }
-
-        ////    ////    return serviceName;
-        ////    ////}
-        ////}
     }
 }

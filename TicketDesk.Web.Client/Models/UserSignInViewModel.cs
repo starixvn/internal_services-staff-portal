@@ -11,7 +11,7 @@
         [Display(ResourceType = typeof(Resources), Name = "Views_User_SignIn_Username")]
         [AllowHtml]
         public string Email { get; set; }
-        
+
         [Required]
         [DataType(DataType.Password)]
         [AllowHtml]

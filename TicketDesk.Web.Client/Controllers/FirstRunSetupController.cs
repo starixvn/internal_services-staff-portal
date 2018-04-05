@@ -11,8 +11,6 @@
     using Identity.Model;
     using Microsoft.AspNet.Identity;
     using Models;
-    ////using PushNotifications;
-    ////using PushNotifications.Model;
 
     [RoutePrefix("first-run-setup")]
     [Route("{action=index}")]
@@ -77,46 +75,9 @@
                 }
             }
 
-            ////Database.SetInitializer(new TdPushNotificationDbInitializer());
-
-            ////Startup.ConfigurePushNotifications();
-            ////if (newUser != null)
-            ////{
-            ////    using (var notificationContext = new TdPushNotificationContext())
-            ////    {
-            ////        notificationContext.SubscriberPushNotificationSettingsManager.AddSettingsForSubscriber(
-            ////            new SubscriberNotificationSetting
-            ////            {
-            ////                SubscriberId = newUser.Id,
-            ////                IsEnabled = true,
-            ////                PushNotificationDestinations = new[]
-            ////                {
-            ////                    new PushNotificationDestination
-            ////                    {
-            ////                        DestinationType = "email",
-            ////                        DestinationAddress = newUser.Email,
-            ////                        SubscriberName = newUser.DisplayName
-            ////                    }
-            ////                }
-            ////            });
-            ////        notificationContext.SaveChanges();
-            ////    }
-            ////}
-
-            ////UpdateSearchIndex();
             return RedirectToAction("Index");
         }
 
-        ////[ChildActionOnly]
-        ////public ActionResult AzureInfo()
-        ////{
-        ////    if (!Model.AzureInfo.HasAzureServices)
-        ////    {
-        ////        return new EmptyResult();
-        ////    }
-
-        ////    return PartialView("_AzureInfo", Model);
-        ////}
 
         [ChildActionOnly]
         public ActionResult DatabaseInfo()
@@ -132,12 +93,6 @@
             {
                 return new EmptyResult();
             }
-
-            ////if (Model.AzureInfo.IsAzureWebSite)
-            ////{
-            ////    ViewBag.ErrorAzureDbDoesNotExist = !Model.DatabaseStatus.DatabaseExists;
-            ////    ViewBag.WarnNotAnAzureDb = !Model.AzureInfo.IsSqlAzure;
-            ////}
 
             return View("_NewDatabase", Model);
         }

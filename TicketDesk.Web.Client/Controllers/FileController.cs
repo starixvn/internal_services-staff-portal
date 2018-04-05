@@ -1,6 +1,5 @@
 ﻿namespace TicketDesk.Web.Client.Controllers
 {
-    using IO;
     using System;
     using System.Configuration;
     using System.Diagnostics;

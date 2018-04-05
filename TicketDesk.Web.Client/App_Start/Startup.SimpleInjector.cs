@@ -100,7 +100,6 @@
             container.Register<ITicketEventService>(() => new TicketEventService(), hybridLifestyle);
 
             container.RegisterInitializer<TicketDeskUserManager>(manager => manager.ConfigureDataProtection(app));
-            ////container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
             container.RegisterMvcControllers(typeof(Startup).Assembly);
 
             return container;

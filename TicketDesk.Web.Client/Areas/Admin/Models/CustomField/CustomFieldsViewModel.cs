@@ -8,7 +8,5 @@
     {
         [Display(Name = nameof(Resources.TicketCategory), ResourceType = typeof(Resources))]
         public TicketCategoryTypes SelectedTicketCategoryType { get; set; }
-
-        ////public IEnumerable<TicketCategory> TicketCategories { get; set; }
     }
 }
