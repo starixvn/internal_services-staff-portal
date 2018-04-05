@@ -11,7 +11,6 @@
     using Fanex.MailDeliver.MailClient.API;
     using Fanex.MailDeliver.Model;
     using Interface;
-    using IO;
     using IO.FileStorage;
 
     public class MailEmptyController : Controller

@@ -29,7 +29,6 @@ namespace TicketDesk.Domain
         {
             // some dbsets are internal, manually initialize for use by EF
             ApplicationSettings = Set<ApplicationSetting>();
-            ////UserSettings = Set<UserSetting>();
 
             // TODO: This is only public because it is used by migrations and related functions
             // This ctor can be removed or made internal by creating a class that implements IDbContextFactory<TicketDeskContext>
@@ -57,8 +56,6 @@ namespace TicketDesk.Domain
         // We'll provide a thin layer of abstraction for safely handling external interactions instead.
         internal DbSet<ApplicationSetting> ApplicationSettings { get; set; }
 
-        ////internal DbSet<UserSetting> UserSettings { get; set; }
-
         public DbSet<CustomFieldType> CustomFieldTypes { get; set; }
 
         public DbSet<CustomField> CustomFields { get; set; }
@@ -78,8 +75,6 @@ namespace TicketDesk.Domain
         public DbSet<CustomFieldListValue> CustomFieldListValues { get; set; }
 
         public DbSet<UserReadAnnouncement> UserReadAnnouncements { get; set; }
-
-        ////public UserSettingsManager UserSettingsManager => _userSettingsManager ?? (_userSettingsManager = new UserSettingsManager(this));
 
         /// <summary>
         /// Gets or sets the application settings specific to ticketdesk.
@@ -127,11 +122,6 @@ namespace TicketDesk.Domain
                 .HasRequired(c => c.TicketSubscriber)
                 .WithMany()
                 .WillCascadeOnDelete(false);
-
-            // json flattening: see this for more info: http://www.reddnet.net/entity-framework-json-column/
-            ////modelBuilder.ComplexType<UserTicketListSettingsCollection>()
-            ////    .Property(p => p.Serialized)
-            ////    .HasColumnName("ListSettingsJson");
 
             modelBuilder.ComplexType<ApplicationSelectListSetting>()
                 .Property(p => p.Serialized)

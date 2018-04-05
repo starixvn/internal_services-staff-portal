@@ -9,7 +9,6 @@
     using Criteria.TicketList;
     using Domain.Model;
     using Interface;
-    using IO;
     using IO.FileStorage;
 
     public class TicketService : EntityFrameworkBaseService, ITicketService

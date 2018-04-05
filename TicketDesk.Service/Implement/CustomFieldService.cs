@@ -28,15 +28,7 @@
                 .Where(x => x.CategoryId == (int)type)
                 .Select(x => x.CustomFieldId);
 
-            var availableCustomField = context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
-
-            ////foreach (CustomField customField in availableCustomField)
-            ////{
-            ////    customField.CustomFieldValues =
-            ////        context.CustomFieldValues.Where(x => x.CustomFieldId == customField.Id).ToList();
-            ////}
-
-            return availableCustomField;
+            return context.CustomFields.Where(x => customFieldIds.Contains(x.Id));
         }
 
         public IQueryable<CustomField> GetCustomFieldsWithTypeForTicketCategory(TicketCategoryTypes type)

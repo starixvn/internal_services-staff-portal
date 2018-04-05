@@ -9,7 +9,6 @@
     using Criteria.FileManager;
     using Domain.Model;
     using Interface;
-    using IO;
     using IO.FileStorage;
 
     public class FileManagerService : BaseService, IFileManagerService

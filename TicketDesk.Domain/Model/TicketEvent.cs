@@ -76,24 +76,5 @@ namespace TicketDesk.Domain.Model
             };
             return tc;
         }
-
-        /// <summary>
-        /// Creates the event notifications for each ticket subscriber and adds them to the TicketEventNotifications collection.
-        /// </summary>
-        ////public void CreateSubscriberEventNotifications()
-        ////{
-        ////    foreach (var subscriber in Ticket.TicketSubscribers)
-        ////    {
-        ////        var isSubscriberEvent = EventBy == subscriber.SubscriberId;
-
-        ////        TicketEventNotifications.Add(
-        ////            new TicketEventNotification
-        ////            {
-        ////                IsNew = !isSubscriberEvent,
-        ////                IsRead = isSubscriberEvent,
-        ////                SubscriberId = subscriber.SubscriberId,
-        ////            });
-        ////    }
-        ////}
     }
 }

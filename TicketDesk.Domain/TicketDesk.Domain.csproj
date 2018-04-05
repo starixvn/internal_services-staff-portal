@@ -166,9 +166,7 @@
     </Compile>
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Infrastructure\AttributeHelper.cs" />
     <Compile Include="IContextHelper.cs" />
-    <Compile Include="Infrastructure\AsyncHelper.cs" />
     <Compile Include="Infrastructure\CommentRequiredAttribute.cs" />
     <Compile Include="Infrastructure\ContextHelper.cs" />
     <Compile Include="Infrastructure\FunctionKeys.cs" />
@@ -354,10 +352,6 @@
     <Compile Include="Model\CustomFieldValue.cs" />
     <Compile Include="Model\EditableField.cs" />
     <Compile Include="Model\Extensions\ApplicationSettingExtensions.cs" />
-    <Compile Include="Model\Extensions\SearchManagerExtensions.cs" />
-    <Compile Include="Model\Extensions\TicketActivityExtensions.cs" />
-    <Compile Include="Model\Extensions\TicketEventExtensions.cs" />
-    <Compile Include="Model\Extensions\TicketTagExtensions.cs" />
     <Compile Include="Model\Extensions\Validation\RequiredIfAttribute.cs" />
     <Compile Include="Model\Shop.cs" />
     <Compile Include="Model\Reference.cs" />
