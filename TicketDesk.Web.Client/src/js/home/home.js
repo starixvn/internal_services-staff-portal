@@ -47,16 +47,21 @@
 
         tableConfigs.rowGroup = {
             dataSrc: 4,
-            startRender: function (rows, group) {
+            startRender: function(rows, group) {
                 return myOpenningTicket.getGroupingRow(rows, group);
             }
-        }
+        };
 
         tableConfigs.infoCallback = function (settings, start, end, max, total, pre) {
             return "Displaying " + start + " to " + end + " of " + max + " item(s)";
         }
 
         var datatables = $table.DataTable(tableConfigs);
+
+        datatables.on("draw",
+            function() {
+                $(".sorting_asc, .sorting_desc, .sorting").off("click");
+            });
 
         datatables.order([[4, "asc"], [2, "desc"]]).draw();
     },
