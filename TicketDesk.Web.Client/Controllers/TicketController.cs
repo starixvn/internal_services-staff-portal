@@ -281,7 +281,7 @@
                 {
                      ShopList = shopService.GetShopSelectList()
                 },
-                System = { CustomField = availableCustomField.First(x => x.Name == DEVICE) },
+                Device = { CustomField = availableCustomField.First(x => x.Name == DEVICE) },
                 TimeOfIncident = { CustomField = availableCustomField.First(x => x.Name == TIME_OF_INCIDENT) },
                 Description = { CustomField = availableCustomField.First(x => x.Name == DESCRIPTION) },
                 AllowToChooseRecipient = ticketCategoryService.GetTicketCategory((int)TicketCategoryTypes.Hardware).IsAllowAdditionalMail

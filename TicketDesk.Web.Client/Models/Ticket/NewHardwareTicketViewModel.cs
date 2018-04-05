@@ -8,7 +8,7 @@
         public NewHardwareTicketViewModel()
         {
             Ticket = new Ticket();
-            System = new CustomFieldValue();
+            Device = new CustomFieldValue();
             Description = new CustomFieldValue();
             TimeOfIncident = new CustomFieldValue();
         }
@@ -17,17 +17,18 @@
 
         public Ticket Ticket { get; set; }
 
-        public CustomFieldValue System { get; set; }
+        public CustomFieldValue Device { get; set; }
 
         public CustomFieldValue TimeOfIncident { get; set; }
 
         public CustomFieldValue Description { get; set; }
+
         public IList<CustomFieldValue> GetCustomFieldValuesToInsert(int ticketId)
         {
             var customFieldValues = new List<CustomFieldValue>();
 
-            System.AddDetails(null, ticketId);
-            customFieldValues.Add(System);
+            Device.AddDetails(null, ticketId);
+            customFieldValues.Add(Device);
 
             Description.AddDetails(null, ticketId);
             customFieldValues.Add(Description);
