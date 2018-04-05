@@ -5,53 +5,55 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="body-content">
+    <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Edit", "CustomFields", FormMethod.Post, new { @class = "form-group" }))
-{
-    @Html.HiddenFor(x => x.Id)
+    @using (Html.BeginForm("Edit", "CustomFields", FormMethod.Post, new { @class = "form-group" }))
+    {
+        @Html.HiddenFor(x => x.Id)
 
-    <div class="input-group">
-        @Html.LabelFor(x => x.TicketCategoryIds)
-        @Html.ListBoxFor(x => x.TicketCategoryIds, Model.TicketCategories, new { @class = "form-control" })
-    </div>
+        <div class="input-group">
+            @Html.LabelFor(x => x.TicketCategoryIds)
+            @Html.ListBoxFor(x => x.TicketCategoryIds, Model.TicketCategories, new { @class = "form-control" })
+        </div>
 
-    <div class="input-group">
-        @Html.LabelFor(x => x.Name)
-        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
-    </div>
+        <div class="input-group">
+            @Html.LabelFor(x => x.Name)
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+        </div>
 
-    <div class="input-group">
-        @Html.LabelFor(x => x.Name_vi)
-        @Html.TextBoxFor(x => x.Name_vi, new { @class = "form-control" })
-    </div>
+        <div class="input-group">
+            @Html.LabelFor(x => x.Name_vi)
+            @Html.TextBoxFor(x => x.Name_vi, new { @class = "form-control" })
+        </div>
 
-    <div class="input-group">
-        @Html.LabelFor(x => x.Values)
-        @Html.TextAreaFor(x => x.Values, new { @class = "form-control" })
-    </div>
+        <div class="input-group">
+            @Html.LabelFor(x => x.Values)
+            @Html.TextAreaFor(x => x.Values, new { @class = "form-control" })
+        </div>
 
-    <div class="input-group">
-        @Html.LabelFor(x => x.Values_vi)
-        @Html.TextAreaFor(x => x.Values_vi, new { @class = "form-control" })
-    </div>
+        <div class="input-group">
+            @Html.LabelFor(x => x.Values_vi)
+            @Html.TextAreaFor(x => x.Values_vi, new { @class = "form-control" })
+        </div>
 
-    <div class="input-group">
-        @Html.LabelFor(x => x.IsEnabled)
-        @Html.CheckBoxFor(x => x.IsEnabled, new { @class = "form-control" })
-    </div>
+        <div class="input-group">
+            @Html.LabelFor(x => x.IsEnabled)
+            @Html.CheckBoxFor(x => x.IsEnabled, new { @class = "form-control" })
+        </div>
 
-    <div class="input-group">
-        @Html.LabelFor(x => x.DisplayOrder)
-        @Html.TextBoxFor(x => x.DisplayOrder, new { @class = "form-control" })
-    </div>
+        <div class="input-group">
+            @Html.LabelFor(x => x.DisplayOrder)
+            @Html.TextBoxFor(x => x.DisplayOrder, new { @class = "form-control" })
+        </div>
 
-    <div class="input-group">
-        @Html.LabelFor(x => x.IsAllowedToEditListValue)
-        @Html.CheckBoxFor(x => x.IsAllowedToEditListValue, new { @class = "form-control" })
-    </div>
+        <div class="input-group">
+            @Html.LabelFor(x => x.IsAllowedToEditListValue)
+            @Html.CheckBoxFor(x => x.IsAllowedToEditListValue, new { @class = "form-control" })
+        </div>
 
-    <div class="input-group">
-        <input type="submit" value="Save" class="btn btn-block btn-success" />
-    </div>
-}
+        <div class="input-group">
+            <input type="submit" value="Save" class="btn btn-block btn-success" />
+        </div>
+    }
+</div>

@@ -26,69 +26,71 @@
 
 }
 
-<h2 class="page-title">@ViewBag.Title</h2>
+<div class="body-content">
+    <h2 class="page-title">@ViewBag.Title</h2>
 
-<section class="filter-form">
-    @using (Html.BeginForm("GetTicketList", "TicketList", FormMethod.Get, new { @class = "filter-row", id = "filterForm" }))
-    {
-        <div class="select-group">
-            @Html.LabelFor(x => x.ShopId)
-            @Html.DropDownListFor(x => x.ShopId, Model.Shops, @Resources.All, new { @class = "form-control searchable" })
-        </div>
+    <section class="filter-form">
+        @using (Html.BeginForm("GetTicketList", "TicketList", FormMethod.Get, new { @class = "filter-row", id = "filterForm" }))
+        {
+            <div class="select-group">
+                @Html.LabelFor(x => x.ShopId)
+                @Html.DropDownListFor(x => x.ShopId, Model.Shops, @Resources.All, new { @class = "form-control searchable" })
+            </div>
 
-        <div class="dropdown-medium">
-            @Html.LabelFor(x => x.TicketType)
-            @Html.DropDownListFor(x => x.TicketType, Model.Types, new { @class = "form-control" })
-        </div>
+            <div class="dropdown-medium">
+                @Html.LabelFor(x => x.TicketType)
+                @Html.DropDownListFor(x => x.TicketType, Model.Types, new { @class = "form-control" })
+            </div>
 
-        <div class="dropdown-medium">
-            @Html.LabelFor(x => x.Status)
-            @Html.EnumDropDownListFor(x => x.Status, @Resources.All, new { @class = "form-control" })
-        </div>
+            <div class="dropdown-medium">
+                @Html.LabelFor(x => x.Status)
+                @Html.EnumDropDownListFor(x => x.Status, @Resources.All, new { @class = "form-control" })
+            </div>
 
-        <div class="date-time">
-            @Html.LabelFor(x => x.CreateDateFrom)
             <div class="date-time">
-                @Html.TextBoxFor(x => x.CreateDateFrom, new { @class = "datetimepicker from form-control" })
-                <span class="icon-calendar"></span>
+                @Html.LabelFor(x => x.CreateDateFrom)
+                <div class="date-time">
+                    @Html.TextBoxFor(x => x.CreateDateFrom, new { @class = "datetimepicker from form-control" })
+                    <span class="icon-calendar"></span>
+                </div>
             </div>
-        </div>
 
-        <div class="date-time">
-            @Html.LabelFor(x => x.CreateDateTo)
             <div class="date-time">
-                @Html.TextBoxFor(x => x.CreateDateTo, new { @class = "datetimepicker to form-control" })
-                <span class="icon-calendar"></span>
+                @Html.LabelFor(x => x.CreateDateTo)
+                <div class="date-time">
+                    @Html.TextBoxFor(x => x.CreateDateTo, new { @class = "datetimepicker to form-control" })
+                    <span class="icon-calendar"></span>
+                </div>
             </div>
-        </div>
 
-        <div class="button-filter">
-            <button type="submit" class="btn btn-submit">@Resources.Views_Announcement_Submit</button>
-        </div>
-    }
-</section>
-
-<section class="table" id="ticket-list-section"></section>
-
-<!-- Confirm Modal -->
-<div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" id="confirm-modal">
-    <div class="modal-dialog small-modal" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p style="margin-bottom: 0; margin-top: 20px; padding-left: 20px;">Do you want to change status this ticket?</p>
+            <div class="button-filter">
+                <button type="submit" class="btn btn-submit">@Resources.Views_Announcement_Submit</button>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-cancel" data-dismiss="modal">@Resources.Cancel</button>
-                <button type="button" class="btn btn-submit" id="confirm-button">@Messages.Yes</button>                
+        }
+    </section>
+
+    <section class="table" id="ticket-list-section"></section>
+
+    <!-- Confirm Modal -->
+    <div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" id="confirm-modal">
+        <div class="modal-dialog small-modal" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p style="margin-bottom: 0; margin-top: 20px; padding-left: 20px;">Do you want to change status this ticket?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" data-dismiss="modal">@Resources.Cancel</button>
+                    <button type="button" class="btn btn-submit" id="confirm-button">@Messages.Yes</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Ticket details Modal -->
-<div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" id="ticket-details-modal">
-    <div class="modal-dialog ticket-list-modal" role="document">
-        <div class="modal-content -has-title" id="ticket-details-content">
+    <!-- Ticket details Modal -->
+    <div class="modal fade" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" id="ticket-details-modal">
+        <div class="modal-dialog ticket-list-modal" role="document">
+            <div class="modal-content -has-title" id="ticket-details-content">
+            </div>
         </div>
     </div>
 </div>

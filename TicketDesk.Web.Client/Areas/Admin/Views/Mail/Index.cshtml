@@ -16,17 +16,18 @@
     <script src="~/src/libs/jQuery-tagEditor/jquery.tag-editor.min.js"></script>
     <script src="~/src/js/admin/mail/mail.js"></script>
 }
+<div class="body-content">
+    <h2 class="page-title">@ViewBag.Title</h2>
 
-<h2 class="page-title">@ViewBag.Title</h2>
+    <section class="filter-form">
+        @using (Html.BeginForm("ListMail", "Mail", FormMethod.Post, new { @class = "filter-row" }))
+        {
+            <div class="dropdown-medium">
+                @Html.LabelFor(x => x.CategoryId)
+                @Html.EnumDropDownListFor(x => x.CategoryId, new { @class = "form-control" })
+            </div>
+        }
+    </section>
 
-<section class="filter-form">
-    @using (Html.BeginForm("ListMail", "Mail", FormMethod.Post, new { @class = "filter-row" }))
-    {
-        <div class="dropdown-medium">
-            @Html.LabelFor(x => x.CategoryId)
-            @Html.EnumDropDownListFor(x => x.CategoryId, new { @class = "form-control" })
-        </div>
-    }
-</section>
-
-<section id="data-list"></section>
+    <section id="data-list"></section>
+</div>

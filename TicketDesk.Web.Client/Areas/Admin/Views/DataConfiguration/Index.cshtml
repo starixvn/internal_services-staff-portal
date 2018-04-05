@@ -18,30 +18,31 @@
     <script src="~/src/js/admin/dataTableCommon.js"></script>
     <script src="~/src/js/admin/dataconfiguration/dataconfigurationindex.js" type="text/javascript"></script>
 }
+<div class="body-content">
+    <section class="hidden">
+        <p id="item-created-message">@Resources.ItemCreatedMessage</p>
+        <p id="item-updated-message">@Resources.ItemUpdatedMessage</p>
+    </section>
 
-<section class="hidden">
-    <p id="item-created-message">@Resources.ItemCreatedMessage</p>
-    <p id="item-updated-message">@Resources.ItemUpdatedMessage</p>
-</section>
+    <div id="dynamic-modals"></div>
 
-<div id="dynamic-modals"></div>
+    <h2 class="page-title">@ViewBag.Title</h2>
 
-<h2 class="page-title">@ViewBag.Title</h2>
-
-<section class="filter-form">
-    @using (Html.BeginForm("ListCustomFieldListValue", "DataConfiguration", FormMethod.Post, new { @class = "filter-row" }))
-    {
-        <div class="select-group">
-            @Html.LabelFor(x => x.SelectedFieldId)
+    <section class="filter-form">
+        @using (Html.BeginForm("ListCustomFieldListValue", "DataConfiguration", FormMethod.Post, new { @class = "filter-row" }))
+        {
             <div class="select-group">
-                @Html.DropDownListFor(x => x.SelectedFieldId, new SelectList(Model.EditableCustomFields, "CustomFieldId", "Name"), new { @class="form-control" })
+                @Html.LabelFor(x => x.SelectedFieldId)
+                <div class="select-group">
+                    @Html.DropDownListFor(x => x.SelectedFieldId, new SelectList(Model.EditableCustomFields, "CustomFieldId", "Name"), new { @class = "form-control" })
+                </div>
             </div>
-        </div>
 
-        <div class="button-filter">
-            <button type="submit" class="btn btn-submit">@Resources.Submit</button>
-        </div>
-    }
-</section>
+            <div class="button-filter">
+                <button type="submit" class="btn btn-submit">@Resources.Submit</button>
+            </div>
+        }
+    </section>
 
-<section class="table" id="data-list"></section>
+    <section class="table" id="data-list"></section>
+</div>

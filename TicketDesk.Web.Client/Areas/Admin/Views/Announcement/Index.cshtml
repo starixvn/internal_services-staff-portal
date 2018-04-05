@@ -7,8 +7,6 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2 class="page-title">@ViewBag.Title</h2>
-
 @section css
 {
     <link href="~/src/libs/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
@@ -28,69 +26,75 @@
     <script src="~/src/js/admin/announcement/announcementsindex.js"></script>
 }
 
-<div id="announcement-modal"></div>
+<div class="body-content">
 
-<div id="quick-publish-modal"></div>
+    <h2 class="page-title">@ViewBag.Title</h2>
 
-<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" id="confirm-popup">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"></h4>
-            </div>
-            <div class="modal-body">
-                <p class="message"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-cancel dismiss-all" data-dismiss="modal">@Resources.Cancel</button>
-                <button type="button" id="confirm-btn" class="btn btn-primary">@Resources.Publish</button>
+    <div id="announcement-modal"></div>
+
+    <div id="quick-publish-modal"></div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" id="confirm-popup">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <p class="message"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel dismiss-all" data-dismiss="modal">@Resources.Cancel</button>
+                    <button type="button" id="confirm-btn" class="btn btn-primary">@Resources.Publish</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!--Filter-->
-<section class="filter-form">
-    @using (Html.BeginForm("AnnouncementList", "Announcement", FormMethod.Get, new { @class = "filter-row" }))
+    <!--Filter-->
+    <section class="filter-form">
+        @using (Html.BeginForm("AnnouncementList", "Announcement", FormMethod.Get, new { @class = "filter-row" }))
+        {
+            <div class="date-time">
+                @Html.LabelFor(x => x.PublishedFrom)
+                <div class="date-time">
+                    @Html.TextBoxFor(x => x.PublishedFrom, new { @class = "datepicker start form-control" })
+                    <span class="icon-calendar"></span>
+                </div>
+            </div>
+            <div class="date-time">
+                @Html.LabelFor(x => x.PublishedTo)
+                <div class="date-time">
+                    @Html.TextBoxFor(x => x.PublishedTo, new { @class = "datepicker end form-control" })
+                    <span class="icon-calendar"></span>
+                </div>
+            </div>
+            <div class="dropdown-small">
+                @Html.LabelFor(x => x.Type)
+                @Html.EnumDropDownListFor(x => x.Type, "All", new { @class = "form-control" })
+            </div>
+            <div class="dropdown-small">
+                @Html.LabelFor(x => x.State)
+                @Html.EnumDropDownListFor(x => x.State, "All", new { @class = "form-control" })
+            </div>
+
+            <div class="button-filter">
+                <button type="submit" class="btn btn-submit">Submit</button>
+            </div>
+        }
+    </section>
+
+    @if (Model.HaveHostPermission)
     {
-        <div class="date-time">
-            @Html.LabelFor(x => x.PublishedFrom)
-            <div class="date-time">
-                @Html.TextBoxFor(x => x.PublishedFrom, new { @class = "datepicker start form-control" })
-                <span class="icon-calendar"></span>
-            </div>
-        </div>
-        <div class="date-time">
-            @Html.LabelFor(x => x.PublishedTo)
-            <div class="date-time">
-                @Html.TextBoxFor(x => x.PublishedTo, new { @class = "datepicker end form-control" })
-                <span class="icon-calendar"></span>
-            </div>
-        </div>
-        <div class="dropdown-small">
-            @Html.LabelFor(x => x.Type)
-            @Html.EnumDropDownListFor(x => x.Type, "All", new { @class = "form-control" })
-        </div>
-        <div class="dropdown-small">
-            @Html.LabelFor(x => x.State)
-            @Html.EnumDropDownListFor(x => x.State, "All", new { @class = "form-control" })
-        </div>
-
-        <div class="button-filter">
-            <button type="submit" class="btn btn-submit">Submit</button>
+        <div class="table-actions">
+            <a class="btn btn-create modal-form" href="#" data-href="@Url.Action("Create", "Announcement")">
+                <span class="icon-add"></span>@Resources.CreateNewAnnouncement
+            </a>
         </div>
     }
-</section>
 
-@if (Model.HaveHostPermission)
-{
-    <div class="table-actions">
-        <a class="btn btn-create modal-form" href="#" data-href="@Url.Action("Create", "Announcement")">
-            <span class="icon-add"></span>@Resources.CreateNewAnnouncement
-        </a>
-    </div>
-}
+    <!--Table-->
+    <section class="table" id="announcement-table"></section>
 
-<!--Table-->
-<section class="table" id="announcement-table"></section>
+</div>
