@@ -45,11 +45,8 @@
             return "Displaying " + start + " to " + end +" of " + max + " item(s)";
         }
 
-        tableConfigs.drawCallback = function (settings) {
-            nexcelSSPCommon.initSelect2();
-        }
-
-        $table.DataTable(tableConfigs);
+       $table.DataTable(tableConfigs);
+       nexcelSSPCommon.initSelect2();
     },
 
     getMyOpenningTickets: function (action) {
