@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using Core.Enumerations;
     using Domain.Infrastructure;
+    using Domain.Model;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Localization.Client;
@@ -121,15 +122,17 @@
 
             if (ModelState.IsValid)
             {
-                result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
+                ////result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
 
-                if (result)
-                {
-                    result = customFieldService.AddCustomFieldValues(
-                        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                ////if (result)
+                ////{
+                ////    result = customFieldService.AddCustomFieldValues(
+                ////        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
 
-                    mailService.ComposeAndSendMail(viewModel.Ticket);
-                }
+                ////    mailService.ComposeAndSendMail(viewModel.Ticket);
+                ////}
+
+                result = CreateTicketAndSendMail(viewModel.Ticket, viewModel.TempId, viewModel);
             }
 
             return Json(new
@@ -182,14 +185,16 @@
 
             if (ModelState.IsValid)
             {
-                result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-                if (result)
-                {
-                    result = customFieldService.AddCustomFieldValues(
-                        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                ////result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
+                ////if (result)
+                ////{
+                ////    result = customFieldService.AddCustomFieldValues(
+                ////        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
 
-                    mailService.ComposeAndSendMail(viewModel.Ticket);
-                }
+                ////    mailService.ComposeAndSendMail(viewModel.Ticket);
+                ////}
+
+                result = CreateTicketAndSendMail(viewModel.Ticket, viewModel.TempId, viewModel);
             }
 
             return Json(new
@@ -244,14 +249,16 @@
 
             if (ModelState.IsValid)
             {
-                result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-                if (result)
-                {
-                    result = customFieldService.AddCustomFieldValues(
-                        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                ////result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
+                ////if (result)
+                ////{
+                ////    result = customFieldService.AddCustomFieldValues(
+                ////        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
 
-                    mailService.ComposeAndSendMail(viewModel.Ticket);
-                }
+                ////    mailService.ComposeAndSendMail(viewModel.Ticket);
+                ////}
+
+                result = CreateTicketAndSendMail(viewModel.Ticket, viewModel.TempId, viewModel);
             }
 
             return Json(new
@@ -301,15 +308,17 @@
 
             if (ModelState.IsValid)
             {
-                result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
+                ////result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
 
-                if (result)
-                {
-                    result = customFieldService.AddCustomFieldValues(
-                        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                ////if (result)
+                ////{
+                ////    result = customFieldService.AddCustomFieldValues(
+                ////        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
 
-                    mailService.ComposeAndSendMail(viewModel.Ticket);
-                }
+                ////    mailService.ComposeAndSendMail(viewModel.Ticket);
+                ////}
+
+                result = CreateTicketAndSendMail(viewModel.Ticket, viewModel.TempId, viewModel);
             }
 
             return Json(new
@@ -359,14 +368,16 @@
 
             if (ModelState.IsValid)
             {
-                result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-                if (result)
-                {
-                    result = customFieldService.AddCustomFieldValues(
-                        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                ////result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
+                ////if (result)
+                ////{
+                ////    result = customFieldService.AddCustomFieldValues(
+                ////        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
 
-                    mailService.ComposeAndSendMail(viewModel.Ticket);
-                }
+                ////    mailService.ComposeAndSendMail(viewModel.Ticket);
+                ////}
+
+                result = CreateTicketAndSendMail(viewModel.Ticket, viewModel.TempId, viewModel);
             }
 
             return Json(new
@@ -421,15 +432,17 @@
             {
                 var ticketTitle = "[" + viewModel.SupportType.Value + "] - " + viewModel.Ticket.Title;
                 viewModel.Ticket.Title = ticketTitle;
-                result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
+                ////result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
 
-                if (result)
-                {
-                    result = customFieldService.AddCustomFieldValues(
-                        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
+                ////if (result)
+                ////{
+                ////    result = customFieldService.AddCustomFieldValues(
+                ////        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
 
-                    mailService.ComposeAndSendMail(viewModel.Ticket);
-                }
+                ////    mailService.ComposeAndSendMail(viewModel.Ticket);
+                ////}
+
+                result = CreateTicketAndSendMail(viewModel.Ticket, viewModel.TempId, viewModel);
             }
 
             return Json(new
@@ -439,6 +452,21 @@
                     .Where(item => item.Value.Errors.Any())
                     .Select(item => new { item.Key, item.Value.Errors.FirstOrDefault()?.ErrorMessage })
             });
+        }
+
+        private bool CreateTicketAndSendMail(Ticket ticket, Guid tempId, ITicketCustomFieldsProvider customFieldsProvider)
+        {
+            var result = ticketService.CreateTicket(ticket, tempId);
+
+            if (result)
+            {
+                result = customFieldService.AddCustomFieldValues(
+                    customFieldsProvider.GetCustomFieldValuesToInsert(ticket.TicketId));
+
+                mailService.ComposeAndSendMail(ticket);
+            }
+
+            return result;
         }
     }
 }
