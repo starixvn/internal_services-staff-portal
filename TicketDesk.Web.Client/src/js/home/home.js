@@ -18,19 +18,30 @@
         var nameArray = group.split("(");
         var groupName = nameArray[0].trim();
         var count = nameArray[1].split(")")[0].trim();
-        return $('<tr class="header expand" data-title="' + groupName + '"><td colspan="4"><span class="sign expanded"></span> ' + groupName + ' <span class="number-ticket">(' + count + ')</span></td></tr>');
+        return $('<tr class="header expand" data-title="' + groupName + '"><td colspan="4"><span class="sign expanded"></span> ' + groupName + ' <span class="number-ticket">(' + count + ")</span></td></tr>");
     },
 
-    initDatatable: function($table) {
+    initDatatable: function ($table) {
         var tableConfigs = commonDataTableInit.Init();
-        //tableConfigs.order = [[2, "desc"]];
-        tableConfigs.ordering = false;
+
+        tableConfigs.ordering = true;
         tableConfigs.searching = false;
         tableConfigs.info = true;
         tableConfigs.columnDefs = [
             {
                 visible: false,
                 targets: [4]
+            },
+            {
+                render: function (data, type, row) {
+                    if (!data) {
+                        return data;
+                    } else {
+                        return myOpenningTicket.dataTableDateTimeRenderer(data, type, row);
+                    }
+                },
+
+                targets: [2]
             }
         ];
 
@@ -41,12 +52,13 @@
             }
         }
 
-        tableConfigs.infoCallback = function(settings, start, end, max, total, pre) {
-            return "Displaying " + start + " to " + end +" of " + max + " item(s)";
+        tableConfigs.infoCallback = function (settings, start, end, max, total, pre) {
+            return "Displaying " + start + " to " + end + " of " + max + " item(s)";
         }
 
-       $table.DataTable(tableConfigs);
-       nexcelSSPCommon.initSelect2();
+        var datatables = $table.DataTable(tableConfigs);
+
+        datatables.order([[4, "asc"], [2, "desc"]]).draw();
     },
 
     getMyOpenningTickets: function (action) {
@@ -61,6 +73,7 @@
                 $("#my-opening-tickets").html(result);
                 myOpenningTicket.initDatatable($("#my-opening-tickets table"));
                 collapseTable.init();
+                nexcelSSPCommon.initSelect2();
             }
         });
     }
@@ -74,7 +87,7 @@ var collapseTable = {
     assignCollapseHeader: function () {
         $("table").on("click",
             ".header",
-            function() {
+            function () {
                 var $this = $(this);
                 collapseTable.toggleCollapseExpand($this);
             });

@@ -501,6 +501,7 @@
     <Content Include="src\libs\jquery.DataTable\dataTables.fixedHeader.min.js" />
     <Content Include="src\libs\jquery.DataTable\datatables.min.css" />
     <Content Include="src\libs\jquery.DataTable\datatables.min.js" />
+    <Content Include="src\libs\jquery.DataTable\dataTables.rowGroup.js" />
     <Content Include="src\libs\jquery.DataTable\dataTables.rowGroup.min.js" />
     <Content Include="src\libs\jquery.DataTable\datetime.js" />
     <Content Include="src\libs\jquery.DataTable\fixedHeader.dataTables.min.css" />
