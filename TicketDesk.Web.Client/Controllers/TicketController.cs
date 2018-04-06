@@ -112,26 +112,12 @@
         {
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Facility;
 
+            AddModelStateErrorForInvalidEmails(ModelState, viewModel.Ticket);
+
             var result = false;
-            if (!mailService.IsEmailListValid(viewModel.Ticket.AdditionalMail))
-            {
-                ModelState.AddModelError(
-                    $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
-                    Resources.NewTicketInValidEmailErrorMessage);
-            }
 
             if (ModelState.IsValid)
             {
-                ////result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-
-                ////if (result)
-                ////{
-                ////    result = customFieldService.AddCustomFieldValues(
-                ////        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
-
-                ////    mailService.ComposeAndSendMail(viewModel.Ticket);
-                ////}
-
                 result = CreateTicketAndSendMail(viewModel.Ticket, viewModel.TempId, viewModel);
             }
 
@@ -172,28 +158,14 @@
         [NapAuth(FunctionKey = FunctionKeys.Feedback, Policy = Constant.Policy.Host)]
         public ActionResult NewFeedbackTicket(NewFeedbackTicketViewModel viewModel)
         {
-            var result = false;
-
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Feedback;
 
-            if (!mailService.IsEmailListValid(viewModel.Ticket.AdditionalMail))
-            {
-                ModelState.AddModelError(
-                    $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
-                    Resources.NewTicketInValidEmailErrorMessage);
-            }
+            AddModelStateErrorForInvalidEmails(ModelState, viewModel.Ticket);
+
+            var result = false;
 
             if (ModelState.IsValid)
             {
-                ////result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-                ////if (result)
-                ////{
-                ////    result = customFieldService.AddCustomFieldValues(
-                ////        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
-
-                ////    mailService.ComposeAndSendMail(viewModel.Ticket);
-                ////}
-
                 result = CreateTicketAndSendMail(viewModel.Ticket, viewModel.TempId, viewModel);
             }
 
@@ -236,28 +208,14 @@
         [NapAuth(FunctionKey = FunctionKeys.Incident, Policy = Constant.Policy.Host)]
         public ActionResult NewIncidentTicket(NewIncidentTicketViewModel viewModel)
         {
-            var result = false;
-
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Incident;
 
-            if (!mailService.IsEmailListValid(viewModel.Ticket.AdditionalMail))
-            {
-                ModelState.AddModelError(
-                    $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
-                    Resources.NewTicketInValidEmailErrorMessage);
-            }
+            AddModelStateErrorForInvalidEmails(ModelState, viewModel.Ticket);
+
+            var result = false;
 
             if (ModelState.IsValid)
             {
-                ////result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-                ////if (result)
-                ////{
-                ////    result = customFieldService.AddCustomFieldValues(
-                ////        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
-
-                ////    mailService.ComposeAndSendMail(viewModel.Ticket);
-                ////}
-
                 result = CreateTicketAndSendMail(viewModel.Ticket, viewModel.TempId, viewModel);
             }
 
@@ -298,26 +256,12 @@
         {
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Hardware;
 
+            AddModelStateErrorForInvalidEmails(ModelState, viewModel.Ticket);
+
             var result = false;
-            if (!mailService.IsEmailListValid(viewModel.Ticket.AdditionalMail))
-            {
-                ModelState.AddModelError(
-                    $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
-                    Resources.NewTicketInValidEmailErrorMessage);
-            }
 
             if (ModelState.IsValid)
             {
-                ////result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-
-                ////if (result)
-                ////{
-                ////    result = customFieldService.AddCustomFieldValues(
-                ////        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
-
-                ////    mailService.ComposeAndSendMail(viewModel.Ticket);
-                ////}
-
                 result = CreateTicketAndSendMail(viewModel.Ticket, viewModel.TempId, viewModel);
             }
 
@@ -358,25 +302,12 @@
         {
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.Software;
 
+            AddModelStateErrorForInvalidEmails(ModelState, viewModel.Ticket);
+
             var result = false;
-            if (!mailService.IsEmailListValid(viewModel.Ticket.AdditionalMail))
-            {
-                ModelState.AddModelError(
-                    $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
-                    Resources.NewTicketInValidEmailErrorMessage);
-            }
 
             if (ModelState.IsValid)
             {
-                ////result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-                ////if (result)
-                ////{
-                ////    result = customFieldService.AddCustomFieldValues(
-                ////        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
-
-                ////    mailService.ComposeAndSendMail(viewModel.Ticket);
-                ////}
-
                 result = CreateTicketAndSendMail(viewModel.Ticket, viewModel.TempId, viewModel);
             }
 
@@ -420,27 +351,14 @@
         {
             viewModel.Ticket.CategoryId = (int)TicketCategoryTypes.CustomerSupport;
 
+            AddModelStateErrorForInvalidEmails(ModelState, viewModel.Ticket);
+
             var result = false;
-            if (!mailService.IsEmailListValid(viewModel.Ticket.AdditionalMail))
-            {
-                ModelState.AddModelError(
-                    $"{nameof(viewModel.Ticket)}.{nameof(viewModel.Ticket.AdditionalMail)}",
-                    Resources.NewTicketInValidEmailErrorMessage);
-            }
 
             if (ModelState.IsValid)
             {
                 var ticketTitle = "[" + viewModel.SupportType.Value + "] - " + viewModel.Ticket.Title;
                 viewModel.Ticket.Title = ticketTitle;
-                ////result = ticketService.CreateTicket(viewModel.Ticket, viewModel.TempId);
-
-                ////if (result)
-                ////{
-                ////    result = customFieldService.AddCustomFieldValues(
-                ////        viewModel.GetCustomFieldValuesToInsert(viewModel.Ticket.TicketId));
-
-                ////    mailService.ComposeAndSendMail(viewModel.Ticket);
-                ////}
 
                 result = CreateTicketAndSendMail(viewModel.Ticket, viewModel.TempId, viewModel);
             }
@@ -452,6 +370,16 @@
                     .Where(item => item.Value.Errors.Any())
                     .Select(item => new { item.Key, item.Value.Errors.FirstOrDefault()?.ErrorMessage })
             });
+        }
+
+        private void AddModelStateErrorForInvalidEmails(ModelStateDictionary modelState, Ticket ticket)
+        {
+            if (!mailService.IsEmailListValid(ticket.AdditionalMail))
+            {
+                modelState.AddModelError(
+                    $"{nameof(ticket)}.{nameof(ticket.AdditionalMail)}",
+                    Resources.NewTicketInValidEmailErrorMessage);
+            }
         }
 
         private bool CreateTicketAndSendMail(Ticket ticket, Guid tempId, ITicketCustomFieldsProvider customFieldsProvider)
