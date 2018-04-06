@@ -170,25 +170,7 @@
                                                             </td>
                                                             <td style="border: 1px solid #d4d4d4; padding: 5px 10px;"><p style="margin: 0;">Status Changed: @Model.TicketEditedMessage</p></td>
                                                         </tr>
-                                                    }                                                   
-
-                                                    @*<tr style="margin: 0;">
-                                                        <td width="140px" class="content-block" style="vertical-align: top; text-align: left; margin: 0; padding: 5px 10px; background: #f2f2f2;" align="center" valign="top">
-                                                            <p style="font-weight: bold; color: #2e4592; margin: 0;">Ticket Details</p>
-                                                        </td>
-                                                        <td style="border: 1px solid #d4d4d4; padding: 5px 10px;">
-                                                            @{
-                                                                var nonGroupCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId == null);
-                                                                foreach (var customFieldValue in nonGroupCustomFieldValues)
-                                                                {
-                                                                    <p style="margin: 0;">
-                                                                        <span>@customFieldValue.CustomField.Name: </span>
-                                                                        <span>@customFieldValue.Value</span>
-                                                                    </p>
-                                                                }
-                                                            }
-                                                        </td>
-                                                    </tr>*@
+                                                    }    
 
                                                     @{
                                                         var nonGroupCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId == null);
@@ -201,9 +183,7 @@
                                                                 <td style="border: 1px solid #d4d4d4; padding: 5px 10px;"><p style="margin: 0;">@customFieldValue.Value</p></td>
                                                             </tr>
                                                         }
-                                                    }
-
-                                                    
+                                                    }                                                    
 
                                                     @{
                                                         var groupedCustomFieldValues = Model.CustomFieldValues.Where(x => x.GroupId != null).GroupBy(x => x.GroupId);
@@ -249,8 +229,7 @@
                         </tr>
                     </table>
                 </div>
-            </td>
-            <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>
+            </td>            
         </tr>
     </table>
 </body>
