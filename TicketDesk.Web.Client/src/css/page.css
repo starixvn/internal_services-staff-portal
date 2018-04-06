@@ -619,6 +619,10 @@ tr.header {
   .form-content textarea + .field-validation-error {
     position: relative;
     top: -10px; }
+  .form-content .item.send-email .field-validation-error {
+    border-left: 0;
+    padding-left: 0;
+    padding-bottom: 10px; }
 
 .attach-file .fullwidth {
   padding: 9px 12px; }
@@ -632,9 +636,6 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   border-left: 1px solid #d3d7db; }
   .facility-form .subject input[type="text"] {
     height: 40px; }
-
-.facility-form .shop-item {
-  padding-bottom: 0 !important; }
 
 .facility-form input[type="text"] {
   border: none;
@@ -655,6 +656,9 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
 .facility-form .item .field-validation-error {
   border-left: 1px solid #d3d7db;
   padding: 0 0 8px 12px; }
+
+.facility-form .shop-item {
+  padding-bottom: 0 !important; }
 
 .facility-form .select2-container .select2-selection--single {
   border: 0;
@@ -851,7 +855,8 @@ input[type="text"]:focus, textarea:focus, x:-moz-any-link, x:default {
   margin-bottom: 1rem;
   border-color: #d3d7db; }
   .tag-editor li {
-    margin-top: 7px; }
+    margin-top: 6px;
+    margin-bottom: 6px; }
   .tag-editor .tag-editor-tag {
     border-radius: 28px;
     font-size: 15px;
