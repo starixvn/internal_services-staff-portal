@@ -14,18 +14,54 @@
     <title>Not Found</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     @Styles.Render("~/content/error-pages")
+    <style>
+        body {
+            font-family: Roboto, sans-serif;
+            margin: 0;
+        }
+
+        .layout-full {
+            position: relative;
+            padding: 100px calc(50% - 300px);
+            height: 100%;
+            text-align: center;
+            overflow: hidden;            
+        }
+
+        .layout-full .img-wrap {
+            margin-bottom: 50px;
+        }
+
+        .layout-full .title {
+            color: #bf141a;
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        .layout-full .cta-button {
+            text-decoration: none;
+            color: #fff;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 40px;
+            background: #2e4592;
+            transition: .2s ease all;
+        }
+
+        .layout-full .cta-button:hover, .layout-full .cta-button:focus {
+            background: #3955b3;
+        }
+    </style>
 </head>
 <body>
 
     <div class="layout-full">
         <div class="img-wrap">
-            <img class="sign" src="~/Content/images/error-assets/404.png" />
-            <img class="cloud-bottom" src="~/Content/images/error-assets/cloud1.png" />
-            <img class="cloud-top" src="~/Content/images/error-assets/cloud2.png" />
+            <img src="~/src/contents/images/error-assets/img404.png" />
         </div>
 
-        <h2 class="title big-title">OOPS...</h2>
-        <p class="margin-bottom-30 text">@Resources.Views_Home_NotFound_Text</p>
+        <h2 class="title">Error - Page Not Found</h2>
+        @*<p class="margin-bottom-30 text">@Resources.Views_Home_NotFound_Text</p>*@
         <a class="cta-button" href="~/"><i class="icon fa fa-arrow-left"></i>@Resources.Views_Home_AccessDenied_ActionText</a>
     </div>
 </body>

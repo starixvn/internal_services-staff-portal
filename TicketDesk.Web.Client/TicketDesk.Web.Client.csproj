@@ -448,6 +448,9 @@
     <Content Include="Scripts\jquery.validate.globalize.min.js" />
     <Content Include="src\contents\images\check.svg" />
     <Content Include="src\contents\images\error-assets\accessdenied.png" />
+    <Content Include="src\contents\images\error-assets\img403.png" />
+    <Content Include="src\contents\images\error-assets\img404.png" />
+    <Content Include="src\contents\images\error-assets\img500.png" />
     <Content Include="src\contents\images\flag-en.png" />
     <Content Include="src\contents\images\flag-vn.png" />
     <Content Include="src\contents\images\sort.png" />
